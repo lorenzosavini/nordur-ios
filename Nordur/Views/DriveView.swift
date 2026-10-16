@@ -16,6 +16,23 @@ struct DriveView: View {
         @Bindable var recorder = recorder
         NavigationStack {
             List {
+                Section {
+                    ScreenHeader(title: "Guida", subtitle: recorder.isRecording ? "Registrazione in corso" : "Percorsi e strade") {
+                        if recorder.isRecording {
+                            Button { confirmStop = true } label: {
+                                Text("Stop").font(.geist(14, .bold)).foregroundStyle(.white)
+                                    .padding(.horizontal, 16).frame(height: 40)
+                                    .background(Theme.danger, in: Capsule())
+                            }
+                            .buttonStyle(.plain)
+                        } else {
+                            AppearanceButton()
+                        }
+                    }
+                }
+                .listRowBackground(Color.clear)
+                .listRowInsets(EdgeInsets(top: 0, leading: 4, bottom: 0, trailing: 4))
+
                 if let recovered = recorder.recoverable {
                     Section {
                         Label("Una registrazione del \(Fmt.dayTime(recovered.start)) si è interrotta (\(Fmt.number(recovered.stats.km, decimals: 1, unit: "km"))).", systemImage: "exclamationmark.arrow.circlepath")
@@ -80,7 +97,7 @@ struct DriveView: View {
                 historySection
             }
             .themedList()
-            .navigationTitle("Guida")
+            .toolbar(.hidden, for: .navigationBar)
             .confirmationDialog("Terminare la registrazione?", isPresented: $confirmStop, titleVisibility: .visible) {
                 Button("Termina e salva") { lastFinished = recorder.stop() }
                 Button("Scarta percorso", role: .destructive) { recorder.discard() }
@@ -92,21 +109,14 @@ struct DriveView: View {
             .sheet(isPresented: $planning) {
                 NavigationStack { RoutePlannerSheet() }
             }
-            .toolbar {
-                ToolbarItem(placement: .topBarTrailing) {
-                    if recorder.isRecording {
-                        Button("Stop", role: .destructive) { confirmStop = true }
-                    }
-                }
-            }
         }
     }
 
     private var startPanel: some View {
         VStack(alignment: .leading, spacing: 12) {
-            Text("Registra il percorso in auto").font(.headline)
+            Text("Registra il percorso in auto").font(.app(.headline))
             Text("GPS, km, tempi, velocità, dislivello e consumi. Continua a schermo bloccato.")
-                .font(.caption).foregroundStyle(.secondary)
+                .font(.app(.caption)).foregroundStyle(.secondary)
             Button {
                 recorder.start()
             } label: {
@@ -117,7 +127,7 @@ struct DriveView: View {
             .controlSize(.large)
             .tint(.red)
             if recorder.authorization == .denied || recorder.authorization == .restricted {
-                Label("Posizione negata: abilitala in Impostazioni › Norður.", systemImage: "location.slash").font(.caption).foregroundStyle(.red)
+                Label("Posizione negata: abilitala in Impostazioni › Norður.", systemImage: "location.slash").font(.app(.caption)).foregroundStyle(.red)
             }
         }
         .padding(.vertical, 4)
@@ -147,9 +157,9 @@ struct DriveView: View {
                     DriveDetailView(drive: drive)
                 } label: {
                     VStack(alignment: .leading, spacing: 2) {
-                        Text(drive.name).font(.subheadline.weight(.semibold))
+                        Text(drive.name).font(.app(.subheadline, .semibold))
                         Text("\(Fmt.dayTime(drive.start)) · \(Fmt.number(drive.stats.km, decimals: 1, unit: "km")) · \(Fmt.duration(drive.durationSeconds()))")
-                            .font(.caption).foregroundStyle(.secondary)
+                            .font(.app(.caption)).foregroundStyle(.secondary)
                     }
                 }
             }
@@ -190,7 +200,7 @@ struct LiveDrivePanel: View {
                             HStack(alignment: .firstTextBaseline, spacing: 4) {
                                 Text(Fmt.number(session.stats.km, decimals: session.stats.km < 100 ? 2 : 1))
                                     .font(.metric(54, .bold)).foregroundStyle(Theme.text)
-                                Text("km").font(.system(size: 17, weight: .medium)).foregroundStyle(Theme.dim)
+                                Text("km").font(.geist(17, .medium)).foregroundStyle(Theme.dim)
                             }
                             Text("Tempo \(Fmt.clock(elapsed))").font(.metric(14)).foregroundStyle(Theme.dim)
                         }
@@ -246,7 +256,7 @@ struct LiveDrivePanel: View {
             let nearest = FuelStations.nearest(stations, to: here, kind: .fuel, limit: 1)
             if let first = nearest.first {
                 Label("Distributore più vicino: \(first.station.name) a \(Fmt.number(first.km, decimals: first.km < 10 ? 1 : 0, unit: "km"))", systemImage: "fuelpump.fill")
-                    .font(.caption).foregroundStyle(.secondary)
+                    .font(.app(.caption)).foregroundStyle(.secondary)
             }
         }
     }
@@ -290,7 +300,7 @@ struct DriveDetailView: View {
                     ForEach(0..<5, id: \.self) { bucket in
                         HStack(spacing: 3) {
                             RoundedRectangle(cornerRadius: 2).fill(DriveTrackMap.color(bucket)).frame(width: 14, height: 5)
-                            Text(["<30", "30–60", "60–80", "80–95", ">95"][bucket]).font(.caption2)
+                            Text(["<30", "30–60", "60–80", "80–95", ">95"][bucket]).font(.app(.caption2))
                         }
                     }
                 }

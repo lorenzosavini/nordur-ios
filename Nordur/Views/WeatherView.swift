@@ -8,6 +8,7 @@ struct WeatherView: View {
         NavigationStack {
             ScrollView {
                 VStack(spacing: 12) {
+                    ScreenHeader(title: "Meteo", subtitle: "Previsioni a 16 giorni") { AppearanceButton() }
                     PlaceHeader()
                     if let fetched = model.forecast {
                         let forecast = fetched.value
@@ -28,7 +29,7 @@ struct WeatherView: View {
                 .padding()
             }
             .background(Theme.bg.ignoresSafeArea())
-            .navigationTitle("Meteo")
+            .toolbar(.hidden, for: .navigationBar)
             .refreshable { await model.refreshPlace() }
         }
     }
@@ -125,7 +126,7 @@ struct WeatherView: View {
                     .foregroundStyle(Theme.danger.opacity(0.7))
                     .lineStyle(StrokeStyle(lineWidth: 1, dash: [3, 3]))
                     .annotation(position: .top, alignment: .leading) {
-                        Text("25 m/s").font(.system(size: 9, weight: .semibold)).foregroundStyle(Theme.danger)
+                        Text("25 m/s").font(.geist(9, .semibold)).foregroundStyle(Theme.danger)
                     }
             }
             .chartYScale(domain: 0...max(30, peak + 3))
@@ -144,7 +145,7 @@ struct WeatherView: View {
     private func legendDot(_ color: Color, _ text: String) -> some View {
         HStack(spacing: 5) {
             RoundedRectangle(cornerRadius: 1).fill(color).frame(width: 12, height: 3)
-            Text(text).font(.system(size: 11)).foregroundStyle(Theme.dim)
+            Text(text).font(.geist(11)).foregroundStyle(Theme.dim)
         }
     }
 
@@ -160,10 +161,10 @@ struct WeatherView: View {
                         VStack(spacing: 8) {
                             Text(index == 0 ? "Ora" : Fmt.time(hour.date, in: zone)).font(.metric(11, .semibold))
                                 .foregroundStyle(index == 0 ? Theme.accent : Theme.dim)
-                            Image(systemName: info.symbol).symbolRenderingMode(.hierarchical).font(.system(size: 18))
+                            Image(systemName: info.symbol).symbolRenderingMode(.hierarchical).font(.geist(18))
                                 .foregroundStyle(Theme.text).frame(height: 22)
                             Text(Fmt.temp(hour.temperature)).font(.metric(17, .semibold)).foregroundStyle(Theme.text)
-                            WindArrow(degrees: hour.windDirection).font(.system(size: 10)).foregroundStyle(Theme.dim)
+                            WindArrow(degrees: hour.windDirection).font(.geist(10)).foregroundStyle(Theme.dim)
                             Text("\(Int((hour.gust ?? 0).rounded()))").font(.metric(12, .bold)).foregroundStyle(hour.windRisk == .ok ? Theme.dim : hour.windRisk.color)
                             Text(hour.precipitationProbability.map { $0 >= 20 ? "\(Int($0))%" : " " } ?? " ")
                                 .font(.metric(10)).foregroundStyle(Theme.accent)
@@ -175,8 +176,8 @@ struct WeatherView: View {
                 }
             }
             HStack(spacing: 12) {
-                Text("Freccia: direzione del vento").font(.system(size: 10)).foregroundStyle(Theme.faint)
-                Text("Numero: raffica m/s").font(.system(size: 10)).foregroundStyle(Theme.faint)
+                Text("Freccia: direzione del vento").font(.geist(10)).foregroundStyle(Theme.faint)
+                Text("Numero: raffica m/s").font(.geist(10)).foregroundStyle(Theme.faint)
             }
         }
         .panel()
@@ -191,7 +192,7 @@ struct WeatherView: View {
                 let info = WeatherCode.describe(day.code)
                 HStack(spacing: 10) {
                     Text(index == 0 ? "Oggi" : Fmt.day(day.date, in: zone))
-                        .font(.system(size: 14, weight: index == 0 ? .semibold : .regular))
+                        .font(.geist(14, index == 0 ? .semibold : .regular))
                         .foregroundStyle(index > 6 ? Theme.dim : Theme.text)
                         .frame(width: 82, alignment: .leading)
                     Image(systemName: info.symbol).symbolRenderingMode(.hierarchical).foregroundStyle(Theme.text).frame(width: 24)
@@ -207,7 +208,7 @@ struct WeatherView: View {
                 if index < days.count - 1 { Divider().overlay(Theme.hairline) }
             }
             Text("Ultima colonna: raffica massima (m/s). Oltre 7 giorni la previsione è indicativa.")
-                .font(.system(size: 10)).foregroundStyle(Theme.faint).padding(.top, 6)
+                .font(.geist(10)).foregroundStyle(Theme.faint).padding(.top, 6)
         }
         .panel()
     }
@@ -229,14 +230,14 @@ struct WeatherView: View {
                     Metric(title: "Acqua", value: Fmt.temp(c.sea_surface_temperature))
                 }
                 HStack {
-                    Text("Spiagge").font(.caption)
+                    Text("Spiagge").font(.app(.caption))
                     RiskBadge(risk: marine.beachRisk)
                     Spacer()
-                    Text("Traghetti/barche").font(.caption)
+                    Text("Traghetti/barche").font(.app(.caption))
                     RiskBadge(risk: marine.seaRisk)
                 }
                 Text("Reynisfjara e spiagge del sud: onde anomale senza preavviso. Resta lontano dalla battigia.")
-                    .font(.caption2).foregroundStyle(.secondary)
+                    .font(.app(.caption2)).foregroundStyle(.secondary)
                 FreshnessLabel(date: fetched.date, isStale: fetched.isStale, source: "Open-Meteo Marine")
             }
         }
@@ -251,7 +252,7 @@ struct WeatherView: View {
                     Metric(title: "PM10", value: Fmt.number(c.pm10, unit: "µg/m³"))
                 }
                 Text("Gas vulcanico: previsioni di dispersione su vedur.is.")
-                    .font(.caption2).foregroundStyle(.secondary)
+                    .font(.app(.caption2)).foregroundStyle(.secondary)
                 FreshnessLabel(date: fetched.date, isStale: fetched.isStale, source: "CAMS via Open-Meteo")
             }
         }

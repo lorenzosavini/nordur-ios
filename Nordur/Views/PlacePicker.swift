@@ -72,7 +72,7 @@ struct PlacePicker: View {
             VStack(alignment: .leading) {
                 Text(place.name).foregroundStyle(.primary)
                 if let subtitle = place.subtitle {
-                    Text(subtitle).font(.caption).foregroundStyle(.secondary)
+                    Text(subtitle).font(.app(.caption)).foregroundStyle(.secondary)
                 }
             }
         }

@@ -25,7 +25,7 @@ struct WarningsView: View {
             }
             Section("Cosa significano i colori") {
                 Text("Giallo: possibili disagi.\nArancione: impatti significativi, valuta di rimandare.\nRosso: evento estremo, non metterti in viaggio.")
-                    .font(.caption)
+                    .font(.app(.caption))
                 LinkRow(title: "Allerte su vedur.is", subtitle: nil, url: "https://en.vedur.is/weather/forecasts/areas/")
             }
         }
@@ -43,19 +43,19 @@ struct WarningRow: View {
         HStack(alignment: .top, spacing: 10) {
             Image(systemName: warning.symbol)
                 .foregroundStyle(warning.color.color)
-                .font(.title3)
+                .font(.app(.title3))
                 .frame(width: 28)
             VStack(alignment: .leading, spacing: 3) {
                 HStack {
                     WarningBadge(color: warning.color)
                     if coversYou {
-                        Text("LA TUA ZONA").font(.caption2.weight(.bold)).foregroundStyle(.red)
+                        Text("LA TUA ZONA").font(.app(.caption2, .bold)).foregroundStyle(.red)
                     }
                 }
-                Text(warning.headline).font(.subheadline.weight(.semibold))
-                Text(warning.region).font(.caption).foregroundStyle(.secondary)
+                Text(warning.headline).font(.app(.subheadline, .semibold))
+                Text(warning.region).font(.app(.caption)).foregroundStyle(.secondary)
                 Text("\(Fmt.dayTime(warning.onset, in: .iceland)) → \(Fmt.dayTime(warning.expires, in: .iceland))")
-                    .font(.caption2).foregroundStyle(.secondary)
+                    .font(.app(.caption2)).foregroundStyle(.secondary)
             }
         }
     }
@@ -85,7 +85,7 @@ struct WarningDetail: View {
             Section("Descrizione (IMO)") {
                 Text(warning.details)
                 if let icelandic = warning.headlineIcelandic {
-                    Text(icelandic).font(.caption).foregroundStyle(.secondary)
+                    Text(icelandic).font(.app(.caption)).foregroundStyle(.secondary)
                 }
             }
             Section("Dettagli") {

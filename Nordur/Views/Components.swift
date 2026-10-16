@@ -13,7 +13,7 @@ struct Card<Content: View>: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 14) {
             HStack(spacing: 6) {
-                Image(systemName: systemImage).font(.system(size: 11, weight: .semibold))
+                Image(systemName: systemImage).font(.geist(11, .semibold))
                 Text(title)
             }
             .eyebrow()
@@ -34,7 +34,7 @@ struct RiskBadge: View {
             Circle().fill(risk.color).frame(width: 7, height: 7)
             Text(text ?? risk.label)
         }
-        .font(.system(size: 12, weight: .semibold))
+        .font(.geist(12, .semibold))
         .padding(.horizontal, 10)
         .padding(.vertical, 5)
         .background(risk.color.opacity(0.14), in: Capsule())
@@ -47,7 +47,7 @@ struct WarningBadge: View {
 
     var body: some View {
         Text(color.label)
-            .font(.system(size: 10, weight: .bold).width(.expanded))
+            .font(.geist(10, .bold))
             .textCase(.uppercase)
             .padding(.horizontal, 7)
             .padding(.vertical, 3)
@@ -69,7 +69,7 @@ struct FreshnessLabel: View {
                 Text(isStale ? "Offline, dati di \(Fmt.relative(date))" : "Aggiornato \(Fmt.relative(date))")
                 if let source { Text("· \(source)") }
             }
-            .font(.system(size: 11))
+            .font(.geist(11))
             .foregroundStyle(isStale ? Theme.warning : Theme.faint)
         }
     }
@@ -84,7 +84,7 @@ struct ErrorNote: View {
                 Image(systemName: "exclamationmark.circle")
                 Text(message)
             }
-            .font(.caption)
+            .font(.app(.caption))
             .foregroundStyle(Theme.dim)
         }
     }
@@ -120,31 +120,38 @@ struct WindArrow: View {
 struct PlaceHeader: View {
     @Environment(AppModel.self) private var model
     @State private var showPicker = false
+    /// White text for use on top of the sky hero.
+    var onHero = false
+
+    init(onHero: Bool = false) {
+        self.onHero = onHero
+    }
 
     var body: some View {
         Button {
             showPicker = true
         } label: {
-            HStack(alignment: .firstTextBaseline) {
-                VStack(alignment: .leading, spacing: 4) {
+            HStack(alignment: .center, spacing: 10) {
+                VStack(alignment: .leading, spacing: 3) {
                     HStack(spacing: 5) {
                         Image(systemName: model.useCurrentLocation ? "location.fill" : "mappin")
                             .font(.system(size: 10, weight: .bold))
                         Text(model.useCurrentLocation ? "Posizione attuale" : (model.activePlace.subtitle ?? "Località"))
                     }
-                    .eyebrow(Theme.accent)
+                    .eyebrow(onHero ? .white.opacity(0.8) : Theme.accent)
                     Text(model.activePlace.name)
-                        .font(.system(size: 30, weight: .bold))
-                        .foregroundStyle(Theme.text)
+                        .font(.display(30, .bold))
+                        .foregroundStyle(onHero ? .white : Theme.text)
                         .lineLimit(1)
                         .minimumScaleFactor(0.6)
                 }
-                Spacer()
                 Image(systemName: "chevron.down")
-                    .font(.system(size: 13, weight: .bold))
-                    .foregroundStyle(Theme.dim)
-                    .padding(9)
-                    .background(Theme.raised, in: Circle())
+                    .font(.system(size: 11, weight: .bold))
+                    .foregroundStyle(onHero ? .white.opacity(0.9) : Theme.dim)
+                    .padding(7)
+                    .background(onHero ? Color.white.opacity(0.18) : Theme.raised, in: Circle())
+                    .padding(.top, 14)
+                Spacer(minLength: 0)
             }
             .contentShape(Rectangle())
         }
@@ -171,16 +178,16 @@ struct LinkRow: View {
             Link(destination: destination) {
                 HStack(spacing: 12) {
                     Image(systemName: systemImage)
-                        .font(.system(size: 14, weight: .semibold))
+                        .font(.geist(14, .semibold))
                         .foregroundStyle(Theme.accent)
                         .frame(width: 30, height: 30)
                         .background(Theme.raised, in: RoundedRectangle(cornerRadius: 8, style: .continuous))
                     VStack(alignment: .leading, spacing: 2) {
                         Text(title).foregroundStyle(Theme.text)
-                        if let subtitle { Text(subtitle).font(.caption).foregroundStyle(Theme.dim) }
+                        if let subtitle { Text(subtitle).font(.app(.caption)).foregroundStyle(Theme.dim) }
                     }
                     Spacer()
-                    Image(systemName: "arrow.up.right").font(.caption.weight(.semibold)).foregroundStyle(Theme.faint)
+                    Image(systemName: "arrow.up.right").font(.app(.caption, .semibold)).foregroundStyle(Theme.faint)
                 }
             }
         }
@@ -210,7 +217,7 @@ struct WindDial: View {
             ForEach(Array(["N", "E", "S", "O"].enumerated()), id: \.offset) { item in
                 let angle = Double(item.offset) * 90 * .pi / 180
                 Text(item.element)
-                    .font(.system(size: 9, weight: .bold))
+                    .font(.geist(9, .bold))
                     .foregroundStyle(item.element == "N" ? Theme.text : Theme.faint)
                     .offset(x: sin(angle) * (size / 2 - 18), y: -cos(angle) * (size / 2 - 18))
             }
@@ -221,7 +228,7 @@ struct WindDial: View {
                     .offset(y: -size * 0.2)
                     .rotationEffect(.degrees(direction + 180))
                 Image(systemName: "arrowtriangle.up.fill")
-                    .font(.system(size: 10))
+                    .font(.geist(10))
                     .foregroundStyle(risk.color)
                     .offset(y: -size * 0.36)
                     .rotationEffect(.degrees(direction + 180))
@@ -229,7 +236,7 @@ struct WindDial: View {
             Circle().fill(Theme.surface).frame(width: size * 0.42, height: size * 0.42)
             VStack(spacing: -2) {
                 Text(speed.map { "\(Int($0.rounded()))" } ?? "–").font(.metric(size * 0.2, .bold)).foregroundStyle(Theme.text)
-                Text("m/s").font(.system(size: 8, weight: .semibold)).foregroundStyle(Theme.faint)
+                Text("m/s").font(.geist(8, .semibold)).foregroundStyle(Theme.faint)
             }
         }
         .frame(width: size, height: size)
@@ -293,7 +300,7 @@ struct RiskTimeline: View {
             if !labels.isEmpty {
                 HStack {
                     ForEach(Array(labels.enumerated()), id: \.offset) { item in
-                        Text(item.element).font(.system(size: 10)).foregroundStyle(Theme.faint)
+                        Text(item.element).font(.geist(10)).foregroundStyle(Theme.faint)
                         if item.offset < labels.count - 1 { Spacer() }
                     }
                 }
@@ -322,7 +329,7 @@ struct ArcGauge: View {
                 .rotationEffect(.degrees(135))
             VStack(spacing: 0) {
                 Text(label).font(.metric(28, .bold)).foregroundStyle(Theme.text)
-                Text(caption).font(.system(size: 9, weight: .semibold)).foregroundStyle(Theme.faint)
+                Text(caption).font(.geist(9, .semibold)).foregroundStyle(Theme.faint)
             }
         }
     }

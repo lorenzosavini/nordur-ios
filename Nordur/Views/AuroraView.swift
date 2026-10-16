@@ -12,7 +12,7 @@ struct AuroraView: View {
                     AuroraLiveView()
                 } label: {
                     HStack {
-                        Text("Mappa aurora in tempo reale").font(.subheadline.weight(.semibold))
+                        Text("Mappa aurora in tempo reale").font(.app(.subheadline, .semibold))
                         Spacer()
                         Image(systemName: "chevron.right").foregroundStyle(.tertiary)
                     }
@@ -38,7 +38,7 @@ struct AuroraView: View {
     @ViewBuilder private var tonightCard: some View {
         Card(title: "Le prossime 24 ore", systemImage: "moon.stars.fill", tint: .mint) {
             if let outlook = model.auroraOutlook {
-                Text(outlook.verdict.text).font(.title3.weight(.semibold))
+                Text(outlook.verdict.text).font(.app(.title3, .semibold))
                 if outlook.hasDarkness {
                     Chart(outlook.darkHours) { hour in
                         BarMark(x: .value("Ora", hour.date, unit: .hour), y: .value("Punteggio", hour.score))
@@ -54,17 +54,17 @@ struct AuroraView: View {
 
                     ForEach(outlook.darkHours) { hour in
                         HStack {
-                            Text(Fmt.time(hour.date, in: zone)).font(.subheadline.monospacedDigit()).frame(width: 52, alignment: .leading)
-                            Label(Fmt.percent(hour.cloudCover), systemImage: "cloud.fill").font(.caption)
+                            Text(Fmt.time(hour.date, in: zone)).font(.app(.subheadline).monospacedDigit()).frame(width: 52, alignment: .leading)
+                            Label(Fmt.percent(hour.cloudCover), systemImage: "cloud.fill").font(.app(.caption))
                                 .frame(width: 70, alignment: .leading)
-                            Text("Kp \(Fmt.number(hour.kp, decimals: 1))").font(.caption)
+                            Text("Kp \(Fmt.number(hour.kp, decimals: 1))").font(.app(.caption))
                             Spacer()
-                            Text("\(hour.score)").font(.subheadline.weight(.bold)).foregroundStyle(hour.score >= 35 ? Color.green : Color.secondary)
+                            Text("\(hour.score)").font(.app(.subheadline, .bold)).foregroundStyle(hour.score >= 35 ? Color.green : Color.secondary)
                         }
                     }
                 } else {
                     Text("Tra metà maggio e inizio agosto in Islanda il cielo non si fa mai abbastanza buio.")
-                        .font(.caption).foregroundStyle(.secondary)
+                        .font(.app(.caption)).foregroundStyle(.secondary)
                 }
             } else {
                 ProgressView()
@@ -107,7 +107,7 @@ struct AuroraView: View {
             }
             if model.solarWind?.value.favourable == true {
                 Label("Bz negativo e vento solare veloce: condizioni favorevoli", systemImage: "arrow.down.circle")
-                    .font(.caption.weight(.semibold)).foregroundStyle(.green)
+                    .font(.app(.caption, .semibold)).foregroundStyle(.green)
             }
         }
     }

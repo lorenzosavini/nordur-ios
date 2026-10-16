@@ -11,7 +11,7 @@ struct OfflineView: View {
         List {
             Section {
                 Text("Scarica i dati prima di entrare in zone senza copertura (Highlands, fiordi occidentali, parte dell'Est).")
-                    .font(.caption)
+                    .font(.app(.caption))
                 Button {
                     Task { await downloadAll() }
                 } label: {
@@ -22,7 +22,7 @@ struct OfflineView: View {
                 }
                 .disabled(running)
                 ForEach(log, id: \.self) { line in
-                    Text(line).font(.caption2).foregroundStyle(.secondary)
+                    Text(line).font(.app(.caption2)).foregroundStyle(.secondary)
                 }
             } header: {
                 Text("Dati dell'app")
@@ -30,7 +30,7 @@ struct OfflineView: View {
 
             Section {
                 Text("Apple Mappe: foto profilo › Mappe offline › Scarica nuova mappa › Islanda.")
-                    .font(.caption)
+                    .font(.app(.caption))
                 if let url = URL(string: "maps://") {
                     Link(destination: url) { Label("Apri Apple Mappe", systemImage: "map") }
                 }

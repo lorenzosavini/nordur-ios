@@ -59,16 +59,16 @@ struct RoadsView: View {
                 HStack(alignment: .top) {
                     Circle().fill((segment.risk ?? .ok).color).frame(width: 10, height: 10).padding(.top, 5)
                     VStack(alignment: .leading, spacing: 2) {
-                        Text(segment.name).font(.subheadline.weight(.semibold))
-                        Text(segment.conditionItalian).font(.caption).foregroundStyle((segment.risk ?? .ok).color)
+                        Text(segment.name).font(.app(.subheadline, .semibold))
+                        Text(segment.conditionItalian).font(.app(.caption)).foregroundStyle((segment.risk ?? .ok).color)
                         if let extra = segment.FrkvLysingEn, !extra.isEmpty {
-                            Text(extra).font(.caption2).foregroundStyle(.secondary)
+                            Text(extra).font(.app(.caption2)).foregroundStyle(.secondary)
                         }
                         if let axle = segment.AsthungiLysingEn, !axle.isEmpty {
-                            Text("Limite di carico: \(axle)").font(.caption2).foregroundStyle(.secondary)
+                            Text("Limite di carico: \(axle)").font(.app(.caption2)).foregroundStyle(.secondary)
                         }
                         if let updated = segment.updated {
-                            Text("Aggiornato \(Fmt.relative(updated))").font(.caption2).foregroundStyle(.tertiary)
+                            Text("Aggiornato \(Fmt.relative(updated))").font(.app(.caption2)).foregroundStyle(.tertiary)
                         }
                     }
                 }
@@ -99,10 +99,10 @@ struct StationRow: View {
         VStack(alignment: .leading, spacing: 4) {
             HStack {
                 Circle().fill(network.worstRisk(of: station).color).frame(width: 10, height: 10)
-                Text(station.name).font(.subheadline.weight(.semibold))
-                if let h = station.Haed { Text("\(Int(h)) m").font(.caption2).foregroundStyle(.secondary) }
+                Text(station.name).font(.app(.subheadline, .semibold))
+                if let h = station.Haed { Text("\(Int(h)) m").font(.app(.caption2)).foregroundStyle(.secondary) }
                 Spacer()
-                if let distance { Text("\(Int(distance)) km").font(.caption).foregroundStyle(.secondary) }
+                if let distance { Text("\(Int(distance)) km").font(.app(.caption)).foregroundStyle(.secondary) }
             }
             HStack(spacing: 12) {
                 Label("\(Fmt.ms(station.Vindhradi)) \(station.windDirection)", systemImage: "wind")
@@ -112,15 +112,15 @@ struct StationRow: View {
                 Label("asfalto \(Fmt.temp(station.Veghiti))", systemImage: "road.lanes")
                     .foregroundStyle(station.surfaceRisk.color)
             }
-            .font(.caption)
+            .font(.app(.caption))
             .labelStyle(CompactLabelStyle())
             ForEach(network.segments(for: station)) { segment in
                 Text("\(segment.name): \(segment.conditionItalian)")
-                    .font(.caption2)
+                    .font(.app(.caption2))
                     .foregroundStyle((segment.risk ?? .ok) > .ok ? (segment.risk ?? .ok).color : Color.secondary)
             }
             if let date = station.date {
-                Text("Lettura \(Fmt.relative(date))").font(.caption2).foregroundStyle(.tertiary)
+                Text("Lettura \(Fmt.relative(date))").font(.app(.caption2)).foregroundStyle(.tertiary)
             }
         }
     }
@@ -129,7 +129,7 @@ struct StationRow: View {
 struct CompactLabelStyle: LabelStyle {
     func makeBody(configuration: Configuration) -> some View {
         HStack(spacing: 3) {
-            configuration.icon.font(.caption2)
+            configuration.icon.font(.app(.caption2))
             configuration.title
         }
     }

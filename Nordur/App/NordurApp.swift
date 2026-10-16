@@ -5,8 +5,10 @@ struct NordurApp: App {
     @State private var model = AppModel()
     @State private var trip = TripStore()
     @Environment(\.scenePhase) private var scenePhase
+    @AppStorage(Appearance.key) private var appearance = Appearance.system.rawValue
 
     init() {
+        Appearance.configureUIKit()
         // Touch the singletons early: when iOS relaunches the app in the background
         // for a location event, their delegates must be installed immediately.
         _ = AlertCenter.shared
@@ -16,8 +18,9 @@ struct NordurApp: App {
     var body: some Scene {
         WindowGroup {
             RootView()
-                .preferredColorScheme(.dark)
+                .preferredColorScheme(Appearance(rawValue: appearance)?.colorScheme)
                 .tint(Theme.accent)
+                .font(.geist(16))
                 .environment(model)
                 .environment(trip)
                 .environment(AlertCenter.shared)
@@ -58,22 +61,14 @@ struct RootView: View {
     var body: some View {
         @Bindable var alerts = alerts
         TabView(selection: $tab) {
-            TodayView()
-                .tabItem { Label("Oggi", systemImage: "sun.horizon.fill") }
-                .tag(Tab.today)
-                .badge(alerts.unreadCount)
-            WeatherView()
-                .tabItem { Label("Meteo", systemImage: "cloud.sun.rain.fill") }
-                .tag(Tab.weather)
-            MapScreen()
-                .tabItem { Label("Mappa", systemImage: "map.fill") }
-                .tag(Tab.map)
-            DriveView()
-                .tabItem { Label("Guida", systemImage: recorder.isRecording ? "record.circle" : "car.fill") }
-                .tag(Tab.drive)
-            TripView()
-                .tabItem { Label("Viaggio", systemImage: "point.topleft.down.to.point.bottomright.curvepath.fill") }
-                .tag(Tab.trip)
+            TodayView().tag(Tab.today).toolbar(.hidden, for: .tabBar)
+            WeatherView().tag(Tab.weather).toolbar(.hidden, for: .tabBar)
+            MapScreen().tag(Tab.map).toolbar(.hidden, for: .tabBar)
+            DriveView().tag(Tab.drive).toolbar(.hidden, for: .tabBar)
+            TripView().tag(Tab.trip).toolbar(.hidden, for: .tabBar)
+        }
+        .safeAreaInset(edge: .bottom, spacing: 0) {
+            NordurTabBar(selection: $tab, badge: alerts.unreadCount, recording: recorder.isRecording)
         }
         .sheet(isPresented: $alerts.openInbox) {
             NavigationStack { AlertsView() }

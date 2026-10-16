@@ -10,6 +10,17 @@ struct TripView: View {
     var body: some View {
         NavigationStack {
             List {
+                Section {
+                    ScreenHeader(title: "Viaggio", subtitle: trip.stops.isEmpty ? "Itinerario" : "\(trip.stops.count) tappe") {
+                        HStack(spacing: 8) {
+                            if !trip.stops.isEmpty { EditButton().font(.geist(15, .medium)) }
+                            HeaderButton(systemImage: "plus") { creating = true }
+                        }
+                    }
+                }
+                .listRowBackground(Color.clear)
+                .listRowInsets(EdgeInsets(top: 0, leading: 4, bottom: 0, trailing: 4))
+
                 if trip.stops.isEmpty {
                     ContentUnavailableView {
                         Label("Nessuna tappa", systemImage: "map")
@@ -36,15 +47,7 @@ struct TripView: View {
                 }
             }
             .themedList()
-            .navigationTitle("Il mio viaggio")
-            .toolbar {
-                ToolbarItem(placement: .topBarTrailing) {
-                    Button { creating = true } label: { Image(systemName: "plus") }
-                }
-                ToolbarItem(placement: .topBarLeading) {
-                    EditButton().disabled(trip.stops.isEmpty)
-                }
-            }
+            .toolbar(.hidden, for: .navigationBar)
             .refreshable {
                 await model.refreshGlobal(force: true)
                 await trip.loadForecasts()
@@ -77,9 +80,9 @@ struct StopSummary: View {
             HStack {
                 Image(systemName: stop.transport.symbol).foregroundStyle(.indigo).frame(width: 26)
                 VStack(alignment: .leading) {
-                    Text(stop.place.name).font(.headline)
+                    Text(stop.place.name).font(.app(.headline))
                     Text("\(Fmt.day(stop.date, in: zone)) · \(stop.nights) \(stop.nights == 1 ? "notte" : "notti")")
-                        .font(.caption).foregroundStyle(.secondary)
+                        .font(.app(.caption)).foregroundStyle(.secondary)
                 }
                 Spacer()
                 if let day { RiskBadge(risk: day.overallRisk) }
@@ -92,22 +95,22 @@ struct StopSummary: View {
                     Text("\(Fmt.temp(day.minTemp))/\(Fmt.temp(day.maxTemp))")
                     Text("raff. \(Fmt.ms(day.maxGust))").foregroundStyle(day.windRisk.color)
                 }
-                .font(.caption)
+                .font(.app(.caption))
                 HStack(spacing: 12) {
                     if let snow = day.snowfall, snow > 0 { Label(Fmt.number(snow, decimals: 1, unit: "cm"), systemImage: "snowflake") }
                     Label(Fmt.number(day.precipitation, decimals: 1, unit: "mm"), systemImage: "drop.fill")
                     Label("\(Fmt.time(day.sunrise, in: zone))–\(Fmt.time(day.sunset, in: zone))", systemImage: "sun.horizon")
                 }
-                .font(.caption2).foregroundStyle(.secondary)
+                .font(.app(.caption2)).foregroundStyle(.secondary)
             } else if forecast != nil {
-                Text(daysUntilText).font(.caption).foregroundStyle(.secondary)
+                Text(daysUntilText).font(.app(.caption)).foregroundStyle(.secondary)
             } else {
                 ProgressView().controlSize(.small)
             }
 
             if stop.transport.caresAboutSea, let marine = trip.marine(for: stop), marine.hasData {
                 HStack {
-                    Text("Mare ora: onde \(Fmt.number(marine.current?.wave_height, decimals: 1, unit: "m"))").font(.caption)
+                    Text("Mare ora: onde \(Fmt.number(marine.current?.wave_height, decimals: 1, unit: "m"))").font(.app(.caption))
                     RiskBadge(risk: marine.seaRisk)
                 }
             }
@@ -115,12 +118,12 @@ struct StopSummary: View {
             ForEach(warnings) { warning in
                 HStack {
                     WarningBadge(color: warning.color)
-                    Text(warning.headline).font(.caption)
+                    Text(warning.headline).font(.app(.caption))
                 }
             }
 
             if !stop.notes.isEmpty {
-                Text(stop.notes).font(.caption).foregroundStyle(.secondary)
+                Text(stop.notes).font(.app(.caption)).foregroundStyle(.secondary)
             }
         }
     }
@@ -145,11 +148,11 @@ struct LegSummary: View {
             HStack {
                 Image(systemName: to.transport.symbol).foregroundStyle(.secondary)
                 Text("Verso \(to.place.name) · ~\(Int(distance)) km in linea d'aria")
-                    .font(.caption.weight(.semibold))
+                    .font(.app(.caption, .semibold))
                 Spacer()
                 if to.transport == .car {
                     Button("Indicazioni") { openDirections() }
-                        .font(.caption)
+                        .font(.app(.caption))
                         .buttonStyle(.bordered)
                 }
             }
@@ -159,7 +162,7 @@ struct LegSummary: View {
                     RouteForecastView(from: from.place, to: to.place, departure: max(to.date, Date()))
                 } label: {
                     Label("Meteo, strade e webcam lungo il percorso", systemImage: "cloud.sun.rain")
-                        .font(.caption.weight(.semibold))
+                        .font(.app(.caption, .semibold))
                 }
             }
 
@@ -169,25 +172,25 @@ struct LegSummary: View {
                 let maxGust = corridor.compactMap(\.Vindhvida).max()
                 let badSegments = corridor.flatMap { network.segments(for: $0) }.filter { ($0.risk ?? .ok) >= .caution }
                 HStack {
-                    Text("Ora lungo il tragitto:").font(.caption)
+                    Text("Ora lungo il tragitto:").font(.app(.caption))
                     RiskBadge(risk: worst)
-                    Text("\(corridor.count) stazioni · raffica max \(Fmt.ms(maxGust))").font(.caption2).foregroundStyle(.secondary)
+                    Text("\(corridor.count) stazioni · raffica max \(Fmt.ms(maxGust))").font(.app(.caption2)).foregroundStyle(.secondary)
                 }
                 ForEach(uniqueSegments(badSegments).prefix(4)) { segment in
                     Text("• \(segment.name): \(segment.conditionItalian)")
-                        .font(.caption2)
+                        .font(.app(.caption2))
                         .foregroundStyle((segment.risk ?? .ok).color)
                 }
                 if Calendar.current.isDateInToday(to.date) || Calendar.current.isDateInTomorrow(to.date) {
-                    Text("Dati attuali: ricontrolla prima di partire.").font(.caption2).foregroundStyle(.secondary)
+                    Text("Dati attuali: ricontrolla prima di partire.").font(.app(.caption2)).foregroundStyle(.secondary)
                 }
             }
 
             if to.transport == .plane {
-                Text("Stato del volo: Voli e traghetti.").font(.caption2).foregroundStyle(.secondary)
+                Text("Stato del volo: Voli e traghetti.").font(.app(.caption2)).foregroundStyle(.secondary)
             }
             if to.transport == .ferry {
-                Text("Con mare grosso i traghetti possono essere cancellati.").font(.caption2).foregroundStyle(.secondary)
+                Text("Con mare grosso i traghetti possono essere cancellati.").font(.app(.caption2)).foregroundStyle(.secondary)
             }
         }
     }

@@ -43,24 +43,24 @@ struct QuakesView: View {
                 ForEach(filtered) { quake in
                     HStack {
                         Text("M\(Fmt.number(quake.magnitude, decimals: 1))")
-                            .font(.headline.monospacedDigit())
+                            .font(.app(.headline).monospacedDigit())
                             .foregroundStyle(quake.risk == .ok ? Color.primary : quake.risk.color)
                             .frame(width: 58, alignment: .leading)
                         VStack(alignment: .leading) {
-                            Text(quake.region).font(.subheadline)
+                            Text(quake.region).font(.app(.subheadline))
                             Text("\(Fmt.dayTime(quake.date, in: .iceland)) · prof. \(Fmt.number(quake.depth, decimals: 1, unit: "km"))\(quake.reviewed ? "" : " · automatico")")
-                                .font(.caption).foregroundStyle(.secondary)
+                                .font(.app(.caption)).foregroundStyle(.secondary)
                         }
                         Spacer()
                         Text("\(Int(Geo.distanceKm(quake.coordinate, model.activePlace.coordinate))) km")
-                            .font(.caption).foregroundStyle(.secondary)
+                            .font(.app(.caption)).foregroundStyle(.secondary)
                     }
                 }
             }
 
             Section("Vulcani ed eruzioni") {
                 Text("Zone di pericolo e chiusure: IMO e Protezione Civile.")
-                    .font(.caption).foregroundStyle(.secondary)
+                    .font(.app(.caption)).foregroundStyle(.secondary)
                 LinkRow(title: "Vedur.is – Terremoti", subtitle: "Mappa ufficiale in tempo reale", url: "https://en.vedur.is/earthquakes-and-volcanism/earthquakes/", systemImage: "waveform.path.ecg")
                 LinkRow(title: "Vedur.is – Vulcani e mappa dei pericoli", subtitle: "Livelli di allerta aviazione e pericolo", url: "https://en.vedur.is/earthquakes-and-volcanism/", systemImage: "mountain.2.fill")
                 LinkRow(title: "Previsione gas vulcanici", subtitle: "Dispersione SO₂ durante le eruzioni", url: "https://en.vedur.is/pollution-and-radiation/volcanic-gas/", systemImage: "aqi.high")

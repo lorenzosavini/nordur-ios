@@ -34,7 +34,7 @@ struct WindyView: View {
                     HStack {
                         ForEach(Self.overlays, id: \.id) { item in
                             Button(item.label) { overlay = item.id }
-                                .font(.caption.weight(.semibold))
+                                .font(.app(.caption, .semibold))
                                 .padding(.horizontal, 10).padding(.vertical, 6)
                                 .background(overlay == item.id ? Color.accentColor : Color.secondary.opacity(0.15), in: Capsule())
                                 .foregroundStyle(overlay == item.id ? Color.white : Color.primary)

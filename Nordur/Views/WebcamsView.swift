@@ -21,9 +21,9 @@ struct WebcamsView: View {
                     HStack {
                         WebcamThumb(site: site, width: 96)
                         VStack(alignment: .leading) {
-                            Text(site.name).font(.subheadline.weight(.semibold))
-                            Text(site.road).font(.caption).foregroundStyle(.secondary)
-                            Text("\(Int(Geo.distanceKm(site.coordinate, here))) km · \(site.images.count) immagini").font(.caption2).foregroundStyle(.secondary)
+                            Text(site.name).font(.app(.subheadline, .semibold))
+                            Text(site.road).font(.app(.caption)).foregroundStyle(.secondary)
+                            Text("\(Int(Geo.distanceKm(site.coordinate, here))) km · \(site.images.count) immagini").font(.app(.caption2)).foregroundStyle(.secondary)
                         }
                     }
                 }
@@ -58,8 +58,8 @@ struct WebcamThumb: View {
             if width >= 140 {
                 LinearGradient(colors: [.clear, .black.opacity(0.75)], startPoint: .center, endPoint: .bottom)
                 VStack(alignment: .leading, spacing: 1) {
-                    Text(site.name).font(.caption.weight(.semibold)).foregroundStyle(.white).lineLimit(1)
-                    Text(site.road).font(.system(size: 10)).foregroundStyle(.white.opacity(0.7)).lineLimit(1)
+                    Text(site.name).font(.app(.caption, .semibold)).foregroundStyle(.white).lineLimit(1)
+                    Text(site.road).font(.geist(10)).foregroundStyle(.white.opacity(0.7)).lineLimit(1)
                 }
                 .padding(8)
             }
@@ -77,7 +77,7 @@ struct WebcamSiteView: View {
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 16) {
-                Text(site.road).font(.subheadline).foregroundStyle(.secondary)
+                Text(site.road).font(.app(.subheadline)).foregroundStyle(.secondary)
                 ForEach(site.images) { image in
                     VStack(alignment: .leading, spacing: 4) {
                         AsyncImage(url: Webcams.fresh(image.url).appending(queryItems: [URLQueryItem(name: "r", value: String(Int(reload.timeIntervalSince1970)))])) { phase in
@@ -88,10 +88,10 @@ struct WebcamSiteView: View {
                             }
                         }
                         .clipShape(RoundedRectangle(cornerRadius: 10))
-                        Text(image.caption).font(.caption).foregroundStyle(.secondary)
+                        Text(image.caption).font(.app(.caption)).foregroundStyle(.secondary)
                     }
                 }
-                Text("Immagini Vegagerðin, aggiornate ogni pochi minuti.").font(.caption2).foregroundStyle(.secondary)
+                Text("Immagini Vegagerðin, aggiornate ogni pochi minuti.").font(.app(.caption2)).foregroundStyle(.secondary)
             }
             .padding()
         }

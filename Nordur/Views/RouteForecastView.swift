@@ -121,7 +121,7 @@ struct RouteForecastView: View {
                 Metric(title: "Arrivo", value: Fmt.time(plan.arrival), systemImage: "flag.checkered")
             }
             HStack {
-                Text("Valutazione complessiva").font(.subheadline)
+                Text("Valutazione complessiva").font(.app(.subheadline))
                 Spacer()
                 RiskBadge(risk: plan.worstRisk)
             }
@@ -131,7 +131,7 @@ struct RouteForecastView: View {
                 Label("Avvia navigazione in Mappe", systemImage: "arrow.triangle.turn.up.right.diamond.fill")
             }
             ForEach(plan.notices, id: \.self) { notice in
-                Label(notice, systemImage: "info.circle").font(.caption)
+                Label(notice, systemImage: "info.circle").font(.app(.caption))
             }
         }
 
@@ -145,22 +145,22 @@ struct RouteForecastView: View {
             ForEach(plan.waypoints) { w in
                 HStack(spacing: 10) {
                     VStack(alignment: .leading) {
-                        Text("km \(Int(w.sample.kmFromStart))").font(.caption.weight(.semibold))
-                        Text(Fmt.time(w.sample.eta)).font(.caption2).foregroundStyle(.secondary)
+                        Text("km \(Int(w.sample.kmFromStart))").font(.app(.caption, .semibold))
+                        Text(Fmt.time(w.sample.eta)).font(.app(.caption2)).foregroundStyle(.secondary)
                     }
                     .frame(width: 56, alignment: .leading)
                     if let h = w.hour {
                         let info = WeatherCode.describe(h.code, isDay: h.isDay)
                         Image(systemName: info.symbol).symbolRenderingMode(.hierarchical).frame(width: 24)
                         VStack(alignment: .leading, spacing: 1) {
-                            Text("\(Fmt.temp(h.temperature)) · \(info.text)").font(.caption)
+                            Text("\(Fmt.temp(h.temperature)) · \(info.text)").font(.app(.caption))
                             Text("vento \(Fmt.ms(h.wind)) raff. \(Fmt.ms(h.gust))" + snowText(h.snowfall))
-                                .font(.caption2).foregroundStyle(h.windRisk.color == .green ? Color.secondary : h.windRisk.color)
+                                .font(.app(.caption2)).foregroundStyle(h.windRisk.color == .green ? Color.secondary : h.windRisk.color)
                         }
                         Spacer()
                         RiskBadge(risk: w.risk)
                     } else {
-                        Text("Previsione non disponibile").font(.caption).foregroundStyle(.secondary)
+                        Text("Previsione non disponibile").font(.app(.caption)).foregroundStyle(.secondary)
                     }
                 }
             }
@@ -171,9 +171,9 @@ struct RouteForecastView: View {
                 ForEach(plan.problemSegments) { segment in
                     HStack {
                         Circle().fill((segment.risk ?? .ok).color).frame(width: 8, height: 8)
-                        Text(segment.name).font(.caption)
+                        Text(segment.name).font(.app(.caption))
                         Spacer()
-                        Text(segment.conditionItalian).font(.caption2).foregroundStyle((segment.risk ?? .ok).color)
+                        Text(segment.conditionItalian).font(.app(.caption2)).foregroundStyle((segment.risk ?? .ok).color)
                     }
                 }
             }
@@ -202,7 +202,7 @@ struct RouteForecastView: View {
         if !plan.fuel.isEmpty {
             Section("Distributori sul percorso (\(plan.fuel.count))") {
                 ForEach(plan.fuel.prefix(10)) { station in
-                    Label("\(station.name)\(station.openingHours.map { " · \($0)" } ?? "")", systemImage: "fuelpump.fill").font(.caption)
+                    Label("\(station.name)\(station.openingHours.map { " · \($0)" } ?? "")", systemImage: "fuelpump.fill").font(.app(.caption))
                 }
             }
         }

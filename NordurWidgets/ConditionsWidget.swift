@@ -179,12 +179,12 @@ struct ConditionsWidgetView: View {
             .gaugeStyle(.accessoryCircular)
         case .accessoryRectangular:
             VStack(alignment: .leading, spacing: 1) {
-                Text("\(entry.placeName) \(Fmt.temp(entry.temperature))").font(.headline).widgetAccentable()
-                Text("Vento \(Fmt.ms(entry.wind)) · raff. \(Fmt.ms(entry.gust))").font(.caption)
+                Text("\(entry.placeName) \(Fmt.temp(entry.temperature))").font(.app(.headline)).widgetAccentable()
+                Text("Vento \(Fmt.ms(entry.wind)) · raff. \(Fmt.ms(entry.gust))").font(.app(.caption))
                 if let warning = entry.warning {
-                    Text(warning.color.label).font(.caption2)
+                    Text(warning.color.label).font(.app(.caption2))
                 } else {
-                    Text("Nessuna allerta").font(.caption2)
+                    Text("Nessuna allerta").font(.app(.caption2))
                 }
             }
         case .accessoryInline:
@@ -197,10 +197,10 @@ struct ConditionsWidgetView: View {
                     warningBlock
                     if let score = entry.auroraScore {
                         Label("Aurora \(score)/100\(entry.auroraTime.map { " · \(Fmt.time($0, in: entry.zone))" } ?? "")", systemImage: "moon.stars.fill")
-                            .font(.caption).foregroundStyle(.secondary)
+                            .font(.app(.caption)).foregroundStyle(.secondary)
                     }
                     Label("Raffica max 12 h: \(Fmt.ms(entry.maxGust12h))", systemImage: "wind")
-                        .font(.caption)
+                        .font(.app(.caption))
                         .foregroundStyle(Risk.wind(mean: nil, gust: entry.maxGust12h).color)
                 }
             }
@@ -215,18 +215,18 @@ struct ConditionsWidgetView: View {
     private var mainBlock: some View {
         let info = WeatherCode.describe(entry.code, isDay: entry.isDay)
         return VStack(alignment: .leading, spacing: 4) {
-            Text(entry.placeName).font(.caption.weight(.semibold)).lineLimit(1)
+            Text(entry.placeName).font(.app(.caption, .semibold)).lineLimit(1)
             HStack {
                 Image(systemName: info.symbol).symbolRenderingMode(.hierarchical)
-                Text(Fmt.temp(entry.temperature)).font(.title.weight(.semibold))
+                Text(Fmt.temp(entry.temperature)).font(.app(.title, .semibold))
             }
             HStack(spacing: 3) {
                 WidgetWindArrow(degrees: entry.windDirection)
                 Text("\(Int((entry.wind ?? 0).rounded()))/\(Int((entry.gust ?? 0).rounded())) m/s")
-                    .font(.caption.weight(.semibold))
+                    .font(.app(.caption, .semibold))
                     .foregroundStyle(entry.windRisk == .ok ? Color.primary : entry.windRisk.color)
             }
-            Text("agg. \(Fmt.time(entry.date))").font(.caption2).foregroundStyle(.secondary)
+            Text("agg. \(Fmt.time(entry.date))").font(.app(.caption2)).foregroundStyle(.secondary)
         }
     }
 
@@ -234,10 +234,10 @@ struct ConditionsWidgetView: View {
         if let warning = entry.warning {
             HStack(spacing: 4) {
                 Circle().fill(warning.color.color).frame(width: 8, height: 8)
-                Text(warning.headline).font(.caption2).lineLimit(2)
+                Text(warning.headline).font(.app(.caption2)).lineLimit(2)
             }
         } else {
-            Label("Nessuna allerta", systemImage: "checkmark.seal").font(.caption2).foregroundStyle(.green)
+            Label("Nessuna allerta", systemImage: "checkmark.seal").font(.app(.caption2)).foregroundStyle(.green)
         }
     }
 }
@@ -246,7 +246,7 @@ struct WidgetWindArrow: View {
     let degrees: Double?
     var body: some View {
         Image(systemName: "location.north.fill")
-            .font(.caption2)
+            .font(.app(.caption2))
             .rotationEffect(.degrees((degrees ?? 0) + 180))
     }
 }
@@ -270,7 +270,7 @@ struct AuroraWidgetView: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 6) {
-            Label("Aurora", systemImage: "moon.stars.fill").font(.caption.weight(.semibold)).foregroundStyle(.secondary)
+            Label("Aurora", systemImage: "moon.stars.fill").font(.app(.caption, .semibold)).foregroundStyle(.secondary)
             if let score = entry.auroraScore {
                 Gauge(value: Double(score), in: 0...100) {
                     Text("")
@@ -280,12 +280,12 @@ struct AuroraWidgetView: View {
                 .gaugeStyle(.accessoryCircular)
                 
                 if let time = entry.auroraTime {
-                    Text("Meglio verso le \(Fmt.time(time, in: entry.zone))").font(.caption2)
+                    Text("Meglio verso le \(Fmt.time(time, in: entry.zone))").font(.app(.caption2))
                 }
             } else {
-                Text("Niente buio stanotte").font(.caption2).foregroundStyle(.secondary)
+                Text("Niente buio stanotte").font(.app(.caption2)).foregroundStyle(.secondary)
             }
-            Text(entry.placeName).font(.caption2).foregroundStyle(.secondary).lineLimit(1)
+            Text(entry.placeName).font(.app(.caption2)).foregroundStyle(.secondary).lineLimit(1)
         }
     }
 }

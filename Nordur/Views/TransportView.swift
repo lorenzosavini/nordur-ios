@@ -31,8 +31,8 @@ struct TransportView: View {
                 if let fetched = model.ferry {
                     if let notice = fetched.value {
                         VStack(alignment: .leading, spacing: 6) {
-                            Label("Herjólfur – Vestmannaeyjar", systemImage: "ferry.fill").font(.subheadline.weight(.semibold))
-                            Text(notice.text).font(.caption)
+                            Label("Herjólfur – Vestmannaeyjar", systemImage: "ferry.fill").font(.app(.subheadline, .semibold))
+                            Text(notice.text).font(.app(.caption))
                             FreshnessLabel(date: fetched.date, isStale: fetched.isStale, source: "herjolfur.is")
                         }
                     } else {
@@ -46,7 +46,7 @@ struct TransportView: View {
                         if on { s.enabled.insert(.ferry) } else { s.enabled.remove(.ferry) }
                         alerts.update(s)
                     }))
-                .font(.caption)
+                .font(.app(.caption))
                 LinkRow(title: "Herjólfur – orari e prenotazioni", subtitle: "Landeyjahöfn / Þorlákshöfn ↔ Vestmannaeyjar", url: TransportService.herjolfurPage, systemImage: "ferry")
                 LinkRow(title: "Baldur (Sæferðir)", subtitle: "Stykkishólmur – Flatey – Brjánslækur", url: "https://www.saeferdir.is/en/", systemImage: "ferry.fill")
                 LinkRow(title: "Smyril Line", subtitle: "Seyðisfjörður – Fær Øer – Danimarca", url: "https://www.smyrilline.com/", systemImage: "ferry")
@@ -59,7 +59,7 @@ struct TransportView: View {
                     ForEach(Direction.allCases) { Text($0.rawValue).tag($0) }
                 }
                 .pickerStyle(.segmented)
-                Toggle("Mostra anche i voli già passati", isOn: $showPast).font(.caption)
+                Toggle("Mostra anche i voli già passati", isOn: $showPast).font(.app(.caption))
                 if let fetched = model.flights {
                     FreshnessLabel(date: fetched.date, isStale: fetched.isStale, source: "kefairport.com")
                 }
@@ -100,14 +100,14 @@ struct FlightRow: View {
         HStack {
             VStack(alignment: .leading, spacing: 2) {
                 HStack {
-                    Text(flight.time ?? "–").font(.subheadline.monospacedDigit().weight(.semibold))
-                    Text(flight.flightNumber).font(.subheadline)
-                    Text(flight.airline ?? "").font(.caption).foregroundStyle(.secondary)
+                    Text(flight.time ?? "–").font(.app(.subheadline, .semibold).monospacedDigit())
+                    Text(flight.flightNumber).font(.app(.subheadline))
+                    Text(flight.airline ?? "").font(.app(.caption)).foregroundStyle(.secondary)
                 }
-                Text("\(flight.arrival ? "da" : "per") \(flight.destination ?? "") (\(flight.airportCode ?? ""))").font(.caption)
+                Text("\(flight.arrival ? "da" : "per") \(flight.destination ?? "") (\(flight.airportCode ?? ""))").font(.app(.caption))
                 HStack {
-                    Text(info.text).font(.caption2.weight(.semibold)).foregroundStyle(info.risk == .ok ? Color.secondary : info.risk.color)
-                    if let gate = flight.gate, !gate.isEmpty, !flight.arrival { Text("Gate \(gate)").font(.caption2).foregroundStyle(.secondary) }
+                    Text(info.text).font(.app(.caption2, .semibold)).foregroundStyle(info.risk == .ok ? Color.secondary : info.risk.color)
+                    if let gate = flight.gate, !gate.isEmpty, !flight.arrival { Text("Gate \(gate)").font(.app(.caption2)).foregroundStyle(.secondary) }
                 }
             }
             Spacer()

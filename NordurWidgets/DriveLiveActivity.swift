@@ -13,24 +13,24 @@ struct DriveLiveActivity: Widget {
             DynamicIsland {
                 DynamicIslandExpandedRegion(.leading) {
                     VStack(alignment: .leading) {
-                        Text(Fmt.number(context.state.km, decimals: 1, unit: "km")).font(.title3.weight(.bold)).monospacedDigit()
-                        Text(Fmt.clock(context.state.elapsedSeconds)).font(.caption).foregroundStyle(.secondary)
+                        Text(Fmt.number(context.state.km, decimals: 1, unit: "km")).font(.app(.title3, .bold)).monospacedDigit()
+                        Text(Fmt.clock(context.state.elapsedSeconds)).font(.app(.caption)).foregroundStyle(.secondary)
                     }
                 }
                 DynamicIslandExpandedRegion(.trailing) {
                     VStack(alignment: .trailing) {
-                        Text("\(Int(context.state.speedKmh)) km/h").font(.title3.weight(.semibold)).monospacedDigit()
-                        Text("media \(Int(context.state.averageKmh))").font(.caption).foregroundStyle(.secondary)
+                        Text("\(Int(context.state.speedKmh)) km/h").font(.app(.title3, .semibold)).monospacedDigit()
+                        Text("media \(Int(context.state.averageKmh))").font(.app(.caption)).foregroundStyle(.secondary)
                     }
                 }
                 DynamicIslandExpandedRegion(.bottom) {
                     if let alert = context.state.alertTitle {
                         Label(alert, systemImage: "exclamationmark.triangle.fill")
-                            .font(.caption)
+                            .font(.app(.caption))
                             .foregroundStyle((Risk(rawValue: context.state.alertSeverity) ?? .caution).color)
                             .lineLimit(2)
                     } else if let odometer = context.state.odometer {
-                        Text("Contachilometri \(Fmt.number(odometer, decimals: 1, unit: "km"))").font(.caption)
+                        Text("Contachilometri \(Fmt.number(odometer, decimals: 1, unit: "km"))").font(.app(.caption))
                     }
                 }
             } compactLeading: {
@@ -54,28 +54,28 @@ struct LockScreenDriveView: View {
         VStack(alignment: .leading, spacing: 8) {
             HStack {
                 Label(state.paused ? "In pausa" : "Norður · in viaggio", systemImage: state.paused ? "pause.circle.fill" : "car.fill")
-                    .font(.caption.weight(.semibold))
+                    .font(.app(.caption, .semibold))
                     .foregroundStyle(.white.opacity(0.8))
                 Spacer()
-                Text(start, style: .timer).font(.caption.monospacedDigit()).foregroundStyle(.white.opacity(0.8))
+                Text(start, style: .timer).font(.app(.caption).monospacedDigit()).foregroundStyle(.white.opacity(0.8))
             }
             HStack(alignment: .firstTextBaseline) {
-                Text(Fmt.number(state.km, decimals: 1)).font(.system(size: 36, weight: .bold, design: .rounded)).monospacedDigit()
+                Text(Fmt.number(state.km, decimals: 1)).font(.metric(36, .bold))
                 Text("km").foregroundStyle(.white.opacity(0.7))
                 Spacer()
                 VStack(alignment: .trailing) {
-                    Text("\(Int(state.speedKmh)) km/h").font(.title3.weight(.semibold)).monospacedDigit()
-                    Text("media \(Int(state.averageKmh)) km/h").font(.caption2).foregroundStyle(.white.opacity(0.7))
+                    Text("\(Int(state.speedKmh)) km/h").font(.app(.title3, .semibold)).monospacedDigit()
+                    Text("media \(Int(state.averageKmh)) km/h").font(.app(.caption2)).foregroundStyle(.white.opacity(0.7))
                 }
             }
             .foregroundStyle(.white)
             if let alert = state.alertTitle {
                 Label(alert, systemImage: "exclamationmark.triangle.fill")
-                    .font(.caption)
+                    .font(.app(.caption))
                     .foregroundStyle((Risk(rawValue: state.alertSeverity) ?? .caution).color)
                     .lineLimit(2)
             } else if let odometer = state.odometer {
-                Text("Contachilometri \(Fmt.number(odometer, decimals: 1, unit: "km"))").font(.caption).foregroundStyle(.white.opacity(0.8))
+                Text("Contachilometri \(Fmt.number(odometer, decimals: 1, unit: "km"))").font(.app(.caption)).foregroundStyle(.white.opacity(0.8))
             }
         }
     }

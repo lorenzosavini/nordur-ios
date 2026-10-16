@@ -26,10 +26,10 @@ struct AuroraLiveView: View {
                         .clipShape(RoundedRectangle(cornerRadius: 12))
                     legend
                     Text("Di giorno l'ovale si trova sul lato notturno della Terra.")
-                        .font(.caption2).foregroundStyle(.secondary)
+                        .font(.app(.caption2)).foregroundStyle(.secondary)
                     if let ovation = model.ovation {
                         Text("Previsione OVATION per le \(Fmt.time(ovation.value.forecastTime, in: .iceland)) (30–90 minuti avanti). Kp attuale \(Fmt.number(model.kp.flatMap { AuroraCalc.kp(at: Date(), in: $0.value) }, decimals: 1)).")
-                            .font(.caption2).foregroundStyle(.secondary)
+                            .font(.app(.caption2)).foregroundStyle(.secondary)
                         FreshnessLabel(date: ovation.date, isStale: ovation.isStale, source: "NOAA SWPC")
                     }
                     ErrorNote(message: model.errors[.ovation])
@@ -54,7 +54,7 @@ struct AuroraLiveView: View {
                             Button { playing.toggle() } label: { Image(systemName: playing ? "pause.fill" : "play.fill") }
                             Slider(value: Binding(get: { Double(index) }, set: { index = Int($0.rounded()); playing = false }),
                                    in: 0...Double(max(frames.count - 1, 1)), step: 1)
-                            Text(Fmt.time(frame.time, in: .iceland)).font(.caption.monospacedDigit())
+                            Text(Fmt.time(frame.time, in: .iceland)).font(.app(.caption).monospacedDigit())
                         }
                     }
                 }
@@ -90,12 +90,12 @@ struct AuroraLiveView: View {
     @ViewBuilder private var legend: some View {
         let ramp = WeatherLayer.aurora.ramp
         HStack(spacing: 6) {
-            Text("0%").font(.caption2)
+            Text("0%").font(.app(.caption2))
             LinearGradient(stops: ramp.map { .init(color: Color(red: $0.r, green: $0.g, blue: $0.b).opacity(max($0.a, 0.35)), location: $0.value / 85) },
                            startPoint: .leading, endPoint: .trailing)
                 .frame(height: 8)
                 .clipShape(Capsule())
-            Text("85%+").font(.caption2)
+            Text("85%+").font(.app(.caption2))
         }
     }
 

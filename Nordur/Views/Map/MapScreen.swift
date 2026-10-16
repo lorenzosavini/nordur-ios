@@ -97,11 +97,12 @@ struct MapScreen: View {
                             playing = false
                         } label: {
                             Label(item.label, systemImage: item.symbol)
-                                .font(.caption.weight(.semibold))
+                                .font(.app(.caption, .semibold))
                                 .padding(.horizontal, 10)
                                 .padding(.vertical, 7)
-                                .background(layer == item ? Color.accentColor : Color(.systemBackground).opacity(0.9), in: Capsule())
-                                .foregroundStyle(layer == item ? Color.white : Color.primary)
+                                .background(layer == item ? Theme.text : Theme.surface.opacity(0.95), in: Capsule())
+                                .foregroundStyle(layer == item ? Theme.bg : Theme.text)
+                                .overlay(Capsule().strokeBorder(Theme.hairline))
                         }
                         .buttonStyle(.plain)
                     }
@@ -120,13 +121,13 @@ struct MapScreen: View {
                     Toggle("Animazione particelle vento", systemImage: "wind", isOn: $showParticles)
                 } label: {
                     Label("Livelli", systemImage: "square.3.layers.3d")
-                        .font(.caption.weight(.semibold))
+                        .font(.app(.caption, .semibold))
                         .padding(.horizontal, 10).padding(.vertical, 7)
                         .background(.regularMaterial, in: Capsule())
                 }
                 Button { showWindy = true } label: {
                     Label("Windy", systemImage: "wind")
-                        .font(.caption.weight(.semibold))
+                        .font(.app(.caption, .semibold))
                         .padding(.horizontal, 10).padding(.vertical, 7)
                         .background(.regularMaterial, in: Capsule())
                 }
@@ -165,19 +166,19 @@ struct MapScreen: View {
                 GeometryReader { geo in
                     ForEach(layer.legendValues, id: \.self) { value in
                         Text(Fmt.number(value, decimals: value < 1 && value > 0 ? 1 : 0))
-                            .font(.caption2)
+                            .font(.app(.caption2))
                             .position(x: geo.size.width * (value - minV) / (maxV - minV), y: 6)
                     }
                 }
                 .frame(height: 12)
                 Text("\(layer.label), \(layer.unit)")
-                    .font(.caption2).foregroundStyle(.secondary)
+                    .font(.app(.caption2)).foregroundStyle(.secondary)
             }
         } else if layer == .radar {
             Text("Radar RainViewer, ultime 2 ore. Copertura parziale.")
-                .font(.caption2).foregroundStyle(.secondary)
+                .font(.app(.caption2)).foregroundStyle(.secondary)
         } else {
-            Text("Tocca la mappa per i valori in un punto").font(.caption2).foregroundStyle(.secondary)
+            Text("Tocca la mappa per i valori in un punto").font(.app(.caption2)).foregroundStyle(.secondary)
         }
     }
 
@@ -186,11 +187,11 @@ struct MapScreen: View {
             HStack {
                 Button { playing.toggle() } label: { Image(systemName: playing ? "pause.fill" : "play.fill") }
                 VStack(alignment: .leading, spacing: 0) {
-                    Text(Fmt.dayTime(grid.times[hourIndex], in: .iceland)).font(.caption.weight(.semibold))
+                    Text(Fmt.dayTime(grid.times[hourIndex], in: .iceland)).font(.app(.caption, .semibold))
                     Slider(value: Binding(get: { Double(hourIndex) }, set: { hour = $0.rounded() }),
                            in: 0...Double(grid.hourCount - 1), step: 1)
                 }
-                Button("Adesso") { hour = -1; playing = false }.font(.caption)
+                Button("Adesso") { hour = -1; playing = false }.font(.app(.caption))
             }
             if let fetched = model.weatherGrid {
                 FreshnessLabel(date: fetched.date, isStale: fetched.isStale, source: "Open-Meteo")
@@ -200,13 +201,13 @@ struct MapScreen: View {
                 if model.errors[.grid] == nil { ProgressView() }
                 ErrorNote(message: model.errors[.grid] ?? "Carico la griglia meteo…")
                 Spacer()
-                Button("Riprova") { Task { await model.refreshMapData(force: true) } }.font(.caption)
+                Button("Riprova") { Task { await model.refreshMapData(force: true) } }.font(.app(.caption))
             }
         } else if layer == .radar, let frame = radarFrame {
             HStack {
                 Button { playing.toggle() } label: { Image(systemName: playing ? "pause.fill" : "play.fill") }
                 VStack(alignment: .leading, spacing: 0) {
-                    Text("\(Fmt.dayTime(frame.time))\(frame.time > Date() ? " (previsione)" : "")").font(.caption.weight(.semibold))
+                    Text("\(Fmt.dayTime(frame.time))\(frame.time > Date() ? " (previsione)" : "")").font(.app(.caption, .semibold))
                     Slider(value: Binding(get: { Double(model.radarFrames.firstIndex(of: frame) ?? 0) }, set: { radarIndex = $0.rounded() }),
                            in: 0...Double(max(model.radarFrames.count - 1, 1)), step: 1)
                 }
@@ -215,7 +216,7 @@ struct MapScreen: View {
             HStack {
                 Image(systemName: "moon.stars.fill").foregroundStyle(.secondary)
                 Text("Ovale OVATION previsto per le \(Fmt.time(model.ovation?.value.forecastTime, in: .iceland)) · Kp \(Fmt.number(model.kp.flatMap { AuroraCalc.kp(at: Date(), in: $0.value) }, decimals: 1))")
-                    .font(.caption)
+                    .font(.app(.caption))
                 Spacer()
             }
         }
@@ -433,9 +434,9 @@ struct ProbeCard: View {
         let nearest = model.roads?.value.nearestStations(to: coordinate, count: 1).first
         VStack(alignment: .leading, spacing: 6) {
             HStack {
-                Text(String(format: "%.2f°N %.2f°O", coordinate.lat, -coordinate.lon)).font(.caption.weight(.semibold))
+                Text(String(format: "%.2f°N %.2f°O", coordinate.lat, -coordinate.lon)).font(.app(.caption, .semibold))
                 if let grid, grid.times.indices.contains(hour) {
-                    Text("· \(Fmt.dayTime(grid.times[hour], in: .iceland))").font(.caption).foregroundStyle(.secondary)
+                    Text("· \(Fmt.dayTime(grid.times[hour], in: .iceland))").font(.app(.caption)).foregroundStyle(.secondary)
                 }
                 Spacer()
                 Button(action: close) { Image(systemName: "xmark.circle.fill").foregroundStyle(.secondary) }
@@ -452,18 +453,18 @@ struct ProbeCard: View {
                     Metric(title: "Nuvole", value: Fmt.percent(v(.cloud)))
                 }
             } else {
-                Text("Fuori dalla griglia meteo dell'Islanda.").font(.caption).foregroundStyle(.secondary)
+                Text("Fuori dalla griglia meteo dell'Islanda.").font(.app(.caption)).foregroundStyle(.secondary)
             }
             if let ovation = model.ovation?.value {
                 Text("Aurora adesso: \(Fmt.percent(ovation.interpolated(lat: coordinate.lat, lon: coordinate.lon)))")
-                    .font(.caption).foregroundStyle(.secondary)
+                    .font(.app(.caption)).foregroundStyle(.secondary)
             }
             if let nearest {
                 Text("Stazione \(nearest.station.name) (\(Int(nearest.distance)) km): \(Fmt.ms(nearest.station.Vindhradi)) / raff. \(Fmt.ms(nearest.station.Vindhvida)), asfalto \(Fmt.temp(nearest.station.Veghiti))")
-                    .font(.caption2).foregroundStyle(.secondary)
+                    .font(.app(.caption2)).foregroundStyle(.secondary)
             }
             ForEach(warnings.prefix(2)) { warning in
-                HStack { WarningBadge(color: warning.color); Text(warning.headline).font(.caption2) }
+                HStack { WarningBadge(color: warning.color); Text(warning.headline).font(.app(.caption2)) }
             }
         }
         .padding(12)

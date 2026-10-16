@@ -60,7 +60,7 @@ struct InfoView: View {
                         Text("• Fai rifornimento appena puoi nell'Est e nei fiordi occidentali: i distributori sono distanti.")
                         Text("• In inverno le giornate sono brevi: pianifica le tratte con la luce.")
                     }
-                    .font(.caption)
+                    .font(.app(.caption))
                 }
 
                 Section("Stato delle fonti") {
@@ -69,15 +69,15 @@ struct InfoView: View {
                             Text(source.rawValue)
                             Spacer()
                             if let error = model.errors[source] {
-                                Text(error).font(.caption2).foregroundStyle(.red).lineLimit(1)
+                                Text(error).font(.app(.caption2)).foregroundStyle(.red).lineLimit(1)
                             } else {
                                 Image(systemName: "checkmark.circle.fill").foregroundStyle(.green)
                             }
                         }
-                        .font(.caption)
+                        .font(.app(.caption))
                     }
                     Text("Veðurstofa Íslands (vedur.is), Vegagerðin (umferdin.is), Open-Meteo, NOAA Space Weather Prediction Center, SafeTravel.is. L'app aggrega dati pubblici: in caso di dubbio prevalgono le fonti ufficiali.")
-                        .font(.caption2).foregroundStyle(.secondary)
+                        .font(.app(.caption2)).foregroundStyle(.secondary)
                 }
             }
             .themedList()

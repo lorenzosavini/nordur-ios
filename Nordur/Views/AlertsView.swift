@@ -19,9 +19,9 @@ struct AlertsView: View {
                     Image(systemName: alerts.notificationsAllowed ? "bell.badge.fill" : "bell.slash.fill")
                         .foregroundStyle(alerts.notificationsAllowed ? Color.green : Color.red)
                     VStack(alignment: .leading) {
-                        Text(alerts.notificationsAllowed ? "Notifiche attive" : "Notifiche disattivate").font(.subheadline.weight(.semibold))
+                        Text(alerts.notificationsAllowed ? "Notifiche attive" : "Notifiche disattivate").font(.app(.subheadline, .semibold))
                         if let last = alerts.lastCheck {
-                            Text("Ultimo controllo \(Fmt.relative(last))").font(.caption).foregroundStyle(.secondary)
+                            Text("Ultimo controllo \(Fmt.relative(last))").font(.app(.caption)).foregroundStyle(.secondary)
                         }
                     }
                     Spacer()
@@ -90,7 +90,7 @@ struct AlertsView: View {
             filter = category
         } label: {
             Label(title, systemImage: category?.symbol ?? "tray.full")
-                .font(.caption)
+                .font(.app(.caption))
                 .padding(.horizontal, 10)
                 .padding(.vertical, 6)
                 .background(filter == category ? Color.accentColor.opacity(0.25) : Color.secondary.opacity(0.12), in: Capsule())
@@ -106,15 +106,15 @@ struct AlertRow: View {
         HStack(alignment: .top, spacing: 10) {
             Image(systemName: event.category.symbol)
                 .foregroundStyle(event.risk.color)
-                .font(.title3)
+                .font(.app(.title3))
                 .frame(width: 28)
             VStack(alignment: .leading, spacing: 3) {
                 HStack {
-                    Text(event.title).font(.subheadline.weight(event.read ? .regular : .semibold))
+                    Text(event.title).font(.app(.subheadline, event.read ? .regular : .semibold))
                     if !event.read { Circle().fill(Color.accentColor).frame(width: 7, height: 7) }
                 }
-                Text(event.body).font(.caption).foregroundStyle(.secondary)
-                Text(Fmt.dayTime(event.date)).font(.caption2).foregroundStyle(.tertiary)
+                Text(event.body).font(.app(.caption)).foregroundStyle(.secondary)
+                Text(Fmt.dayTime(event.date)).font(.app(.caption2)).foregroundStyle(.tertiary)
             }
         }
     }
@@ -155,7 +155,7 @@ struct AlertSettingsView: View {
                 Toggle("Controlli in background anche ad app chiusa", isOn: $draft.backgroundLocation)
                 if draft.backgroundLocation && alerts.backgroundLocationStatus != .authorizedAlways {
                     Label("Serve l'accesso alla posizione «Sempre»: Impostazioni › Norður › Posizione.", systemImage: "location.slash")
-                        .font(.caption).foregroundStyle(.orange)
+                        .font(.app(.caption)).foregroundStyle(.orange)
                     if let url = URL(string: UIApplication.openSettingsURLString) {
                         Link("Apri Impostazioni", destination: url)
                     }
