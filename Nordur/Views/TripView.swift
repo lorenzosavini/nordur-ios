@@ -153,6 +153,15 @@ struct LegSummary: View {
                 }
             }
 
+            if to.transport == .car || to.transport == .bus {
+                NavigationLink {
+                    RouteForecastView(from: from.place, to: to.place, departure: max(to.date, Date()))
+                } label: {
+                    Label("Meteo, strade e webcam lungo il percorso", systemImage: "cloud.sun.rain")
+                        .font(.caption.weight(.semibold))
+                }
+            }
+
             if to.transport == .car || to.transport == .bus, let network = model.roads?.value {
                 let corridor = network.corridor(from: from.place.coordinate, to: to.place.coordinate)
                 let worst = corridor.map { network.worstRisk(of: $0) }.max() ?? .ok

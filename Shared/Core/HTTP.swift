@@ -92,6 +92,13 @@ enum HTTP {
     }
 }
 
+/// Deterministic (per-launch stable) hash for cache keys; `hashValue` is randomized.
+func stableHash(_ text: String) -> String {
+    var hash: UInt64 = 5381
+    for byte in text.utf8 { hash = (hash &* 33) ^ UInt64(byte) }
+    return String(hash, radix: 36)
+}
+
 /// Wraps an async throwing call so several can run in parallel with `async let`
 /// and fail independently.
 func attempt<T>(_ operation: @escaping () async throws -> T) async -> Result<T, Error> {

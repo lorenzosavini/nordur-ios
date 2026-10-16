@@ -12,6 +12,11 @@ struct MapScreen: View {
     @AppStorage("map.roads") private var showRoads = true
     @AppStorage("map.quakes") private var showQuakes = false
     @AppStorage("map.trip") private var showTrip = true
+    @AppStorage("map.webcams") private var showWebcams = false
+    @AppStorage("map.fuel") private var showFuel = false
+    @AppStorage("map.chargers") private var showChargers = false
+    @Environment(DriveRecorder.self) private var recorder
+    @State private var selectedWebcam: WebcamSite?
     @State private var selectedStation: RoadStation?
     @State private var selectedWarning: WeatherWarning?
 
@@ -59,6 +64,34 @@ struct MapScreen: View {
                     }
                 }
 
+                if showWebcams {
+                    ForEach(model.webcams?.value ?? []) { site in
+                        Annotation(site.name, coordinate: site.coordinate.clCoordinate) {
+                            Button { selectedWebcam = site } label: {
+                                Image(systemName: "video.fill")
+                                    .font(.caption2)
+                                    .foregroundStyle(.white)
+                                    .padding(5)
+                                    .background(Color.indigo, in: Circle())
+                            }
+                        }
+                        .annotationTitles(.hidden)
+                    }
+                }
+
+                if showFuel || showChargers {
+                    ForEach((model.fuel?.value ?? []).filter { ($0.kind == .fuel && showFuel) || ($0.kind == .charger && showChargers) }) { station in
+                        Marker(station.name, systemImage: station.kind == .fuel ? "fuelpump.fill" : "bolt.car.fill",
+                               coordinate: station.coordinate.clCoordinate)
+                            .tint(station.kind == .fuel ? .orange : .green)
+                    }
+                }
+
+                if recorder.isRecording && recorder.recentPoints.count >= 2 {
+                    MapPolyline(coordinates: recorder.recentPoints.map(\.coordinate.clCoordinate))
+                        .stroke(.red, lineWidth: 4)
+                }
+
                 if showTrip {
                     ForEach(Array(trip.stops.enumerated()), id: \.element.id) { item in
                         Marker("\(item.offset + 1). \(item.element.place.name)", systemImage: item.element.transport.symbol,
@@ -87,10 +120,17 @@ struct MapScreen: View {
                         Toggle("Stazioni stradali", systemImage: "road.lanes", isOn: $showRoads)
                         Toggle("Terremoti 48 h", systemImage: "waveform.path.ecg", isOn: $showQuakes)
                         Toggle("Il mio viaggio", systemImage: "point.topleft.down.to.point.bottomright.curvepath", isOn: $showTrip)
+                        Toggle("Webcam", systemImage: "video", isOn: $showWebcams)
+                        Toggle("Distributori", systemImage: "fuelpump", isOn: $showFuel)
+                        Toggle("Ricarica EV", systemImage: "bolt.car", isOn: $showChargers)
                     } label: {
                         Image(systemName: "square.3.layers.3d")
                     }
                 }
+            }
+            .sheet(item: $selectedWebcam) { site in
+                NavigationStack { WebcamSiteView(site: site) }
+                    .presentationDetents([.medium, .large])
             }
             .sheet(item: $selectedStation) { station in
                 NavigationStack {

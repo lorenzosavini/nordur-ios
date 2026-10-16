@@ -33,6 +33,10 @@ struct RoadsView: View {
                 ProgressView()
             }
 
+            Section {
+                NavigationLink { WebcamsView() } label: { Label("Webcam stradali (\(model.webcams?.value.count ?? 0) siti)", systemImage: "video") }
+            }
+
             Section("Ufficiale") {
                 LinkRow(title: "Umferdin.is – mappa strade in tempo reale", subtitle: "Chiusure, condizioni, webcam", url: "https://umferdin.is/en", systemImage: "map")
                 LinkRow(title: "Road.is – Vegagerðin", subtitle: "Info stradali, strade F nelle Highlands", url: "https://www.road.is/", systemImage: "road.lanes")

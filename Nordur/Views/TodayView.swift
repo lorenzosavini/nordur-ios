@@ -2,17 +2,24 @@ import SwiftUI
 
 struct TodayView: View {
     @Environment(AppModel.self) private var model
+    @Environment(AlertCenter.self) private var alerts
+    @Environment(DriveRecorder.self) private var recorder
+    @State private var showInfo = false
 
     var body: some View {
         NavigationStack {
             ScrollView {
                 VStack(spacing: 14) {
                     PlaceHeader()
+                    latestAlertBanner
                     warningsSection
                     currentSection
                     drivingSection
                     auroraSection
                     roadsSection
+                    webcamsSection
+                    transportSection
+                    fuelSection
                     seaSection
                     quakesSection
                     newsSection
@@ -22,10 +29,25 @@ struct TodayView: View {
             }
             .background(Color(.systemGroupedBackground))
             .navigationTitle("Norður")
-            .refreshable { await model.refreshAll() }
+            .refreshable {
+                await model.refreshAll()
+                await alerts.check()
+            }
+            .sheet(isPresented: $showInfo) { InfoView() }
             .toolbar {
+                ToolbarItem(placement: .topBarLeading) {
+                    Button { showInfo = true } label: {
+                        Label("SOS", systemImage: "sos.circle.fill").foregroundStyle(.red)
+                    }
+                }
                 ToolbarItem(placement: .topBarTrailing) {
-                    if model.isRefreshing { ProgressView() }
+                    HStack {
+                        if model.isRefreshing { ProgressView() }
+                        Button { alerts.openInbox = true } label: {
+                            Image(systemName: alerts.unreadCount > 0 ? "bell.badge.fill" : "bell")
+                                .symbolRenderingMode(.multicolor)
+                        }
+                    }
                 }
             }
         }
@@ -205,6 +227,104 @@ struct TodayView: View {
             }
         }
         .buttonStyle(.plain)
+    }
+
+    // MARK: Live drive / latest alert
+
+    @ViewBuilder private var latestAlertBanner: some View {
+        if let latest = alerts.latest, !latest.read, Date().timeIntervalSince(latest.date) < 6 * 3600 {
+            Button { alerts.openInbox = true } label: {
+                AlertRow(event: latest)
+                    .padding()
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .background(latest.risk.color.opacity(0.15), in: RoundedRectangle(cornerRadius: 18, style: .continuous))
+            }
+            .buttonStyle(.plain)
+        }
+        if recorder.isRecording, let session = recorder.session {
+            Label("Registrazione percorso: \(Fmt.number(session.stats.km, decimals: 1, unit: "km")) · \(Int(recorder.speedKmh)) km/h",
+                  systemImage: "record.circle")
+                .font(.subheadline.weight(.semibold))
+                .foregroundStyle(.red)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .padding()
+                .background(.regularMaterial, in: RoundedRectangle(cornerRadius: 18, style: .continuous))
+        }
+    }
+
+    // MARK: Webcams
+
+    @ViewBuilder private var webcamsSection: some View {
+        let near = Webcams.nearest(model.webcams?.value ?? [], to: model.activePlace.coordinate, within: 60, limit: 6)
+        if !near.isEmpty {
+            Card(title: "Webcam vicine", systemImage: "video.fill", tint: .indigo) {
+                ScrollView(.horizontal, showsIndicators: false) {
+                    HStack {
+                        ForEach(near) { site in
+                            NavigationLink { WebcamSiteView(site: site) } label: { WebcamThumb(site: site) }
+                                .buttonStyle(.plain)
+                        }
+                    }
+                }
+                NavigationLink("Tutte le webcam") { WebcamsView() }.font(.caption)
+            }
+        }
+    }
+
+    // MARK: Transport
+
+    private var transportSection: some View {
+        NavigationLink {
+            TransportView()
+        } label: {
+            Card(title: "Voli e traghetti", systemImage: "airplane.departure", tint: .cyan) {
+                let followed = (model.flights?.value ?? []).filter { alerts.isFollowing($0.flightNumber) }
+                if followed.isEmpty {
+                    Text(alerts.settings.followedFlights.isEmpty
+                         ? "Tabellone di Keflavík in tempo reale, avvisi Herjólfur. Segui un volo per ricevere notifiche."
+                         : "Voli seguiti: \(alerts.settings.followedFlights.joined(separator: ", "))")
+                        .font(.subheadline)
+                }
+                ForEach(followed) { flight in
+                    HStack {
+                        Text("\(flight.time ?? "") \(flight.flightNumber)").font(.subheadline.weight(.semibold))
+                        Text(flight.destination ?? "").font(.caption)
+                        Spacer()
+                        Text(flight.statusInfo.text).font(.caption).foregroundStyle(flight.statusInfo.risk == .ok ? Color.secondary : flight.statusInfo.risk.color)
+                    }
+                }
+                if let notice = model.ferry?.value {
+                    Text("Herjólfur: \(notice.text.components(separatedBy: "\n").dropFirst().first ?? notice.text)")
+                        .font(.caption).foregroundStyle(.secondary).lineLimit(2)
+                }
+            }
+        }
+        .buttonStyle(.plain)
+        .task { if model.flights == nil && !alerts.settings.followedFlights.isEmpty { await model.refreshTransport() } }
+    }
+
+    // MARK: Fuel
+
+    @ViewBuilder private var fuelSection: some View {
+        if let stations = model.fuel?.value, !stations.isEmpty {
+            let here = model.activePlace.coordinate
+            let fuel = FuelStations.nearest(stations, to: here, kind: .fuel, limit: 3)
+            let chargers = FuelStations.nearest(stations, to: here, kind: .charger, limit: 1)
+            Card(title: "Carburante e ricarica (offline)", systemImage: "fuelpump.fill", tint: .orange) {
+                ForEach(fuel, id: \.station.id) { item in
+                    HStack {
+                        Text(item.station.name).font(.caption.weight(.medium))
+                        if let hours = item.station.openingHours { Text(hours).font(.caption2).foregroundStyle(.secondary).lineLimit(1) }
+                        Spacer()
+                        Text(Fmt.number(item.km, decimals: item.km < 10 ? 1 : 0, unit: "km")).font(.caption)
+                    }
+                }
+                if let charger = chargers.first {
+                    Label("Ricarica EV più vicina: \(charger.station.name), \(Fmt.number(charger.km, decimals: 0, unit: "km"))", systemImage: "bolt.car")
+                        .font(.caption2).foregroundStyle(.secondary)
+                }
+            }
+        }
     }
 
     // MARK: Sea

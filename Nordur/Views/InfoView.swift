@@ -2,9 +2,7 @@ import SwiftUI
 
 struct InfoView: View {
     @Environment(AppModel.self) private var model
-    @AppStorage(Notifier.Key.warnings) private var notifyWarnings = false
-    @AppStorage(Notifier.Key.includeYellow) private var notifyYellow = false
-    @AppStorage(Notifier.Key.aurora) private var notifyAurora = false
+    @Environment(\.dismiss) private var dismiss
 
     var body: some View {
         NavigationStack {
@@ -19,17 +17,16 @@ struct InfoView: View {
                     Text("Sicurezza")
                 }
 
-                Section {
-                    Toggle("Allerte arancioni e rosse", isOn: $notifyWarnings)
-                    Toggle("Anche le allerte gialle", isOn: $notifyYellow).disabled(!notifyWarnings)
-                    Toggle("Notti buone per l'aurora", isOn: $notifyAurora)
-                } header: {
-                    Text("Notifiche")
-                } footer: {
-                    Text("Controlla in background la tua posizione e le tappe dei prossimi 3 giorni. iOS decide quando eseguire i controlli (di solito ogni 1–2 ore se l'app è usata spesso).")
+                Section("Strumenti") {
+                    NavigationLink { AlertSettingsView() } label: { Label("Allerte e notifiche", systemImage: "bell.badge") }
+                    NavigationLink { AlertsView() } label: { Label("Storico allerte", systemImage: "tray.full") }
+                    NavigationLink { OfflineView() } label: { Label("Pacchetto offline", systemImage: "arrow.down.circle") }
+                    NavigationLink { TransportView() } label: { Label("Voli KEF e traghetti", systemImage: "airplane.departure") }
+                    NavigationLink { WebcamsView() } label: { Label("Webcam stradali", systemImage: "video") }
+                    NavigationLink { RoadsView() } label: { Label("Condizioni delle strade", systemImage: "road.lanes") }
+                    NavigationLink { QuakesView() } label: { Label("Terremoti e vulcani", systemImage: "waveform.path.ecg") }
                 }
-                .onChange(of: notifyWarnings) { _, on in if on { Task { _ = await Notifier.requestAuthorization() } } }
-                .onChange(of: notifyAurora) { _, on in if on { Task { _ = await Notifier.requestAuthorization() } } }
+
 
                 Section("Meteo") {
                     LinkRow(title: "Vedur.is – Meteo ufficiale islandese", subtitle: "Previsioni, allerte, mappe del vento", url: "https://en.vedur.is/")
@@ -84,6 +81,9 @@ struct InfoView: View {
                 }
             }
             .navigationTitle("Info & SOS")
+            .toolbar {
+                ToolbarItem(placement: .cancellationAction) { Button("Chiudi") { dismiss() } }
+            }
         }
     }
 }

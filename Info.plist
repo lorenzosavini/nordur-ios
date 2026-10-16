@@ -3,10 +3,16 @@
 <plist version="1.0">
 <dict>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>Norður usa la tua posizione per mostrarti meteo, allerte, strade e probabilità di aurora dove ti trovi.</string>
+	<string>Norður usa la tua posizione per meteo, allerte, strade e aurora dove ti trovi, e per registrare i percorsi in auto.</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>Con l'accesso «Sempre» Norður controlla allerte meteo, raffiche e strade chiuse vicino a te anche quando l'app è chiusa, e continua a registrare il percorso a schermo bloccato.</string>
+	<key>NSSupportsLiveActivities</key>
+	<true/>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>fetch</string>
+		<string>location</string>
+		<string>audio</string>
 	</array>
 	<key>BGTaskSchedulerPermittedIdentifiers</key>
 	<array>

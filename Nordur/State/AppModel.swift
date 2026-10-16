@@ -16,6 +16,10 @@ final class AppModel {
         case ovation = "Ovale aurorale"
         case solarWind = "Vento solare"
         case news = "SafeTravel"
+        case webcams = "Webcam"
+        case fuel = "Distributori"
+        case flights = "Voli KEF"
+        case ferry = "Herjólfur"
     }
 
     let location = LocationManager()
@@ -33,6 +37,10 @@ final class AppModel {
     var ovation: Fetched<OvationGrid>?
     var solarWind: Fetched<SolarWind>?
     var news: Fetched<[NewsItem]>?
+    var webcams: Fetched<[WebcamSite]>?
+    var fuel: Fetched<[FuelStation]>?
+    var flights: Fetched<[Flight]>?
+    var ferry: Fetched<FerryNotice?>?
 
     var errors: [Source: String] = [:]
     var isRefreshing = false
@@ -134,6 +142,30 @@ final class AppModel {
         apply(ro, .ovation) { self.ovation = $0 }
         apply(rs, .solarWind) { self.solarWind = $0 }
         apply(rn, .news) { self.news = $0 }
+        await refreshStatic()
+    }
+
+    /// Slow-changing data: webcam list (every 6 h) and fuel stations (30-day on-device copy).
+    func refreshStatic(force: Bool = false) async {
+        let webcamsOld = webcams.map { Date().timeIntervalSince($0.date) > 6 * 3600 || $0.isStale } ?? true
+        if webcamsOld || force {
+            let result = await attempt { try await Webcams.sites() }
+            apply(result, .webcams) { self.webcams = $0 }
+        }
+        if fuel == nil || force {
+            let maxAge: TimeInterval = force ? 0 : 30 * 24 * 3600
+            let result = await attempt { try await FuelStations.all(maxAge: maxAge) }
+            apply(result, .fuel) { self.fuel = $0 }
+        }
+    }
+
+    /// Flight board and ferry notices; loaded on demand (the flight page is ~1.5 MB).
+    func refreshTransport() async {
+        async let fl = attempt { try await TransportService.kefFlights() }
+        async let fe = attempt { try await TransportService.herjolfur() }
+        let (rfl, rfe) = await (fl, fe)
+        apply(rfl, .flights) { self.flights = $0 }
+        apply(rfe, .ferry) { self.ferry = $0 }
     }
 
     private func apply<T>(_ result: Result<T, Error>, _ source: Source, _ assign: (T) -> Void) {
