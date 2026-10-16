@@ -7,15 +7,15 @@ enum AlertCategory: String, Codable, CaseIterable, Identifiable {
 
     var label: String {
         switch self {
-        case .weatherWarning: return "Allerte meteo IMO"
-        case .wind: return "Raffiche forti vicino a te"
-        case .road: return "Strade chiuse o impraticabili"
-        case .quake: return "Terremoti"
-        case .safeTravel: return "Avvisi SafeTravel"
-        case .aurora: return "Aurora boreale"
-        case .flight: return "Voli seguiti (KEF)"
-        case .ferry: return "Traghetto Herjólfur"
-        case .speed: return "Limite di velocità (in guida)"
+        case .weatherWarning: return String(localized: "Allerte meteo IMO")
+        case .wind: return String(localized: "Raffiche forti vicino a te")
+        case .road: return String(localized: "Strade chiuse o impraticabili")
+        case .quake: return String(localized: "Terremoti")
+        case .safeTravel: return String(localized: "Avvisi SafeTravel")
+        case .aurora: return String(localized: "Aurora boreale")
+        case .flight: return String(localized: "Voli seguiti (KEF)")
+        case .ferry: return String(localized: "Traghetto Herjólfur")
+        case .speed: return String(localized: "Limite di velocità (in guida)")
         }
     }
 

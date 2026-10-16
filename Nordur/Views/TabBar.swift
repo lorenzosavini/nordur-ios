@@ -18,17 +18,17 @@ enum Appearance: String, CaseIterable, Identifiable {
 
     var label: String {
         switch self {
-        case .system: return "Automatico"
-        case .light: return "Chiaro"
-        case .dark: return "Scuro"
+        case .system: return String(localized: "Automatico")
+        case .light: return String(localized: "Chiaro")
+        case .dark: return String(localized: "Scuro")
         }
     }
 
     var short: String {
         switch self {
-        case .system: return "AUTO"
-        case .light: return "GIORNO"
-        case .dark: return "NOTTE"
+        case .system: return String(localized: "AUTO")
+        case .light: return String(localized: "GIORNO")
+        case .dark: return String(localized: "NOTTE")
         }
     }
 

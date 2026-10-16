@@ -17,10 +17,10 @@ enum Risk: Int, Comparable, CaseIterable {
 
     var label: String {
         switch self {
-        case .ok: return "Buono"
-        case .caution: return "Attenzione"
-        case .warning: return "Difficile"
-        case .danger: return "Pericoloso"
+        case .ok: return String(localized: "Buono")
+        case .caution: return String(localized: "Attenzione")
+        case .warning: return String(localized: "Difficile")
+        case .danger: return String(localized: "Pericoloso")
         }
     }
 
@@ -53,10 +53,10 @@ enum Risk: Int, Comparable, CaseIterable {
 
     static func windAdvice(_ risk: Risk) -> String {
         switch risk {
-        case .ok: return "Vento gestibile."
-        case .caution: return "Vento sostenuto: tieni salde le portiere dell'auto aprendole."
-        case .warning: return "Guida impegnativa, raffiche forti vicino alle montagne. Evita camper e auto alte."
-        case .danger: return "Sconsigliato mettersi in viaggio. Controlla umferdin.is e safetravel.is."
+        case .ok: return String(localized: "Vento gestibile.")
+        case .caution: return String(localized: "Vento sostenuto: tieni salde le portiere dell'auto aprendole.")
+        case .warning: return String(localized: "Guida impegnativa, raffiche forti vicino alle montagne. Evita camper e auto alte.")
+        case .danger: return String(localized: "Sconsigliato mettersi in viaggio. Controlla umferdin.is e safetravel.is.")
         }
     }
 

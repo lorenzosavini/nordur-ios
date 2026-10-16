@@ -157,10 +157,10 @@ enum ViewingGeometry {
         static func < (l: Category, r: Category) -> Bool { l.rawValue < r.rawValue }
         var label: String {
             switch self {
-            case .overhead: return "Sopra di te o quasi"
-            case .toward: return "Visibile verso l'orizzonte"
-            case .low: return "Molto bassa sull'orizzonte"
-            case .none: return "Non prevista nel cielo visibile"
+            case .overhead: return String(localized: "Sopra di te o quasi")
+            case .toward: return String(localized: "Visibile verso l'orizzonte")
+            case .low: return String(localized: "Molto bassa sull'orizzonte")
+            case .none: return String(localized: "Non prevista nel cielo visibile")
             }
         }
     }
@@ -285,11 +285,11 @@ enum ObservabilityClass: Int, Comparable, CaseIterable {
 
     var label: String {
         switch self {
-        case .veryPoor: return "Molto sfavorevole"
-        case .poor: return "Sfavorevole"
-        case .moderate: return "Moderatamente favorevole"
-        case .good: return "Favorevole"
-        case .excellent: return "Molto favorevole"
+        case .veryPoor: return String(localized: "Molto sfavorevole")
+        case .poor: return String(localized: "Sfavorevole")
+        case .moderate: return String(localized: "Moderatamente favorevole")
+        case .good: return String(localized: "Favorevole")
+        case .excellent: return String(localized: "Molto favorevole")
         }
     }
 }

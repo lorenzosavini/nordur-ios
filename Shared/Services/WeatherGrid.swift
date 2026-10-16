@@ -8,15 +8,15 @@ enum WeatherLayer: String, CaseIterable, Identifiable, Codable {
 
     var label: String {
         switch self {
-        case .none: return "Nessuno"
-        case .wind: return "Vento"
-        case .gust: return "Raffiche"
-        case .precipitation: return "Pioggia"
-        case .snow: return "Neve"
-        case .cloud: return "Nuvole"
-        case .temperature: return "Temperatura"
-        case .aurora: return "Aurora"
-        case .radar: return "Radar"
+        case .none: return String(localized: "Nessuno")
+        case .wind: return String(localized: "Vento")
+        case .gust: return String(localized: "Raffiche")
+        case .precipitation: return String(localized: "Pioggia")
+        case .snow: return String(localized: "Neve")
+        case .cloud: return String(localized: "Nuvole")
+        case .temperature: return String(localized: "Temperatura")
+        case .aurora: return String(localized: "Aurora")
+        case .radar: return String(localized: "Radar")
         }
     }
 

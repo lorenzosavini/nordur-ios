@@ -29,10 +29,10 @@ enum WarningColor: Int, Comparable {
 
     var label: String {
         switch self {
-        case .unknown: return "Avviso"
-        case .yellow: return "Allerta gialla"
-        case .orange: return "Allerta arancione"
-        case .red: return "Allerta rossa"
+        case .unknown: return String(localized: "Avviso")
+        case .yellow: return String(localized: "Allerta gialla")
+        case .orange: return String(localized: "Allerta arancione")
+        case .red: return String(localized: "Allerta rossa")
         }
     }
 

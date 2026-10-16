@@ -122,12 +122,13 @@ do {
 do {
     let wall = TerrainHorizon(angles: (0..<16).map { $0 == 0 ? 30 : 0 })
     check(abs(wall.angle(toward: 0) - 30) < 1e-9 && abs(wall.angle(toward: 11.25) - 15) < 1e-9 && wall.angle(toward: 180) == 0, "horizon interpolation")
-    // A band 3° north (≈17° high) is hidden by a 30° wall to the north, visible with a flat horizon.
+    // A band 3° north (≈17–29° high) is hidden by a 40° skyline all round (a deep valley), visible with a flat horizon.
     let band = Band(lat: 67, v: 40)
-    check(ViewingGeometry.evaluate(band, at: reykjavik, horizon: wall).category == .none, "aurora behind a mountain is not visible")
+    let valley = TerrainHorizon(angles: Array(repeating: 40, count: 16))
+    check(ViewingGeometry.evaluate(band, at: reykjavik, horizon: valley).category == .none, "aurora behind a mountain is not visible")
     check(ViewingGeometry.evaluate(band, at: reykjavik).category == .toward, "same aurora with a flat horizon")
     let nw = TerrainHorizon(angles: Array(repeating: 12, count: 16))
-        let trondelag = Coordinate(lat: 62.5, lon: 10)
+    let trondelag = Coordinate(lat: 62.5, lon: 10)
     // CGM ≈ 59.8°: at Kp 1 the oval edge (64.45°) is ≈ 4.7° away, low on the horizon.
     check(ViewingGeometry.fromKp(1, at: trondelag).category == .low, "Kp 1 aurora low on the horizon from 59.8° CGM")
     let kpLow = ViewingGeometry.fromKp(1, at: trondelag, horizon: nw)

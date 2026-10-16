@@ -7,12 +7,12 @@ enum Transport: String, Codable, CaseIterable, Identifiable {
 
     var label: String {
         switch self {
-        case .car: return "Auto"
-        case .plane: return "Aereo"
-        case .ferry: return "Traghetto"
-        case .bus: return "Bus"
-        case .walk: return "A piedi / trekking"
-        case .boat: return "Escursione in barca"
+        case .car: return String(localized: "Auto")
+        case .plane: return String(localized: "Aereo")
+        case .ferry: return String(localized: "Traghetto")
+        case .bus: return String(localized: "Bus")
+        case .walk: return String(localized: "A piedi / trekking")
+        case .boat: return String(localized: "Escursione in barca")
         }
     }
 
