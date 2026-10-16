@@ -27,6 +27,9 @@ struct DriveView: View {
                     }
                 }
 
+                // CI screenshots show the road watch first (it is below the fold otherwise).
+                if UserDefaults.standard.bool(forKey: "ciAutoDrive") { RoadAheadSection() }
+
                 Section {
                     if recorder.isRecording {
                         LiveDrivePanel()
@@ -35,7 +38,7 @@ struct DriveView: View {
                     }
                 }
 
-                RoadAheadSection()
+                if !UserDefaults.standard.bool(forKey: "ciAutoDrive") { RoadAheadSection() }
 
                 Section {
                     Button {
@@ -196,13 +199,13 @@ struct LiveDrivePanel: View {
                             Metric(title: "Max", value: Fmt.number(session.stats.maxKmh, unit: "km/h"), systemImage: "gauge.with.dots.needle.100percent")
                         }
                         GridRow {
-                            Metric(title: "In movimento", value: Fmt.clock(session.stats.movingSeconds), systemImage: "car")
-                            Metric(title: "Dislivello +", value: Fmt.number(session.stats.elevationGain, unit: "m"), systemImage: "arrow.up.right")
+                            Metric(title: "In marcia", value: Fmt.clock(session.stats.movingSeconds), systemImage: "car")
+                            Metric(title: "Salita", value: Fmt.number(session.stats.elevationGain, unit: "m"), systemImage: "arrow.up.right")
                             Metric(title: "Soste", value: "\(session.stats.stops)", systemImage: "parkingsign")
                         }
                         GridRow {
-                            Metric(title: "Contachilometri", value: Fmt.number(session.odometerEnd, decimals: 1, unit: "km"), systemImage: "gauge.open.with.lines.needle.33percent")
-                            Metric(title: "Carburante", value: Fmt.number(session.stats.fuelLitres(recorder.settings), decimals: 1, unit: "l"), systemImage: "fuelpump")
+                            Metric(title: "Km auto", value: Fmt.number(session.odometerEnd, decimals: 0), systemImage: "gauge.open.with.lines.needle.33percent")
+                            Metric(title: "Litri", value: Fmt.number(session.stats.fuelLitres(recorder.settings), decimals: 1, unit: "l"), systemImage: "fuelpump")
                             Metric(title: "Costo", value: Fmt.number(session.stats.fuelCost(recorder.settings), unit: "ISK"), systemImage: "creditcard")
                         }
                     }
@@ -234,7 +237,7 @@ struct LiveDrivePanel: View {
         if let here = recorder.session?.points.last?.coordinate, let stations = model.fuel?.value {
             let nearest = FuelStations.nearest(stations, to: here, kind: .fuel, limit: 1)
             if let first = nearest.first {
-                Label("Distributore più vicino: \(first.station.name) a \(Fmt.number(first.km, decimals: 0, unit: "km"))", systemImage: "fuelpump.fill")
+                Label("Distributore più vicino: \(first.station.name) a \(Fmt.number(first.km, decimals: first.km < 10 ? 1 : 0, unit: "km"))", systemImage: "fuelpump.fill")
                     .font(.caption).foregroundStyle(.secondary)
             }
         }
