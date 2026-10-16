@@ -47,9 +47,10 @@ struct RootView: View {
     @Environment(AppModel.self) private var model
     @Environment(AlertCenter.self) private var alerts
     @Environment(DriveRecorder.self) private var recorder
-    @State private var tab = Tab.today
+    // `-initialTab drive` as launch argument opens a given tab (used by the CI screenshots).
+    @State private var tab = Tab(rawValue: UserDefaults.standard.string(forKey: "initialTab") ?? "") ?? .today
 
-    enum Tab: Hashable { case today, weather, map, drive, trip }
+    enum Tab: String, Hashable { case today, weather, map, drive, trip }
 
     var body: some View {
         @Bindable var alerts = alerts
