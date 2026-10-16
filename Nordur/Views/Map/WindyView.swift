@@ -9,9 +9,9 @@ struct WindyView: View {
     @State private var overlay = "wind"
 
     static let overlays: [(id: String, label: String)] = [
-        ("wind", "Vento"), ("gust", "Raffiche"), ("rain", "Pioggia"), ("snowAccu", "Neve accumulata"),
-        ("clouds", "Nuvole"), ("temp", "Temperatura"), ("waves", "Onde"), ("swell1", "Onda lunga"),
-        ("visibility", "Visibilità"), ("cape", "Temporali (CAPE)"), ("pressure", "Pressione"),
+        ("wind", String(localized: "Vento")), ("gust", String(localized: "Raffiche")), ("rain", String(localized: "Pioggia")), ("snowAccu", String(localized: "Neve accumulata")),
+        ("clouds", String(localized: "Nuvole")), ("temp", String(localized: "Temperatura")), ("waves", String(localized: "Onde")), ("swell1", String(localized: "Onda lunga")),
+        ("visibility", String(localized: "Visibilità")), ("cape", String(localized: "Temporali (CAPE)")), ("pressure", String(localized: "Pressione")),
     ]
 
     private var url: URL? {

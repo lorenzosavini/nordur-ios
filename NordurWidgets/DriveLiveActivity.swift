@@ -53,7 +53,7 @@ struct LockScreenDriveView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
             HStack {
-                Label(state.paused ? "In pausa" : "Norður · in viaggio", systemImage: state.paused ? "pause.circle.fill" : "car.fill")
+                Label(state.paused ? String(localized: "In pausa") : String(localized: "Norður · in viaggio"), systemImage: state.paused ? "pause.circle.fill" : "car.fill")
                     .font(.app(.caption, .semibold))
                     .foregroundStyle(.white.opacity(0.8))
                 Spacer()

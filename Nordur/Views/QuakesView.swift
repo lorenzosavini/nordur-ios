@@ -34,7 +34,7 @@ struct QuakesView: View {
                 }
                 .pickerStyle(.segmented)
                 if let fetched = model.quakes {
-                    FreshnessLabel(date: fetched.date, isStale: fetched.isStale, source: "Veðurstofa Íslands")
+                    FreshnessLabel(date: fetched.date, isStale: fetched.isStale, source: String(localized: "Veðurstofa Íslands"))
                 }
                 ErrorNote(message: model.errors[.quakes])
             }
@@ -48,7 +48,7 @@ struct QuakesView: View {
                             .frame(width: 58, alignment: .leading)
                         VStack(alignment: .leading) {
                             Text(quake.region).font(.app(.subheadline))
-                            Text("\(Fmt.dayTime(quake.date, in: .iceland)) · prof. \(Fmt.number(quake.depth, decimals: 1, unit: "km"))\(quake.reviewed ? "" : " · automatico")")
+                            Text("\(Fmt.dayTime(quake.date, in: .iceland)) · prof. \(Fmt.number(quake.depth, decimals: 1, unit: "km"))\(quake.reviewed ? "" : String(localized: " · automatico"))")
                                 .font(.app(.caption)).foregroundStyle(.secondary)
                         }
                         Spacer()
@@ -61,10 +61,10 @@ struct QuakesView: View {
             Section("Vulcani ed eruzioni") {
                 Text("Zone di pericolo e chiusure: IMO e Protezione Civile.")
                     .font(.app(.caption)).foregroundStyle(.secondary)
-                LinkRow(title: "Vedur.is – Terremoti", subtitle: "Mappa ufficiale in tempo reale", url: "https://en.vedur.is/earthquakes-and-volcanism/earthquakes/", systemImage: "waveform.path.ecg")
-                LinkRow(title: "Vedur.is – Vulcani e mappa dei pericoli", subtitle: "Livelli di allerta aviazione e pericolo", url: "https://en.vedur.is/earthquakes-and-volcanism/", systemImage: "mountain.2.fill")
-                LinkRow(title: "Previsione gas vulcanici", subtitle: "Dispersione SO₂ durante le eruzioni", url: "https://en.vedur.is/pollution-and-radiation/volcanic-gas/", systemImage: "aqi.high")
-                LinkRow(title: "Protezione Civile (Almannavarnir)", subtitle: "Evacuazioni e zone chiuse", url: "https://www.almannavarnir.is/english/", systemImage: "shield.lefthalf.filled")
+                LinkRow(title: String(localized: "Vedur.is – Terremoti"), subtitle: String(localized: "Mappa ufficiale in tempo reale"), url: "https://en.vedur.is/earthquakes-and-volcanism/earthquakes/", systemImage: "waveform.path.ecg")
+                LinkRow(title: String(localized: "Vedur.is – Vulcani e mappa dei pericoli"), subtitle: String(localized: "Livelli di allerta aviazione e pericolo"), url: "https://en.vedur.is/earthquakes-and-volcanism/", systemImage: "mountain.2.fill")
+                LinkRow(title: String(localized: "Previsione gas vulcanici"), subtitle: String(localized: "Dispersione SO₂ durante le eruzioni"), url: "https://en.vedur.is/pollution-and-radiation/volcanic-gas/", systemImage: "aqi.high")
+                LinkRow(title: String(localized: "Protezione Civile (Almannavarnir)"), subtitle: String(localized: "Evacuazioni e zone chiuse"), url: "https://www.almannavarnir.is/english/", systemImage: "shield.lefthalf.filled")
             }
         }
         .themedList()

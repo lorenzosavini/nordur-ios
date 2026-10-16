@@ -9,7 +9,7 @@ struct WarningsView: View {
             let warnings = model.warnings?.value ?? []
             Section {
                 if let fetched = model.warnings {
-                    FreshnessLabel(date: fetched.date, isStale: fetched.isStale, source: "Veðurstofa Íslands")
+                    FreshnessLabel(date: fetched.date, isStale: fetched.isStale, source: String(localized: "Veðurstofa Íslands"))
                 }
                 ErrorNote(message: model.errors[.warnings])
                 if warnings.isEmpty && model.warnings != nil {
@@ -26,7 +26,7 @@ struct WarningsView: View {
             Section("Cosa significano i colori") {
                 Text("Giallo: possibili disagi.\nArancione: impatti significativi, valuta di rimandare.\nRosso: evento estremo, non metterti in viaggio.")
                     .font(.app(.caption))
-                LinkRow(title: "Allerte su vedur.is", subtitle: nil, url: "https://en.vedur.is/weather/forecasts/areas/")
+                LinkRow(title: String(localized: "Allerte su vedur.is"), subtitle: nil, url: "https://en.vedur.is/weather/forecasts/areas/")
             }
         }
         .themedList()

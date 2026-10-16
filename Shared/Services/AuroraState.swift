@@ -111,8 +111,10 @@ struct AuroraState: Decodable {
         let g: Int?
         let active: Bool?
         var issuedDate: Date? { DateParse.iso(issued) }
+        /// The headline in the app language: NOAA writes in English, so only the Italian interface translates it.
         var italian: String {
             var t = headline
+            guard Bundle.main.preferredLocalizations.first == "it" else { return t }
             for (en, it) in [("EXTENDED WARNING:", "Avviso esteso:"), ("WARNING:", "Avviso:"), ("ALERT:", "Allerta:"), ("WATCH:", "Sorveglianza:"),
                              ("SUMMARY:", "Riepilogo:"), ("Geomagnetic K-index of", "indice K geomagnetico"), ("or greater", "o superiore"),
                              ("expected", "previsto"), ("Geomagnetic Storm Category", "tempesta geomagnetica"), ("Predicted", "prevista"),

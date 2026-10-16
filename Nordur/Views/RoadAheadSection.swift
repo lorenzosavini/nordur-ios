@@ -17,7 +17,7 @@ struct RoadAheadSection: View {
             HStack {
                 Image(systemName: "flag.checkered")
                 VStack(alignment: .leading, spacing: 1) {
-                    Text(watch.destination.map { "Verso \($0.name)" } ?? "Nessuna destinazione").font(.app(.subheadline, .semibold))
+                    Text(watch.destination.map { String(localized: "Verso \($0.name)") } ?? String(localized: "Nessuna destinazione")).font(.app(.subheadline, .semibold))
                     if let remaining = watch.remainingKm {
                         let minutes = watch.routeTotalKm > 0 ? Int(watch.routeTravelTime / 60 * remaining / watch.routeTotalKm) : 0
                         Text("Mancano \(Fmt.number(remaining, unit: "km")) · circa \(Fmt.duration(Double(minutes) * 60))")
@@ -53,8 +53,8 @@ struct RoadAheadSection: View {
             }
 
             if watch.ahead.isEmpty {
-                Text(recorder.isRecording ? "Nessuna stazione stradale davanti a te nel raggio controllato." :
-                        "Disponibile durante la registrazione di un percorso.")
+                Text(recorder.isRecording ? String(localized: "Nessuna stazione stradale davanti a te nel raggio controllato.") :
+                        String(localized: "Disponibile durante la registrazione di un percorso."))
                     .font(.app(.caption)).foregroundStyle(.secondary)
             }
             ForEach(watch.ahead) { item in
@@ -99,7 +99,7 @@ struct AheadRow: View {
                 Circle().fill(item.risk.color).frame(width: 9, height: 9)
                 Text(item.station.name).font(.app(.subheadline, .semibold)).lineLimit(1)
                 Spacer()
-                Text(item.kmAhead < 1 ? "" : "≈ \(item.etaMinutes) min").font(.app(.caption2)).foregroundStyle(.secondary)
+                Text(item.kmAhead < 1 ? "" : String(localized: "≈ \(item.etaMinutes) min")).font(.app(.caption2)).foregroundStyle(.secondary)
             }
             HStack(spacing: 10) {
                 Label("\(Fmt.ms(item.station.Vindhradi)) / \(Fmt.ms(item.station.Vindhvida))", systemImage: "wind")

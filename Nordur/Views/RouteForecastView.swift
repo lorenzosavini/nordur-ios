@@ -16,12 +16,12 @@ struct RoutePlannerSheet: View {
         Form {
             Section("Percorso") {
                 Button { picking = .from } label: {
-                    LabeledContent("Partenza", value: from?.name ?? "Posizione attuale")
+                    LabeledContent("Partenza", value: from?.name ?? String(localized: "Posizione attuale"))
                 }
                 Button { picking = .to } label: {
-                    LabeledContent("Arrivo", value: to?.name ?? "Scegli…")
+                    LabeledContent("Arrivo", value: to?.name ?? String(localized: "Scegli…"))
                 }
-                DatePicker("Partenza alle", selection: $departure, in: Date().addingTimeInterval(-3600)...Date().addingTimeInterval(15 * 24 * 3600))
+                DatePicker(String(localized: "Partenza alle"), selection: $departure, in: Date().addingTimeInterval(-3600)...Date().addingTimeInterval(15 * 24 * 3600))
             }
             if let to {
                 Section {
@@ -91,7 +91,7 @@ struct RouteForecastView: View {
 
     private func snowText(_ snow: Double?) -> String {
         guard let snow, snow > 0 else { return "" }
-        return " · neve " + Fmt.number(snow, decimals: 1, unit: "cm")
+        return String(localized: " · neve ") + Fmt.number(snow, decimals: 1, unit: "cm")
     }
 
     @ViewBuilder private func content(_ plan: RoutePlan) -> some View {
@@ -116,9 +116,9 @@ struct RouteForecastView: View {
             .listRowInsets(EdgeInsets())
 
             HStack {
-                Metric(title: "Distanza", value: Fmt.number(plan.distanceKm, unit: "km"), systemImage: "road.lanes")
-                Metric(title: "Durata", value: Fmt.duration(plan.travelTime), systemImage: "clock")
-                Metric(title: "Arrivo", value: Fmt.time(plan.arrival), systemImage: "flag.checkered")
+                Metric(title: String(localized: "Distanza"), value: Fmt.number(plan.distanceKm, unit: "km"), systemImage: "road.lanes")
+                Metric(title: String(localized: "Durata"), value: Fmt.duration(plan.travelTime), systemImage: "clock")
+                Metric(title: String(localized: "Arrivo"), value: Fmt.time(plan.arrival), systemImage: "flag.checkered")
             }
             HStack {
                 Text("Valutazione complessiva").font(.app(.subheadline))

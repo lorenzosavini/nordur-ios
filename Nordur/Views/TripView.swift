@@ -12,10 +12,10 @@ struct TripView: View {
         NavigationStack {
             List {
                 Section {
-                    ScreenHeader(title: "Viaggio", subtitle: trip.stops.isEmpty ? "Itinerario" : "\(trip.stops.count) tappe", index: "05") {
+                    ScreenHeader(title: String(localized: "Viaggio"), subtitle: trip.stops.isEmpty ? String(localized: "Itinerario") : String(localized: "\(trip.stops.count) tappe"), index: "05") {
                         HStack(spacing: 8) {
                             if !trip.stops.isEmpty { EditButton().font(.mono(11, .semibold)) }
-                            HeaderButton(systemImage: "person", label: "ACCOUNT") { showAccount = true }
+                            HeaderButton(systemImage: "person", label: String(localized: "ACCOUNT")) { showAccount = true }
                             HeaderButton(systemImage: "plus") { creating = true }
                         }
                     }
@@ -144,8 +144,8 @@ struct StopSummary: View {
 
     private var daysUntilText: String {
         let days = Calendar.current.dateComponents([.day], from: Date(), to: stop.date).day ?? 0
-        if days < 0 { return "Tappa passata." }
-        return "Previsioni disponibili circa 10 giorni prima (mancano \(days) giorni)."
+        if days < 0 { return String(localized: "Tappa passata.") }
+        return String(localized: "Previsioni disponibili circa 10 giorni prima (mancano \(days) giorni).")
     }
 }
 
@@ -252,14 +252,14 @@ struct StopEditor: View {
                         pickingPlace = true
                     } label: {
                         HStack {
-                            Text(place?.name ?? "Scegli un luogo…").foregroundStyle(place == nil ? Color.accentColor : Color.primary)
+                            Text(place?.name ?? String(localized: "Scegli un luogo…")).foregroundStyle(place == nil ? Color.accentColor : Color.primary)
                             Spacer()
                             Image(systemName: "chevron.right").foregroundStyle(.secondary)
                         }
                     }
                 }
                 Section("Quando") {
-                    DatePicker("Arrivo", selection: $date, displayedComponents: [.date, .hourAndMinute])
+                    DatePicker(String(localized: "Arrivo"), selection: $date, displayedComponents: [.date, .hourAndMinute])
                     Stepper("Notti: \(nights)", value: $nights, in: 0...30)
                 }
                 Section("Come ci arrivi") {
@@ -282,7 +282,7 @@ struct StopEditor: View {
                 }
             }
             .themedList()
-            .navigationTitle(original == nil ? "Nuova tappa" : "Modifica tappa")
+            .navigationTitle(original == nil ? String(localized: "Nuova tappa") : String(localized: "Modifica tappa"))
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {

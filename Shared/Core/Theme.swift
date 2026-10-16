@@ -176,11 +176,11 @@ struct SectionLabel: View {
     var body: some View {
         HStack(alignment: .firstTextBaseline, spacing: 8) {
             if let index { Text(index).font(.mono(10.5, .semibold)).foregroundStyle(Theme.accent) }
-            Text(title).font(.mono(10.5, .semibold)).tracking(1).textCase(.uppercase).foregroundStyle(Theme.text)
+            Text(title.loc).font(.mono(10.5, .semibold)).tracking(1).textCase(.uppercase).foregroundStyle(Theme.text)
                 .fixedSize()
             Rectangle().fill(Theme.hairline).frame(height: 1).alignmentGuide(.firstTextBaseline) { d in d[.bottom] + 3 }
             if let trailing {
-                Text(trailing).font(.mono(10.5, .medium)).foregroundStyle(trailingColor).fixedSize()
+                Text(trailing.loc).font(.mono(10.5, .medium)).foregroundStyle(trailingColor).fixedSize()
             }
         }
     }

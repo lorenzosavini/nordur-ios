@@ -22,7 +22,7 @@ struct OfflineView: View {
                 }
                 .disabled(running)
                 ForEach(log, id: \.self) { line in
-                    Text(line).font(.app(.caption2)).foregroundStyle(.secondary)
+                    Text(line.loc).font(.app(.caption2)).foregroundStyle(.secondary)
                 }
             } header: {
                 Text("Dati dell'app")
@@ -43,9 +43,9 @@ struct OfflineView: View {
                     let stations = fuel.value
                     LabeledContent("Carburante", value: "\(stations.filter { $0.kind == .fuel }.count)")
                     LabeledContent("Colonnine di ricarica", value: "\(stations.filter { $0.kind == .charger }.count)")
-                    FreshnessLabel(date: fuel.date, isStale: fuel.isStale, source: "OpenStreetMap")
+                    FreshnessLabel(date: fuel.date, isStale: fuel.isStale, source: String(localized: "OpenStreetMap"))
                 } else {
-                    ErrorNote(message: model.errors[.fuel] ?? "Non ancora scaricati")
+                    ErrorNote(message: model.errors[.fuel] ?? String(localized: "Non ancora scaricati"))
                 }
             }
         }
@@ -57,17 +57,17 @@ struct OfflineView: View {
         running = true
         log = []
         defer { running = false }
-        log.append("Allerte, strade, terremoti, aurora, SafeTravel…")
+        log.append(String(localized: "Allerte, strade, terremoti, aurora, SafeTravel…"))
         await model.refreshGlobal(force: true)
-        log.append("Webcam e distributori…")
+        log.append(String(localized: "Webcam e distributori…"))
         await model.refreshStatic(force: true)
-        log.append("Previsioni per la posizione…")
+        log.append(String(localized: "Previsioni per la posizione…"))
         await model.refreshPlace()
-        log.append("Previsioni per \(trip.stops.count) tappe del viaggio…")
+        log.append(String(localized: "Previsioni per \(trip.stops.count) tappe del viaggio…"))
         await trip.loadForecasts()
-        log.append("Voli e traghetti…")
+        log.append(String(localized: "Voli e traghetti…"))
         await model.refreshTransport()
         let failed = AppModel.Source.allCases.filter { model.errors[$0] != nil }.map(\.rawValue)
-        log.append(failed.isEmpty ? "Completato" : "Non riuscito: \(failed.joined(separator: ", "))")
+        log.append(failed.isEmpty ? String(localized: "Completato") : String(localized: "Non riuscito: \(failed.joined(separator: ", "))"))
     }
 }

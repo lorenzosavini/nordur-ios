@@ -24,17 +24,17 @@ struct Flight: Identifiable, Hashable, Decodable {
     var statusInfo: (text: String, risk: Risk) {
         let updated = updatedTime.map { " \($0)" } ?? ""
         switch status?.uppercased() {
-        case "ATD", "DEP": return ("Partito\(updated)", .ok)
-        case "LBB": return ("Atterrato · bagagli al nastro \(belt ?? "")", .ok)
-        case "LND", "ARR", "ATA": return ("Atterrato\(updated)", .ok)
-        case "EST": return ("Previsto\(updated)", isLate ? .caution : .ok)
-        case "BDC", "BRD": return ("Imbarco in corso", .ok)
-        case "GTO": return ("Gate aperto", .ok)
-        case "OFF", "GCL": return ("Gate chiuso", .ok)
-        case "DEL", "DLY": return ("In ritardo\(updated)", .warning)
-        case "CNL", "CAN", "CXX": return ("Cancellato", .danger)
-        case "DIV": return ("Dirottato", .danger)
-        case "NOSTATUS", nil: return ("In orario", .ok)
+        case "ATD", "DEP": return (String(localized: "Partito\(updated)"), .ok)
+        case "LBB": return (String(localized: "Atterrato · bagagli al nastro \(belt ?? "")"), .ok)
+        case "LND", "ARR", "ATA": return (String(localized: "Atterrato\(updated)"), .ok)
+        case "EST": return (String(localized: "Previsto\(updated)"), isLate ? .caution : .ok)
+        case "BDC", "BRD": return (String(localized: "Imbarco in corso"), .ok)
+        case "GTO": return (String(localized: "Gate aperto"), .ok)
+        case "OFF", "GCL": return (String(localized: "Gate chiuso"), .ok)
+        case "DEL", "DLY": return (String(localized: "In ritardo\(updated)"), .warning)
+        case "CNL", "CAN", "CXX": return (String(localized: "Cancellato"), .danger)
+        case "DIV": return (String(localized: "Dirottato"), .danger)
+        case "NOSTATUS", nil: return (String(localized: "In orario"), .ok)
         default: return (status ?? "—", .ok)
         }
     }

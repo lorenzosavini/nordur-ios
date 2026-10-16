@@ -251,7 +251,7 @@ enum LightPollution {
     /// No openly licensed sky-brightness API is integrated. Proxy: distance from
     /// Iceland's largest built-up areas (Statistics Iceland). Shown as a proxy.
     static let towns: [(name: String, c: Coordinate, radiusKm: Double)] = [
-        ("Area di Reykjavík", Coordinate(lat: 64.12, lon: -21.88), 12),
+        (String(localized: "Area di Reykjavík"), Coordinate(lat: 64.12, lon: -21.88), 12),
         ("Reykjanesbær", Coordinate(lat: 63.99, lon: -22.56), 5),
         ("Akureyri", Coordinate(lat: 65.68, lon: -18.10), 5),
         ("Selfoss", Coordinate(lat: 63.93, lon: -21.00), 3),
@@ -260,8 +260,8 @@ enum LightPollution {
     static func factor(at c: Coordinate) -> (value: Double, note: String?) {
         for town in towns {
             let km = Geo.distanceKm(c, town.c)
-            if km <= town.radiusKm { return (0.7, "Dentro \(town.name): cielo illuminato") }
-            if km <= town.radiusKm + 10 { return (0.88, "Vicino a \(town.name)") }
+            if km <= town.radiusKm { return (0.7, String(localized: "Dentro \(town.name): cielo illuminato")) }
+            if km <= town.radiusKm + 10 { return (0.88, String(localized: "Vicino a \(town.name)")) }
         }
         return (1, nil)
     }
@@ -297,7 +297,7 @@ enum ObservabilityClass: Int, Comparable, CaseIterable {
 enum Reliability: Int, Comparable {
     case low = 0, medium, high
     static func < (l: Self, r: Self) -> Bool { l.rawValue < r.rawValue }
-    var label: String { self == .high ? "Alta" : self == .medium ? "Media" : "Bassa" }
+    var label: String { self == .high ? String(localized: "Alta") : self == .medium ? String(localized: "Media") : String(localized: "Bassa") }
     func lowered() -> Reliability { Reliability(rawValue: max(0, rawValue - 1)) ?? .low }
 }
 
@@ -373,43 +373,43 @@ enum AuroraEngine {
             geometry = g.category; ovationValue = g.value; azimuth = g.azimuth; elevation = g.elevation
             let geo = g.category == .overhead ? 1 : g.category == .toward ? 0.85 : g.category == .low ? 0.45 : 0
             activity = min(1, g.value / 40) * geo
-            if g.category == .none { reasons.append((1, "OVATION non prevede aurora nel tuo cielo")) }
+            if g.category == .none { reasons.append((1, String(localized: "OVATION non prevede aurora nel tuo cielo"))) }
         } else if let kpValue {
             let g = ViewingGeometry.fromKp(kpValue, at: place, horizon: inputs.horizon ?? .flat)
             geometry = g.category
             azimuth = g.category == .overhead ? nil : ViewingGeometry.bearing(from: place, to: Coordinate(lat: Geomagnetic.poleLat, lon: Geomagnetic.poleLon))
             let geo = g.category == .overhead ? 1 : g.category == .toward ? 0.6 : g.category == .low ? 0.3 : 0
             activity = kpActivity(kpValue) * geo
-            if g.category == .none { reasons.append((1, "Con Kp \(Fmt.number(kpValue, decimals: 1)) l'ovale resta lontano")) }
+            if g.category == .none { reasons.append((1, String(localized: "Con Kp \(Fmt.number(kpValue, decimals: 1)) l'ovale resta lontano"))) }
         } else {
-            notes.append("Nessuna previsione geomagnetica per quest'ora")
+            notes.append(String(localized: "Nessuna previsione geomagnetica per quest'ora"))
         }
         if activity > 0 && activity < 0.45 {
-            reasons.append((1 - activity, kpValue.map { "Attività prevista debole (Kp \(Fmt.number($0, decimals: 1)))" } ?? "Attività prevista debole"))
+            reasons.append((1 - activity, kpValue.map { String(localized: "Attività prevista debole (Kp \(Fmt.number($0, decimals: 1)))") } ?? String(localized: "Attività prevista debole")))
         }
 
         // 2 · observability
         let sunAlt = Astro.sunAltitude(date, at: place)
         let darkness = Astro.Darkness(sunAltitude: sunAlt)
         let darkFactor: Double = [.day: 0, .civil: 0.05, .nautical: 0.5, .astronomical: 0.85, .night: 1][darkness] ?? 0
-        if darkness <= .civil { reasons.append((1, darkness == .day ? "È giorno" : "Cielo ancora chiaro (crepuscolo civile)")) }
-        else if darkness == .nautical { reasons.append((0.5, "Crepuscolo nautico: solo aurore intense")) }
+        if darkness <= .civil { reasons.append((1, darkness == .day ? String(localized: "È giorno") : String(localized: "Cielo ancora chiaro (crepuscolo civile)"))) }
+        else if darkness == .nautical { reasons.append((0.5, String(localized: "Crepuscolo nautico: solo aurore intense"))) }
 
         let clear = SkyModel.clearFraction(sky)
         let clearFactor = clear ?? 0.5
-        if clear == nil { notes.append("Nuvolosità non disponibile") }
-        if let c = clear, c < 0.6 { reasons.append((1 - c, c < 0.15 ? "Cielo coperto" : "Nuvolosità \(Int(((1 - c) * 100).rounded()))% (stima per strati)")) }
+        if clear == nil { notes.append(String(localized: "Nuvolosità non disponibile")) }
+        if let c = clear, c < 0.6 { reasons.append((1 - c, c < 0.15 ? String(localized: "Cielo coperto") : String(localized: "Nuvolosità \(Int(((1 - c) * 100).rounded()))% (stima per strati)"))) }
 
         let moon = Astro.moon(date, at: place)
         let moonUp = moon.altitude > 0 ? min(1, (moon.altitude + 5) / 30) : 0
         let moonFactor = 1 - 0.35 * moon.illuminatedFraction * moonUp
-        if moonFactor < 0.85 { reasons.append((1 - moonFactor, "Luna illuminata al \(Int((moon.illuminatedFraction * 100).rounded()))% sopra l'orizzonte")) }
+        if moonFactor < 0.85 { reasons.append((1 - moonFactor, String(localized: "Luna illuminata al \(Int((moon.illuminatedFraction * 100).rounded()))% sopra l'orizzonte"))) }
 
         if let h = inputs.horizon {
             let towardPole = h.angle(toward: ViewingGeometry.bearing(from: place, to: Coordinate(lat: Geomagnetic.poleLat, lon: Geomagnetic.poleLon)))
-            if towardPole >= 5 { reasons.append((min(1, towardPole / 20), "Rilievi verso nord-ovest: orizzonte a \(Int(towardPole.rounded()))°")) }
+            if towardPole >= 5 { reasons.append((min(1, towardPole / 20), String(localized: "Rilievi verso nord-ovest: orizzonte a \(Int(towardPole.rounded()))°"))) }
         } else {
-            notes.append("Orizzonte del terreno non disponibile: assunto libero")
+            notes.append(String(localized: "Orizzonte del terreno non disponibile: assunto libero"))
         }
 
         let light = LightPollution.factor(at: place)
@@ -418,19 +418,19 @@ enum AuroraEngine {
         let index = activity * clearFactor * darkFactor * moonFactor * light.value
         let cls = ObservabilityClass(index: index)
         if reasons.isEmpty && cls >= .good {
-            reasons.append((0, "Buio, cielo in gran parte sereno e attività adeguata"))
+            reasons.append((0, String(localized: "Buio, cielo in gran parte sereno e attività adeguata")))
         }
 
         // 3 · reliability
         let lead = date.timeIntervalSince(now) / 3600
         var reliability: Reliability = source == "OVATION" ? .high : lead < 24 ? .medium : .low
-        if source == "OVATION" && !inputs.solarWindFresh { reliability = .medium; notes.append("Vento solare non aggiornato") }
-        if !inputs.kpSourceFresh { reliability = reliability.lowered(); notes.append("Previsione Kp non aggiornata") }
+        if source == "OVATION" && !inputs.solarWindFresh { reliability = .medium; notes.append(String(localized: "Vento solare non aggiornato")) }
+        if !inputs.kpSourceFresh { reliability = reliability.lowered(); notes.append(String(localized: "Previsione Kp non aggiornata")) }
         if clear == nil { reliability = reliability.lowered() }
         if let other = inputs.secondSky.first(where: { abs($0.date.timeIntervalSince(date)) < 1800 }),
            let a = clear, let b = SkyModel.clearFraction(other), abs(a - b) > 0.4 {
             reliability = reliability.lowered()
-            notes.append("I modelli meteo non concordano sulle nuvole")
+            notes.append(String(localized: "I modelli meteo non concordano sulle nuvole"))
         }
         if lead > 72 { reliability = .low }
 
@@ -459,7 +459,7 @@ enum AuroraEngine {
 
     static func compass(_ azimuth: Double?) -> String {
         guard let azimuth else { return "–" }
-        let names = ["N", "NNE", "NE", "ENE", "E", "ESE", "SE", "SSE", "S", "SSO", "SO", "OSO", "O", "ONO", "NO", "NNO"]
+        let names = [String(localized: "N"), String(localized: "NNE"), String(localized: "NE"), String(localized: "ENE"), String(localized: "E"), String(localized: "ESE"), String(localized: "SE"), String(localized: "SSE"), String(localized: "S"), String(localized: "SSO"), String(localized: "SO"), String(localized: "OSO"), String(localized: "O"), String(localized: "ONO"), String(localized: "NO"), String(localized: "NNO")]
         return names[Int((azimuth / 22.5).rounded()) % 16]
     }
 }

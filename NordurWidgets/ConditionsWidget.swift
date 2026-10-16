@@ -16,7 +16,7 @@ struct PlaceEntity: AppEntity {
     var displayRepresentation: DisplayRepresentation { DisplayRepresentation(title: "\(name)") }
     static var defaultQuery = PlaceEntityQuery()
 
-    static let current = PlaceEntity(id: currentID, name: "Posizione attuale", coordinate: nil)
+    static let current = PlaceEntity(id: currentID, name: String(localized: "Posizione attuale"), coordinate: nil)
     static var all: [PlaceEntity] {
         [current] + Place.presets.map { PlaceEntity(id: $0.name, name: $0.name, coordinate: $0.coordinate) }
     }
@@ -126,7 +126,7 @@ struct ConditionsProvider: AppIntentTimelineProvider {
             let locator = await WidgetLocator()
             if let here = await locator.current() {
                 coordinate = here
-                name = "Qui"
+                name = String(localized: "Qui")
             } else {
                 coordinate = Place.reykjavik.coordinate
                 name = Place.reykjavik.name
@@ -191,7 +191,7 @@ struct ConditionsWidgetView: View {
                 }
             }
         case .accessoryInline:
-            Text("\(Fmt.temp(entry.temperature)) · raff. \(Fmt.ms(entry.gust))\(entry.warning != nil ? " · allerta" : "")")
+            Text("\(Fmt.temp(entry.temperature)) · raff. \(Fmt.ms(entry.gust))\(entry.warning != nil ? String(localized: " · allerta") : "")")
         case .systemMedium:
             HStack(alignment: .top) {
                 mainBlock
@@ -260,8 +260,8 @@ struct ConditionsWidget: Widget {
             ConditionsWidgetView(entry: entry)
                 .containerBackground(Theme.bg, for: .widget)
         }
-        .configurationDisplayName("Condizioni Norður")
-        .description("Temperatura, vento, raffiche e allerte IMO per un luogo.")
+        .configurationDisplayName(String(localized: "Condizioni Norður"))
+        .description(String(localized: "Temperatura, vento, raffiche e allerte IMO per un luogo."))
         .supportedFamilies([.systemSmall, .systemMedium, .accessoryCircular, .accessoryRectangular, .accessoryInline])
     }
 }
@@ -296,8 +296,8 @@ struct AuroraWidget: Widget {
             AuroraWidgetView(entry: entry)
                 .containerBackground(Theme.bg, for: .widget)
         }
-        .configurationDisplayName("Aurora stanotte")
-        .description("Punteggio 0–100: attività geomagnetica × cielo sereno nelle ore di buio.")
+        .configurationDisplayName(String(localized: "Aurora stanotte"))
+        .description(String(localized: "Classe di osservabilità dell’aurora stanotte: attività prevista, nuvole, buio e Luna."))
         .supportedFamilies([.systemSmall])
     }
 }

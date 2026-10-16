@@ -47,8 +47,8 @@ enum Webcams {
             let image = WebcamImage(url: url, caption: cam.Skyring ?? cam.Myndavel ?? "")
             if byID[id] == nil {
                 order.append(id)
-                let road = [cam.NrVegur.map { "Strada \($0)" }, cam.Vegheiti].compactMap { $0 }.joined(separator: " · ")
-                byID[id] = (cam.Myndavel ?? "Webcam \(id)", road, Coordinate(lat: lat, lon: lon), [image])
+                let road = [cam.NrVegur.map { String(localized: "Strada \($0)") }, cam.Vegheiti].compactMap { $0 }.joined(separator: " · ")
+                byID[id] = (cam.Myndavel ?? String(localized: "Webcam \(id)"), road, Coordinate(lat: lat, lon: lon), [image])
             } else {
                 byID[id]?.images.append(image)
             }

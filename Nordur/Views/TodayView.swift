@@ -82,12 +82,12 @@ struct TodayView: View {
         let headline: String = {
             if let w = here.first { return "\(w.color.label) · \(w.hazardItalian) · \(w.region)" }
             switch driving.risk {
-            case .ok: return "Nessuna criticità nelle prossime 12 ore"
-            default: return "Guida: \(driving.risk.label.lowercased()) · raffiche fino a \(Fmt.ms(driving.maxGust))"
+            case .ok: return String(localized: "Nessuna criticità nelle prossime 12 ore")
+            default: return String(localized: "Guida: \(driving.risk.label.lowercased()) · raffiche fino a \(Fmt.ms(driving.maxGust))")
             }
         }()
         HStack(alignment: .firstTextBaseline, spacing: 10) {
-            Text(risk == .ok ? "STATO" : "ATTENZIONE").font(.mono(10.5, .semibold)).tracking(0.8)
+            Text(risk == .ok ? String(localized: "STATO") : String(localized: "ATTENZIONE")).font(.mono(10.5, .semibold)).tracking(0.8)
             Text(headline).font(.sans(14, .medium)).lineLimit(2)
             Spacer(minLength: 0)
         }
@@ -120,22 +120,22 @@ struct TodayView: View {
                     VStack(alignment: .leading, spacing: 8) {
                         Text(info.text.uppercased()).font(.display(24, .semibold)).foregroundStyle(Theme.text)
                             .lineLimit(2).minimumScaleFactor(0.7)
-                        dataLine("PERCEPITA", Fmt.temp(current.apparent_temperature))
-                        dataLine("MIN / MAX", "\(Fmt.temp(today?.minTemp)) / \(Fmt.temp(today?.maxTemp))")
-                        dataLine("PIOGGIA OGGI", Fmt.number(today?.precipitation, decimals: 1, unit: "mm"))
+                        dataLine(String(localized: "PERCEPITA"), Fmt.temp(current.apparent_temperature))
+                        dataLine(String(localized: "MIN / MAX"), "\(Fmt.temp(today?.minTemp)) / \(Fmt.temp(today?.maxTemp))")
+                        dataLine(String(localized: "PIOGGIA OGGI"), Fmt.number(today?.precipitation, decimals: 1, unit: "mm"))
                     }
                     .padding(.top, 6)
                     Spacer(minLength: 0)
                 }
                 ReadingGrid(items: [
-                    Reading(label: "Vento", value: Fmt.number(current.wind_speed_10m), unit: "m/s",
+                    Reading(label: String(localized: "Vento"), value: Fmt.number(current.wind_speed_10m), unit: "m/s",
                             note: current.wind_direction_10m == nil ? nil : "da \(Fmt.compass(current.wind_direction_10m))", size: 28),
-                    Reading(label: "Raffiche", value: Fmt.number(current.wind_gusts_10m), unit: "m/s",
+                    Reading(label: String(localized: "Raffiche"), value: Fmt.number(current.wind_gusts_10m), unit: "m/s",
                             tint: windTint(current.wind_gusts_10m), size: 28),
-                    Reading(label: "Precip.", value: Fmt.number(current.precipitation, decimals: 1), unit: "mm/h", size: 28),
-                    Reading(label: "Nuvole", value: Fmt.number(current.cloud_cover), unit: "%", size: 28),
-                    Reading(label: "Pressione", value: Fmt.number(current.pressure_msl), unit: "hPa", size: 28),
-                    Reading(label: "Umidità", value: Fmt.number(current.relative_humidity_2m), unit: "%", size: 28),
+                    Reading(label: String(localized: "Precip."), value: Fmt.number(current.precipitation, decimals: 1), unit: "mm/h", size: 28),
+                    Reading(label: String(localized: "Nuvole"), value: Fmt.number(current.cloud_cover), unit: "%", size: 28),
+                    Reading(label: String(localized: "Pressione"), value: Fmt.number(current.pressure_msl), unit: "hPa", size: 28),
+                    Reading(label: String(localized: "Umidità"), value: Fmt.number(current.relative_humidity_2m), unit: "%", size: 28),
                 ], columns: 3)
                 .overlay(alignment: .top) { Rule() }
                 .overlay(alignment: .bottom) { Rule() }
@@ -150,7 +150,7 @@ struct TodayView: View {
 
     private func dataLine(_ label: String, _ value: String) -> some View {
         HStack(alignment: .firstTextBaseline, spacing: 8) {
-            Text(label).font(.mono(9.5)).foregroundStyle(Theme.faint).frame(width: 82, alignment: .leading)
+            Text(label.loc).font(.mono(9.5)).foregroundStyle(Theme.faint).frame(width: 82, alignment: .leading)
             Text(value).font(.metric(17, .semibold)).foregroundStyle(Theme.text)
         }
     }
@@ -169,7 +169,7 @@ struct TodayView: View {
         if let forecast = model.forecast?.value {
             let hours = forecast.upcomingHours(18)
             VStack(alignment: .leading, spacing: 12) {
-                SectionLabel(index: "01", title: "Prossime ore", trailing: "ORA LOCALE")
+                SectionLabel(index: "01", title: String(localized: "Prossime ore"), trailing: String(localized: "ORA LOCALE"))
                 HourTable(hours: hours, zone: forecast.timeZone)
             }
         }
@@ -180,7 +180,7 @@ struct TodayView: View {
     @ViewBuilder private var windSection: some View {
         if let current = model.forecast?.value.current {
             VStack(alignment: .leading, spacing: 14) {
-                SectionLabel(index: "02", title: "Vento", trailing: Risk.wind(mean: current.wind_speed_10m, gust: current.wind_gusts_10m).label.uppercased(),
+                SectionLabel(index: "02", title: String(localized: "Vento"), trailing: Risk.wind(mean: current.wind_speed_10m, gust: current.wind_gusts_10m).label.uppercased(),
                              trailingColor: Risk.wind(mean: current.wind_speed_10m, gust: current.wind_gusts_10m).color)
                 HStack(alignment: .center, spacing: 20) {
                     WindDial(direction: current.wind_direction_10m, speed: current.wind_speed_10m, gust: current.wind_gusts_10m, size: 118)
@@ -206,7 +206,7 @@ struct TodayView: View {
     @ViewBuilder private var warningsSection: some View {
         let here = model.warningsHere
         VStack(alignment: .leading, spacing: 12) {
-            SectionLabel(index: "03", title: "Allerte", trailing: "\(model.warnings?.value.count ?? 0) IN ISLANDA")
+            SectionLabel(index: "03", title: String(localized: "Allerte"), trailing: String(localized: "\(model.warnings?.value.count ?? 0) IN ISLANDA"))
 
             if recorder.isRecording, let session = recorder.session {
                 HStack(spacing: 10) {
@@ -232,7 +232,7 @@ struct TodayView: View {
                                 VStack(alignment: .leading, spacing: 4) {
                                     HStack(spacing: 8) {
                                         WarningBadge(color: warning.color)
-                                        Text(warning.isActive() ? "IN CORSO" : "DALLE \(Fmt.dayTime(warning.onset, in: .iceland).uppercased())")
+                                        Text(warning.isActive() ? String(localized: "IN CORSO") : String(localized: "DALLE \(Fmt.dayTime(warning.onset, in: .iceland).uppercased())"))
                                             .font(.mono(9.5)).foregroundStyle(Theme.dim)
                                     }
                                     Text(warning.headline).font(.app(.subheadline, .semibold)).foregroundStyle(Theme.text)
@@ -282,7 +282,7 @@ struct TodayView: View {
 
     private var outlookSection: some View {
         VStack(alignment: .leading, spacing: 12) {
-            SectionLabel(index: "04", title: "Guida e aurora")
+            SectionLabel(index: "04", title: String(localized: "Guida e aurora"))
             HStack(alignment: .top, spacing: 0) {
                 drivingColumn.padding(.trailing, 14)
                 Theme.hairline.frame(width: 1)
@@ -301,9 +301,9 @@ struct TodayView: View {
                 .foregroundStyle(driving.risk == .ok ? Theme.text : driving.risk.color)
             RiskTimeline(risks: hours.map { max($0.windRisk, $0.iceRisk) })
             VStack(spacing: 6) {
-                miniRow("RAFF. MAX", Fmt.ms(driving.maxGust))
-                miniRow("MINIMA", Fmt.temp(driving.minTemp))
-                miniRow("NEVE", Fmt.number(driving.snow, decimals: 1, unit: "cm"))
+                miniRow(String(localized: "RAFF. MAX"), Fmt.ms(driving.maxGust))
+                miniRow(String(localized: "MINIMA"), Fmt.temp(driving.minTemp))
+                miniRow(String(localized: "NEVE"), Fmt.number(driving.snow, decimals: 1, unit: "cm"))
             }
         }
         .frame(maxWidth: .infinity, alignment: .leading)
@@ -343,7 +343,7 @@ struct TodayView: View {
 
     private func miniRow(_ label: String, _ value: String) -> some View {
         HStack {
-            Text(label).font(.mono(9.5)).foregroundStyle(Theme.dim)
+            Text(label.loc).font(.mono(9.5)).foregroundStyle(Theme.dim)
             Spacer()
             Text(value).font(.metric(16, .semibold)).foregroundStyle(Theme.text)
         }
@@ -354,17 +354,17 @@ struct TodayView: View {
     private var roadsSection: some View {
         NavigationLink { RoadsView() } label: {
             VStack(alignment: .leading, spacing: 12) {
-                SectionLabel(index: "05", title: "Strade", trailing: "TUTTE →", trailingColor: Theme.accent)
+                SectionLabel(index: "05", title: String(localized: "Strade"), trailing: String(localized: "TUTTE →"), trailingColor: Theme.accent)
                 if let network = model.roads?.value {
                     let risks = network.segments.map(\.risk)
                     let order: [Risk?] = [.ok, .caution, .warning, .danger, nil]
                     let counts: [(Risk?, Int)] = order.map { r in (r, risks.filter { $0 == r }.count) }
                     HStack(spacing: 0) {
-                        roadCount(counts[0].1, "PERCORRIBILI", Theme.text)
+                        roadCount(counts[0].1, String(localized: "PERCORRIBILI"), Theme.text)
                         Theme.hairline.frame(width: 1)
-                        roadCount(counts[1].1 + counts[2].1, "NEVE / GHIACCIO", counts[1].1 + counts[2].1 > 0 ? Theme.caution : Theme.text)
+                        roadCount(counts[1].1 + counts[2].1, String(localized: "NEVE / GHIACCIO"), counts[1].1 + counts[2].1 > 0 ? Theme.caution : Theme.text)
                         Theme.hairline.frame(width: 1)
-                        roadCount(counts[3].1, "CHIUSI", counts[3].1 > 0 ? Theme.danger : Theme.text)
+                        roadCount(counts[3].1, String(localized: "CHIUSI"), counts[3].1 > 0 ? Theme.danger : Theme.text)
                     }
                     .fixedSize(horizontal: false, vertical: true)
                     StackedBar(parts: counts.map { (value: Double($0.1), color: $0.0 == .ok ? Theme.rule : ($0.0?.color ?? Theme.hairline)) })
@@ -395,7 +395,7 @@ struct TodayView: View {
                             Rule()
                         }
                     }
-                    if let fetched = model.roads { FreshnessLabel(date: fetched.date, isStale: fetched.isStale, source: "Vegagerðin") }
+                    if let fetched = model.roads { FreshnessLabel(date: fetched.date, isStale: fetched.isStale, source: String(localized: "Vegagerðin")) }
                 } else if let error = model.errors[.roads] {
                     ErrorNote(message: error)
                 } else {
@@ -409,7 +409,7 @@ struct TodayView: View {
     private func roadCount(_ value: Int, _ label: String, _ color: Color) -> some View {
         VStack(alignment: .leading, spacing: 0) {
             Text("\(value)").font(.metric(34, .semibold)).foregroundStyle(color)
-            Text(label).font(.mono(9)).foregroundStyle(Theme.dim)
+            Text(label.loc).font(.mono(9)).foregroundStyle(Theme.dim)
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .padding(.leading, 10)
@@ -422,7 +422,7 @@ struct TodayView: View {
         if !near.isEmpty {
             VStack(alignment: .leading, spacing: 12) {
                 NavigationLink { WebcamsView() } label: {
-                    SectionLabel(index: "06", title: "Webcam vicine", trailing: "TUTTE →", trailingColor: Theme.accent)
+                    SectionLabel(index: "06", title: String(localized: "Webcam vicine"), trailing: String(localized: "TUTTE →"), trailingColor: Theme.accent)
                 }
                 .buttonStyle(.plain)
                 ScrollView(.horizontal, showsIndicators: false) {
@@ -441,7 +441,7 @@ struct TodayView: View {
 
     private var moreSection: some View {
         VStack(alignment: .leading, spacing: 12) {
-            SectionLabel(index: "07", title: "Terra, mare, servizi")
+            SectionLabel(index: "07", title: String(localized: "Terra, mare, servizi"))
             VStack(spacing: 0) {
                 HStack(spacing: 0) {
                     quakesCell
@@ -464,7 +464,7 @@ struct TodayView: View {
 
     private func cell<Content: View>(_ title: String, @ViewBuilder content: () -> Content) -> some View {
         VStack(alignment: .leading, spacing: 6) {
-            Text(title).font(.mono(9.5)).foregroundStyle(Theme.faint)
+            Text(title.loc).font(.mono(9.5)).foregroundStyle(Theme.faint)
             content()
             Spacer(minLength: 0)
         }
@@ -475,7 +475,7 @@ struct TodayView: View {
 
     private var quakesCell: some View {
         NavigationLink { QuakesView() } label: {
-            cell("TERREMOTI · 24 H") {
+            cell(String(localized: "TERREMOTI · 24 H")) {
                 let recent = model.recentQuakes24h
                 HStack(alignment: .firstTextBaseline, spacing: 4) {
                     Text("\(recent.count)").font(.metric(34, .semibold)).foregroundStyle(Theme.text)
@@ -502,15 +502,15 @@ struct TodayView: View {
     }
 
     private var seaCell: some View {
-        cell("MARE · ONDE") {
+        cell(String(localized: "MARE · ONDE")) {
             if let marine = model.marine?.value, marine.hasData, let c = marine.current {
                 HStack(alignment: .firstTextBaseline, spacing: 3) {
                     Text(Fmt.number(c.wave_height, decimals: 1)).font(.metric(34, .semibold)).foregroundStyle(Theme.text)
                     Text("M · \(Fmt.number(c.wave_period, decimals: 0)) S").font(.mono(9.5)).foregroundStyle(Theme.dim)
                 }
                 HStack(spacing: 6) {
-                    RiskBadge(risk: marine.beachRisk, text: "Spiagge")
-                    RiskBadge(risk: marine.seaRisk, text: "Barca")
+                    RiskBadge(risk: marine.beachRisk, text: String(localized: "Spiagge"))
+                    RiskBadge(risk: marine.seaRisk, text: String(localized: "Barca"))
                 }
                 Text("ACQUA \(Fmt.temp(c.sea_surface_temperature))").font(.mono(9)).foregroundStyle(Theme.faint)
             } else {
@@ -520,7 +520,7 @@ struct TodayView: View {
     }
 
     private var fuelCell: some View {
-        cell("CARBURANTE") {
+        cell(String(localized: "CARBURANTE")) {
             if let stations = model.fuel?.value, let first = FuelStations.nearest(stations, to: model.activePlace.coordinate, kind: .fuel, limit: 1).first {
                 HStack(alignment: .firstTextBaseline, spacing: 3) {
                     Text(Fmt.number(first.km, decimals: first.km < 10 ? 1 : 0)).font(.metric(34, .semibold)).foregroundStyle(Theme.text)
@@ -531,14 +531,14 @@ struct TodayView: View {
                     Text("RICARICA EV \(Fmt.number(charger.km, decimals: 0)) KM").font(.mono(9)).foregroundStyle(Theme.faint)
                 }
             } else {
-                Text(model.errors[.fuel] == nil ? "Download in corso" : "Non disponibile").font(.app(.caption)).foregroundStyle(Theme.faint)
+                Text(model.errors[.fuel] == nil ? String(localized: "Download in corso") : String(localized: "Non disponibile")).font(.app(.caption)).foregroundStyle(Theme.faint)
             }
         }
     }
 
     private var transportCell: some View {
         NavigationLink { TransportView() } label: {
-            cell("VOLI E TRAGHETTI") {
+            cell(String(localized: "VOLI E TRAGHETTI")) {
                 let followed = (model.flights?.value ?? []).filter { alerts.isFollowing($0.flightNumber) }
                 if let flight = followed.first {
                     Text(flight.flightNumber).font(.metric(30, .semibold)).foregroundStyle(Theme.text)
@@ -559,7 +559,7 @@ struct TodayView: View {
     @ViewBuilder private var newsSection: some View {
         if let news = model.news?.value, !news.isEmpty {
             VStack(alignment: .leading, spacing: 4) {
-                SectionLabel(index: "08", title: "SafeTravel").padding(.bottom, 8)
+                SectionLabel(index: "08", title: String(localized: "SafeTravel")).padding(.bottom, 8)
                 ForEach(news.prefix(4)) { item in
                     if let link = item.link {
                         Link(destination: link) { newsRow(item) }
@@ -575,7 +575,7 @@ struct TodayView: View {
         row(marker: item.risk > .ok ? item.risk.color : Theme.hairline) {
             VStack(alignment: .leading, spacing: 3) {
                 if let date = item.date { Text(Fmt.relative(date).uppercased()).font(.mono(9)).foregroundStyle(Theme.faint) }
-                Text(item.title).font(.app(.subheadline, .semibold)).foregroundStyle(Theme.text).multilineTextAlignment(.leading)
+                Text(item.title.loc).font(.app(.subheadline, .semibold)).foregroundStyle(Theme.text).multilineTextAlignment(.leading)
                 Text(item.summary).font(.app(.caption)).foregroundStyle(Theme.dim).lineLimit(2).multilineTextAlignment(.leading)
             }
         }
@@ -586,7 +586,7 @@ struct TodayView: View {
     @ViewBuilder private var daylight: some View {
         if let today = model.forecast?.value.days.first {
             VStack(alignment: .leading, spacing: 8) {
-                SectionLabel(title: "Luce", trailing: Fmt.duration(today.daylight).uppercased())
+                SectionLabel(title: String(localized: "Luce"), trailing: Fmt.duration(today.daylight).uppercased())
                 DaylightBar(sunrise: today.sunrise, sunset: today.sunset, zone: zone)
                 HStack {
                     Text("ALBA \(Fmt.time(today.sunrise, in: zone))")
@@ -611,14 +611,14 @@ struct HourTable: View {
     var body: some View {
         HStack(alignment: .top, spacing: 0) {
             VStack(alignment: .leading, spacing: 0) {
-                label("ORA"); label("CIELO"); label("°C"); label("VENTO"); label("RAFF."); label("DIR"); label("MM")
+                label(String(localized: "ORA")); label(String(localized: "CIELO")); label("°C"); label(String(localized: "VENTO")); label(String(localized: "RAFF.")); label(String(localized: "DIR")); label("MM")
             }
             .frame(width: labelWidth, alignment: .leading)
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(spacing: 0) {
                     ForEach(Array(hours.enumerated()), id: \.offset) { index, hour in
                         VStack(spacing: 0) {
-                            cell(index == 0 ? "ORA" : Fmt.hour(hour.date, in: zone), mono: true, color: index == 0 ? Theme.accent : Theme.dim)
+                            cell(index == 0 ? String(localized: "ORA") : Fmt.hour(hour.date, in: zone), mono: true, color: index == 0 ? Theme.accent : Theme.dim)
                             Image(systemName: WeatherCode.describe(hour.code, isDay: hour.isDay).symbol)
                                 .symbolRenderingMode(.monochrome)
                                 .font(.system(size: 13))
@@ -641,11 +641,11 @@ struct HourTable: View {
     }
 
     private func label(_ text: String) -> some View {
-        Text(text).font(.mono(9)).foregroundStyle(Theme.faint).frame(height: 30, alignment: .leading)
+        Text(text.loc).font(.mono(9)).foregroundStyle(Theme.faint).frame(height: 30, alignment: .leading)
     }
 
     private func cell(_ text: String, mono: Bool = false, color: Color) -> some View {
-        Text(text)
+        Text(text.loc)
             .font(mono ? .mono(10, .medium) : .metric(18, .semibold))
             .foregroundStyle(color)
             .frame(height: 30)

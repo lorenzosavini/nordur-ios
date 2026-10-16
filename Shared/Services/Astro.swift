@@ -101,9 +101,9 @@ enum Astro {
     static func moonPhaseName(_ m: MoonPosition) -> String {
         switch m.illuminatedFraction {
         case ..<0.03: return String(localized: "Luna nuova")
-        case ..<0.35: return m.waxing ? "Falce crescente" : "Falce calante"
-        case ..<0.65: return m.waxing ? "Primo quarto" : "Ultimo quarto"
-        case ..<0.97: return m.waxing ? "Gibbosa crescente" : "Gibbosa calante"
+        case ..<0.35: return m.waxing ? String(localized: "Falce crescente") : String(localized: "Falce calante")
+        case ..<0.65: return m.waxing ? String(localized: "Primo quarto") : String(localized: "Ultimo quarto")
+        case ..<0.97: return m.waxing ? String(localized: "Gibbosa crescente") : String(localized: "Gibbosa calante")
         default: return String(localized: "Luna piena")
         }
     }

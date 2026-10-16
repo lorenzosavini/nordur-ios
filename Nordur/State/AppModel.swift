@@ -79,7 +79,7 @@ final class AppModel {
 
     var activePlace: Place {
         if useCurrentLocation, let c = location.coordinate {
-            return Place(name: location.placeName ?? "Posizione attuale", coordinate: c, subtitle: "Posizione attuale")
+            return Place(name: location.placeName ?? String(localized: "Posizione attuale"), coordinate: c, subtitle: String(localized: "Posizione attuale"))
         }
         return chosenPlace
     }
@@ -118,7 +118,7 @@ final class AppModel {
     nonisolated static var monitoredPlace: Place {
         let useCurrent = UserDefaults.standard.object(forKey: useCurrentKey) as? Bool ?? true
         if useCurrent, let last = LocationManager.lastKnown {
-            return Place(name: "Posizione attuale", coordinate: last)
+            return Place(name: String(localized: "Posizione attuale"), coordinate: last)
         }
         return storedChosenPlace ?? .reykjavik
     }

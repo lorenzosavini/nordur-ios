@@ -27,11 +27,11 @@ struct AuroraLiveView: View {
     var body: some View {
         ScrollView {
             VStack(spacing: 14) {
-                Card(title: "Ovale aurorale sulla mappa", systemImage: "moon.stars.fill", tint: .mint) {
+                Card(title: String(localized: "Ovale aurorale sulla mappa"), systemImage: "moon.stars.fill", tint: .mint) {
                     HStack(spacing: 0) {
                         ForEach(Layer.allCases, id: \.self) { l in
                             Button { layer = l; Task { await buildClouds() } } label: {
-                                Text(l.rawValue).font(.mono(10.5, .semibold))
+                                Text(l.rawValue.loc).font(.mono(10.5, .semibold))
                                     .foregroundStyle(layer == l ? Theme.bg : Theme.text)
                                     .frame(maxWidth: .infinity).frame(height: 34)
                                     .background(layer == l ? Theme.text : .clear)
@@ -51,12 +51,12 @@ struct AuroraLiveView: View {
                     if let ovation = model.ovation {
                         Text("Previsione OVATION valida per le \(Fmt.time(ovation.value.forecastTime, in: .iceland)) (circa 30–90 minuti dopo la misura del vento solare a L1): non vale per le ore e i giorni successivi. La scala mostra il valore del modello OVATION, non nuvolosità né probabilità di osservazione. Kp previsto per il blocco attuale \(Fmt.number(model.kp.flatMap { KpLookup.kp(at: Date(), in: $0.value) }, decimals: 1)).")
                             .font(.app(.caption2)).foregroundStyle(.secondary)
-                        FreshnessLabel(date: ovation.date, isStale: ovation.isStale, source: "NOAA SWPC")
+                        FreshnessLabel(date: ovation.date, isStale: ovation.isStale, source: String(localized: "NOAA SWPC"))
                     }
                     ErrorNote(message: model.errors[.ovation])
                 }
 
-                Card(title: "Vista polare NOAA, ultime 3 ore", systemImage: "globe.europe.africa.fill", tint: .green) {
+                Card(title: String(localized: "Vista polare NOAA, ultime 3 ore"), systemImage: "globe.europe.africa.fill", tint: .green) {
                     if frames.isEmpty {
                         if let error { ErrorNote(message: error) } else { ProgressView().frame(maxWidth: .infinity, minHeight: 200) }
                     } else {
@@ -118,7 +118,7 @@ struct AuroraLiveView: View {
         // Saved places: the trip's stops.
         pois += trip.stops.map { stop in
             PoiAnnotation(kind: .stop, key: "trip-\(stop.id)", coordinate: stop.place.coordinate.clCoordinate,
-                          title: stop.place.name, subtitle: "Tappa del viaggio", color: UIColor(white: 0.5, alpha: 1), size: 16)
+                          title: stop.place.name, subtitle: String(localized: "Tappa del viaggio"), color: UIColor(white: 0.5, alpha: 1), size: 16)
         }
         c.pois = pois
         c.poisKey = "sites-\(model.siteRanking.map { "\($0.id)\($0.best?.observability.rawValue ?? -1)" }.joined())-\(trip.stops.count)"
@@ -161,7 +161,7 @@ struct AuroraLiveView: View {
                     .frame(height: 8)
                 Text("100%").font(.mono(9))
             }
-            Text(model.weatherGrid.map { "COPERTURA NUVOLOSA TOTALE, ORA \(Fmt.time($0.value.times[$0.value.currentHourIndex], in: .iceland)) · OPEN-METEO" } ?? "NUVOLOSITÀ IN CARICAMENTO")
+            Text(model.weatherGrid.map { String(localized: "COPERTURA NUVOLOSA TOTALE, ORA \(Fmt.time($0.value.times[$0.value.currentHourIndex], in: .iceland)) · OPEN-METEO") } ?? String(localized: "NUVOLOSITÀ IN CARICAMENTO"))
                 .font(.mono(8.5)).foregroundStyle(Theme.faint)
         }
     }

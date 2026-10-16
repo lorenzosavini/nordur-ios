@@ -11,7 +11,7 @@ struct WebcamsView: View {
             .sorted { Geo.distanceKm($0.coordinate, here) < Geo.distanceKm($1.coordinate, here) }
         List {
             if let fetched = model.webcams {
-                FreshnessLabel(date: fetched.date, isStale: fetched.isStale, source: "Vegagerðin")
+                FreshnessLabel(date: fetched.date, isStale: fetched.isStale, source: String(localized: "Vegagerðin"))
             }
             ErrorNote(message: model.errors[.webcams])
             ForEach(sites) { site in
@@ -31,7 +31,7 @@ struct WebcamsView: View {
         }
         .themedList()
         .navigationTitle("Webcam stradali")
-        .searchable(text: $query, prompt: "Cerca webcam o strada")
+        .searchable(text: $query, prompt: String(localized: "Cerca webcam o strada"))
         .refreshable { await model.refreshStatic(force: true) }
         .task { if model.webcams == nil { await model.refreshStatic() } }
     }

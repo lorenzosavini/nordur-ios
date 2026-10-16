@@ -19,7 +19,7 @@ struct AlertsView: View {
                     Image(systemName: alerts.notificationsAllowed ? "bell.badge.fill" : "bell.slash.fill")
                         .foregroundStyle(alerts.notificationsAllowed ? Color.green : Color.red)
                     VStack(alignment: .leading) {
-                        Text(alerts.notificationsAllowed ? "Notifiche attive" : "Notifiche disattivate").font(.app(.subheadline, .semibold))
+                        Text(alerts.notificationsAllowed ? String(localized: "Notifiche attive") : String(localized: "Notifiche disattivate")).font(.app(.subheadline, .semibold))
                         if let last = alerts.lastCheck {
                             Text("Ultimo controllo \(Fmt.relative(last))").font(.app(.caption)).foregroundStyle(.secondary)
                         }
@@ -45,7 +45,7 @@ struct AlertsView: View {
             Section {
                 ScrollView(.horizontal, showsIndicators: false) {
                     HStack {
-                        chip(nil, "Tutte")
+                        chip(nil, String(localized: "Tutte"))
                         ForEach(AlertCategory.allCases) { category in
                             chip(category, category.label)
                         }
@@ -190,8 +190,8 @@ struct AlertSettingsView: View {
             Section {
                 Button("Invia una notifica di prova") {
                     alerts.record(AlertEvent(id: "test:\(Date().timeIntervalSince1970)", date: Date(), category: .weatherWarning,
-                                             severity: Risk.caution.rawValue, title: "Notifica di prova",
-                                             body: "Le notifiche funzionano."), notify: true, speak: false)
+                                             severity: Risk.caution.rawValue, title: String(localized: "Notifica di prova"),
+                                             body: String(localized: "Le notifiche funzionano.")), notify: true, speak: false)
                 }
             }
         }

@@ -42,8 +42,8 @@ enum Appearance: String, CaseIterable, Identifiable {
 
     /// Navigation bars and controls in the app fonts.
     static func configureUIKit() {
-        let title = UIFont(name: "IBMPlexMono-SemiBold", size: 13) ?? .monospacedSystemFont(ofSize: 13, weight: .semibold)
-        let large = UIFont(name: "BarlowCondensed-Bold", size: 40) ?? .systemFont(ofSize: 34, weight: .bold)
+        let title = UIFont(name: String(localized: "IBMPlexMono-SemiBold"), size: 13) ?? .monospacedSystemFont(ofSize: 13, weight: .semibold)
+        let large = UIFont(name: String(localized: "BarlowCondensed-Bold"), size: 40) ?? .systemFont(ofSize: 34, weight: .bold)
         let titleAttributes: [NSAttributedString.Key: Any] = [.font: title, .kern: 1.0]
         let bar = UINavigationBarAppearance()
         bar.configureWithTransparentBackground()
@@ -59,10 +59,10 @@ enum Appearance: String, CaseIterable, Identifiable {
         UINavigationBar.appearance().compactAppearance = scrolled
         UINavigationBar.appearance().scrollEdgeAppearance = bar
         let barButton = UIBarButtonItemAppearance()
-        barButton.normal.titleTextAttributes = [.font: UIFont(name: "IBMPlexSansRoman-Medium", size: 16) ?? .systemFont(ofSize: 16)]
+        barButton.normal.titleTextAttributes = [.font: UIFont(name: String(localized: "IBMPlexSansRoman-Medium"), size: 16) ?? .systemFont(ofSize: 16)]
         scrolled.buttonAppearance = barButton
         bar.buttonAppearance = barButton
-        let mono = UIFont(name: "IBMPlexMono-Medium", size: 12) ?? .monospacedSystemFont(ofSize: 12, weight: .medium)
+        let mono = UIFont(name: String(localized: "IBMPlexMono-Medium"), size: 12) ?? .monospacedSystemFont(ofSize: 12, weight: .medium)
         UISegmentedControl.appearance().setTitleTextAttributes([.font: mono], for: .normal)
         UISegmentedControl.appearance().selectedSegmentTintColor = UIColor(hex: 0xF04A00)
         UISegmentedControl.appearance().setTitleTextAttributes([.font: mono, .foregroundColor: UIColor.white], for: .selected)
@@ -78,11 +78,11 @@ struct NordurTabBar: View {
     @Namespace private var namespace
 
     private let items: [(tab: RootView.Tab, index: String, title: String)] = [
-        (.today, "01", "Oggi"),
-        (.weather, "02", "Meteo"),
-        (.map, "03", "Mappa"),
-        (.drive, "04", "Guida"),
-        (.trip, "05", "Viaggio"),
+        (.today, "01", String(localized: "Oggi")),
+        (.weather, "02", String(localized: "Meteo")),
+        (.map, "03", String(localized: "Mappa")),
+        (.drive, "04", String(localized: "Guida")),
+        (.trip, "05", String(localized: "Viaggio")),
     ]
 
     var body: some View {
@@ -110,7 +110,7 @@ struct NordurTabBar: View {
                                         Rectangle().fill(Theme.accent).frame(width: 5, height: 5)
                                     }
                                 }
-                                Text(item.title.uppercased())
+                                Text(item.title.loc.uppercased())
                                     .font(.mono(11, selected ? .semibold : .medium))
                                     .tracking(0.6)
                                     .foregroundStyle(selected ? Theme.text : Theme.dim)
@@ -143,12 +143,12 @@ struct ScreenHeader<Trailing: View>: View {
             HStack(alignment: .center) {
                 HStack(spacing: 8) {
                     if let index { Text(index).font(.mono(10.5, .semibold)).foregroundStyle(Theme.accent) }
-                    if let subtitle { Text(subtitle).eyebrow(Theme.dim) }
+                    if let subtitle { Text(subtitle.loc).eyebrow(Theme.dim) }
                 }
                 Spacer()
                 trailing
             }
-            Text(title.uppercased()).font(.display(46, .bold)).foregroundStyle(Theme.text)
+            Text(title.loc.uppercased()).font(.display(46, .bold)).foregroundStyle(Theme.text)
                 .padding(.bottom, -6)
             Rule(color: Theme.rule, height: 2)
         }
@@ -178,7 +178,7 @@ struct HeaderButton: View {
             ZStack(alignment: .topTrailing) {
                 Group {
                     if let label {
-                        Text(label).font(.mono(10.5, .semibold)).tracking(0.6).padding(.horizontal, 9)
+                        Text(label.loc).font(.mono(10.5, .semibold)).tracking(0.6).padding(.horizontal, 9)
                     } else {
                         Image(systemName: systemImage).font(.system(size: 13, weight: .semibold)).frame(width: 34)
                     }

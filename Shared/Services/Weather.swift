@@ -435,13 +435,13 @@ enum IMOForecast {
 
     static func translate(_ text: String) -> String {
         let table: [String: String] = [
-            "clear sky": "Sereno", "partly cloudy": "Poco nuvoloso", "cloudy": "Nuvoloso", "overcast": "Coperto",
-            "light rain": "Pioggia debole", "rain": "Pioggia", "heavy rain": "Pioggia forte", "drizzle": "Pioviggine",
-            "light sleet": "Nevischio debole", "sleet": "Nevischio", "light snow": "Neve debole", "snow": "Neve",
-            "heavy snow": "Neve forte", "rain showers": "Rovesci", "light rain showers": "Rovesci deboli",
-            "sleet showers": "Rovesci di nevischio", "snow showers": "Rovesci di neve", "light snow showers": "Deboli rovesci di neve",
-            "fog": "Nebbia", "dust": "Polvere", "thunder": "Temporale", "freezing rain": "Pioggia gelata",
-            "light drizzle": "Pioviggine debole", "freezing drizzle": "Pioviggine gelata",
+            "clear sky": String(localized: "Sereno"), "partly cloudy": String(localized: "Poco nuvoloso"), "cloudy": String(localized: "Nuvoloso"), "overcast": String(localized: "Coperto"),
+            "light rain": String(localized: "Pioggia debole"), "rain": String(localized: "Pioggia"), "heavy rain": String(localized: "Pioggia forte"), "drizzle": String(localized: "Pioviggine"),
+            "light sleet": String(localized: "Nevischio debole"), "sleet": String(localized: "Nevischio"), "light snow": String(localized: "Neve debole"), "snow": String(localized: "Neve"),
+            "heavy snow": String(localized: "Neve forte"), "rain showers": String(localized: "Rovesci"), "light rain showers": String(localized: "Rovesci deboli"),
+            "sleet showers": String(localized: "Rovesci di nevischio"), "snow showers": String(localized: "Rovesci di neve"), "light snow showers": String(localized: "Deboli rovesci di neve"),
+            "fog": String(localized: "Nebbia"), "dust": String(localized: "Polvere"), "thunder": String(localized: "Temporale"), "freezing rain": String(localized: "Pioggia gelata"),
+            "light drizzle": String(localized: "Pioviggine debole"), "freezing drizzle": String(localized: "Pioviggine gelata"),
         ]
         return table[text.lowercased()] ?? text
     }

@@ -26,7 +26,7 @@ struct AuroraView: View {
         ScrollView {
             VStack(alignment: .leading, spacing: 28) {
                 VStack(alignment: .leading, spacing: 16) {
-                    ScreenHeader(title: "Aurora", subtitle: "NOAA · GFZ · NASA · MET Norway")
+                    ScreenHeader(title: String(localized: "Aurora"), subtitle: String(localized: "NOAA · GFZ · NASA · MET Norway"))
                     PlaceHeader(size: 30)
                     summary
                     modePicker
@@ -60,12 +60,12 @@ struct AuroraView: View {
         VStack(spacing: 0) {
             Rule(color: Theme.rule, height: 2)
             HStack(alignment: .top, spacing: 0) {
-                answer("ATTIVITÀ", activityText(now), activityDetail(now))
+                answer(String(localized: "ATTIVITÀ"), activityText(now), activityDetail(now))
                 Theme.hairline.frame(width: 1)
-                answer("OSSERVABILITÀ QUI", now?.observability.label ?? "–", now.map { $0.darkness.label } ?? "", color: classColor(now?.observability))
+                answer(String(localized: "OSSERVABILITÀ QUI"), now?.observability.label ?? "–", now.map { $0.darkness.label } ?? "", color: classColor(now?.observability))
                     .padding(.leading, 10)
                 Theme.hairline.frame(width: 1)
-                answer("AFFIDABILITÀ", now?.reliability.label ?? "–", now?.activitySource ?? "", color: reliabilityColor(now?.reliability))
+                answer(String(localized: "AFFIDABILITÀ"), now?.reliability.label ?? "–", now?.activitySource ?? "", color: reliabilityColor(now?.reliability))
                     .padding(.leading, 10)
             }
             .fixedSize(horizontal: false, vertical: true)
@@ -76,7 +76,7 @@ struct AuroraView: View {
                     ForEach(now.reasons.prefix(3), id: \.self) { reason in
                         HStack(alignment: .firstTextBaseline, spacing: 8) {
                             Text("—").font(.mono(10)).foregroundStyle(Theme.faint)
-                            Text(reason).font(.app(.caption)).foregroundStyle(Theme.text)
+                            Text(reason.loc).font(.app(.caption)).foregroundStyle(Theme.text)
                         }
                     }
                 }
@@ -99,22 +99,22 @@ struct AuroraView: View {
 
     private func answer(_ title: String, _ value: String, _ detail: String, color: Color = Theme.text) -> some View {
         VStack(alignment: .leading, spacing: 4) {
-            Text(title).font(.mono(8.5)).foregroundStyle(Theme.faint)
+            Text(title.loc).font(.mono(8.5)).foregroundStyle(Theme.faint)
             Text(value.uppercased()).font(.display(19, .semibold)).foregroundStyle(color).lineLimit(2).minimumScaleFactor(0.7)
-            Text(detail).font(.mono(9)).foregroundStyle(Theme.dim).lineLimit(2)
+            Text(detail.loc).font(.mono(9)).foregroundStyle(Theme.dim).lineLimit(2)
         }
         .frame(maxWidth: .infinity, alignment: .leading)
     }
 
     private func activityText(_ s: AuroraSlot?) -> String {
         guard let s else { return "–" }
-        if s.activitySource == "OVATION" { return s.geometry == .none ? "Assente qui" : s.geometry.label }
+        if s.activitySource == "OVATION" { return s.geometry == .none ? String(localized: "Assente qui") : s.geometry.label }
         return s.kp.map { "Kp \(Fmt.number($0, decimals: 1))" } ?? "–"
     }
 
     private func activityDetail(_ s: AuroraSlot?) -> String {
         guard let s else { return "" }
-        if s.activitySource == "OVATION", let v = s.ovationValue, v > 0 { return "OVATION \(Int(v)) · \(AuroraEngine.compass(s.lookAzimuth))" }
+        if s.activitySource == "OVATION", let v = s.ovationValue, v > 0 { return String(localized: "OVATION \(Int(v)) · \(AuroraEngine.compass(s.lookAzimuth))") }
         return s.geometry.label
     }
 
@@ -122,7 +122,7 @@ struct AuroraView: View {
         HStack(spacing: 0) {
             ForEach(Mode.allCases) { m in
                 Button { withAnimation(.snappy(duration: 0.2)) { mode = m } } label: {
-                    Text(m.rawValue).font(.mono(10.5, .semibold)).tracking(0.5)
+                    Text(m.rawValue.loc).font(.mono(10.5, .semibold)).tracking(0.5)
                         .foregroundStyle(mode == m ? Theme.bg : Theme.text)
                         .frame(maxWidth: .infinity).frame(height: 36)
                         .background(mode == m ? Theme.text : .clear)
@@ -138,7 +138,7 @@ struct AuroraView: View {
 
     @ViewBuilder private var liveMode: some View {
         VStack(alignment: .leading, spacing: 12) {
-            SectionLabel(index: "01", title: "Ovale adesso", trailing: ovationValidity)
+            SectionLabel(index: "01", title: String(localized: "Ovale adesso"), trailing: ovationValidity)
             if let now = model.auroraNow, now.activitySource == "OVATION" {
                 HStack(alignment: .firstTextBaseline, spacing: 12) {
                     Text(now.ovationValue.map { "\(Int($0))" } ?? "0").font(.metric(72, .bold))
@@ -147,7 +147,7 @@ struct AuroraView: View {
                         Text("VALORE OVATION NEL TUO CIELO").font(.mono(9)).foregroundStyle(Theme.dim)
                         Text(now.geometry.label.uppercased()).font(.display(20, .semibold)).foregroundStyle(Theme.text)
                         if now.geometry != .none, let az = now.lookAzimuth {
-                            Text("GUARDA VERSO \(AuroraEngine.compass(az)) (\(Int(az))°)\(now.lookElevation.map { " · ~\(Int($0))° SULL'ORIZZONTE" } ?? "")")
+                            Text("GUARDA VERSO \(AuroraEngine.compass(az)) (\(Int(az))°)\(now.lookElevation.map { String(localized: " · ~\(Int($0))° SULL'ORIZZONTE") } ?? "")")
                                 .font(.mono(10, .semibold)).foregroundStyle(Theme.accent)
                         }
                     }
@@ -175,19 +175,19 @@ struct AuroraView: View {
 
     private var ovationValidity: String {
         guard let o = state?.ovation, let v = o.validAt else {
-            return model.ovation?.value.forecastTime.map { "VALIDO \(Fmt.time($0, in: zone))" } ?? ""
+            return model.ovation?.value.forecastTime.map { String(localized: "VALIDO \(Fmt.time($0, in: zone))") } ?? ""
         }
-        return "VALIDO \(Fmt.time(v, in: zone))"
+        return String(localized: "VALIDO \(Fmt.time(v, in: zone))")
     }
 
     @ViewBuilder private var solarWindSection: some View {
         VStack(alignment: .leading, spacing: 12) {
-            SectionLabel(index: "02", title: "Vento solare a L1", trailing: swTrailing.text, trailingColor: swTrailing.color)
+            SectionLabel(index: "02", title: String(localized: "Vento solare a L1"), trailing: swTrailing.text, trailingColor: swTrailing.color)
             if let sw = state?.solarWind {
                 VStack(spacing: 0) {
                     HStack(spacing: 0) {
                         cellHead("", 46, .leading)
-                        ForEach(["ORA", "5'", "15'", "30'", "60'"], id: \.self) { cellHead($0, nil) }
+                        ForEach([String(localized: "ORA"), "5'", "15'", "30'", "60'"], id: \.self) { cellHead($0, nil) }
                     }
                     .padding(.bottom, 5)
                     Rule()
@@ -195,18 +195,18 @@ struct AuroraView: View {
                     swRow("BT nT", sw.latest.bt, [5, 15, 30, 60].map { sw.average($0)?.bt }, decimals: 1)
                     swRow("V km/s", sw.latest.v, [5, 15, 30, 60].map { sw.average($0)?.v }, decimals: 0, tint: { ($0 ?? 0) >= 600 ? Theme.aurora : Theme.text })
                     swRow("N /cm³", sw.latest.n, [5, 15, 30, 60].map { sw.average($0)?.n }, decimals: 1)
-                    swRow("P nPa", sw.latest.pdyn, [5, 15, 30, 60].map { sw.average($0)?.pdyn }, decimals: 2)
+                    swRow(String(localized: "P nPa"), sw.latest.pdyn, [5, 15, 30, 60].map { sw.average($0)?.pdyn }, decimals: 2)
                 }
                 ReadingGrid(items: [
-                    Reading(label: "Bz sud continuo", value: "\(sw.bzSouth.continuousMinutes)", unit: "min",
+                    Reading(label: String(localized: "Bz sud continuo"), value: "\(sw.bzSouth.continuousMinutes)", unit: "min",
                             tint: sw.bzSouth.continuousMinutes >= 30 ? Theme.aurora : Theme.text, size: 24),
                     Reading(label: "Bz ≤ −5 in 60'", value: Fmt.number((sw.bzSouth.fractionBelow5 ?? 0) * 100), unit: "%", size: 24),
-                    Reading(label: "Pressione vs 1 h fa", value: sw.pressureTrend.map { "×\(Fmt.number($0, decimals: 1))" } ?? "–",
+                    Reading(label: String(localized: "Pressione vs 1 h fa"), value: sw.pressureTrend.map { "×\(Fmt.number($0, decimals: 1))" } ?? "–",
                             tint: (sw.pressureTrend ?? 1) >= 1.5 ? Theme.caution : Theme.text, size: 24),
-                    Reading(label: "Arrivo a terra", value: sw.propagation.map { "\(Int($0.minutes))" } ?? "–",
-                            unit: sw.propagation.map { "±\(Int($0.uncertaintyMinutes)) min" } ?? "", size: 24),
-                    Reading(label: "Kp da vento (Newell)", value: Fmt.number(sw.newellKp, decimals: 1), size: 24),
-                    Reading(label: "Bz min / max 60'", value: "\(Fmt.number(sw.extremes60.bzMin, decimals: 0))/\(Fmt.number(sw.extremes60.bzMax, decimals: 0))", unit: "nT", size: 24),
+                    Reading(label: String(localized: "Arrivo a terra"), value: sw.propagation.map { "\(Int($0.minutes))" } ?? "–",
+                            unit: sw.propagation.map { String(localized: "±\(Int($0.uncertaintyMinutes)) min") } ?? "", size: 24),
+                    Reading(label: String(localized: "Kp da vento (Newell)"), value: Fmt.number(sw.newellKp, decimals: 1), size: 24),
+                    Reading(label: String(localized: "Bz min / max 60'"), value: "\(Fmt.number(sw.extremes60.bzMin, decimals: 0))/\(Fmt.number(sw.extremes60.bzMax, decimals: 0))", unit: "nT", size: 24),
                 ], columns: 3)
                 .overlay(alignment: .top) { Rule() }
                 .overlay(alignment: .bottom) { Rule() }
@@ -236,12 +236,12 @@ struct AuroraView: View {
 
     private var swTrailing: (text: String, color: Color) {
         guard let sw = state?.solarWind, let s = state?.source("solarWind") else { return ("", Theme.dim) }
-        let age = "\(sw.spacecraft ?? "") · \(Int(sw.ageMinutes ?? 0)) MIN FA"
-        return s.isOK ? (age, Theme.dim) : ("NON AGGIORNATO · \(age)", Theme.warning)
+        let age = String(localized: "\(sw.spacecraft ?? "") · \(Int(sw.ageMinutes ?? 0)) MIN FA")
+        return s.isOK ? (age, Theme.dim) : (String(localized: "NON AGGIORNATO · \(age)"), Theme.warning)
     }
 
     private func cellHead(_ text: String, _ width: CGFloat?, _ alignment: Alignment = .trailing) -> some View {
-        Text(text).font(.mono(8.5)).foregroundStyle(Theme.faint)
+        Text(text.loc).font(.mono(8.5)).foregroundStyle(Theme.faint)
             .frame(width: width, alignment: alignment)
             .frame(maxWidth: width == nil ? .infinity : nil, alignment: alignment)
     }
@@ -249,7 +249,7 @@ struct AuroraView: View {
     private func swRow(_ label: String, _ now: Double?, _ values: [Double?], decimals: Int, tint: @escaping (Double?) -> Color = { _ in Theme.text }) -> some View {
         VStack(spacing: 0) {
             HStack(spacing: 0) {
-                Text(label).font(.mono(9)).foregroundStyle(Theme.dim).frame(width: 46, alignment: .leading)
+                Text(label.loc).font(.mono(9)).foregroundStyle(Theme.dim).frame(width: 46, alignment: .leading)
                 Text(Fmt.number(now, decimals: decimals)).font(.metric(17, .semibold)).foregroundStyle(tint(now)).frame(maxWidth: .infinity, alignment: .trailing)
                 ForEach(Array(values.enumerated()), id: \.offset) { item in
                     Text(Fmt.number(item.element, decimals: decimals)).font(.metric(17)).foregroundStyle(tint(item.element)).frame(maxWidth: .infinity, alignment: .trailing)
@@ -268,7 +268,7 @@ struct AuroraView: View {
         if points.count > 10 {
             Chart {
                 ForEach(Array(points.enumerated()), id: \.offset) { item in
-                    LineMark(x: .value("Ora", item.element.0), y: .value("Bz", item.element.1))
+                    LineMark(x: .value(String(localized: "Ora"), item.element.0), y: .value("Bz", item.element.1))
                         .foregroundStyle(Theme.text).lineStyle(StrokeStyle(lineWidth: 1.1))
                 }
                 RuleMark(y: .value("0", 0)).foregroundStyle(Theme.rule.opacity(0.4))
@@ -293,12 +293,12 @@ struct AuroraView: View {
 
     @ViewBuilder private var kpNowSection: some View {
         VStack(alignment: .leading, spacing: 10) {
-            SectionLabel(index: "03", title: "Indice Kp", trailing: "MISURATO ≠ PREVISTO")
+            SectionLabel(index: "03", title: String(localized: "Indice Kp"), trailing: String(localized: "MISURATO ≠ PREVISTO"))
             VStack(spacing: 0) {
-                kpRow("Stima NOAA (1 min)", "provvisoria, magnetometri a terra", state?.kp.estimated?.kp, state?.kp.estimated?.date)
-                kpRow("Kp GFZ Potsdam", "produttore ufficiale · \(state?.kp.gfz.last?.status ?? "–")", state?.kp.gfz.last?.kp, state?.kp.gfz.last?.date)
-                kpRow("Previsione NOAA, blocco attuale", "3 ore", state?.currentBlock?.noaa, state?.currentBlock?.start)
-                kpRow("Combinato, blocco attuale", state?.currentBlock?.driver ?? "–", state?.currentBlock?.value, nil, highlight: true)
+                kpRow(String(localized: "Stima NOAA (1 min)"), String(localized: "provvisoria, magnetometri a terra"), state?.kp.estimated?.kp, state?.kp.estimated?.date)
+                kpRow(String(localized: "Kp GFZ Potsdam"), String(localized: "produttore ufficiale · \(state?.kp.gfz.last?.status ?? "–")"), state?.kp.gfz.last?.kp, state?.kp.gfz.last?.date)
+                kpRow(String(localized: "Previsione NOAA, blocco attuale"), String(localized: "3 ore"), state?.currentBlock?.noaa, state?.currentBlock?.start)
+                kpRow(String(localized: "Combinato, blocco attuale"), state?.currentBlock?.driver ?? "–", state?.currentBlock?.value, nil, highlight: true)
             }
             .overlay(alignment: .top) { Rule() }
             if let hp = state?.hemisphericPower?.latest?.north {
@@ -315,7 +315,7 @@ struct AuroraView: View {
         VStack(spacing: 0) {
             HStack(alignment: .firstTextBaseline) {
                 VStack(alignment: .leading, spacing: 1) {
-                    Text(title).font(.app(.subheadline, .medium)).foregroundStyle(Theme.text)
+                    Text(title.loc).font(.app(.subheadline, .medium)).foregroundStyle(Theme.text)
                     Text(detail + (time.map { " · \(Fmt.dayTime($0, in: zone))" } ?? "")).font(.mono(9)).foregroundStyle(Theme.faint)
                 }
                 Spacer()
@@ -330,13 +330,13 @@ struct AuroraView: View {
         let active = (state?.alerts ?? []).filter { $0.active == true }
         let recent = (state?.alerts ?? []).filter { $0.active != true }.prefix(3)
         VStack(alignment: .leading, spacing: 8) {
-            SectionLabel(index: "04", title: "Avvisi NOAA", trailing: active.isEmpty ? "NESSUNO ATTIVO" : "\(active.count) ATTIVI",
+            SectionLabel(index: "04", title: String(localized: "Avvisi NOAA"), trailing: active.isEmpty ? String(localized: "NESSUNO ATTIVO") : String(localized: "\(active.count) ATTIVI"),
                          trailingColor: active.isEmpty ? Theme.dim : Theme.warning)
             ForEach(active + Array(recent)) { alert in
                 HStack(alignment: .top, spacing: 10) {
                     Rectangle().fill(alert.active == true ? Theme.warning : Theme.hairline).frame(width: 3)
                     VStack(alignment: .leading, spacing: 2) {
-                        Text("\(alert.active == true ? "ATTIVO" : "SCADUTO") · \(alert.issuedDate.map { Fmt.dayTime($0, in: zone) } ?? "")")
+                        Text("\(alert.active == true ? "ATTIVO" : String(localized: "SCADUTO")) · \(alert.issuedDate.map { Fmt.dayTime($0, in: zone) } ?? "")")
                             .font(.mono(9)).foregroundStyle(Theme.faint)
                         Text(alert.italian).font(.app(.caption, .medium)).foregroundStyle(Theme.text)
                     }
@@ -348,15 +348,15 @@ struct AuroraView: View {
 
     @ViewBuilder private var sightingsSection: some View {
         VStack(alignment: .leading, spacing: 10) {
-            SectionLabel(index: "05", title: "Avvistamenti", trailing: "ULTIME 3 ORE")
+            SectionLabel(index: "05", title: String(localized: "Avvistamenti"), trailing: String(localized: "ULTIME 3 ORE"))
             let near = (sightings?.cells ?? []).filter { Geo.distanceKm(place, Coordinate(lat: $0.lat, lon: $0.lon)) < 150 }
             Text(near.isEmpty
-                 ? "Nessuna segnalazione entro 150 km. L'assenza di segnalazioni non indica assenza di aurora."
-                 : "\(near.reduce(0) { $0 + $1.reports }) segnalazioni entro 150 km (\(near.reduce(0) { $0 + $1.nakedEye }) a occhio nudo).")
+                 ? String(localized: "Nessuna segnalazione entro 150 km. L'assenza di segnalazioni non indica assenza di aurora.")
+                 : String(localized: "\(near.reduce(0) { $0 + $1.reports }) segnalazioni entro 150 km (\(near.reduce(0) { $0 + $1.nakedEye }) a occhio nudo)."))
                 .font(.app(.caption)).foregroundStyle(Theme.text)
             Button { reporting = true } label: {
                 HStack {
-                    Text(account.isSignedIn ? "HO VISTO L'AURORA" : "ACCEDI PER SEGNALARE").font(.mono(11, .semibold)).tracking(0.6)
+                    Text(account.isSignedIn ? String(localized: "HO VISTO L'AURORA") : String(localized: "ACCEDI PER SEGNALARE")).font(.mono(11, .semibold)).tracking(0.6)
                     Spacer()
                     Text("+").font(.mono(15, .semibold))
                 }
@@ -375,11 +375,11 @@ struct AuroraView: View {
     @ViewBuilder private var dayMode: some View {
         let slots = model.auroraSlots.filter { $0.date.addingTimeInterval(3600) > Date() }.prefix(24)
         VStack(alignment: .leading, spacing: 10) {
-            SectionLabel(index: "01", title: "Ora per ora", trailing: "ORA LOCALE")
+            SectionLabel(index: "01", title: String(localized: "Ora per ora"), trailing: String(localized: "ORA LOCALE"))
             VStack(spacing: 0) {
                 HStack(spacing: 0) {
-                    cellHead("ORA", 34, .leading); cellHead("ATTIVITÀ", 74, .leading); cellHead("NUVOLE", 50); cellHead("BUIO", 44); cellHead("LUNA", 40)
-                    cellHead("OSSERVABILITÀ", nil, .leading).padding(.leading, 10)
+                    cellHead(String(localized: "ORA"), 34, .leading); cellHead(String(localized: "ATTIVITÀ"), 74, .leading); cellHead(String(localized: "NUVOLE"), 50); cellHead(String(localized: "BUIO"), 44); cellHead(String(localized: "LUNA"), 40)
+                    cellHead(String(localized: "OSSERVABILITÀ"), nil, .leading).padding(.leading, 10)
                 }
                 .padding(.bottom, 5)
                 Rule()
@@ -423,9 +423,9 @@ struct AuroraView: View {
 
     @ViewBuilder private var sitesSection: some View {
         VStack(alignment: .leading, spacing: 10) {
-            SectionLabel(index: "02", title: "Località migliori · 12 h", trailing: "METEO MET NORWAY")
+            SectionLabel(index: "02", title: String(localized: "Località migliori · 12 h"), trailing: String(localized: "METEO MET NORWAY"))
             if model.siteRanking.isEmpty {
-                ErrorNote(message: model.errors[.sites] ?? "Classifica in caricamento")
+                ErrorNote(message: model.errors[.sites] ?? String(localized: "Classifica in caricamento"))
             } else {
                 VStack(spacing: 0) {
                     ForEach(Array(model.siteRanking.prefix(8).enumerated()), id: \.element.id) { item in
@@ -434,14 +434,14 @@ struct AuroraView: View {
                             Text("\(item.offset + 1)").font(.mono(10, .semibold)).foregroundStyle(Theme.faint).frame(width: 16, alignment: .leading)
                             VStack(alignment: .leading, spacing: 1) {
                                 Text(s.site.name).font(.app(.subheadline, .medium)).foregroundStyle(Theme.text)
-                                Text([s.now.flatMap(\.clear).map { "nuvole ora \(Int(((1 - $0) * 100).rounded()))%" },
+                                Text([s.now.flatMap(\.clear).map { String(localized: "nuvole ora \(Int(((1 - $0) * 100).rounded()))%") },
                                       s.distanceKm.map { "\(Int($0)) km" }].compactMap { $0 }.joined(separator: " · "))
                                     .font(.mono(9)).foregroundStyle(Theme.faint)
                             }
                             Spacer()
                             VStack(alignment: .trailing, spacing: 1) {
                                 Text(s.best?.observability.label.uppercased() ?? "–").font(.mono(9.5, .semibold)).foregroundStyle(classColor(s.best?.observability))
-                                Text(s.best.map { "verso le \(Fmt.time($0.date, in: zone))" } ?? "").font(.mono(9)).foregroundStyle(Theme.dim)
+                                Text(s.best.map { String(localized: "verso le \(Fmt.time($0.date, in: zone))") } ?? "").font(.mono(9)).foregroundStyle(Theme.dim)
                             }
                         }
                         .padding(.vertical, 8)
@@ -459,7 +459,7 @@ struct AuroraView: View {
 
     @ViewBuilder private var threeDayMode: some View {
         VStack(alignment: .leading, spacing: 12) {
-            SectionLabel(index: "01", title: "Kp a blocchi di 3 ore", trailing: "OSSERVATO · STIMATO · PREVISTO")
+            SectionLabel(index: "01", title: String(localized: "Kp a blocchi di 3 ore"), trailing: String(localized: "OSSERVATO · STIMATO · PREVISTO"))
             if let blocks = state?.kp.blocks, !blocks.isEmpty {
                 kpChart(blocks)
                 VStack(spacing: 0) {
@@ -493,13 +493,13 @@ struct AuroraView: View {
         return Chart {
             ForEach(Array(shown.enumerated()), id: \.offset) { entry in
                 let item = entry.element
-                BarMark(x: .value("Ora", item.0, unit: .hour), y: .value("Kp", item.1.value), width: .fixed(9))
+                BarMark(x: .value(String(localized: "Ora"), item.0, unit: .hour), y: .value("Kp", item.1.value), width: .fixed(9))
                     .foregroundStyle(item.1.isObserved ? Theme.dim : (item.1.nasa != nil && item.1.driver == "CME NASA" ? Theme.accent : Theme.text))
                 if !item.1.isObserved {
-                    PointMark(x: .value("Ora", item.0, unit: .hour), y: .value("NOAA", item.1.noaa)).symbolSize(14).foregroundStyle(Theme.aurora)
+                    PointMark(x: .value(String(localized: "Ora"), item.0, unit: .hour), y: .value(String(localized: "NOAA"), item.1.noaa)).symbolSize(14).foregroundStyle(Theme.aurora)
                 }
             }
-            RuleMark(x: .value("Adesso", now)).foregroundStyle(Theme.accent).lineStyle(StrokeStyle(lineWidth: 1))
+            RuleMark(x: .value(String(localized: "Adesso"), now)).foregroundStyle(Theme.accent).lineStyle(StrokeStyle(lineWidth: 1))
         }
         .chartYScale(domain: 0...9)
         .chartXAxis {
@@ -522,7 +522,7 @@ struct AuroraView: View {
     @ViewBuilder private var nightsSection: some View {
         let nights = nightBests()
         VStack(alignment: .leading, spacing: 8) {
-            SectionLabel(index: "02", title: "Notti", trailing: "MIGLIORE ORA PER NOTTE")
+            SectionLabel(index: "02", title: String(localized: "Notti"), trailing: String(localized: "MIGLIORE ORA PER NOTTE"))
             ForEach(nights, id: \.date) { s in
                 HStack(spacing: 10) {
                     Text(Fmt.day(s.date, in: zone).uppercased()).font(.mono(10, .semibold)).foregroundStyle(Theme.text).frame(width: 96, alignment: .leading)
@@ -552,16 +552,16 @@ struct AuroraView: View {
     @ViewBuilder private var enlilSection: some View {
         if let enlil = state?.enlil, !enlil.samples.isEmpty {
             VStack(alignment: .leading, spacing: 8) {
-                SectionLabel(index: "03", title: "Vento solare previsto · WSA-ENLIL NOAA")
+                SectionLabel(index: "03", title: String(localized: "Vento solare previsto · WSA-ENLIL NOAA"))
                 Chart {
                     ForEach(Array(enlil.samples.compactMap { s in s.date.map { ($0, s) } }.enumerated()), id: \.offset) { entry in
                         let item = entry.element
-                        LineMark(x: .value("Ora", item.0), y: .value("km/s", item.1.v)).foregroundStyle(Theme.text)
+                        LineMark(x: .value(String(localized: "Ora"), item.0), y: .value("km/s", item.1.v)).foregroundStyle(Theme.text)
                         if item.1.cloud {
-                            BarMark(x: .value("Ora", item.0), yStart: .value("a", 250), yEnd: .value("b", 300)).foregroundStyle(Theme.accent)
+                            BarMark(x: .value(String(localized: "Ora"), item.0), yStart: .value("a", 250), yEnd: .value("b", 300)).foregroundStyle(Theme.accent)
                         }
                     }
-                    RuleMark(x: .value("Adesso", Date())).foregroundStyle(Theme.accent)
+                    RuleMark(x: .value(String(localized: "Adesso"), Date())).foregroundStyle(Theme.accent)
                 }
                 .chartYScale(domain: 250...max(700, (enlil.samples.map(\.v).max() ?? 600) + 50))
                 .chartXAxis {
@@ -572,8 +572,8 @@ struct AuroraView: View {
                 }
                 .frame(height: 110)
                 Text(enlil.cmeArrivals.isEmpty
-                     ? "Il modello non prevede materiale di CME alla Terra fino al \(enlil.modelEnd.flatMap { DateParse.iso($0) }.map { Fmt.day($0, in: zone) } ?? "termine del modello"). ENLIL prevede velocità e densità, non il Bz: non può dire da solo quanto sarà forte una tempesta."
-                     : "Materiale di CME previsto alla Terra: \(enlil.cmeArrivals.compactMap { $0.date.map { Fmt.dayTime($0, in: zone) } }.joined(separator: ", ")) (barre arancioni). L'intensità dipenderà dal Bz all'arrivo, misurabile solo ~1 ora prima a L1.")
+                     ? String(localized: "Il modello non prevede materiale di CME alla Terra fino al \(enlil.modelEnd.flatMap { DateParse.iso($0) }.map { Fmt.day($0, in: zone) } ?? String(localized: "termine del modello")). ENLIL prevede velocità e densità, non il Bz: non può dire da solo quanto sarà forte una tempesta.")
+                     : String(localized: "Materiale di CME previsto alla Terra: \(enlil.cmeArrivals.compactMap { $0.date.map { Fmt.dayTime($0, in: zone) } }.joined(separator: ", ")) (barre arancioni). L'intensità dipenderà dal Bz all'arrivo, misurabile solo ~1 ora prima a L1."))
                     .font(.app(.caption)).foregroundStyle(Theme.dim)
             }
         }
@@ -581,7 +581,7 @@ struct AuroraView: View {
 
     @ViewBuilder private var donkiSection: some View {
         VStack(alignment: .leading, spacing: 8) {
-            SectionLabel(index: "04", title: "NASA DONKI", trailing: donkiTrailing.text, trailingColor: donkiTrailing.color)
+            SectionLabel(index: "04", title: String(localized: "NASA DONKI"), trailing: donkiTrailing.text, trailingColor: donkiTrailing.color)
             if let d = state?.donki {
                 if d.upcoming.isEmpty {
                     Text("Nessuna CME diretta verso la Terra nelle simulazioni NASA degli ultimi 10 giorni.").font(.app(.caption)).foregroundStyle(Theme.dim)
@@ -590,9 +590,9 @@ struct AuroraView: View {
                     HStack(alignment: .top, spacing: 10) {
                         Rectangle().fill(cme.glancing ? Theme.caution : Theme.accent).frame(width: 3)
                         VStack(alignment: .leading, spacing: 2) {
-                            Text("\(cme.glancing ? "CME DI STRISCIO" : "CME DIRETTA") · ARRIVO \(cme.arrivalDate.map { Fmt.dayTime($0, in: zone).uppercased() } ?? "–") ±\(Int(cme.arrivalUncertaintyHours ?? 7)) H")
+                            Text("\(cme.glancing ? String(localized: "CME DI STRISCIO") : String(localized: "CME DIRETTA")) · ARRIVO \(cme.arrivalDate.map { Fmt.dayTime($0, in: zone).uppercased() } ?? "–") ±\(Int(cme.arrivalUncertaintyHours ?? 7)) H")
                                 .font(.mono(9.5, .semibold)).foregroundStyle(Theme.text)
-                            Text([cme.speed.map { "\(Int($0)) km/s" }, cme.kp.map { "Kp atteso da NASA \(Fmt.number($0.min))–\(Fmt.number($0.max))" }, cme.durationHours.map { "~\(Int($0)) h" }]
+                            Text([cme.speed.map { "\(Int($0)) km/s" }, cme.kp.map { String(localized: "Kp atteso da NASA \(Fmt.number($0.min))–\(Fmt.number($0.max))") }, cme.durationHours.map { "~\(Int($0)) h" }]
                                 .compactMap { $0 }.joined(separator: " · ")).font(.app(.caption)).foregroundStyle(Theme.dim)
                         }
                     }
@@ -611,9 +611,9 @@ struct AuroraView: View {
 
     private var donkiTrailing: (text: String, color: Color) {
         switch state?.source("donki")?.status {
-        case "ok": return ("AGGIORNATO", Theme.dim)
-        case "stale": return ("ULTIMA COPIA SALVATA", Theme.caution)
-        default: return ("NON DISPONIBILE", Theme.warning)
+        case "ok": return (String(localized: "AGGIORNATO"), Theme.dim)
+        case "stale": return (String(localized: "ULTIMA COPIA SALVATA"), Theme.caution)
+        default: return (String(localized: "NON DISPONIBILE"), Theme.warning)
         }
     }
 
@@ -622,15 +622,15 @@ struct AuroraView: View {
     @ViewBuilder private var longMode: some View {
         let days = state?.longTerm?.outlook27 ?? []
         VStack(alignment: .leading, spacing: 10) {
-            SectionLabel(index: "01", title: "Tendenza 27 giorni", trailing: "INDICAZIONE PRELIMINARE")
+            SectionLabel(index: "01", title: String(localized: "Tendenza 27 giorni"), trailing: String(localized: "INDICAZIONE PRELIMINARE"))
             Text("NOAA pubblica ogni settimana il Kp massimo atteso per giorno, basato sulla rotazione solare di 27 giorni (ricorrenza dei buchi coronali). Non esiste una previsione affidabile di aurora o nuvole a queste distanze: qui trovi attività attesa, ore di buio e Luna. Il dettaglio aumenta avvicinandosi alla data.")
                 .font(.app(.caption)).foregroundStyle(Theme.dim)
             if days.isEmpty {
-                ErrorNote(message: "Outlook a 27 giorni non disponibile")
+                ErrorNote(message: String(localized: "Outlook a 27 giorni non disponibile"))
             } else {
                 VStack(spacing: 0) {
                     HStack(spacing: 0) {
-                        cellHead("GIORNO", 96, .leading); cellHead("KP MAX", 52); cellHead("AP", 36); cellHead("BUIO", 50); cellHead("LUNA", nil)
+                        cellHead(String(localized: "GIORNO"), 96, .leading); cellHead(String(localized: "KP MAX"), 52); cellHead("AP", 36); cellHead(String(localized: "BUIO"), 50); cellHead(String(localized: "LUNA"), nil)
                     }
                     .padding(.bottom, 5)
                     Rule()
@@ -668,7 +668,7 @@ struct AuroraView: View {
 
     @ViewBuilder private var sourcesSection: some View {
         VStack(alignment: .leading, spacing: 8) {
-            SectionLabel(title: "Fonti e stato", trailing: state?.generated.flatMap { DateParse.iso($0) }.map { "AGG. \(Fmt.time($0, in: zone))" } ?? "")
+            SectionLabel(title: String(localized: "Fonti e stato"), trailing: state?.generated.flatMap { DateParse.iso($0) }.map { String(localized: "AGG. \(Fmt.time($0, in: zone))") } ?? "")
             if let sources = state?.sources {
                 ForEach(sources.keys.sorted(), id: \.self) { key in
                     let s = sources[key]!
@@ -676,12 +676,12 @@ struct AuroraView: View {
                         Rectangle().fill(s.status == "ok" ? Theme.rule : s.status == "stale" ? Theme.caution : Theme.danger).frame(width: 6, height: 6)
                         Text(sourceName(key)).font(.app(.caption, .medium)).foregroundStyle(Theme.text)
                         Spacer()
-                        Text([s.provider, s.ageMinutes.map { "\(Int($0)) min" }, s.status == "ok" ? nil : s.status.uppercased()].compactMap { $0 }.joined(separator: " · "))
+                        Text([s.provider, s.ageMinutes.map { String(localized: "\(Int($0)) min") }, s.status == "ok" ? nil : s.status.uppercased()].compactMap { $0 }.joined(separator: " · "))
                             .font(.mono(9)).foregroundStyle(s.status == "ok" ? Theme.faint : Theme.warning).lineLimit(1)
                     }
                 }
             } else {
-                ErrorNote(message: model.errors[.aurora] ?? "Stato delle fonti non disponibile")
+                ErrorNote(message: model.errors[.aurora] ?? String(localized: "Stato delle fonti non disponibile"))
             }
             if let bt = backtest {
                 Rule().padding(.vertical, 4)
@@ -694,7 +694,7 @@ struct AuroraView: View {
                         }
                     }
                 } else {
-                    Text(bt.note ?? "Dati insufficienti").font(.app(.caption)).foregroundStyle(Theme.dim)
+                    Text(bt.note ?? String(localized: "Dati insufficienti")).font(.app(.caption)).foregroundStyle(Theme.dim)
                 }
             }
         }
@@ -702,16 +702,16 @@ struct AuroraView: View {
 
     private func sourceName(_ key: String) -> String {
         [
-            "kpForecast": "Kp previsto NOAA", "kpEstimated": "Kp stimato NOAA (1 min)", "kpGFZ": "Kp GFZ Potsdam",
-            "solarWind": "Vento solare RTSW", "ovation": "OVATION Prime", "enlil": "WSA-ENLIL NOAA", "scales": "Scale NOAA",
-            "alerts": "Avvisi NOAA", "hemisphericPower": "Potenza emisferica", "outlook27": "Outlook 27 giorni",
-            "forecast45": "Previsione 45 giorni", "donki": "NASA DONKI",
+            "kpForecast": String(localized: "Kp previsto NOAA"), "kpEstimated": String(localized: "Kp stimato NOAA (1 min)"), "kpGFZ": String(localized: "Kp GFZ Potsdam"),
+            "solarWind": String(localized: "Vento solare RTSW"), "ovation": String(localized: "OVATION Prime"), "enlil": String(localized: "WSA-ENLIL NOAA"), "scales": String(localized: "Scale NOAA"),
+            "alerts": String(localized: "Avvisi NOAA"), "hemisphericPower": String(localized: "Potenza emisferica"), "outlook27": String(localized: "Outlook 27 giorni"),
+            "forecast45": String(localized: "Previsione 45 giorni"), "donki": String(localized: "NASA DONKI"),
         ][key] ?? key
     }
 
     private var methodSection: some View {
         VStack(alignment: .leading, spacing: 6) {
-            SectionLabel(title: "Metodo")
+            SectionLabel(title: String(localized: "Metodo"))
             Text("L'indice di osservabilità è una stima euristica trasparente, non una probabilità: moltiplica attività prevista (OVATION entro la sua validità, poi Kp e posizione dell'ovale su latitudine geomagnetica), cielo sereno per strati, buio (altezza del Sole), Luna (fase e altezza) e un indicatore di inquinamento luminoso basato sulla distanza dai centri principali. Le percentuali di probabilità richiedono un modello calibrato su osservazioni reali: le segnalazioni degli utenti servono a costruirlo.")
                 .font(.app(.caption)).foregroundStyle(Theme.dim)
         }
@@ -772,7 +772,7 @@ struct SightingSheet: View {
     var body: some View {
         NavigationStack {
             VStack(alignment: .leading, spacing: 18) {
-                ScreenHeader(title: "Avvistamento", subtitle: Fmt.coordinate(coordinate))
+                ScreenHeader(title: String(localized: "Avvistamento"), subtitle: Fmt.coordinate(coordinate))
                 Toggle("Visibile a occhio nudo", isOn: $nakedEye).font(.app(.subheadline))
                 Toggle("Visibile in foto", isOn: $camera).font(.app(.subheadline))
                 Picker("Intensità", selection: $strength) {
@@ -784,7 +784,7 @@ struct SightingSheet: View {
                     Task {
                         do {
                             try await account.reportSighting(at: coordinate, nakedEye: nakedEye, camera: camera, strength: strength)
-                            message = "Segnalazione registrata. Grazie."
+                            message = String(localized: "Segnalazione registrata. Grazie.")
                         } catch { message = error.localizedDescription }
                         sending = false
                     }
@@ -798,7 +798,7 @@ struct SightingSheet: View {
                 }
                 .buttonStyle(.plain)
                 .disabled(sending || (!nakedEye && !camera))
-                if let message { Text(message).font(.app(.footnote)).foregroundStyle(Theme.text) }
+                if let message { Text(message.loc).font(.app(.footnote)).foregroundStyle(Theme.text) }
                 Text("Posizione arrotondata a ~1 km. Una segnalazione ogni 20 minuti. Le segnalazioni sono anonime per gli altri utenti.")
                     .font(.app(.caption)).foregroundStyle(Theme.dim)
                 Spacer()

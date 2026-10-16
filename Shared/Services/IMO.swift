@@ -71,7 +71,7 @@ struct WeatherWarning: Decodable, Identifiable {
     init(from decoder: Decoder) throws {
         let c = try decoder.container(keyedBy: CodingKeys.self)
         identifier = try c.decode(String.self, forKey: .identifier)
-        headline = (try? c.decodeIfPresent(String.self, forKey: .headline_en)) ?? "Avviso meteo"
+        headline = (try? c.decodeIfPresent(String.self, forKey: .headline_en)) ?? String(localized: "Avviso meteo")
         headlineIcelandic = try? c.decodeIfPresent(String.self, forKey: .headline_is)
         event = (try? c.decodeIfPresent(String.self, forKey: .event_en)) ?? ""
         details = (try? c.decodeIfPresent(String.self, forKey: .description_en)) ?? ""
@@ -81,7 +81,7 @@ struct WeatherWarning: Decodable, Identifiable {
         onset = DateParse.iso((try? c.decodeIfPresent(String.self, forKey: .onset)) ?? nil)
         expires = DateParse.iso((try? c.decodeIfPresent(String.self, forKey: .expires)) ?? nil)
         let geocode = (try? c.decodeIfPresent([String: [String]].self, forKey: .geocode_en)) ?? nil
-        region = geocode?.values.first?.first ?? "Islanda"
+        region = geocode?.values.first?.first ?? String(localized: "Islanda")
         let parameter = (try? c.decodeIfPresent([String: [String]].self, forKey: .parameter)) ?? nil
         color = WarningColor(parameter?["Color"]?.first)
         let eventCode = (try? c.decodeIfPresent([String: [String]].self, forKey: .eventcode)) ?? nil
@@ -131,10 +131,10 @@ struct WeatherWarning: Decodable, Identifiable {
     /// Italian name of the hazard (the CAP feed's English event is "Weather Warning: Wind" and similar).
     var hazardItalian: String {
         let type = (alertTypes.first ?? event).lowercased()
-        let table: [(String, String)] = [("blizzard", "Bufera di neve"), ("snow", "Neve"), ("wind", "Vento"), ("rain", "Pioggia"),
-                                         ("thunder", "Temporali"), ("lightning", "Fulmini"), ("ice", "Ghiaccio"), ("frost", "Gelo"),
-                                         ("coastal", "Mareggiata"), ("wave", "Mareggiata"), ("sea", "Mare"), ("avalanche", "Valanghe")]
-        return table.first { type.contains($0.0) }?.1 ?? "Meteo"
+        let table: [(String, String)] = [("blizzard", String(localized: "Bufera di neve")), ("snow", String(localized: "Neve")), ("wind", String(localized: "Vento")), ("rain", String(localized: "Pioggia")),
+                                         ("thunder", String(localized: "Temporali")), ("lightning", String(localized: "Fulmini")), ("ice", String(localized: "Ghiaccio")), ("frost", String(localized: "Gelo")),
+                                         ("coastal", String(localized: "Mareggiata")), ("wave", String(localized: "Mareggiata")), ("sea", String(localized: "Mare")), ("avalanche", String(localized: "Valanghe"))]
+        return table.first { type.contains($0.0) }?.1 ?? String(localized: "Meteo")
     }
 }
 
@@ -212,7 +212,7 @@ enum IMO {
                     date: date,
                     magnitude: magnitude,
                     depth: p.depth,
-                    region: p.region ?? "Islanda",
+                    region: p.region ?? String(localized: "Islanda"),
                     kind: p.type ?? "earthquake",
                     reviewed: p.evaluation_mode == "manual",
                     coordinate: Coordinate(lat: feature.geometry.coordinates[1], lon: feature.geometry.coordinates[0])

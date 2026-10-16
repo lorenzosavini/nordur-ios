@@ -1,7 +1,8 @@
 import Foundation
 
 enum Fmt {
-    static let italian = Locale(identifier: "it_IT")
+    /// Locale for dates and numbers in the app language (Italian by default, British English otherwise).
+    static let italian = Locale(identifier: Bundle.main.preferredLocalizations.first == "en" ? "en_GB" : "it_IT")
 
     static func temp(_ value: Double?) -> String {
         guard let value else { return "–" }
@@ -38,8 +39,8 @@ enum Fmt {
 
     static func compass(_ degrees: Double?) -> String {
         guard let degrees else { return "" }
-        let names = ["N", "NNE", "NE", "ENE", "E", "ESE", "SE", "SSE",
-                     "S", "SSO", "SO", "OSO", "O", "ONO", "NO", "NNO"]
+        let names = [String(localized: "N"), String(localized: "NNE"), String(localized: "NE"), String(localized: "ENE"), String(localized: "E"), String(localized: "ESE"), String(localized: "SE"), String(localized: "SSE"),
+                     String(localized: "S"), String(localized: "SSO"), String(localized: "SO"), String(localized: "OSO"), String(localized: "O"), String(localized: "ONO"), String(localized: "NO"), String(localized: "NNO")]
         let index = Int((degrees.truncatingRemainder(dividingBy: 360) / 22.5).rounded()) % 16
         return names[(index + 16) % 16]
     }
@@ -133,4 +134,9 @@ enum WeatherCode {
         guard let code else { return false }
         return code >= 95
     }
+}
+
+extension String {
+    /// Translation of a label passed around as a plain String (runtime lookup in the string catalog; unchanged when missing).
+    var loc: String { Bundle.main.localizedString(forKey: self, value: self, table: nil) }
 }

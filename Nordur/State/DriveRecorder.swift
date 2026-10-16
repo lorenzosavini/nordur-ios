@@ -55,7 +55,7 @@ final class DriveRecorder: NSObject {
         guard session == nil else { return }
         if authorization == .notDetermined { manager.requestWhenInUseAuthorization() }
         let now = Date()
-        let title = name ?? "Viaggio del \(Fmt.dayTime(now, in: .current))"
+        let title = name ?? String(localized: "Viaggio del \(Fmt.dayTime(now, in: .current))")
         var new = DriveSession(name: title, start: now)
         new.odometerStart = settings.odometer
         session = new
@@ -200,8 +200,8 @@ final class DriveRecorder: NSObject {
                 lastSpeedWarning = now
                 let event = AlertEvent(
                     id: "v:\(Int(now.timeIntervalSince1970))", date: now, category: .speed, severity: Risk.caution.rawValue,
-                    title: "Velocità \(Int(point.kmh)) km/h – limite \(Int(settings.speedLimit))",
-                    body: "In Islanda le multe per eccesso di velocità sono molto alte. Su sterrato il limite è 80 km/h, nei centri abitati 50.",
+                    title: String(localized: "Velocità \(Int(point.kmh)) km/h – limite \(Int(settings.speedLimit))"),
+                    body: String(localized: "In Islanda le multe per eccesso di velocità sono molto alte. Su sterrato il limite è 80 km/h, nei centri abitati 50."),
                     coordinate: point.coordinate)
                 AlertCenter.shared.record(event, notify: false, speak: settings.spokenAlerts)
             }
@@ -219,7 +219,7 @@ final class DriveRecorder: NSObject {
         let hazard = RoadWatch.shared.nextHazard
         var hazardText: String?
         if let h = hazard {
-            var text = "Tra \(Int(h.kmAhead)) km: \(h.station.name), raffiche \(Fmt.ms(h.station.Vindhvida))"
+            var text = String(localized: "Tra \(Int(h.kmAhead)) km: \(h.station.name), raffiche \(Fmt.ms(h.station.Vindhvida))")
             if let bad = h.segments.first(where: { ($0.risk ?? .ok) >= .warning }) { text += " · " + bad.conditionItalian }
             hazardText = text
         }

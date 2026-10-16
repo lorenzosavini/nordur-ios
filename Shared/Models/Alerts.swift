@@ -127,11 +127,11 @@ enum AlertEngine {
             let minimum: WarningColor = settings.includeYellow ? .yellow : .orange
             for warning in input.warnings where warning.color >= minimum && warning.isRelevant(at: now) {
                 guard let place = input.watched.first(where: { warning.covers($0.coordinate) && warning.overlaps($0.from, $0.to) }) else { continue }
-                let when = warning.isActive(at: now) ? "in corso" : "dalle \(Fmt.dayTime(warning.onset, in: .iceland))"
+                let when = warning.isActive(at: now) ? String(localized: "in corso") : String(localized: "dalle \(Fmt.dayTime(warning.onset, in: .iceland))")
                 events.append(AlertEvent(
                     id: "w:\(warning.identifier)", date: now, category: .weatherWarning, severity: warning.color.risk.rawValue,
                     title: "\(warning.color.label): \(warning.headline)",
-                    body: "\(place.name) · \(warning.region) · \(when) fino alle \(Fmt.time(warning.expires, in: .iceland))",
+                    body: String(localized: "\(place.name) · \(warning.region) · \(when) fino alle \(Fmt.time(warning.expires, in: .iceland))"),
                     coordinate: place.coordinate))
             }
         }
@@ -149,8 +149,8 @@ enum AlertEngine {
                     let bucket = Int(now.timeIntervalSince1970 / (3 * 3600))
                     events.append(AlertEvent(
                         id: "g:\(station.id):\(bucket)", date: now, category: .wind, severity: station.windRisk.rawValue,
-                        title: "Raffiche di \(Fmt.ms(station.Vindhvida)) a \(station.name)",
-                        body: "A \(Int(km)) km da te. Vento medio \(Fmt.ms(station.Vindhradi)) \(station.windDirection). \(Risk.windAdvice(station.windRisk))",
+                        title: String(localized: "Raffiche di \(Fmt.ms(station.Vindhvida)) a \(station.name)"),
+                        body: String(localized: "A \(Int(km)) km da te. Vento medio \(Fmt.ms(station.Vindhradi)) \(station.windDirection). \(Risk.windAdvice(station.windRisk))"),
                         coordinate: station.coordinate))
                 }
             }
@@ -162,7 +162,7 @@ enum AlertEngine {
                         events.append(AlertEvent(
                             id: "r:\(segment.id):\(segment.AstandYfirbord ?? "")", date: now, category: .road, severity: Risk.danger.rawValue,
                             title: "\(segment.conditionItalian): \(segment.name)",
-                            body: "Tratto vicino a \(station.name), a \(Int(Geo.distanceKm(c, current.coordinate))) km da te. Verifica su umferdin.is o chiama il 1777.",
+                            body: String(localized: "Tratto vicino a \(station.name), a \(Int(Geo.distanceKm(c, current.coordinate))) km da te. Verifica su umferdin.is o chiama il 1777."),
                             coordinate: c))
                     }
                 }
@@ -177,8 +177,8 @@ enum AlertEngine {
                 let distance = near.map { " · \(Int($0.0)) km da \($0.1.name)" } ?? ""
                 events.append(AlertEvent(
                     id: "q:\(quake.id)", date: now, category: .quake, severity: quake.risk.rawValue,
-                    title: "Terremoto M\(Fmt.number(quake.magnitude, decimals: 1)) – \(quake.region)",
-                    body: "\(Fmt.time(quake.date, in: .iceland)), profondità \(Fmt.number(quake.depth, decimals: 1, unit: "km"))\(distance)",
+                    title: String(localized: "Terremoto M\(Fmt.number(quake.magnitude, decimals: 1)) – \(quake.region)"),
+                    body: String(localized: "\(Fmt.time(quake.date, in: .iceland)), profondità \(Fmt.number(quake.depth, decimals: 1, unit: "km"))\(distance)"),
                     coordinate: quake.coordinate))
             }
         }
@@ -188,7 +188,7 @@ enum AlertEngine {
                 guard let date = item.date, now.timeIntervalSince(date) <= 3 * 24 * 3600 else { continue }
                 events.append(AlertEvent(
                     id: "s:\(item.id)", date: now, category: .safeTravel, severity: item.risk.rawValue,
-                    title: "SafeTravel: \(item.title)", body: String(item.summary.prefix(220))))
+                    title: String(localized: "SafeTravel: \(item.title)"), body: String(item.summary.prefix(220))))
             }
         }
 
@@ -204,14 +204,14 @@ enum AlertEngine {
                 events.append(AlertEvent(
                     id: key, date: now, category: .flight, severity: info.risk.rawValue,
                     title: "\(flight.flightNumber) \(flight.arrival ? "da" : "per") \(flight.destination ?? "") – \(info.text)",
-                    body: "Orario \(flight.time ?? "–")\(flight.gate.map { $0.isEmpty ? "" : " · gate \($0)" } ?? "")"))
+                    body: String(localized: "Orario \(flight.time ?? "–")\(flight.gate.map { $0.isEmpty ? "" : String(localized: " · gate \($0)") } ?? "")")))
             }
         }
 
         if settings.isOn(.ferry), let ferry = input.ferry {
             events.append(AlertEvent(
                 id: "h:\(stableHash(ferry.text))", date: now, category: .ferry, severity: Risk.caution.rawValue,
-                title: "Herjólfur – nuovo avviso", body: String(ferry.text.prefix(240))))
+                title: String(localized: "Herjólfur – nuovo avviso"), body: String(ferry.text.prefix(240))))
         }
 
         return events
@@ -231,11 +231,14 @@ extension AlertEngine {
         // Observing conditions here, now (OVATION-based when valid).
         if let slot = input.auroraSlots.first(where: { abs($0.date.timeIntervalSince(now)) < 1800 }),
            slot.observability >= minClass, slot.darkness >= .nautical, slot.reliability >= .medium {
-            let look = slot.lookAzimuth.map { " Guarda verso \(AuroraEngine.compass($0))." } ?? ""
+            let activity = slot.activitySource == "OVATION"
+                ? String(localized: "OVATION \(Int(slot.ovationValue ?? 0)) nel tuo cielo")
+                : "Kp \(Fmt.number(slot.kp, decimals: 1))"
+            let look = slot.lookAzimuth.map { String(localized: " Guarda verso \(AuroraEngine.compass($0)).") } ?? ""
             events.append(AlertEvent(
                 id: "aurora-now:\(bucket3h)", date: now, category: .aurora, severity: Risk.caution.rawValue,
-                title: "Condizioni \(slot.observability.label.lowercased()) per l'aurora, adesso",
-                body: "Stima euristica: \(slot.activitySource == "OVATION" ? "OVATION \(Int(slot.ovationValue ?? 0)) nel tuo cielo" : "Kp \(Fmt.number(slot.kp, decimals: 1))"), cielo sereno al \(Int(((slot.clear ?? 0) * 100).rounded()))%.\(look) Non è garanzia di aurora visibile.",
+                title: String(localized: "Condizioni \(slot.observability.label.lowercased()) per l'aurora, adesso"),
+                body: String(localized: "Stima euristica: \(activity), cielo sereno al \(Int(((slot.clear ?? 0) * 100).rounded()))%.\(look) Non è garanzia di aurora visibile."),
                 expires: now.addingTimeInterval(90 * 60)))
         } else if let best = AuroraEngine.best(input.auroraSlots, within: 6, now: now), best.date > now.addingTimeInterval(1800),
                   best.observability >= minClass {
@@ -245,8 +248,8 @@ extension AlertEngine {
             let night = calendar.startOfDay(for: best.date.addingTimeInterval(-12 * 3600))
             events.append(AlertEvent(
                 id: "aurora-window:\(Int(night.timeIntervalSince1970))", date: now, category: .aurora, severity: Risk.ok.rawValue,
-                title: "Finestra \(best.observability.label.lowercased()) per l'aurora verso le \(Fmt.time(best.date, in: zone))",
-                body: "\(best.reasons.first ?? "Buio e cielo in gran parte sereno"). Affidabilità \(best.reliability.label.lowercased()): ricontrolla più tardi.",
+                title: String(localized: "Finestra \(best.observability.label.lowercased()) per l'aurora verso le \(Fmt.time(best.date, in: zone))"),
+                body: String(localized: "\(best.reasons.first ?? String(localized: "Buio e cielo in gran parte sereno")). Affidabilità \(best.reliability.label.lowercased()): ricontrolla più tardi."),
                 expires: best.date.addingTimeInterval(3600)))
         }
 
@@ -255,18 +258,18 @@ extension AlertEngine {
         // Persistent southward IMF (measured, fresh data only).
         if state.source("solarWind")?.isOK == true, let sw = state.solarWind,
            sw.bzSouth.continuousMinutes >= 30, let bz = sw.average(30)?.bz, bz <= -8 {
-            let lead = sw.propagation.map { " Arriva a terra tra ~\(Int($0.minutes)) min." } ?? ""
+            let lead = sw.propagation.map { String(localized: " Arriva a terra tra ~\(Int($0.minutes)) min.") } ?? ""
             events.append(AlertEvent(
                 id: "bz:\(bucket3h)", date: now, category: .aurora, severity: Risk.caution.rawValue,
-                title: "Bz negativo persistente: \(Fmt.number(bz, decimals: 0)) nT da \(sw.bzSouth.continuousMinutes) min",
-                body: "Il campo interplanetario è orientato a sud: favorisce l'attività geomagnetica.\(lead) Non garantisce un'aurora visibile.",
+                title: String(localized: "Bz negativo persistente: \(Fmt.number(bz, decimals: 0)) nT da \(sw.bzSouth.continuousMinutes) min"),
+                body: String(localized: "Il campo interplanetario è orientato a sud: favorisce l'attività geomagnetica.\(lead) Non garantisce un'aurora visibile."),
                 expires: now.addingTimeInterval(3 * 3600)))
         }
         if state.source("solarWind")?.isOK == true, let shock = state.solarWind?.shocks.last, now.timeIntervalSince(shock.date) < 3600 {
             events.append(AlertEvent(
                 id: "shock:\(Int(shock.t))", date: now, category: .aurora, severity: Risk.caution.rawValue,
-                title: "Possibile shock nel vento solare",
-                body: "A L1 alle \(Fmt.time(shock.date, in: zone)): velocità +\(Int(shock.dv)) km/s, densità ×\(Fmt.number(shock.densityRatio, decimals: 1)). Candidato automatico: l'attività potrebbe aumentare nella prossima ora.",
+                title: String(localized: "Possibile shock nel vento solare"),
+                body: String(localized: "A L1 alle \(Fmt.time(shock.date, in: zone)): velocità +\(Int(shock.dv)) km/s, densità ×\(Fmt.number(shock.densityRatio, decimals: 1)). Candidato automatico: l'attività potrebbe aumentare nella prossima ora."),
                 expires: now.addingTimeInterval(3 * 3600)))
         }
         // NOAA K-index warnings/alerts in force.
@@ -274,7 +277,7 @@ extension AlertEngine {
             guard let k = alert.kp, Double(k) >= settings.auroraKp else { continue }
             events.append(AlertEvent(
                 id: "swpc:\(alert.id)", date: now, category: .aurora, severity: (k >= 7 ? Risk.warning : Risk.caution).rawValue,
-                title: "NOAA: attività geomagnetica Kp \(k)", body: alert.italian,
+                title: String(localized: "NOAA: attività geomagnetica Kp \(k)"), body: alert.italian,
                 expires: alert.validTo.flatMap { DateParse.iso($0) }))
         }
         // NASA DONKI CME expected at Earth within 36 h.
@@ -284,8 +287,8 @@ extension AlertEngine {
             let range = cme.kp.map { "Kp \(Fmt.number($0.min))–\(Fmt.number($0.max))" } ?? ""
             events.append(AlertEvent(
                 id: "cme:\(cme.id)", date: now, category: .aurora, severity: (kp >= 7 ? Risk.warning : Risk.caution).rawValue,
-                title: cme.glancing ? "CME di striscio in arrivo" : "Espulsione di massa coronale in arrivo",
-                body: "NASA (WSA-ENLIL) prevede l'arrivo verso \(Fmt.dayTime(arrival, in: zone)) ±7 h, \(range). L'effetto dipende dal Bz all'arrivo.",
+                title: cme.glancing ? String(localized: "CME di striscio in arrivo") : String(localized: "Espulsione di massa coronale in arrivo"),
+                body: String(localized: "NASA (WSA-ENLIL) prevede l'arrivo verso \(Fmt.dayTime(arrival, in: zone)) ±7 h, \(range). L'effetto dipende dal Bz all'arrivo."),
                 expires: arrival.addingTimeInterval((cme.durationHours ?? 18) * 3600)))
         }
         // NOAA ENLIL: CME material predicted at Earth within 36 h.
@@ -293,8 +296,8 @@ extension AlertEngine {
             guard let t = arrival.date, t > now, t < now.addingTimeInterval(36 * 3600) else { continue }
             events.append(AlertEvent(
                 id: "enlil:\(Int(t.timeIntervalSince1970 / 3600))", date: now, category: .aurora, severity: Risk.ok.rawValue,
-                title: "Possibile arrivo di una CME verso \(Fmt.dayTime(t, in: zone))",
-                body: "Il modello WSA-ENLIL di NOAA prevede materiale di CME alla Terra (picco ~\(Int(arrival.peakSpeed)) km/s). Intensità non prevedibile prima dell'arrivo.",
+                title: String(localized: "Possibile arrivo di una CME verso \(Fmt.dayTime(t, in: zone))"),
+                body: String(localized: "Il modello WSA-ENLIL di NOAA prevede materiale di CME alla Terra (picco ~\(Int(arrival.peakSpeed)) km/s). Intensità non prevedibile prima dell'arrivo."),
                 expires: t.addingTimeInterval(24 * 3600)))
         }
         return events

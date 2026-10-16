@@ -165,21 +165,21 @@ final class RoadWatch {
                 guard risk >= .caution, before == nil || risk > (before ?? .ok) else { continue }
                 // First sighting of a hazard only matters if it is serious; worsening always matters.
                 if before == nil && risk < .warning { continue }
-                let what = before == nil ? segment.conditionItalian : "peggiorata: \(segment.conditionItalian)"
-                let note = "Tra \(Int(item.kmAhead)) km (\(item.etaMinutes) min): \(segment.name) – \(what)"
+                let what = before == nil ? segment.conditionItalian : String(localized: "peggiorata: \(segment.conditionItalian)")
+                let note = String(localized: "Tra \(Int(item.kmAhead)) km (\(item.etaMinutes) min): \(segment.name) – \(what)")
                 changes.insert("\(Fmt.time(Date())) \(note)", at: 0)
                 AlertCenter.shared.record(AlertEvent(
                     id: "rw:\(segment.id):\(segment.AstandYfirbord ?? "")", date: Date(), category: .road, severity: risk.rawValue,
-                    title: "Strada davanti: \(segment.conditionItalian)",
+                    title: String(localized: "Strada davanti: \(segment.conditionItalian)"),
                     body: note, coordinate: item.station.coordinate), notify: true, speak: settings.spoken)
             }
             if let gust = item.station.Vindhvida, gust >= settings.gustThreshold, item.kmAhead <= 60 {
                 let bucket = Int(Date().timeIntervalSince1970 / 3600)
-                let note = "Raffiche \(Fmt.ms(gust)) a \(item.station.name) tra \(Int(item.kmAhead)) km (\(item.etaMinutes) min)"
+                let note = String(localized: "Raffiche \(Fmt.ms(gust)) a \(item.station.name) tra \(Int(item.kmAhead)) km (\(item.etaMinutes) min)")
                 if !changes.contains(where: { $0.hasSuffix(note) }) { changes.insert("\(Fmt.time(Date())) \(note)", at: 0) }
                 AlertCenter.shared.record(AlertEvent(
                     id: "rwg:\(item.station.id):\(bucket)", date: Date(), category: .wind, severity: item.station.windRisk.rawValue,
-                    title: "Vento forte sulla strada davanti", body: note, coordinate: item.station.coordinate),
+                    title: String(localized: "Vento forte sulla strada davanti"), body: note, coordinate: item.station.coordinate),
                     notify: true, speak: settings.spoken)
             }
         }

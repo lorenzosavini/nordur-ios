@@ -30,7 +30,7 @@ struct RiskBadge: View {
 
     var body: some View {
         let solid = risk >= .warning
-        Text(text ?? risk.label)
+        Text(text?.loc ?? risk.label)
             .font(.mono(10.5, .semibold))
             .textCase(.uppercase)
             .tracking(0.6)
@@ -67,7 +67,7 @@ struct FreshnessLabel: View {
         if let date {
             HStack(spacing: 6) {
                 if isStale { Text("OFFLINE").foregroundStyle(Theme.warning) }
-                Text(isStale ? "dati di \(Fmt.relative(date))" : "agg. \(Fmt.relative(date))")
+                Text(isStale ? String(localized: "dati di \(Fmt.relative(date))") : String(localized: "agg. \(Fmt.relative(date))"))
                 if let source { Text("· \(source.uppercased())") }
             }
             .font(.mono(10))
@@ -83,7 +83,7 @@ struct ErrorNote: View {
         if let message {
             HStack(alignment: .firstTextBaseline, spacing: 6) {
                 Text("ERR").font(.mono(10, .semibold)).foregroundStyle(Theme.warning)
-                Text(message).font(.app(.caption)).foregroundStyle(Theme.dim)
+                Text(message.loc).font(.app(.caption)).foregroundStyle(Theme.dim)
             }
         }
     }
@@ -98,7 +98,7 @@ struct Metric: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 3) {
-            Text(title).eyebrow(Theme.faint).lineLimit(1).minimumScaleFactor(0.8)
+            Text(title.loc).eyebrow(Theme.faint).lineLimit(1).minimumScaleFactor(0.8)
             Text(value).font(.metric(22, .semibold)).foregroundStyle(tint).lineLimit(1).minimumScaleFactor(0.7)
         }
         .frame(maxWidth: .infinity, alignment: .leading)
@@ -116,13 +116,13 @@ struct Reading: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 2) {
-            Text(label).eyebrow(Theme.faint).lineLimit(1)
+            Text(label.loc).eyebrow(Theme.faint).lineLimit(1)
             HStack(alignment: .firstTextBaseline, spacing: 3) {
                 Text(value).font(.metric(size, .semibold)).foregroundStyle(tint)
-                if !unit.isEmpty { Text(unit).font(.mono(10.5)).foregroundStyle(Theme.dim) }
+                if !unit.isEmpty { Text(unit.loc).font(.mono(10.5)).foregroundStyle(Theme.dim) }
             }
             .lineLimit(1).minimumScaleFactor(0.6)
-            if let note { Text(note).font(.mono(10)).foregroundStyle(Theme.dim).lineLimit(1) }
+            if let note { Text(note.loc).font(.mono(10)).foregroundStyle(Theme.dim).lineLimit(1) }
         }
         .frame(maxWidth: .infinity, alignment: .leading)
     }
@@ -183,7 +183,7 @@ struct PlaceHeader: View {
                     if model.useCurrentLocation {
                         Rectangle().fill(Theme.accent).frame(width: 6, height: 6)
                     }
-                    Text(model.useCurrentLocation ? "GPS · posizione attuale" : (model.activePlace.subtitle ?? "Località scelta"))
+                    Text(model.useCurrentLocation ? String(localized: "GPS · posizione attuale") : (model.activePlace.subtitle ?? String(localized: "Località scelta")))
                         .eyebrow(Theme.dim)
                     Text(Fmt.coordinate(model.activePlace.coordinate)).font(.mono(10)).foregroundStyle(Theme.faint)
                 }
@@ -222,8 +222,8 @@ struct LinkRow: View {
             Link(destination: destination) {
                 HStack(alignment: .firstTextBaseline, spacing: 12) {
                     VStack(alignment: .leading, spacing: 2) {
-                        Text(title).font(.app(.subheadline, .medium)).foregroundStyle(Theme.text)
-                        if let subtitle { Text(subtitle).font(.app(.caption)).foregroundStyle(Theme.dim) }
+                        Text(title.loc).font(.app(.subheadline, .medium)).foregroundStyle(Theme.text)
+                        if let subtitle { Text(subtitle.loc).font(.app(.caption)).foregroundStyle(Theme.dim) }
                     }
                     Spacer()
                     Text("↗").font(.mono(13, .medium)).foregroundStyle(Theme.accent)
@@ -256,7 +256,7 @@ struct WindDial: View {
             }
             ForEach(Array(["N", "E", "S", "O"].enumerated()), id: \.offset) { item in
                 let angle = Double(item.offset) * 90 * .pi / 180
-                Text(item.element)
+                Text(item.element.loc)
                     .font(.mono(9, .semibold))
                     .foregroundStyle(item.element == "N" ? Theme.accent : Theme.dim)
                     .offset(x: sin(angle) * (size / 2 - 18), y: -cos(angle) * (size / 2 - 18))
@@ -347,7 +347,7 @@ struct RiskTimeline: View {
             if !labels.isEmpty {
                 HStack {
                     ForEach(Array(labels.enumerated()), id: \.offset) { item in
-                        Text(item.element).font(.mono(9.5)).foregroundStyle(Theme.faint)
+                        Text(item.element.loc).font(.mono(9.5)).foregroundStyle(Theme.faint)
                         if item.offset < labels.count - 1 { Spacer() }
                     }
                 }
@@ -367,8 +367,8 @@ struct ArcGauge: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 6) {
             HStack(alignment: .firstTextBaseline, spacing: 4) {
-                Text(label).font(.metric(40, .bold)).foregroundStyle(Theme.text)
-                Text(caption.uppercased()).font(.mono(9.5)).foregroundStyle(Theme.dim)
+                Text(label.loc).font(.metric(40, .bold)).foregroundStyle(Theme.text)
+                Text(caption.loc.uppercased()).font(.mono(9.5)).foregroundStyle(Theme.dim)
             }
             HStack(spacing: 2) {
                 ForEach(0..<20, id: \.self) { i in

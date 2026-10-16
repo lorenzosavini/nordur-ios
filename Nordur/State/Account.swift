@@ -62,21 +62,21 @@ final class Account {
     }
 
     func changePassword(current: String, new: String) async throws {
-        guard let email else { throw AccountError.message("Accedi al tuo account") }
+        guard let email else { throw AccountError.message(String(localized: "Accedi al tuo account")) }
         let body = try JSONSerialization.data(withJSONObject: ["mode": "change", "email": email, "password": current, "newPassword": new])
         _ = try await request("auth", method: "POST", body: body)
     }
 
     /// Replaces the recovery code (the old one stops working).
     func regenerateRecoveryCode(password: String) async throws {
-        guard let email else { throw AccountError.message("Accedi al tuo account") }
+        guard let email else { throw AccountError.message(String(localized: "Accedi al tuo account")) }
         let body = try JSONSerialization.data(withJSONObject: ["mode": "recovery", "email": email, "password": password])
         pendingRecoveryCode = try JSONDecoder().decode(RecoveryResponse.self, from: try await request("auth", method: "POST", body: body)).recoveryCode
     }
 
     /// Permanently deletes the account, its backup and its sightings. Local data stays on the phone.
     func deleteAccount(password: String) async throws {
-        guard let email else { throw AccountError.message("Accedi al tuo account") }
+        guard let email else { throw AccountError.message(String(localized: "Accedi al tuo account")) }
         let body = try JSONSerialization.data(withJSONObject: ["email": email, "password": password])
         _ = try await request("auth", method: "DELETE", body: body)
         signOut()
@@ -184,7 +184,7 @@ final class Account {
         request.timeoutInterval = 30
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         if authorized {
-            guard let token else { throw AccountError.message("Accedi al tuo account") }
+            guard let token else { throw AccountError.message(String(localized: "Accedi al tuo account")) }
             request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
         }
         let (data, response) = try await URLSession.shared.data(for: request)
@@ -192,7 +192,7 @@ final class Account {
         guard (200..<300).contains(status) else {
             // An expired session signs out; a wrong password on account actions does not.
             if status == 401, authorized, path != "auth" { signOut() }
-            let message = (try? JSONDecoder().decode(ErrorResponse.self, from: data))?.error ?? "Errore \(status)"
+            let message = (try? JSONDecoder().decode(ErrorResponse.self, from: data))?.error ?? String(localized: "Errore \(status)")
             throw AccountError.message(message)
         }
         return data

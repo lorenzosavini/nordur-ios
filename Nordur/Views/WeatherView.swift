@@ -9,7 +9,7 @@ struct WeatherView: View {
             ScrollView {
                 VStack(alignment: .leading, spacing: 30) {
                     VStack(alignment: .leading, spacing: 16) {
-                        ScreenHeader(title: "Meteo", subtitle: "Previsioni · 10 giorni", index: "02") { AppearanceButton() }
+                        ScreenHeader(title: String(localized: "Meteo"), subtitle: String(localized: "Previsioni · 10 giorni"), index: "02") { AppearanceButton() }
                         PlaceHeader(size: 34)
                     }
                     if let fetched = model.forecast {
@@ -39,17 +39,17 @@ struct WeatherView: View {
     // MARK: Source
 
     private func sourceBlock(_ forecast: Forecast, fetched: Fetched<Forecast>) -> some View {
-        let primary = forecast.sources.first ?? "Open-Meteo"
+        let primary = forecast.sources.first ?? String(localized: "Open-Meteo")
         return VStack(alignment: .leading, spacing: 6) {
             HStack(alignment: .firstTextBaseline, spacing: 10) {
                 Text("FONTE").font(.mono(9.5)).foregroundStyle(Theme.faint).frame(width: 52, alignment: .leading)
-                Text(primary == "MET Norway" ? "MET Norway · MEPS 2,5 km" : primary)
+                Text(primary == "MET Norway" ? String(localized: "MET Norway · MEPS 2,5 km") : primary)
                     .font(.mono(11, .semibold)).foregroundStyle(Theme.text)
             }
             if primary == "MET Norway" {
                 HStack(alignment: .firstTextBaseline, spacing: 10) {
                     Text("").frame(width: 52)
-                    Text("Modello nordico gestito con Veðurstofa Íslands, lo stesso di yr.no. Dopo \(forecast.primaryUntil.map { Fmt.dayTime($0, in: forecast.timeZone) } ?? "60 ore") e per le raffiche: ECMWF/ICON via Open-Meteo.")
+                    Text("Modello nordico gestito con Veðurstofa Íslands, lo stesso di yr.no. Dopo \(forecast.primaryUntil.map { Fmt.dayTime($0, in: forecast.timeZone) } ?? String(localized: "60 ore")) e per le raffiche: ECMWF/ICON via Open-Meteo.")
                         .font(.app(.caption)).foregroundStyle(Theme.dim)
                 }
             }
@@ -93,13 +93,13 @@ struct WeatherView: View {
         let peak = hours.compactMap(\.gust).max() ?? 0
         let rain = hours.compactMap(\.precipitation).reduce(0, +)
         return VStack(alignment: .leading, spacing: 14) {
-            SectionLabel(index: "01", title: "Meteogramma · 48 h")
+            SectionLabel(index: "01", title: String(localized: "Meteogramma · 48 h"))
 
-            chartHeader("TEMPERATURA", "\(Fmt.temp(temps.min())) / \(Fmt.temp(temps.max()))")
+            chartHeader(String(localized: "TEMPERATURA"), "\(Fmt.temp(temps.min())) / \(Fmt.temp(temps.max()))")
             Chart {
                 ForEach(hours) { hour in
                     if let temp = hour.temperature {
-                        LineMark(x: .value("Ora", hour.date, unit: .hour), y: .value("°C", temp))
+                        LineMark(x: .value(String(localized: "Ora"), hour.date, unit: .hour), y: .value("°C", temp))
                             .foregroundStyle(Theme.text)
                             .lineStyle(StrokeStyle(lineWidth: 1.6))
                             .interpolationMethod(.monotone)
@@ -108,17 +108,17 @@ struct WeatherView: View {
                 if low < 0 && high > 0 {
                     RuleMark(y: .value("0", 0)).foregroundStyle(Theme.accent).lineStyle(StrokeStyle(lineWidth: 1, dash: [2, 3]))
                 }
-                RuleMark(x: .value("Adesso", Date())).foregroundStyle(Theme.accent).lineStyle(StrokeStyle(lineWidth: 1))
+                RuleMark(x: .value(String(localized: "Adesso"), Date())).foregroundStyle(Theme.accent).lineStyle(StrokeStyle(lineWidth: 1))
             }
             .chartYScale(domain: low...high)
             .chartXAxis { dayAxis() }
             .chartYAxis { yAxis("°") }
             .frame(height: 130)
 
-            chartHeader("PRECIPITAZIONI", Fmt.number(rain, decimals: 1, unit: "MM IN 48 H"))
+            chartHeader(String(localized: "PRECIPITAZIONI"), Fmt.number(rain, decimals: 1, unit: "MM IN 48 H"))
             Chart {
                 ForEach(hours) { hour in
-                    BarMark(x: .value("Ora", hour.date, unit: .hour), y: .value("mm", hour.precipitation ?? 0), width: .ratio(0.7))
+                    BarMark(x: .value(String(localized: "Ora"), hour.date, unit: .hour), y: .value("mm", hour.precipitation ?? 0), width: .ratio(0.7))
                         .foregroundStyle((hour.snowfall ?? 0) > 0 ? Theme.dim : Theme.accent)
                 }
             }
@@ -126,17 +126,17 @@ struct WeatherView: View {
             .chartYAxis { yAxis("") }
             .frame(height: 64)
 
-            chartHeader("VENTO · RAFFICHE", "MAX \(Fmt.number(peak)) M/S", color: Risk.wind(mean: nil, gust: peak) == .ok ? Theme.dim : Risk.wind(mean: nil, gust: peak).color)
+            chartHeader(String(localized: "VENTO · RAFFICHE"), String(localized: "MAX \(Fmt.number(peak)) M/S"), color: Risk.wind(mean: nil, gust: peak) == .ok ? Theme.dim : Risk.wind(mean: nil, gust: peak).color)
             Chart {
                 ForEach(hours) { hour in
                     if let gust = hour.gust {
-                        LineMark(x: .value("Ora", hour.date, unit: .hour), y: .value("m/s", gust), series: .value("s", "raffica"))
+                        LineMark(x: .value(String(localized: "Ora"), hour.date, unit: .hour), y: .value("m/s", gust), series: .value("s", "raffica"))
                             .foregroundStyle(Theme.accent)
                             .lineStyle(StrokeStyle(lineWidth: 1.2, dash: [3, 2]))
                             .interpolationMethod(.stepCenter)
                     }
                     if let wind = hour.wind {
-                        LineMark(x: .value("Ora", hour.date, unit: .hour), y: .value("m/s", wind), series: .value("s", "medio"))
+                        LineMark(x: .value(String(localized: "Ora"), hour.date, unit: .hour), y: .value("m/s", wind), series: .value("s", "medio"))
                             .foregroundStyle(Theme.text)
                             .lineStyle(StrokeStyle(lineWidth: 1.6))
                             .interpolationMethod(.monotone)
@@ -166,7 +166,7 @@ struct WeatherView: View {
             .padding(.trailing, 28)
 
             HStack(spacing: 16) {
-                legend(Theme.text, dashed: false, "vento medio")
+                legend(Theme.text, dashed: false, String(localized: "vento medio"))
                 legend(Theme.accent, dashed: true, "raffiche")
                 legend(Theme.accent, dashed: false, "adesso")
             }
@@ -176,7 +176,7 @@ struct WeatherView: View {
 
     private func chartHeader(_ title: String, _ value: String, color: Color = Theme.dim) -> some View {
         HStack {
-            Text(title).font(.mono(9.5, .medium)).foregroundStyle(Theme.faint)
+            Text(title.loc).font(.mono(9.5, .medium)).foregroundStyle(Theme.faint)
             Spacer()
             Text(value).font(.mono(9.5, .semibold)).foregroundStyle(color)
         }
@@ -189,7 +189,7 @@ struct WeatherView: View {
             } else {
                 Rectangle().fill(color).frame(width: 14, height: 1.5)
             }
-            Text(text.uppercased()).font(.mono(9)).foregroundStyle(Theme.dim)
+            Text(text.loc.uppercased()).font(.mono(9)).foregroundStyle(Theme.dim)
         }
     }
 
@@ -202,20 +202,20 @@ struct WeatherView: View {
             let rows = station.hours.filter { $0.date.addingTimeInterval(3600) > now }.prefix(12)
             let metByHour = Dictionary(forecast.hours.map { (Int($0.date.timeIntervalSince1970 / 3600), $0) }, uniquingKeysWith: { a, _ in a })
             VStack(alignment: .leading, spacing: 12) {
-                SectionLabel(index: "02", title: "Confronto ufficiale IMO", trailing: "\(Int(station.distanceKm)) KM")
+                SectionLabel(index: "02", title: String(localized: "Confronto ufficiale IMO"), trailing: "\(Int(station.distanceKm)) KM")
                 VStack(alignment: .leading, spacing: 3) {
                     Text(station.station.name.uppercased()).font(.display(24, .bold)).foregroundStyle(Theme.text)
-                    Text("Previsione per stazione di Veðurstofa Íslands\(station.issued.map { " · emessa \(Fmt.dayTime($0, in: .iceland))" } ?? "")")
+                    Text("Previsione per stazione di Veðurstofa Íslands\(station.issued.map { String(localized: " · emessa \(Fmt.dayTime($0, in: .iceland))") } ?? "")")
                         .font(.app(.caption)).foregroundStyle(Theme.dim)
                 }
                 VStack(spacing: 0) {
                     HStack(spacing: 0) {
-                        head("ORA", 40, .leading)
-                        head("IMO °C", 52)
-                        head("MET °C", 52)
-                        head("IMO M/S", 58)
-                        head("MET M/S", 58)
-                        head("CIELO (IMO)", nil, .leading).padding(.leading, 10)
+                        head(String(localized: "ORA"), 40, .leading)
+                        head(String(localized: "IMO °C"), 52)
+                        head(String(localized: "MET °C"), 52)
+                        head(String(localized: "IMO M/S"), 58)
+                        head(String(localized: "MET M/S"), 58)
+                        head(String(localized: "CIELO (IMO)"), nil, .leading).padding(.leading, 10)
                     }
                     .padding(.bottom, 6)
                     Rule()
@@ -245,13 +245,13 @@ struct WeatherView: View {
     }
 
     private func head(_ text: String, _ width: CGFloat?, _ alignment: Alignment = .trailing) -> some View {
-        Text(text).font(.mono(8.5)).foregroundStyle(Theme.faint).lineLimit(1)
+        Text(text.loc).font(.mono(8.5)).foregroundStyle(Theme.faint).lineLimit(1)
             .frame(width: width, alignment: alignment)
             .frame(maxWidth: width == nil ? .infinity : nil, alignment: alignment)
     }
 
     private func num(_ text: String, _ width: CGFloat, _ color: Color) -> some View {
-        Text(text).font(.metric(18, .semibold)).foregroundStyle(color).frame(width: width, alignment: .trailing)
+        Text(text.loc).font(.metric(18, .semibold)).foregroundStyle(color).frame(width: width, alignment: .trailing)
     }
 
     // MARK: Daily
@@ -260,13 +260,13 @@ struct WeatherView: View {
         let lows = days.compactMap(\.minTemp), highs = days.compactMap(\.maxTemp)
         let scaleMin = (lows.min() ?? 0) - 1, scaleMax = (highs.max() ?? 10) + 1
         return VStack(alignment: .leading, spacing: 10) {
-            SectionLabel(index: "03", title: "10 giorni", trailing: "MIN · MAX · RAFF · MM")
+            SectionLabel(index: "03", title: String(localized: "10 giorni"), trailing: String(localized: "MIN · MAX · RAFF · MM"))
             VStack(spacing: 0) {
                 ForEach(Array(days.enumerated()), id: \.element.id) { index, day in
                     let info = WeatherCode.describe(day.code)
                     HStack(spacing: 8) {
                         VStack(alignment: .leading, spacing: 0) {
-                            Text(index == 0 ? "OGGI" : weekday(day.date, zone)).font(.mono(10.5, .semibold))
+                            Text(index == 0 ? String(localized: "OGGI") : weekday(day.date, zone)).font(.mono(10.5, .semibold))
                                 .foregroundStyle(index == 0 ? Theme.accent : Theme.text)
                             Text(dayNumber(day.date, zone)).font(.mono(9)).foregroundStyle(Theme.faint)
                         }
@@ -304,7 +304,7 @@ struct WeatherView: View {
         let f = DateFormatter()
         f.locale = Fmt.italian
         f.timeZone = zone
-        f.dateFormat = "EEE"
+        f.dateFormat = String(localized: "EEE")
         return f.string(from: date).uppercased().replacingOccurrences(of: ".", with: "")
     }
 
@@ -312,7 +312,7 @@ struct WeatherView: View {
         let f = DateFormatter()
         f.locale = Fmt.italian
         f.timeZone = zone
-        f.dateFormat = "d MMM"
+        f.dateFormat = String(localized: "d MMM")
         return f.string(from: date).uppercased()
     }
 
@@ -322,24 +322,24 @@ struct WeatherView: View {
         if let fetched = model.marine, fetched.value.hasData, let c = fetched.value.current {
             let marine = fetched.value
             VStack(alignment: .leading, spacing: 12) {
-                SectionLabel(index: "04", title: "Mare")
+                SectionLabel(index: "04", title: String(localized: "Mare"))
                 ReadingGrid(items: [
-                    Reading(label: "Onde", value: Fmt.number(c.wave_height, decimals: 1), unit: "m", size: 26),
-                    Reading(label: "Periodo", value: Fmt.number(c.wave_period), unit: "s", size: 26),
+                    Reading(label: String(localized: "Onde"), value: Fmt.number(c.wave_height, decimals: 1), unit: "m", size: 26),
+                    Reading(label: String(localized: "Periodo"), value: Fmt.number(c.wave_period), unit: "s", size: 26),
                     Reading(label: "Da", value: Fmt.compass(c.wave_direction), size: 26),
-                    Reading(label: "Swell", value: Fmt.number(c.swell_wave_height, decimals: 1), unit: "m", size: 26),
-                    Reading(label: "Max 48 h", value: Fmt.number(marine.maxWaveHeight(next: 48), decimals: 1), unit: "m", size: 26),
-                    Reading(label: "Acqua", value: Fmt.number(c.sea_surface_temperature), unit: "°C", size: 26),
+                    Reading(label: String(localized: "Swell"), value: Fmt.number(c.swell_wave_height, decimals: 1), unit: "m", size: 26),
+                    Reading(label: String(localized: "Max 48 h"), value: Fmt.number(marine.maxWaveHeight(next: 48), decimals: 1), unit: "m", size: 26),
+                    Reading(label: String(localized: "Acqua"), value: Fmt.number(c.sea_surface_temperature), unit: "°C", size: 26),
                 ], columns: 3)
                 .overlay(alignment: .top) { Rule() }
                 .overlay(alignment: .bottom) { Rule() }
                 HStack(spacing: 8) {
-                    RiskBadge(risk: marine.beachRisk, text: "Spiagge: \(marine.beachRisk.label)")
-                    RiskBadge(risk: marine.seaRisk, text: "Barca: \(marine.seaRisk.label)")
+                    RiskBadge(risk: marine.beachRisk, text: String(localized: "Spiagge: \(marine.beachRisk.label)"))
+                    RiskBadge(risk: marine.seaRisk, text: String(localized: "Barca: \(marine.seaRisk.label)"))
                 }
                 Text("Reynisfjara e spiagge del sud: onde anomale senza preavviso. Resta lontano dalla battigia.")
                     .font(.app(.caption)).foregroundStyle(Theme.dim)
-                FreshnessLabel(date: fetched.date, isStale: fetched.isStale, source: "Open-Meteo Marine")
+                FreshnessLabel(date: fetched.date, isStale: fetched.isStale, source: String(localized: "Open-Meteo Marine"))
             }
         }
     }
@@ -347,9 +347,9 @@ struct WeatherView: View {
     @ViewBuilder private var airSection: some View {
         if let fetched = model.air, let c = fetched.value.current {
             VStack(alignment: .leading, spacing: 12) {
-                SectionLabel(index: "05", title: "Aria e gas vulcanici")
+                SectionLabel(index: "05", title: String(localized: "Aria e gas vulcanici"))
                 ReadingGrid(items: [
-                    Reading(label: "Indice EU", value: Fmt.number(c.european_aqi),
+                    Reading(label: String(localized: "Indice EU"), value: Fmt.number(c.european_aqi),
                             tint: fetched.value.aqiRisk == .ok ? Theme.text : fetched.value.aqiRisk.color, size: 26),
                     Reading(label: "SO₂", value: Fmt.number(c.sulphur_dioxide), unit: "µg/m³",
                             tint: fetched.value.so2Risk == .ok ? Theme.text : fetched.value.so2Risk.color, size: 26),
@@ -358,7 +358,7 @@ struct WeatherView: View {
                 .overlay(alignment: .top) { Rule() }
                 .overlay(alignment: .bottom) { Rule() }
                 Text("Dispersione del gas vulcanico: vedur.is.").font(.app(.caption)).foregroundStyle(Theme.dim)
-                FreshnessLabel(date: fetched.date, isStale: fetched.isStale, source: "CAMS via Open-Meteo")
+                FreshnessLabel(date: fetched.date, isStale: fetched.isStale, source: String(localized: "CAMS via Open-Meteo"))
             }
         }
     }

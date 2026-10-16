@@ -47,16 +47,16 @@ struct TransportView: View {
                         alerts.update(s)
                     }))
                 .font(.app(.caption))
-                LinkRow(title: "Herjólfur – orari e prenotazioni", subtitle: "Landeyjahöfn / Þorlákshöfn ↔ Vestmannaeyjar", url: TransportService.herjolfurPage, systemImage: "ferry")
-                LinkRow(title: "Baldur (Sæferðir)", subtitle: "Stykkishólmur – Flatey – Brjánslækur", url: "https://www.saeferdir.is/en/", systemImage: "ferry.fill")
-                LinkRow(title: "Smyril Line", subtitle: "Seyðisfjörður – Fær Øer – Danimarca", url: "https://www.smyrilline.com/", systemImage: "ferry")
+                LinkRow(title: String(localized: "Herjólfur – orari e prenotazioni"), subtitle: String(localized: "Landeyjahöfn / Þorlákshöfn ↔ Vestmannaeyjar"), url: TransportService.herjolfurPage, systemImage: "ferry")
+                LinkRow(title: String(localized: "Baldur (Sæferðir)"), subtitle: String(localized: "Stykkishólmur – Flatey – Brjánslækur"), url: "https://www.saeferdir.is/en/", systemImage: "ferry.fill")
+                LinkRow(title: String(localized: "Smyril Line"), subtitle: String(localized: "Seyðisfjörður – Fær Øer – Danimarca"), url: "https://www.smyrilline.com/", systemImage: "ferry")
             } header: {
                 Text("Traghetti")
             }
 
             Section {
                 Picker("Direzione", selection: $direction) {
-                    ForEach(Direction.allCases) { Text($0.rawValue).tag($0) }
+                    ForEach(Direction.allCases) { Text($0.rawValue.loc).tag($0) }
                 }
                 .pickerStyle(.segmented)
                 Toggle("Mostra anche i voli già passati", isOn: $showPast).font(.app(.caption))
@@ -77,14 +77,14 @@ struct TransportView: View {
             }
 
             Section("Altri collegamenti") {
-                LinkRow(title: "Voli interni (Reykjavík RKV, Akureyri…)", subtitle: "Isavia", url: "https://www.isavia.is/en", systemImage: "airplane.circle")
-                LinkRow(title: "Flybus / Airport Direct", subtitle: "Navette KEF ↔ Reykjavík", url: "https://www.re.is/", systemImage: "bus")
-                LinkRow(title: "Strætó", subtitle: "Bus urbani e di lunga distanza", url: "https://www.straeto.is/en", systemImage: "bus.fill")
+                LinkRow(title: String(localized: "Voli interni (Reykjavík RKV, Akureyri…)"), subtitle: String(localized: "Isavia"), url: "https://www.isavia.is/en", systemImage: "airplane.circle")
+                LinkRow(title: String(localized: "Flybus / Airport Direct"), subtitle: String(localized: "Navette KEF ↔ Reykjavík"), url: "https://www.re.is/", systemImage: "bus")
+                LinkRow(title: String(localized: "Strætó"), subtitle: String(localized: "Bus urbani e di lunga distanza"), url: "https://www.straeto.is/en", systemImage: "bus.fill")
             }
         }
         .themedList()
         .navigationTitle("Voli e traghetti")
-        .searchable(text: $query, prompt: "Volo, città o compagnia")
+        .searchable(text: $query, prompt: String(localized: "Volo, città o compagnia"))
         .task { await model.refreshTransport() }
         .refreshable { await model.refreshTransport() }
     }

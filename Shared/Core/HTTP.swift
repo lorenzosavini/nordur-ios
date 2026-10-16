@@ -46,8 +46,8 @@ enum HTTPError: LocalizedError {
 
     var errorDescription: String? {
         switch self {
-        case .status(let code): return "Il server ha risposto con errore \(code)"
-        case .invalidURL: return "Indirizzo non valido"
+        case .status(let code): return String(localized: "Il server ha risposto con errore \(code)")
+        case .invalidURL: return String(localized: "Indirizzo non valido")
         }
     }
 }

@@ -16,8 +16,8 @@ struct RoadSegment: Decodable, Identifiable {
     let DagsSkrad: String?
 
     var id: Int { Int(IdButur) }
-    var name: String { FulltNafnButs ?? StuttNafnButs ?? "Tratto \(id)" }
-    var conditionText: String { AstandLysingEn ?? AstandLysing ?? "Sconosciuto" }
+    var name: String { FulltNafnButs ?? StuttNafnButs ?? String(localized: "Tratto \(id)") }
+    var conditionText: String { AstandLysingEn ?? AstandLysing ?? String(localized: "Sconosciuto") }
     var updated: Date? { DateParse.iso(DagsSkrad) }
 
     /// nil when the segment is not serviced or its state is unknown.
@@ -44,7 +44,7 @@ struct RoadStation: Decodable, Identifiable {
     let IdButur2: Double?
 
     var id: Int { Int(Nr) }
-    var name: String { Nafn ?? "Stazione \(id)" }
+    var name: String { Nafn ?? String(localized: "Stazione \(id)") }
     var coordinate: Coordinate? {
         guard let Breidd, let Lengd, Breidd != 0 else { return nil }
         return Coordinate(lat: Breidd, lon: Lengd)
@@ -90,19 +90,19 @@ enum RoadCondition {
 
     static func italian(_ code: String?) -> String? {
         switch code?.uppercased() {
-        case "GREIDFAERT": return "Percorribile"
-        case "HALKUBLETTIR": return "Tratti ghiacciati"
-        case "HALKA": return "Strada scivolosa"
-        case "FLUGHALT": return "Estremamente scivolosa"
-        case "KRAP": return "Neve bagnata"
-        case "SNJOTHEKJA": return "Neve sulla carreggiata"
-        case "THUNGFAERT": return "Percorribilità difficile"
-        case "SKAFRENNINGUR": return "Neve soffiata dal vento"
-        case "FAERT_FJALLABILUM": return "Solo veicoli 4x4 da montagna"
-        case "OFAERT", "OFAERT_ANNAD", "OFAERT_VEDUR": return "Impraticabile"
-        case "LOKAD": return "Chiusa"
-        case "EKKI_I_THJONUSTU": return "Non mantenuta in questo periodo"
-        case "OTHEKKT": return "Stato sconosciuto"
+        case "GREIDFAERT": return String(localized: "Percorribile")
+        case "HALKUBLETTIR": return String(localized: "Tratti ghiacciati")
+        case "HALKA": return String(localized: "Strada scivolosa")
+        case "FLUGHALT": return String(localized: "Estremamente scivolosa")
+        case "KRAP": return String(localized: "Neve bagnata")
+        case "SNJOTHEKJA": return String(localized: "Neve sulla carreggiata")
+        case "THUNGFAERT": return String(localized: "Percorribilità difficile")
+        case "SKAFRENNINGUR": return String(localized: "Neve soffiata dal vento")
+        case "FAERT_FJALLABILUM": return String(localized: "Solo veicoli 4x4 da montagna")
+        case "OFAERT", "OFAERT_ANNAD", "OFAERT_VEDUR": return String(localized: "Impraticabile")
+        case "LOKAD": return String(localized: "Chiusa")
+        case "EKKI_I_THJONUSTU": return String(localized: "Non mantenuta in questo periodo")
+        case "OTHEKKT": return String(localized: "Stato sconosciuto")
         default: return nil
         }
     }

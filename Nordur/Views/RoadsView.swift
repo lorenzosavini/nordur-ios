@@ -15,11 +15,11 @@ struct RoadsView: View {
         List {
             Section {
                 Picker("Vista", selection: $mode) {
-                    ForEach(Mode.allCases) { Text($0.rawValue).tag($0) }
+                    ForEach(Mode.allCases) { Text($0.rawValue.loc).tag($0) }
                 }
                 .pickerStyle(.segmented)
                 if let fetched = model.roads {
-                    FreshnessLabel(date: fetched.date, isStale: fetched.isStale, source: "Vegagerðin")
+                    FreshnessLabel(date: fetched.date, isStale: fetched.isStale, source: String(localized: "Vegagerðin"))
                 }
                 ErrorNote(message: model.errors[.roads])
             }
@@ -38,14 +38,14 @@ struct RoadsView: View {
             }
 
             Section("Ufficiale") {
-                LinkRow(title: "Umferdin.is – mappa strade in tempo reale", subtitle: "Chiusure, condizioni, webcam", url: "https://umferdin.is/en", systemImage: "map")
-                LinkRow(title: "Road.is – Vegagerðin", subtitle: "Info stradali, strade F nelle Highlands", url: "https://www.road.is/", systemImage: "road.lanes")
-                LinkRow(title: "Chiama il 1777", subtitle: "Informazioni stradali (8–16, inverno anche 6:30–22)", url: "tel:1777", systemImage: "phone.fill")
+                LinkRow(title: String(localized: "Umferdin.is – mappa strade in tempo reale"), subtitle: String(localized: "Chiusure, condizioni, webcam"), url: "https://umferdin.is/en", systemImage: "map")
+                LinkRow(title: String(localized: "Road.is – Vegagerðin"), subtitle: String(localized: "Info stradali, strade F nelle Highlands"), url: "https://www.road.is/", systemImage: "road.lanes")
+                LinkRow(title: String(localized: "Chiama il 1777"), subtitle: String(localized: "Informazioni stradali (8–16, inverno anche 6:30–22)"), url: "tel:1777", systemImage: "phone.fill")
             }
         }
         .themedList()
         .navigationTitle("Strade")
-        .searchable(text: $query, prompt: "Cerca strada o località")
+        .searchable(text: $query, prompt: String(localized: "Cerca strada o località"))
         .refreshable { await model.refreshGlobal(force: true) }
     }
 

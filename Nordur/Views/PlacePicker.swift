@@ -49,7 +49,7 @@ struct PlacePicker: View {
             .themedList()
             .navigationTitle("Scegli un luogo")
             .navigationBarTitleDisplayMode(.inline)
-            .searchable(text: $query, prompt: "Cerca un luogo nel mondo")
+            .searchable(text: $query, prompt: String(localized: "Cerca un luogo nel mondo"))
             .task(id: query) { await search() }
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
@@ -72,7 +72,7 @@ struct PlacePicker: View {
             VStack(alignment: .leading) {
                 Text(place.name).foregroundStyle(.primary)
                 if let subtitle = place.subtitle {
-                    Text(subtitle).font(.app(.caption)).foregroundStyle(.secondary)
+                    Text(subtitle.loc).font(.app(.caption)).foregroundStyle(.secondary)
                 }
             }
         }

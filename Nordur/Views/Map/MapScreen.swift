@@ -96,7 +96,7 @@ struct MapScreen: View {
                             layerRaw = item.rawValue
                             playing = false
                         } label: {
-                            Text(item.label.uppercased())
+                            Text(item.label.loc.uppercased())
                                 .font(.mono(10.5, .semibold))
                                 .padding(.horizontal, 10)
                                 .padding(.vertical, 7)
@@ -194,12 +194,12 @@ struct MapScreen: View {
                 Button("Adesso") { hour = -1; playing = false }.font(.app(.caption))
             }
             if let fetched = model.weatherGrid {
-                FreshnessLabel(date: fetched.date, isStale: fetched.isStale, source: "Open-Meteo")
+                FreshnessLabel(date: fetched.date, isStale: fetched.isStale, source: String(localized: "Open-Meteo"))
             }
         } else if layer.isForecast {
             HStack {
                 if model.errors[.grid] == nil { ProgressView() }
-                ErrorNote(message: model.errors[.grid] ?? "Carico la griglia meteo…")
+                ErrorNote(message: model.errors[.grid] ?? String(localized: "Carico la griglia meteo…"))
                 Spacer()
                 Button("Riprova") { Task { await model.refreshMapData(force: true) } }.font(.app(.caption))
             }
@@ -207,7 +207,7 @@ struct MapScreen: View {
             HStack {
                 Button { playing.toggle() } label: { Image(systemName: playing ? "pause.fill" : "play.fill") }
                 VStack(alignment: .leading, spacing: 0) {
-                    Text("\(Fmt.dayTime(frame.time))\(frame.time > Date() ? " (previsione)" : "")").font(.app(.caption, .semibold))
+                    Text("\(Fmt.dayTime(frame.time))\(frame.time > Date() ? String(localized: " (previsione)") : "")").font(.app(.caption, .semibold))
                     Slider(value: Binding(get: { Double(model.radarFrames.firstIndex(of: frame) ?? 0) }, set: { radarIndex = $0.rounded() }),
                            in: 0...Double(max(model.radarFrames.count - 1, 1)), step: 1)
                 }
@@ -443,14 +443,14 @@ struct ProbeCard: View {
             }
             if grid != nil, v(.temperature) != nil {
                 HStack {
-                    Metric(title: "Temp.", value: Fmt.temp(v(.temperature)))
-                    Metric(title: "Vento", value: Fmt.ms(v(.wind)), tint: Risk.wind(mean: v(.wind), gust: nil).color)
-                    Metric(title: "Raffiche", value: Fmt.ms(v(.gust)), tint: Risk.wind(mean: nil, gust: v(.gust)).color)
+                    Metric(title: String(localized: "Temp."), value: Fmt.temp(v(.temperature)))
+                    Metric(title: String(localized: "Vento"), value: Fmt.ms(v(.wind)), tint: Risk.wind(mean: v(.wind), gust: nil).color)
+                    Metric(title: String(localized: "Raffiche"), value: Fmt.ms(v(.gust)), tint: Risk.wind(mean: nil, gust: v(.gust)).color)
                 }
                 HStack {
-                    Metric(title: "Pioggia", value: Fmt.number(v(.precipitation), decimals: 1, unit: "mm/h"))
-                    Metric(title: "Neve", value: Fmt.number(v(.snow), decimals: 1, unit: "cm/h"))
-                    Metric(title: "Nuvole", value: Fmt.percent(v(.cloud)))
+                    Metric(title: String(localized: "Pioggia"), value: Fmt.number(v(.precipitation), decimals: 1, unit: "mm/h"))
+                    Metric(title: String(localized: "Neve"), value: Fmt.number(v(.snow), decimals: 1, unit: "cm/h"))
+                    Metric(title: String(localized: "Nuvole"), value: Fmt.percent(v(.cloud)))
                 }
             } else {
                 Text("Fuori dalla griglia meteo dell'Islanda.").font(.app(.caption)).foregroundStyle(.secondary)

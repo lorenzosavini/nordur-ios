@@ -30,7 +30,7 @@ struct RoutePlan {
 enum RoutePlanner {
     enum PlanError: LocalizedError {
         case noRoute
-        var errorDescription: String? { "Nessun percorso stradale trovato tra questi luoghi." }
+        var errorDescription: String? { String(localized: "Nessun percorso stradale trovato tra questi luoghi.") }
     }
 
     static func plan(from: Place, to: Place, departure: Date, model: AppModel) async throws -> RoutePlan {

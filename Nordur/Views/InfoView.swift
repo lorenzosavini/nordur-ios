@@ -8,11 +8,11 @@ struct InfoView: View {
         NavigationStack {
             List {
                 Section {
-                    LinkRow(title: "Emergenza: 112", subtitle: "Polizia, ambulanza, vigili del fuoco, soccorso alpino", url: "tel:112", systemImage: "phone.fill")
-                    LinkRow(title: "Numero alternativo: 599-0112", subtitle: "Se il 112 non si connette (spegnimento reti 2G/3G)", url: "tel:5990112", systemImage: "phone.badge.waveform.fill")
-                    LinkRow(title: "112.is – Centrale emergenze", subtitle: "Chat con il 112 e informazioni per i viaggiatori", url: "https://www.112.is/en", systemImage: "sos")
-                    LinkRow(title: "Registra il piano di viaggio", subtitle: "SafeTravel – i soccorsi sapranno dove cercarti", url: "https://safetravel.is/travel-plan", systemImage: "doc.text.fill")
-                    LinkRow(title: "Guardia medica 1700", subtitle: "Consulenza sanitaria non urgente", url: "tel:1700", systemImage: "cross.case.fill")
+                    LinkRow(title: String(localized: "Emergenza: 112"), subtitle: String(localized: "Polizia, ambulanza, vigili del fuoco, soccorso alpino"), url: "tel:112", systemImage: "phone.fill")
+                    LinkRow(title: String(localized: "Numero alternativo: 599-0112"), subtitle: String(localized: "Se il 112 non si connette (spegnimento reti 2G/3G)"), url: "tel:5990112", systemImage: "phone.badge.waveform.fill")
+                    LinkRow(title: String(localized: "112.is – Centrale emergenze"), subtitle: String(localized: "Chat con il 112 e informazioni per i viaggiatori"), url: "https://www.112.is/en", systemImage: "sos")
+                    LinkRow(title: String(localized: "Registra il piano di viaggio"), subtitle: String(localized: "SafeTravel – i soccorsi sapranno dove cercarti"), url: "https://safetravel.is/travel-plan", systemImage: "doc.text.fill")
+                    LinkRow(title: String(localized: "Guardia medica 1700"), subtitle: String(localized: "Consulenza sanitaria non urgente"), url: "tel:1700", systemImage: "cross.case.fill")
                 } header: {
                     Text("Sicurezza")
                 }
@@ -29,27 +29,27 @@ struct InfoView: View {
 
 
                 Section("Meteo") {
-                    LinkRow(title: "Vedur.is – Meteo ufficiale islandese", subtitle: "Previsioni, allerte, mappe del vento", url: "https://en.vedur.is/")
-                    LinkRow(title: "Windy", subtitle: "Modelli a confronto, vento e raffiche", url: "https://www.windy.com/?64.9,-18.6,6")
-                    LinkRow(title: "Yr.no", subtitle: "Previsioni norvegesi (MET Norway)", url: "https://www.yr.no/en")
-                    LinkRow(title: "Blika.is", subtitle: "Previsioni islandesi dettagliate", url: "https://blika.is/")
+                    LinkRow(title: String(localized: "Vedur.is – Meteo ufficiale islandese"), subtitle: String(localized: "Previsioni, allerte, mappe del vento"), url: "https://en.vedur.is/")
+                    LinkRow(title: String(localized: "Windy"), subtitle: String(localized: "Modelli a confronto, vento e raffiche"), url: "https://www.windy.com/?64.9,-18.6,6")
+                    LinkRow(title: "Yr.no", subtitle: String(localized: "Previsioni norvegesi (MET Norway)"), url: "https://www.yr.no/en")
+                    LinkRow(title: String(localized: "Blika.is"), subtitle: String(localized: "Previsioni islandesi dettagliate"), url: "https://blika.is/")
                 }
 
                 Section("Strade") {
-                    LinkRow(title: "Umferdin.is", subtitle: "Mappa ufficiale di strade, chiusure e webcam", url: "https://umferdin.is/en", systemImage: "map")
-                    LinkRow(title: "SafeTravel – condizioni", subtitle: "Avvisi e mappa delle condizioni", url: "https://safetravel.is/", systemImage: "exclamationmark.shield")
-                    LinkRow(title: "Strade F (Highlands)", subtitle: "Date di apertura – solo 4x4, guadi", url: "https://www.road.is/travel-info/highland-roads/", systemImage: "mountain.2")
-                    LinkRow(title: "Distributori e ricarica", subtitle: "Mappa di N1 / Orkan / Olís", url: "https://www.n1.is/en/", systemImage: "fuelpump")
+                    LinkRow(title: String(localized: "Umferdin.is"), subtitle: String(localized: "Mappa ufficiale di strade, chiusure e webcam"), url: "https://umferdin.is/en", systemImage: "map")
+                    LinkRow(title: String(localized: "SafeTravel – condizioni"), subtitle: String(localized: "Avvisi e mappa delle condizioni"), url: "https://safetravel.is/", systemImage: "exclamationmark.shield")
+                    LinkRow(title: String(localized: "Strade F (Highlands)"), subtitle: String(localized: "Date di apertura – solo 4x4, guadi"), url: "https://www.road.is/travel-info/highland-roads/", systemImage: "mountain.2")
+                    LinkRow(title: String(localized: "Distributori e ricarica"), subtitle: String(localized: "Mappa di N1 / Orkan / Olís"), url: "https://www.n1.is/en/", systemImage: "fuelpump")
                 }
 
                 Section("Voli, bus e traghetti") {
-                    LinkRow(title: "Keflavík – arrivi e partenze", subtitle: "Isavia KEF", url: "https://www.isavia.is/en/keflavik-airport", systemImage: "airplane")
-                    LinkRow(title: "Voli interni", subtitle: "Icelandair, Norlandair, Mýflug", url: "https://www.icelandair.com/", systemImage: "airplane.circle")
-                    LinkRow(title: "Flybus / Airport Direct", subtitle: "Navette aeroporto ↔ Reykjavík", url: "https://www.re.is/", systemImage: "bus")
-                    LinkRow(title: "Strætó – bus di linea", subtitle: "Reykjavík e lunga distanza", url: "https://www.straeto.is/en", systemImage: "bus.fill")
-                    LinkRow(title: "Herjólfur", subtitle: "Traghetto per Vestmannaeyjar", url: "https://www.herjolfur.is/en/", systemImage: "ferry")
-                    LinkRow(title: "Baldur (Sæferðir)", subtitle: "Traghetto Stykkishólmur – Brjánslækur", url: "https://www.saeferdir.is/en/", systemImage: "ferry.fill")
-                    LinkRow(title: "Smyril Line", subtitle: "Traghetto Seyðisfjörður – Fær Øer – Danimarca", url: "https://www.smyrilline.com/", systemImage: "ferry")
+                    LinkRow(title: String(localized: "Keflavík – arrivi e partenze"), subtitle: String(localized: "Isavia KEF"), url: "https://www.isavia.is/en/keflavik-airport", systemImage: "airplane")
+                    LinkRow(title: String(localized: "Voli interni"), subtitle: String(localized: "Icelandair, Norlandair, Mýflug"), url: "https://www.icelandair.com/", systemImage: "airplane.circle")
+                    LinkRow(title: String(localized: "Flybus / Airport Direct"), subtitle: String(localized: "Navette aeroporto ↔ Reykjavík"), url: "https://www.re.is/", systemImage: "bus")
+                    LinkRow(title: String(localized: "Strætó – bus di linea"), subtitle: String(localized: "Reykjavík e lunga distanza"), url: "https://www.straeto.is/en", systemImage: "bus.fill")
+                    LinkRow(title: String(localized: "Herjólfur"), subtitle: String(localized: "Traghetto per Vestmannaeyjar"), url: "https://www.herjolfur.is/en/", systemImage: "ferry")
+                    LinkRow(title: String(localized: "Baldur (Sæferðir)"), subtitle: String(localized: "Traghetto Stykkishólmur – Brjánslækur"), url: "https://www.saeferdir.is/en/", systemImage: "ferry.fill")
+                    LinkRow(title: String(localized: "Smyril Line"), subtitle: String(localized: "Traghetto Seyðisfjörður – Fær Øer – Danimarca"), url: "https://www.smyrilline.com/", systemImage: "ferry")
                 }
 
                 Section("Consigli per guidare in Islanda") {
@@ -66,7 +66,7 @@ struct InfoView: View {
                 Section("Stato delle fonti") {
                     ForEach(AppModel.Source.allCases, id: \.self) { source in
                         HStack {
-                            Text(source.rawValue)
+                            Text(source.rawValue.loc)
                             Spacer()
                             if let error = model.errors[source] {
                                 Text(error).font(.app(.caption2)).foregroundStyle(.red).lineLimit(1)

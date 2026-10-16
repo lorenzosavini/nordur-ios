@@ -189,7 +189,7 @@ final class AlertCenter: NSObject {
         input.now = now
 
         let current = position ?? model?.location.coordinate ?? LocationManager.lastKnown
-        let currentPlace = current.map { Place(name: "la tua posizione", coordinate: $0) } ?? AppModel.monitoredPlace
+        let currentPlace = current.map { Place(name: String(localized: "la tua posizione"), coordinate: $0) } ?? AppModel.monitoredPlace
         input.watched.append(.init(name: currentPlace.name, coordinate: currentPlace.coordinate,
                                    from: now, to: now.addingTimeInterval(12 * 3600), isCurrent: true))
         let horizon = now.addingTimeInterval(3 * 24 * 3600)

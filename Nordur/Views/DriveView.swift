@@ -17,7 +17,7 @@ struct DriveView: View {
         NavigationStack {
             List {
                 Section {
-                    ScreenHeader(title: "Guida", subtitle: recorder.isRecording ? "Registrazione in corso" : "Percorsi e strade", index: "04") {
+                    ScreenHeader(title: String(localized: "Guida"), subtitle: recorder.isRecording ? String(localized: "Registrazione in corso") : String(localized: "Percorsi e strade"), index: "04") {
                         if recorder.isRecording {
                             Button { confirmStop = true } label: {
                                 Text("■ STOP").font(.mono(11, .semibold)).tracking(0.8).foregroundStyle(.white)
@@ -146,14 +146,14 @@ struct DriveView: View {
                 Text("Nessun percorso registrato.").foregroundStyle(.secondary)
             } else {
                 HStack {
-                    Metric(title: "Totale", value: Fmt.number(store.totalKm, decimals: 1, unit: "km"), systemImage: "road.lanes")
-                    Metric(title: "Alla guida", value: Fmt.duration(store.totalSeconds), systemImage: "clock")
-                    Metric(title: "Percorsi", value: "\(store.drives.count)", systemImage: "list.number")
+                    Metric(title: String(localized: "Totale"), value: Fmt.number(store.totalKm, decimals: 1, unit: "km"), systemImage: "road.lanes")
+                    Metric(title: String(localized: "Alla guida"), value: Fmt.duration(store.totalSeconds), systemImage: "clock")
+                    Metric(title: String(localized: "Percorsi"), value: "\(store.drives.count)", systemImage: "list.number")
                 }
                 let perDay = DriveMath.kmPerDay(store.drives)
                 if perDay.count > 1 {
                     Chart(perDay) { item in
-                        BarMark(x: .value("Giorno", item.day, unit: .day), y: .value("km", item.km))
+                        BarMark(x: .value(String(localized: "Giorno"), item.day, unit: .day), y: .value("km", item.km))
                             .foregroundStyle(Color.accentColor)
                     }
                     .frame(height: 120)
@@ -194,7 +194,7 @@ struct LiveDrivePanel: View {
                     HStack {
                         HStack(spacing: 6) {
                             Circle().fill(recorder.isPaused ? Theme.warning : Theme.danger).frame(width: 8, height: 8)
-                            Text(recorder.isPaused ? "In pausa" : "Registrazione").eyebrow(recorder.isPaused ? Theme.warning : Theme.danger)
+                            Text(recorder.isPaused ? String(localized: "In pausa") : String(localized: "Registrazione")).eyebrow(recorder.isPaused ? Theme.warning : Theme.danger)
                         }
                         Spacer()
                         if let acc = recorder.gpsAccuracy {
@@ -219,19 +219,19 @@ struct LiveDrivePanel: View {
                     }
                     Grid(alignment: .leading, horizontalSpacing: 12, verticalSpacing: 10) {
                         GridRow {
-                            Metric(title: "Velocità max", value: Fmt.number(session.stats.maxKmh, unit: "km/h"), systemImage: "gauge.with.dots.needle.100percent")
-                            Metric(title: "Media", value: Fmt.number(session.stats.averageKmh(totalSeconds: elapsed), unit: "km/h"), systemImage: "speedometer")
-                            Metric(title: "Quota", value: Fmt.number(session.points.last?.alt, unit: "m"), systemImage: "mountain.2")
+                            Metric(title: String(localized: "Velocità max"), value: Fmt.number(session.stats.maxKmh, unit: "km/h"), systemImage: "gauge.with.dots.needle.100percent")
+                            Metric(title: String(localized: "Media"), value: Fmt.number(session.stats.averageKmh(totalSeconds: elapsed), unit: "km/h"), systemImage: "speedometer")
+                            Metric(title: String(localized: "Quota"), value: Fmt.number(session.points.last?.alt, unit: "m"), systemImage: "mountain.2")
                         }
                         GridRow {
-                            Metric(title: "In marcia", value: Fmt.clock(session.stats.movingSeconds), systemImage: "car")
-                            Metric(title: "Salita", value: Fmt.number(session.stats.elevationGain, unit: "m"), systemImage: "arrow.up.right")
-                            Metric(title: "Soste", value: "\(session.stats.stops)", systemImage: "parkingsign")
+                            Metric(title: String(localized: "In marcia"), value: Fmt.clock(session.stats.movingSeconds), systemImage: "car")
+                            Metric(title: String(localized: "Salita"), value: Fmt.number(session.stats.elevationGain, unit: "m"), systemImage: "arrow.up.right")
+                            Metric(title: String(localized: "Soste"), value: "\(session.stats.stops)", systemImage: "parkingsign")
                         }
                         GridRow {
-                            Metric(title: "Km auto", value: Fmt.number(session.odometerEnd, decimals: 0), systemImage: "gauge.open.with.lines.needle.33percent")
-                            Metric(title: "Litri", value: Fmt.number(session.stats.fuelLitres(recorder.settings), decimals: 1, unit: "l"), systemImage: "fuelpump")
-                            Metric(title: "Costo", value: Fmt.number(session.stats.fuelCost(recorder.settings), unit: "ISK"), systemImage: "creditcard")
+                            Metric(title: String(localized: "Km auto"), value: Fmt.number(session.odometerEnd, decimals: 0), systemImage: "gauge.open.with.lines.needle.33percent")
+                            Metric(title: String(localized: "Litri"), value: Fmt.number(session.stats.fuelLitres(recorder.settings), decimals: 1, unit: "l"), systemImage: "fuelpump")
+                            Metric(title: String(localized: "Costo"), value: Fmt.number(session.stats.fuelCost(recorder.settings), unit: String(localized: "ISK")), systemImage: "creditcard")
                         }
                     }
                     if let latest = alerts.latest, Date().timeIntervalSince(latest.date) < 3600 {
@@ -328,7 +328,7 @@ struct DriveDetailView: View {
                 }
                 LabeledContent("Soste (>2 min)", value: "\(s.stops)")
                 if s.speedingSeconds > 0 {
-                    LabeledContent("Oltre il limite", value: "\(Fmt.clock(s.speedingSeconds)) · max \(Int(s.speedingMaxKmh)) km/h")
+                    LabeledContent("Oltre il limite", value: String(localized: "\(Fmt.clock(s.speedingSeconds)) · max \(Int(s.speedingMaxKmh)) km/h"))
                 }
                 if let start = session.odometerStart, let end = session.odometerEnd {
                     LabeledContent("Contachilometri", value: "\(Fmt.number(start, unit: "")) → \(Fmt.number(end, unit: "km"))")
@@ -401,10 +401,10 @@ struct DriveTrackMap: View {
                 }
             }
             if let first = points.first {
-                Marker("Partenza", systemImage: "flag.fill", coordinate: first.coordinate.clCoordinate).tint(.green)
+                Marker(String(localized: "Partenza"), systemImage: "flag.fill", coordinate: first.coordinate.clCoordinate).tint(.green)
             }
             if let last = points.last, points.count > 1 {
-                Marker("Arrivo", systemImage: "flag.checkered", coordinate: last.coordinate.clCoordinate).tint(.red)
+                Marker(String(localized: "Arrivo"), systemImage: "flag.checkered", coordinate: last.coordinate.clCoordinate).tint(.red)
             }
         }
     }
@@ -437,7 +437,7 @@ struct SpeedAltitudeChart: View {
         Chart {
             ForEach(data) { row in
                 if let alt = row.altitude {
-                    AreaMark(x: .value("km", row.km), y: .value("Quota (scalata)", alt / max(maxAlt, 1) * maxSpeed))
+                    AreaMark(x: .value("km", row.km), y: .value(String(localized: "Quota (scalata)"), alt / max(maxAlt, 1) * maxSpeed))
                         .foregroundStyle(.brown.opacity(0.2))
                 }
                 LineMark(x: .value("km", row.km), y: .value("km/h", row.speed))
