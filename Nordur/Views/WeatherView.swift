@@ -38,7 +38,7 @@ struct WeatherView: View {
     private func axis() -> some AxisContent {
         AxisMarks(values: .stride(by: .hour, count: 12)) { _ in
             AxisGridLine(stroke: StrokeStyle(lineWidth: 0.5)).foregroundStyle(Theme.hairline)
-            AxisValueLabel(format: .dateTime.weekday(.abbreviated).hour(.twoDigits(amPM: .omitted)), centered: false)
+            AxisValueLabel(format: .dateTime.weekday(.abbreviated).hour(), centered: false)
                 .foregroundStyle(Theme.faint)
         }
     }

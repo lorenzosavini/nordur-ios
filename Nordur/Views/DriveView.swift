@@ -71,7 +71,7 @@ struct DriveView: View {
                     Toggle("Avviso se superi il limite", isOn: $recorder.settings.speedAlerts)
                     Toggle("Avvisi vocali", isOn: $recorder.settings.spokenAlerts)
                 } header: {
-                    Text("Auto e chilometraggio")
+                    Text("Auto e chilometraggio").eyebrow()
                 } footer: {
                     Text("Inserisci i km al ritiro dell'auto: si aggiornano a ogni percorso. Limiti: 90 km/h asfalto, 80 sterrato, 50 centri abitati.")
                 }
@@ -158,7 +158,7 @@ struct DriveView: View {
                 removed.forEach { store.delete($0) }
             }
         } header: {
-            Text("Storico percorsi")
+            Text("Storico percorsi").eyebrow()
         }
     }
 }

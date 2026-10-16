@@ -72,7 +72,7 @@ struct RoadAheadSection: View {
                 .font(.caption)
             }
         } header: {
-            Text("La strada davanti a te")
+            Text("La strada davanti a te").eyebrow()
         }
         .sheet(isPresented: $picking) {
             PlacePicker(allowCurrentLocation: false) { choice in
