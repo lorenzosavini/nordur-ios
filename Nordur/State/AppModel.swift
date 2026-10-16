@@ -30,6 +30,8 @@ final class AppModel {
     private(set) var chosenPlace: Place
 
     var forecast: Fetched<Forecast>?
+    /// Official IMO forecast for the nearest station (nil when none within 60 km).
+    var stationForecast: Fetched<StationForecast>?
     var marine: Fetched<Marine>?
     var air: Fetched<AirQuality>?
     var warnings: Fetched<[WeatherWarning]>?
@@ -53,6 +55,11 @@ final class AppModel {
     init() {
         let defaults = UserDefaults.standard
         useCurrentLocation = defaults.object(forKey: Self.useCurrentKey) as? Bool ?? true
+        chosenPlace = Self.storedChosenPlace ?? .reykjavik
+    }
+
+    func reloadSelection() {
+        useCurrentLocation = UserDefaults.standard.object(forKey: Self.useCurrentKey) as? Bool ?? true
         chosenPlace = Self.storedChosenPlace ?? .reykjavik
     }
 
@@ -116,12 +123,14 @@ final class AppModel {
 
     func refreshPlace() async {
         let c = activePlace.coordinate
-        async let f = attempt { try await OpenMeteo.forecast(c) }
+        async let f = attempt { try await WeatherService.forecast(c) }
         async let m = attempt { try await OpenMeteo.marine(c) }
         async let a = attempt { try await OpenMeteo.airQuality(c) }
-        let (rf, rm, ra) = await (f, m, a)
+        async let s = attempt { try await IMOForecast.forecast(near: c) }
+        let (rf, rm, ra, rs) = await (f, m, a, s)
         // The user may have switched place meanwhile.
         guard c == activePlace.coordinate else { return }
+        if case .success(let station) = rs { stationForecast = station }
         apply(rf, .forecast) { self.forecast = $0 }
         apply(rm, .marine) { self.marine = $0 }
         apply(ra, .air) { self.air = $0 }

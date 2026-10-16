@@ -134,7 +134,7 @@ struct ConditionsProvider: AppIntentTimelineProvider {
         }
         let c = coordinate ?? Place.reykjavik.coordinate
 
-        async let forecastResult = attempt { try await OpenMeteo.forecast(c).value }
+        async let forecastResult = attempt { try await WeatherService.forecast(c).value }
         async let warningsResult = attempt { try await IMO.warnings().value }
         async let kpResult = attempt { try await SpaceWeather.kpForecast().value }
         let forecast = try? await forecastResult.get()
@@ -255,7 +255,7 @@ struct ConditionsWidget: Widget {
     var body: some WidgetConfiguration {
         AppIntentConfiguration(kind: "NordurConditions", intent: SelectPlaceIntent.self, provider: ConditionsProvider()) { entry in
             ConditionsWidgetView(entry: entry)
-                .containerBackground(.fill.tertiary, for: .widget)
+                .containerBackground(Theme.bg, for: .widget)
         }
         .configurationDisplayName("Condizioni Norður")
         .description("Temperatura, vento, raffiche e allerte IMO per un luogo.")
@@ -294,7 +294,7 @@ struct AuroraWidget: Widget {
     var body: some WidgetConfiguration {
         AppIntentConfiguration(kind: "NordurAurora", intent: SelectPlaceIntent.self, provider: ConditionsProvider()) { entry in
             AuroraWidgetView(entry: entry)
-                .containerBackground(.fill.tertiary, for: .widget)
+                .containerBackground(Theme.bg, for: .widget)
         }
         .configurationDisplayName("Aurora stanotte")
         .description("Punteggio 0–100: attività geomagnetica × cielo sereno nelle ore di buio.")

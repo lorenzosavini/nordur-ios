@@ -11,7 +11,15 @@ struct Forecast: Decodable {
     let utc_offset_seconds: Int
     let current: Current?
     let hourly: Hourly?
-    let daily: Daily?
+    var daily: Daily?
+    /// Models that produced this forecast, most authoritative first.
+    var sources: [String] = ["Open-Meteo"]
+    /// Last hour covered by the primary (MET Norway) model.
+    var primaryUntil: Date?
+
+    enum CodingKeys: String, CodingKey {
+        case latitude, longitude, timezone, utc_offset_seconds, current, hourly, daily
+    }
 
     struct Current: Decodable {
         let time: Int
@@ -273,7 +281,7 @@ enum OpenMeteo {
             "wind_speed_unit": "ms",
             "timezone": "auto",
             "timeformat": "unixtime",
-            "forecast_days": "16",
+            "forecast_days": "11",
         ])
         return try await HTTP.json(Forecast.self, from: url, cacheKey: "forecast_\(c.key)")
     }

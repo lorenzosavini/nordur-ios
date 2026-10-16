@@ -2,43 +2,43 @@ import SwiftUI
 
 // MARK: - Containers
 
-/// Dark surface panel with an uppercase section label.
+/// A section: mono label with a rule, then the content. No box, no shadow.
 struct Card<Content: View>: View {
     let title: String
     let systemImage: String
-    /// Kept for call-site compatibility; panels are deliberately neutral.
+    /// Kept for call-site compatibility; sections are deliberately neutral.
     var tint: Color = .primary
+    var index: String?
+    var trailing: String?
     @ViewBuilder var content: Content
 
     var body: some View {
         VStack(alignment: .leading, spacing: 14) {
-            HStack(spacing: 6) {
-                Image(systemName: systemImage).font(.geist(11, .semibold))
-                Text(title)
-            }
-            .eyebrow()
+            SectionLabel(index: index, title: title, trailing: trailing)
             content
         }
-        .panel()
+        .frame(maxWidth: .infinity, alignment: .leading)
     }
 }
 
 // MARK: - Badges and labels
 
+/// Square status tag. Solid when it calls for action, outlined otherwise.
 struct RiskBadge: View {
     let risk: Risk
     var text: String?
 
     var body: some View {
-        HStack(spacing: 6) {
-            Circle().fill(risk.color).frame(width: 7, height: 7)
-            Text(text ?? risk.label)
-        }
-        .font(.geist(12, .semibold))
-        .padding(.horizontal, 10)
-        .padding(.vertical, 5)
-        .background(risk.color.opacity(0.14), in: Capsule())
-        .foregroundStyle(risk.color)
+        let solid = risk >= .warning
+        Text(text ?? risk.label)
+            .font(.mono(10.5, .semibold))
+            .textCase(.uppercase)
+            .tracking(0.6)
+            .padding(.horizontal, 7)
+            .padding(.vertical, 4)
+            .foregroundStyle(solid ? Theme.onAccent : (risk == .ok ? Theme.dim : risk.color))
+            .background(solid ? risk.color : .clear)
+            .overlay(Rectangle().strokeBorder(solid ? .clear : (risk == .ok ? Theme.hairline : risk.color), lineWidth: 1))
     }
 }
 
@@ -47,16 +47,17 @@ struct WarningBadge: View {
 
     var body: some View {
         Text(color.label)
-            .font(.geist(10, .bold))
+            .font(.mono(9.5, .semibold))
             .textCase(.uppercase)
-            .padding(.horizontal, 7)
+            .tracking(0.5)
+            .padding(.horizontal, 6)
             .padding(.vertical, 3)
-            .background(color.color, in: RoundedRectangle(cornerRadius: 5, style: .continuous))
-            .foregroundStyle(Theme.bg)
+            .background(color.color)
+            .foregroundStyle(Color.black)
     }
 }
 
-/// When data was fetched and whether it comes from the offline cache.
+/// When data was fetched, from where, and whether it comes from the offline cache.
 struct FreshnessLabel: View {
     let date: Date?
     let isStale: Bool
@@ -64,13 +65,13 @@ struct FreshnessLabel: View {
 
     var body: some View {
         if let date {
-            HStack(spacing: 4) {
-                if isStale { Image(systemName: "wifi.slash") }
-                Text(isStale ? "Offline, dati di \(Fmt.relative(date))" : "Aggiornato \(Fmt.relative(date))")
-                if let source { Text("· \(source)") }
+            HStack(spacing: 6) {
+                if isStale { Text("OFFLINE").foregroundStyle(Theme.warning) }
+                Text(isStale ? "dati di \(Fmt.relative(date))" : "agg. \(Fmt.relative(date))")
+                if let source { Text("· \(source.uppercased())") }
             }
-            .font(.geist(11))
-            .foregroundStyle(isStale ? Theme.warning : Theme.faint)
+            .font(.mono(10))
+            .foregroundStyle(Theme.faint)
         }
     }
 }
@@ -80,17 +81,15 @@ struct ErrorNote: View {
 
     var body: some View {
         if let message {
-            HStack(spacing: 6) {
-                Image(systemName: "exclamationmark.circle")
-                Text(message)
+            HStack(alignment: .firstTextBaseline, spacing: 6) {
+                Text("ERR").font(.mono(10, .semibold)).foregroundStyle(Theme.warning)
+                Text(message).font(.app(.caption)).foregroundStyle(Theme.dim)
             }
-            .font(.app(.caption))
-            .foregroundStyle(Theme.dim)
         }
     }
 }
 
-/// Label on top, value below in rounded digits.
+/// Mono label on top, condensed figure below.
 struct Metric: View {
     let title: String
     let value: String
@@ -98,11 +97,56 @@ struct Metric: View {
     var tint: Color = Theme.text
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 4) {
+        VStack(alignment: .leading, spacing: 3) {
             Text(title).eyebrow(Theme.faint).lineLimit(1).minimumScaleFactor(0.8)
-            Text(value).font(.metric(19, .semibold)).foregroundStyle(tint).lineLimit(1).minimumScaleFactor(0.7)
+            Text(value).font(.metric(22, .semibold)).foregroundStyle(tint).lineLimit(1).minimumScaleFactor(0.7)
         }
         .frame(maxWidth: .infinity, alignment: .leading)
+    }
+}
+
+/// Reading with a separate unit, for data grids.
+struct Reading: View {
+    let label: String
+    let value: String
+    var unit: String = ""
+    var note: String?
+    var tint: Color = Theme.text
+    var size: CGFloat = 30
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 2) {
+            Text(label).eyebrow(Theme.faint).lineLimit(1)
+            HStack(alignment: .firstTextBaseline, spacing: 3) {
+                Text(value).font(.metric(size, .semibold)).foregroundStyle(tint)
+                if !unit.isEmpty { Text(unit).font(.mono(10.5)).foregroundStyle(Theme.dim) }
+            }
+            .lineLimit(1).minimumScaleFactor(0.6)
+            if let note { Text(note).font(.mono(10)).foregroundStyle(Theme.dim).lineLimit(1) }
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
+    }
+}
+
+/// Grid of readings separated by hairlines.
+struct ReadingGrid: View {
+    let items: [Reading]
+    var columns = 2
+
+    var body: some View {
+        let rows = stride(from: 0, to: items.count, by: columns).map { Array(items[$0..<min($0 + columns, items.count)]) }
+        VStack(spacing: 0) {
+            ForEach(Array(rows.enumerated()), id: \.offset) { row in
+                if row.offset > 0 { Rule() }
+                HStack(spacing: 0) {
+                    ForEach(Array(row.element.enumerated()), id: \.offset) { cell in
+                        if cell.offset > 0 { Theme.hairline.frame(width: 1) }
+                        cell.element.padding(.vertical, 10).padding(.leading, cell.offset > 0 ? 12 : 0)
+                    }
+                    if row.element.count < columns { Spacer() }
+                }
+            }
+        }
     }
 }
 
@@ -111,44 +155,45 @@ struct WindArrow: View {
     let degrees: Double?
 
     var body: some View {
-        Image(systemName: "location.north.fill")
+        Image(systemName: "arrow.up")
+            .fontWeight(.semibold)
             .rotationEffect(.degrees((degrees ?? 0) + 180))
             .opacity(degrees == nil ? 0 : 1)
     }
 }
 
+/// Place selector: mono context line, condensed uppercase name.
 struct PlaceHeader: View {
     @Environment(AppModel.self) private var model
     @State private var showPicker = false
-    /// White text for use on top of the sky hero.
     var onHero = false
+    var size: CGFloat = 34
 
-    init(onHero: Bool = false) {
+    init(onHero: Bool = false, size: CGFloat = 34) {
         self.onHero = onHero
+        self.size = size
     }
 
     var body: some View {
         Button {
             showPicker = true
         } label: {
-            VStack(alignment: .leading, spacing: 3) {
-                HStack(spacing: 5) {
-                    Image(systemName: model.useCurrentLocation ? "location.fill" : "mappin")
-                        .font(.system(size: 10, weight: .bold))
-                    Text(model.useCurrentLocation ? "Posizione attuale" : (model.activePlace.subtitle ?? "Località"))
+            VStack(alignment: .leading, spacing: 2) {
+                HStack(spacing: 6) {
+                    if model.useCurrentLocation {
+                        Rectangle().fill(Theme.accent).frame(width: 6, height: 6)
+                    }
+                    Text(model.useCurrentLocation ? "GPS · posizione attuale" : (model.activePlace.subtitle ?? "Località scelta"))
+                        .eyebrow(Theme.dim)
+                    Text(Fmt.coordinate(model.activePlace.coordinate)).font(.mono(10)).foregroundStyle(Theme.faint)
                 }
-                .eyebrow(onHero ? .white.opacity(0.8) : Theme.accent)
-                HStack(alignment: .center, spacing: 10) {
-                    Text(model.activePlace.name)
-                        .font(.display(30, .bold))
-                        .foregroundStyle(onHero ? .white : Theme.text)
+                HStack(alignment: .firstTextBaseline, spacing: 8) {
+                    Text(model.activePlace.name.uppercased())
+                        .font(.display(size, .bold))
+                        .foregroundStyle(Theme.text)
                         .lineLimit(1)
-                        .minimumScaleFactor(0.6)
-                    Image(systemName: "chevron.down")
-                        .font(.system(size: 11, weight: .bold))
-                        .foregroundStyle(onHero ? .white.opacity(0.9) : Theme.dim)
-                        .padding(7)
-                        .background(onHero ? Color.white.opacity(0.18) : Theme.raised, in: Circle())
+                        .minimumScaleFactor(0.5)
+                    Text("CAMBIA").font(.mono(9.5, .semibold)).foregroundStyle(Theme.accent)
                     Spacer(minLength: 0)
                 }
             }
@@ -175,18 +220,13 @@ struct LinkRow: View {
     var body: some View {
         if let destination = URL(string: url) {
             Link(destination: destination) {
-                HStack(spacing: 12) {
-                    Image(systemName: systemImage)
-                        .font(.geist(14, .semibold))
-                        .foregroundStyle(Theme.accent)
-                        .frame(width: 30, height: 30)
-                        .background(Theme.raised, in: RoundedRectangle(cornerRadius: 8, style: .continuous))
+                HStack(alignment: .firstTextBaseline, spacing: 12) {
                     VStack(alignment: .leading, spacing: 2) {
-                        Text(title).foregroundStyle(Theme.text)
+                        Text(title).font(.app(.subheadline, .medium)).foregroundStyle(Theme.text)
                         if let subtitle { Text(subtitle).font(.app(.caption)).foregroundStyle(Theme.dim) }
                     }
                     Spacer()
-                    Image(systemName: "arrow.up.right").font(.app(.caption, .semibold)).foregroundStyle(Theme.faint)
+                    Text("↗").font(.mono(13, .medium)).foregroundStyle(Theme.accent)
                 }
             }
         }
@@ -195,7 +235,7 @@ struct LinkRow: View {
 
 // MARK: - Data visualisations
 
-/// Compass dial: ticks, cardinal letters, arrow towards where the wind blows, speed in the centre.
+/// Compass rose: ticks, letters, arrow towards where the wind blows, speed in the centre.
 struct WindDial: View {
     let direction: Double?
     let speed: Double?
@@ -204,38 +244,38 @@ struct WindDial: View {
 
     var body: some View {
         let risk = Risk.wind(mean: speed, gust: gust)
+        let needle = risk >= .caution ? risk.color : Theme.text
         ZStack {
-            Circle().fill(Theme.raised)
-            ForEach(0..<36, id: \.self) { i in
+            Circle().strokeBorder(Theme.hairline, lineWidth: 1)
+            ForEach(0..<72, id: \.self) { i in
                 Rectangle()
-                    .fill(i % 9 == 0 ? Theme.dim : Theme.faint.opacity(0.6))
-                    .frame(width: i % 9 == 0 ? 2 : 1, height: i % 9 == 0 ? 7 : 4)
-                    .offset(y: -size / 2 + 6)
-                    .rotationEffect(.degrees(Double(i) * 10))
+                    .fill(i % 18 == 0 ? Theme.text : Theme.faint)
+                    .frame(width: 1, height: i % 18 == 0 ? 8 : (i % 2 == 0 ? 4 : 2))
+                    .offset(y: -size / 2 + 5)
+                    .rotationEffect(.degrees(Double(i) * 5))
             }
             ForEach(Array(["N", "E", "S", "O"].enumerated()), id: \.offset) { item in
                 let angle = Double(item.offset) * 90 * .pi / 180
                 Text(item.element)
-                    .font(.geist(9, .bold))
-                    .foregroundStyle(item.element == "N" ? Theme.text : Theme.faint)
+                    .font(.mono(9, .semibold))
+                    .foregroundStyle(item.element == "N" ? Theme.accent : Theme.dim)
                     .offset(x: sin(angle) * (size / 2 - 18), y: -cos(angle) * (size / 2 - 18))
             }
             if let direction {
-                Capsule()
-                    .fill(risk.color)
-                    .frame(width: 3, height: size * 0.3)
-                    .offset(y: -size * 0.2)
+                Rectangle()
+                    .fill(needle)
+                    .frame(width: 2, height: size * 0.62)
                     .rotationEffect(.degrees(direction + 180))
                 Image(systemName: "arrowtriangle.up.fill")
-                    .font(.geist(10))
-                    .foregroundStyle(risk.color)
-                    .offset(y: -size * 0.36)
+                    .font(.system(size: size * 0.1))
+                    .foregroundStyle(needle)
+                    .offset(y: -size * 0.31)
                     .rotationEffect(.degrees(direction + 180))
             }
-            Circle().fill(Theme.surface).frame(width: size * 0.42, height: size * 0.42)
-            VStack(spacing: -2) {
-                Text(speed.map { "\(Int($0.rounded()))" } ?? "–").font(.metric(size * 0.2, .bold)).foregroundStyle(Theme.text)
-                Text("m/s").font(.geist(8, .semibold)).foregroundStyle(Theme.faint)
+            Rectangle().fill(Theme.bg).frame(width: size * 0.4, height: size * 0.3)
+            VStack(spacing: -3) {
+                Text(speed.map { "\(Int($0.rounded()))" } ?? "–").font(.metric(size * 0.22, .bold)).foregroundStyle(Theme.text)
+                Text("M/S").font(.mono(7.5, .medium)).foregroundStyle(Theme.dim)
             }
         }
         .frame(width: size, height: size)
@@ -249,57 +289,65 @@ struct GustScale: View {
     private let maxValue = 40.0
 
     var body: some View {
-        GeometryReader { geo in
-            let w = geo.size.width
-            ZStack(alignment: .leading) {
-                HStack(spacing: 2) {
-                    segment(0, 10, Theme.ok, w)
-                    segment(10, 18, Theme.caution, w)
-                    segment(18, 25, Theme.warning, w)
-                    segment(25, 40, Theme.danger, w)
+        VStack(alignment: .leading, spacing: 4) {
+            GeometryReader { geo in
+                let w = geo.size.width
+                ZStack(alignment: .leading) {
+                    HStack(spacing: 1) {
+                        segment(0, 10, Theme.ok.opacity(0.35), w)
+                        segment(10, 18, Theme.caution, w)
+                        segment(18, 25, Theme.warning, w)
+                        segment(25, 40, Theme.danger, w)
+                    }
+                    if let mean { marker(mean, w, filled: false) }
+                    if let gust { marker(gust, w, filled: true) }
                 }
-                if let mean { marker(mean, w, filled: false) }
-                if let gust { marker(gust, w, filled: true) }
+                .frame(height: 16)
             }
-            .frame(height: 14)
+            .frame(height: 16)
+            HStack {
+                ForEach(["0", "10", "18", "25", "40"], id: \.self) { t in
+                    Text(t).font(.mono(9)).foregroundStyle(Theme.faint)
+                    if t != "40" { Spacer() }
+                }
+            }
         }
-        .frame(height: 14)
     }
 
     private func segment(_ from: Double, _ to: Double, _ color: Color, _ w: CGFloat) -> some View {
-        RoundedRectangle(cornerRadius: 2).fill(color.opacity(0.4))
-            .frame(width: max(0, CGFloat((to - from) / maxValue) * w - 2), height: 4)
+        Rectangle().fill(color)
+            .frame(width: max(0, CGFloat((to - from) / maxValue) * w - 1), height: 3)
     }
 
     private func marker(_ value: Double, _ w: CGFloat, filled: Bool) -> some View {
         let x = CGFloat(min(value, maxValue) / maxValue) * w
-        return Circle()
-            .fill(filled ? Theme.text : Theme.surface)
-            .overlay(Circle().strokeBorder(Theme.text, lineWidth: 2))
-            .frame(width: 12, height: 12)
-            .offset(x: x - 6)
+        return Rectangle()
+            .fill(filled ? Theme.text : Theme.bg)
+            .overlay(Rectangle().strokeBorder(Theme.text, lineWidth: 1.5))
+            .frame(width: filled ? 4 : 8, height: 16)
+            .offset(x: x - (filled ? 2 : 4))
     }
 }
 
-/// Sequence of small bars coloured by risk, one per hour.
+/// Sequence of ticks coloured by risk, one per hour.
 struct RiskTimeline: View {
     let risks: [Risk]
     var labels: [String] = []
 
     var body: some View {
         VStack(alignment: .leading, spacing: 5) {
-            HStack(alignment: .bottom, spacing: 3) {
+            HStack(alignment: .bottom, spacing: 2) {
                 ForEach(Array(risks.enumerated()), id: \.offset) { item in
-                    RoundedRectangle(cornerRadius: 2)
-                        .fill(item.element.color.opacity(item.element == .ok ? 0.45 : 0.95))
-                        .frame(height: 8 + CGFloat(item.element.rawValue) * 5)
+                    Rectangle()
+                        .fill(item.element == .ok ? Theme.hairline : item.element.color)
+                        .frame(height: item.element == .ok ? 6 : 8 + CGFloat(item.element.rawValue) * 6)
                 }
             }
-            .frame(height: 24, alignment: .bottom)
+            .frame(height: 28, alignment: .bottom)
             if !labels.isEmpty {
                 HStack {
                     ForEach(Array(labels.enumerated()), id: \.offset) { item in
-                        Text(item.element).font(.geist(10)).foregroundStyle(Theme.faint)
+                        Text(item.element).font(.mono(9.5)).foregroundStyle(Theme.faint)
                         if item.offset < labels.count - 1 { Spacer() }
                     }
                 }
@@ -308,7 +356,7 @@ struct RiskTimeline: View {
     }
 }
 
-/// 270° arc gauge.
+/// Segmented linear gauge with a figure.
 struct ArcGauge: View {
     let value: Double          // 0…1
     let color: Color
@@ -317,19 +365,17 @@ struct ArcGauge: View {
     var caption: String
 
     var body: some View {
-        ZStack {
-            Circle()
-                .trim(from: 0, to: 0.75)
-                .stroke(Theme.raised, style: StrokeStyle(lineWidth: lineWidth, lineCap: .round))
-                .rotationEffect(.degrees(135))
-            Circle()
-                .trim(from: 0, to: 0.75 * max(0.02, min(1, value)))
-                .stroke(color, style: StrokeStyle(lineWidth: lineWidth, lineCap: .round))
-                .rotationEffect(.degrees(135))
-            VStack(spacing: 0) {
-                Text(label).font(.metric(28, .bold)).foregroundStyle(Theme.text)
-                Text(caption).font(.geist(9, .semibold)).foregroundStyle(Theme.faint)
+        VStack(alignment: .leading, spacing: 6) {
+            HStack(alignment: .firstTextBaseline, spacing: 4) {
+                Text(label).font(.metric(40, .bold)).foregroundStyle(Theme.text)
+                Text(caption.uppercased()).font(.mono(9.5)).foregroundStyle(Theme.dim)
             }
+            HStack(spacing: 2) {
+                ForEach(0..<20, id: \.self) { i in
+                    Rectangle().fill(Double(i) / 20 < value ? color : Theme.hairline)
+                }
+            }
+            .frame(height: 8)
         }
     }
 }
@@ -341,17 +387,17 @@ struct StackedBar: View {
     var body: some View {
         GeometryReader { geo in
             let total = max(parts.map(\.value).reduce(0, +), 1)
-            HStack(spacing: 2) {
+            HStack(spacing: 1) {
                 ForEach(Array(parts.enumerated()), id: \.offset) { item in
                     if item.element.value > 0 {
-                        RoundedRectangle(cornerRadius: 3)
+                        Rectangle()
                             .fill(item.element.color)
-                            .frame(width: max(3, geo.size.width * CGFloat(item.element.value / total) - 2))
+                            .frame(width: max(3, geo.size.width * CGFloat(item.element.value / total) - 1))
                     }
                 }
             }
         }
-        .frame(height: 8)
+        .frame(height: 6)
     }
 }
 
@@ -364,18 +410,18 @@ struct MiniBars: View {
 
     var body: some View {
         let top = max(maxValue ?? (values.max() ?? 1), 0.0001)
-        HStack(alignment: .bottom, spacing: 2) {
+        HStack(alignment: .bottom, spacing: 1) {
             ForEach(Array(values.enumerated()), id: \.offset) { item in
-                RoundedRectangle(cornerRadius: 1.5)
-                    .fill(color.opacity(item.element > 0 ? 0.35 + 0.65 * min(1, item.element / top) : 0.12))
-                    .frame(height: max(2, height * CGFloat(min(1, item.element / top))))
+                Rectangle()
+                    .fill(item.element > 0 ? color : Theme.hairline)
+                    .frame(height: max(1, height * CGFloat(min(1, item.element / top))))
             }
         }
         .frame(height: height, alignment: .bottom)
     }
 }
 
-/// Min–max temperature bar on a common scale, coloured by temperature.
+/// Min–max temperature bar on a common scale.
 struct RangeBar: View {
     let low: Double
     let high: Double
@@ -388,14 +434,14 @@ struct RangeBar: View {
             let x0 = CGFloat((low - scaleMin) / span) * geo.size.width
             let x1 = CGFloat((high - scaleMin) / span) * geo.size.width
             ZStack(alignment: .leading) {
-                Capsule().fill(Theme.raised)
-                Capsule()
+                Rectangle().fill(Theme.hairline).frame(height: 1)
+                Rectangle()
                     .fill(LinearGradient(colors: [Theme.temperature(low), Theme.temperature(high)], startPoint: .leading, endPoint: .trailing))
-                    .frame(width: max(6, x1 - x0))
+                    .frame(width: max(4, x1 - x0), height: 4)
                     .offset(x: x0)
             }
         }
-        .frame(height: 6)
+        .frame(height: 4)
     }
 }
 
@@ -409,19 +455,19 @@ struct DaylightBar: View {
     var body: some View {
         GeometryReader { geo in
             ZStack(alignment: .leading) {
-                Capsule().fill(Theme.raised)
+                Rectangle().fill(Theme.hairline).frame(height: 1)
                 if let sunrise, let sunset, sunset > sunrise {
                     let start = startOfDay(sunrise)
                     let day: Double = 24 * 3600
                     let a = CGFloat(sunrise.timeIntervalSince(start) / day) * geo.size.width
                     let b = CGFloat(sunset.timeIntervalSince(start) / day) * geo.size.width
                     let n = CGFloat(min(max(now.timeIntervalSince(start) / day, 0), 1)) * geo.size.width
-                    Capsule().fill(Theme.caution.opacity(0.55)).frame(width: max(4, b - a)).offset(x: a)
-                    Circle().fill(Theme.text).frame(width: 9, height: 9).offset(x: n - 4.5)
+                    Rectangle().fill(Theme.text).frame(width: max(4, b - a), height: 4).offset(x: a)
+                    Rectangle().fill(Theme.accent).frame(width: 2, height: 12).offset(x: n - 1)
                 }
             }
         }
-        .frame(height: 9)
+        .frame(height: 12)
     }
 
     private func startOfDay(_ date: Date) -> Date {

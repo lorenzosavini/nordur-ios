@@ -17,7 +17,7 @@ struct AuroraView: View {
                         Image(systemName: "chevron.right").foregroundStyle(.tertiary)
                     }
                     .padding()
-                    .background(Color(.secondarySystemGroupedBackground), in: RoundedRectangle(cornerRadius: 12, style: .continuous))
+                    .background(Theme.surface, in: Rectangle())
                 }
                 .buttonStyle(.plain)
                 tonightCard
@@ -47,7 +47,7 @@ struct AuroraView: View {
                     .chartYScale(domain: 0...100)
                     .chartXAxis {
                         AxisMarks(values: .stride(by: .hour, count: 3)) { value in
-                            AxisValueLabel { if let date = value.as(Date.self) { Text(Fmt.time(date)).font(.geist(10)).foregroundStyle(Theme.faint) } }
+                            AxisValueLabel { if let date = value.as(Date.self) { Text(Fmt.time(date)).font(.sans(10)).foregroundStyle(Theme.faint) } }
                         }
                     }
                     .frame(height: 140)
@@ -85,7 +85,7 @@ struct AuroraView: View {
                 .chartXAxis {
                     AxisMarks(values: .stride(by: .day)) { value in
                         AxisGridLine()
-                        AxisValueLabel { if let date = value.as(Date.self) { Text(Fmt.axis(date, hour: false)).font(.geist(10)).foregroundStyle(Theme.faint) } }
+                        AxisValueLabel { if let date = value.as(Date.self) { Text(Fmt.axis(date, hour: false)).font(.sans(10)).foregroundStyle(Theme.faint) } }
                     }
                 }
                 .frame(height: 150)

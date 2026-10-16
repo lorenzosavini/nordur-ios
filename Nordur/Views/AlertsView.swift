@@ -93,7 +93,7 @@ struct AlertsView: View {
                 .font(.app(.caption))
                 .padding(.horizontal, 10)
                 .padding(.vertical, 6)
-                .background(filter == category ? Color.accentColor.opacity(0.25) : Color.secondary.opacity(0.12), in: Capsule())
+                .background(filter == category ? Theme.text : Color.clear, in: Rectangle())
         }
         .buttonStyle(.plain)
     }
@@ -152,7 +152,7 @@ struct AlertSettingsView: View {
 
             Section {
                 Toggle("Avvisi vocali durante la guida", isOn: $draft.spoken)
-                Toggle("Controlli in background anche ad app chiusa", isOn: $draft.backgroundLocation)
+                Toggle("Allerte in base a dove ti trovi, anche ad app chiusa", isOn: $draft.backgroundLocation)
                 if draft.backgroundLocation && alerts.backgroundLocationStatus != .authorizedAlways {
                     Label("Serve l'accesso alla posizione «Sempre»: Impostazioni › Norður › Posizione.", systemImage: "location.slash")
                         .font(.app(.caption)).foregroundStyle(.orange)
@@ -163,7 +163,7 @@ struct AlertSettingsView: View {
             } header: {
                 Text("In viaggio")
             } footer: {
-                Text("Con l'accesso «Sempre» i controlli continuano ad app chiusa. Durante la registrazione di un percorso girano ogni 5 minuti.")
+                Text("Ogni volta che ti sposti di circa 2 km l'app controlla allerte, strade, vento e terremoti intorno a te, anche se non stai registrando un percorso. Serve l'accesso alla posizione «Sempre».")
             }
 
             Section("Voli seguiti") {

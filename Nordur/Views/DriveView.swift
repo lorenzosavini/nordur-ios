@@ -17,12 +17,12 @@ struct DriveView: View {
         NavigationStack {
             List {
                 Section {
-                    ScreenHeader(title: "Guida", subtitle: recorder.isRecording ? "Registrazione in corso" : "Percorsi e strade") {
+                    ScreenHeader(title: "Guida", subtitle: recorder.isRecording ? "Registrazione in corso" : "Percorsi e strade", index: "04") {
                         if recorder.isRecording {
                             Button { confirmStop = true } label: {
-                                Text("Stop").font(.geist(14, .bold)).foregroundStyle(.white)
+                                Text("Stop").font(.sans(14, .bold)).foregroundStyle(.white)
                                     .padding(.horizontal, 16).frame(height: 40)
-                                    .background(Theme.danger, in: Capsule())
+                                    .background(Theme.danger, in: Rectangle())
                             }
                             .buttonStyle(.plain)
                         } else {
@@ -122,12 +122,12 @@ struct DriveView: View {
             } label: {
                 HStack(spacing: 10) {
                     Circle().fill(.white).frame(width: 12, height: 12)
-                    Text("Inizia registrazione").font(.geist(17, .semibold))
+                    Text("Inizia registrazione").font(.sans(17, .semibold))
                 }
                 .foregroundStyle(.white)
                 .frame(maxWidth: .infinity)
                 .frame(height: 54)
-                .background(Theme.danger, in: Capsule())
+                .background(Theme.danger, in: Rectangle())
             }
             .buttonStyle(.plain)
             if recorder.authorization == .denied || recorder.authorization == .restricted {
@@ -204,7 +204,7 @@ struct LiveDrivePanel: View {
                             HStack(alignment: .firstTextBaseline, spacing: 4) {
                                 Text(Fmt.number(session.stats.km, decimals: session.stats.km < 100 ? 2 : 1))
                                     .font(.metric(54, .bold)).foregroundStyle(Theme.text)
-                                Text("km").font(.geist(17, .medium)).foregroundStyle(Theme.dim)
+                                Text("km").font(.sans(17, .medium)).foregroundStyle(Theme.dim)
                             }
                             Text("Tempo \(Fmt.clock(elapsed))").font(.metric(14)).foregroundStyle(Theme.dim)
                         }
@@ -234,7 +234,7 @@ struct LiveDrivePanel: View {
                     if let latest = alerts.latest, Date().timeIntervalSince(latest.date) < 3600 {
                         AlertRow(event: latest)
                             .padding(8)
-                            .background(latest.risk.color.opacity(0.12), in: RoundedRectangle(cornerRadius: 10))
+                            .background(latest.risk.color.opacity(0.12), in: Rectangle())
                     }
                     nearbyFuel
                     HStack {
@@ -249,7 +249,7 @@ struct LiveDrivePanel: View {
                     .controlSize(.large)
                     LiveTrackMap(points: recorder.recentPoints)
                         .frame(height: 220)
-                        .clipShape(RoundedRectangle(cornerRadius: 12))
+                        .clipShape(Rectangle())
                 }
             }
         }
@@ -303,7 +303,7 @@ struct DriveDetailView: View {
                 HStack(spacing: 8) {
                     ForEach(0..<5, id: \.self) { bucket in
                         HStack(spacing: 3) {
-                            RoundedRectangle(cornerRadius: 2).fill(DriveTrackMap.color(bucket)).frame(width: 14, height: 5)
+                            Rectangle().fill(DriveTrackMap.color(bucket)).frame(width: 14, height: 5)
                             Text(["<30", "30–60", "60–80", "80–95", ">95"][bucket]).font(.app(.caption2))
                         }
                     }

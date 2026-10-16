@@ -59,14 +59,14 @@ struct WebcamThumb: View {
                 LinearGradient(colors: [.clear, .black.opacity(0.75)], startPoint: .center, endPoint: .bottom)
                 VStack(alignment: .leading, spacing: 1) {
                     Text(site.name).font(.app(.caption, .semibold)).foregroundStyle(.white).lineLimit(1)
-                    Text(site.road).font(.geist(10)).foregroundStyle(.white.opacity(0.7)).lineLimit(1)
+                    Text(site.road).font(.sans(10)).foregroundStyle(.white.opacity(0.7)).lineLimit(1)
                 }
                 .padding(8)
             }
         }
         .frame(width: width, height: width * 0.62)
-        .clipShape(RoundedRectangle(cornerRadius: 14, style: .continuous))
-        .overlay(RoundedRectangle(cornerRadius: 14, style: .continuous).strokeBorder(Theme.hairline))
+        .clipShape(Rectangle())
+        .overlay(Rectangle().strokeBorder(Theme.hairline))
     }
 }
 
@@ -87,7 +87,7 @@ struct WebcamSiteView: View {
                             default: ProgressView().frame(maxWidth: .infinity, minHeight: 180)
                             }
                         }
-                        .clipShape(RoundedRectangle(cornerRadius: 10))
+                        .clipShape(Rectangle())
                         Text(image.caption).font(.app(.caption)).foregroundStyle(.secondary)
                     }
                 }

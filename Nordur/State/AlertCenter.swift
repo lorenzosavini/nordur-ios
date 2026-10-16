@@ -12,8 +12,10 @@ import BackgroundTasks
 /// - every 5 minutes while the app is open;
 /// - every 5 minutes while a drive is being recorded (the app stays alive in
 ///   the background thanks to continuous GPS);
-/// - on significant location changes (~500 m+) when "Allerte in background"
-///   is on and location access is "Sempre" — iOS relaunches the app for these;
+/// - whenever you move, even without recording a drive: significant location
+///   changes (~500 m+) plus a 2 km geofence around the last fix that is
+///   re-centred each time you leave it. iOS relaunches the app for both when
+///   location access is "Sempre";
 /// - on iOS background refresh (best effort, roughly hourly).
 ///
 /// Each condition has a stable key so it notifies once; repeating conditions
@@ -33,11 +35,15 @@ final class AlertCenter: NSObject {
     var openInbox = false
     /// True while DriveRecorder is recording (enables spoken alerts).
     var isDriving = false
+    /// True when the last background fix was at driving speed.
+    private(set) var isMoving = false
 
     @ObservationIgnored weak var model: AppModel?
     @ObservationIgnored private var fired: [String: Date] = [:]
     @ObservationIgnored private let significant = CLLocationManager()
     @ObservationIgnored private let speech = AVSpeechSynthesizer()
+    @ObservationIgnored private var lastPositionCheck: (date: Date, coordinate: Coordinate)?
+    private static let fenceID = "nordur.here"
 
     private override init() {
         settings = AlertSettings.load()
@@ -47,6 +53,13 @@ final class AlertCenter: NSObject {
         UNUserNotificationCenter.current().delegate = self
         applyBackgroundLocation()
         Task { await refreshPermissionState() }
+    }
+
+    /// Picks up an inbox and settings restored from the account backup.
+    func reloadAfterRestore() {
+        loadFromDisk()
+        settings = AlertSettings.load()
+        applyBackgroundLocation()
     }
 
     var unreadCount: Int { events.filter { !$0.read }.count }
@@ -89,10 +102,42 @@ final class AlertCenter: NSObject {
                 significant.requestAlwaysAuthorization()
             }
             significant.startMonitoringSignificantLocationChanges()
+            if let last = LocationManager.lastKnown { recentreFence(on: last) }
         } else {
             significant.stopMonitoringSignificantLocationChanges()
+            for region in significant.monitoredRegions where region.identifier == Self.fenceID {
+                significant.stopMonitoring(for: region)
+            }
         }
     }
+
+    /// A small geofence around the current position: leaving it wakes the app
+    /// sooner than significant-change monitoring alone, which on the road can lag.
+    private func recentreFence(on c: Coordinate) {
+        guard CLLocationManager.isMonitoringAvailable(for: CLCircularRegion.self) else { return }
+        let region = CLCircularRegion(center: c.clCoordinate, radius: 2000, identifier: Self.fenceID)
+        region.notifyOnExit = true
+        region.notifyOnEntry = false
+        significant.startMonitoring(for: region)
+    }
+
+    /// Called for every background fix. Throttled so a fast drive doesn't
+    /// download everything each minute.
+    fileprivate func handleFix(_ location: CLLocation) async {
+        let coordinate = Coordinate(location.coordinate)
+        LocationManager.lastKnown = coordinate
+        isMoving = location.speed > 8
+        recentreFence(on: coordinate)
+        if let last = lastPositionCheck,
+           Date().timeIntervalSince(last.date) < 180,
+           Geo.distanceKm(last.coordinate, coordinate) < 3 { return }
+        lastPositionCheck = (Date(), coordinate)
+        let task = UIApplication.shared.beginBackgroundTask(withName: "alert-check")
+        await check(position: coordinate)
+        UIApplication.shared.endBackgroundTask(task)
+    }
+
+    fileprivate func requestFix() { significant.requestLocation() }
 
     var backgroundLocationStatus: CLAuthorizationStatus { significant.authorizationStatus }
 
@@ -173,7 +218,7 @@ final class AlertCenter: NSObject {
         if settings.isOn(.aurora), Self.isEvening(now) {
             var kp = model?.kp?.value ?? []
             if kp.isEmpty, let fetched = try? await SpaceWeather.kpForecast() { kp = fetched.value }
-            if let forecast = try? await OpenMeteo.forecast(currentPlace.coordinate).value {
+            if let forecast = try? await WeatherService.forecast(currentPlace.coordinate).value {
                 input.aurora = AuroraCalc.outlook(forecast: forecast, kp: kp, ovation: model?.ovation?.value)
                 input.auroraZone = forecast.timeZone
             }
@@ -202,7 +247,7 @@ final class AlertCenter: NSObject {
             fired[event.id] = event.date
             events.insert(event, at: 0)
             post(event)
-            if isDriving && settings.spoken && event.risk >= .warning {
+            if (isDriving || isMoving) && settings.spoken && event.risk >= .warning {
                 say(event.title)
             }
         }
@@ -282,14 +327,11 @@ extension AlertCenter: UNUserNotificationCenterDelegate {
 extension AlertCenter: CLLocationManagerDelegate {
     nonisolated func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         guard let location = locations.last else { return }
-        let coordinate = Coordinate(location.coordinate)
-        Task { @MainActor in
-            LocationManager.lastKnown = coordinate
-            // Ask iOS for a little extra time to finish downloads after a background wake.
-            let task = UIApplication.shared.beginBackgroundTask(withName: "alert-check")
-            await AlertCenter.shared.check(position: coordinate)
-            UIApplication.shared.endBackgroundTask(task)
-        }
+        Task { @MainActor in await AlertCenter.shared.handleFix(location) }
+    }
+
+    nonisolated func locationManager(_ manager: CLLocationManager, didExitRegion region: CLRegion) {
+        Task { @MainActor in AlertCenter.shared.requestFix() }
     }
 
     nonisolated func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {}
@@ -298,6 +340,7 @@ extension AlertCenter: CLLocationManagerDelegate {
         Task { @MainActor in
             if AlertCenter.shared.settings.backgroundLocation {
                 manager.startMonitoringSignificantLocationChanges()
+                if let last = LocationManager.lastKnown { AlertCenter.shared.recentreFence(on: last) }
             }
         }
     }

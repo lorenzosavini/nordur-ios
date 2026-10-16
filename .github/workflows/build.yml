@@ -46,7 +46,7 @@ jobs:
           xcrun simctl privacy "$UDID" grant location-always it.lorenzosavini.nordur || true
           xcrun simctl location "$UDID" set 63.4186,-19.0060 || true
           mkdir -p shots
-          for shot in today today@light weather weather@light map:wind map:aurora drive drive@light trip@light aurora; do
+          for shot in today@light today weather@light weather map:wind drive@light trip@light aurora account@light; do
             base="${shot%%@*}"; mode="dark"; [ "$base" != "$shot" ] && mode="${shot#*@}"
             tab="${base%%:*}"; layer="${base#*:}"; [ "$layer" = "$base" ] && layer="wind"
             xcrun simctl launch "$UDID" it.lorenzosavini.nordur -initialTab "$tab" -map.layer "$layer" -appearance "$mode"

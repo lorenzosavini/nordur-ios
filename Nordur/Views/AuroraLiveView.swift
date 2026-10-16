@@ -23,7 +23,7 @@ struct AuroraLiveView: View {
                 Card(title: "Ovale aurorale sulla mappa", systemImage: "moon.stars.fill", tint: .mint) {
                     WeatherMapView(content: mapContent, initialRegion: Self.region, onTap: { _ in }, onSelect: { _ in })
                         .frame(height: 380)
-                        .clipShape(RoundedRectangle(cornerRadius: 12))
+                        .clipShape(Rectangle())
                     legend
                     Text("Di giorno l'ovale si trova sul lato notturno della Terra.")
                         .font(.app(.caption2)).foregroundStyle(.secondary)
@@ -49,7 +49,7 @@ struct AuroraLiveView: View {
                             }
                         }
                         .aspectRatio(1, contentMode: .fit)
-                        .clipShape(RoundedRectangle(cornerRadius: 12))
+                        .clipShape(Rectangle())
                         HStack {
                             Button { playing.toggle() } label: { Image(systemName: playing ? "pause.fill" : "play.fill") }
                             Slider(value: Binding(get: { Double(index) }, set: { index = Int($0.rounded()); playing = false }),
@@ -94,7 +94,7 @@ struct AuroraLiveView: View {
             LinearGradient(stops: ramp.map { .init(color: Color(red: $0.r, green: $0.g, blue: $0.b).opacity(max($0.a, 0.35)), location: $0.value / 85) },
                            startPoint: .leading, endPoint: .trailing)
                 .frame(height: 8)
-                .clipShape(Capsule())
+                .clipShape(Rectangle())
             Text("85%+").font(.app(.caption2))
         }
     }

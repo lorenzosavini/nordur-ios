@@ -6,14 +6,16 @@ struct TripView: View {
     @Environment(TripStore.self) private var trip
     @State private var editing: TripStop?
     @State private var creating = false
+    @State private var showAccount = false
 
     var body: some View {
         NavigationStack {
             List {
                 Section {
-                    ScreenHeader(title: "Viaggio", subtitle: trip.stops.isEmpty ? "Itinerario" : "\(trip.stops.count) tappe") {
+                    ScreenHeader(title: "Viaggio", subtitle: trip.stops.isEmpty ? "Itinerario" : "\(trip.stops.count) tappe", index: "05") {
                         HStack(spacing: 8) {
-                            if !trip.stops.isEmpty { EditButton().font(.geist(15, .medium)) }
+                            if !trip.stops.isEmpty { EditButton().font(.mono(11, .semibold)) }
+                            HeaderButton(systemImage: "person", label: "ACCOUNT") { showAccount = true }
                             HeaderButton(systemImage: "plus") { creating = true }
                         }
                     }
@@ -55,6 +57,7 @@ struct TripView: View {
             .task(id: trip.stops.map(\.place.coordinate.key).joined()) {
                 await trip.loadForecasts()
             }
+            .sheet(isPresented: $showAccount) { AccountView() }
             .sheet(isPresented: $creating) {
                 StopEditor(stop: nil)
             }
@@ -131,7 +134,7 @@ struct StopSummary: View {
     private var daysUntilText: String {
         let days = Calendar.current.dateComponents([.day], from: Date(), to: stop.date).day ?? 0
         if days < 0 { return "Tappa passata." }
-        return "Previsioni disponibili circa 16 giorni prima (mancano \(days) giorni)."
+        return "Previsioni disponibili circa 10 giorni prima (mancano \(days) giorni)."
     }
 }
 

@@ -96,13 +96,13 @@ struct MapScreen: View {
                             layerRaw = item.rawValue
                             playing = false
                         } label: {
-                            Label(item.label, systemImage: item.symbol)
-                                .font(.app(.caption, .semibold))
+                            Text(item.label.uppercased())
+                                .font(.mono(10.5, .semibold))
                                 .padding(.horizontal, 10)
                                 .padding(.vertical, 7)
-                                .background(layer == item ? Theme.text : Theme.surface.opacity(0.95), in: Capsule())
-                                .foregroundStyle(layer == item ? Theme.bg : Theme.text)
-                                .overlay(Capsule().strokeBorder(Theme.hairline))
+                                .background(layer == item ? Theme.accent : Theme.bg.opacity(0.94))
+                                .foregroundStyle(layer == item ? Theme.onAccent : Theme.text)
+                                .overlay(Rectangle().strokeBorder(Theme.hairline))
                         }
                         .buttonStyle(.plain)
                     }
@@ -120,16 +120,16 @@ struct MapScreen: View {
                     Toggle("Viaggio e percorso", systemImage: "point.topleft.down.to.point.bottomright.curvepath", isOn: $showTrip)
                     Toggle("Animazione particelle vento", systemImage: "wind", isOn: $showParticles)
                 } label: {
-                    Label("Livelli", systemImage: "square.3.layers.3d")
-                        .font(.app(.caption, .semibold))
+                    Text("LIVELLI +")
+                        .font(.mono(10.5, .semibold)).foregroundStyle(Theme.text)
                         .padding(.horizontal, 10).padding(.vertical, 7)
-                        .background(.regularMaterial, in: Capsule())
+                        .background(Theme.bg.opacity(0.94)).overlay(Rectangle().strokeBorder(Theme.hairline))
                 }
                 Button { showWindy = true } label: {
-                    Label("Windy", systemImage: "wind")
-                        .font(.app(.caption, .semibold))
+                    Text("WINDY ↗")
+                        .font(.mono(10.5, .semibold)).foregroundStyle(Theme.text)
                         .padding(.horizontal, 10).padding(.vertical, 7)
-                        .background(.regularMaterial, in: Capsule())
+                        .background(Theme.bg.opacity(0.94)).overlay(Rectangle().strokeBorder(Theme.hairline))
                 }
                 Spacer()
             }
@@ -148,7 +148,7 @@ struct MapScreen: View {
                 timeControls
             }
             .padding(12)
-            .background(.regularMaterial, in: RoundedRectangle(cornerRadius: 16, style: .continuous))
+            .background(Theme.bg.opacity(0.94)).overlay(Rectangle().strokeBorder(Theme.hairline))
         }
         .padding(.horizontal)
         .padding(.bottom, 6)
@@ -162,7 +162,7 @@ struct MapScreen: View {
                     .init(color: Color(red: $0.r, green: $0.g, blue: $0.b).opacity(max($0.a, 0.35)), location: ($0.value - minV) / (maxV - minV))
                 }, startPoint: .leading, endPoint: .trailing)
                 .frame(height: 10)
-                .clipShape(Capsule())
+                .clipShape(Rectangle())
                 GeometryReader { geo in
                     ForEach(layer.legendValues, id: \.self) { value in
                         Text(Fmt.number(value, decimals: value < 1 && value > 0 ? 1 : 0))
@@ -468,6 +468,6 @@ struct ProbeCard: View {
             }
         }
         .padding(12)
-        .background(.regularMaterial, in: RoundedRectangle(cornerRadius: 16, style: .continuous))
+        .background(Theme.bg.opacity(0.94)).overlay(Rectangle().strokeBorder(Theme.hairline))
     }
 }

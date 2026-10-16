@@ -19,6 +19,18 @@ enum Fmt {
         return unit.isEmpty ? text : "\(text) \(unit)"
     }
 
+    /// "63.42N 19.01W"
+    static func coordinate(_ c: Coordinate) -> String {
+        String(format: "%.2f%@ %.2f%@", abs(c.lat), c.lat >= 0 ? "N" : "S", abs(c.lon), c.lon >= 0 ? "E" : "W")
+    }
+
+    /// Hour as two digits ("07").
+    static func hour(_ date: Date, in zone: TimeZone = .current) -> String {
+        var calendar = Calendar(identifier: .gregorian)
+        calendar.timeZone = zone
+        return String(format: "%02d", calendar.component(.hour, from: date))
+    }
+
     static func percent(_ value: Double?) -> String {
         guard let value else { return "–" }
         return "\(Int(value.rounded()))%"
@@ -103,6 +115,8 @@ enum WeatherCode {
         case 61, 63: return ("Pioggia", "cloud.rain.fill")
         case 65: return ("Pioggia forte", "cloud.heavyrain.fill")
         case 66, 67: return ("Pioggia gelata", "cloud.sleet.fill")
+        case 68: return ("Nevischio", "cloud.sleet.fill")
+        case 83: return ("Rovesci di nevischio", "cloud.sleet.fill")
         case 71, 73: return ("Neve", "cloud.snow.fill")
         case 75: return ("Neve forte", "snowflake")
         case 77: return ("Granuli di neve", "cloud.snow.fill")

@@ -13,6 +13,8 @@ final class DriveStore {
         drives = Self.loadIndex()
     }
 
+    func reload() { drives = Self.loadIndex() }
+
     nonisolated static var directory: URL {
         let url = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent("drives", isDirectory: true)
         try? FileManager.default.createDirectory(at: url, withIntermediateDirectories: true)

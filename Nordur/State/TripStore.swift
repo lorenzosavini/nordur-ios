@@ -12,6 +12,8 @@ final class TripStore {
         stops = Self.loadFromDisk()
     }
 
+    func reload() { stops = Self.loadFromDisk() }
+
     nonisolated static var fileURL: URL {
         FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent("trip.json")
     }
@@ -67,7 +69,7 @@ final class TripStore {
         await withTaskGroup(of: (String, Forecast?, Marine?).self) { group in
             for c in coordinates {
                 group.addTask {
-                    let f = try? await OpenMeteo.forecast(c).value
+                    let f = try? await WeatherService.forecast(c).value
                     let m = try? await OpenMeteo.marine(c).value
                     return (c.key, f, m)
                 }

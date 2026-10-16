@@ -1,4 +1,5 @@
 import SwiftUI
+import UserNotifications
 
 @main
 struct NordurApp: App {
@@ -20,18 +21,26 @@ struct NordurApp: App {
             RootView()
                 .preferredColorScheme(Appearance(rawValue: appearance)?.colorScheme)
                 .tint(Theme.accent)
-                .font(.geist(16))
+                .font(.sans(16))
                 .environment(model)
                 .environment(trip)
                 .environment(AlertCenter.shared)
                 .environment(DriveRecorder.shared)
                 .environment(DriveStore.shared)
+                .environment(Account.shared)
+                .onReceive(NotificationCenter.default.publisher(for: .accountRestored)) { _ in
+                    trip.reload()
+                    DriveStore.shared.reload()
+                    AlertCenter.shared.reloadAfterRestore()
+                    model.reloadSelection()
+                }
                 .onAppear { AlertCenter.shared.model = model }
         }
         .onChange(of: scenePhase) { _, phase in
             switch phase {
             case .background:
                 AlertCenter.scheduleBackgroundRefresh()
+                Task { await Account.shared.sync() }
             case .active:
                 Task {
                     await model.refreshGlobal()
@@ -57,6 +66,7 @@ struct RootView: View {
 
     enum Tab: String, Hashable { case today, weather, map, drive, trip }
     @State private var showAuroraLive = UserDefaults.standard.string(forKey: "initialTab") == "aurora"
+    @State private var showAccount = UserDefaults.standard.string(forKey: "initialTab") == "account"
 
     var body: some View {
         @Bindable var alerts = alerts
@@ -73,6 +83,7 @@ struct RootView: View {
         .sheet(isPresented: $alerts.openInbox) {
             NavigationStack { AlertsView() }
         }
+        .sheet(isPresented: $showAccount) { AccountView() }
         .sheet(isPresented: $showAuroraLive) {
             NavigationStack { AuroraLiveView() }
         }
@@ -85,6 +96,12 @@ struct RootView: View {
         .task {
             model.location.request()
             await alerts.refreshPermissionState()
+            await Account.shared.restoreAfterReinstall()
+            // CI launches pass -initialTab: no permission sheet over the screenshots there.
+            if UserDefaults.standard.string(forKey: "initialTab") == nil,
+               await UNUserNotificationCenter.current().notificationSettings().authorizationStatus == .notDetermined {
+                await alerts.requestNotificationPermission()
+            }
             await model.refreshGlobal(force: true)
             await alerts.check()
         }
@@ -96,6 +113,7 @@ struct RootView: View {
             while !Task.isCancelled {
                 try? await Task.sleep(nanoseconds: 5 * 60 * 1_000_000_000)
                 await alerts.check()
+                await Account.shared.sync()
             }
         }
     }

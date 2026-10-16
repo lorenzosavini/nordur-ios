@@ -87,7 +87,7 @@ enum HTTP {
         while true {
             do {
                 var request = URLRequest(url: url)
-                request.setValue("Nordur-iOS/1.0 (travel safety app)", forHTTPHeaderField: "User-Agent")
+                request.setValue("Nordur-iOS/1.0 github.com/lorenzosavini/nordur-ios", forHTTPHeaderField: "User-Agent")
                 let (data, response) = try await session.data(for: request)
                 if let http = response as? HTTPURLResponse, !(200..<300).contains(http.statusCode) {
                     throw HTTPError.status(http.statusCode)

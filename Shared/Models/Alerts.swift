@@ -58,14 +58,20 @@ struct AlertSettings: Codable, Equatable {
     var quakeRadiusKm = 80.0
     var auroraScore = 50
     var spoken = true
-    var backgroundLocation = false    // significant-change monitoring (needs "Always")
+    var backgroundLocation = true     // position-based checks with the app closed (needs "Always")
     var followedFlights: [String] = []
 
     private static let key = "alertSettings"
 
     static func load() -> AlertSettings {
         guard let data = UserDefaults.standard.data(forKey: key),
-              let settings = try? JSONDecoder().decode(AlertSettings.self, from: data) else { return AlertSettings() }
+              var settings = try? JSONDecoder().decode(AlertSettings.self, from: data) else { return AlertSettings() }
+        // v2: position-based background alerts are on by default, also for existing installs.
+        if !UserDefaults.standard.bool(forKey: "alertSettings.v2") {
+            settings.backgroundLocation = true
+            UserDefaults.standard.set(true, forKey: "alertSettings.v2")
+            settings.save()
+        }
         return settings
     }
 

@@ -24,11 +24,11 @@ enum Appearance: String, CaseIterable, Identifiable {
         }
     }
 
-    var symbol: String {
+    var short: String {
         switch self {
-        case .system: return "circle.lefthalf.filled"
-        case .light: return "sun.max"
-        case .dark: return "moon"
+        case .system: return "AUTO"
+        case .light: return "GIORNO"
+        case .dark: return "NOTTE"
         }
     }
 
@@ -40,144 +40,166 @@ enum Appearance: String, CaseIterable, Identifiable {
         }
     }
 
-    /// Navigation bar titles in the app fonts.
+    /// Navigation bars and controls in the app fonts.
     static func configureUIKit() {
-        let title = UIFont(name: "Geist-SemiBold", size: 17) ?? .systemFont(ofSize: 17, weight: .semibold)
-        let large = UIFont(name: "BricolageGrotesque-Bold", size: 34) ?? .systemFont(ofSize: 34, weight: .bold)
+        let title = UIFont(name: "IBMPlexMono-SemiBold", size: 13) ?? .monospacedSystemFont(ofSize: 13, weight: .semibold)
+        let large = UIFont(name: "BarlowCondensed-Bold", size: 40) ?? .systemFont(ofSize: 34, weight: .bold)
+        let titleAttributes: [NSAttributedString.Key: Any] = [.font: title, .kern: 1.0]
         let bar = UINavigationBarAppearance()
         bar.configureWithTransparentBackground()
-        bar.titleTextAttributes = [.font: title]
+        bar.titleTextAttributes = titleAttributes
         bar.largeTitleTextAttributes = [.font: large]
         let scrolled = UINavigationBarAppearance()
-        scrolled.configureWithDefaultBackground()
-        scrolled.titleTextAttributes = [.font: title]
+        scrolled.configureWithOpaqueBackground()
+        scrolled.backgroundColor = UIColor { $0.userInterfaceStyle == .dark ? .black : .white }
+        scrolled.shadowColor = UIColor { $0.userInterfaceStyle == .dark ? UIColor(white: 1, alpha: 0.16) : UIColor(white: 0, alpha: 0.13) }
+        scrolled.titleTextAttributes = titleAttributes
         scrolled.largeTitleTextAttributes = [.font: large]
         UINavigationBar.appearance().standardAppearance = scrolled
         UINavigationBar.appearance().compactAppearance = scrolled
         UINavigationBar.appearance().scrollEdgeAppearance = bar
         let barButton = UIBarButtonItemAppearance()
-        barButton.normal.titleTextAttributes = [.font: UIFont(name: "Geist-Medium", size: 17) ?? .systemFont(ofSize: 17)]
+        barButton.normal.titleTextAttributes = [.font: UIFont(name: "IBMPlexSansRoman-Medium", size: 16) ?? .systemFont(ofSize: 16)]
         scrolled.buttonAppearance = barButton
         bar.buttonAppearance = barButton
-        UISegmentedControl.appearance().setTitleTextAttributes([.font: UIFont(name: "Geist-Medium", size: 13) ?? .systemFont(ofSize: 13)], for: .normal)
+        let mono = UIFont(name: "IBMPlexMono-Medium", size: 12) ?? .monospacedSystemFont(ofSize: 12, weight: .medium)
+        UISegmentedControl.appearance().setTitleTextAttributes([.font: mono], for: .normal)
+        UISegmentedControl.appearance().selectedSegmentTintColor = UIColor(hex: 0xF04A00)
+        UISegmentedControl.appearance().setTitleTextAttributes([.font: mono, .foregroundColor: UIColor.white], for: .selected)
+        UITableViewHeaderFooterView.appearance().tintColor = .clear
     }
 }
 
-/// Floating pill tab bar with an animated selection.
+/// Flat bottom bar: rule on top, mono labels, orange marker above the active tab.
 struct NordurTabBar: View {
     @Binding var selection: RootView.Tab
     var badge: Int
     var recording: Bool
     @Namespace private var namespace
 
-    private let items: [(tab: RootView.Tab, title: String, symbol: String, selectedSymbol: String)] = [
-        (.today, "Oggi", "sun.horizon", "sun.horizon.fill"),
-        (.weather, "Meteo", "cloud.sun", "cloud.sun.fill"),
-        (.map, "Mappa", "map", "map.fill"),
-        (.drive, "Guida", "car", "car.fill"),
-        (.trip, "Viaggio", "signpost.right", "signpost.right.fill"),
+    private let items: [(tab: RootView.Tab, index: String, title: String)] = [
+        (.today, "01", "Oggi"),
+        (.weather, "02", "Meteo"),
+        (.map, "03", "Mappa"),
+        (.drive, "04", "Guida"),
+        (.trip, "05", "Viaggio"),
     ]
 
     var body: some View {
-        HStack(spacing: 4) {
-            ForEach(items, id: \.tab) { item in
-                let selected = selection == item.tab
-                Button {
-                    withAnimation(.spring(response: 0.35, dampingFraction: 0.85)) { selection = item.tab }
-                } label: {
-                    VStack(spacing: 3) {
-                        ZStack(alignment: .topTrailing) {
-                            Image(systemName: selected ? item.selectedSymbol : item.symbol)
-                                .font(.system(size: 17, weight: selected ? .semibold : .regular))
-                                .frame(height: 22)
-                            if item.tab == .today && badge > 0 {
-                                Circle().fill(Theme.danger).frame(width: 7, height: 7).offset(x: 5, y: -1)
+        VStack(spacing: 0) {
+            Rule(color: Theme.hairline)
+            HStack(spacing: 0) {
+                ForEach(items, id: \.tab) { item in
+                    let selected = selection == item.tab
+                    Button {
+                        withAnimation(.snappy(duration: 0.25)) { selection = item.tab }
+                    } label: {
+                        VStack(spacing: 0) {
+                            ZStack {
+                                Rectangle().fill(Color.clear).frame(height: 2)
+                                if selected {
+                                    Rectangle().fill(Theme.accent).frame(height: 2)
+                                        .matchedGeometryEffect(id: "tab", in: namespace)
+                                }
                             }
-                            if item.tab == .drive && recording {
-                                Circle().fill(Theme.danger).frame(width: 7, height: 7).offset(x: 5, y: -1)
+                            VStack(spacing: 3) {
+                                HStack(spacing: 4) {
+                                    Text(item.index).font(.mono(9, .medium))
+                                        .foregroundStyle(selected ? Theme.accent : Theme.faint)
+                                    if (item.tab == .today && badge > 0) || (item.tab == .drive && recording) {
+                                        Rectangle().fill(Theme.accent).frame(width: 5, height: 5)
+                                    }
+                                }
+                                Text(item.title.uppercased())
+                                    .font(.mono(11, selected ? .semibold : .medium))
+                                    .tracking(0.6)
+                                    .foregroundStyle(selected ? Theme.text : Theme.dim)
                             }
+                            .padding(.top, 8)
+                            .padding(.bottom, 6)
                         }
-                        Text(item.title).font(.geist(10.5, selected ? .semibold : .medium))
+                        .frame(maxWidth: .infinity)
+                        .contentShape(Rectangle())
                     }
-                    .foregroundStyle(selected ? Theme.text : Theme.faint)
-                    .frame(maxWidth: .infinity)
-                    .padding(.vertical, 8)
-                    .background {
-                        if selected {
-                            Capsule().fill(Theme.raised).matchedGeometryEffect(id: "tab", in: namespace)
-                        }
-                    }
+                    .buttonStyle(.plain)
+                    .accessibilityLabel(item.title)
+                    .accessibilityAddTraits(selected ? .isSelected : [])
                 }
-                .buttonStyle(.plain)
-                .accessibilityLabel(item.title)
             }
         }
-        .padding(6)
-        .background(.ultraThinMaterial, in: Capsule())
-        .overlay(Capsule().strokeBorder(Theme.hairline))
-        .shadow(color: .black.opacity(0.12), radius: 18, x: 0, y: 8)
-        .padding(.horizontal, 16)
-        .padding(.bottom, 4)
+        .background(Theme.bg.ignoresSafeArea(edges: .bottom))
     }
 }
 
-/// Custom header used at the top of the main screens instead of the system large title.
+/// Header at the top of the main screens: index + mono kicker, condensed title.
 struct ScreenHeader<Trailing: View>: View {
     let title: String
     var subtitle: String?
+    var index: String?
     @ViewBuilder var trailing: Trailing
 
     var body: some View {
-        HStack(alignment: .bottom) {
-            VStack(alignment: .leading, spacing: 2) {
-                if let subtitle { Text(subtitle).eyebrow(Theme.accent) }
-                Text(title).font(.display(36, .heavy)).foregroundStyle(Theme.text)
+        VStack(alignment: .leading, spacing: 10) {
+            HStack(alignment: .center) {
+                HStack(spacing: 8) {
+                    if let index { Text(index).font(.mono(10.5, .semibold)).foregroundStyle(Theme.accent) }
+                    if let subtitle { Text(subtitle).eyebrow(Theme.dim) }
+                }
+                Spacer()
+                trailing
             }
-            Spacer()
-            trailing
+            Text(title.uppercased()).font(.display(46, .bold)).foregroundStyle(Theme.text)
+                .padding(.bottom, -6)
+            Rule(color: Theme.rule, height: 2)
         }
-        .padding(.top, 8)
+        .padding(.top, 6)
     }
 }
 
 extension ScreenHeader where Trailing == EmptyView {
-    init(title: String, subtitle: String? = nil) {
+    init(title: String, subtitle: String? = nil, index: String? = nil) {
         self.title = title
         self.subtitle = subtitle
+        self.index = index
         self.trailing = EmptyView()
     }
 }
 
-/// Round icon button used in headers.
+/// Square outlined control used in headers.
 struct HeaderButton: View {
     let systemImage: String
     var tint: Color = Theme.text
     var dot: Bool = false
+    var label: String?
     let action: () -> Void
 
     var body: some View {
         Button(action: action) {
             ZStack(alignment: .topTrailing) {
-                Image(systemName: systemImage)
-                    .font(.system(size: 15, weight: .semibold))
-                    .foregroundStyle(tint)
-                    .frame(width: 40, height: 40)
-                    .background(Theme.surface, in: Circle())
-                    .overlay(Circle().strokeBorder(Theme.hairline))
-                if dot { Circle().fill(Theme.danger).frame(width: 9, height: 9).offset(x: -2, y: 2) }
+                Group {
+                    if let label {
+                        Text(label).font(.mono(10.5, .semibold)).tracking(0.6).padding(.horizontal, 9)
+                    } else {
+                        Image(systemName: systemImage).font(.system(size: 13, weight: .semibold)).frame(width: 34)
+                    }
+                }
+                .foregroundStyle(tint)
+                .frame(height: 34)
+                .overlay(Rectangle().strokeBorder(Theme.hairline, lineWidth: 1))
+                if dot { Rectangle().fill(Theme.accent).frame(width: 7, height: 7).offset(x: 2, y: -2) }
             }
         }
         .buttonStyle(.plain)
     }
 }
 
-/// Cycles automatic → light → dark.
+/// Cycles automatic → day → night.
 struct AppearanceButton: View {
     @AppStorage(Appearance.key) private var appearance = Appearance.system.rawValue
 
     var body: some View {
         let current = Appearance(rawValue: appearance) ?? .system
-        HeaderButton(systemImage: current.symbol) {
+        HeaderButton(systemImage: "circle.lefthalf.filled", label: current.short) {
             withAnimation(.easeInOut(duration: 0.25)) { appearance = current.next.rawValue }
         }
         .accessibilityLabel("Aspetto: \(current.label)")

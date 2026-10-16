@@ -4,13 +4,15 @@
 <dict>
 	<key>UIAppFonts</key>
 	<array>
-		<string>Geist-Regular.ttf</string>
-		<string>Geist-Medium.ttf</string>
-		<string>Geist-SemiBold.ttf</string>
-		<string>Geist-Bold.ttf</string>
-		<string>BricolageGrotesque-SemiBold.ttf</string>
-		<string>BricolageGrotesque-Bold.ttf</string>
-		<string>BricolageGrotesque-ExtraBold.ttf</string>
+		<string>IBMPlexSans-Regular.ttf</string>
+		<string>IBMPlexSans-Medium.ttf</string>
+		<string>IBMPlexSans-SemiBold.ttf</string>
+		<string>IBMPlexMono-Regular.ttf</string>
+		<string>IBMPlexMono-Medium.ttf</string>
+		<string>IBMPlexMono-SemiBold.ttf</string>
+		<string>BarlowCondensed-Medium.ttf</string>
+		<string>BarlowCondensed-SemiBold.ttf</string>
+		<string>BarlowCondensed-Bold.ttf</string>
 	</array>
 	<key>NSExtension</key>
 	<dict>

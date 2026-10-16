@@ -3,26 +3,30 @@ import SwiftUI
 import UIKit
 #endif
 
-/// Visual identity. Light: warm paper, white cards, deep glacier accent.
-/// Dark: ink, graphite cards, bright glacier accent. Risk colours tuned per mode.
+/// Visual identity: a field instrument.
+/// Paper-white or true black, hairline rules, square corners, and one signal
+/// colour (rescue orange) used only where something needs attention.
 enum Theme {
-    static let bg = dynamic(0xF1F0EB, 0x0B0D10)
-    static let surface = dynamic(0xFFFFFF, 0x15181D)
-    static let raised = dynamic(0xEAE9E3, 0x1F232A)
-    static let hairline = dynamic(0x000000, 0xFFFFFF, lightAlpha: 0.06, darkAlpha: 0.08)
-    static let text = dynamic(0x14171B, 0xEEF0F3)
-    static let dim = dynamic(0x5C646E, 0x9AA3AE)
-    static let faint = dynamic(0x979EA6, 0x5E6873)
-    static let accent = dynamic(0x0B7A97, 0x72D2EA)
-    static let aurora = dynamic(0x12A06C, 0x58E0A0)
-    static let ink = dynamic(0x14171B, 0x0B0D10)
+    static let bg = dynamic(0xFFFFFF, 0x000000)
+    static let surface = dynamic(0xF4F4F2, 0x0F0F0F)
+    static let raised = dynamic(0xE9E9E6, 0x1C1C1C)
+    static let hairline = dynamic(0x000000, 0xFFFFFF, lightAlpha: 0.13, darkAlpha: 0.16)
+    static let rule = dynamic(0x000000, 0xFFFFFF, lightAlpha: 0.9, darkAlpha: 0.85)
+    static let text = dynamic(0x0A0A0A, 0xF2F2F0)
+    static let dim = dynamic(0x5E5E5E, 0x9C9C9A)
+    static let faint = dynamic(0x9C9C9C, 0x5E5E5E)
+    static let accent = dynamic(0xF04A00, 0xFF5A1F)
+    static let onAccent = Color.white
+    static let aurora = dynamic(0x00A37A, 0x3DE0A8)
+    static let ink = dynamic(0x0A0A0A, 0x000000)
 
-    static let ok = dynamic(0x1E9A60, 0x3FCF8E)
-    static let caution = dynamic(0xC08600, 0xF2C14E)
-    static let warning = dynamic(0xD8641B, 0xF0883E)
-    static let danger = dynamic(0xD13B37, 0xEF5350)
+    // Risk: neutral when fine, colour only when it matters.
+    static let ok = dynamic(0x8A8A8A, 0x6E6E6C)
+    static let caution = dynamic(0xD99A00, 0xF2B807)
+    static let warning = accent
+    static let danger = dynamic(0xD10000, 0xFF3B30)
 
-    static let radius: CGFloat = 26
+    static let radius: CGFloat = 0
 
     static func dynamic(_ light: UInt32, _ dark: UInt32, lightAlpha: Double = 1, darkAlpha: Double = 1) -> Color {
         #if canImport(UIKit)
@@ -34,31 +38,13 @@ enum Theme {
         #endif
     }
 
-    /// Temperature colour, used for the daily range bars.
+    /// Temperature scale for range bars: cold steel → neutral → orange.
     static func temperature(_ value: Double) -> Color {
         let c = ColorStop.color(for: value, in: [
-            .init(-15, 0.50, 0.40, 0.92, 1), .init(-5, 0.36, 0.58, 0.96, 1), .init(0, 0.35, 0.78, 0.92, 1),
-            .init(5, 0.40, 0.80, 0.60, 1), .init(10, 0.95, 0.78, 0.30, 1), .init(16, 0.97, 0.55, 0.25, 1),
-            .init(22, 0.92, 0.32, 0.30, 1),
+            .init(-15, 0.24, 0.36, 0.62, 1), .init(-3, 0.38, 0.55, 0.75, 1), .init(3, 0.56, 0.62, 0.66, 1),
+            .init(10, 0.80, 0.60, 0.40, 1), .init(18, 0.94, 0.33, 0.06, 1),
         ])
         return Color(red: c.r, green: c.g, blue: c.b)
-    }
-
-    /// Sky gradient for the hero card, from the weather code and day/night.
-    static func sky(code: Int?, isDay: Bool) -> [Color] {
-        let c = code ?? 3
-        if !isDay {
-            if c >= 61 { return [Color(hex: 0x1B2433), Color(hex: 0x2B3A4E)] }
-            return [Color(hex: 0x0E1730), Color(hex: 0x263866)]
-        }
-        switch c {
-        case 0, 1: return [Color(hex: 0x2F7FC8), Color(hex: 0x7DBDEB)]
-        case 2: return [Color(hex: 0x4A7FA8), Color(hex: 0x9CC0DA)]
-        case 3, 45, 48: return [Color(hex: 0x5E6E7E), Color(hex: 0x9AA8B5)]
-        case 71...77, 85, 86: return [Color(hex: 0x7C93AA), Color(hex: 0xC7D6E3)]
-        case 95...99: return [Color(hex: 0x2E3446), Color(hex: 0x5B5F79)]
-        default: return [Color(hex: 0x3F5466), Color(hex: 0x7891A5)]
-        }
     }
 }
 
@@ -81,93 +67,121 @@ extension Color {
     }
 }
 
-// MARK: - Typography (Geist for text, Bricolage Grotesque for display and numbers)
+// MARK: - Typography
+// IBM Plex Sans for text, IBM Plex Mono for labels and data, Barlow Condensed for figures.
 
 enum AppFontName {
-    static func geist(_ weight: Font.Weight) -> String {
+    static func sans(_ weight: Font.Weight) -> String {
         switch weight {
-        case .bold, .heavy, .black: return "Geist-Bold"
-        case .semibold: return "Geist-SemiBold"
-        case .medium: return "Geist-Medium"
-        default: return "Geist-Regular"
+        case .semibold, .bold, .heavy, .black: return "IBMPlexSansRoman-SemiBold"
+        case .medium: return "IBMPlexSansRoman-Medium"
+        default: return "IBMPlexSansRoman-Regular"
         }
     }
 
-    static func display(_ weight: Font.Weight) -> String {
+    static func mono(_ weight: Font.Weight) -> String {
         switch weight {
-        case .heavy, .black: return "BricolageGrotesque-ExtraBold"
-        case .bold: return "BricolageGrotesque-Bold"
-        default: return "BricolageGrotesque-SemiBold"
+        case .semibold, .bold, .heavy, .black: return "IBMPlexMono-SemiBold"
+        case .medium: return "IBMPlexMono-Medium"
+        default: return "IBMPlexMono-Regular"
+        }
+    }
+
+    static func condensed(_ weight: Font.Weight) -> String {
+        switch weight {
+        case .bold, .heavy, .black: return "BarlowCondensed-Bold"
+        case .semibold: return "BarlowCondensed-SemiBold"
+        default: return "BarlowCondensed-Medium"
         }
     }
 }
 
 extension Font {
-    /// Body/UI text in Geist.
-    static func geist(_ size: CGFloat, _ weight: Font.Weight = .regular, relativeTo style: Font.TextStyle = .body) -> Font {
-        .custom(AppFontName.geist(weight), size: size, relativeTo: style)
+    /// Body/UI text.
+    static func sans(_ size: CGFloat, _ weight: Font.Weight = .regular, relativeTo style: Font.TextStyle = .body) -> Font {
+        .custom(AppFontName.sans(weight), size: size, relativeTo: style)
     }
 
-    /// Headlines in Bricolage Grotesque.
+    /// Labels, codes, tables.
+    static func mono(_ size: CGFloat, _ weight: Font.Weight = .medium, relativeTo style: Font.TextStyle = .caption) -> Font {
+        .custom(AppFontName.mono(weight), size: size, relativeTo: style)
+    }
+
+    /// Headlines: condensed, set in capitals by the caller when needed.
     static func display(_ size: CGFloat, _ weight: Font.Weight = .bold) -> Font {
-        .custom(AppFontName.display(weight), size: size, relativeTo: .largeTitle)
+        .custom(AppFontName.condensed(weight), size: size, relativeTo: .largeTitle)
     }
 
-    /// Big numbers: Bricolage Grotesque, tabular digits.
+    /// Figures: condensed, tabular.
     static func metric(_ size: CGFloat, _ weight: Font.Weight = .semibold) -> Font {
-        .custom(AppFontName.display(weight == .regular || weight == .medium || weight == .light || weight == .thin ? .semibold : weight),
-                size: size, relativeTo: .title).monospacedDigit()
+        .custom(AppFontName.condensed(weight), size: size, relativeTo: .title).monospacedDigit()
     }
 
-    /// Text styles mapped onto Geist.
     static func app(_ style: Font.TextStyle, _ weight: Font.Weight? = nil) -> Font {
         switch style {
-        case .largeTitle: return .display(34, weight ?? .bold)
-        case .title: return .display(28, weight ?? .bold)
-        case .title2: return .display(22, weight ?? .semibold)
-        case .title3: return .geist(20, weight ?? .semibold, relativeTo: style)
-        case .headline: return .geist(17, weight ?? .semibold, relativeTo: style)
-        case .callout: return .geist(16, weight ?? .regular, relativeTo: style)
-        case .subheadline: return .geist(15, weight ?? .regular, relativeTo: style)
-        case .footnote: return .geist(13, weight ?? .regular, relativeTo: style)
-        case .caption: return .geist(12, weight ?? .regular, relativeTo: style)
-        case .caption2: return .geist(11, weight ?? .regular, relativeTo: style)
-        default: return .geist(16, weight ?? .regular, relativeTo: style)
+        case .largeTitle: return .display(40, weight ?? .bold)
+        case .title: return .display(32, weight ?? .bold)
+        case .title2: return .display(26, weight ?? .semibold)
+        case .title3: return .sans(19, weight ?? .semibold, relativeTo: style)
+        case .headline: return .sans(16, weight ?? .semibold, relativeTo: style)
+        case .callout: return .sans(15.5, weight ?? .regular, relativeTo: style)
+        case .subheadline: return .sans(14.5, weight ?? .regular, relativeTo: style)
+        case .footnote: return .sans(13, weight ?? .regular, relativeTo: style)
+        case .caption: return .sans(12, weight ?? .regular, relativeTo: style)
+        case .caption2: return .sans(11, weight ?? .regular, relativeTo: style)
+        default: return .sans(15.5, weight ?? .regular, relativeTo: style)
         }
     }
 
-    static let eyebrow = Font.geist(11, .semibold, relativeTo: .caption2)
+    static let eyebrow = Font.mono(10.5, .medium, relativeTo: .caption2)
 }
 
 extension View {
-    /// Uppercase, tracked, dim label.
+    /// Uppercase mono label.
     func eyebrow(_ color: Color = Theme.dim) -> some View {
-        font(.eyebrow).tracking(1.1).textCase(.uppercase).foregroundStyle(color)
+        font(.eyebrow).tracking(0.8).textCase(.uppercase).foregroundStyle(color)
     }
 
-    /// List styling for secondary screens.
+    /// Plain list on the app background for secondary screens.
     func themedList() -> some View {
-        scrollContentBackground(.hidden)
+        listStyle(.plain)
+            .scrollContentBackground(.hidden)
             .background(Theme.bg)
+            .listRowSeparatorTint(Theme.hairline)
+            .listSectionSeparator(.hidden)
     }
 
-    /// Card surface: soft shadow in light mode, hairline in dark mode.
-    func panel(padding: CGFloat = 18, radius: CGFloat = Theme.radius) -> some View {
-        modifier(PanelModifier(padding: padding, radius: radius))
+    /// Instrument panel: square, ruled, no fill, no shadow.
+    func panel(padding: CGFloat = 16, radius: CGFloat = Theme.radius) -> some View {
+        self.padding(padding)
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .overlay(Rectangle().strokeBorder(Theme.hairline, lineWidth: 1))
     }
 }
 
-struct PanelModifier: ViewModifier {
-    @Environment(\.colorScheme) private var scheme
-    let padding: CGFloat
-    let radius: CGFloat
+/// Thin full-width rule.
+struct Rule: View {
+    var color: Color = Theme.hairline
+    var height: CGFloat = 1
+    var body: some View { color.frame(height: height).frame(maxWidth: .infinity) }
+}
 
-    func body(content: Content) -> some View {
-        content
-            .padding(padding)
-            .frame(maxWidth: .infinity, alignment: .leading)
-            .background(Theme.surface, in: RoundedRectangle(cornerRadius: radius, style: .continuous))
-            .overlay(RoundedRectangle(cornerRadius: radius, style: .continuous).strokeBorder(Theme.hairline, lineWidth: 1))
-            .shadow(color: .black.opacity(scheme == .dark ? 0 : 0.05), radius: 14, x: 0, y: 6)
+/// Section label: index, title, rule running to the edge, optional trailing note.
+struct SectionLabel: View {
+    var index: String?
+    let title: String
+    var trailing: String?
+    var trailingColor: Color = Theme.dim
+
+    var body: some View {
+        HStack(alignment: .firstTextBaseline, spacing: 8) {
+            if let index { Text(index).font(.mono(10.5, .semibold)).foregroundStyle(Theme.accent) }
+            Text(title).font(.mono(10.5, .semibold)).tracking(1).textCase(.uppercase).foregroundStyle(Theme.text)
+                .fixedSize()
+            Rectangle().fill(Theme.hairline).frame(height: 1).alignmentGuide(.firstTextBaseline) { d in d[.bottom] + 3 }
+            if let trailing {
+                Text(trailing).font(.mono(10.5, .medium)).foregroundStyle(trailingColor).fixedSize()
+            }
+        }
     }
 }
