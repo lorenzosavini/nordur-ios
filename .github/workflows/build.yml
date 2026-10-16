@@ -43,7 +43,7 @@ jobs:
             -target Nordur \
             -sdk iphonesimulator \
             -configuration Debug \
-            ARCHS=arm64 ONLY_ACTIVE_ARCH=NO \
+            ARCHS="arm64 x86_64" ONLY_ACTIVE_ARCH=NO \
             CODE_SIGNING_ALLOWED=NO \
             build 2>&1 | tee build.log | grep -E "error:|warning:|BUILD (SUCCEEDED|FAILED)" | grep -v "^ld: warning" | head -400
 
@@ -110,7 +110,9 @@ jobs:
         if: always()
         run: |
           [ -d build/Debug-iphonesimulator/Nordur.app ] || exit 0
-          (cd build/Debug-iphonesimulator && ditto -c -k --sequesterRsrc --keepParent Nordur.app ../../Nordur-simulator.zip)
+          (cd build/Debug-iphonesimulator && ditto -c -k --keepParent Nordur.app ../../Nordur-simulator.zip)
+          unzip -l Nordur-simulator.zip | head -5
+          lipo -info build/Debug-iphonesimulator/Nordur.app/Nordur
 
       - name: Upload simulator build
         if: always()
@@ -128,6 +130,8 @@ jobs:
           cp build.log shots/ || true
           cp engine-tests.log shots/ || true
           find loc -name "*.xliff" -exec cp {} shots/strings-en.xliff \; 2>/dev/null || true
+          # Single zip with Nordur.app at the root, for Appetize (workflow artifacts are zipped twice).
+          cp Nordur-simulator.zip shots/ || true
           mv shots /tmp/shots
           git config user.name "nordur-ci"
           git config user.email "ci@users.noreply.github.com"
