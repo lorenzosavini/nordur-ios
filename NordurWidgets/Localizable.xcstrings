@@ -5805,7 +5805,14 @@
       }
     },
     "O" : {
-      "shouldTranslate" : false
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "W"
+          }
+        }
+      }
     },
     "OFFLINE" : {
       "localizations" : {
@@ -9817,7 +9824,14 @@
       "shouldTranslate" : false
     },
     "• %@: %@" : {
-      "shouldTranslate" : false
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "• %1$@: %2$@"
+          }
+        }
+      }
     },
     "• Con vento forte apri la portiera tenendola con due mani: il vento può strapparla (danno non coperto dall'assicurazione)." : {
       "localizations" : {

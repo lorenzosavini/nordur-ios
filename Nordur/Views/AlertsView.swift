@@ -93,6 +93,7 @@ struct AlertsView: View {
                 .font(.app(.caption))
                 .padding(.horizontal, 10)
                 .padding(.vertical, 6)
+                .foregroundStyle(filter == category ? Theme.bg : Theme.text)
                 .background(filter == category ? Theme.text : Color.clear, in: Rectangle())
         }
         .buttonStyle(.plain)
