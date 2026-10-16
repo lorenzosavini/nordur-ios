@@ -42,8 +42,8 @@ enum Appearance: String, CaseIterable, Identifiable {
 
     /// Navigation bars and controls in the app fonts.
     static func configureUIKit() {
-        let title = UIFont(name: String(localized: "IBMPlexMono-SemiBold"), size: 13) ?? .monospacedSystemFont(ofSize: 13, weight: .semibold)
-        let large = UIFont(name: String(localized: "BarlowCondensed-Bold"), size: 40) ?? .systemFont(ofSize: 34, weight: .bold)
+        let title = UIFont(name: "IBMPlexMono-SemiBold", size: 13) ?? .monospacedSystemFont(ofSize: 13, weight: .semibold)
+        let large = UIFont(name: "BarlowCondensed-Bold", size: 40) ?? .systemFont(ofSize: 34, weight: .bold)
         let titleAttributes: [NSAttributedString.Key: Any] = [.font: title, .kern: 1.0]
         let bar = UINavigationBarAppearance()
         bar.configureWithTransparentBackground()
@@ -59,10 +59,10 @@ enum Appearance: String, CaseIterable, Identifiable {
         UINavigationBar.appearance().compactAppearance = scrolled
         UINavigationBar.appearance().scrollEdgeAppearance = bar
         let barButton = UIBarButtonItemAppearance()
-        barButton.normal.titleTextAttributes = [.font: UIFont(name: String(localized: "IBMPlexSansRoman-Medium"), size: 16) ?? .systemFont(ofSize: 16)]
+        barButton.normal.titleTextAttributes = [.font: UIFont(name: "IBMPlexSansRoman-Medium", size: 16) ?? .systemFont(ofSize: 16)]
         scrolled.buttonAppearance = barButton
         bar.buttonAppearance = barButton
-        let mono = UIFont(name: String(localized: "IBMPlexMono-Medium"), size: 12) ?? .monospacedSystemFont(ofSize: 12, weight: .medium)
+        let mono = UIFont(name: "IBMPlexMono-Medium", size: 12) ?? .monospacedSystemFont(ofSize: 12, weight: .medium)
         UISegmentedControl.appearance().setTitleTextAttributes([.font: mono], for: .normal)
         UISegmentedControl.appearance().selectedSegmentTintColor = UIColor(hex: 0xF04A00)
         UISegmentedControl.appearance().setTitleTextAttributes([.font: mono, .foregroundColor: UIColor.white], for: .selected)

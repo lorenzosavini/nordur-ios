@@ -304,7 +304,7 @@ struct WeatherView: View {
         let f = DateFormatter()
         f.locale = Fmt.italian
         f.timeZone = zone
-        f.dateFormat = String(localized: "EEE")
+        f.dateFormat = "EEE"
         return f.string(from: date).uppercased().replacingOccurrences(of: ".", with: "")
     }
 
@@ -312,7 +312,7 @@ struct WeatherView: View {
         let f = DateFormatter()
         f.locale = Fmt.italian
         f.timeZone = zone
-        f.dateFormat = String(localized: "d MMM")
+        f.dateFormat = "d MMM"
         return f.string(from: date).uppercased()
     }
 

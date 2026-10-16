@@ -220,7 +220,7 @@ struct LiveDrivePanel: View {
                     Grid(alignment: .leading, horizontalSpacing: 12, verticalSpacing: 10) {
                         GridRow {
                             Metric(title: String(localized: "Velocità max"), value: Fmt.number(session.stats.maxKmh, unit: "km/h"), systemImage: "gauge.with.dots.needle.100percent")
-                            Metric(title: String(localized: "Media"), value: Fmt.number(session.stats.averageKmh(totalSeconds: elapsed), unit: "km/h"), systemImage: "speedometer")
+                            Metric(title: String(localized: "drive.average", defaultValue: "Media"), value: Fmt.number(session.stats.averageKmh(totalSeconds: elapsed), unit: "km/h"), systemImage: "speedometer")
                             Metric(title: String(localized: "Quota"), value: Fmt.number(session.points.last?.alt, unit: "m"), systemImage: "mountain.2")
                         }
                         GridRow {

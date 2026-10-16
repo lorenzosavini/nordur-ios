@@ -618,7 +618,7 @@ struct HourTable: View {
                 HStack(spacing: 0) {
                     ForEach(Array(hours.enumerated()), id: \.offset) { index, hour in
                         VStack(spacing: 0) {
-                            cell(index == 0 ? String(localized: "ORA") : Fmt.hour(hour.date, in: zone), mono: true, color: index == 0 ? Theme.accent : Theme.dim)
+                            cell(index == 0 ? String(localized: "now.short", defaultValue: "ORA") : Fmt.hour(hour.date, in: zone), mono: true, color: index == 0 ? Theme.accent : Theme.dim)
                             Image(systemName: WeatherCode.describe(hour.code, isDay: hour.isDay).symbol)
                                 .symbolRenderingMode(.monochrome)
                                 .font(.system(size: 13))

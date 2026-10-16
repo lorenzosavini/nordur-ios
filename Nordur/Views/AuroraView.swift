@@ -187,7 +187,7 @@ struct AuroraView: View {
                 VStack(spacing: 0) {
                     HStack(spacing: 0) {
                         cellHead("", 46, .leading)
-                        ForEach([String(localized: "ORA"), "5'", "15'", "30'", "60'"], id: \.self) { cellHead($0, nil) }
+                        ForEach([String(localized: "now.short", defaultValue: "ORA"), "5'", "15'", "30'", "60'"], id: \.self) { cellHead($0, nil) }
                     }
                     .padding(.bottom, 5)
                     Rule()

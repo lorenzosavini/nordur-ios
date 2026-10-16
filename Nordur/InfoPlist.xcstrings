@@ -1,0 +1,32 @@
+{
+  "sourceLanguage" : "it",
+  "strings" : {
+    "CFBundleDisplayName" : {
+      "shouldTranslate" : false
+    },
+    "CFBundleName" : {
+      "shouldTranslate" : false
+    },
+    "NSLocationAlwaysAndWhenInUseUsageDescription" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "With “Always” access Norður checks weather warnings, gusts and closed roads near you even when the app is closed, and keeps recording your drive with the screen locked."
+          }
+        }
+      }
+    },
+    "NSLocationWhenInUseUsageDescription" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Norður uses your location for weather, warnings, roads and aurora where you are, and to record your drives."
+          }
+        }
+      }
+    }
+  },
+  "version" : "1.0"
+}
