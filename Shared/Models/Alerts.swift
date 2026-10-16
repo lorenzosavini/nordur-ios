@@ -100,6 +100,11 @@ struct AlertInput {
     var news: [NewsItem] = []
     var aurora: AuroraOutlook?
     var auroraZone: TimeZone = .iceland
+    /// CMEs NASA expects at Earth, and the Kp needed at the current latitude.
+    var cmeArrivals: [DonkiDigest.Arrival] = []
+    var kpNeeded: Double = 2
+    /// NOAA geomagnetic K-index alerts and warnings.
+    var spaceAlerts: [SpaceAlert] = []
     var flights: [Flight] = []
     var ferry: FerryNotice?
     var now = Date()
@@ -188,6 +193,26 @@ enum AlertEngine {
                 id: "a:\(night)", date: now, category: .aurora, severity: Risk.ok.rawValue,
                 title: "Aurora probabile stanotte",
                 body: "Punteggio \(best.score)/100 verso le \(Fmt.time(best.date, in: input.auroraZone)), nuvole \(Fmt.percent(best.cloudCover)), Kp \(Fmt.number(best.kp, decimals: 1))."))
+        }
+
+        if settings.isOn(.aurora) {
+            // NASA DONKI: a CME strong enough for this latitude arriving within 36 h.
+            for cme in input.cmeArrivals {
+                guard let arrival = cme.arrivalDate, let kp = cme.expectedKp, kp >= input.kpNeeded,
+                      arrival > now.addingTimeInterval(-6 * 3600), arrival < now.addingTimeInterval(36 * 3600) else { continue }
+                let range = cme.kp.map { "Kp \(Fmt.number($0.min, decimals: 0))–\(Fmt.number($0.max, decimals: 0))" } ?? "Kp \(Fmt.number(kp, decimals: 0))"
+                events.append(AlertEvent(
+                    id: "cme:\(cme.id)", date: now, category: .aurora, severity: (kp >= 7 ? Risk.warning : Risk.caution).rawValue,
+                    title: cme.glancing ? "CME di striscio in arrivo" : "Espulsione di massa coronale in arrivo",
+                    body: "NASA prevede l'impatto verso \(Fmt.dayTime(arrival, in: input.auroraZone)) (±7 h), \(range). Tieni d'occhio il cielo e le nuvole."))
+            }
+            // NOAA SWPC: K-index warnings/alerts reaching what this latitude needs.
+            for alert in input.spaceAlerts {
+                guard let k = alert.kp, Double(k) >= input.kpNeeded else { continue }
+                events.append(AlertEvent(
+                    id: "swpc:\(alert.id)", date: now, category: .aurora, severity: (k >= 7 ? Risk.warning : Risk.caution).rawValue,
+                    title: "NOAA: attività geomagnetica Kp \(k)", body: alert.title))
+            }
         }
 
         if settings.isOn(.flight) {

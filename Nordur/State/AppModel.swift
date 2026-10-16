@@ -40,6 +40,8 @@ final class AppModel {
     var kp: Fetched<[KpPoint]>?
     var ovation: Fetched<OvationGrid>?
     var solarWind: Fetched<SolarWind>?
+    /// NOAA + NASA cross-check and blended Kp.
+    var space: Fetched<SpaceIntel>?
     var news: Fetched<[NewsItem]>?
     var webcams: Fetched<[WebcamSite]>?
     var fuel: Fetched<[FuelStation]>?
@@ -155,6 +157,8 @@ final class AppModel {
         apply(ro, .ovation) { self.ovation = $0 }
         apply(rs, .solarWind) { self.solarWind = $0 }
         apply(rn, .news) { self.news = $0 }
+        let intel = await SpaceIntelService.load(kpForecast: kp?.value ?? [])
+        space = Fetched(value: intel, date: Date(), isStale: kp?.isStale ?? false)
         await refreshStatic()
     }
 
@@ -220,7 +224,8 @@ final class AppModel {
 
     var auroraOutlook: AuroraOutlook? {
         guard let forecast = forecast?.value else { return nil }
-        return AuroraCalc.outlook(forecast: forecast, kp: kp?.value ?? [], ovation: ovation?.value)
+        let blended = space?.value.blendedKp ?? []
+        return AuroraCalc.outlook(forecast: forecast, kp: blended.isEmpty ? (kp?.value ?? []) : blended, ovation: ovation?.value)
     }
 
     var recentQuakes24h: [Quake] {

@@ -8,6 +8,11 @@ on:
 permissions:
   contents: write
 
+# One run at a time: a newer push cancels the older run (both would push ci-screenshots).
+concurrency:
+  group: build-ios
+  cancel-in-progress: true
+
 jobs:
   build:
     runs-on: macos-latest

@@ -218,6 +218,12 @@ final class AlertCenter: NSObject {
         if settings.isOn(.aurora), Self.isEvening(now) {
             var kp = model?.kp?.value ?? []
             if kp.isEmpty, let fetched = try? await SpaceWeather.kpForecast() { kp = fetched.value }
+            let intel: SpaceIntel
+            if let cached = model?.space?.value { intel = cached } else { intel = await SpaceIntelService.load(kpForecast: kp) }
+            if !intel.blend.isEmpty { kp = intel.blendedKp }
+            input.cmeArrivals = intel.donki?.upcoming ?? []
+            input.spaceAlerts = intel.alerts
+            input.kpNeeded = AuroraCalc.kpNeeded(latitude: currentPlace.coordinate.lat)
             if let forecast = try? await WeatherService.forecast(currentPlace.coordinate).value {
                 input.aurora = AuroraCalc.outlook(forecast: forecast, kp: kp, ovation: model?.ovation?.value)
                 input.auroraZone = forecast.timeZone
