@@ -20,6 +20,8 @@ final class AppModel {
         case fuel = "Distributori"
         case flights = "Voli KEF"
         case ferry = "Herjólfur"
+        case grid = "Mappa meteo"
+        case radar = "Radar"
     }
 
     let location = LocationManager()
@@ -41,6 +43,8 @@ final class AppModel {
     var fuel: Fetched<[FuelStation]>?
     var flights: Fetched<[Flight]>?
     var ferry: Fetched<FerryNotice?>?
+    var weatherGrid: Fetched<WeatherGrid>?
+    var radarFrames: [RadarFrame] = []
 
     var errors: [Source: String] = [:]
     var isRefreshing = false
@@ -156,6 +160,21 @@ final class AppModel {
             let maxAge: TimeInterval = force ? 0 : 30 * 24 * 3600
             let result = await attempt { try await FuelStations.all(maxAge: maxAge) }
             apply(result, .fuel) { self.fuel = $0 }
+        }
+    }
+
+    /// Forecast grid for the weather map (refreshed at most hourly) and radar frames.
+    func refreshMapData(force: Bool = false) async {
+        let gridOld = weatherGrid.map { Date().timeIntervalSince($0.date) > 3600 || $0.isStale } ?? true
+        if gridOld || force {
+            let result = await attempt { try await WeatherGridService.iceland() }
+            apply(result, .grid) { self.weatherGrid = $0 }
+        }
+        let radar = await attempt { try await RainViewer.frames() }
+        apply(radar, .radar) { self.radarFrames = $0 }
+        if ovation == nil || force {
+            let result = await attempt { try await SpaceWeather.ovation() }
+            apply(result, .ovation) { self.ovation = $0 }
         }
     }
 

@@ -8,6 +8,23 @@ struct AuroraView: View {
         ScrollView {
             VStack(spacing: 14) {
                 PlaceHeader()
+                NavigationLink {
+                    AuroraLiveView()
+                } label: {
+                    HStack {
+                        Image(systemName: "globe.europe.africa.fill").font(.title2).foregroundStyle(.green)
+                        VStack(alignment: .leading) {
+                            Text("Mappa aurora live").font(.headline)
+                            Text("Ovale colorato sulla mappa + animazione NOAA delle ultime 3 ore").font(.caption).foregroundStyle(.secondary)
+                        }
+                        Spacer()
+                        Image(systemName: "chevron.right").foregroundStyle(.secondary)
+                    }
+                    .padding()
+                    .background(LinearGradient(colors: [.green.opacity(0.25), .mint.opacity(0.15)], startPoint: .leading, endPoint: .trailing),
+                                in: RoundedRectangle(cornerRadius: 18, style: .continuous))
+                }
+                .buttonStyle(.plain)
                 tonightCard
                 kpCard
                 spaceCard

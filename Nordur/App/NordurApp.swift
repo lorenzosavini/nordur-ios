@@ -51,6 +51,7 @@ struct RootView: View {
     @State private var tab = Tab(rawValue: UserDefaults.standard.string(forKey: "initialTab") ?? "") ?? .today
 
     enum Tab: String, Hashable { case today, weather, map, drive, trip }
+    @State private var showAuroraLive = UserDefaults.standard.string(forKey: "initialTab") == "aurora"
 
     var body: some View {
         @Bindable var alerts = alerts
@@ -74,6 +75,9 @@ struct RootView: View {
         }
         .sheet(isPresented: $alerts.openInbox) {
             NavigationStack { AlertsView() }
+        }
+        .sheet(isPresented: $showAuroraLive) {
+            NavigationStack { AuroraLiveView() }
         }
         .task {
             model.location.request()

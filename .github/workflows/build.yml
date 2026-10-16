@@ -46,14 +46,15 @@ jobs:
           xcrun simctl privacy "$UDID" grant location-always it.lorenzosavini.nordur || true
           xcrun simctl location "$UDID" set 63.4186,-19.0060 || true
           mkdir -p shots
-          for tab in today weather map drive trip; do
-            xcrun simctl launch "$UDID" it.lorenzosavini.nordur -initialTab "$tab"
+          for shot in today weather map:wind map:aurora map:precipitation drive trip aurora; do
+            tab="${shot%%:*}"; layer="${shot#*:}"; [ "$layer" = "$shot" ] && layer="wind"
+            xcrun simctl launch "$UDID" it.lorenzosavini.nordur -initialTab "$tab" -map.layer "$layer"
             sleep 25
-            xcrun simctl io "$UDID" screenshot "shots/$tab.png"
+            xcrun simctl io "$UDID" screenshot "shots/${shot/:/-}.png"
             if xcrun simctl spawn "$UDID" launchctl list | grep -q it.lorenzosavini.nordur; then
-              echo "RUNNING after 25s: $tab" | tee -a shots/report.txt
+              echo "RUNNING after 25s: $shot" | tee -a shots/report.txt
             else
-              echo "CRASHED or exited: $tab" | tee -a shots/report.txt
+              echo "CRASHED or exited: $shot" | tee -a shots/report.txt
             fi
             xcrun simctl terminate "$UDID" it.lorenzosavini.nordur || true
             sleep 2

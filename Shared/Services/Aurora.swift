@@ -33,12 +33,50 @@ struct OvationGrid {
         return values.indices.contains(index) ? values[index] : nil
     }
 
+    /// Smoothly interpolated probability, for drawing the oval on a map.
+    func interpolated(lat: Double, lon: Double) -> Double {
+        guard lat > -90, lat < 90 else { return 0 }
+        var x = lon.truncatingRemainder(dividingBy: 360)
+        if x < 0 { x += 360 }
+        let x0 = Int(x), y0 = Int(floor(lat))
+        let tx = x - Double(x0), ty = lat - Double(y0)
+        func v(_ lo: Int, _ la: Int) -> Double {
+            let index = ((lo % 360 + 360) % 360) * 181 + (min(max(la, -90), 90) + 90)
+            return values.indices.contains(index) ? values[index] : 0
+        }
+        let top = v(x0, y0) + (v(x0 + 1, y0) - v(x0, y0)) * tx
+        let bottom = v(x0, y0 + 1) + (v(x0 + 1, y0 + 1) - v(x0, y0 + 1)) * tx
+        return top + (bottom - top) * ty
+    }
+
     /// Aurora is usually seen low on the poleward horizon before it is overhead:
     /// best probability within a few degrees towards the pole.
     func horizonProbability(at c: Coordinate, degrees: Int = 4) -> Double? {
         let step = c.lat >= 0 ? 1.0 : -1.0
         let samples = (0...degrees).compactMap { probability(at: Coordinate(lat: c.lat + Double($0) * step, lon: c.lon)) }
         return samples.max()
+    }
+}
+
+/// NOAA polar-view images of the northern oval, every 5 minutes over 24 h.
+struct OvationFrame: Identifiable, Hashable {
+    let time: Date
+    let url: URL
+    var id: Date { time }
+}
+
+extension SpaceWeather {
+    static func ovationAnimation(lastHours: Double = 3, step: Int = 2) async throws -> [OvationFrame] {
+        guard let url = URL(string: "https://services.swpc.noaa.gov/products/animations/ovation_north_24h.json") else { throw HTTPError.invalidURL }
+        struct Raw: Decodable { let url: String; let time_tag: String }
+        let raw = try await HTTP.json([Raw].self, from: url, cacheKey: "swpc_ovation_anim").value
+        let cutoff = Date().addingTimeInterval(-lastHours * 3600)
+        let frames = raw.compactMap { item -> OvationFrame? in
+            guard let time = DateParse.iso(item.time_tag), time >= cutoff,
+                  let full = URL(string: "https://services.swpc.noaa.gov" + item.url) else { return nil }
+            return OvationFrame(time: time, url: full)
+        }
+        return stride(from: 0, to: frames.count, by: max(1, step)).map { frames[$0] } + (frames.last.map { [$0] } ?? [])
     }
 }
 
