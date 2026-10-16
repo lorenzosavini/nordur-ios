@@ -31,7 +31,9 @@ jobs:
           ./engine-tests | tee -a engine-tests.log
 
       - name: Backend unit tests (Node)
-        run: node --test backend/test/*.test.mjs
+        run: |
+          npm ci --prefix backend --no-audit --no-fund
+          node --test backend/test/*.test.mjs
 
       - name: Build app + widget (simulator, no signing)
         run: |
