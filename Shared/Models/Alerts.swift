@@ -174,7 +174,7 @@ enum AlertEngine {
                 let near = input.watched.map { (Geo.distanceKm($0.coordinate, quake.coordinate), $0) }.min { $0.0 < $1.0 }
                 let isNear = (near?.0 ?? .infinity) <= settings.quakeRadiusKm && quake.magnitude >= settings.quakeMagnitude
                 guard isNear || quake.magnitude >= 4.5 else { continue }
-                let distance = near.map { " · \(Int($0.0)) km da \($0.1.name)" } ?? ""
+                let distance = near.map { String(localized: " · \(Int($0.0)) km da \($0.1.name)") } ?? ""
                 events.append(AlertEvent(
                     id: "q:\(quake.id)", date: now, category: .quake, severity: quake.risk.rawValue,
                     title: String(localized: "Terremoto M\(Fmt.number(quake.magnitude, decimals: 1)) – \(quake.region)"),

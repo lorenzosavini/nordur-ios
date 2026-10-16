@@ -34,6 +34,16 @@
         }
       }
     },
+    " · %lld km da %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : " · %1$lld km from %2$@"
+          }
+        }
+      }
+    },
     " · allerta" : {
       "localizations" : {
         "en" : {
@@ -93,9 +103,6 @@
           }
         }
       }
-    },
-    "%@" : {
-      "shouldTranslate" : false
     },
     "%@ %@" : {
       "shouldTranslate" : false
@@ -408,9 +415,6 @@
     "%lld%@" : {
       "shouldTranslate" : false
     },
-    "%lld/%lld m/s" : {
-      "shouldTranslate" : false
-    },
     "+" : {
       "shouldTranslate" : false
     },
@@ -447,7 +451,6 @@
       }
     },
     "24 ORE" : {
-      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -471,7 +474,6 @@
       }
     },
     "27 GIORNI" : {
-      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -482,7 +484,6 @@
       }
     },
     "3 GIORNI" : {
-      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -748,7 +749,6 @@
       }
     },
     "Accedi per inviare un avvistamento" : {
-      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -799,7 +799,6 @@
       }
     },
     "Account eliminato" : {
-      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -950,7 +949,6 @@
       }
     },
     "Allerte IMO" : {
-      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1131,7 +1129,6 @@
       }
     },
     "Arrivi" : {
-      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1262,7 +1259,6 @@
       }
     },
     "Aurora (NOAA/GFZ/NASA)" : {
-      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1493,7 +1489,6 @@
       }
     },
     "Avvistamento già registrato per questa zona" : {
-      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -2887,7 +2882,6 @@
       }
     },
     "Email non valida" : {
-      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -2898,7 +2892,6 @@
       }
     },
     "Email o codice di recupero errati" : {
-      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -2909,7 +2902,6 @@
       }
     },
     "Email o password errate" : {
-      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -2940,7 +2932,6 @@
       }
     },
     "Errore del server" : {
-      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -2991,7 +2982,6 @@
       }
     },
     "Esiste già un account con questa email" : {
-      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -4162,7 +4152,6 @@
       }
     },
     "Kp → ovale" : {
-      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -4223,7 +4212,6 @@
       }
     },
     "LIVE" : {
-      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -4254,7 +4242,6 @@
       }
     },
     "La nuova password deve avere almeno 8 caratteri" : {
-      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -4265,7 +4252,6 @@
       }
     },
     "La password deve avere almeno 8 caratteri" : {
-      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -4396,7 +4382,6 @@
       }
     },
     "Località aurora" : {
-      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -4685,7 +4670,6 @@
       }
     },
     "Mappa meteo" : {
-      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -5199,7 +5183,6 @@
       }
     },
     "NUVOLE ORA" : {
-      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -5873,7 +5856,6 @@
       }
     },
     "OVALE OVATION" : {
-      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -6134,7 +6116,6 @@
       }
     },
     "Ovale aurorale" : {
-      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -6315,7 +6296,6 @@
       }
     },
     "Partenze" : {
-      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -6376,7 +6356,6 @@
       }
     },
     "Password errata" : {
-      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -6657,7 +6636,6 @@
       }
     },
     "Posizione non valida" : {
-      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -6808,7 +6786,6 @@
       }
     },
     "Previsioni" : {
-      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -6949,7 +6926,6 @@
       }
     },
     "Puoi inviare un avvistamento ogni 20 minuti" : {
-      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -6970,7 +6946,6 @@
       }
     },
     "Qualità dell'aria" : {
-      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -7764,7 +7739,6 @@
       }
     },
     "Sessione non valida, accedi di nuovo" : {
-      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -7775,7 +7749,6 @@
       }
     },
     "Sessione scaduta, accedi di nuovo" : {
-      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -7986,7 +7959,6 @@
       }
     },
     "Stazioni meteo stradali" : {
-      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -8547,7 +8519,6 @@
       }
     },
     "Tratti critici" : {
-      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -8968,7 +8939,6 @@
       }
     },
     "Vento solare" : {
-      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -9189,7 +9159,6 @@
       }
     },
     "Voli KEF" : {
-      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -9432,6 +9401,16 @@
     "a" : {
       "shouldTranslate" : false
     },
+    "adesso" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "just now"
+          }
+        }
+      }
+    },
     "agg. %@" : {
       "localizations" : {
         "en" : {
@@ -9454,6 +9433,16 @@
     },
     "b" : {
       "shouldTranslate" : false
+    },
+    "da %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "from %@"
+          }
+        }
+      }
     },
     "dalle %@" : {
       "localizations" : {

@@ -81,7 +81,7 @@ enum Fmt {
     }
 
     static func relative(_ date: Date) -> String {
-        if abs(date.timeIntervalSinceNow) < 60 { return "adesso" }
+        if abs(date.timeIntervalSinceNow) < 60 { return String(localized: "adesso") }
         let formatter = RelativeDateTimeFormatter()
         formatter.locale = italian
         formatter.unitsStyle = .short

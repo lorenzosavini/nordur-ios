@@ -129,7 +129,7 @@ struct TodayView: View {
                 }
                 ReadingGrid(items: [
                     Reading(label: String(localized: "Vento"), value: Fmt.number(current.wind_speed_10m), unit: "m/s",
-                            note: current.wind_direction_10m == nil ? nil : "da \(Fmt.compass(current.wind_direction_10m))", size: 28),
+                            note: current.wind_direction_10m == nil ? nil : String(localized: "da \(Fmt.compass(current.wind_direction_10m))"), size: 28),
                     Reading(label: String(localized: "Raffiche"), value: Fmt.number(current.wind_gusts_10m), unit: "m/s",
                             tint: windTint(current.wind_gusts_10m), size: 28),
                     Reading(label: String(localized: "Precip."), value: Fmt.number(current.precipitation, decimals: 1), unit: "mm/h", size: 28),
