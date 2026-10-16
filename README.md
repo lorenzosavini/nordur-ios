@@ -39,7 +39,7 @@ Già presenti dalla 1.0: funziona offline con l'ultima copia di ogni fonte, mete
 
 Serve un Mac con **Xcode 16 o successivo** (gratuito sul Mac App Store).
 
-1. Apri `ios/Nordur/Nordur.xcodeproj` in Xcode.
+1. Apri `Nordur.xcodeproj` in Xcode.
 2. Seleziona il target **Nordur** → *Signing & Capabilities* → scegli il tuo **Team**
    (basta un Apple ID gratuito; con l'Apple Developer Program l'app non scade dopo 7 giorni).
    Se il bundle id `it.lorenzosavini.nordur` è già occupato, cambialo.
@@ -47,7 +47,7 @@ Serve un Mac con **Xcode 16 o successivo** (gratuito sul Mac App Store).
 3. Collega l'iPhone, attiva la *Modalità sviluppatore* (Impostazioni → Privacy e sicurezza) e premi ▶︎ Run.
 4. Al primo avvio concedi posizione e notifiche. Per le allerte anche ad app chiusa: Info & SOS › Allerte e notifiche › «Controlli in background» e poi posizione «Sempre».
 
-In alternativa il progetto si può rigenerare con XcodeGen: `brew install xcodegen && cd ios/Nordur && xcodegen generate`.
+In alternativa il progetto si può rigenerare con XcodeGen: `brew install xcodegen && xcodegen generate`.
 
 ## Struttura
 
