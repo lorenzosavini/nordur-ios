@@ -68,12 +68,17 @@ jobs:
           xcrun simctl privacy "$UDID" grant location-always it.lorenzosavini.nordur || true
           xcrun simctl location "$UDID" set 63.4186,-19.0060 || true
           mkdir -p shots
-          # name[:layer][@appearance][+language]
-          for shot in today@light today weather@light map:wind drive@light trip@light kp@light kp kp:day@light kp:three@light kp:long@light account@light today@light+en kp@light+en kp:day@light+en; do
+          # name[:layer][@appearance][+language]; "s.<screen>" opens a secondary screen (-ciScreen) over Today.
+          SHOTS="today@light today weather@light weather map:wind map:temperature@light map:precipitation map:cloud map:aurora map:radar
+            drive@light trip@light kp@light kp kp:day@light kp:three@light kp:long@light aurora@light account@light
+            s.alerts@light s.alertSettings@light s.info@light s.quakes@light s.roads@light s.transport@light s.webcams@light s.warnings@light s.offline@light
+            today@light+en weather@light+en kp@light+en kp:day@light+en s.info@light+en"
+          for shot in $SHOTS; do
             lang="it"; spec="$shot"; [ "${shot%+*}" != "$shot" ] && lang="${shot##*+}" && spec="${shot%+*}"
             base="${spec%%@*}"; mode="dark"; [ "$base" != "$spec" ] && mode="${spec#*@}"
             tab="${base%%:*}"; layer="${base#*:}"; [ "$layer" = "$base" ] && layer="wind"
-            xcrun simctl launch "$UDID" it.lorenzosavini.nordur -initialTab "$tab" -map.layer "$layer" -auroraMode "$layer" -appearance "$mode" \
+            screen=""; [ "${tab#s.}" != "$tab" ] && screen="${tab#s.}" && tab="today"
+            xcrun simctl launch "$UDID" it.lorenzosavini.nordur -initialTab "$tab" -ciScreen "$screen" -map.layer "$layer" -auroraMode "$layer" -appearance "$mode" \
               -AppleLanguages "($lang)" -AppleLocale "$([ "$lang" = en ] && echo en_GB || echo it_IT)"
             sleep 25
             xcrun simctl io "$UDID" screenshot "shots/$(echo "$shot" | tr ':@+' '---').png"
@@ -100,6 +105,21 @@ jobs:
           for f in ~/Library/Logs/DiagnosticReports/*Nordur*; do [ -f "$f" ] && head -120 "$f" > "shots/crash-$(basename "$f").txt"; done || true
           xcrun simctl spawn "$UDID" log show --last 3m --style compact --predicate 'process == "Nordur" AND (messageType == error OR messageType == fault)' 2>/dev/null | tail -150 > shots/app-errors.txt || true
           cat shots/report.txt
+
+      - name: Simulator build for Appetize or Xcode (zip)
+        if: always()
+        run: |
+          [ -d build/Debug-iphonesimulator/Nordur.app ] || exit 0
+          (cd build/Debug-iphonesimulator && ditto -c -k --sequesterRsrc --keepParent Nordur.app ../../Nordur-simulator.zip)
+
+      - name: Upload simulator build
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: Nordur-simulator
+          path: Nordur-simulator.zip
+          if-no-files-found: ignore
+          retention-days: 30
 
       - name: Publish screenshots to branch ci-screenshots
         if: always()

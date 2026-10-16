@@ -68,6 +68,13 @@ struct RootView: View {
     @State private var showAuroraLive = UserDefaults.standard.string(forKey: "initialTab") == "aurora"
     @State private var showAccount = UserDefaults.standard.string(forKey: "initialTab") == "account"
     @State private var showAuroraIntel = UserDefaults.standard.string(forKey: "initialTab") == "kp"
+    // CI only: `-ciScreen quakes` opens a secondary screen over the tabs for the screenshots.
+    @State private var ciScreen = UserDefaults.standard.string(forKey: "ciScreen").flatMap(CIScreen.init(rawValue:))
+
+    enum CIScreen: String, Identifiable {
+        case alerts, alertSettings, info, quakes, roads, transport, webcams, warnings, offline
+        var id: String { rawValue }
+    }
 
     var body: some View {
         @Bindable var alerts = alerts
@@ -89,6 +96,21 @@ struct RootView: View {
         .sheet(isPresented: $showAuroraLive) {
             NavigationStack { AuroraLiveView() }
         }
+        .sheet(item: $ciScreen) { screen in
+            NavigationStack {
+                switch screen {
+                case .alerts: AlertsView()
+                case .alertSettings: AlertSettingsView()
+                case .info: InfoView()
+                case .quakes: QuakesView()
+                case .roads: RoadsView()
+                case .transport: TransportView()
+                case .webcams: WebcamsView()
+                case .warnings: WarningsView()
+                case .offline: OfflineView()
+                }
+            }
+        }
         .task {
             // CI only: `-ciAutoDrive YES` starts a recording to exercise the live road watch.
             if UserDefaults.standard.bool(forKey: "ciAutoDrive"), !recorder.isRecording {
@@ -100,7 +122,7 @@ struct RootView: View {
             await alerts.refreshPermissionState()
             await Account.shared.restoreAfterReinstall()
             // CI launches pass -initialTab: no permission sheet over the screenshots there.
-            if UserDefaults.standard.string(forKey: "initialTab") == nil,
+            if UserDefaults.standard.string(forKey: "initialTab") == nil, UserDefaults.standard.string(forKey: "ciScreen") == nil,
                await UNUserNotificationCenter.current().notificationSettings().authorizationStatus == .notDetermined {
                 await alerts.requestNotificationPermission()
             }
