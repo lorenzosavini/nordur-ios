@@ -67,6 +67,7 @@ struct RootView: View {
     enum Tab: String, Hashable { case today, weather, map, drive, trip }
     @State private var showAuroraLive = UserDefaults.standard.string(forKey: "initialTab") == "aurora"
     @State private var showAccount = UserDefaults.standard.string(forKey: "initialTab") == "account"
+    @State private var showAuroraIntel = UserDefaults.standard.string(forKey: "initialTab") == "kp"
 
     var body: some View {
         @Bindable var alerts = alerts
@@ -84,6 +85,7 @@ struct RootView: View {
             NavigationStack { AlertsView() }
         }
         .sheet(isPresented: $showAccount) { AccountView() }
+        .sheet(isPresented: $showAuroraIntel) { NavigationStack { AuroraView() } }
         .sheet(isPresented: $showAuroraLive) {
             NavigationStack { AuroraLiveView() }
         }
