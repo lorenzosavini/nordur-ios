@@ -10,6 +10,7 @@ struct AccountView: View {
     @State private var working = false
     @State private var message: String?
     @State private var confirmDelete = false
+    @State private var sheet: AccountAction?
 
     var body: some View {
         NavigationStack {
@@ -25,6 +26,13 @@ struct AccountView: View {
             .background(Theme.bg.ignoresSafeArea())
             .toolbar {
                 ToolbarItem(placement: .confirmationAction) { Button("Fine") { dismiss() } }
+            }
+            .sheet(item: $sheet) { AccountActionSheet(action: $0) }
+            .sheet(isPresented: Binding(get: { account.pendingRecoveryCode != nil && sheet == nil },
+                                        set: { if !$0 { account.pendingRecoveryCode = nil } })) {
+                if let code = account.pendingRecoveryCode {
+                    RecoveryCodeSheet(code: code) { account.pendingRecoveryCode = nil }
+                }
             }
             .confirmationDialog("Eliminare i dati salvati online?", isPresented: $confirmDelete, titleVisibility: .visible) {
                 Button("Elimina dati online", role: .destructive) {
@@ -80,6 +88,10 @@ struct AccountView: View {
             .opacity(email.isEmpty || password.isEmpty ? 0.5 : 1)
 
             if let message { Text(message).font(.app(.footnote)).foregroundStyle(Theme.text) }
+            Button { sheet = .reset } label: {
+                Text("PASSWORD DIMENTICATA? USA IL CODICE DI RECUPERO").font(.mono(10, .semibold)).foregroundStyle(Theme.accent)
+            }
+            .buttonStyle(.plain)
         }
     }
 
@@ -131,7 +143,10 @@ struct AccountView: View {
                 account.signOut()
                 message = nil
             }
-            actionRow("Elimina dati online", detail: nil, destructive: true) { confirmDelete = true }
+            actionRow("Cambia password", detail: nil) { sheet = .change }
+            actionRow("Nuovo codice di recupero", detail: "Serve per reimpostare la password") { sheet = .recovery }
+            actionRow("Elimina dati online", detail: "L'account resta attivo", destructive: true) { confirmDelete = true }
+            actionRow("Elimina account", detail: "Account, backup e avvistamenti, in modo definitivo", destructive: true) { sheet = .delete }
         }
     }
 
@@ -168,6 +183,8 @@ struct AccountView: View {
             }
             Text("I dati sono cifrati (AES-256) prima di essere salvati. Dopo aver reinstallato l'app basta accedere con la stessa email: tutto torna com'era. Il backup parte da solo quando chiudi l'app e ogni 5 minuti mentre la usi.")
                 .font(.app(.caption)).foregroundStyle(Theme.dim)
+            LinkRow(title: "Informativa sulla privacy", subtitle: "Quali dati usa Norður e come", url: "https://nordur-api.vercel.app/privacy.html")
+                .padding(.top, 6)
         }
     }
 

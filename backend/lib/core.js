@@ -92,6 +92,11 @@ export async function deleteObjects(urls) {
 export const userPath = (email) => `users/${hmac(email.trim().toLowerCase(), "user")}.bin`;
 export const docPrefix = (uid) => `data/${hmac(uid, "data")}/`;
 export const docPath = (uid, doc) => `${docPrefix(uid)}${doc}.bin`;
+/** Written when an account is deleted: its tokens can no longer write anything. */
+export const revokedPath = (uid) => `revoked/${hmac(uid, "revoked")}.bin`;
+export async function isRevoked(uid) {
+  return Boolean(await readObject(revokedPath(uid)).catch(() => null));
+}
 
 export async function readJSON(req) {
   if (req.body && typeof req.body === "object") return req.body;

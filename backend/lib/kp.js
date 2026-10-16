@@ -5,7 +5,7 @@
 //   current block    -> weighted mean of NOAA forecast (×1), NOAA 1-min
 //                       estimate (×2, a measurement) and the solar-wind Newell
 //                       Kp (×1, a statistical fit, biased high when quiet)
-//   future blocks    -> NOAA forecast, raised to NASA's expected Kp while a
+//   future blocks    -> NOAA forecast, raised to the low end of NASA's Kp range while a
 //                       DONKI/ENLIL CME is predicted to pass (window opened
 //                       6 h early for the ±7 h arrival uncertainty)
 // The result is a deterministic forecast, not a probability.
@@ -35,8 +35,9 @@ export function blend({ forecast, estimated, gfz, newellKp, donki, enlil, now = 
         .map((a) => {
           const arrival = Date.parse(a.arrival);
           const leave = arrival + (a.durationHours ?? 18) * 3600e3;
-          const mid = a.glancing ? a.kp.min : (a.kp.min + a.kp.max) / 2;
-          return arrival - 6 * 3600e3 < end && start < leave ? mid : null;
+          // CCMC notes that ENLIL runs tend to overestimate the impact at Earth:
+          // use the low end of NASA's Kp range.
+          return arrival - 6 * 3600e3 < end && start < leave ? a.kp.min : null;
         })
         .filter((v) => v != null)
         .reduce((m, v) => Math.max(m, v), -1);

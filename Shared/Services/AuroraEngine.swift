@@ -23,6 +23,22 @@ struct SkyHour {
     var visibility: Double?   // m
 }
 
+/// Terrain horizon: elevation angle (°) of the skyline for 16 azimuths (0°, 22.5°, …),
+/// from EU-DEM 25 m via nordur-api (/api/horizon).
+struct TerrainHorizon: Codable {
+    let angles: [Double]
+
+    /// Skyline angle toward `azimuth`, interpolated between the 16 directions.
+    func angle(toward azimuth: Double) -> Double {
+        guard angles.count == 16 else { return 0 }
+        let x = Astro.normalize(azimuth) / 22.5
+        let i = Int(floor(x)) % 16, j = (i + 1) % 16, t = x - floor(x)
+        return angles[i] * (1 - t) + angles[j] * t
+    }
+
+    static let flat = TerrainHorizon(angles: Array(repeating: 0, count: 16))
+}
+
 /// One 3-hour Kp block.
 struct KpBlock {
     let start: Date
@@ -41,19 +57,75 @@ protocol AuroraField {
 // MARK: - Geomagnetic coordinates
 
 enum Geomagnetic {
-    /// North geomagnetic (dipole) pole, IGRF-14 epoch 2025 (≈80.8°N, 72.7°W).
-    static let poleLat = 80.8, poleLon = -72.7
+    /// North geomagnetic (centred-dipole) pole, IGRF-13 at 2020.5.
+    static let poleLat = 80.65, poleLon = -72.68
 
-    /// Centred-dipole magnetic latitude. Differs from corrected geomagnetic
-    /// latitude by a few degrees in the North Atlantic (Iceland: dipole ≈ 69°, CGM ≈ 65°).
-    static func latitude(_ c: Coordinate) -> Double {
+    /// Centred-dipole magnetic latitude (reference only: in Iceland it is ~5° too high).
+    static func dipoleLatitude(_ c: Coordinate) -> Double {
         let d = Astro.deg
         let s = sin(c.lat * d) * sin(poleLat * d) + cos(c.lat * d) * cos(poleLat * d) * cos((c.lon - poleLon) * d)
         return asin(max(-1, min(1, s))) / d
     }
 
+    // IGRF-13 degree-1/2 Gauss coefficients at 2020.5 (nT).
+    private static let g10 = -29401.95, g11 = -1447.2, h11 = 4639.55
+    private static let g20 = -2505.1, g21 = 2978.5, h21 = -3006.7, g22 = 1675.95, h22 = -745.8
+
+    /// Eccentric (offset) dipole, Fraser-Smith (1987): centre offset and axis.
+    private static let eccentric: (offset: (Double, Double, Double), axis: (Double, Double, Double)) = {
+        let b0sq = g10 * g10 + g11 * g11 + h11 * h11, b0 = b0sq.squareRoot(), s3 = 3.0.squareRoot()
+        let l0 = 2 * g10 * g20 + s3 * (g11 * g21 + h11 * h21)
+        let l1 = -g11 * g20 + s3 * (g10 * g21 + g11 * g22 + h11 * h22)
+        let l2 = -h11 * g20 + s3 * (g10 * h21 - h11 * g22 + g11 * h22)
+        let e = (l0 * g10 + l1 * g11 + l2 * h11) / (4 * b0sq)
+        let a = 6371.2
+        return ((a * (l1 - g11 * e) / (3 * b0sq), a * (l2 - h11 * e) / (3 * b0sq), a * (l0 - g10 * e) / (3 * b0sq)),
+                (-g11 / b0, -h11 / b0, -g10 / b0))
+    }()
+
+    static func eccentricLatitude(_ c: Coordinate) -> Double {
+        let d = Astro.deg, a = 6371.2
+        let (o, p) = eccentric
+        let x = a * cos(c.lat * d) * cos(c.lon * d) - o.0
+        let y = a * cos(c.lat * d) * sin(c.lon * d) - o.1
+        let z = a * sin(c.lat * d) - o.2
+        let r = (x * x + y * y + z * z).squareRoot()
+        return asin((x * p.0 + y * p.1 + z * p.2) / r) / d
+    }
+
+    /// Corrected-geomagnetic latitude minus eccentric-dipole latitude at 39
+    /// magnetic observatories (ISGI, IGRF-13 2020.5 corrected geomagnetic coordinates).
+    static let residuals: [(lat: Double, lon: Double, delta: Double)] = [
+        (64.18, -21.7, 0.567), (69.67, 18.95, -0.78), (67.369, 26.627, -1.05), (68.355, 18.819, -0.71),
+        (61.162, -45.442, -0.532), (67.83, 20.42, -0.751), (60.138, -1.183, 1.139), (77.0, 15.55, -0.955),
+        (74.5, 19.0, -0.967), (54.616, -113.347, -1.91), (58.759, -94.088, -3.54), (64.874, -147.86, 2.366),
+        (62.48, -114.482, -1.449), (64.318, -96.012, -3.082), (45.403, -75.552, -3.42), (60.508, 24.655, -0.571),
+        (59.903, 17.353, 0.049), (64.612, 18.748, -0.458), (62.073, 9.117, 0.346), (71.323, -156.623, 2.715),
+        (69.123, -105.031, -1.947), (74.69, -94.895, -2.072), (77.468, -69.22, -2.142), (69.251, -53.529, -1.676),
+        (57.058, -135.327, 1.065), (48.265, -117.123, -1.523), (38.205, -77.373, -3.569), (55.314, -3.206, 2.214),
+        (54.604, 18.813, 0.559), (50.096, 4.597, 2.95), (50.995, -4.484, 3.422), (53.743, 9.073, 1.673),
+        (55.633, 11.667, 1.091), (65.417, -52.917, -1.525), (36.233, 140.189, 0.139), (43.91, 144.189, 1.03),
+        (40.137, -105.237, -3.048), (47.595, -52.677, 0.263), (63.753, -68.518, -2.804),
+    ]
+
+    /// Approximate corrected geomagnetic (CGM) latitude: eccentric dipole plus
+    /// the observatory residuals interpolated with a Gaussian kernel (600 km)
+    /// and a weak prior towards zero far from any observatory.
+    /// Leave-one-out error vs ISGI: 0.3° rms in Iceland/Scandinavia/Greenland,
+    /// 0.6° rms over all 39 observatories (centred dipole: 2.8°, 4.8° in Iceland).
+    static func latitude(_ c: Coordinate) -> Double {
+        var num = 0.0, den = 0.0
+        for r in residuals {
+            let km = Geo.distanceKm(c, Coordinate(lat: r.lat, lon: r.lon))
+            let w = exp(-(km / 600) * (km / 600))
+            num += w * r.delta
+            den += w
+        }
+        return eccentricLatitude(c) - num / (den + 0.02)
+    }
+
     /// Equatorward edge of the auroral oval (midnight sector) for a Kp value,
-    /// geomagnetic latitude in degrees. Linear fit to NOAA SWPC's Kp/latitude
+    /// corrected geomagnetic latitude in degrees. Linear fit to NOAA SWPC's Kp/latitude
     /// table (Kp 0 → 66.5°, Kp 9 → 48.1°), uncertainty ≈ ±2–3°.
     static func ovalEdge(kp: Double) -> Double { 66.5 - 2.05 * max(0, min(9, kp)) }
 }
@@ -108,7 +180,7 @@ enum ViewingGeometry {
     /// Scans the field within reach of the observer (~1 300 km) and returns the
     /// strongest aurora that rises at least 3° above the horizon (lower emission),
     /// with a 200 km upper-emission check for very low aurora.
-    static func evaluate(_ field: AuroraField, at observer: Coordinate) -> Result {
+    static func evaluate(_ field: AuroraField, at observer: Coordinate, horizon: TerrainHorizon = .flat) -> Result {
         var best: (score: Double, value: Double, el: Double, az: Double, km: Double, cat: Category)?
         let latRange = Int(floor(observer.lat - 12))...Int(ceil(min(89, observer.lat + 12)))
         for lat in latRange {
@@ -120,6 +192,10 @@ enum ViewingGeometry {
                 let km = Geo.distanceKm(observer, cell)
                 let el = elevation(groundKm: km, emissionKm: lowerEmission)
                 let elUpper = elevation(groundKm: km, emissionKm: upperEmission)
+                // Hidden behind the local skyline (1° margin): not visible from here.
+                let az = bearing(from: observer, to: cell)
+                let skyline = horizon.angle(toward: az)
+                if max(el, elUpper) < skyline + 1 { continue }
                 let cat: Category
                 if el >= 60 { cat = .overhead }
                 else if el >= 15 { cat = .toward }
@@ -128,7 +204,7 @@ enum ViewingGeometry {
                 // Prefer strong aurora high in the sky: weight by geometry class.
                 let score = v * (cat == .overhead ? 1 : cat == .toward ? 0.85 : 0.5)
                 if best == nil || score > best!.score {
-                    best = (score, v, max(el, 0), bearing(from: observer, to: cell), km, cat)
+                    best = (score, v, max(el, 0), az, km, cat)
                 }
             }
         }
@@ -138,12 +214,16 @@ enum ViewingGeometry {
 
     /// Kp-based geometry for hours beyond OVATION's horizon: where the oval's
     /// equatorward edge sits relative to the observer (Δ = magLat − edge, °).
-    static func fromKp(_ kp: Double, at observer: Coordinate) -> (category: Category, delta: Double) {
+    static func fromKp(_ kp: Double, at observer: Coordinate, horizon: TerrainHorizon = .flat) -> (category: Category, delta: Double) {
         let delta = Geomagnetic.latitude(observer) - Geomagnetic.ovalEdge(kp: kp)
         // The edge is uncertain by ±2–3° (model fit + dipole vs corrected coordinates):
         // "overhead" only beyond that margin. 1° ≈ 111 km; lower-border aurora
         // 15° / 3° high lies ≈ 350 / 760 km away.
-        let category: Category = delta >= 2 ? .overhead : delta > -2 ? .toward : delta > -6 ? .low : .none
+        var category: Category = delta >= 2 ? .overhead : delta > -2 ? .toward : delta > -6 ? .low : .none
+        // The skyline toward the magnetic pole hides low aurora (typical heights: low ~5°, toward ~15°).
+        let skyline = horizon.angle(toward: bearing(from: observer, to: Coordinate(lat: Geomagnetic.poleLat, lon: Geomagnetic.poleLon)))
+        if category == .low && skyline >= 5 { category = .none }
+        if category == .toward && skyline >= 15 { category = .low }
         return (category, delta)
     }
 }
@@ -255,6 +335,7 @@ struct AuroraInputs {
     var solarWindFresh = true
     var kpSourceFresh = true
     var secondSky: [SkyHour] = []      // another weather model, for agreement checks
+    var horizon: TerrainHorizon?       // local skyline; nil = assumed flat
 }
 
 enum AuroraEngine {
@@ -287,14 +368,14 @@ enum AuroraEngine {
         var ovationValue: Double?, azimuth: Double?, elevation: Double?
         var activity = 0.0
         if let field = inputs.field, fieldIsUsable(field, at: date, now: now) {
-            let g = ViewingGeometry.evaluate(field, at: place)
+            let g = ViewingGeometry.evaluate(field, at: place, horizon: inputs.horizon ?? .flat)
             source = "OVATION"
             geometry = g.category; ovationValue = g.value; azimuth = g.azimuth; elevation = g.elevation
             let geo = g.category == .overhead ? 1 : g.category == .toward ? 0.85 : g.category == .low ? 0.45 : 0
             activity = min(1, g.value / 40) * geo
             if g.category == .none { reasons.append((1, "OVATION non prevede aurora nel tuo cielo")) }
         } else if let kpValue {
-            let g = ViewingGeometry.fromKp(kpValue, at: place)
+            let g = ViewingGeometry.fromKp(kpValue, at: place, horizon: inputs.horizon ?? .flat)
             geometry = g.category
             azimuth = g.category == .overhead ? nil : ViewingGeometry.bearing(from: place, to: Coordinate(lat: Geomagnetic.poleLat, lon: Geomagnetic.poleLon))
             let geo = g.category == .overhead ? 1 : g.category == .toward ? 0.6 : g.category == .low ? 0.3 : 0
@@ -323,6 +404,13 @@ enum AuroraEngine {
         let moonUp = moon.altitude > 0 ? min(1, (moon.altitude + 5) / 30) : 0
         let moonFactor = 1 - 0.35 * moon.illuminatedFraction * moonUp
         if moonFactor < 0.85 { reasons.append((1 - moonFactor, "Luna illuminata al \(Int((moon.illuminatedFraction * 100).rounded()))% sopra l'orizzonte")) }
+
+        if let h = inputs.horizon {
+            let towardPole = h.angle(toward: ViewingGeometry.bearing(from: place, to: Coordinate(lat: Geomagnetic.poleLat, lon: Geomagnetic.poleLon)))
+            if towardPole >= 5 { reasons.append((min(1, towardPole / 20), "Rilievi verso nord-ovest: orizzonte a \(Int(towardPole.rounded()))°")) }
+        } else {
+            notes.append("Orizzonte del terreno non disponibile: assunto libero")
+        }
 
         let light = LightPollution.factor(at: place)
         if let note = light.note { reasons.append((1 - light.value, note)) }

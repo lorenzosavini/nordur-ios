@@ -30,21 +30,56 @@ final class Account {
 
     // MARK: Auth
 
-    struct AuthResponse: Decodable { let token: String; let userId: String; let email: String }
+    struct AuthResponse: Decodable { let token: String; let userId: String; let email: String; let recoveryCode: String? }
     struct ErrorResponse: Decodable { let error: String }
+    struct RecoveryResponse: Decodable { let recoveryCode: String }
+
+    /// One-time recovery code to show the user (after sign-up, reset or regeneration).
+    var pendingRecoveryCode: String?
 
     /// Signs in or creates the account, then restores what is stored online.
     func authenticate(email: String, password: String, register: Bool) async throws -> Int {
         let body = try JSONSerialization.data(withJSONObject: ["mode": register ? "register" : "login", "email": email, "password": password])
-        let data = try await request("auth", method: "POST", body: body, authorized: false)
+        return try await signIn(with: try await request("auth", method: "POST", body: body, authorized: false))
+    }
+
+    /// Sets a new password with the recovery code (no e-mail involved), then signs in.
+    func resetPassword(email: String, recoveryCode: String, newPassword: String) async throws -> Int {
+        let body = try JSONSerialization.data(withJSONObject: ["mode": "reset", "email": email, "recoveryCode": recoveryCode, "password": newPassword])
+        return try await signIn(with: try await request("auth", method: "POST", body: body, authorized: false))
+    }
+
+    private func signIn(with data: Data) async throws -> Int {
         let response = try JSONDecoder().decode(AuthResponse.self, from: data)
         token = response.token
         Keychain.write("email", response.email)
         self.email = response.email
+        if let code = response.recoveryCode { pendingRecoveryCode = code }
         UserDefaults.standard.removeObject(forKey: Self.manifestKey)
         let restored = try await restore()
         await sync()
         return restored
+    }
+
+    func changePassword(current: String, new: String) async throws {
+        guard let email else { throw AccountError.message("Accedi al tuo account") }
+        let body = try JSONSerialization.data(withJSONObject: ["mode": "change", "email": email, "password": current, "newPassword": new])
+        _ = try await request("auth", method: "POST", body: body)
+    }
+
+    /// Replaces the recovery code (the old one stops working).
+    func regenerateRecoveryCode(password: String) async throws {
+        guard let email else { throw AccountError.message("Accedi al tuo account") }
+        let body = try JSONSerialization.data(withJSONObject: ["mode": "recovery", "email": email, "password": password])
+        pendingRecoveryCode = try JSONDecoder().decode(RecoveryResponse.self, from: try await request("auth", method: "POST", body: body)).recoveryCode
+    }
+
+    /// Permanently deletes the account, its backup and its sightings. Local data stays on the phone.
+    func deleteAccount(password: String) async throws {
+        guard let email else { throw AccountError.message("Accedi al tuo account") }
+        let body = try JSONSerialization.data(withJSONObject: ["email": email, "password": password])
+        _ = try await request("auth", method: "DELETE", body: body)
+        signOut()
     }
 
     func signOut() {
@@ -155,7 +190,8 @@ final class Account {
         let (data, response) = try await URLSession.shared.data(for: request)
         let status = (response as? HTTPURLResponse)?.statusCode ?? 0
         guard (200..<300).contains(status) else {
-            if status == 401, authorized { signOut() }
+            // An expired session signs out; a wrong password on account actions does not.
+            if status == 401, authorized, path != "auth" { signOut() }
             let message = (try? JSONDecoder().decode(ErrorResponse.self, from: data))?.error ?? "Errore \(status)"
             throw AccountError.message(message)
         }

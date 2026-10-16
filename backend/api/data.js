@@ -3,7 +3,7 @@
 //   GET    /api/data?doc=trip   -> { doc, updatedAt, payload }
 //   PUT    /api/data?doc=trip   { updatedAt, payload } -> { ok }
 //   DELETE /api/data?doc=trip   -> { ok }
-import { verifyToken, readObject, writeObject, listObjects, deleteObjects, docPrefix, docPath, readJSON, send } from "../lib/core.js";
+import { verifyToken, readObject, writeObject, listObjects, deleteObjects, docPrefix, docPath, readJSON, send, isRevoked } from "../lib/core.js";
 
 const DOC = /^[a-z0-9][a-z0-9_-]{0,80}$/;
 
@@ -30,6 +30,7 @@ export default async function handler(req, res) {
       return send(res, 200, { doc, ...stored });
     }
     if (req.method === "PUT") {
+      if (await isRevoked(uid)) return send(res, 401, { error: "Account eliminato" });
       const { payload, updatedAt } = await readJSON(req);
       if (payload === undefined) return send(res, 400, { error: "payload" });
       await writeObject(docPath(uid, doc), { payload, updatedAt: updatedAt || new Date().toISOString() });

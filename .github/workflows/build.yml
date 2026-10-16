@@ -49,6 +49,11 @@ jobs:
         if: failure()
         run: grep -E "error:" build.log | sort -u | head -200
 
+      - name: Export strings for localization (XLIFF)
+        run: |
+          xcodebuild -exportLocalizations -project Nordur.xcodeproj -localizationPath loc -exportLanguage en > loc.log 2>&1 || tail -40 loc.log
+          ls -R loc | head -20 || true
+
       - name: Run in the iPhone simulator and take screenshots
         run: |
           set -x
@@ -97,6 +102,7 @@ jobs:
           mkdir -p shots
           cp build.log shots/ || true
           cp engine-tests.log shots/ || true
+          find loc -name "*.xliff" -exec cp {} shots/strings-en.xliff \; 2>/dev/null || true
           mv shots /tmp/shots
           git config user.name "nordur-ci"
           git config user.email "ci@users.noreply.github.com"

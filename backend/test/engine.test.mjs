@@ -84,7 +84,7 @@ test("blend keeps observed blocks, averages the current block, raises for NASA C
   assert.equal(blocks[0].value, 2);
   assert.equal(blocks[0].driver, "osservato");
   assert.equal(blocks[1].value, weighted([[2, 1], [4, 2], [3, 1]])); // 3.25
-  assert.equal(blocks[2].value, 6);
+  assert.equal(blocks[2].value, 5); // low end of NASA's 5–7 range
   assert.equal(blocks[2].driver, "CME NASA");
 });
 
@@ -92,4 +92,38 @@ test("a stale 1-minute estimate is ignored", () => {
   const now = Date.parse("2026-10-16T13:00:00Z");
   const [b] = blend({ forecast: [{ t: Date.parse("2026-10-16T12:00:00Z"), kp: 2, kind: "estimated" }], estimated: [{ t: now - 3 * 3600e3, kp: 7 }], newellKp: null, now });
   assert.equal(b.value, 2);
+});
+
+import { destination, terrainAngle, profile, AZIMUTHS, DISTANCES_KM } from "../lib/horizon.js";
+
+test("terrain: destination and curvature-corrected angles", () => {
+  const [lat, lon] = destination(64, -21, 0, 111.2);
+  assert.ok(Math.abs(lat - 65) < 0.01 && Math.abs(lon + 21) < 1e-9);
+  assert.ok(Math.abs(terrainAngle(1000, 10) - 5.68) < 0.05); // atan(1000/10000) minus ~0.4 m-level drop
+  assert.ok(terrainAngle(0, 40) < 0); // flat sea falls below the horizontal far away
+  const flat = profile(0, AZIMUTHS.map(() => DISTANCES_KM.map(() => 0)));
+  assert.ok(flat.every((p) => p.angle === 0));
+  const north = profile(0, AZIMUTHS.map((_, i) => DISTANCES_KM.map((km) => (i === 0 && km === 5 ? 500 : 0))));
+  assert.ok(north[0].angle > 5 && north[0].distanceKm === 5 && north[8].angle === 0);
+});
+
+import { digest } from "../lib/donki.js";
+
+test("DONKI digest follows the documented WSA-ENLIL schema", () => {
+  // Shape as published by CCMC (e.g. WSA-ENLIL run with Earth arrival 2024-06-09T22:07Z ±7 h, (kp)90=6).
+  const enlil = [{
+    simulationID: "WSA-ENLIL/31370/1", modelCompletionTime: "2024-06-08T10:00Z", au: 2,
+    cmeInputs: [{ cmeStartTime: "2024-06-08T02:00Z", latitude: 5, longitude: -8, speed: 1265, halfAngle: 53, isMostAccurate: true, cmeid: "2024-06-08T02:00:00-CME-001" }],
+    estimatedShockArrivalTime: "2024-06-09T22:07Z", estimatedDuration: 20, isEarthGB: false, kp_18: null, kp_90: 6, kp_135: 8, kp_180: 8,
+    impactList: [{ location: "Earth", arrivalTime: "2024-06-09T22:07Z", isGlancingBlow: false }], link: "https://kauai.ccmc.gsfc.nasa.gov/DONKI/view/WSA-ENLIL/31370/1",
+  }];
+  const gst = [{ gstID: "2024-06-10T00:00:00-GST-001", startTime: "2024-06-10T00:00Z", allKpIndex: [{ observedTime: "2024-06-10T03:00Z", kpIndex: 6.33, source: "NOAA" }] }];
+  const flr = [{ flrID: "F1", peakTime: "2024-06-08T01:50Z", classType: "X1.0", activeRegionNum: 13697 }, { flrID: "F2", peakTime: "2024-06-08T05:00Z", classType: "C3.2" }];
+  const d = digest(gst, enlil, flr, Date.parse("2024-06-09T00:00:00Z"));
+  assert.equal(d.arrivals.length, 1);
+  assert.equal(d.arrivals[0].arrival, "2024-06-09T22:07:00.000Z");
+  assert.deepEqual(d.arrivals[0].kp, { min: 6, max: 8 });
+  assert.equal(d.arrivals[0].speed, 1265);
+  assert.equal(d.storms[0].maxKp, 6.33);
+  assert.deepEqual(d.flares.map((f) => f.classType), ["X1.0"]);
 });

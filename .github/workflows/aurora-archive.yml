@@ -1,0 +1,23 @@
+name: Aurora archive
+
+# Calls nordur-api once per 3-hour Kp block so a forecast snapshot is archived
+# even when nobody opens the app (Vercel Hobby allows only one cron a day).
+# A few seconds on an Ubuntu runner: ~8 runs a day.
+on:
+  schedule:
+    - cron: "17 */3 * * *"
+  workflow_dispatch:
+
+permissions: {}
+
+jobs:
+  snapshot:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - name: Request the aurora state (archives the current Kp block)
+        run: |
+          code=$(curl -sS -o /tmp/aurora.json -w "%{http_code}" -H "Cache-Control: no-cache" "https://nordur-api.vercel.app/api/aurora?archive=$(date -u +%Y%m%d%H)")
+          echo "HTTP $code"
+          python3 -c "import json; d=json.load(open('/tmp/aurora.json')); print({k: v['status'] for k, v in d['sources'].items()})"
+          test "$code" = "200"

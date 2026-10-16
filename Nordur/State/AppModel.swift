@@ -50,6 +50,8 @@ final class AppModel {
     private(set) var auroraSlots: [AuroraSlot] = []
     /// Reference sites ranked by observability in the next 12 h.
     private(set) var siteRanking: [SiteOutlook] = []
+    /// Terrain skylines by rounded coordinate (TerrainService.key).
+    private(set) var horizons: [String: TerrainHorizon] = [:]
     var news: Fetched<[NewsItem]>?
     var webcams: Fetched<[WebcamSite]>?
     var fuel: Fetched<[FuelStation]>?
@@ -241,10 +243,23 @@ final class AppModel {
         apply(rs, .aurora) { self.aurora = $0 }
         apply(rt, .sites) { if let fresh = $0 { self.auroraSites = fresh } }
         recomputeAurora()
+        await loadHorizons()
     }
 
     func auroraInputs(for place: Coordinate, forecast: Forecast?) -> AuroraInputs {
-        AuroraInputs.make(place: place, forecast: forecast, state: aurora?.value, kp: kp?.value ?? [], ovation: ovation?.value)
+        AuroraInputs.make(place: place, forecast: forecast, state: aurora?.value, kp: kp?.value ?? [], ovation: ovation?.value,
+                          horizon: horizons[TerrainService.key(place)])
+    }
+
+    /// Skylines for the active place and the reference sites, one request at a
+    /// time (the terrain service allows one call per second); kept for good.
+    private func loadHorizons() async {
+        let wanted = [activePlace.coordinate] + (auroraSites?.value.sites.map(\.coordinate) ?? [])
+        var changed = false
+        for c in wanted where horizons[TerrainService.key(c)] == nil {
+            if let h = await TerrainService.horizon(c) { horizons[TerrainService.key(c)] = h; changed = true }
+        }
+        if changed { recomputeAurora() }
     }
 
     func recomputeAurora() {
@@ -252,7 +267,7 @@ final class AppModel {
         let inputs = auroraInputs(for: place, forecast: forecast?.value)
         auroraSlots = AuroraEngine.forecast(inputs)
         if let sites = auroraSites?.value {
-            siteRanking = AuroraSitesService.rank(sites, base: inputs, from: useCurrentLocation ? location.coordinate : nil)
+            siteRanking = AuroraSitesService.rank(sites, base: inputs, from: useCurrentLocation ? location.coordinate : nil, horizons: horizons)
         }
     }
 

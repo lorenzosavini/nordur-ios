@@ -229,7 +229,8 @@ final class AlertCenter: NSObject {
             let weather: Forecast?
             if let forecast { weather = forecast } else { weather = try? await WeatherService.forecast(currentPlace.coordinate).value }
             let inputs = AuroraInputs.make(place: currentPlace.coordinate, forecast: weather, state: state,
-                                           kp: model?.kp?.value ?? [], ovation: model?.ovation?.value, now: now)
+                                           kp: model?.kp?.value ?? [], ovation: model?.ovation?.value,
+                                           horizon: model?.horizons[TerrainService.key(currentPlace.coordinate)], now: now)
             input.auroraSlots = AuroraEngine.forecast(inputs, hours: 12)
             input.auroraState = state
             input.auroraZone = weather?.timeZone ?? .iceland

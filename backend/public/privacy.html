@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Norður · Informativa sulla privacy</title>
+<style>
+  :root { --bg: #fff; --text: #0a0a0a; --dim: #5e5e5e; --rule: #0a0a0a; --hair: rgba(0,0,0,.13); --accent: #f04a00; }
+  @media (prefers-color-scheme: dark) { :root { --bg: #000; --text: #f2f2f0; --dim: #9c9c9a; --rule: #f2f2f0; --hair: rgba(255,255,255,.16); --accent: #ff5a1f; } }
+  body { margin: 0; background: var(--bg); color: var(--text); font: 16px/1.55 -apple-system, "IBM Plex Sans", system-ui, sans-serif; }
+  main { max-width: 720px; margin: 0 auto; padding: 32px 18px 64px; }
+  .kicker { font: 600 11px/1 ui-monospace, "IBM Plex Mono", monospace; letter-spacing: .1em; text-transform: uppercase; color: var(--dim); }
+  h1 { font: 700 44px/1 "Barlow Condensed", "Arial Narrow", sans-serif; text-transform: uppercase; margin: 10px 0 12px; padding-bottom: 10px; border-bottom: 2px solid var(--rule); }
+  h2 { font: 600 11px/1 ui-monospace, "IBM Plex Mono", monospace; letter-spacing: .1em; text-transform: uppercase; margin: 34px 0 10px; display: flex; gap: 10px; align-items: center; }
+  h2::after { content: ""; flex: 1; height: 1px; background: var(--hair); }
+  h2 span { color: var(--accent); }
+  table { width: 100%; border-collapse: collapse; font-size: 14px; }
+  td, th { text-align: left; vertical-align: top; padding: 8px 6px 8px 0; border-bottom: 1px solid var(--hair); }
+  th { font: 500 10px/1.3 ui-monospace, monospace; letter-spacing: .06em; text-transform: uppercase; color: var(--dim); }
+  p, li { color: var(--text); } .dim { color: var(--dim); font-size: 14px; }
+</style>
+</head>
+<body>
+<main>
+  <div class="kicker">Norður · versione del 16 ottobre 2026</div>
+  <h1>Privacy</h1>
+  <p>Norður è un'app di viaggio per l'Islanda (meteo, strade, allerte, aurora, percorsi in auto). Questa pagina spiega quali dati usa, dove finiscono e come cancellarli.</p>
+
+  <h2><span>01</span>In breve</h2>
+  <ul>
+    <li>Nessuna pubblicità, nessun tracciamento, nessuna profilazione, nessuna vendita di dati.</li>
+    <li>Senza account tutto resta sul telefono.</li>
+    <li>Con l'account i tuoi dati vengono salvati cifrati per poterli ripristinare. Puoi eliminare l'account dall'app in qualsiasi momento.</li>
+  </ul>
+
+  <h2><span>02</span>Posizione</h2>
+  <p>La posizione (anche "Sempre", se lo consenti) serve a mostrare meteo, strade e aurora dove ti trovi, a inviarti le allerte vicine anche ad app chiusa e a registrare i percorsi in auto.</p>
+  <ul>
+    <li><strong>Previsioni e allerte</strong>: le coordinate vengono inviate solo ai servizi pubblici che le richiedono, cioè le previsioni di MET Norway, Open-Meteo e Veðurstofa Íslands. Non sono associate a te.</li>
+    <li><strong>Percorsi registrati</strong>: restano sul telefono. Escono solo se usi il backup dell'account.</li>
+  </ul>
+
+  <h2><span>03</span>Account e backup</h2>
+  <table>
+    <tr><th>Dato</th><th>Perché</th><th>Come è conservato</th></tr>
+    <tr><td>Email</td><td>Identificare l'account</td><td>Il percorso di archiviazione è un'impronta HMAC dell'email</td></tr>
+    <tr><td>Password</td><td>Accesso</td><td>Solo hash scrypt con sale: la password non viene mai salvata</td></tr>
+    <tr><td>Codice di recupero</td><td>Reimpostare la password senza email</td><td>Solo hash scrypt, sostituito a ogni uso</td></tr>
+    <tr><td>Viaggio, percorsi, storico delle allerte, impostazioni</td><td>Ripristino dopo una reinstallazione o su un altro iPhone</td><td>Cifrati con AES-256-GCM prima del salvataggio</td></tr>
+  </table>
+  <p class="dim">L'archiviazione è su Vercel Blob (Vercel Inc.), area di Francoforte. Il token di sessione resta nel Portachiavi dell'iPhone.</p>
+
+  <h2><span>04</span>Avvistamenti dell'aurora</h2>
+  <p>Se segnali un avvistamento (serve l'account), vengono salvati:</p>
+  <ul>
+    <li>la posizione arrotondata a circa 1 km;</li>
+    <li>l'ora;</li>
+    <li>se l'hai vista a occhio nudo o in foto, e con quale intensità.</li>
+  </ul>
+  <p>La segnalazione è legata a un identificativo derivato dall'account, che serve a limitare gli abusi. Gli altri utenti vedono solo conteggi aggregati su celle di 0,5°, mai chi ha segnalato. Le segnalazioni servono a verificare e calibrare le previsioni.</p>
+
+  <h2><span>05</span>Servizi esterni</h2>
+  <p class="dim">L'app e il suo server leggono dati pubblici da queste fonti, senza inviare informazioni personali:</p>
+  <ul>
+    <li>NOAA Space Weather Prediction Center</li>
+    <li>GFZ Potsdam (dati Kp, licenza CC BY 4.0)</li>
+    <li>NASA CCMC DONKI</li>
+    <li>MET Norway</li>
+    <li>Open-Meteo</li>
+    <li>Veðurstofa Íslands</li>
+    <li>Vegagerðin</li>
+    <li>SafeTravel</li>
+    <li>Isavia (aeroporto di Keflavík)</li>
+    <li>Herjólfur</li>
+    <li>RainViewer</li>
+    <li>OpenStreetMap (Overpass)</li>
+    <li>Windy, solo se apri la sua mappa</li>
+  </ul>
+
+  <h2><span>06</span>Cancellazione e diritti</h2>
+  <p>Dall'app (Account), puoi:</p>
+  <ul>
+    <li><strong>eliminare solo il backup online</strong>: l'account resta attivo;</li>
+    <li><strong>eliminare l'account</strong>: vengono cancellati in modo definitivo l'account, tutti i documenti di backup e i tuoi avvistamenti.</li>
+  </ul>
+  <p>I dati sul telefono si cancellano disinstallando l'app.</p>
+  <p>Ai sensi del GDPR puoi chiedere accesso, rettifica, portabilità o cancellazione dei dati. Puoi farlo tramite le funzioni dell'app o scrivendo allo sviluppatore all'indirizzo indicato nella scheda dell'app.</p>
+
+  <h2><span>07</span>Conservazione</h2>
+  <ul>
+    <li><strong>Backup</strong>: finché l'account esiste.</li>
+    <li><strong>Avvistamenti</strong>: finché l'account esiste, poi vengono cancellati con lui.</li>
+    <li><strong>Archivio delle previsioni dell'aurora</strong>: dati scientifici pubblici, senza dati personali.</li>
+  </ul>
+</main>
+</body>
+</html>

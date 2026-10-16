@@ -194,8 +194,8 @@ struct DonkiDigest: Decodable {
         let link: String?
         var arrivalDate: Date? { DonkiDigest.date(arrival) }
         var launchDate: Date? { DonkiDigest.date(launched) }
-        /// Kp NASA expects while the CME passes: middle of its range, low end for a glancing blow.
-        var expectedKp: Double? { kp.map { glancing ? $0.min : ($0.min + $0.max) / 2 } }
+        /// Kp used for this CME: the low end of NASA's range (CCMC warns ENLIL runs tend to overestimate impacts).
+        var expectedKp: Double? { kp?.min }
     }
     struct Flare: Decodable, Identifiable {
         let id: String

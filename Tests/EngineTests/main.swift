@@ -41,10 +41,17 @@ do {
 // MARK: Geomagnetic coordinates and geometry
 
 do {
-    let pole = Geomagnetic.latitude(Coordinate(lat: Geomagnetic.poleLat, lon: Geomagnetic.poleLon))
+    let pole = Geomagnetic.dipoleLatitude(Coordinate(lat: Geomagnetic.poleLat, lon: Geomagnetic.poleLon))
     check(abs(pole - 90) < 0.01, "dipole pole is 90°", "\(pole)")
+    // ISGI corrected geomagnetic latitudes (IGRF-13 2020.5).
+    let lrv = Geomagnetic.latitude(Coordinate(lat: 64.18, lon: -21.7))
+    check(abs(lrv - 64.06) < 0.3, "Leirvogur CGM ≈ 64.06°", "\(lrv)")
+    check(abs(Geomagnetic.eccentricLatitude(Coordinate(lat: 64.18, lon: -21.7)) - 64.63) < 0.05, "Leirvogur eccentric dipole ≈ 64.63°")
+    check(abs(Geomagnetic.dipoleLatitude(Coordinate(lat: 64.18, lon: -21.7)) - 68.74) < 0.2, "Leirvogur centred dipole ≈ 68.74° (ISGI)")
+    let tro = Geomagnetic.latitude(Coordinate(lat: 69.67, lon: 18.95))
+    check(abs(tro - 66.92) < 0.3, "Tromsø CGM ≈ 66.92°", "\(tro)")
     let rvk = Geomagnetic.latitude(reykjavik)
-    check(rvk > 67 && rvk < 71, "Reykjavík dipole latitude ≈ 69°", "\(rvk)")
+    check(rvk > 63.5 && rvk < 64.7, "Reykjavík CGM ≈ 64.1°", "\(rvk)")
     check(Geomagnetic.ovalEdge(kp: 0) == 66.5 && abs(Geomagnetic.ovalEdge(kp: 9) - 48.05) < 0.01, "oval edge fit")
 
     check(abs(ViewingGeometry.elevation(groundKm: 0, emissionKm: 110) - 90) < 0.01, "emission overhead at 90°")
@@ -108,6 +115,23 @@ do {
     check(AuroraEngine.fieldIsUsable(field, at: night, now: night), "OVATION usable at its time")
     check(!AuroraEngine.fieldIsUsable(field, at: night.addingTimeInterval(6 * 3600), now: night), "OVATION not used 6 h later")
     check(!AuroraEngine.fieldIsUsable(field, at: night, now: night.addingTimeInterval(3 * 3600)), "old OVATION run not used")
+}
+
+// MARK: Terrain horizon
+
+do {
+    let wall = TerrainHorizon(angles: (0..<16).map { $0 == 0 ? 30 : 0 })
+    check(abs(wall.angle(toward: 0) - 30) < 1e-9 && abs(wall.angle(toward: 11.25) - 15) < 1e-9 && wall.angle(toward: 180) == 0, "horizon interpolation")
+    // A band 3° north (≈17° high) is hidden by a 30° wall to the north, visible with a flat horizon.
+    let band = Band(lat: 67, v: 40)
+    check(ViewingGeometry.evaluate(band, at: reykjavik, horizon: wall).category == .none, "aurora behind a mountain is not visible")
+    check(ViewingGeometry.evaluate(band, at: reykjavik).category == .toward, "same aurora with a flat horizon")
+    let nw = TerrainHorizon(angles: Array(repeating: 12, count: 16))
+        let trondelag = Coordinate(lat: 62.5, lon: 10)
+    // CGM ≈ 59.8°: at Kp 1 the oval edge (64.45°) is ≈ 4.7° away, low on the horizon.
+    check(ViewingGeometry.fromKp(1, at: trondelag).category == .low, "Kp 1 aurora low on the horizon from 59.8° CGM")
+    let kpLow = ViewingGeometry.fromKp(1, at: trondelag, horizon: nw)
+    check(kpLow.category == .none, "low aurora hidden by a 12° skyline", "\(kpLow)")
 }
 
 print(failures == 0 ? "ALL ENGINE TESTS PASSED" : "\(failures) FAILURES")

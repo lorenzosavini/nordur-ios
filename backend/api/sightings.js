@@ -9,14 +9,14 @@
 // the same user are rejected. Absence of reports does not mean absence of aurora.
 import crypto from "node:crypto";
 import { list } from "@vercel/blob";
-import { verifyToken, readObject, writeObject, readJSON, send, hmac } from "../lib/core.js";
+import { verifyToken, readObject, writeObject, readJSON, send, hmac, isRevoked } from "../lib/core.js";
 
 const lastByUser = new Map(); // per instance, first line of defence; the blob key enforces the rest
 
 export default async function handler(req, res) {
   if (req.method === "POST") {
     const uid = verifyToken(req.headers.authorization);
-    if (!uid) return send(res, 401, { error: "Accedi per inviare un avvistamento" });
+    if (!uid || (await isRevoked(uid))) return send(res, 401, { error: "Accedi per inviare un avvistamento" });
     const body = await readJSON(req).catch(() => ({}));
     const lat = Number(body.lat), lon = Number(body.lon);
     if (!Number.isFinite(lat) || !Number.isFinite(lon) || lat < 40 || lat > 90 || lon < -180 || lon > 180) {
