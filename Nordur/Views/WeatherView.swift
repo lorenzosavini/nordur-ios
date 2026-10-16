@@ -37,10 +37,9 @@ struct WeatherView: View {
     // MARK: Charts
 
     private func axis() -> some AxisContent {
-        AxisMarks(values: .stride(by: .hour, count: 12)) { _ in
+        AxisMarks(values: .stride(by: .hour, count: 12)) { value in
             AxisGridLine(stroke: StrokeStyle(lineWidth: 0.5)).foregroundStyle(Theme.hairline)
-            AxisValueLabel(format: .dateTime.weekday(.abbreviated).hour(), centered: false)
-                .foregroundStyle(Theme.faint)
+            AxisValueLabel { if let date = value.as(Date.self) { Text(Fmt.axis(date)).font(.geist(10)).foregroundStyle(Theme.faint) } }
         }
     }
 

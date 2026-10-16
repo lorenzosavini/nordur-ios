@@ -46,8 +46,8 @@ struct AuroraView: View {
                     }
                     .chartYScale(domain: 0...100)
                     .chartXAxis {
-                        AxisMarks(values: .stride(by: .hour, count: 3)) { _ in
-                            AxisValueLabel(format: .dateTime.hour())
+                        AxisMarks(values: .stride(by: .hour, count: 3)) { value in
+                            AxisValueLabel { if let date = value.as(Date.self) { Text(Fmt.time(date)).font(.geist(10)).foregroundStyle(Theme.faint) } }
                         }
                     }
                     .frame(height: 140)
@@ -83,9 +83,9 @@ struct AuroraView: View {
                 }
                 .chartYScale(domain: 0...9)
                 .chartXAxis {
-                    AxisMarks(values: .stride(by: .day)) { _ in
+                    AxisMarks(values: .stride(by: .day)) { value in
                         AxisGridLine()
-                        AxisValueLabel(format: .dateTime.weekday().day())
+                        AxisValueLabel { if let date = value.as(Date.self) { Text(Fmt.axis(date, hour: false)).font(.geist(10)).foregroundStyle(Theme.faint) } }
                     }
                 }
                 .frame(height: 150)

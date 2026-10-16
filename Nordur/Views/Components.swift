@@ -131,27 +131,26 @@ struct PlaceHeader: View {
         Button {
             showPicker = true
         } label: {
-            HStack(alignment: .center, spacing: 10) {
-                VStack(alignment: .leading, spacing: 3) {
-                    HStack(spacing: 5) {
-                        Image(systemName: model.useCurrentLocation ? "location.fill" : "mappin")
-                            .font(.system(size: 10, weight: .bold))
-                        Text(model.useCurrentLocation ? "Posizione attuale" : (model.activePlace.subtitle ?? "Località"))
-                    }
-                    .eyebrow(onHero ? .white.opacity(0.8) : Theme.accent)
+            VStack(alignment: .leading, spacing: 3) {
+                HStack(spacing: 5) {
+                    Image(systemName: model.useCurrentLocation ? "location.fill" : "mappin")
+                        .font(.system(size: 10, weight: .bold))
+                    Text(model.useCurrentLocation ? "Posizione attuale" : (model.activePlace.subtitle ?? "Località"))
+                }
+                .eyebrow(onHero ? .white.opacity(0.8) : Theme.accent)
+                HStack(alignment: .center, spacing: 10) {
                     Text(model.activePlace.name)
                         .font(.display(30, .bold))
                         .foregroundStyle(onHero ? .white : Theme.text)
                         .lineLimit(1)
                         .minimumScaleFactor(0.6)
+                    Image(systemName: "chevron.down")
+                        .font(.system(size: 11, weight: .bold))
+                        .foregroundStyle(onHero ? .white.opacity(0.9) : Theme.dim)
+                        .padding(7)
+                        .background(onHero ? Color.white.opacity(0.18) : Theme.raised, in: Circle())
+                    Spacer(minLength: 0)
                 }
-                Image(systemName: "chevron.down")
-                    .font(.system(size: 11, weight: .bold))
-                    .foregroundStyle(onHero ? .white.opacity(0.9) : Theme.dim)
-                    .padding(7)
-                    .background(onHero ? Color.white.opacity(0.18) : Theme.raised, in: Circle())
-                    .padding(.top, 14)
-                Spacer(minLength: 0)
             }
             .contentShape(Rectangle())
         }

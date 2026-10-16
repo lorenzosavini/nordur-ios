@@ -120,12 +120,16 @@ struct DriveView: View {
             Button {
                 recorder.start()
             } label: {
-                Label("Inizia registrazione", systemImage: "record.circle")
-                    .frame(maxWidth: .infinity)
+                HStack(spacing: 10) {
+                    Circle().fill(.white).frame(width: 12, height: 12)
+                    Text("Inizia registrazione").font(.geist(17, .semibold))
+                }
+                .foregroundStyle(.white)
+                .frame(maxWidth: .infinity)
+                .frame(height: 54)
+                .background(Theme.danger, in: Capsule())
             }
-            .buttonStyle(.borderedProminent)
-            .controlSize(.large)
-            .tint(.red)
+            .buttonStyle(.plain)
             if recorder.authorization == .denied || recorder.authorization == .restricted {
                 Label("Posizione negata: abilitala in Impostazioni › Norður.", systemImage: "location.slash").font(.app(.caption)).foregroundStyle(.red)
             }

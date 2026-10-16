@@ -58,6 +58,15 @@ enum Fmt {
         return formatter.string(from: date)
     }
 
+    /// Chart axis label: "ven 13".
+    static func axis(_ date: Date, hour: Bool = true) -> String {
+        let formatter = DateFormatter()
+        formatter.locale = italian
+        formatter.timeZone = .current
+        formatter.dateFormat = hour ? "EEE HH" : "EEE d"
+        return formatter.string(from: date)
+    }
+
     static func relative(_ date: Date) -> String {
         if abs(date.timeIntervalSinceNow) < 60 { return "adesso" }
         let formatter = RelativeDateTimeFormatter()
