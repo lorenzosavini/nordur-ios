@@ -239,8 +239,8 @@ struct MapScreen: View {
         var built: RasterOverlay?
         if currentLayer == .aurora, let ovation = model.ovation?.value {
             built = await Task.detached(priority: .userInitiated) {
-                let (s, w, n, e) = (50.0, -65.0, 82.0, 35.0)
-                guard let image = RasterPainter.image(south: s, west: w, north: n, east: e, width: 420, ramp: ramp,
+                let (s, w, n, e) = (35.0, -180.0, 84.0, 180.0)
+                guard let image = RasterPainter.image(south: s, west: w, north: n, east: e, width: 1024, ramp: ramp,
                                                       sample: { lat, lon in ovation.interpolated(lat: lat, lon: lon) }) else { return nil }
                 return RasterOverlay(south: s, west: w, north: n, east: e, image: image)
             }.value

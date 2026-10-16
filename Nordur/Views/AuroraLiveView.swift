@@ -25,6 +25,8 @@ struct AuroraLiveView: View {
                         .frame(height: 380)
                         .clipShape(RoundedRectangle(cornerRadius: 12))
                     legend
+                    Text("Trascina la mappa: di giorno l'ovale è sul lato notturno della Terra (Alaska, Canada, Siberia) e arriva sull'Islanda la sera.")
+                        .font(.caption2).foregroundStyle(.secondary)
                     if let ovation = model.ovation {
                         Text("Previsione OVATION per le \(Fmt.time(ovation.value.forecastTime, in: .iceland)) (30–90 minuti avanti). Kp attuale \(Fmt.number(model.kp.flatMap { AuroraCalc.kp(at: Date(), in: $0.value) }, decimals: 1)).")
                             .font(.caption2).foregroundStyle(.secondary)
@@ -100,8 +102,8 @@ struct AuroraLiveView: View {
         if let ovation = model.ovation?.value {
             let ramp = WeatherLayer.aurora.ramp
             let built = await Task.detached(priority: .userInitiated) { () -> RasterOverlay? in
-                let (s, w, n, e) = (45.0, -80.0, 84.0, 45.0)
-                guard let image = RasterPainter.image(south: s, west: w, north: n, east: e, width: 480, ramp: ramp,
+                let (s, w, n, e) = (35.0, -180.0, 84.0, 180.0)
+                guard let image = RasterPainter.image(south: s, west: w, north: n, east: e, width: 1024, ramp: ramp,
                                                       sample: { lat, lon in ovation.interpolated(lat: lat, lon: lon) }) else { return nil }
                 return RasterOverlay(south: s, west: w, north: n, east: e, image: image)
             }.value

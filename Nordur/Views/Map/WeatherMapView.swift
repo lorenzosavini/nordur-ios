@@ -152,7 +152,7 @@ struct WeatherMapView: UIViewRepresentable {
         map.addSubview(tracking)
         NSLayoutConstraint.activate([
             tracking.trailingAnchor.constraint(equalTo: map.safeAreaLayoutGuide.trailingAnchor, constant: -10),
-            tracking.topAnchor.constraint(equalTo: map.safeAreaLayoutGuide.topAnchor, constant: 64),
+            tracking.topAnchor.constraint(equalTo: map.safeAreaLayoutGuide.topAnchor, constant: 150),
         ])
         context.coordinator.mapView = map
         return map
