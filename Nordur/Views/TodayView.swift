@@ -186,6 +186,8 @@ struct TodayView: View {
                                 .font(.caption).foregroundStyle(.secondary)
                         }
                     }
+                } else if model.errors[.forecast] != nil {
+                    ErrorNote(message: "Serve la previsione delle nuvole: riprova tirando giù la pagina.")
                 } else {
                     ProgressView()
                 }

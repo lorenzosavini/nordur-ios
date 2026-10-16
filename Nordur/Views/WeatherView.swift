@@ -54,9 +54,9 @@ struct WeatherView: View {
                     .lineStyle(StrokeStyle(lineWidth: 1, dash: [4]))
             }
             .chartXAxis {
-                AxisMarks(values: .stride(by: .hour, count: 6)) { _ in
+                AxisMarks(values: .stride(by: .hour, count: 12)) { _ in
                     AxisGridLine()
-                    AxisValueLabel(format: .dateTime.hour().day(), centered: false)
+                    AxisValueLabel(format: .dateTime.weekday(.abbreviated).hour(.twoDigits(amPM: .omitted)), centered: false)
                 }
             }
             .frame(height: 170)
@@ -86,9 +86,9 @@ struct WeatherView: View {
                     }
             }
             .chartXAxis {
-                AxisMarks(values: .stride(by: .hour, count: 6)) { _ in
+                AxisMarks(values: .stride(by: .hour, count: 12)) { _ in
                     AxisGridLine()
-                    AxisValueLabel(format: .dateTime.hour().day(), centered: false)
+                    AxisValueLabel(format: .dateTime.weekday(.abbreviated).hour(.twoDigits(amPM: .omitted)), centered: false)
                 }
             }
             .frame(height: 170)

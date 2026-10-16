@@ -144,7 +144,8 @@ struct RoadNetwork {
 
     func nearestStations(to point: Coordinate, count: Int) -> [NearbyStation] {
         let nearby = stations.compactMap { station -> NearbyStation? in
-            guard let c = station.coordinate, !station.isOutdated else { return nil }
+            guard let c = station.coordinate, !station.isOutdated,
+                  station.Vindhradi != nil || station.Hiti != nil || station.Veghiti != nil else { return nil }
             return NearbyStation(station: station, distance: Geo.distanceKm(point, c))
         }
         return Array(nearby.sorted { $0.distance < $1.distance }.prefix(count))

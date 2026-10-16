@@ -70,12 +70,7 @@ enum HTTP {
     /// Downloads `url`; on failure falls back to the last cached copy.
     static func get(_ url: URL, cacheKey: String) async throws -> Fetched<Data> {
         do {
-            var request = URLRequest(url: url)
-            request.setValue("Nordur-iOS/1.0 (travel safety app)", forHTTPHeaderField: "User-Agent")
-            let (data, response) = try await session.data(for: request)
-            if let http = response as? HTTPURLResponse, !(200..<300).contains(http.statusCode) {
-                throw HTTPError.status(http.statusCode)
-            }
+            let data = try await download(url, retries: 2)
             DiskCache.write(data, key: cacheKey)
             return Fetched(value: data, date: Date(), isStale: false)
         } catch {
@@ -83,6 +78,30 @@ enum HTTP {
                 return Fetched(value: cached.data, date: cached.date, isStale: true)
             }
             throw error
+        }
+    }
+
+    /// Retries busy/overloaded responses (429, 5xx) and timeouts with a short backoff.
+    private static func download(_ url: URL, retries: Int) async throws -> Data {
+        var attemptNumber = 0
+        while true {
+            do {
+                var request = URLRequest(url: url)
+                request.setValue("Nordur-iOS/1.0 (travel safety app)", forHTTPHeaderField: "User-Agent")
+                let (data, response) = try await session.data(for: request)
+                if let http = response as? HTTPURLResponse, !(200..<300).contains(http.statusCode) {
+                    throw HTTPError.status(http.statusCode)
+                }
+                return data
+            } catch {
+                let transient: Bool
+                if case HTTPError.status(let code) = error { transient = code == 429 || code >= 500 }
+                else if let urlError = error as? URLError { transient = urlError.code == .timedOut || urlError.code == .networkConnectionLost }
+                else { transient = false }
+                guard transient, attemptNumber < retries else { throw error }
+                attemptNumber += 1
+                try await Task.sleep(nanoseconds: UInt64(attemptNumber) * 1_500_000_000)
+            }
         }
     }
 
