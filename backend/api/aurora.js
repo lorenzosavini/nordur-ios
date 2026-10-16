@@ -47,7 +47,7 @@ export async function buildState(now = Date.now()) {
     settle("donki", async () => {
       const d = await loadDonki();
       if (!d.digest) throw new Error(d.errors.join("; ") || "DONKI non disponibile");
-      return { data: d.digest, meta: { provider: "NASA CCMC DONKI", endpoint: "https://kauai.ccmc.gsfc.nasa.gov/DONKI/WS/get/", fetchedAt: new Date(d.fetchedAt).toISOString(), cachedCopy: d.stale, errors: d.errors } };
+      return { data: d.digest, meta: { provider: "NASA CCMC DONKI", endpoint: "https://ccmc.gsfc.nasa.gov/DONKI-API/get/", fetchedAt: new Date(d.fetchedAt).toISOString(), cachedCopy: d.stale, errors: d.errors } };
     }),
   ]);
   const src = Object.fromEntries(entries);

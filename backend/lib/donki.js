@@ -1,11 +1,13 @@
 // NASA CCMC DONKI: geomagnetic storms, WSA-ENLIL CME simulations, flares.
-// Hosts tried in order; the last complete digest is kept in Blob and served
-// as stale when DONKI is down (it is written only when its content changes).
+// CCMC moved the DONKI API on 2026-09-30: the old kauai/webtools hosts now
+// answer with an HTML announcement. Hosts are tried in order; the last
+// complete digest is kept in Blob and served as stale when DONKI is down
+// (it is written only when its content changes).
 import crypto from "node:crypto";
 import { fetchJSON, utc, iso } from "./fetch.js";
 import { readObject, writeObject } from "./core.js";
 
-const HOSTS = ["https://kauai.ccmc.gsfc.nasa.gov/DONKI/WS/get/", "https://webtools.ccmc.gsfc.nasa.gov/DONKI/WS/get/"];
+const HOSTS = ["https://ccmc.gsfc.nasa.gov/DONKI-API/get/"];
 const GATEWAY = "https://api.nasa.gov/DONKI/";
 const CACHE = "public/donki.bin";
 const MAX_AGE = 30 * 60e3;

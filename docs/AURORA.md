@@ -61,7 +61,7 @@ Tutti gli endpoint sono stati interrogati realmente il 16/10/2026, con verifica 
 | MET Norway | `locationforecast/2.0/complete` | nubi per strati (basse/medie/alte), nebbia | 30 min (backend), a ogni aggiornamento meteo (app) |
 | Open-Meteo | `v1/forecast` | strati nuvolosi e visibilità oltre l'orizzonte di MET | aggiornamento meteo dell'app |
 
-**NASA DONKI** il 16/10/2026 rifiutava le connessioni su tutti gli host, sia da questo ambiente sia da Vercel: `kauai.ccmc.gsfc.nasa.gov` e `webtools.ccmc.gsfc.nasa.gov` restituivano ECONNREFUSED, `api.nasa.gov` un 503 "upstream". Il client li prova in ordine. Conserva l'ultima risposta completa (scritta solo se cambia) e la mostra come "copia salvata". Lo schema DONKI integrato è quello documentato dalla NASA, ma non è stato verificato su una risposta reale. È la prima verifica da fare quando il servizio torna disponibile.
+**NASA DONKI** è stato spostato da CCMC il 30/09/2026 su `ccmc.gsfc.nasa.gov/DONKI-API/get/`. I vecchi host (`kauai`, `webtools`) rispondono con una pagina HTML di avviso e `api.nasa.gov/DONKI` restituisce 503. Verificato il 16/10/2026 su dati reali: tempeste geomagnetiche (GST), simulazioni WSA-ENLIL con Kp atteso e brillamenti (FLR). Se il servizio non risponde, l'app mostra l'ultima risposta completa come "copia salvata".
 
 ## Calcoli
 
@@ -203,11 +203,10 @@ La visibilità locale non è ancora validabile: richiede gli avvistamenti. L'ass
 
 - **Backend**: `node --test backend/test`, 11 test su tempi, pressione, Newell, shock, propagazione, medie Kp combinato, orizzonte e riepilogo DONKI. Eseguito anche in CI.
 - **Motore**: `Tests/EngineTests/main.swift`, compilato in CI con i sorgenti reali tramite `swiftc`. Copre astronomia, latitudine CGM, orizzonte del terreno, geometria, nubi, classi, affidabilità e validità di OVATION.
-- **Dati reali**: `/api/aurora` in produzione ha risposto con 11 fonti su 12 "ok"; DONKI risultava "error" per il disservizio NASA.
+- **Dati reali**: `/api/aurora` in produzione il 16/10/2026 ha risposto con tutte le 12 fonti "ok", NASA DONKI compreso dopo il cambio di host.
 
 ## Limiti noti
 
-- **NASA DONKI** non raggiungibile durante lo sviluppo: il parser segue lo schema documentato ma non è stato verificato su dati reali.
 - **Inquinamento luminoso**: si usa un indicatore basato sulla distanza dai centri abitati. Il World Atlas 2015 (Falchi) è CC BY-NC 4.0 e si ottiene con un modulo di richiesta; VIIRS Black Marble (VNP46) richiede un account NASA Earthdata. Entrambi richiedono un'azione del proprietario dell'app.
 - **Orizzonte**: risoluzione 25 m e 16 direzioni; edifici e alberi non sono nel DEM.
 - **Magnetometri**: SuperMAG richiede registrazione e accettazione dei termini, quindi non è integrato. GFZ è integrato solo come Kp.
