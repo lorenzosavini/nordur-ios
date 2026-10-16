@@ -80,6 +80,12 @@ struct RootView: View {
             NavigationStack { AuroraLiveView() }
         }
         .task {
+            // CI only: `-ciAutoDrive YES` starts a recording to exercise the live road watch.
+            if UserDefaults.standard.bool(forKey: "ciAutoDrive"), !recorder.isRecording {
+                recorder.start(name: "Test CI")
+            }
+        }
+        .task {
             model.location.request()
             await alerts.refreshPermissionState()
             await model.refreshGlobal(force: true)
