@@ -62,7 +62,8 @@ struct AuroraLiveView: View {
             }
             .padding()
         }
-        .background(Color(.systemGroupedBackground))
+        .background(Theme.bg.ignoresSafeArea())
+        .themedList()
         .navigationTitle("Aurora live")
         .navigationBarTitleDisplayMode(.inline)
         .task { await load() }

@@ -67,6 +67,7 @@ struct QuakesView: View {
                 LinkRow(title: "Protezione Civile (Almannavarnir)", subtitle: "Evacuazioni e zone chiuse", url: "https://www.almannavarnir.is/english/", systemImage: "shield.lefthalf.filled")
             }
         }
+        .themedList()
         .navigationTitle("Terremoti e vulcani")
         .refreshable { await model.refreshGlobal(force: true) }
     }

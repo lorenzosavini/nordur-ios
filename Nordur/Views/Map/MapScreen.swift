@@ -73,6 +73,7 @@ struct MapScreen: View {
                             StationRow(station: station, network: network)
                         }
                     }
+                    .themedList()
                     .navigationTitle(station.name)
                     .navigationBarTitleDisplayMode(.inline)
                 }

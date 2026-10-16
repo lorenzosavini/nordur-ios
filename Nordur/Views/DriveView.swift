@@ -79,6 +79,7 @@ struct DriveView: View {
 
                 historySection
             }
+            .themedList()
             .navigationTitle("Guida")
             .confirmationDialog("Terminare la registrazione?", isPresented: $confirmStop, titleVisibility: .visible) {
                 Button("Termina e salva") { lastFinished = recorder.stop() }
@@ -174,29 +175,36 @@ struct LiveDrivePanel: View {
                 let elapsed = session.durationSeconds()
                 VStack(alignment: .leading, spacing: 12) {
                     HStack {
-                        Label(recorder.isPaused ? "In pausa" : "Registrazione in corso", systemImage: recorder.isPaused ? "pause.circle.fill" : "record.circle")
-                            .foregroundStyle(recorder.isPaused ? Color.orange : Color.red)
-                            .font(.subheadline.weight(.semibold))
+                        HStack(spacing: 6) {
+                            Circle().fill(recorder.isPaused ? Theme.warning : Theme.danger).frame(width: 8, height: 8)
+                            Text(recorder.isPaused ? "In pausa" : "Registrazione").eyebrow(recorder.isPaused ? Theme.warning : Theme.danger)
+                        }
                         Spacer()
                         if let acc = recorder.gpsAccuracy {
-                            Text("GPS ±\(Int(acc)) m").font(.caption2).foregroundStyle(acc <= 15 ? Color.green : Color.orange)
+                            Text("GPS ±\(Int(acc)) m").font(.metric(11)).foregroundStyle(acc <= 15 ? Theme.ok : Theme.warning)
                         }
                     }
-                    HStack(alignment: .firstTextBaseline) {
-                        Text(Fmt.number(session.stats.km, decimals: 2)).font(.system(size: 52, weight: .bold, design: .rounded)).monospacedDigit()
-                        Text("km").font(.title3).foregroundStyle(.secondary)
-                        Spacer()
-                        VStack(alignment: .trailing) {
-                            Text("\(Int(recorder.speedKmh.rounded()))").font(.system(size: 34, weight: .semibold, design: .rounded)).monospacedDigit()
-                                .foregroundStyle(recorder.speedKmh > recorder.settings.speedLimit + 3 ? Color.red : Color.primary)
-                            Text("km/h").font(.caption).foregroundStyle(.secondary)
+                    HStack(alignment: .center, spacing: 16) {
+                        VStack(alignment: .leading, spacing: 2) {
+                            Text("Distanza").eyebrow()
+                            HStack(alignment: .firstTextBaseline, spacing: 4) {
+                                Text(Fmt.number(session.stats.km, decimals: session.stats.km < 100 ? 2 : 1))
+                                    .font(.metric(54, .bold)).foregroundStyle(Theme.text)
+                                Text("km").font(.system(size: 17, weight: .medium)).foregroundStyle(Theme.dim)
+                            }
+                            Text("Tempo \(Fmt.clock(elapsed))").font(.metric(14)).foregroundStyle(Theme.dim)
                         }
+                        Spacer()
+                        let speeding = recorder.speedKmh > recorder.settings.speedLimit + 3
+                        ArcGauge(value: recorder.speedKmh / 130, color: speeding ? Theme.danger : Theme.accent,
+                                 lineWidth: 8, label: "\(Int(recorder.speedKmh.rounded()))", caption: "KM/H")
+                            .frame(width: 104, height: 104)
                     }
                     Grid(alignment: .leading, horizontalSpacing: 12, verticalSpacing: 10) {
                         GridRow {
-                            Metric(title: "Tempo", value: Fmt.clock(elapsed), systemImage: "clock")
+                            Metric(title: "Velocità max", value: Fmt.number(session.stats.maxKmh, unit: "km/h"), systemImage: "gauge.with.dots.needle.100percent")
                             Metric(title: "Media", value: Fmt.number(session.stats.averageKmh(totalSeconds: elapsed), unit: "km/h"), systemImage: "speedometer")
-                            Metric(title: "Max", value: Fmt.number(session.stats.maxKmh, unit: "km/h"), systemImage: "gauge.with.dots.needle.100percent")
+                            Metric(title: "Quota", value: Fmt.number(session.points.last?.alt, unit: "m"), systemImage: "mountain.2")
                         }
                         GridRow {
                             Metric(title: "In marcia", value: Fmt.clock(session.stats.movingSeconds), systemImage: "car")
@@ -341,6 +349,7 @@ struct DriveDetailView: View {
                 }
             }
         }
+        .themedList()
         .navigationTitle(session.name)
         .navigationBarTitleDisplayMode(.inline)
         .task {

@@ -8,18 +8,18 @@ enum Risk: Int, Comparable, CaseIterable {
 
     var color: Color {
         switch self {
-        case .ok: return .green
-        case .caution: return .yellow
-        case .warning: return .orange
-        case .danger: return .red
+        case .ok: return Theme.ok
+        case .caution: return Theme.caution
+        case .warning: return Theme.warning
+        case .danger: return Theme.danger
         }
     }
 
     var label: String {
         switch self {
-        case .ok: return "Tranquillo"
+        case .ok: return "Buono"
         case .caution: return "Attenzione"
-        case .warning: return "Rischioso"
+        case .warning: return "Difficile"
         case .danger: return "Pericoloso"
         }
     }

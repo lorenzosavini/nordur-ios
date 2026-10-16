@@ -16,6 +16,8 @@ struct NordurApp: App {
     var body: some Scene {
         WindowGroup {
             RootView()
+                .preferredColorScheme(.dark)
+                .tint(Theme.accent)
                 .environment(model)
                 .environment(trip)
                 .environment(AlertCenter.shared)

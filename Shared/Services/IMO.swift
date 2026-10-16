@@ -20,10 +20,10 @@ enum WarningColor: Int, Comparable {
 
     var color: Color {
         switch self {
-        case .unknown: return .gray
-        case .yellow: return .yellow
-        case .orange: return .orange
-        case .red: return .red
+        case .unknown: return Theme.dim
+        case .yellow: return Color(hex: 0xF5D04A)
+        case .orange: return Color(hex: 0xF28A30)
+        case .red: return Color(hex: 0xE5413E)
         }
     }
 

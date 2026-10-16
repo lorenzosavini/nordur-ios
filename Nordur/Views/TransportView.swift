@@ -82,6 +82,7 @@ struct TransportView: View {
                 LinkRow(title: "Strætó", subtitle: "Bus urbani e di lunga distanza", url: "https://www.straeto.is/en", systemImage: "bus.fill")
             }
         }
+        .themedList()
         .navigationTitle("Voli e traghetti")
         .searchable(text: $query, prompt: "Volo, città o compagnia")
         .task { await model.refreshTransport() }

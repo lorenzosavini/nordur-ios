@@ -80,6 +80,7 @@ struct InfoView: View {
                         .font(.caption2).foregroundStyle(.secondary)
                 }
             }
+            .themedList()
             .navigationTitle("Info & SOS")
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) { Button("Chiudi") { dismiss() } }

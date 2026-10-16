@@ -27,7 +27,8 @@ struct AuroraView: View {
             }
             .padding()
         }
-        .background(Color(.systemGroupedBackground))
+        .background(Theme.bg.ignoresSafeArea())
+        .themedList()
         .navigationTitle("Aurora boreale")
         .refreshable { await model.refreshAll() }
     }

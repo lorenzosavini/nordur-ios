@@ -43,6 +43,7 @@ struct RoadsView: View {
                 LinkRow(title: "Chiama il 1777", subtitle: "Informazioni stradali (8–16, inverno anche 6:30–22)", url: "tel:1777", systemImage: "phone.fill")
             }
         }
+        .themedList()
         .navigationTitle("Strade")
         .searchable(text: $query, prompt: "Cerca strada o località")
         .refreshable { await model.refreshGlobal(force: true) }

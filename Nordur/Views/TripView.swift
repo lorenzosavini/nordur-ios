@@ -35,6 +35,7 @@ struct TripView: View {
                     trip.delete(at: offsets)
                 }
             }
+            .themedList()
             .navigationTitle("Il mio viaggio")
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
@@ -263,6 +264,7 @@ struct StopEditor: View {
                     }
                 }
             }
+            .themedList()
             .navigationTitle(original == nil ? "Nuova tappa" : "Modifica tappa")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {

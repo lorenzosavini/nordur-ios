@@ -7,7 +7,7 @@ struct WeatherView: View {
     var body: some View {
         NavigationStack {
             ScrollView {
-                VStack(spacing: 14) {
+                VStack(spacing: 12) {
                     PlaceHeader()
                     if let fetched = model.forecast {
                         let forecast = fetched.value
@@ -27,7 +27,7 @@ struct WeatherView: View {
                 }
                 .padding()
             }
-            .background(Color(.systemGroupedBackground))
+            .background(Theme.bg.ignoresSafeArea())
             .navigationTitle("Meteo")
             .refreshable { await model.refreshPlace() }
         }
@@ -35,123 +35,181 @@ struct WeatherView: View {
 
     // MARK: Charts
 
-    private func temperatureChart(_ hours: [HourPoint], zone: TimeZone) -> some View {
-        Card(title: "Temperatura (°C) e precipitazioni (mm), 48 ore", systemImage: "thermometer.medium") {
-            Chart {
-                ForEach(hours) { hour in
-                    if let precip = hour.precipitation, precip > 0 {
-                        BarMark(x: .value("Ora", hour.date, unit: .hour), y: .value("mm", precip))
-                            .foregroundStyle(.blue.opacity(0.35))
-                    }
-                    if let temp = hour.temperature {
-                        LineMark(x: .value("Ora", hour.date, unit: .hour), y: .value("°C", temp))
-                            .foregroundStyle(.orange)
-                            .interpolationMethod(.catmullRom)
-                    }
-                }
-                RuleMark(y: .value("Zero", 0))
-                    .foregroundStyle(.cyan.opacity(0.6))
-                    .lineStyle(StrokeStyle(lineWidth: 1, dash: [4]))
-            }
-            .chartXAxis {
-                AxisMarks(values: .stride(by: .hour, count: 12)) { _ in
-                    AxisGridLine()
-                    AxisValueLabel(format: .dateTime.weekday(.abbreviated).hour(.twoDigits(amPM: .omitted)), centered: false)
-                }
-            }
-            .frame(height: 170)
-            .environment(\.locale, Fmt.italian)
+    private func axis() -> some AxisContent {
+        AxisMarks(values: .stride(by: .hour, count: 12)) { _ in
+            AxisGridLine(stroke: StrokeStyle(lineWidth: 0.5)).foregroundStyle(Theme.hairline)
+            AxisValueLabel(format: .dateTime.weekday(.abbreviated).hour(.twoDigits(amPM: .omitted)), centered: false)
+                .foregroundStyle(Theme.faint)
         }
     }
 
+    private func yAxis() -> some AxisContent {
+        AxisMarks(position: .trailing) { _ in
+            AxisGridLine(stroke: StrokeStyle(lineWidth: 0.5)).foregroundStyle(Theme.hairline)
+            AxisValueLabel().foregroundStyle(Theme.faint)
+        }
+    }
+
+    private func temperatureChart(_ hours: [HourPoint], zone: TimeZone) -> some View {
+        let temps = hours.compactMap(\.temperature)
+        let low = (temps.min() ?? 0) - 2, high = (temps.max() ?? 10) + 2
+        return VStack(alignment: .leading, spacing: 12) {
+            HStack {
+                Text("Temperatura, 48 ore").eyebrow()
+                Spacer()
+                if let min = temps.min(), let max = temps.max() {
+                    Text("\(Fmt.temp(min)) / \(Fmt.temp(max))").font(.metric(13, .semibold)).foregroundStyle(Theme.dim)
+                }
+            }
+            Chart {
+                ForEach(hours) { hour in
+                    if let temp = hour.temperature {
+                        AreaMark(x: .value("Ora", hour.date, unit: .hour), yStart: .value("base", low), yEnd: .value("°C", temp))
+                            .foregroundStyle(LinearGradient(colors: [Theme.caution.opacity(0.28), Theme.caution.opacity(0.02)], startPoint: .top, endPoint: .bottom))
+                            .interpolationMethod(.catmullRom)
+                        LineMark(x: .value("Ora", hour.date, unit: .hour), y: .value("°C", temp))
+                            .foregroundStyle(Theme.caution)
+                            .lineStyle(StrokeStyle(lineWidth: 2))
+                            .interpolationMethod(.catmullRom)
+                    }
+                }
+                if low < 0 && high > 0 {
+                    RuleMark(y: .value("0", 0)).foregroundStyle(Theme.accent.opacity(0.5)).lineStyle(StrokeStyle(lineWidth: 1, dash: [3, 3]))
+                }
+            }
+            .chartYScale(domain: low...high)
+            .chartXAxis { axis() }
+            .chartYAxis { yAxis() }
+            .frame(height: 150)
+            .environment(\.locale, Fmt.italian)
+
+            Text("Precipitazioni (mm)").eyebrow(Theme.faint)
+            Chart {
+                ForEach(hours) { hour in
+                    BarMark(x: .value("Ora", hour.date, unit: .hour), y: .value("mm", hour.precipitation ?? 0))
+                        .foregroundStyle((hour.snowfall ?? 0) > 0 ? Theme.text.opacity(0.8) : Theme.accent)
+                        .cornerRadius(1.5)
+                }
+            }
+            .chartXAxis { axis() }
+            .chartYAxis { yAxis() }
+            .frame(height: 70)
+            .environment(\.locale, Fmt.italian)
+        }
+        .panel()
+    }
+
     private func windChart(_ hours: [HourPoint], zone: TimeZone) -> some View {
-        Card(title: "Vento medio e raffiche (m/s), 48 ore", systemImage: "wind") {
+        let peak = hours.compactMap(\.gust).max() ?? 0
+        return VStack(alignment: .leading, spacing: 12) {
+            HStack {
+                Text("Vento e raffiche, 48 ore").eyebrow()
+                Spacer()
+                Text("max \(Fmt.ms(peak))").font(.metric(13, .semibold)).foregroundStyle(Risk.wind(mean: nil, gust: peak).color)
+            }
             Chart {
                 ForEach(hours) { hour in
                     if let gust = hour.gust {
                         AreaMark(x: .value("Ora", hour.date, unit: .hour), y: .value("Raffiche", gust))
-                            .foregroundStyle(.red.opacity(0.18))
+                            .foregroundStyle(LinearGradient(colors: [Theme.warning.opacity(0.35), Theme.warning.opacity(0.03)], startPoint: .top, endPoint: .bottom))
+                            .interpolationMethod(.monotone)
                     }
                     if let wind = hour.wind {
                         LineMark(x: .value("Ora", hour.date, unit: .hour), y: .value("Vento", wind))
-                            .foregroundStyle(.teal)
+                            .foregroundStyle(Theme.accent)
+                            .lineStyle(StrokeStyle(lineWidth: 2))
+                            .interpolationMethod(.monotone)
                     }
                 }
-                RuleMark(y: .value("Pericolo", 25))
-                    .foregroundStyle(.red)
-                    .lineStyle(StrokeStyle(lineWidth: 1, dash: [4]))
+                RuleMark(y: .value("25", 25))
+                    .foregroundStyle(Theme.danger.opacity(0.7))
+                    .lineStyle(StrokeStyle(lineWidth: 1, dash: [3, 3]))
                     .annotation(position: .top, alignment: .leading) {
-                        Text("raffiche 25 m/s").font(.caption2).foregroundStyle(.red)
+                        Text("25 m/s").font(.system(size: 9, weight: .semibold)).foregroundStyle(Theme.danger)
                     }
             }
-            .chartXAxis {
-                AxisMarks(values: .stride(by: .hour, count: 12)) { _ in
-                    AxisGridLine()
-                    AxisValueLabel(format: .dateTime.weekday(.abbreviated).hour(.twoDigits(amPM: .omitted)), centered: false)
-                }
-            }
-            .frame(height: 170)
+            .chartYScale(domain: 0...max(30, peak + 3))
+            .chartXAxis { axis() }
+            .chartYAxis { yAxis() }
+            .frame(height: 160)
             .environment(\.locale, Fmt.italian)
+            HStack(spacing: 14) {
+                legendDot(Theme.accent, "vento medio")
+                legendDot(Theme.warning, "raffiche")
+            }
+        }
+        .panel()
+    }
+
+    private func legendDot(_ color: Color, _ text: String) -> some View {
+        HStack(spacing: 5) {
+            RoundedRectangle(cornerRadius: 1).fill(color).frame(width: 12, height: 3)
+            Text(text).font(.system(size: 11)).foregroundStyle(Theme.dim)
         }
     }
 
     // MARK: Lists
 
     private func hourlyList(_ hours: [HourPoint], zone: TimeZone) -> some View {
-        Card(title: "Ora per ora", systemImage: "clock") {
+        VStack(alignment: .leading, spacing: 12) {
+            Text("Ora per ora").eyebrow()
             ScrollView(.horizontal, showsIndicators: false) {
-                HStack(spacing: 14) {
-                    ForEach(hours) { hour in
+                HStack(spacing: 8) {
+                    ForEach(Array(hours.enumerated()), id: \.element.id) { index, hour in
                         let info = WeatherCode.describe(hour.code, isDay: hour.isDay)
-                        VStack(spacing: 6) {
-                            Text(Fmt.time(hour.date, in: zone)).font(.caption2).foregroundStyle(.secondary)
-                            Image(systemName: info.symbol).symbolRenderingMode(.hierarchical).font(.title3)
-                            Text(Fmt.temp(hour.temperature)).font(.subheadline.weight(.semibold))
-                            HStack(spacing: 2) {
-                                WindArrow(degrees: hour.windDirection).font(.caption2)
-                                Text("\(Int((hour.wind ?? 0).rounded()))").font(.caption2)
-                            }
-                            Text("\(Int((hour.gust ?? 0).rounded()))")
-                                .font(.caption2.weight(.bold))
-                                .foregroundStyle(hour.windRisk.color)
-                            if let p = hour.precipitationProbability, p >= 20 {
-                                Text("\(Int(p))%").font(.caption2).foregroundStyle(.blue)
-                            } else {
-                                Text(" ").font(.caption2)
-                            }
-                            if hour.lightningRisk > .ok {
-                                Image(systemName: "cloud.bolt").font(.caption2).foregroundStyle(.secondary)
-                            }
+                        VStack(spacing: 8) {
+                            Text(index == 0 ? "Ora" : Fmt.time(hour.date, in: zone)).font(.metric(11, .semibold))
+                                .foregroundStyle(index == 0 ? Theme.accent : Theme.dim)
+                            Image(systemName: info.symbol).symbolRenderingMode(.hierarchical).font(.system(size: 18))
+                                .foregroundStyle(Theme.text).frame(height: 22)
+                            Text(Fmt.temp(hour.temperature)).font(.metric(17, .semibold)).foregroundStyle(Theme.text)
+                            WindArrow(degrees: hour.windDirection).font(.system(size: 10)).foregroundStyle(Theme.dim)
+                            Text("\(Int((hour.gust ?? 0).rounded()))").font(.metric(12, .bold)).foregroundStyle(hour.windRisk == .ok ? Theme.dim : hour.windRisk.color)
+                            Text(hour.precipitationProbability.map { $0 >= 20 ? "\(Int($0))%" : " " } ?? " ")
+                                .font(.metric(10)).foregroundStyle(Theme.accent)
                         }
-                        .frame(minWidth: 40)
+                        .frame(width: 46)
+                        .padding(.vertical, 10)
+                        .background(index == 0 ? Theme.raised : Color.clear, in: RoundedRectangle(cornerRadius: 14, style: .continuous))
                     }
                 }
             }
+            HStack(spacing: 12) {
+                Text("Freccia: direzione del vento").font(.system(size: 10)).foregroundStyle(Theme.faint)
+                Text("Numero: raffica m/s").font(.system(size: 10)).foregroundStyle(Theme.faint)
+            }
         }
+        .panel()
     }
 
     private func dailyList(_ days: [DayPoint], zone: TimeZone) -> some View {
-        Card(title: "Prossimi 16 giorni", systemImage: "calendar") {
-            ForEach(days) { day in
+        let lows = days.compactMap(\.minTemp), highs = days.compactMap(\.maxTemp)
+        let scaleMin = (lows.min() ?? 0) - 1, scaleMax = (highs.max() ?? 10) + 1
+        return VStack(alignment: .leading, spacing: 4) {
+            Text("16 giorni").eyebrow().padding(.bottom, 8)
+            ForEach(Array(days.enumerated()), id: \.element.id) { index, day in
                 let info = WeatherCode.describe(day.code)
-                HStack {
-                    Text(Fmt.day(day.date, in: zone)).font(.subheadline).frame(width: 92, alignment: .leading)
-                    Image(systemName: info.symbol).symbolRenderingMode(.hierarchical).frame(width: 26)
-                    Text("\(Fmt.temp(day.minTemp)) / \(Fmt.temp(day.maxTemp))").font(.subheadline.monospacedDigit())
-                    Spacer()
-                    VStack(alignment: .trailing, spacing: 0) {
-                        Text("raff. \(Fmt.ms(day.maxGust))").font(.caption.weight(.semibold)).foregroundStyle(day.windRisk.color)
-                        if let snow = day.snowfall, snow > 0 {
-                            Text("neve \(Fmt.number(snow, decimals: 1, unit: "cm"))").font(.caption2).foregroundStyle(.cyan)
-                        } else if let rain = day.precipitation, rain > 0.5 {
-                            Text("\(Fmt.number(rain, decimals: 1, unit: "mm"))").font(.caption2).foregroundStyle(.blue)
-                        }
-                    }
+                HStack(spacing: 10) {
+                    Text(index == 0 ? "Oggi" : Fmt.day(day.date, in: zone))
+                        .font(.system(size: 14, weight: index == 0 ? .semibold : .regular))
+                        .foregroundStyle(index > 6 ? Theme.dim : Theme.text)
+                        .frame(width: 82, alignment: .leading)
+                    Image(systemName: info.symbol).symbolRenderingMode(.hierarchical).foregroundStyle(Theme.text).frame(width: 24)
+                    Text(Fmt.temp(day.minTemp)).font(.metric(14)).foregroundStyle(Theme.dim).frame(width: 32, alignment: .trailing)
+                    RangeBar(low: day.minTemp ?? 0, high: day.maxTemp ?? 0, scaleMin: scaleMin, scaleMax: scaleMax)
+                    Text(Fmt.temp(day.maxTemp)).font(.metric(14, .semibold)).foregroundStyle(Theme.text).frame(width: 32, alignment: .leading)
+                    Text("\(Int((day.maxGust ?? 0).rounded()))")
+                        .font(.metric(12, .bold))
+                        .foregroundStyle(day.windRisk == .ok ? Theme.faint : day.windRisk.color)
+                        .frame(width: 24, alignment: .trailing)
                 }
-                Divider()
+                .padding(.vertical, 7)
+                if index < days.count - 1 { Divider().overlay(Theme.hairline) }
             }
-            Text("Oltre 7 giorni: indicativo.").font(.caption2).foregroundStyle(.secondary)
+            Text("Ultima colonna: raffica massima (m/s). Oltre 7 giorni la previsione è indicativa.")
+                .font(.system(size: 10)).foregroundStyle(Theme.faint).padding(.top, 6)
         }
+        .panel()
     }
 
     // MARK: Sea & air

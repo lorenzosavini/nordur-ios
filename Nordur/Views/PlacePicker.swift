@@ -46,6 +46,7 @@ struct PlacePicker: View {
                     }
                 }
             }
+            .themedList()
             .navigationTitle("Scegli un luogo")
             .navigationBarTitleDisplayMode(.inline)
             .searchable(text: $query, prompt: "Cerca un luogo nel mondo")

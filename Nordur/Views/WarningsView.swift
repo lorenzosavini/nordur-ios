@@ -31,6 +31,7 @@ Rosso: evento estremo, non metterti in viaggio.")
                 LinkRow(title: "Allerte su vedur.is", subtitle: nil, url: "https://en.vedur.is/weather/forecasts/areas/")
             }
         }
+        .themedList()
         .navigationTitle("Allerte meteo")
         .refreshable { await model.refreshGlobal(force: true) }
     }
@@ -97,6 +98,7 @@ struct WarningDetail: View {
                 LabeledContent("Fine", value: Fmt.dayTime(warning.expires, in: .iceland))
             }
         }
+        .themedList()
         .navigationTitle(warning.color.label)
         .navigationBarTitleDisplayMode(.inline)
     }

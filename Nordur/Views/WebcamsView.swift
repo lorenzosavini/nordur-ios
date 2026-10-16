@@ -29,6 +29,7 @@ struct WebcamsView: View {
                 }
             }
         }
+        .themedList()
         .navigationTitle("Webcam stradali")
         .searchable(text: $query, prompt: "Cerca webcam o strada")
         .refreshable { await model.refreshStatic(force: true) }
@@ -41,23 +42,31 @@ struct WebcamThumb: View {
     var width: CGFloat = 150
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 4) {
+        ZStack(alignment: .bottomLeading) {
+            Theme.raised
             if let image = site.images.first {
                 AsyncImage(url: Webcams.fresh(image.url)) { phase in
                     switch phase {
                     case .success(let img): img.resizable().scaledToFill()
-                    case .failure: Image(systemName: "video.slash").foregroundStyle(.secondary)
-                    default: ProgressView()
+                    case .failure: Image(systemName: "video.slash").foregroundStyle(Theme.faint)
+                    default: ProgressView().tint(Theme.dim)
                     }
                 }
-                .frame(width: width, height: width * 0.6)
-                .background(Color.secondary.opacity(0.15))
-                .clipShape(RoundedRectangle(cornerRadius: 8))
+                .frame(width: width, height: width * 0.62)
+                .clipped()
             }
             if width >= 140 {
-                Text(site.name).font(.caption2).lineLimit(1).frame(width: width, alignment: .leading)
+                LinearGradient(colors: [.clear, .black.opacity(0.75)], startPoint: .center, endPoint: .bottom)
+                VStack(alignment: .leading, spacing: 1) {
+                    Text(site.name).font(.caption.weight(.semibold)).foregroundStyle(.white).lineLimit(1)
+                    Text(site.road).font(.system(size: 10)).foregroundStyle(.white.opacity(0.7)).lineLimit(1)
+                }
+                .padding(8)
             }
         }
+        .frame(width: width, height: width * 0.62)
+        .clipShape(RoundedRectangle(cornerRadius: 14, style: .continuous))
+        .overlay(RoundedRectangle(cornerRadius: 14, style: .continuous).strokeBorder(Theme.hairline))
     }
 }
 
@@ -86,6 +95,7 @@ struct WebcamSiteView: View {
             }
             .padding()
         }
+        .themedList()
         .navigationTitle(site.name)
         .navigationBarTitleDisplayMode(.inline)
         .refreshable { reload = Date() }

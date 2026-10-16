@@ -33,6 +33,7 @@ struct RoutePlannerSheet: View {
                 }
             }
         }
+        .themedList()
         .navigationTitle("Pianifica percorso")
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
@@ -69,6 +70,7 @@ struct RouteForecastView: View {
             if let error { ErrorNote(message: error) }
             if let plan { content(plan) }
         }
+        .themedList()
         .navigationTitle("\(from.name) → \(to.name)")
         .navigationBarTitleDisplayMode(.inline)
         .task { await load() }

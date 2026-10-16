@@ -6,28 +6,27 @@ struct TodayView: View {
     @Environment(DriveRecorder.self) private var recorder
     @State private var showInfo = false
 
+    private var zone: TimeZone { model.forecast?.value.timeZone ?? .iceland }
+
     var body: some View {
         NavigationStack {
             ScrollView {
-                VStack(spacing: 14) {
-                    PlaceHeader()
-                    latestAlertBanner
-                    warningsSection
-                    currentSection
-                    drivingSection
-                    auroraSection
-                    roadsSection
-                    webcamsSection
-                    transportSection
-                    fuelSection
-                    seaSection
-                    quakesSection
-                    newsSection
+                VStack(spacing: 12) {
+                    hero
+                    warningsStrip
+                    drivingCard
+                    auroraCard
+                    roadsCard
+                    webcamsRow
+                    tilesGrid
+                    newsCard
                 }
-                .padding()
+                .padding(.horizontal, 16)
+                .padding(.bottom, 24)
             }
-            .background(Color(.systemGroupedBackground))
-            .navigationTitle("Norður")
+            .background(Theme.bg.ignoresSafeArea())
+            .navigationTitle("")
+            .navigationBarTitleDisplayMode(.inline)
             .refreshable {
                 await model.refreshAll()
                 await alerts.check()
@@ -36,15 +35,15 @@ struct TodayView: View {
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
                     Button { showInfo = true } label: {
-                        Text("SOS").fontWeight(.semibold).foregroundStyle(.red)
+                        Text("SOS").font(.system(size: 13, weight: .heavy).width(.expanded)).foregroundStyle(Theme.danger)
                     }
                 }
                 ToolbarItem(placement: .topBarTrailing) {
-                    HStack {
-                        if model.isRefreshing { ProgressView() }
+                    HStack(spacing: 14) {
+                        if model.isRefreshing { ProgressView().tint(Theme.dim) }
                         Button { alerts.openInbox = true } label: {
                             Image(systemName: alerts.unreadCount > 0 ? "bell.badge.fill" : "bell")
-                                .symbolRenderingMode(.hierarchical)
+                                .foregroundStyle(alerts.unreadCount > 0 ? Theme.accent : Theme.dim)
                         }
                     }
                 }
@@ -52,250 +51,439 @@ struct TodayView: View {
         }
     }
 
-    // MARK: Warnings
+    // MARK: Hero
 
-    @ViewBuilder private var warningsSection: some View {
+    @ViewBuilder private var hero: some View {
+        VStack(alignment: .leading, spacing: 18) {
+            PlaceHeader()
+            Text(heroDate).eyebrow(Theme.faint)
+
+            if let fetched = model.forecast, let current = fetched.value.current {
+                let info = WeatherCode.describe(current.weather_code, isDay: current.is_day != 0)
+                let today = fetched.value.days.first
+                HStack(alignment: .top) {
+                    HStack(alignment: .top, spacing: 2) {
+                        Text(current.temperature_2m.map { "\(Int($0.rounded()))" } ?? "–")
+                            .font(.system(size: 96, weight: .thin, design: .rounded))
+                            .foregroundStyle(Theme.text)
+                        Text("°").font(.system(size: 44, weight: .thin, design: .rounded)).foregroundStyle(Theme.dim).padding(.top, 12)
+                    }
+                    Spacer()
+                    VStack(alignment: .trailing, spacing: 6) {
+                        Image(systemName: info.symbol)
+                            .symbolRenderingMode(.hierarchical)
+                            .font(.system(size: 30))
+                            .foregroundStyle(Theme.accent)
+                        Text(info.text).font(.system(size: 17, weight: .semibold)).foregroundStyle(Theme.text)
+                        Text("Percepita \(Fmt.temp(current.apparent_temperature))").font(.subheadline).foregroundStyle(Theme.dim)
+                        if let today {
+                            Text("\(Fmt.temp(today.minTemp)) / \(Fmt.temp(today.maxTemp))").font(.metric(15)).foregroundStyle(Theme.dim)
+                        }
+                    }
+                    .padding(.top, 14)
+                }
+
+                HStack(spacing: 18) {
+                    WindDial(direction: current.wind_direction_10m, speed: current.wind_speed_10m, gust: current.wind_gusts_10m, size: 104)
+                    VStack(alignment: .leading, spacing: 10) {
+                        HStack(alignment: .firstTextBaseline) {
+                            Text("Vento").eyebrow()
+                            Spacer()
+                            RiskBadge(risk: Risk.wind(mean: current.wind_speed_10m, gust: current.wind_gusts_10m))
+                        }
+                        HStack(alignment: .firstTextBaseline, spacing: 4) {
+                            Text(Fmt.compass(current.wind_direction_10m)).font(.metric(22, .semibold)).foregroundStyle(Theme.text)
+                            Text("raffiche").font(.caption).foregroundStyle(Theme.dim)
+                            Text(current.wind_gusts_10m.map { "\(Int($0.rounded()))" } ?? "–").font(.metric(22, .semibold)).foregroundStyle(Theme.text)
+                            Text("m/s").font(.caption).foregroundStyle(Theme.dim)
+                        }
+                        GustScale(mean: current.wind_speed_10m, gust: current.wind_gusts_10m)
+                        HStack {
+                            Text("0").font(.system(size: 9)); Spacer(); Text("10"); Spacer(); Text("18"); Spacer(); Text("25"); Spacer(); Text("40")
+                        }
+                        .font(.system(size: 9)).foregroundStyle(Theme.faint)
+                    }
+                }
+                .panel(padding: 14)
+
+                HStack(spacing: 0) {
+                    heroStat("Pioggia", Fmt.number(current.precipitation, decimals: 1), "mm")
+                    heroStat("Nuvole", current.cloud_cover.map { "\(Int($0))" } ?? "–", "%")
+                    heroStat("Umidità", current.relative_humidity_2m.map { "\(Int($0))" } ?? "–", "%")
+                    heroStat("Pressione", current.pressure_msl.map { "\(Int($0))" } ?? "–", "hPa")
+                }
+
+                VStack(spacing: 8) {
+                    DaylightBar(sunrise: today?.sunrise, sunset: today?.sunset, zone: fetched.value.timeZone)
+                    HStack {
+                        Label(Fmt.time(today?.sunrise, in: zone), systemImage: "sunrise")
+                        Spacer()
+                        Text("\(Fmt.duration(today?.daylight)) di luce")
+                        Spacer()
+                        Label(Fmt.time(today?.sunset, in: zone), systemImage: "sunset")
+                    }
+                    .font(.metric(12)).foregroundStyle(Theme.dim)
+                }
+                FreshnessLabel(date: fetched.date, isStale: fetched.isStale, source: "Open-Meteo")
+            } else if let error = model.errors[.forecast] {
+                ErrorNote(message: error)
+            } else {
+                ProgressView().tint(Theme.dim).frame(maxWidth: .infinity, minHeight: 160)
+            }
+        }
+        .padding(.top, 4)
+    }
+
+    private var heroDate: String {
+        let formatter = DateFormatter()
+        formatter.locale = Fmt.italian
+        formatter.timeZone = zone
+        formatter.dateFormat = "EEEE d MMMM · HH:mm"
+        return formatter.string(from: Date())
+    }
+
+    private func heroStat(_ title: String, _ value: String, _ unit: String) -> some View {
+        VStack(alignment: .leading, spacing: 3) {
+            Text(title).eyebrow(Theme.faint)
+            HStack(alignment: .firstTextBaseline, spacing: 2) {
+                Text(value).font(.metric(20, .semibold)).foregroundStyle(Theme.text)
+                Text(unit).font(.system(size: 11)).foregroundStyle(Theme.dim)
+            }
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
+    }
+
+    // MARK: Warnings / alerts
+
+    @ViewBuilder private var warningsStrip: some View {
+        if recorder.isRecording, let session = recorder.session {
+            HStack {
+                Circle().fill(Theme.danger).frame(width: 8, height: 8)
+                Text("Registrazione").eyebrow(Theme.danger)
+                Spacer()
+                Text("\(Fmt.number(session.stats.km, decimals: 1)) km").font(.metric(15, .semibold)).foregroundStyle(Theme.text)
+                Text("\(Int(recorder.speedKmh)) km/h").font(.metric(15)).foregroundStyle(Theme.dim)
+            }
+            .panel(padding: 14)
+        }
+
         let here = model.warningsHere
-        let all = model.warnings?.value ?? []
         NavigationLink {
             WarningsView()
         } label: {
-            Card(title: "Allerte meteo ufficiali (IMO)", systemImage: "exclamationmark.triangle.fill",
-                 tint: here.map(\.color).max()?.color ?? .green) {
+            VStack(alignment: .leading, spacing: 12) {
+                HStack {
+                    Text("Allerte IMO").eyebrow()
+                    Spacer()
+                    Text("\(model.warnings?.value.count ?? 0) in Islanda").font(.caption).foregroundStyle(Theme.faint)
+                    Image(systemName: "chevron.right").font(.caption.weight(.semibold)).foregroundStyle(Theme.faint)
+                }
                 if here.isEmpty {
-                    Text(all.isEmpty ? "Nessuna allerta attiva in Islanda." : "Nessuna allerta qui. \(all.count) allerte attive in altre zone dell'Islanda.")
-                        .font(.subheadline)
+                    HStack(spacing: 8) {
+                        Image(systemName: "checkmark.circle").foregroundStyle(Theme.ok)
+                        Text("Nessuna allerta per questa zona").font(.subheadline).foregroundStyle(Theme.text)
+                    }
                 } else {
                     ForEach(here.prefix(3)) { warning in
-                        VStack(alignment: .leading, spacing: 4) {
-                            HStack {
-                                WarningBadge(color: warning.color)
-                                Text(warning.isActive() ? "IN CORSO" : "dalle \(Fmt.dayTime(warning.onset, in: .iceland))")
-                                    .font(.caption2.weight(.semibold))
-                                    .foregroundStyle(.secondary)
+                        HStack(alignment: .top, spacing: 12) {
+                            RoundedRectangle(cornerRadius: 2).fill(warning.color.color).frame(width: 4)
+                            VStack(alignment: .leading, spacing: 4) {
+                                HStack(spacing: 8) {
+                                    WarningBadge(color: warning.color)
+                                    Text(warning.isActive() ? "In corso" : "Dalle \(Fmt.dayTime(warning.onset, in: .iceland))")
+                                        .font(.caption.weight(.medium)).foregroundStyle(Theme.dim)
+                                }
+                                Text(warning.headline).font(.subheadline.weight(.semibold)).foregroundStyle(Theme.text)
+                                Text("\(warning.region) · fino alle \(Fmt.dayTime(warning.expires, in: .iceland))")
+                                    .font(.caption).foregroundStyle(Theme.dim)
                             }
-                            Text(warning.headline).font(.subheadline.weight(.semibold))
-                            Text(warning.region).font(.caption).foregroundStyle(.secondary)
                         }
-                    }
-                    if here.count > 3 {
-                        Text("+ altre \(here.count - 3)").font(.caption).foregroundStyle(.secondary)
+                        .fixedSize(horizontal: false, vertical: true)
                     }
                 }
                 ErrorNote(message: model.errors[.warnings])
             }
+            .panel()
         }
         .buttonStyle(.plain)
-    }
 
-    // MARK: Current conditions
-
-    @ViewBuilder private var currentSection: some View {
-        if let fetched = model.forecast, let current = fetched.value.current {
-            let info = WeatherCode.describe(current.weather_code, isDay: current.is_day != 0)
-            let windRisk = Risk.wind(mean: current.wind_speed_10m, gust: current.wind_gusts_10m)
-            let today = fetched.value.days.first
-            Card(title: "Adesso", systemImage: info.symbol) {
-                HStack(alignment: .firstTextBaseline) {
-                    Text(Fmt.temp(current.temperature_2m)).font(.system(size: 54, weight: .thin))
-                    VStack(alignment: .leading) {
-                        Text(info.text).font(.headline)
-                        Text("Percepita \(Fmt.temp(current.apparent_temperature))").font(.subheadline).foregroundStyle(.secondary)
-                    }
-                    Spacer()
-                }
-                HStack {
-                    WindArrow(degrees: current.wind_direction_10m)
-                    Text("\(Fmt.ms(current.wind_speed_10m)) \(Fmt.compass(current.wind_direction_10m)) · raffiche \(Fmt.ms(current.wind_gusts_10m))")
-                        .font(.subheadline.weight(.medium))
-                    Spacer()
-                    RiskBadge(risk: windRisk)
-                }
-                Grid(alignment: .leading, horizontalSpacing: 12, verticalSpacing: 8) {
-                    GridRow {
-                        Metric(title: "Precipitazioni", value: Fmt.number(current.precipitation, decimals: 1, unit: "mm"), systemImage: "drop.fill")
-                        Metric(title: "Nuvole", value: Fmt.percent(current.cloud_cover), systemImage: "cloud.fill")
-                        Metric(title: "Umidità", value: Fmt.percent(current.relative_humidity_2m), systemImage: "humidity.fill")
-                    }
-                    GridRow {
-                        Metric(title: "Alba", value: Fmt.time(today?.sunrise, in: fetched.value.timeZone), systemImage: "sunrise.fill")
-                        Metric(title: "Tramonto", value: Fmt.time(today?.sunset, in: fetched.value.timeZone), systemImage: "sunset.fill")
-                        Metric(title: "Luce", value: Fmt.duration(today?.daylight), systemImage: "sun.max")
+        if let latest = alerts.latest, !latest.read, Date().timeIntervalSince(latest.date) < 6 * 3600 {
+            Button { alerts.openInbox = true } label: {
+                HStack(alignment: .top, spacing: 12) {
+                    RoundedRectangle(cornerRadius: 2).fill(latest.risk.color).frame(width: 4)
+                    VStack(alignment: .leading, spacing: 3) {
+                        Text("Ultima allerta · \(Fmt.relative(latest.date))").eyebrow(Theme.faint)
+                        Text(latest.title).font(.subheadline.weight(.semibold)).foregroundStyle(Theme.text)
+                        Text(latest.body).font(.caption).foregroundStyle(Theme.dim).lineLimit(2)
                     }
                 }
-                FreshnessLabel(date: fetched.date, isStale: fetched.isStale, source: "Open-Meteo")
+                .fixedSize(horizontal: false, vertical: true)
+                .panel(padding: 14)
             }
-        } else {
-            Card(title: "Adesso", systemImage: "cloud") {
-                if let error = model.errors[.forecast] {
-                    ErrorNote(message: error)
-                } else {
-                    ProgressView("Carico le previsioni…")
-                }
-            }
+            .buttonStyle(.plain)
         }
     }
 
     // MARK: Driving
 
-    @ViewBuilder private var drivingSection: some View {
-        if model.forecast != nil {
+    @ViewBuilder private var drivingCard: some View {
+        if let forecast = model.forecast?.value {
             let driving = model.drivingRiskNext12h
-            Card(title: "Guidare nelle prossime 12 ore", systemImage: "car.fill", tint: driving.risk.color) {
+            let hours = forecast.upcomingHours(12)
+            VStack(alignment: .leading, spacing: 14) {
                 HStack {
-                    RiskBadge(risk: driving.risk)
+                    Text("Guida, prossime 12 ore").eyebrow()
                     Spacer()
+                    RiskBadge(risk: driving.risk)
                 }
+                RiskTimeline(risks: hours.map { max($0.windRisk, $0.iceRisk) },
+                             labels: ["ora", "+3 h", "+6 h", "+9 h", "+12 h"])
                 HStack {
-                    Metric(title: "Raffica max", value: Fmt.ms(driving.maxGust), systemImage: "wind")
-                    Metric(title: "Temp. minima", value: Fmt.temp(driving.minTemp), systemImage: "thermometer.snowflake")
-                    Metric(title: "Neve", value: Fmt.number(driving.snow, decimals: 1, unit: "cm"), systemImage: "snowflake")
+                    Metric(title: "Raffica max", value: Fmt.ms(driving.maxGust), tint: Risk.wind(mean: nil, gust: driving.maxGust).color)
+                    Metric(title: "Minima", value: Fmt.temp(driving.minTemp))
+                    Metric(title: "Neve", value: Fmt.number(driving.snow, decimals: 1, unit: "cm"))
                 }
                 Text(Risk.windAdvice(Risk.wind(mean: nil, gust: driving.maxGust)))
-                    .font(.caption)
-                    .foregroundStyle(.secondary)
+                    .font(.footnote).foregroundStyle(Theme.dim)
             }
+            .panel()
         }
     }
 
     // MARK: Aurora
 
-    @ViewBuilder private var auroraSection: some View {
+    private var auroraCard: some View {
         NavigationLink {
             AuroraView()
         } label: {
-            Card(title: "Aurora boreale stanotte", systemImage: "moon.stars.fill", tint: .mint) {
+            VStack(alignment: .leading, spacing: 14) {
+                HStack {
+                    Text("Aurora stanotte").eyebrow()
+                    Spacer()
+                    Image(systemName: "chevron.right").font(.caption.weight(.semibold)).foregroundStyle(Theme.faint)
+                }
                 if let outlook = model.auroraOutlook {
-                    let verdict = outlook.verdict
-                    HStack(alignment: .center) {
-                        Gauge(value: Double(outlook.best?.score ?? 0), in: 0...100) {
-                            Text("")
-                        } currentValueLabel: {
-                            Text("\(outlook.best?.score ?? 0)")
-                        }
-                        .gaugeStyle(.accessoryCircular)
-                        VStack(alignment: .leading, spacing: 4) {
-                            Text(verdict.text).font(.subheadline.weight(.semibold))
+                    let score = outlook.best?.score ?? 0
+                    HStack(spacing: 18) {
+                        ArcGauge(value: Double(score) / 100, color: Theme.aurora, label: "\(score)", caption: "SU 100")
+                            .frame(width: 92, height: 92)
+                        VStack(alignment: .leading, spacing: 8) {
+                            Text(outlook.verdict.text).font(.system(size: 17, weight: .semibold)).foregroundStyle(Theme.text)
                             if let best = outlook.best, best.score > 0 {
-                                Text("Momento migliore: \(Fmt.time(best.date, in: model.forecast?.value.timeZone ?? .current)) · nuvole \(Fmt.percent(best.cloudCover))")
-                                    .font(.caption).foregroundStyle(.secondary)
+                                Text("Meglio verso le \(Fmt.time(best.date, in: zone)), nuvole \(Fmt.percent(best.cloudCover))")
+                                    .font(.caption).foregroundStyle(Theme.dim)
                             }
-                            Text("Kp max stanotte \(Fmt.number(outlook.maxKp, decimals: 1)) · serve circa \(Fmt.number(outlook.kpNeeded, decimals: 0))")
-                                .font(.caption).foregroundStyle(.secondary)
+                            Text("Kp max \(Fmt.number(outlook.maxKp, decimals: 1)) · serve \(Fmt.number(outlook.kpNeeded, decimals: 0))")
+                                .font(.metric(12)).foregroundStyle(Theme.faint)
+                        }
+                    }
+                    if outlook.hasDarkness {
+                        VStack(alignment: .leading, spacing: 4) {
+                            MiniBars(values: outlook.darkHours.map { Double($0.score) }, maxValue: 100, color: Theme.aurora, height: 30)
+                            HStack {
+                                Text(Fmt.time(outlook.darkHours.first?.date, in: zone))
+                                Spacer()
+                                Text(Fmt.time(outlook.darkHours.last?.date, in: zone))
+                            }
+                            .font(.metric(10)).foregroundStyle(Theme.faint)
                         }
                     }
                 } else if model.errors[.forecast] != nil {
-                    ErrorNote(message: "Serve la previsione delle nuvole: riprova tirando giù la pagina.")
+                    ErrorNote(message: "Serve la previsione delle nuvole")
                 } else {
-                    ProgressView()
+                    ProgressView().tint(Theme.dim)
                 }
             }
+            .panel()
         }
         .buttonStyle(.plain)
     }
 
     // MARK: Roads
 
-    @ViewBuilder private var roadsSection: some View {
+    private var roadsCard: some View {
         NavigationLink {
             RoadsView()
         } label: {
-            Card(title: "Strade (Vegagerðin)", systemImage: "road.lanes", tint: .blue) {
+            VStack(alignment: .leading, spacing: 14) {
+                HStack {
+                    Text("Strade").eyebrow()
+                    Spacer()
+                    Image(systemName: "chevron.right").font(.caption.weight(.semibold)).foregroundStyle(Theme.faint)
+                }
                 if let network = model.roads?.value {
-                    let problems = network.problemSegments
-                    let closed = problems.filter { $0.risk == .danger }.count
-                    Text("\(problems.count) tratti con ghiaccio/neve o problemi · \(closed) impraticabili o chiusi")
-                        .font(.subheadline)
-                    ForEach(network.nearestStations(to: model.activePlace.coordinate, count: 3)) { item in
-                        HStack {
-                            Circle().fill(network.worstRisk(of: item.station).color).frame(width: 8, height: 8)
-                            Text(item.station.name).font(.caption.weight(.medium))
-                            Text("\(Int(item.distance)) km").font(.caption2).foregroundStyle(.secondary)
-                            Spacer()
-                            Text("\(Fmt.ms(item.station.Vindhradi)) / \(Fmt.ms(item.station.Vindhvida)) · asfalto \(Fmt.temp(item.station.Veghiti))")
-                                .font(.caption2).foregroundStyle(.secondary)
+                    let risks = network.segments.map(\.risk)
+                    let order: [Risk?] = [.ok, .caution, .warning, .danger, nil]
+                    let counts: [(Risk?, Int)] = order.map { r in (r, risks.filter { $0 == r }.count) }
+                    StackedBar(parts: counts.map { (value: Double($0.1), color: $0.0?.color ?? Theme.raised) })
+                    HStack(spacing: 14) {
+                        roadCount(counts[0].1, "percorribili", Theme.ok)
+                        roadCount(counts[1].1 + counts[2].1, "ghiaccio o neve", Theme.caution)
+                        roadCount(counts[3].1, "chiusi", Theme.danger)
+                    }
+                    VStack(spacing: 0) {
+                        ForEach(network.nearestStations(to: model.activePlace.coordinate, count: 3)) { item in
+                            HStack {
+                                Circle().fill(network.worstRisk(of: item.station).color).frame(width: 7, height: 7)
+                                VStack(alignment: .leading, spacing: 1) {
+                                    Text(item.station.name).font(.subheadline.weight(.medium)).foregroundStyle(Theme.text).lineLimit(1)
+                                    Text("\(Int(item.distance)) km").font(.metric(11)).foregroundStyle(Theme.faint)
+                                }
+                                Spacer()
+                                VStack(alignment: .trailing, spacing: 1) {
+                                    Text("\(Fmt.ms(item.station.Vindhradi)) · \(Fmt.ms(item.station.Vindhvida))")
+                                        .font(.metric(13, .semibold)).foregroundStyle(item.station.windRisk == .ok ? Theme.text : item.station.windRisk.color)
+                                    Text("asfalto \(Fmt.temp(item.station.Veghiti))").font(.metric(11))
+                                        .foregroundStyle(item.station.surfaceRisk == .ok ? Theme.faint : item.station.surfaceRisk.color)
+                                }
+                            }
+                            .padding(.vertical, 8)
+                            Divider().overlay(Theme.hairline)
                         }
                     }
-                    if let fetched = model.roads {
-                        FreshnessLabel(date: fetched.date, isStale: fetched.isStale)
-                    }
+                    if let fetched = model.roads { FreshnessLabel(date: fetched.date, isStale: fetched.isStale, source: "Vegagerðin") }
                 } else if let error = model.errors[.roads] {
                     ErrorNote(message: error)
                 } else {
-                    ProgressView()
+                    ProgressView().tint(Theme.dim)
+                }
+            }
+            .panel()
+        }
+        .buttonStyle(.plain)
+    }
+
+    private func roadCount(_ value: Int, _ label: String, _ color: Color) -> some View {
+        VStack(alignment: .leading, spacing: 1) {
+            Text("\(value)").font(.metric(20, .semibold)).foregroundStyle(color)
+            Text(label).font(.system(size: 11)).foregroundStyle(Theme.dim)
+        }
+    }
+
+    // MARK: Webcams
+
+    @ViewBuilder private var webcamsRow: some View {
+        let near = Webcams.nearest(model.webcams?.value ?? [], to: model.activePlace.coordinate, within: 60, limit: 6)
+        if !near.isEmpty {
+            VStack(alignment: .leading, spacing: 10) {
+                HStack {
+                    Text("Webcam vicine").eyebrow()
+                    Spacer()
+                    NavigationLink { WebcamsView() } label: {
+                        Text("Tutte").font(.caption.weight(.semibold)).foregroundStyle(Theme.accent)
+                    }
+                }
+                ScrollView(.horizontal, showsIndicators: false) {
+                    HStack(spacing: 10) {
+                        ForEach(near) { site in
+                            NavigationLink { WebcamSiteView(site: site) } label: { WebcamThumb(site: site, width: 190) }
+                                .buttonStyle(.plain)
+                        }
+                    }
+                }
+            }
+            .padding(.vertical, 4)
+        }
+    }
+
+    // MARK: Tiles
+
+    private var tilesGrid: some View {
+        LazyVGrid(columns: [GridItem(.flexible(), spacing: 12), GridItem(.flexible(), spacing: 12)], spacing: 12) {
+            quakesTile
+            seaTile
+            fuelTile
+            transportTile
+        }
+    }
+
+    private func tile<Content: View>(_ title: String, @ViewBuilder content: () -> Content) -> some View {
+        VStack(alignment: .leading, spacing: 10) {
+            Text(title).eyebrow()
+            content()
+            Spacer(minLength: 0)
+        }
+        .frame(maxWidth: .infinity, minHeight: 132, alignment: .topLeading)
+        .panel(padding: 14)
+    }
+
+    private var quakesTile: some View {
+        NavigationLink { QuakesView() } label: {
+            tile("Terremoti 24 h") {
+                let recent = model.recentQuakes24h
+                HStack(alignment: .firstTextBaseline, spacing: 4) {
+                    Text("\(recent.count)").font(.metric(30, .semibold)).foregroundStyle(Theme.text)
+                    Text("scosse").font(.caption).foregroundStyle(Theme.dim)
+                }
+                MiniBars(values: quakeHistogram(recent), color: Theme.warning, height: 26)
+                if let strongest = recent.max(by: { $0.magnitude < $1.magnitude }) {
+                    Text("Max M\(Fmt.number(strongest.magnitude, decimals: 1)) \(strongest.region)")
+                        .font(.caption2).foregroundStyle(Theme.dim).lineLimit(1)
                 }
             }
         }
         .buttonStyle(.plain)
     }
 
-    // MARK: Live drive / latest alert
-
-    @ViewBuilder private var latestAlertBanner: some View {
-        if let latest = alerts.latest, !latest.read, Date().timeIntervalSince(latest.date) < 6 * 3600 {
-            Button { alerts.openInbox = true } label: {
-                AlertRow(event: latest)
-                    .padding()
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .background(latest.risk.color.opacity(0.15), in: RoundedRectangle(cornerRadius: 18, style: .continuous))
-            }
-            .buttonStyle(.plain)
+    private func quakeHistogram(_ quakes: [Quake]) -> [Double] {
+        var bins = Array(repeating: 0.0, count: 12)
+        let now = Date()
+        for q in quakes {
+            let index = 11 - Int(now.timeIntervalSince(q.date) / 7200)
+            if bins.indices.contains(index) { bins[index] += 1 }
         }
-        if recorder.isRecording, let session = recorder.session {
-            Label("Registrazione percorso: \(Fmt.number(session.stats.km, decimals: 1, unit: "km")) · \(Int(recorder.speedKmh)) km/h",
-                  systemImage: "record.circle")
-                .font(.subheadline.weight(.semibold))
-                .foregroundStyle(.red)
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .padding()
-                .background(.regularMaterial, in: RoundedRectangle(cornerRadius: 18, style: .continuous))
-        }
+        return bins
     }
 
-    // MARK: Webcams
-
-    @ViewBuilder private var webcamsSection: some View {
-        let near = Webcams.nearest(model.webcams?.value ?? [], to: model.activePlace.coordinate, within: 60, limit: 6)
-        if !near.isEmpty {
-            Card(title: "Webcam vicine", systemImage: "video.fill", tint: .indigo) {
-                ScrollView(.horizontal, showsIndicators: false) {
-                    HStack {
-                        ForEach(near) { site in
-                            NavigationLink { WebcamSiteView(site: site) } label: { WebcamThumb(site: site) }
-                                .buttonStyle(.plain)
-                        }
-                    }
+    @ViewBuilder private var seaTile: some View {
+        tile("Mare") {
+            if let marine = model.marine?.value, marine.hasData, let c = marine.current {
+                HStack(alignment: .firstTextBaseline, spacing: 3) {
+                    Text(Fmt.number(c.wave_height, decimals: 1)).font(.metric(30, .semibold)).foregroundStyle(Theme.text)
+                    Text("m").font(.caption).foregroundStyle(Theme.dim)
+                    Text("\(Fmt.number(c.wave_period, decimals: 0)) s").font(.metric(13)).foregroundStyle(Theme.dim)
                 }
-                NavigationLink("Tutte le webcam") { WebcamsView() }.font(.caption)
+                HStack(spacing: 6) {
+                    Text("Spiagge").font(.caption2).foregroundStyle(Theme.dim)
+                    Circle().fill(marine.beachRisk.color).frame(width: 7, height: 7)
+                    Text("Traghetti").font(.caption2).foregroundStyle(Theme.dim)
+                    Circle().fill(marine.seaRisk.color).frame(width: 7, height: 7)
+                }
+                Text("Acqua \(Fmt.temp(c.sea_surface_temperature))").font(.caption2).foregroundStyle(Theme.faint)
+            } else {
+                Text("Non disponibile per questa località").font(.caption).foregroundStyle(Theme.faint)
             }
         }
     }
 
-    // MARK: Transport
+    @ViewBuilder private var fuelTile: some View {
+        tile("Carburante") {
+            if let stations = model.fuel?.value, let first = FuelStations.nearest(stations, to: model.activePlace.coordinate, kind: .fuel, limit: 1).first {
+                HStack(alignment: .firstTextBaseline, spacing: 3) {
+                    Text(Fmt.number(first.km, decimals: first.km < 10 ? 1 : 0)).font(.metric(30, .semibold)).foregroundStyle(Theme.text)
+                    Text("km").font(.caption).foregroundStyle(Theme.dim)
+                }
+                Text(first.station.name).font(.caption).foregroundStyle(Theme.dim).lineLimit(1)
+                if let charger = FuelStations.nearest(stations, to: model.activePlace.coordinate, kind: .charger, limit: 1).first {
+                    Text("Ricarica EV a \(Fmt.number(charger.km, decimals: 0)) km").font(.caption2).foregroundStyle(Theme.faint)
+                }
+            } else {
+                Text(model.errors[.fuel] == nil ? "Download in corso" : "Non disponibile").font(.caption).foregroundStyle(Theme.faint)
+            }
+        }
+    }
 
-    private var transportSection: some View {
-        NavigationLink {
-            TransportView()
-        } label: {
-            Card(title: "Voli e traghetti", systemImage: "airplane.departure", tint: .cyan) {
+    private var transportTile: some View {
+        NavigationLink { TransportView() } label: {
+            tile("Voli e traghetti") {
                 let followed = (model.flights?.value ?? []).filter { alerts.isFollowing($0.flightNumber) }
-                if followed.isEmpty {
-                    Text(alerts.settings.followedFlights.isEmpty
-                         ? "Tabellone di Keflavík in tempo reale, avvisi Herjólfur. Segui un volo per ricevere notifiche."
-                         : "Voli seguiti: \(alerts.settings.followedFlights.joined(separator: ", "))")
-                        .font(.subheadline)
-                }
-                ForEach(followed) { flight in
-                    HStack {
-                        Text("\(flight.time ?? "") \(flight.flightNumber)").font(.subheadline.weight(.semibold))
-                        Text(flight.destination ?? "").font(.caption)
-                        Spacer()
-                        Text(flight.statusInfo.text).font(.caption).foregroundStyle(flight.statusInfo.risk == .ok ? Color.secondary : flight.statusInfo.risk.color)
-                    }
-                }
-                if let notice = model.ferry?.value {
-                    Text("Herjólfur: \(notice.text.components(separatedBy: "\n").dropFirst().first ?? notice.text)")
-                        .font(.caption).foregroundStyle(.secondary).lineLimit(2)
+                if let flight = followed.first {
+                    Text(flight.flightNumber).font(.metric(22, .semibold)).foregroundStyle(Theme.text)
+                    Text(flight.statusInfo.text).font(.caption)
+                        .foregroundStyle(flight.statusInfo.risk == .ok ? Theme.dim : flight.statusInfo.risk.color).lineLimit(2)
+                } else {
+                    Image(systemName: "airplane.departure").font(.system(size: 24)).foregroundStyle(Theme.accent)
+                    Text("Keflavík in tempo reale, Herjólfur").font(.caption).foregroundStyle(Theme.dim)
                 }
             }
         }
@@ -303,92 +491,12 @@ struct TodayView: View {
         .task { if model.flights == nil && !alerts.settings.followedFlights.isEmpty { await model.refreshTransport() } }
     }
 
-    // MARK: Fuel
-
-    @ViewBuilder private var fuelSection: some View {
-        if let stations = model.fuel?.value, !stations.isEmpty {
-            let here = model.activePlace.coordinate
-            let fuel = FuelStations.nearest(stations, to: here, kind: .fuel, limit: 3)
-            let chargers = FuelStations.nearest(stations, to: here, kind: .charger, limit: 1)
-            Card(title: "Carburante e ricarica (offline)", systemImage: "fuelpump.fill", tint: .orange) {
-                ForEach(fuel, id: \.station.id) { item in
-                    HStack {
-                        Text(item.station.name).font(.caption.weight(.medium))
-                        if let hours = item.station.openingHours { Text(hours).font(.caption2).foregroundStyle(.secondary).lineLimit(1) }
-                        Spacer()
-                        Text(Fmt.number(item.km, decimals: item.km < 10 ? 1 : 0, unit: "km")).font(.caption)
-                    }
-                }
-                if let charger = chargers.first {
-                    Label("Ricarica EV più vicina: \(charger.station.name), \(Fmt.number(charger.km, decimals: 0, unit: "km"))", systemImage: "bolt.car")
-                        .font(.caption2).foregroundStyle(.secondary)
-                }
-            }
-        }
-    }
-
-    // MARK: Sea
-
-    @ViewBuilder private var seaSection: some View {
-        if let marine = model.marine?.value, marine.hasData, let current = marine.current {
-            NavigationLink {
-                WeatherView()
-            } label: {
-                Card(title: "Mare e spiagge", systemImage: "water.waves", tint: .teal) {
-                    HStack {
-                        Metric(title: "Onde", value: Fmt.number(current.wave_height, decimals: 1, unit: "m"))
-                        Metric(title: "Periodo", value: Fmt.number(current.wave_period, decimals: 0, unit: "s"))
-                        Metric(title: "Acqua", value: Fmt.temp(current.sea_surface_temperature))
-                    }
-                    HStack {
-                        Text("Spiagge (onde anomale)").font(.caption)
-                        RiskBadge(risk: marine.beachRisk)
-                        Spacer()
-                        Text("Traghetti").font(.caption)
-                        RiskBadge(risk: marine.seaRisk)
-                    }
-                }
-            }
-            .buttonStyle(.plain)
-        }
-    }
-
-    // MARK: Quakes
-
-    @ViewBuilder private var quakesSection: some View {
-        NavigationLink {
-            QuakesView()
-        } label: {
-            Card(title: "Terremoti e vulcani", systemImage: "waveform.path.ecg", tint: .brown) {
-                let recent = model.recentQuakes24h
-                if model.quakes != nil {
-                    let strongest = recent.max { $0.magnitude < $1.magnitude }
-                    Text("\(recent.count) scosse nelle ultime 24 ore")
-                        .font(.subheadline)
-                    if let strongest {
-                        Text("Più forte: M\(Fmt.number(strongest.magnitude, decimals: 1)) – \(strongest.region), \(Fmt.relative(strongest.date))")
-                            .font(.caption).foregroundStyle(.secondary)
-                    }
-                    let near = recent.filter { Geo.distanceKm($0.coordinate, model.activePlace.coordinate) < 50 && $0.magnitude >= 2 }
-                    if !near.isEmpty {
-                        Label("\(near.count) scosse M2+ entro 50 km da te", systemImage: "location.circle")
-                            .font(.caption).foregroundStyle(.orange)
-                    }
-                } else if let error = model.errors[.quakes] {
-                    ErrorNote(message: error)
-                } else {
-                    ProgressView()
-                }
-            }
-        }
-        .buttonStyle(.plain)
-    }
-
     // MARK: News
 
-    @ViewBuilder private var newsSection: some View {
+    @ViewBuilder private var newsCard: some View {
         if let news = model.news?.value, !news.isEmpty {
-            Card(title: "SafeTravel – avvisi ai viaggiatori", systemImage: "megaphone.fill", tint: .red) {
+            VStack(alignment: .leading, spacing: 12) {
+                Text("SafeTravel").eyebrow()
                 ForEach(news.prefix(4)) { item in
                     if let link = item.link {
                         Link(destination: link) { newsRow(item) }
@@ -397,23 +505,20 @@ struct TodayView: View {
                     }
                 }
             }
+            .panel()
         }
     }
 
     private func newsRow(_ item: NewsItem) -> some View {
-        VStack(alignment: .leading, spacing: 2) {
-            HStack(spacing: 6) {
-                if item.risk > .ok {
-                    Circle().fill(item.risk.color).frame(width: 8, height: 8)
-                }
-                Text(item.title).font(.subheadline.weight(.semibold)).foregroundStyle(.primary)
+        HStack(alignment: .top, spacing: 12) {
+            RoundedRectangle(cornerRadius: 2).fill(item.risk > .ok ? item.risk.color : Theme.raised).frame(width: 4)
+            VStack(alignment: .leading, spacing: 3) {
+                Text(item.title).font(.subheadline.weight(.semibold)).foregroundStyle(Theme.text).multilineTextAlignment(.leading)
+                Text(item.summary).font(.caption).foregroundStyle(Theme.dim).lineLimit(2).multilineTextAlignment(.leading)
+                if let date = item.date { Text(Fmt.relative(date)).font(.caption2).foregroundStyle(Theme.faint) }
             }
-            if let date = item.date {
-                Text(Fmt.relative(date)).font(.caption2).foregroundStyle(.secondary)
-            }
-            Text(item.summary).font(.caption).foregroundStyle(.secondary).lineLimit(3)
         }
+        .fixedSize(horizontal: false, vertical: true)
         .frame(maxWidth: .infinity, alignment: .leading)
     }
-
 }

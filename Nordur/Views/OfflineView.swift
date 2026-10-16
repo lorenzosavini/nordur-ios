@@ -49,6 +49,7 @@ struct OfflineView: View {
                 }
             }
         }
+        .themedList()
         .navigationTitle("Pacchetto offline")
     }
 

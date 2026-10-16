@@ -45,6 +45,7 @@ struct WindyView: View {
                 }
                 if let url { WebView(url: url).ignoresSafeArea(edges: .bottom) }
             }
+            .themedList()
             .navigationTitle("Windy")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar { ToolbarItem(placement: .cancellationAction) { Button("Chiudi") { dismiss() } } }

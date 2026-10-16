@@ -66,6 +66,7 @@ struct AlertsView: View {
                     }
             }
         }
+        .themedList()
         .navigationTitle("Allerte")
         .toolbar {
             ToolbarItem(placement: .cancellationAction) {
@@ -191,6 +192,7 @@ struct AlertSettingsView: View {
                 }
             }
         }
+        .themedList()
         .navigationTitle("Impostazioni allerte")
         .onAppear {
             if !loaded { draft = alerts.settings; loaded = true }
