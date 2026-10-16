@@ -74,12 +74,21 @@ struct AuroraLiveView: View {
         .task { await load() }
         .task(id: playing) { await animate() }
         .refreshable { await load(force: true) }
+        .task {
+            // Live: NOAA refreshes the oval every ~5 minutes.
+            while !Task.isCancelled {
+                try? await Task.sleep(nanoseconds: 300 * 1_000_000_000)
+                guard !Task.isCancelled else { break }
+                await load(force: true)
+            }
+        }
     }
 
     private var mapContent: MapContent {
         var c = MapContent()
         c.raster = raster
         c.rasterKey = rasterKey
+        c.pulse = true
         return c
     }
 

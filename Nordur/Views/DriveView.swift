@@ -35,6 +35,8 @@ struct DriveView: View {
                     }
                 }
 
+                RoadAheadSection()
+
                 Section {
                     Button {
                         planning = true

@@ -18,6 +18,7 @@ struct MapScreen: View {
     @AppStorage("map.fuel") private var showFuel = false
     @AppStorage("map.chargers") private var showChargers = false
     @AppStorage("map.trip") private var showTrip = true
+    @AppStorage("map.particles") private var showParticles = true
 
     @State private var hour: Double = -1
     @State private var radarIndex: Double = -1
@@ -61,6 +62,7 @@ struct MapScreen: View {
             .task { await model.refreshMapData() }
             .task(id: rasterRequestKey) { await rebuildRaster() }
             .task(id: playing) { await animate() }
+            .task(id: layerRaw) { await liveRefresh() }
             .sheet(item: $selectedWebcam) { site in
                 NavigationStack { WebcamSiteView(site: site) }.presentationDetents([.medium, .large])
             }
@@ -114,6 +116,7 @@ struct MapScreen: View {
                     Toggle("Distributori", systemImage: "fuelpump", isOn: $showFuel)
                     Toggle("Ricarica EV", systemImage: "bolt.car", isOn: $showChargers)
                     Toggle("Viaggio e percorso", systemImage: "point.topleft.down.to.point.bottomright.curvepath", isOn: $showTrip)
+                    Toggle("Animazione particelle vento", systemImage: "wind", isOn: $showParticles)
                 } label: {
                     Label("Livelli", systemImage: "square.3.layers.3d")
                         .font(.caption.weight(.semibold))
@@ -209,6 +212,8 @@ struct MapScreen: View {
             }
         } else if layer == .aurora {
             HStack {
+                Text("LIVE").font(.caption2.weight(.heavy)).padding(.horizontal, 5).padding(.vertical, 2)
+                    .background(Color.red, in: Capsule()).foregroundStyle(.white)
                 Image(systemName: "sparkles").foregroundStyle(.mint)
                 Text("Ovale OVATION previsto per le \(Fmt.time(model.ovation?.value.forecastTime, in: .iceland)) · Kp \(Fmt.number(model.kp.flatMap { AuroraCalc.kp(at: Date(), in: $0.value) }, decimals: 1))")
                     .font(.caption)
@@ -258,6 +263,19 @@ struct MapScreen: View {
         rasterKey = built == nil ? "none" : key
     }
 
+    /// Keeps "live" layers fresh while they are on screen: aurora oval every 5 min, radar every 5 min.
+    private func liveRefresh() async {
+        while !Task.isCancelled && (layer == .aurora || layer == .radar) {
+            try? await Task.sleep(nanoseconds: 300 * 1_000_000_000)
+            guard !Task.isCancelled else { break }
+            if layer == .aurora {
+                if let fresh = try? await SpaceWeather.ovation() { model.ovation = fresh }
+            } else if layer == .radar {
+                if let frames = try? await RainViewer.frames() { model.radarFrames = frames; radarIndex = -1 }
+            }
+        }
+    }
+
     private func animate() async {
         guard playing else { return }
         while playing && !Task.isCancelled {
@@ -282,7 +300,13 @@ struct MapScreen: View {
         c.rasterKey = rasterKey
         c.radarTemplate = layer == .radar ? radarFrame?.urlTemplate : nil
 
-        if layer.showsArrows, let grid {
+        if layer.showsArrows && showParticles, let grid {
+            c.windField = WindField(grid: grid, hour: hourIndex)
+            c.windFieldKey = "wf-\(hourIndex)-\(model.weatherGrid?.date.timeIntervalSince1970 ?? 0)"
+        }
+        c.pulse = layer == .aurora
+
+        if layer.showsArrows && !showParticles, let grid {
             let h = hourIndex
             var arrows: [ArrowAnnotation] = []
             for row in grid.lats.indices where row % 2 == 0 {

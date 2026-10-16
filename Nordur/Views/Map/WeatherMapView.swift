@@ -121,6 +121,11 @@ struct MapContent {
     var polygonsKey = ""
     var polylines: [TitledPolyline] = []
     var polylinesKey = ""
+    /// Animated wind particles (nil = off).
+    var windField: WindField?
+    var windFieldKey = ""
+    /// Gently pulse the raster (aurora "breathing").
+    var pulse = false
 }
 
 struct WeatherMapView: UIViewRepresentable {
@@ -138,7 +143,15 @@ struct WeatherMapView: UIViewRepresentable {
         map.showsCompass = true
         map.showsScale = true
         map.pointOfInterestFilter = .excludingAll
+        // Particle projection assumes a north-up map.
+        map.isRotateEnabled = false
+        map.isPitchEnabled = false
         map.setRegion(initialRegion, animated: false)
+        let particles = WindParticleView(frame: map.bounds)
+        particles.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        particles.mapView = map
+        map.addSubview(particles)
+        context.coordinator.particles = particles
         map.register(MKAnnotationView.self, forAnnotationViewWithReuseIdentifier: "arrow")
         map.register(MKAnnotationView.self, forAnnotationViewWithReuseIdentifier: "dot")
         map.register(MKMarkerAnnotationView.self, forAnnotationViewWithReuseIdentifier: "marker")
@@ -170,10 +183,40 @@ struct WeatherMapView: UIViewRepresentable {
         private var rasterOverlay: RasterOverlay?
         private var radarOverlay: MKTileOverlay?
         private var radarTemplate: String?
+        var particles: WindParticleView?
+        private weak var rasterRenderer: RasterRenderer?
+        private var pulseLink: CADisplayLink?
+        private var pulseStart = CACurrentMediaTime()
 
         init(_ parent: WeatherMapView) { self.parent = parent }
 
+        deinit { pulseLink?.invalidate() }
+
+        private func setPulse(_ on: Bool) {
+            if on, pulseLink == nil {
+                let link = CADisplayLink(target: self, selector: #selector(pulseStep))
+                link.preferredFrameRateRange = CAFrameRateRange(minimum: 10, maximum: 20, preferred: 15)
+                link.add(to: .main, forMode: .common)
+                pulseLink = link
+            } else if !on {
+                pulseLink?.invalidate()
+                pulseLink = nil
+                rasterRenderer?.alpha = 1
+            }
+        }
+
+        @objc private func pulseStep() {
+            let t = CACurrentMediaTime() - pulseStart
+            rasterRenderer?.alpha = CGFloat(0.72 + 0.28 * sin(t * 2.2))
+        }
+
         func apply(_ content: MapContent, to map: MKMapView) {
+            if content.windFieldKey != applied.windFieldKey {
+                particles?.field = content.windField
+                particles?.isHidden = content.windField == nil
+                applied.windFieldKey = content.windFieldKey
+            }
+            setPulse(content.pulse)
             if content.rasterKey != applied.rasterKey {
                 if let old = rasterOverlay { map.removeOverlay(old) }
                 rasterOverlay = content.raster
@@ -229,7 +272,11 @@ struct WeatherMapView: UIViewRepresentable {
         func gestureRecognizer(_ g: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith other: UIGestureRecognizer) -> Bool { true }
 
         func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
-            if let raster = overlay as? RasterOverlay { return RasterRenderer(overlay: raster) }
+            if let raster = overlay as? RasterOverlay {
+                let renderer = RasterRenderer(overlay: raster)
+                rasterRenderer = renderer
+                return renderer
+            }
             if let tiles = overlay as? MKTileOverlay {
                 let renderer = MKTileOverlayRenderer(tileOverlay: tiles)
                 renderer.alpha = 0.75

@@ -123,6 +123,7 @@ final class DriveRecorder: NSObject {
         isPaused = false
         speedKmh = 0
         AlertCenter.shared.isDriving = false
+        RoadWatch.shared.clear()
         DriveStore.clearInProgress()
         // Keep only drives with some movement.
         guard finished.stats.distanceMeters > 50 || finished.points.count > 10 else { return nil }
@@ -181,6 +182,7 @@ final class DriveRecorder: NSObject {
         }
         updateLiveActivity(force: false)
         checkSpeed(point, now: now)
+        Task { await RoadWatch.shared.refresh(position: point.coordinate, course: point.course, speedKmh: point.kmh) }
         if now.timeIntervalSince(lastAlertCheck) > 5 * 60 {
             lastAlertCheck = now
             Task {
@@ -214,6 +216,13 @@ final class DriveRecorder: NSObject {
         guard let s = session else { return nil }
         let elapsed = s.durationSeconds() - (pauseStarted.map { Date().timeIntervalSince($0) } ?? 0)
         let alert = AlertCenter.shared.latest.flatMap { Date().timeIntervalSince($0.date) < 3 * 3600 ? $0 : nil }
+        let hazard = RoadWatch.shared.nextHazard
+        var hazardText: String?
+        if let h = hazard {
+            var text = "Tra \(Int(h.kmAhead)) km: \(h.station.name), raffiche \(Fmt.ms(h.station.Vindhvida))"
+            if let bad = h.segments.first(where: { ($0.risk ?? .ok) >= .warning }) { text += " · " + bad.conditionItalian }
+            hazardText = text
+        }
         return .init(
             km: s.stats.km,
             elapsedSeconds: elapsed,
@@ -221,8 +230,8 @@ final class DriveRecorder: NSObject {
             averageKmh: s.stats.averageKmh(totalSeconds: elapsed),
             odometer: s.odometerEnd,
             paused: isPaused,
-            alertTitle: alert?.title,
-            alertSeverity: alert?.severity ?? 0,
+            alertTitle: hazardText ?? alert?.title,
+            alertSeverity: hazard?.risk.rawValue ?? alert?.severity ?? 0,
             updated: Date()
         )
     }
