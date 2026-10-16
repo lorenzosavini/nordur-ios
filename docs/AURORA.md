@@ -84,14 +84,15 @@ Osservato, stimato e previsto restano distinti. Il Kp combinato si costruisce pe
 
 - **Blocchi osservati**: valore NOAA, con quello GFZ accanto.
 - **Blocco attuale**: media pesata di previsione NOAA (×1), stima NOAA al minuto (×2, se ha meno di 20 minuti) e Kp di Newell (×1).
-- **Blocchi futuri**: previsione NOAA, alzata al Kp atteso da NASA quando una CME DONKI attraversa il blocco. La finestra si apre 6 h prima, per l'incertezza di ±7 h sull'arrivo. Per un colpo di striscio si usa il minimo della forbice NASA.
+- **Blocchi futuri**: previsione NOAA, alzata al Kp atteso da NASA quando una CME DONKI attraversa il blocco. La finestra si apre 6 h prima, per l'incertezza di ±7 h sull'arrivo. Si usa sempre il minimo della forbice NASA: CCMC segnala che il Kp derivato da ENLIL tende a sovrastimare.
 
 Il Kp non viene mai usato come regola universale di visibilità.
 
 ### Latitudine geomagnetica e ovale (`AuroraEngine.swift`)
 
-- Latitudine di dipolo centrato, con polo IGRF-14 2025 a circa 80,8° N e 72,7° O. Reykjavík risulta a 68,8°.
-- La latitudine geomagnetica corretta è di qualche grado più bassa nell'Atlantico del Nord. L'incertezza è dichiarata.
+- Dipolo eccentrico (Fraser-Smith, coefficienti IGRF-13 2020,5): il dipolo centrato dava Reykjavík circa 4,8° troppo alta.
+- Correzione verso la latitudine geomagnetica corretta (CGM): i residui di 39 osservatori ISGI sono interpolati con un kernel gaussiano (600 km, prior 0,02).
+- Errore leave-one-out: 0,3° rms in Islanda e Scandinavia, 0,6° su tutti gli osservatori. Leirvogur risulta a circa 64,1° CGM, Tromsø a 66,9°.
 - Bordo equatoriale dell'ovale: Λ = 66,5° − 2,05 · Kp, fit della tabella Kp–latitudine di NOAA, con incertezza di ±2–3°.
 - Questo modello si usa solo oltre la validità di OVATION. La categoria "sopra di te" richiede almeno 2° oltre il bordo.
 
@@ -113,6 +114,14 @@ Categorie risultanti:
 | Non prevista | sotto queste soglie |
 
 Il valore OVATION non viene presentato come probabilità di osservazione da terra.
+
+### Orizzonte del terreno (`/api/horizon`)
+
+- Quote dal DEM EU-DEM 25 m (OpenTopoData): 16 direzioni × 12 distanze, da 1 a 40 km.
+- Correzione per curvatura terrestre e rifrazione (k = 0,13), occhi a 2 m dal suolo.
+- Il profilo è calcolato una volta per luogo (coordinate arrotondate a 0,01°) e conservato sul telefono.
+- Le celle OVATION sotto lo skyline + 1° non contano come visibili; nel modello Kp l'orizzonte verso il polo magnetico nasconde l'aurora bassa.
+- Verifiche: Vík verso N 8,9–11°, Reykjavík verso NE 3° (Esja), Akureyri verso O 5–8°.
 
 ### Cielo, buio, Luna, luce
 
@@ -164,7 +173,7 @@ Scende di un livello se il Kp previsto non è aggiornato, se manca la nuvolosit�
 | Stato spaziale (backend) | cache 60 s, quindi vento solare e Kp al minuto e OVATION a ogni nuova esecuzione |
 | DONKI | 30 min |
 | Meteo delle località (MET) | 30 min |
-| Archivio | uno snapshot per blocco Kp di 3 h, mai sovrascritto, più un cron giornaliero (il piano Hobby di Vercel non ne permette di più frequenti) |
+| Archivio | uno snapshot per blocco Kp di 3 h, mai sovrascritto, scritto dal workflow GitHub ogni 3 h e dal cron giornaliero di Vercel |
 | App | stato spaziale a ogni apertura, ogni 5 min in primo piano e a ogni controllo delle allerte; meteo a ogni aggiornamento del luogo |
 
 ## Notifiche aurora
@@ -192,17 +201,24 @@ La visibilità locale non è ancora validabile: richiede gli avvistamenti. L'ass
 
 ## Test
 
-- **Backend**: `node --test backend/test`, 9 test su tempi, pressione, Newell, shock, propagazione, medie e Kp combinato. Eseguito anche in CI.
-- **Motore**: `Tests/EngineTests/main.swift`, compilato in CI con i sorgenti reali tramite `swiftc`. Copre astronomia, geomagnetismo, geometria, nubi, classi, affidabilità e validità di OVATION.
+- **Backend**: `node --test backend/test`, 11 test su tempi, pressione, Newell, shock, propagazione, medie Kp combinato, orizzonte e riepilogo DONKI. Eseguito anche in CI.
+- **Motore**: `Tests/EngineTests/main.swift`, compilato in CI con i sorgenti reali tramite `swiftc`. Copre astronomia, latitudine CGM, orizzonte del terreno, geometria, nubi, classi, affidabilità e validità di OVATION.
 - **Dati reali**: `/api/aurora` in produzione ha risposto con 11 fonti su 12 "ok"; DONKI risultava "error" per il disservizio NASA.
 
 ## Limiti noti
 
 - **NASA DONKI** non raggiungibile durante lo sviluppo: il parser segue lo schema documentato ma non è stato verificato su dati reali.
-- **Inquinamento luminoso**: nessun dataset aperto di brillanza del cielo è integrato. Si usa un indicatore basato sulla distanza dai centri abitati. Sono candidati il World Atlas 2015 e VIIRS VNP46, da verificare per licenza e accesso.
-- **Ostacoli dell'orizzonte e montagne**: non modellati (servirebbe un DEM). La geometria assume orizzonte libero.
+- **Inquinamento luminoso**: si usa un indicatore basato sulla distanza dai centri abitati. Il World Atlas 2015 (Falchi) è CC BY-NC 4.0 e si ottiene con un modulo di richiesta; VIIRS Black Marble (VNP46) richiede un account NASA Earthdata. Entrambi richiedono un'azione del proprietario dell'app.
+- **Orizzonte**: risoluzione 25 m e 16 direzioni; edifici e alberi non sono nel DEM.
 - **Magnetometri**: SuperMAG richiede registrazione e accettazione dei termini, quindi non è integrato. GFZ è integrato solo come Kp.
-- **Latitudine geomagnetica**: è quella di dipolo, non la corretta (CGM/AACGM); circa ±3° nell'Atlantico del Nord.
+- **Latitudine geomagnetica**: approssimazione della CGM (0,3–0,6° rms), non il calcolo AACGM completo.
 - **Indice di osservabilità**: euristico, da calibrare con gli avvistamenti.
 - **Open-Meteo**: limita le richieste per IP; il confronto tra località usa quindi MET Norway dal backend.
-- **Archivio**: dipende dal traffico e dal cron giornaliero (piano Hobby). Per avere uno snapshot ogni 3 h garantito serve un cron più frequente (piano Pro o scheduler esterno).
+- **Archivio**: un workflow GitHub pianificato (`aurora-archive.yml`, ogni 3 h al minuto 17) richiama `/api/aurora`; GitHub può ritardare i job pianificati di qualche minuto.
+
+## Account e dati personali
+
+- Registrazione con email e password (scrypt); nessuna email viene inviata.
+- Recupero password con un codice di 16 caratteri mostrato alla registrazione, conservato solo come hash e rigenerato a ogni uso.
+- Cambio password, nuovo codice di recupero ed eliminazione dell'account dall'app. L'eliminazione cancella backup, avvistamenti e utente, e revoca le sessioni esistenti.
+- Informativa: `backend/public/privacy.html`; manifest `PrivacyInfo.xcprivacy` per app e widget.
