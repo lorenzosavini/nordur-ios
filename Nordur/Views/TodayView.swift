@@ -23,7 +23,6 @@ struct TodayView: View {
                     seaSection
                     quakesSection
                     newsSection
-                    sourcesFooter
                 }
                 .padding()
             }
@@ -37,7 +36,7 @@ struct TodayView: View {
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
                     Button { showInfo = true } label: {
-                        Label("SOS", systemImage: "sos.circle.fill").foregroundStyle(.red)
+                        Text("SOS").fontWeight(.semibold).foregroundStyle(.red)
                     }
                 }
                 ToolbarItem(placement: .topBarTrailing) {
@@ -45,7 +44,7 @@ struct TodayView: View {
                         if model.isRefreshing { ProgressView() }
                         Button { alerts.openInbox = true } label: {
                             Image(systemName: alerts.unreadCount > 0 ? "bell.badge.fill" : "bell")
-                                .symbolRenderingMode(.multicolor)
+                                .symbolRenderingMode(.hierarchical)
                         }
                     }
                 }
@@ -165,7 +164,7 @@ struct TodayView: View {
         NavigationLink {
             AuroraView()
         } label: {
-            Card(title: "Aurora boreale stanotte", systemImage: "sparkles", tint: .mint) {
+            Card(title: "Aurora boreale stanotte", systemImage: "moon.stars.fill", tint: .mint) {
                 if let outlook = model.auroraOutlook {
                     let verdict = outlook.verdict
                     HStack(alignment: .center) {
@@ -175,7 +174,6 @@ struct TodayView: View {
                             Text("\(outlook.best?.score ?? 0)")
                         }
                         .gaugeStyle(.accessoryCircular)
-                        .tint(Gradient(colors: [.gray, .green, .mint]))
                         VStack(alignment: .leading, spacing: 4) {
                             Text(verdict.text).font(.subheadline.weight(.semibold))
                             if let best = outlook.best, best.score > 0 {
@@ -418,11 +416,4 @@ struct TodayView: View {
         .frame(maxWidth: .infinity, alignment: .leading)
     }
 
-    private var sourcesFooter: some View {
-        Text("Dati: Veðurstofa Íslands (IMO), Vegagerðin, Open-Meteo, NOAA SWPC, SafeTravel.is. In caso di dubbio vale sempre l'informazione ufficiale.")
-            .font(.caption2)
-            .foregroundStyle(.secondary)
-            .multilineTextAlignment(.center)
-            .padding(.top, 8)
-    }
 }

@@ -70,7 +70,7 @@ struct DriveView: View {
                 } header: {
                     Text("Auto e chilometraggio")
                 } footer: {
-                    Text("Inserisci i km del contachilometri al ritiro dell'auto a noleggio: l'app li aggiorna a ogni percorso registrato. Limiti in Islanda: 90 km/h asfalto, 80 sterrato, 50 centri abitati.")
+                    Text("Inserisci i km al ritiro dell'auto: si aggiornano a ogni percorso. Limiti: 90 km/h asfalto, 80 sterrato, 50 centri abitati.")
                 }
                 .onChange(of: recorder.settings) { _, _ in recorder.saveSettings() }
 
@@ -101,7 +101,7 @@ struct DriveView: View {
     private var startPanel: some View {
         VStack(alignment: .leading, spacing: 12) {
             Text("Registra il percorso in auto").font(.headline)
-            Text("Traccia GPS, km percorsi, tempo di guida, velocità media e massima, dislivello, soste, consumo stimato e contachilometri. Funziona anche a schermo bloccato e mostra i dati sulla schermata di blocco e nella Dynamic Island.")
+            Text("GPS, km, tempi, velocità, dislivello e consumi. Continua a schermo bloccato.")
                 .font(.caption).foregroundStyle(.secondary)
             Button {
                 recorder.start()

@@ -29,7 +29,7 @@ enum WeatherLayer: String, CaseIterable, Identifiable, Codable {
         case .snow: return "snowflake"
         case .cloud: return "cloud.fill"
         case .temperature: return "thermometer.medium"
-        case .aurora: return "sparkles"
+        case .aurora: return "moon.stars.fill"
         case .radar: return "dot.radiowaves.left.and.right"
         }
     }

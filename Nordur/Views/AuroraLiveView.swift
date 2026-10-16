@@ -20,12 +20,12 @@ struct AuroraLiveView: View {
     var body: some View {
         ScrollView {
             VStack(spacing: 14) {
-                Card(title: "Ovale aurorale sulla mappa", systemImage: "sparkles", tint: .mint) {
+                Card(title: "Ovale aurorale sulla mappa", systemImage: "moon.stars.fill", tint: .mint) {
                     WeatherMapView(content: mapContent, initialRegion: Self.region, onTap: { _ in }, onSelect: { _ in })
                         .frame(height: 380)
                         .clipShape(RoundedRectangle(cornerRadius: 12))
                     legend
-                    Text("Trascina la mappa: di giorno l'ovale è sul lato notturno della Terra (Alaska, Canada, Siberia) e arriva sull'Islanda la sera.")
+                    Text("Di giorno l'ovale si trova sul lato notturno della Terra.")
                         .font(.caption2).foregroundStyle(.secondary)
                     if let ovation = model.ovation {
                         Text("Previsione OVATION per le \(Fmt.time(ovation.value.forecastTime, in: .iceland)) (30–90 minuti avanti). Kp attuale \(Fmt.number(model.kp.flatMap { AuroraCalc.kp(at: Date(), in: $0.value) }, decimals: 1)).")
@@ -35,7 +35,7 @@ struct AuroraLiveView: View {
                     ErrorNote(message: model.errors[.ovation])
                 }
 
-                Card(title: "Vista polare NOAA – ultime 3 ore", systemImage: "globe.europe.africa.fill", tint: .green) {
+                Card(title: "Vista polare NOAA, ultime 3 ore", systemImage: "globe.europe.africa.fill", tint: .green) {
                     if frames.isEmpty {
                         if let error { ErrorNote(message: error) } else { ProgressView().frame(maxWidth: .infinity, minHeight: 200) }
                     } else {
@@ -56,15 +56,9 @@ struct AuroraLiveView: View {
                                    in: 0...Double(max(frames.count - 1, 1)), step: 1)
                             Text(Fmt.time(frame.time, in: .iceland)).font(.caption.monospacedDigit())
                         }
-                        Text("L'Islanda è in basso a sinistra rispetto al polo. Verde = aurora debole, giallo/rosso = intensa.")
-                            .font(.caption2).foregroundStyle(.secondary)
                     }
                 }
 
-                Card(title: "Come leggerla", systemImage: "info.circle", tint: .blue) {
-                    Text("Se l'ovale verde arriva sopra o poco a nord di dove sei e il cielo è sereno (livello «Nuvole» nella mappa meteo), guarda verso nord lontano dalle luci. La percentuale è la probabilità di vedere l'aurora allo zenit.")
-                        .font(.caption)
-                }
             }
             .padding()
         }

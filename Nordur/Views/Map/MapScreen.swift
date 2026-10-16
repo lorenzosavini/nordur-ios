@@ -124,7 +124,7 @@ struct MapScreen: View {
                         .background(.regularMaterial, in: Capsule())
                 }
                 Button { showWindy = true } label: {
-                    Label("Animazione Windy", systemImage: "wind.circle")
+                    Label("Windy", systemImage: "wind")
                         .font(.caption.weight(.semibold))
                         .padding(.horizontal, 10).padding(.vertical, 7)
                         .background(.regularMaterial, in: Capsule())
@@ -169,14 +169,14 @@ struct MapScreen: View {
                     }
                 }
                 .frame(height: 12)
-                Text("\(layer.label) (\(layer.unit)) · tocca la mappa per i valori in un punto")
+                Text("\(layer.label), \(layer.unit)")
                     .font(.caption2).foregroundStyle(.secondary)
             }
         } else if layer == .radar {
-            Text("Radar precipitazioni (RainViewer): ultime 2 ore + previsione a breve. Copertura parziale sull'Islanda.")
+            Text("Radar RainViewer, ultime 2 ore. Copertura parziale.")
                 .font(.caption2).foregroundStyle(.secondary)
         } else {
-            Text("Nessun livello meteo · tocca la mappa per i valori in un punto").font(.caption2).foregroundStyle(.secondary)
+            Text("Tocca la mappa per i valori in un punto").font(.caption2).foregroundStyle(.secondary)
         }
     }
 
@@ -212,15 +212,11 @@ struct MapScreen: View {
             }
         } else if layer == .aurora {
             HStack {
-                Text("LIVE").font(.caption2.weight(.heavy)).padding(.horizontal, 5).padding(.vertical, 2)
-                    .background(Color.red, in: Capsule()).foregroundStyle(.white)
-                Image(systemName: "sparkles").foregroundStyle(.mint)
+                Image(systemName: "moon.stars.fill").foregroundStyle(.secondary)
                 Text("Ovale OVATION previsto per le \(Fmt.time(model.ovation?.value.forecastTime, in: .iceland)) · Kp \(Fmt.number(model.kp.flatMap { AuroraCalc.kp(at: Date(), in: $0.value) }, decimals: 1))")
                     .font(.caption)
                 Spacer()
             }
-            Text("Probabilità di vedere l'aurora sopra di te. Attiva anche «Nuvole» per capire dove il cielo è sereno.")
-                .font(.caption2).foregroundStyle(.secondary)
         }
     }
 
@@ -459,7 +455,7 @@ struct ProbeCard: View {
             }
             if let ovation = model.ovation?.value {
                 Text("Aurora adesso: \(Fmt.percent(ovation.interpolated(lat: coordinate.lat, lon: coordinate.lon)))")
-                    .font(.caption).foregroundStyle(.mint)
+                    .font(.caption).foregroundStyle(.secondary)
             }
             if let nearest {
                 Text("Stazione \(nearest.station.name) (\(Int(nearest.distance)) km): \(Fmt.ms(nearest.station.Vindhradi)) / raff. \(Fmt.ms(nearest.station.Vindhvida)), asfalto \(Fmt.temp(nearest.station.Veghiti))")

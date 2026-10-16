@@ -109,12 +109,12 @@ struct AuroraOutlook {
     var hasDarkness: Bool { !darkHours.isEmpty }
 
     var verdict: (text: String, risk: Risk) {
-        guard hasDarkness else { return ("Niente buio nelle prossime 24 ore: aurora non visibile", .ok) }
+        guard hasDarkness else { return ("Nessuna ora di buio nelle prossime 24 ore", .ok) }
         let score = best?.score ?? 0
-        if score >= 60 { return ("Ottime probabilità", .ok) }
-        if score >= 35 { return ("Buone probabilità", .caution) }
-        if score >= 15 { return ("Possibile, con un po' di fortuna", .warning) }
-        return ("Improbabile stanotte", .danger)
+        if score >= 60 { return ("Probabilità alta", .ok) }
+        if score >= 35 { return ("Probabilità media", .caution) }
+        if score >= 15 { return ("Probabilità bassa", .warning) }
+        return ("Probabilità molto bassa", .danger)
     }
 }
 

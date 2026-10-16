@@ -73,7 +73,7 @@ struct TransportView: View {
             } header: {
                 Text("Aeroporto di Keflavík (oggi)")
             } footer: {
-                Text("Tocca la stella per seguire un volo: riceverai una notifica a ogni cambio di stato, orario o gate.")
+                Text("Con la stella ricevi una notifica a ogni cambio di stato, orario o gate.")
             }
 
             Section("Altri collegamenti") {

@@ -59,7 +59,7 @@ struct QuakesView: View {
             }
 
             Section("Vulcani ed eruzioni") {
-                Text("Sciami di terremoti superficiali (es. Reykjanes, Bárðarbunga, Katla, Askja) possono precedere un'eruzione. Le zone di pericolo e le chiusure sono pubblicate da IMO e dalla Protezione Civile.")
+                Text("Zone di pericolo e chiusure: IMO e Protezione Civile.")
                     .font(.caption).foregroundStyle(.secondary)
                 LinkRow(title: "Vedur.is – Terremoti", subtitle: "Mappa ufficiale in tempo reale", url: "https://en.vedur.is/earthquakes-and-volcanism/earthquakes/", systemImage: "waveform.path.ecg")
                 LinkRow(title: "Vedur.is – Vulcani e mappa dei pericoli", subtitle: "Livelli di allerta aviazione e pericolo", url: "https://en.vedur.is/earthquakes-and-volcanism/", systemImage: "mountain.2.fill")

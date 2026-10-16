@@ -149,7 +149,7 @@ struct RouteForecastView: View {
                     .frame(width: 56, alignment: .leading)
                     if let h = w.hour {
                         let info = WeatherCode.describe(h.code, isDay: h.isDay)
-                        Image(systemName: info.symbol).symbolRenderingMode(.multicolor).frame(width: 24)
+                        Image(systemName: info.symbol).symbolRenderingMode(.hierarchical).frame(width: 24)
                         VStack(alignment: .leading, spacing: 1) {
                             Text("\(Fmt.temp(h.temperature)) · \(info.text)").font(.caption)
                             Text("vento \(Fmt.ms(h.wind)) raff. \(Fmt.ms(h.gust))" + snowText(h.snowfall))

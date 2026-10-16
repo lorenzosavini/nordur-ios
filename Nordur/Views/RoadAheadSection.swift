@@ -23,7 +23,7 @@ struct RoadAheadSection: View {
                         Text("Mancano \(Fmt.number(remaining, unit: "km")) · circa \(Fmt.duration(Double(minutes) * 60))")
                             .font(.caption).foregroundStyle(.secondary)
                     } else {
-                        Text("Senza destinazione guardo le stazioni nella tua direzione di marcia (60 km).")
+                        Text("Senza destinazione: stazioni nella direzione di marcia, entro 60 km.")
                             .font(.caption).foregroundStyle(.secondary)
                     }
                 }
@@ -54,7 +54,7 @@ struct RoadAheadSection: View {
 
             if watch.ahead.isEmpty {
                 Text(recorder.isRecording ? "Nessuna stazione stradale davanti a te nel raggio controllato." :
-                        "Avvia la registrazione: durante la guida qui vedi in tempo reale vento, ghiaccio e chiusure sulla strada che stai per percorrere.")
+                        "Disponibile durante la registrazione di un percorso.")
                     .font(.caption).foregroundStyle(.secondary)
             }
             ForEach(watch.ahead) { item in
@@ -62,7 +62,7 @@ struct RoadAheadSection: View {
             }
 
             if let last = watch.lastUpdate {
-                Text("Calcolato \(Fmt.relative(last)) · dati strade \(watch.lastRoadsFetch.map { Fmt.relative($0) } ?? "–") · aggiornamento automatico ogni 5 min")
+                Text("Calcolato \(Fmt.relative(last)) · dati strade \(watch.lastRoadsFetch.map { Fmt.relative($0) } ?? "–")")
                     .font(.caption2).foregroundStyle(.secondary)
             }
             if !watch.changes.isEmpty {

@@ -10,7 +10,7 @@ struct OfflineView: View {
     var body: some View {
         List {
             Section {
-                Text("Nelle Highlands, nei fiordi occidentali e lungo parte della costa est il segnale manca per decine di km. Prima di partire scarica qui i dati: l'app mostrerà l'ultima copia salvata, con l'ora a cui risale.")
+                Text("Scarica i dati prima di entrare in zone senza copertura (Highlands, fiordi occidentali, parte dell'Est).")
                     .font(.caption)
                 Button {
                     Task { await downloadAll() }
@@ -29,7 +29,7 @@ struct OfflineView: View {
             }
 
             Section {
-                Text("Mappe offline di Apple: apri Mappe › tocca la tua foto profilo › Mappe offline › Scarica nuova mappa e seleziona l'Islanda (o le regioni del viaggio). La navigazione e la mappa di Norður funzioneranno anche senza rete.")
+                Text("Apple Mappe: foto profilo › Mappe offline › Scarica nuova mappa › Islanda.")
                     .font(.caption)
                 if let url = URL(string: "maps://") {
                     Link(destination: url) { Label("Apri Apple Mappe", systemImage: "map") }
@@ -67,6 +67,6 @@ struct OfflineView: View {
         log.append("Voli e traghetti…")
         await model.refreshTransport()
         let failed = AppModel.Source.allCases.filter { model.errors[$0] != nil }.map(\.rawValue)
-        log.append(failed.isEmpty ? "✅ Completato" : "⚠️ Non riuscito: \(failed.joined(separator: ", "))")
+        log.append(failed.isEmpty ? "Completato" : "Non riuscito: \(failed.joined(separator: ", "))")
     }
 }

@@ -36,7 +36,7 @@ struct WeatherView: View {
     // MARK: Charts
 
     private func temperatureChart(_ hours: [HourPoint], zone: TimeZone) -> some View {
-        Card(title: "Temperatura e precipitazioni – 48 ore", systemImage: "thermometer.medium") {
+        Card(title: "Temperatura (°C) e precipitazioni (mm), 48 ore", systemImage: "thermometer.medium") {
             Chart {
                 ForEach(hours) { hour in
                     if let precip = hour.precipitation, precip > 0 {
@@ -61,13 +61,11 @@ struct WeatherView: View {
             }
             .frame(height: 170)
             .environment(\.locale, Fmt.italian)
-            Text("Linea arancione: °C · barre blu: pioggia/neve in mm · tratteggio: 0 °C")
-                .font(.caption2).foregroundStyle(.secondary)
         }
     }
 
     private func windChart(_ hours: [HourPoint], zone: TimeZone) -> some View {
-        Card(title: "Vento e raffiche – 48 ore", systemImage: "wind") {
+        Card(title: "Vento medio e raffiche (m/s), 48 ore", systemImage: "wind") {
             Chart {
                 ForEach(hours) { hour in
                     if let gust = hour.gust {
@@ -94,8 +92,6 @@ struct WeatherView: View {
             }
             .frame(height: 170)
             .environment(\.locale, Fmt.italian)
-            Text("Linea: vento medio · area rossa: raffiche (m/s)")
-                .font(.caption2).foregroundStyle(.secondary)
         }
     }
 
@@ -109,7 +105,7 @@ struct WeatherView: View {
                         let info = WeatherCode.describe(hour.code, isDay: hour.isDay)
                         VStack(spacing: 6) {
                             Text(Fmt.time(hour.date, in: zone)).font(.caption2).foregroundStyle(.secondary)
-                            Image(systemName: info.symbol).symbolRenderingMode(.multicolor).font(.title3)
+                            Image(systemName: info.symbol).symbolRenderingMode(.hierarchical).font(.title3)
                             Text(Fmt.temp(hour.temperature)).font(.subheadline.weight(.semibold))
                             HStack(spacing: 2) {
                                 WindArrow(degrees: hour.windDirection).font(.caption2)
@@ -124,15 +120,13 @@ struct WeatherView: View {
                                 Text(" ").font(.caption2)
                             }
                             if hour.lightningRisk > .ok {
-                                Image(systemName: "bolt.fill").font(.caption2).foregroundStyle(.yellow)
+                                Image(systemName: "cloud.bolt").font(.caption2).foregroundStyle(.secondary)
                             }
                         }
                         .frame(minWidth: 40)
                     }
                 }
             }
-            Text("Sotto l'icona: vento medio e raffica (m/s, colorata per rischio) · % pioggia · ⚡ rischio fulmini")
-                .font(.caption2).foregroundStyle(.secondary)
         }
     }
 
@@ -142,7 +136,7 @@ struct WeatherView: View {
                 let info = WeatherCode.describe(day.code)
                 HStack {
                     Text(Fmt.day(day.date, in: zone)).font(.subheadline).frame(width: 92, alignment: .leading)
-                    Image(systemName: info.symbol).symbolRenderingMode(.multicolor).frame(width: 26)
+                    Image(systemName: info.symbol).symbolRenderingMode(.hierarchical).frame(width: 26)
                     Text("\(Fmt.temp(day.minTemp)) / \(Fmt.temp(day.maxTemp))").font(.subheadline.monospacedDigit())
                     Spacer()
                     VStack(alignment: .trailing, spacing: 0) {
@@ -156,7 +150,7 @@ struct WeatherView: View {
                 }
                 Divider()
             }
-            Text("Oltre 7 giorni le previsioni sono indicative.").font(.caption2).foregroundStyle(.secondary)
+            Text("Oltre 7 giorni: indicativo.").font(.caption2).foregroundStyle(.secondary)
         }
     }
 
@@ -183,7 +177,7 @@ struct WeatherView: View {
                     Text("Traghetti/barche").font(.caption)
                     RiskBadge(risk: marine.seaRisk)
                 }
-                Text("Su spiagge come Reynisfjara le onde anomale (sneaker waves) arrivano senza preavviso: mai voltare le spalle al mare, resta lontano dalla battigia e rispetta il semaforo all'ingresso.")
+                Text("Reynisfjara e spiagge del sud: onde anomale senza preavviso. Resta lontano dalla battigia.")
                     .font(.caption2).foregroundStyle(.secondary)
                 FreshnessLabel(date: fetched.date, isStale: fetched.isStale, source: "Open-Meteo Marine")
             }
@@ -198,7 +192,7 @@ struct WeatherView: View {
                     Metric(title: "SO₂", value: Fmt.number(c.sulphur_dioxide, unit: "µg/m³"), tint: fetched.value.so2Risk.color)
                     Metric(title: "PM10", value: Fmt.number(c.pm10, unit: "µg/m³"))
                 }
-                Text("Durante le eruzioni sulla penisola di Reykjanes il gas (SO₂) può spostarsi verso le zone abitate: segui le previsioni del gas su vedur.is.")
+                Text("Gas vulcanico: previsioni di dispersione su vedur.is.")
                     .font(.caption2).foregroundStyle(.secondary)
                 FreshnessLabel(date: fetched.date, isStale: fetched.isStale, source: "CAMS via Open-Meteo")
             }

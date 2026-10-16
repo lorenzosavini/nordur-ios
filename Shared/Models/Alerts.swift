@@ -26,7 +26,7 @@ enum AlertCategory: String, Codable, CaseIterable, Identifiable {
         case .road: return "road.lanes"
         case .quake: return "waveform.path.ecg"
         case .safeTravel: return "megaphone.fill"
-        case .aurora: return "sparkles"
+        case .aurora: return "moon.stars.fill"
         case .flight: return "airplane"
         case .ferry: return "ferry.fill"
         case .speed: return "gauge.with.dots.needle.67percent"
@@ -180,7 +180,7 @@ enum AlertEngine {
             let night = Fmt.day(now.addingTimeInterval(-12 * 3600), in: input.auroraZone)
             events.append(AlertEvent(
                 id: "a:\(night)", date: now, category: .aurora, severity: Risk.ok.rawValue,
-                title: "Aurora probabile stanotte 🌌",
+                title: "Aurora probabile stanotte",
                 body: "Punteggio \(best.score)/100 verso le \(Fmt.time(best.date, in: input.auroraZone)), nuvole \(Fmt.percent(best.cloudCover)), Kp \(Fmt.number(best.kp, decimals: 1))."))
         }
 

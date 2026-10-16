@@ -182,13 +182,13 @@ struct ConditionsWidgetView: View {
                 Text("\(entry.placeName) \(Fmt.temp(entry.temperature))").font(.headline).widgetAccentable()
                 Text("Vento \(Fmt.ms(entry.wind)) · raff. \(Fmt.ms(entry.gust))").font(.caption)
                 if let warning = entry.warning {
-                    Text("⚠︎ \(warning.color.label)").font(.caption2)
+                    Text(warning.color.label).font(.caption2)
                 } else {
                     Text("Nessuna allerta").font(.caption2)
                 }
             }
         case .accessoryInline:
-            Text("\(Fmt.temp(entry.temperature)) · raff. \(Fmt.ms(entry.gust))\(entry.warning != nil ? " · ⚠︎" : "")")
+            Text("\(Fmt.temp(entry.temperature)) · raff. \(Fmt.ms(entry.gust))\(entry.warning != nil ? " · allerta" : "")")
         case .systemMedium:
             HStack(alignment: .top) {
                 mainBlock
@@ -196,8 +196,8 @@ struct ConditionsWidgetView: View {
                 VStack(alignment: .leading, spacing: 6) {
                     warningBlock
                     if let score = entry.auroraScore {
-                        Label("Aurora \(score)/100\(entry.auroraTime.map { " · \(Fmt.time($0, in: entry.zone))" } ?? "")", systemImage: "sparkles")
-                            .font(.caption).foregroundStyle(.mint)
+                        Label("Aurora \(score)/100\(entry.auroraTime.map { " · \(Fmt.time($0, in: entry.zone))" } ?? "")", systemImage: "moon.stars.fill")
+                            .font(.caption).foregroundStyle(.secondary)
                     }
                     Label("Raffica max 12 h: \(Fmt.ms(entry.maxGust12h))", systemImage: "wind")
                         .font(.caption)
@@ -217,7 +217,7 @@ struct ConditionsWidgetView: View {
         return VStack(alignment: .leading, spacing: 4) {
             Text(entry.placeName).font(.caption.weight(.semibold)).lineLimit(1)
             HStack {
-                Image(systemName: info.symbol).symbolRenderingMode(.multicolor)
+                Image(systemName: info.symbol).symbolRenderingMode(.hierarchical)
                 Text(Fmt.temp(entry.temperature)).font(.title.weight(.semibold))
             }
             HStack(spacing: 3) {
@@ -270,7 +270,7 @@ struct AuroraWidgetView: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 6) {
-            Label("Aurora", systemImage: "sparkles").font(.caption.weight(.semibold)).foregroundStyle(.mint)
+            Label("Aurora", systemImage: "moon.stars.fill").font(.caption.weight(.semibold)).foregroundStyle(.secondary)
             if let score = entry.auroraScore {
                 Gauge(value: Double(score), in: 0...100) {
                     Text("")
@@ -278,7 +278,7 @@ struct AuroraWidgetView: View {
                     Text("\(score)")
                 }
                 .gaugeStyle(.accessoryCircular)
-                .tint(.mint)
+                
                 if let time = entry.auroraTime {
                     Text("Meglio verso le \(Fmt.time(time, in: entry.zone))").font(.caption2)
                 }
@@ -294,8 +294,7 @@ struct AuroraWidget: Widget {
     var body: some WidgetConfiguration {
         AppIntentConfiguration(kind: "NordurAurora", intent: SelectPlaceIntent.self, provider: ConditionsProvider()) { entry in
             AuroraWidgetView(entry: entry)
-                .containerBackground(for: .widget) { LinearGradient(colors: [.black, .indigo.opacity(0.8)], startPoint: .top, endPoint: .bottom) }
-                .environment(\.colorScheme, .dark)
+                .containerBackground(.fill.tertiary, for: .widget)
         }
         .configurationDisplayName("Aurora stanotte")
         .description("Punteggio 0–100: attività geomagnetica × cielo sereno nelle ore di buio.")

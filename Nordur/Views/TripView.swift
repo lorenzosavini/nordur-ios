@@ -14,7 +14,7 @@ struct TripView: View {
                     ContentUnavailableView {
                         Label("Nessuna tappa", systemImage: "map")
                     } description: {
-                        Text("Aggiungi le tappe del viaggio: per ognuna vedrai meteo del giorno, allerte, vento, mare e i rischi stradali lungo il tragitto.")
+                        Text("Per ogni tappa: meteo del giorno, allerte, mare e strade lungo il tragitto.")
                     } actions: {
                         Button("Aggiungi la prima tappa") { creating = true }
                             .buttonStyle(.borderedProminent)
@@ -87,7 +87,7 @@ struct StopSummary: View {
             if let day {
                 let info = WeatherCode.describe(day.code)
                 HStack(spacing: 12) {
-                    Label(info.text, systemImage: info.symbol).symbolRenderingMode(.multicolor)
+                    Label(info.text, systemImage: info.symbol).symbolRenderingMode(.hierarchical)
                     Text("\(Fmt.temp(day.minTemp))/\(Fmt.temp(day.maxTemp))")
                     Text("raff. \(Fmt.ms(day.maxGust))").foregroundStyle(day.windRisk.color)
                 }
@@ -178,15 +178,15 @@ struct LegSummary: View {
                         .foregroundStyle((segment.risk ?? .ok).color)
                 }
                 if Calendar.current.isDateInToday(to.date) || Calendar.current.isDateInTomorrow(to.date) {
-                    Text("Condizioni in tempo reale: ricontrolla prima di partire.").font(.caption2).foregroundStyle(.secondary)
+                    Text("Dati attuali: ricontrolla prima di partire.").font(.caption2).foregroundStyle(.secondary)
                 }
             }
 
             if to.transport == .plane {
-                Text("Controlla lo stato del volo su isavia.is (KEF) o sul sito della compagnia.").font(.caption2).foregroundStyle(.secondary)
+                Text("Stato del volo: Voli e traghetti.").font(.caption2).foregroundStyle(.secondary)
             }
             if to.transport == .ferry {
-                Text("I traghetti (Herjólfur, Baldur) vengono cancellati con mare grosso: verifica la mattina stessa.").font(.caption2).foregroundStyle(.secondary)
+                Text("Con mare grosso i traghetti possono essere cancellati.").font(.caption2).foregroundStyle(.secondary)
             }
         }
     }

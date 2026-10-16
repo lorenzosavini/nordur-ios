@@ -56,7 +56,7 @@ struct AlertsView: View {
 
             if shown.isEmpty {
                 ContentUnavailableView("Nessuna allerta", systemImage: "checkmark.seal",
-                                       description: Text("Quando qualcosa cambia – allerte IMO, raffiche, strade chiuse, terremoti, aurora, voli – lo trovi qui e ricevi una notifica."))
+                                       description: Text("Qui compaiono le allerte inviate."))
             }
 
             ForEach(shown) { event in
@@ -162,7 +162,7 @@ struct AlertSettingsView: View {
             } header: {
                 Text("In viaggio")
             } footer: {
-                Text("Con «Sempre», iOS riattiva l'app quando ti sposti di qualche centinaio di metri e i controlli partono anche se l'hai chiusa. Durante la registrazione di un percorso i controlli girano ogni 5 minuti.")
+                Text("Con l'accesso «Sempre» i controlli continuano ad app chiusa. Durante la registrazione di un percorso girano ogni 5 minuti.")
             }
 
             Section("Voli seguiti") {
@@ -187,7 +187,7 @@ struct AlertSettingsView: View {
                 Button("Invia una notifica di prova") {
                     alerts.record(AlertEvent(id: "test:\(Date().timeIntervalSince1970)", date: Date(), category: .weatherWarning,
                                              severity: Risk.caution.rawValue, title: "Notifica di prova",
-                                             body: "Se vedi questo messaggio, le allerte funzionano."), notify: true, speak: false)
+                                             body: "Le notifiche funzionano."), notify: true, speak: false)
                 }
             }
         }

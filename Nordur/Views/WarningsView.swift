@@ -24,7 +24,9 @@ struct WarningsView: View {
                 }
             }
             Section("Cosa significano i colori") {
-                Text("🟡 Giallo: possibili disagi, viaggia con attenzione.\n🟠 Arancione: impatti significativi, valuta di rimandare gli spostamenti.\n🔴 Rosso: evento estremo, non metterti in viaggio.")
+                Text("Giallo: possibili disagi.
+Arancione: impatti significativi, valuta di rimandare.
+Rosso: evento estremo, non metterti in viaggio.")
                     .font(.caption)
                 LinkRow(title: "Allerte su vedur.is", subtitle: nil, url: "https://en.vedur.is/weather/forecasts/areas/")
             }

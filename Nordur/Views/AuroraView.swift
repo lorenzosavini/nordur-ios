@@ -12,23 +12,17 @@ struct AuroraView: View {
                     AuroraLiveView()
                 } label: {
                     HStack {
-                        Image(systemName: "globe.europe.africa.fill").font(.title2).foregroundStyle(.green)
-                        VStack(alignment: .leading) {
-                            Text("Mappa aurora live").font(.headline)
-                            Text("Ovale colorato sulla mappa + animazione NOAA delle ultime 3 ore").font(.caption).foregroundStyle(.secondary)
-                        }
+                        Text("Mappa aurora in tempo reale").font(.subheadline.weight(.semibold))
                         Spacer()
-                        Image(systemName: "chevron.right").foregroundStyle(.secondary)
+                        Image(systemName: "chevron.right").foregroundStyle(.tertiary)
                     }
                     .padding()
-                    .background(LinearGradient(colors: [.green.opacity(0.25), .mint.opacity(0.15)], startPoint: .leading, endPoint: .trailing),
-                                in: RoundedRectangle(cornerRadius: 18, style: .continuous))
+                    .background(Color(.secondarySystemGroupedBackground), in: RoundedRectangle(cornerRadius: 12, style: .continuous))
                 }
                 .buttonStyle(.plain)
                 tonightCard
                 kpCard
                 spaceCard
-                tipsCard
                 linksCard
             }
             .padding()
@@ -47,7 +41,7 @@ struct AuroraView: View {
                 if outlook.hasDarkness {
                     Chart(outlook.darkHours) { hour in
                         BarMark(x: .value("Ora", hour.date, unit: .hour), y: .value("Punteggio", hour.score))
-                            .foregroundStyle(.mint.gradient)
+                            .foregroundStyle(Color.accentColor)
                     }
                     .chartYScale(domain: 0...100)
                     .chartXAxis {
@@ -71,8 +65,6 @@ struct AuroraView: View {
                     Text("Tra metà maggio e inizio agosto in Islanda il cielo non si fa mai abbastanza buio.")
                         .font(.caption).foregroundStyle(.secondary)
                 }
-                Text("Punteggio 0–100 = attività geomagnetica prevista (Kp, ovale aurorale) × cielo sereno, solo nelle ore di buio.")
-                    .font(.caption2).foregroundStyle(.secondary)
             } else {
                 ProgressView()
             }
@@ -96,8 +88,6 @@ struct AuroraView: View {
                     }
                 }
                 .frame(height: 150)
-                Text("Kp 0–9: in Islanda già con Kp 2–3 e cielo sereno l'aurora è spesso visibile. Barre chiare = previsione. Kp ≥ 5 = tempesta geomagnetica.")
-                    .font(.caption2).foregroundStyle(.secondary)
                 if let fetched = model.kp { FreshnessLabel(date: fetched.date, isStale: fetched.isStale, source: "NOAA SWPC") }
             } else {
                 ErrorNote(message: model.errors[.kp])
@@ -115,24 +105,9 @@ struct AuroraView: View {
                 Metric(title: "Vento solare", value: Fmt.number(model.solarWind?.value.speed, unit: "km/s"))
             }
             if model.solarWind?.value.favourable == true {
-                Label("Bz fortemente negativo e vento solare veloce: esci a guardare!", systemImage: "sparkles")
+                Label("Bz negativo e vento solare veloce: condizioni favorevoli", systemImage: "arrow.down.circle")
                     .font(.caption.weight(.semibold)).foregroundStyle(.green)
             }
-            Text("Ovale: probabilità OVATION di aurora sopra di te o poco più a nord, prossimi 30–90 minuti. Bz negativo (sud) favorisce l'aurora.")
-                .font(.caption2).foregroundStyle(.secondary)
-        }
-    }
-
-    private var tipsCard: some View {
-        Card(title: "Consigli", systemImage: "lightbulb.fill", tint: .yellow) {
-            VStack(alignment: .leading, spacing: 6) {
-                Text("• Allontanati dalle luci delle città: anche 15–20 minuti di auto fanno la differenza.")
-                Text("• Le ore migliori sono di solito tra le 22 e le 2, ma può comparire presto la sera.")
-                Text("• Fotocamera: modalità Notte su iPhone con cavalletto, oppure 5–15 s di esposizione.")
-                Text("• Non fermarti mai sulla carreggiata o nelle piazzole delle corsie a senso unico: usa parcheggi veri.")
-                Text("• Controlla la mappa delle nuvole di vedur.is: spesso c'è sereno a nord o a est quando il sud è coperto.")
-            }
-            .font(.caption)
         }
     }
 

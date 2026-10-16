@@ -3,19 +3,22 @@ import SwiftUI
 struct Card<Content: View>: View {
     let title: String
     let systemImage: String
-    var tint: Color = .accentColor
+    /// Kept for call-site compatibility; cards are deliberately neutral.
+    var tint: Color = .primary
     @ViewBuilder var content: Content
 
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
-            Label(title, systemImage: systemImage)
-                .font(.headline)
-                .foregroundStyle(tint)
+            HStack(spacing: 6) {
+                Image(systemName: systemImage).foregroundStyle(.secondary)
+                Text(title)
+            }
+            .font(.subheadline.weight(.semibold))
             content
         }
         .padding()
         .frame(maxWidth: .infinity, alignment: .leading)
-        .background(.regularMaterial, in: RoundedRectangle(cornerRadius: 18, style: .continuous))
+        .background(Color(.secondarySystemGroupedBackground), in: RoundedRectangle(cornerRadius: 12, style: .continuous))
     }
 }
 
