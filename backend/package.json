@@ -1,6 +1,7 @@
 {
   "name": "nordur-api",
   "private": true,
+  "license": "UNLICENSED",
   "type": "module",
   "engines": { "node": "22.x" },
   "dependencies": {

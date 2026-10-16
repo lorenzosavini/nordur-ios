@@ -1,0 +1,77 @@
+Norður — Proprietary License (source available, all rights reserved)
+
+Copyright (c) 2026 Lorenzo Savini. All rights reserved.
+
+This repository contains the source code, documentation, design and other
+materials of the Norður iOS app and of its backend service "nordur-api"
+(together, the "Software"). The Software is made publicly visible for
+reference only. It is NOT open source.
+
+1. Permitted use
+
+   You may view the Software and fork this repository on GitHub, to the
+   extent that GitHub's Terms of Service require for public repositories.
+   No other right is granted.
+
+2. Restrictions
+
+   Without the prior written permission of the copyright holder you may not:
+
+   a) copy, reproduce or redistribute the Software or any substantial part
+      of it, in source or compiled form;
+   b) modify the Software or create derivative works based on it;
+   c) publish, sell, sublicense, rent or lease the Software, or apps or
+      services built from it, including on the Apple App Store, TestFlight
+      or any other distribution channel;
+   d) run the backend, or a service derived from it, for third parties;
+   e) use the name "Norður", its icon or its visual identity for another
+      product or service;
+   f) use the Software, in whole or in part, to train or evaluate machine
+      learning models.
+
+3. Contributions
+
+   Issues and pull requests are welcome. By submitting a contribution you
+   agree that the copyright holder may use, modify and distribute it as
+   part of the Software under any terms, and you confirm that you have the
+   right to grant this.
+
+4. Third-party components and data
+
+   Components by third parties keep their own licenses and are not covered
+   by this license. They are listed in THIRD_PARTY_NOTICES.md. Data from
+   external services is fetched at run time and is subject to the terms of
+   each provider.
+
+5. No warranty
+
+   THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+   OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+   MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT.
+
+   Weather, road, earthquake, flight, ferry and aurora information is
+   aggregated from public sources and may be late, incomplete or wrong. It
+   is not a substitute for official warnings and must not be relied upon
+   for decisions affecting safety. Always check the official sources
+   (vedur.is, umferdin.is, safetravel.is, 112.is) before travelling.
+
+6. Limitation of liability
+
+   TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, IN NO EVENT SHALL THE
+   COPYRIGHT HOLDER BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+   WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF
+   OR IN CONNECTION WITH THE SOFTWARE OR THE USE OF OR OTHER DEALINGS IN THE
+   SOFTWARE. Nothing in this license limits liability that cannot be
+   limited under applicable law.
+
+7. Termination
+
+   Any use of the Software in breach of this license ends any permission
+   granted by it, automatically and without notice.
+
+8. Governing law
+
+   This license is governed by the laws of Italy. Mandatory consumer
+   protection rules of the country where you live are not affected.
+
+For permissions or questions, open an issue in this repository.

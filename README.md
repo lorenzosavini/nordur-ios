@@ -38,3 +38,7 @@ Shared/          codice comune ad app e widget (modelli, servizi, motore allerte
 Nordur/          app: stato, schermate, mappa
 NordurWidgets/   widget e Live Activity
 ```
+
+## Licenza
+
+Codice visibile ma non open source: tutti i diritti riservati. Vedi [LICENSE](LICENSE) e, per font e fonti dati di terzi, [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
