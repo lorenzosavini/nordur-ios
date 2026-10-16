@@ -60,6 +60,7 @@ struct WeatherView: View {
                 }
             }
             .frame(height: 170)
+            .environment(\.locale, Fmt.italian)
             Text("Linea arancione: °C · barre blu: pioggia/neve in mm · tratteggio: 0 °C")
                 .font(.caption2).foregroundStyle(.secondary)
         }
@@ -92,6 +93,7 @@ struct WeatherView: View {
                 }
             }
             .frame(height: 170)
+            .environment(\.locale, Fmt.italian)
             Text("Linea: vento medio · area rossa: raffiche (m/s)")
                 .font(.caption2).foregroundStyle(.secondary)
         }
