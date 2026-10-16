@@ -24,14 +24,25 @@ struct TripView: View {
                 .listRowInsets(EdgeInsets(top: 0, leading: 4, bottom: 0, trailing: 4))
 
                 if trip.stops.isEmpty {
-                    ContentUnavailableView {
-                        Label("Nessuna tappa", systemImage: "map")
-                    } description: {
+                    VStack(alignment: .leading, spacing: 12) {
+                        Text("NESSUNA TAPPA").font(.display(28, .bold)).foregroundStyle(Theme.text)
                         Text("Per ogni tappa: meteo del giorno, allerte, mare e strade lungo il tragitto.")
-                    } actions: {
-                        Button("Aggiungi la prima tappa") { creating = true }
-                            .buttonStyle(.borderedProminent)
+                            .font(.app(.subheadline)).foregroundStyle(Theme.dim)
+                        Button { creating = true } label: {
+                            HStack {
+                                Text("AGGIUNGI LA PRIMA TAPPA").font(.mono(12, .semibold)).tracking(0.8)
+                                Spacer()
+                                Text("+").font(.mono(16, .semibold))
+                            }
+                            .foregroundStyle(Theme.onAccent)
+                            .padding(.horizontal, 14)
+                            .frame(height: 48)
+                            .background(Theme.accent)
+                        }
+                        .buttonStyle(.plain)
                     }
+                    .padding(.vertical, 12)
+                    .listRowSeparator(.hidden)
                 }
                 ForEach(trip.stops) { stop in
                     Section {

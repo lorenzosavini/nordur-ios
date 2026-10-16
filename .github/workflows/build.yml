@@ -23,6 +23,16 @@ jobs:
       - name: Xcode version
         run: xcodebuild -version
 
+      - name: Engine unit tests (Swift, real sources)
+        run: |
+          set -o pipefail
+          swiftc -O -o engine-tests Shared/Core/Geo.swift Shared/Core/Format.swift Shared/Core/Dates.swift \
+            Shared/Services/Astro.swift Shared/Services/AuroraEngine.swift Tests/EngineTests/main.swift 2>&1 | tee engine-tests.log
+          ./engine-tests | tee -a engine-tests.log
+
+      - name: Backend unit tests (Node)
+        run: node --test backend/test/*.test.mjs
+
       - name: Build app + widget (simulator, no signing)
         run: |
           set -o pipefail
@@ -51,10 +61,10 @@ jobs:
           xcrun simctl privacy "$UDID" grant location-always it.lorenzosavini.nordur || true
           xcrun simctl location "$UDID" set 63.4186,-19.0060 || true
           mkdir -p shots
-          for shot in today@light today weather@light weather map:wind drive@light trip@light aurora kp kp@light account@light; do
+          for shot in today@light today weather@light map:wind drive@light trip@light kp@light kp kp:day@light kp:three@light kp:long@light account@light; do
             base="${shot%%@*}"; mode="dark"; [ "$base" != "$shot" ] && mode="${shot#*@}"
             tab="${base%%:*}"; layer="${base#*:}"; [ "$layer" = "$base" ] && layer="wind"
-            xcrun simctl launch "$UDID" it.lorenzosavini.nordur -initialTab "$tab" -map.layer "$layer" -appearance "$mode"
+            xcrun simctl launch "$UDID" it.lorenzosavini.nordur -initialTab "$tab" -map.layer "$layer" -auroraMode "$layer" -appearance "$mode"
             sleep 25
             xcrun simctl io "$UDID" screenshot "shots/$(echo "$shot" | tr ':@' '--').png"
             if xcrun simctl spawn "$UDID" launchctl list | grep -q it.lorenzosavini.nordur; then
@@ -84,8 +94,9 @@ jobs:
       - name: Publish screenshots to branch ci-screenshots
         if: always()
         run: |
-          [ -d shots ] || exit 0
+          mkdir -p shots
           cp build.log shots/ || true
+          cp engine-tests.log shots/ || true
           mv shots /tmp/shots
           git config user.name "nordur-ci"
           git config user.email "ci@users.noreply.github.com"

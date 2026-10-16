@@ -22,6 +22,8 @@ final class AppModel {
         case ferry = "Herjólfur"
         case grid = "Mappa meteo"
         case radar = "Radar"
+        case aurora = "Aurora (NOAA/GFZ/NASA)"
+        case sites = "Località aurora"
     }
 
     let location = LocationManager()
@@ -40,8 +42,14 @@ final class AppModel {
     var kp: Fetched<[KpPoint]>?
     var ovation: Fetched<OvationGrid>?
     var solarWind: Fetched<SolarWind>?
-    /// NOAA + NASA cross-check and blended Kp.
-    var space: Fetched<SpaceIntel>?
+    /// Validated space-weather state (NOAA SWPC, GFZ, NASA DONKI) from nordur-api.
+    var aurora: Fetched<AuroraState>?
+    /// MET Norway sky forecast at the reference observing sites.
+    var auroraSites: Fetched<AuroraSitesResponse>?
+    /// Engine output for the active place, hourly for 72 h (recomputed when inputs change).
+    private(set) var auroraSlots: [AuroraSlot] = []
+    /// Reference sites ranked by observability in the next 12 h.
+    private(set) var siteRanking: [SiteOutlook] = []
     var news: Fetched<[NewsItem]>?
     var webcams: Fetched<[WebcamSite]>?
     var fuel: Fetched<[FuelStation]>?
@@ -136,6 +144,7 @@ final class AppModel {
         apply(rf, .forecast) { self.forecast = $0 }
         apply(rm, .marine) { self.marine = $0 }
         apply(ra, .air) { self.air = $0 }
+        recomputeAurora()
     }
 
     /// Country-wide feeds; skipped if refreshed less than 5 minutes ago unless forced.
@@ -157,8 +166,7 @@ final class AppModel {
         apply(ro, .ovation) { self.ovation = $0 }
         apply(rs, .solarWind) { self.solarWind = $0 }
         apply(rn, .news) { self.news = $0 }
-        let intel = await SpaceIntelService.load(kpForecast: kp?.value ?? [])
-        space = Fetched(value: intel, date: Date(), isStale: kp?.isStale ?? false)
+        await refreshAurora()
         await refreshStatic()
     }
 
@@ -222,11 +230,34 @@ final class AppModel {
         (warnings?.value ?? []).filter { $0.covers(point) && $0.overlaps(start, end) }
     }
 
-    var auroraOutlook: AuroraOutlook? {
-        guard let forecast = forecast?.value else { return nil }
-        let blended = space?.value.blendedKp ?? []
-        return AuroraCalc.outlook(forecast: forecast, kp: blended.isEmpty ? (kp?.value ?? []) : blended, ovation: ovation?.value)
+    // MARK: - Aurora
+
+    /// Space-weather state every call (the backend caches for 60 s); sites every 30 min.
+    func refreshAurora() async {
+        let sitesOld = auroraSites.map { Date().timeIntervalSince($0.date) > 1800 || $0.isStale } ?? true
+        async let state = attempt { try await AuroraStateService.load() }
+        async let sites = attempt { sitesOld ? try await AuroraSitesService.load() : nil }
+        let (rs, rt) = await (state, sites)
+        apply(rs, .aurora) { self.aurora = $0 }
+        apply(rt, .sites) { if let fresh = $0 { self.auroraSites = fresh } }
+        recomputeAurora()
     }
+
+    func auroraInputs(for place: Coordinate, forecast: Forecast?) -> AuroraInputs {
+        AuroraInputs.make(place: place, forecast: forecast, state: aurora?.value, kp: kp?.value ?? [], ovation: ovation?.value)
+    }
+
+    func recomputeAurora() {
+        let place = activePlace.coordinate
+        let inputs = auroraInputs(for: place, forecast: forecast?.value)
+        auroraSlots = AuroraEngine.forecast(inputs)
+        if let sites = auroraSites?.value {
+            siteRanking = AuroraSitesService.rank(sites, base: inputs, from: useCurrentLocation ? location.coordinate : nil)
+        }
+    }
+
+    var auroraNow: AuroraSlot? { auroraSlots.first { abs($0.date.timeIntervalSinceNow) < 1800 } ?? auroraSlots.first }
+    var auroraBestTonight: AuroraSlot? { AuroraEngine.best(auroraSlots, within: 24) }
 
     var recentQuakes24h: [Quake] {
         let since = Date().addingTimeInterval(-24 * 3600)

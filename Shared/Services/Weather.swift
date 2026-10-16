@@ -41,6 +41,10 @@ enum WeatherService {
         var precip = h.precipitation ?? Array(repeating: nil, count: n)
         var code = h.weather_code ?? Array(repeating: nil, count: n)
         var cloud = h.cloud_cover ?? Array(repeating: nil, count: n)
+        var low = h.cloud_cover_low ?? Array(repeating: nil, count: n)
+        var mid = h.cloud_cover_mid ?? Array(repeating: nil, count: n)
+        var high = h.cloud_cover_high ?? Array(repeating: nil, count: n)
+        var fog: [Double?] = Array(repeating: nil, count: n)
         var wind = h.wind_speed_10m ?? Array(repeating: nil, count: n)
         var dir = h.wind_direction_10m ?? Array(repeating: nil, count: n)
         var gust = h.wind_gusts_10m ?? Array(repeating: nil, count: n)
@@ -53,6 +57,10 @@ enum WeatherService {
             temp[i] = d.air_temperature ?? temp[i]
             apparent[i] = d.apparent_air_temperature ?? apparent[i]
             cloud[i] = d.cloud_area_fraction ?? cloud[i]
+            low[i] = d.cloud_area_fraction_low ?? low[i]
+            mid[i] = d.cloud_area_fraction_medium ?? mid[i]
+            high[i] = d.cloud_area_fraction_high ?? high[i]
+            fog[i] = d.fog_area_fraction
             wind[i] = d.wind_speed ?? wind[i]
             dir[i] = d.wind_from_direction ?? dir[i]
             if let g = d.wind_speed_of_gust { gust[i] = g }
@@ -67,7 +75,8 @@ enum WeatherService {
         let hourly = Forecast.Hourly(
             time: h.time, temperature_2m: temp, apparent_temperature: apparent, precipitation_probability: prob,
             precipitation: precip, snowfall: h.snowfall, weather_code: code, cloud_cover: cloud, visibility: h.visibility,
-            wind_speed_10m: wind, wind_direction_10m: dir, wind_gusts_10m: gust, cape: h.cape, is_day: h.is_day)
+            wind_speed_10m: wind, wind_direction_10m: dir, wind_gusts_10m: gust, cape: h.cape, is_day: h.is_day,
+            cloud_cover_low: low, cloud_cover_mid: mid, cloud_cover_high: high, fog_area_fraction: fog)
 
         var current = base.current
         if let first = met.properties.timeseries.first(where: { $0.time.addingTimeInterval(3600) > Date() }) {
@@ -109,7 +118,9 @@ enum WeatherService {
             precipitation_probability: cut(h.precipitation_probability), precipitation: cut(h.precipitation), snowfall: cut(h.snowfall),
             weather_code: cut(h.weather_code), cloud_cover: cut(h.cloud_cover), visibility: cut(h.visibility),
             wind_speed_10m: cut(h.wind_speed_10m), wind_direction_10m: cut(h.wind_direction_10m), wind_gusts_10m: cut(h.wind_gusts_10m),
-            cape: cut(h.cape), is_day: cut(h.is_day))
+            cape: cut(h.cape), is_day: cut(h.is_day),
+            cloud_cover_low: cut(h.cloud_cover_low), cloud_cover_mid: cut(h.cloud_cover_mid),
+            cloud_cover_high: cut(h.cloud_cover_high), fog_area_fraction: cut(h.fog_area_fraction))
         guard let d = days else { return (hourly, nil) }
         let m = min(limitDays, d.time.count)
         func cutD<T>(_ a: [T?]?) -> [T?]? { a.map { Array($0.prefix(m)) } }
@@ -188,7 +199,9 @@ enum WeatherService {
             snowfall: nil, weather_code: series.map { METSymbol.code(block($0)?.summary.symbol_code) },
             cloud_cover: instant(\.cloud_area_fraction), visibility: nil, wind_speed_10m: instant(\.wind_speed),
             wind_direction_10m: instant(\.wind_from_direction), wind_gusts_10m: instant(\.wind_speed_of_gust), cape: nil,
-            is_day: series.map { Solar.isDay($0.time, at: c) ? 1 : 0 })
+            is_day: series.map { Solar.isDay($0.time, at: c) ? 1 : 0 },
+            cloud_cover_low: instant(\.cloud_area_fraction_low), cloud_cover_mid: instant(\.cloud_area_fraction_medium),
+            cloud_cover_high: instant(\.cloud_area_fraction_high), fog_area_fraction: instant(\.fog_area_fraction))
         let first = series.first { $0.time.addingTimeInterval(3600) > Date() } ?? series.first
         let d = first?.data.instant.details
         let current = first.map { f in
@@ -246,6 +259,9 @@ struct METResponse: Decodable {
         let apparent_air_temperature: Double?
         let air_pressure_at_sea_level: Double?
         let cloud_area_fraction: Double?
+        let cloud_area_fraction_low: Double?
+        let cloud_area_fraction_medium: Double?
+        let cloud_area_fraction_high: Double?
         let relative_humidity: Double?
         let wind_from_direction: Double?
         let wind_speed: Double?

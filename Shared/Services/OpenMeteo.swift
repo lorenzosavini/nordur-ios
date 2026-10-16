@@ -52,6 +52,11 @@ struct Forecast: Decodable {
         let wind_gusts_10m: [Double?]?
         let cape: [Double?]?
         let is_day: [Int?]?
+        // Cloud layers (aurora visibility). Low/mid/high from Open-Meteo or MET Norway; fog from MET only.
+        var cloud_cover_low: [Double?]? = nil
+        var cloud_cover_mid: [Double?]? = nil
+        var cloud_cover_high: [Double?]? = nil
+        var fog_area_fraction: [Double?]? = nil
     }
 
     struct Daily: Decodable {
@@ -89,7 +94,11 @@ struct Forecast: Decodable {
                 windDirection: h.wind_direction_10m.value(i),
                 gust: h.wind_gusts_10m.value(i),
                 cape: h.cape.value(i),
-                isDay: (h.is_day.value(i) ?? 1) == 1
+                isDay: (h.is_day.value(i) ?? 1) == 1,
+                cloudLow: h.cloud_cover_low.value(i),
+                cloudMid: h.cloud_cover_mid.value(i),
+                cloudHigh: h.cloud_cover_high.value(i),
+                fog: h.fog_area_fraction.value(i)
             )
         }
     }
@@ -153,6 +162,10 @@ struct HourPoint: Identifiable {
     let gust: Double?
     let cape: Double?
     let isDay: Bool
+    var cloudLow: Double? = nil
+    var cloudMid: Double? = nil
+    var cloudHigh: Double? = nil
+    var fog: Double? = nil
 
     var windRisk: Risk { Risk.wind(mean: wind, gust: gust) }
     var iceRisk: Risk { Risk.ice(temperature: temperature, precipitation: precipitation, snowfall: snowfall) }
@@ -276,7 +289,7 @@ enum OpenMeteo {
             "latitude": String(c.lat),
             "longitude": String(c.lon),
             "current": "temperature_2m,apparent_temperature,relative_humidity_2m,precipitation,snowfall,weather_code,cloud_cover,pressure_msl,wind_speed_10m,wind_direction_10m,wind_gusts_10m,is_day",
-            "hourly": "temperature_2m,apparent_temperature,precipitation_probability,precipitation,snowfall,weather_code,cloud_cover,visibility,wind_speed_10m,wind_direction_10m,wind_gusts_10m,cape,is_day",
+            "hourly": "temperature_2m,apparent_temperature,precipitation_probability,precipitation,snowfall,weather_code,cloud_cover,cloud_cover_low,cloud_cover_mid,cloud_cover_high,visibility,wind_speed_10m,wind_direction_10m,wind_gusts_10m,cape,is_day",
             "daily": "weather_code,temperature_2m_max,temperature_2m_min,precipitation_sum,snowfall_sum,precipitation_probability_max,wind_speed_10m_max,wind_gusts_10m_max,wind_direction_10m_dominant,sunrise,sunset,daylight_duration",
             "wind_speed_unit": "ms",
             "timezone": "auto",

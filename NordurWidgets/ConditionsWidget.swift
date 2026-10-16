@@ -103,7 +103,7 @@ struct ConditionsEntry: TimelineEntry {
 
     static let placeholder = ConditionsEntry(
         date: Date(), placeName: "Reykjavík", temperature: 6, code: 3, isDay: true, wind: 9, gust: 17, windDirection: 200,
-        maxGust12h: 22, warning: nil, warningCount: 0, auroraScore: 40, auroraTime: Date(), zone: .iceland)
+        maxGust12h: 22, warning: nil, warningCount: 0, auroraScore: 3, auroraTime: Date(), zone: .iceland)
 }
 
 struct ConditionsProvider: AppIntentTimelineProvider {
@@ -136,13 +136,16 @@ struct ConditionsProvider: AppIntentTimelineProvider {
 
         async let forecastResult = attempt { try await WeatherService.forecast(c).value }
         async let warningsResult = attempt { try await IMO.warnings().value }
-        async let kpResult = attempt { try await SpaceWeather.kpForecast().value }
+        async let stateResult = attempt { try await AuroraStateService.load().value }
         let forecast = try? await forecastResult.get()
         let warnings = ((try? await warningsResult.get()) ?? []).filter { $0.covers(c) }
-        let kp = (try? await kpResult.get()) ?? []
+        let state = try? await stateResult.get()
+        var kp: [KpPoint] = []
+        if state == nil { kp = (try? await SpaceWeather.kpForecast().value) ?? [] }
 
         let current = forecast?.current
-        let outlook = forecast.map { AuroraCalc.outlook(forecast: $0, kp: kp, ovation: nil) }
+        let slots = AuroraEngine.forecast(AuroraInputs.make(place: c, forecast: forecast, state: state, kp: kp, ovation: nil), hours: 24)
+        let best = AuroraEngine.best(slots, within: 24)
         return ConditionsEntry(
             date: Date(),
             placeName: name,
@@ -155,8 +158,8 @@ struct ConditionsProvider: AppIntentTimelineProvider {
             maxGust12h: forecast?.upcomingHours(12).compactMap(\.gust).max(),
             warning: warnings.first,
             warningCount: warnings.count,
-            auroraScore: outlook?.hasDarkness == true ? outlook?.best?.score : nil,
-            auroraTime: outlook?.best?.date,
+            auroraScore: best?.observability.rawValue,
+            auroraTime: best?.date,
             zone: forecast?.timeZone ?? .iceland
         )
     }
@@ -195,8 +198,8 @@ struct ConditionsWidgetView: View {
                 Divider()
                 VStack(alignment: .leading, spacing: 6) {
                     warningBlock
-                    if let score = entry.auroraScore {
-                        Label("Aurora \(score)/100\(entry.auroraTime.map { " · \(Fmt.time($0, in: entry.zone))" } ?? "")", systemImage: "moon.stars.fill")
+                    if let raw = entry.auroraScore, let cls = ObservabilityClass(rawValue: raw) {
+                        Label("Aurora: \(cls.label.lowercased())\(entry.auroraTime.map { " · \(Fmt.time($0, in: entry.zone))" } ?? "")", systemImage: "moon.stars.fill")
                             .font(.app(.caption)).foregroundStyle(.secondary)
                     }
                     Label("Raffica max 12 h: \(Fmt.ms(entry.maxGust12h))", systemImage: "wind")
@@ -271,14 +274,11 @@ struct AuroraWidgetView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 6) {
             Label("Aurora", systemImage: "moon.stars.fill").font(.app(.caption, .semibold)).foregroundStyle(.secondary)
-            if let score = entry.auroraScore {
-                Gauge(value: Double(score), in: 0...100) {
-                    Text("")
-                } currentValueLabel: {
-                    Text("\(score)")
-                }
-                .gaugeStyle(.accessoryCircular)
-                
+            if let raw = entry.auroraScore, let cls = ObservabilityClass(rawValue: raw) {
+                Text(cls.label.uppercased()).font(.display(18, .bold)).lineLimit(2).minimumScaleFactor(0.7)
+                Gauge(value: Double(raw), in: 0...4) { Text("") }
+                    .gaugeStyle(.accessoryLinearCapacity)
+                    .tint(Theme.aurora)
                 if let time = entry.auroraTime {
                     Text("Meglio verso le \(Fmt.time(time, in: entry.zone))").font(.app(.caption2))
                 }

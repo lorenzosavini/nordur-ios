@@ -80,7 +80,7 @@ struct TodayView: View {
         let worstWarning = here.map(\.color).max()
         let risk = max(driving.risk, worstWarning?.risk ?? .ok)
         let headline: String = {
-            if let w = here.first { return "\(w.color.label) · \(w.event.isEmpty ? w.headline : w.event)" }
+            if let w = here.first { return "\(w.color.label) · \(w.hazardItalian) · \(w.region)" }
             switch driving.risk {
             case .ok: return "Nessuna criticità nelle prossime 12 ore"
             default: return "Guida: \(driving.risk.label.lowercased()) · raffiche fino a \(Fmt.ms(driving.maxGust))"
@@ -129,7 +129,7 @@ struct TodayView: View {
                 }
                 ReadingGrid(items: [
                     Reading(label: "Vento", value: Fmt.number(current.wind_speed_10m), unit: "m/s",
-                            note: Fmt.compass(current.wind_direction_10m), size: 28),
+                            note: current.wind_direction_10m == nil ? nil : "da \(Fmt.compass(current.wind_direction_10m))", size: 28),
                     Reading(label: "Raffiche", value: Fmt.number(current.wind_gusts_10m), unit: "m/s",
                             tint: windTint(current.wind_gusts_10m), size: 28),
                     Reading(label: "Precip.", value: Fmt.number(current.precipitation, decimals: 1), unit: "mm/h", size: 28),
@@ -313,14 +313,25 @@ struct TodayView: View {
         NavigationLink { AuroraView() } label: {
             VStack(alignment: .leading, spacing: 10) {
                 Text("AURORA · STANOTTE").font(.mono(9.5)).foregroundStyle(Theme.faint)
-                if let outlook = model.auroraOutlook {
-                    let score = outlook.best?.score ?? 0
-                    ArcGauge(value: Double(score) / 100, color: Theme.aurora, label: "\(score)", caption: "/100")
-                    Text(outlook.verdict.text).font(.app(.caption, .medium)).foregroundStyle(Theme.text).lineLimit(2)
-                    if outlook.hasDarkness {
-                        MiniBars(values: outlook.darkHours.map { Double($0.score) }, maxValue: 100, color: Theme.aurora, height: 20)
+                if !model.auroraSlots.isEmpty {
+                    let best = model.auroraBestTonight
+                    let cls = best?.observability ?? .veryPoor
+                    Text(cls.label.uppercased()).font(.display(24, .bold))
+                        .foregroundStyle(cls >= .good ? Theme.aurora : cls == .moderate ? Theme.caution : Theme.text)
+                        .lineLimit(2).minimumScaleFactor(0.7)
+                    HStack(spacing: 2) {
+                        ForEach(0..<4, id: \.self) { i in
+                            Rectangle().fill(i < cls.rawValue ? Theme.aurora : Theme.hairline).frame(height: 8)
+                        }
                     }
-                    Text("MAPPA LIVE →").font(.mono(9.5, .semibold)).foregroundStyle(Theme.accent)
+                    if let best {
+                        Text("VERSO LE \(Fmt.time(best.date, in: zone)) · \(best.reasons.first ?? best.darkness.label)")
+                            .font(.mono(9)).foregroundStyle(Theme.dim).lineLimit(3)
+                    } else {
+                        Text("NESSUNA ORA DI BUIO").font(.mono(9)).foregroundStyle(Theme.dim)
+                    }
+                    MiniBars(values: model.auroraSlots.prefix(24).map(\.index), maxValue: 0.6, color: Theme.aurora, height: 20)
+                    Text("PREVISIONE COMPLETA →").font(.mono(9.5, .semibold)).foregroundStyle(Theme.accent)
                 } else {
                     ProgressView().tint(Theme.dim)
                 }

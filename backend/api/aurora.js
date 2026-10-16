@@ -1,0 +1,114 @@
+// GET /api/aurora -> validated, normalised space-weather state for the app.
+//
+// One request here replaces ~15 requests (and ~6 MB) per device: the result is
+// cached on Vercel's CDN for 60 s, so NOAA/GFZ/NASA see one request per minute
+// at most, whatever the number of users.
+//
+// Each source carries provenance (provider, endpoint, observed/valid times)
+// and a status: ok, stale (too old to be shown as live) or error.
+// A snapshot is archived once per 3-hour Kp block for backtesting.
+import * as S from "../lib/sources.js";
+import { loadDonki } from "../lib/donki.js";
+import { blend } from "../lib/kp.js";
+import { send } from "../lib/core.js";
+import { archiveSnapshot } from "../lib/archive.js";
+
+// Maximum age before a "live" source is flagged stale (minutes).
+const LIVE_LIMITS = { solarWind: 15, kpEstimated: 20, ovation: 25, hemisphericPower: 25 };
+
+async function settle(name, loader) {
+  try {
+    const r = await loader();
+    return [name, { status: "ok", ...r }];
+  } catch (e) {
+    console.error(name, e.message);
+    return [name, { status: "error", error: String(e.message || e), data: null, meta: null }];
+  }
+}
+
+function ageMinutes(isoTime, now) {
+  const t = Date.parse(isoTime || "");
+  return Number.isFinite(t) ? (now - t) / 60e3 : null;
+}
+
+export async function buildState(now = Date.now()) {
+  const entries = await Promise.all([
+    settle("kpForecast", S.kpForecast),
+    settle("kpEstimated", S.kpEstimated),
+    settle("kpGFZ", S.kpGFZ),
+    settle("solarWind", S.solarWind),
+    settle("ovation", S.ovation),
+    settle("enlil", S.enlil),
+    settle("scales", S.scales),
+    settle("alerts", S.alerts),
+    settle("hemisphericPower", S.hemisphericPower),
+    settle("outlook27", S.outlook27),
+    settle("forecast45", S.forecast45),
+    settle("donki", async () => {
+      const d = await loadDonki();
+      if (!d.digest) throw new Error(d.errors.join("; ") || "DONKI non disponibile");
+      return { data: d.digest, meta: { provider: "NASA CCMC DONKI", endpoint: "https://kauai.ccmc.gsfc.nasa.gov/DONKI/WS/get/", fetchedAt: new Date(d.fetchedAt).toISOString(), cachedCopy: d.stale, errors: d.errors } };
+    }),
+  ]);
+  const src = Object.fromEntries(entries);
+
+  // Freshness: a source that answered but carries old data is "stale".
+  const observedAt = {
+    solarWind: src.solarWind.meta?.observedAt,
+    kpEstimated: src.kpEstimated.meta?.observedAt,
+    ovation: src.ovation.meta?.observedAt,
+    hemisphericPower: src.hemisphericPower.meta?.observedAt,
+  };
+  for (const [name, limit] of Object.entries(LIVE_LIMITS)) {
+    const age = ageMinutes(observedAt[name], now);
+    if (src[name].status === "ok" && (age == null || age > limit)) src[name].status = "stale";
+    if (src[name].meta) src[name].meta.ageMinutes = age == null ? null : Math.round(age);
+  }
+  if (src.donki.meta?.cachedCopy) src.donki.status = "stale";
+
+  const usable = (name) => (src[name].status === "ok" ? src[name].data : null);
+  const kpBlocks = src.kpForecast.data
+    ? blend({
+        forecast: src.kpForecast.data,
+        estimated: usable("kpEstimated"),
+        gfz: src.kpGFZ.data,
+        newellKp: usable("solarWind")?.newellKp ?? null,
+        donki: src.donki.data,
+        enlil: src.enlil.data,
+        now,
+      })
+    : [];
+
+  const sources = Object.fromEntries(Object.entries(src).map(([k, v]) => [k, { status: v.status, error: v.error || null, ...(v.meta || {}) }]));
+  const est = src.kpEstimated.data || [];
+  return {
+    generated: new Date(now).toISOString(),
+    sources,
+    kp: {
+      blocks: kpBlocks,
+      estimated: est.length ? { t: new Date(est.at(-1).t).toISOString(), kp: est.at(-1).kp, series: est.filter((_, i) => i % 10 === 0).slice(-18).map((r) => ({ t: new Date(r.t).toISOString(), kp: r.kp })) } : null,
+      gfz: (src.kpGFZ.data || []).slice(-8).map((r) => ({ t: new Date(r.t).toISOString(), kp: r.kp, status: r.status })),
+    },
+    solarWind: src.solarWind.data,
+    ovation: src.ovation.data,
+    enlil: src.enlil.data,
+    scales: src.scales.data,
+    alerts: src.alerts.data,
+    hemisphericPower: src.hemisphericPower.data,
+    donki: src.donki.data,
+    longTerm: { outlook27: src.outlook27.data, forecast45: src.forecast45.data },
+  };
+}
+
+export default async function handler(req, res) {
+  const state = await buildState();
+  // Archive once per Kp block. Awaited (a serverless function may freeze once the
+  // response is sent) but capped at 4 s; failures never affect the response.
+  await Promise.race([
+    archiveSnapshot(state).catch((e) => console.error("archive", e.message)),
+    new Promise((resolve) => setTimeout(resolve, 4000)),
+  ]);
+  const essential = state.sources.kpForecast.status !== "error" || state.sources.solarWind.status !== "error";
+  res.setHeader("Cache-Control", essential ? "public, s-maxage=60, stale-while-revalidate=120" : "no-store");
+  return send(res, essential ? 200 : 502, state);
+}

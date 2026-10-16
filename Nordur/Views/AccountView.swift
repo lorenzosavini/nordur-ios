@@ -47,14 +47,14 @@ struct AccountView: View {
             .overlay(Rectangle().strokeBorder(Theme.rule, lineWidth: 1))
 
             field("EMAIL") {
-                TextField("nome@esempio.it", text: $email)
+                TextField("", text: $email, prompt: Text("nome@esempio.it").foregroundStyle(Theme.faint))
                     .textContentType(.emailAddress)
                     .keyboardType(.emailAddress)
                     .textInputAutocapitalization(.never)
                     .autocorrectionDisabled()
             }
             field("PASSWORD") {
-                SecureField(register ? "Almeno 8 caratteri" : "Password", text: $password)
+                SecureField("", text: $password, prompt: Text(register ? "Almeno 8 caratteri" : "Password").foregroundStyle(Theme.faint))
                     .textContentType(register ? .newPassword : .password)
             }
 

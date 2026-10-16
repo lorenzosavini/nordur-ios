@@ -127,6 +127,15 @@ struct WeatherWarning: Decodable, Identifiable {
         if type.contains("avalanche") { return "mountain.2.fill" }
         return "exclamationmark.triangle.fill"
     }
+
+    /// Italian name of the hazard (the CAP feed's English event is "Weather Warning: Wind" and similar).
+    var hazardItalian: String {
+        let type = (alertTypes.first ?? event).lowercased()
+        let table: [(String, String)] = [("blizzard", "Bufera di neve"), ("snow", "Neve"), ("wind", "Vento"), ("rain", "Pioggia"),
+                                         ("thunder", "Temporali"), ("lightning", "Fulmini"), ("ice", "Ghiaccio"), ("frost", "Gelo"),
+                                         ("coastal", "Mareggiata"), ("wave", "Mareggiata"), ("sea", "Mare"), ("avalanche", "Valanghe")]
+        return table.first { type.contains($0.0) }?.1 ?? "Meteo"
+    }
 }
 
 struct Quake: Identifiable {

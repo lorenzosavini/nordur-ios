@@ -215,19 +215,24 @@ final class AlertCenter: NSObject {
             input.news = (try? await n.get()) ?? []
         }
 
-        if settings.isOn(.aurora), Self.isEvening(now) {
-            var kp = model?.kp?.value ?? []
-            if kp.isEmpty, let fetched = try? await SpaceWeather.kpForecast() { kp = fetched.value }
-            let intel: SpaceIntel
-            if let cached = model?.space?.value { intel = cached } else { intel = await SpaceIntelService.load(kpForecast: kp) }
-            if !intel.blend.isEmpty { kp = intel.blendedKp }
-            input.cmeArrivals = intel.donki?.upcoming ?? []
-            input.spaceAlerts = intel.alerts
-            input.kpNeeded = AuroraCalc.kpNeeded(latitude: currentPlace.coordinate.lat)
-            if let forecast = try? await WeatherService.forecast(currentPlace.coordinate).value {
-                input.aurora = AuroraCalc.outlook(forecast: forecast, kp: kp, ovation: model?.ovation?.value)
-                input.auroraZone = forecast.timeZone
+        if settings.isOn(.aurora) {
+            // Space weather is checked at any hour (CMEs, Bz, NOAA alerts);
+            // the observing conditions only matter after dark, which the engine knows.
+            let state: AuroraState?
+            if let model {
+                await model.refreshAurora()
+                state = model.aurora?.value
+            } else {
+                state = try? await AuroraStateService.load().value
             }
+            let forecast = (current != nil && model?.useCurrentLocation == true) ? model?.forecast?.value : nil
+            let weather: Forecast?
+            if let forecast { weather = forecast } else { weather = try? await WeatherService.forecast(currentPlace.coordinate).value }
+            let inputs = AuroraInputs.make(place: currentPlace.coordinate, forecast: weather, state: state,
+                                           kp: model?.kp?.value ?? [], ovation: model?.ovation?.value, now: now)
+            input.auroraSlots = AuroraEngine.forecast(inputs, hours: 12)
+            input.auroraState = state
+            input.auroraZone = weather?.timeZone ?? .iceland
         }
 
         if settings.isOn(.flight), !settings.followedFlights.isEmpty {
@@ -237,13 +242,6 @@ final class AlertCenter: NSObject {
             if let fetched = try? await TransportService.herjolfur() { input.ferry = fetched.value }
         }
         return input
-    }
-
-    private static func isEvening(_ date: Date) -> Bool {
-        var calendar = Calendar(identifier: .gregorian)
-        calendar.timeZone = .iceland
-        let hour = calendar.component(.hour, from: date)
-        return hour >= 15 || hour < 4
     }
 
     private func deliver(_ candidates: [AlertEvent]) {

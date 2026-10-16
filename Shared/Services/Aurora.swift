@@ -1,7 +1,8 @@
 import Foundation
 
-// NOAA Space Weather Prediction Center (swpc.noaa.gov): planetary Kp forecast,
-// OVATION aurora probability model (30–90 min ahead) and real-time solar wind.
+// NOAA Space Weather Prediction Center (swpc.noaa.gov), fetched directly by the
+// device: Kp forecast and OVATION for the map and as fallback when nordur-api
+// is unreachable. The forecasting logic lives in AuroraEngine.swift.
 
 struct KpPoint: Identifiable {
     var id: Date { date }
@@ -90,59 +91,9 @@ struct SolarWind {
     var favourable: Bool { (bz ?? 0) <= -5 && (speed ?? 0) >= 400 }
 }
 
-struct AuroraHour: Identifiable {
-    var id: Date { date }
-    let date: Date
-    let kp: Double?
-    let cloudCover: Double?
-    let isDark: Bool
-    let score: Int
-}
-
-struct AuroraOutlook {
-    let hours: [AuroraHour]
-    let kpNeeded: Double
-
-    var darkHours: [AuroraHour] { hours.filter(\.isDark) }
-    var best: AuroraHour? { darkHours.max { $0.score < $1.score } }
-    var maxKp: Double? { darkHours.compactMap(\.kp).max() }
-    var hasDarkness: Bool { !darkHours.isEmpty }
-
-    var verdict: (text: String, risk: Risk) {
-        guard hasDarkness else { return ("Nessuna ora di buio nelle prossime 24 ore", .ok) }
-        let score = best?.score ?? 0
-        if score >= 60 { return ("Probabilità alta", .ok) }
-        if score >= 35 { return ("Probabilità media", .caution) }
-        if score >= 15 { return ("Probabilità bassa", .warning) }
-        return ("Probabilità molto bassa", .danger)
-    }
-}
-
-enum AuroraCalc {
-    /// Rough Kp needed to see aurora at a given geographic latitude (northern Europe).
-    static func kpNeeded(latitude: Double) -> Double {
-        min(9, max(0.5, (66 - abs(latitude)) / 2.5 + 1))
-    }
-
+enum KpLookup {
     static func kp(at date: Date, in points: [KpPoint]) -> Double? {
         points.last { $0.date <= date && date < $0.date.addingTimeInterval(3 * 3600) }?.kp
-    }
-
-    static func outlook(forecast: Forecast, kp: [KpPoint], ovation: OvationGrid?, now: Date = Date()) -> AuroraOutlook {
-        let place = Coordinate(lat: forecast.latitude, lon: forecast.longitude)
-        let needed = kpNeeded(latitude: place.lat)
-        let ovationNow = ovation?.horizonProbability(at: place)
-        let hours = forecast.upcomingHours(24, from: now).map { hour -> AuroraHour in
-            let kpValue = AuroraCalc.kp(at: hour.date, in: kp)
-            var activity = kpValue.map { min(1, max(0, ($0 - needed + 1) / 4)) } ?? 0
-            if let ovationNow, abs(hour.date.timeIntervalSince(now)) < 2 * 3600 {
-                activity = max(activity, min(1, ovationNow / 30))
-            }
-            let clear = 1 - min(100, max(0, hour.cloudCover ?? 100)) / 100
-            let score = hour.isDay ? 0 : Int((activity * clear * 100).rounded())
-            return AuroraHour(date: hour.date, kp: kpValue, cloudCover: hour.cloudCover, isDark: !hour.isDay, score: score)
-        }
-        return AuroraOutlook(hours: hours, kpNeeded: needed)
     }
 }
 

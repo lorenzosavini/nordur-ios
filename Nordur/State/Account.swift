@@ -56,6 +56,13 @@ final class Account {
         UserDefaults.standard.removeObject(forKey: "sync.last")
     }
 
+    /// Reports an aurora sighting at the given position (rounded to ~1 km by the server).
+    func reportSighting(at c: Coordinate, nakedEye: Bool, camera: Bool, strength: String?) async throws {
+        var body: [String: Any] = ["lat": c.lat, "lon": c.lon, "nakedEye": nakedEye, "camera": camera]
+        if let strength { body["strength"] = strength }
+        _ = try await request("sightings", method: "POST", body: try JSONSerialization.data(withJSONObject: body))
+    }
+
     /// Deletes every document stored online for this account.
     func deleteRemoteData() async throws {
         _ = try await request("data", method: "DELETE")

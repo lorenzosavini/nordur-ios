@@ -215,7 +215,7 @@ struct MapScreen: View {
         } else if layer == .aurora {
             HStack {
                 Image(systemName: "moon.stars.fill").foregroundStyle(.secondary)
-                Text("Ovale OVATION previsto per le \(Fmt.time(model.ovation?.value.forecastTime, in: .iceland)) · Kp \(Fmt.number(model.kp.flatMap { AuroraCalc.kp(at: Date(), in: $0.value) }, decimals: 1))")
+                Text("Ovale OVATION previsto per le \(Fmt.time(model.ovation?.value.forecastTime, in: .iceland)) · Kp \(Fmt.number(model.kp.flatMap { KpLookup.kp(at: Date(), in: $0.value) }, decimals: 1))")
                     .font(.app(.caption))
                 Spacer()
             }

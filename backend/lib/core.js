@@ -65,11 +65,11 @@ export async function readObject(pathname) {
   return decrypt(Buffer.concat(chunks));
 }
 
-export async function writeObject(pathname, obj) {
+export async function writeObject(pathname, obj, { overwrite = true } = {}) {
   await put(pathname, encrypt(obj), {
     access: "private",
     addRandomSuffix: false,
-    allowOverwrite: true,
+    allowOverwrite: overwrite,
     contentType: "application/octet-stream",
   });
 }

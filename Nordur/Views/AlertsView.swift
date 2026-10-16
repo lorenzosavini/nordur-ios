@@ -147,7 +147,10 @@ struct AlertSettingsView: View {
                 Stepper("Strade chiuse entro \(Int(draft.roadRadiusKm)) km", value: $draft.roadRadiusKm, in: 10...150, step: 10)
                 Stepper("Terremoti da M\(Fmt.number(draft.quakeMagnitude, decimals: 1))", value: $draft.quakeMagnitude, in: 1...6, step: 0.5)
                 Stepper("…entro \(Int(draft.quakeRadiusKm)) km", value: $draft.quakeRadiusKm, in: 10...400, step: 10)
-                Stepper("Aurora da punteggio \(draft.auroraScore)", value: $draft.auroraScore, in: 15...90, step: 5)
+                Picker("Aurora: avvisa da", selection: Binding(get: { draft.auroraClass.rawValue }, set: { draft.auroraMinClass = $0 })) {
+                    ForEach([ObservabilityClass.moderate, .good, .excellent], id: \.rawValue) { Text($0.label).tag($0.rawValue) }
+                }
+                Stepper("Avvisi NOAA e CME NASA da Kp \(Fmt.number(draft.auroraKp))", value: Binding(get: { draft.auroraKp }, set: { draft.auroraKpAlert = $0 }), in: 3...8, step: 1)
             }
 
             Section {

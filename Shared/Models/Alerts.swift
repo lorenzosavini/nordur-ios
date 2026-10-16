@@ -44,6 +44,8 @@ struct AlertEvent: Codable, Identifiable, Hashable {
     let body: String
     var coordinate: Coordinate?
     var read: Bool = false
+    /// After this time the condition no longer applies (aurora windows, space-weather alerts).
+    var expires: Date?
 
     var risk: Risk { Risk(rawValue: severity) ?? .caution }
 }
@@ -56,7 +58,11 @@ struct AlertSettings: Codable, Equatable {
     var roadRadiusKm = 40.0
     var quakeMagnitude = 3.0
     var quakeRadiusKm = 80.0
-    var auroraScore = 50
+    var auroraScore = 50              // legacy (score removed), kept so stored settings still decode
+    /// Minimum observability class for aurora notifications (ObservabilityClass raw value).
+    var auroraMinClass: Int?
+    /// NOAA K-index alerts and NASA CMEs notify from this Kp.
+    var auroraKpAlert: Double?
     var spoken = true
     var backgroundLocation = true     // position-based checks with the app closed (needs "Always")
     var followedFlights: [String] = []
@@ -80,6 +86,9 @@ struct AlertSettings: Codable, Equatable {
     }
 
     func isOn(_ category: AlertCategory) -> Bool { enabled.contains(category) }
+
+    var auroraClass: ObservabilityClass { ObservabilityClass(rawValue: auroraMinClass ?? ObservabilityClass.good.rawValue) ?? .good }
+    var auroraKp: Double { auroraKpAlert ?? 5 }
 }
 
 /// Everything the engine looks at in one pass.
@@ -98,13 +107,10 @@ struct AlertInput {
     var roads: RoadNetwork?
     var quakes: [Quake] = []
     var news: [NewsItem] = []
-    var aurora: AuroraOutlook?
+    /// Aurora engine output at the current position, and the space-weather state behind it.
+    var auroraSlots: [AuroraSlot] = []
+    var auroraState: AuroraState?
     var auroraZone: TimeZone = .iceland
-    /// CMEs NASA expects at Earth, and the Kp needed at the current latitude.
-    var cmeArrivals: [DonkiDigest.Arrival] = []
-    var kpNeeded: Double = 2
-    /// NOAA geomagnetic K-index alerts and warnings.
-    var spaceAlerts: [SpaceAlert] = []
     var flights: [Flight] = []
     var ferry: FerryNotice?
     var now = Date()
@@ -186,33 +192,8 @@ enum AlertEngine {
             }
         }
 
-        if settings.isOn(.aurora), let aurora = input.aurora, let best = aurora.best,
-           best.score >= settings.auroraScore, best.date.timeIntervalSince(now) <= 6 * 3600 {
-            let night = Fmt.day(now.addingTimeInterval(-12 * 3600), in: input.auroraZone)
-            events.append(AlertEvent(
-                id: "a:\(night)", date: now, category: .aurora, severity: Risk.ok.rawValue,
-                title: "Aurora probabile stanotte",
-                body: "Punteggio \(best.score)/100 verso le \(Fmt.time(best.date, in: input.auroraZone)), nuvole \(Fmt.percent(best.cloudCover)), Kp \(Fmt.number(best.kp, decimals: 1))."))
-        }
-
         if settings.isOn(.aurora) {
-            // NASA DONKI: a CME strong enough for this latitude arriving within 36 h.
-            for cme in input.cmeArrivals {
-                guard let arrival = cme.arrivalDate, let kp = cme.expectedKp, kp >= input.kpNeeded,
-                      arrival > now.addingTimeInterval(-6 * 3600), arrival < now.addingTimeInterval(36 * 3600) else { continue }
-                let range = cme.kp.map { "Kp \(Fmt.number($0.min, decimals: 0))–\(Fmt.number($0.max, decimals: 0))" } ?? "Kp \(Fmt.number(kp, decimals: 0))"
-                events.append(AlertEvent(
-                    id: "cme:\(cme.id)", date: now, category: .aurora, severity: (kp >= 7 ? Risk.warning : Risk.caution).rawValue,
-                    title: cme.glancing ? "CME di striscio in arrivo" : "Espulsione di massa coronale in arrivo",
-                    body: "NASA prevede l'impatto verso \(Fmt.dayTime(arrival, in: input.auroraZone)) (±7 h), \(range). Tieni d'occhio il cielo e le nuvole."))
-            }
-            // NOAA SWPC: K-index warnings/alerts reaching what this latitude needs.
-            for alert in input.spaceAlerts {
-                guard let k = alert.kp, Double(k) >= input.kpNeeded else { continue }
-                events.append(AlertEvent(
-                    id: "swpc:\(alert.id)", date: now, category: .aurora, severity: (k >= 7 ? Risk.warning : Risk.caution).rawValue,
-                    title: "NOAA: attività geomagnetica Kp \(k)", body: alert.title))
-            }
+            events += auroraEvents(input, settings: settings)
         }
 
         if settings.isOn(.flight) {
@@ -233,6 +214,89 @@ enum AlertEngine {
                 title: "Herjólfur – nuovo avviso", body: String(ferry.text.prefix(240))))
         }
 
+        return events
+    }
+}
+
+extension AlertEngine {
+    /// Aurora notifications. They report conditions verified in the data and
+    /// never promise a visible aurora. Keys are bucketed by time (cooldown) and
+    /// each event carries an expiry.
+    static func auroraEvents(_ input: AlertInput, settings: AlertSettings) -> [AlertEvent] {
+        var events: [AlertEvent] = []
+        let now = input.now, zone = input.auroraZone
+        let bucket3h = Int(now.timeIntervalSince1970 / 10800)
+        let minClass = settings.auroraClass
+
+        // Observing conditions here, now (OVATION-based when valid).
+        if let slot = input.auroraSlots.first(where: { abs($0.date.timeIntervalSince(now)) < 1800 }),
+           slot.observability >= minClass, slot.darkness >= .nautical, slot.reliability >= .medium {
+            let look = slot.lookAzimuth.map { " Guarda verso \(AuroraEngine.compass($0))." } ?? ""
+            events.append(AlertEvent(
+                id: "aurora-now:\(bucket3h)", date: now, category: .aurora, severity: Risk.caution.rawValue,
+                title: "Condizioni \(slot.observability.label.lowercased()) per l'aurora, adesso",
+                body: "Stima euristica: \(slot.activitySource == "OVATION" ? "OVATION \(Int(slot.ovationValue ?? 0)) nel tuo cielo" : "Kp \(Fmt.number(slot.kp, decimals: 1))"), cielo sereno al \(Int(((slot.clear ?? 0) * 100).rounded()))%.\(look) Non è garanzia di aurora visibile.",
+                expires: now.addingTimeInterval(90 * 60)))
+        } else if let best = AuroraEngine.best(input.auroraSlots, within: 6, now: now), best.date > now.addingTimeInterval(1800),
+                  best.observability >= minClass {
+            // A favourable window later tonight.
+            var calendar = Calendar(identifier: .gregorian)
+            calendar.timeZone = zone
+            let night = calendar.startOfDay(for: best.date.addingTimeInterval(-12 * 3600))
+            events.append(AlertEvent(
+                id: "aurora-window:\(Int(night.timeIntervalSince1970))", date: now, category: .aurora, severity: Risk.ok.rawValue,
+                title: "Finestra \(best.observability.label.lowercased()) per l'aurora verso le \(Fmt.time(best.date, in: zone))",
+                body: "\(best.reasons.first ?? "Buio e cielo in gran parte sereno"). Affidabilità \(best.reliability.label.lowercased()): ricontrolla più tardi.",
+                expires: best.date.addingTimeInterval(3600)))
+        }
+
+        guard let state = input.auroraState else { return events }
+
+        // Persistent southward IMF (measured, fresh data only).
+        if state.source("solarWind")?.isOK == true, let sw = state.solarWind,
+           sw.bzSouth.continuousMinutes >= 30, let bz = sw.average(30)?.bz, bz <= -8 {
+            let lead = sw.propagation.map { " Arriva a terra tra ~\(Int($0.minutes)) min." } ?? ""
+            events.append(AlertEvent(
+                id: "bz:\(bucket3h)", date: now, category: .aurora, severity: Risk.caution.rawValue,
+                title: "Bz negativo persistente: \(Fmt.number(bz, decimals: 0)) nT da \(sw.bzSouth.continuousMinutes) min",
+                body: "Il campo interplanetario è orientato a sud: favorisce l'attività geomagnetica.\(lead) Non garantisce un'aurora visibile.",
+                expires: now.addingTimeInterval(3 * 3600)))
+        }
+        if state.source("solarWind")?.isOK == true, let shock = state.solarWind?.shocks.last, now.timeIntervalSince(shock.date) < 3600 {
+            events.append(AlertEvent(
+                id: "shock:\(Int(shock.t))", date: now, category: .aurora, severity: Risk.caution.rawValue,
+                title: "Possibile shock nel vento solare",
+                body: "A L1 alle \(Fmt.time(shock.date, in: zone)): velocità +\(Int(shock.dv)) km/s, densità ×\(Fmt.number(shock.densityRatio, decimals: 1)). Candidato automatico: l'attività potrebbe aumentare nella prossima ora.",
+                expires: now.addingTimeInterval(3 * 3600)))
+        }
+        // NOAA K-index warnings/alerts in force.
+        for alert in state.alerts ?? [] where alert.active == true {
+            guard let k = alert.kp, Double(k) >= settings.auroraKp else { continue }
+            events.append(AlertEvent(
+                id: "swpc:\(alert.id)", date: now, category: .aurora, severity: (k >= 7 ? Risk.warning : Risk.caution).rawValue,
+                title: "NOAA: attività geomagnetica Kp \(k)", body: alert.italian,
+                expires: alert.validTo.flatMap { DateParse.iso($0) }))
+        }
+        // NASA DONKI CME expected at Earth within 36 h.
+        for cme in state.donki?.upcoming ?? [] {
+            guard let arrival = cme.arrivalDate, let kp = cme.expectedKp, kp >= settings.auroraKp,
+                  arrival > now.addingTimeInterval(-6 * 3600), arrival < now.addingTimeInterval(36 * 3600) else { continue }
+            let range = cme.kp.map { "Kp \(Fmt.number($0.min))–\(Fmt.number($0.max))" } ?? ""
+            events.append(AlertEvent(
+                id: "cme:\(cme.id)", date: now, category: .aurora, severity: (kp >= 7 ? Risk.warning : Risk.caution).rawValue,
+                title: cme.glancing ? "CME di striscio in arrivo" : "Espulsione di massa coronale in arrivo",
+                body: "NASA (WSA-ENLIL) prevede l'arrivo verso \(Fmt.dayTime(arrival, in: zone)) ±7 h, \(range). L'effetto dipende dal Bz all'arrivo.",
+                expires: arrival.addingTimeInterval((cme.durationHours ?? 18) * 3600)))
+        }
+        // NOAA ENLIL: CME material predicted at Earth within 36 h.
+        for arrival in state.enlil?.cmeArrivals ?? [] {
+            guard let t = arrival.date, t > now, t < now.addingTimeInterval(36 * 3600) else { continue }
+            events.append(AlertEvent(
+                id: "enlil:\(Int(t.timeIntervalSince1970 / 3600))", date: now, category: .aurora, severity: Risk.ok.rawValue,
+                title: "Possibile arrivo di una CME verso \(Fmt.dayTime(t, in: zone))",
+                body: "Il modello WSA-ENLIL di NOAA prevede materiale di CME alla Terra (picco ~\(Int(arrival.peakSpeed)) km/s). Intensità non prevedibile prima dell'arrivo.",
+                expires: t.addingTimeInterval(24 * 3600)))
+        }
         return events
     }
 }
