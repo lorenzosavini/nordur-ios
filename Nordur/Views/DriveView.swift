@@ -20,8 +20,8 @@ struct DriveView: View {
                     ScreenHeader(title: "Guida", subtitle: recorder.isRecording ? "Registrazione in corso" : "Percorsi e strade", index: "04") {
                         if recorder.isRecording {
                             Button { confirmStop = true } label: {
-                                Text("Stop").font(.sans(14, .bold)).foregroundStyle(.white)
-                                    .padding(.horizontal, 16).frame(height: 40)
+                                Text("■ STOP").font(.mono(11, .semibold)).tracking(0.8).foregroundStyle(.white)
+                                    .padding(.horizontal, 12).frame(height: 34)
                                     .background(Theme.danger, in: Rectangle())
                             }
                             .buttonStyle(.plain)
@@ -114,20 +114,23 @@ struct DriveView: View {
 
     private var startPanel: some View {
         VStack(alignment: .leading, spacing: 12) {
-            Text("Registra il percorso in auto").font(.app(.headline))
+            Text("REGISTRA IL PERCORSO").font(.display(26, .bold))
             Text("GPS, km, tempi, velocità, dislivello e consumi. Continua a schermo bloccato.")
                 .font(.app(.caption)).foregroundStyle(.secondary)
             Button {
                 recorder.start()
             } label: {
                 HStack(spacing: 10) {
-                    Circle().fill(.white).frame(width: 12, height: 12)
-                    Text("Inizia registrazione").font(.sans(17, .semibold))
+                    Circle().fill(.white).frame(width: 10, height: 10)
+                    Text("AVVIA REGISTRAZIONE").font(.mono(13, .semibold)).tracking(1)
+                    Spacer()
+                    Text("→").font(.mono(15, .semibold))
                 }
                 .foregroundStyle(.white)
+                .padding(.horizontal, 16)
                 .frame(maxWidth: .infinity)
-                .frame(height: 54)
-                .background(Theme.danger, in: Rectangle())
+                .frame(height: 52)
+                .background(Theme.accent)
             }
             .buttonStyle(.plain)
             if recorder.authorization == .denied || recorder.authorization == .restricted {
