@@ -26,6 +26,7 @@ struct RoutePlan {
     }
 }
 
+@MainActor
 enum RoutePlanner {
     enum PlanError: LocalizedError {
         case noRoute
