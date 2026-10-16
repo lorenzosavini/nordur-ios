@@ -2108,6 +2108,26 @@
         }
       }
     },
+    "Cielo illuminato dalle luci vicine" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sky lit by nearby lights"
+          }
+        }
+      }
+    },
+    "Cielo molto illuminato dalle luci della città" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sky strongly lit by city lights"
+          }
+        }
+      }
+    },
     "Classe di osservabilità dell’aurora stanotte: attività prevista, nuvole, buio e Luna." : {
       "localizations" : {
         "en" : {
@@ -2124,6 +2144,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Loading ranking"
+          }
+        }
+      }
+    },
+    "Classifica per indice di osservabilità (euristico): attività prevista × cielo sereno × buio × Luna × luci artificiali (NASA Black Marble) × orizzonte del terreno. Non considera sicurezza e percorribilità delle strade: controlla sempre lo stato delle strade prima di muoverti di notte." : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ranked by observability index (heuristic): expected activity × clear sky × darkness × Moon × artificial light (NASA Black Marble) × terrain horizon. It does not consider road safety or passability: always check road conditions before driving at night."
           }
         }
       }
@@ -4191,6 +4222,17 @@
         }
       }
     },
+    "L'indice di osservabilità è una stima euristica trasparente, non una probabilità: moltiplica attività prevista (OVATION entro la sua validità, poi Kp e posizione dell'ovale su latitudine geomagnetica), cielo sereno per strati, buio (altezza del Sole), Luna (fase e altezza) e le luci artificiali misurate dal satellite VIIRS (NASA Black Marble, media annuale) pesate con la distanza, e l'orizzonte del terreno. Le percentuali di probabilità richiedono un modello calibrato su osservazioni reali: le segnalazioni degli utenti servono a costruirlo." : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The observability index is a transparent heuristic estimate, not a probability: it multiplies expected activity (OVATION within its validity, then Kp and the oval position in geomagnetic latitude), clear sky by layer, darkness (Sun altitude), Moon (phase and altitude), artificial light measured by the VIIRS satellite (NASA Black Marble, annual mean) weighted by distance, and the terrain horizon. Probability percentages need a model calibrated on real observations: user reports are collected to build it."
+          }
+        }
+      }
+    },
     "L'indice di osservabilità è una stima euristica trasparente, non una probabilità: moltiplica attività prevista (OVATION entro la sua validità, poi Kp e posizione dell'ovale su latitudine geomagnetica), cielo sereno per strati, buio (altezza del Sole), Luna (fase e altezza) e un indicatore di inquinamento luminoso basato sulla distanza dai centri principali. Le percentuali di probabilità richiedono un modello calibrato su osservazioni reali: le segnalazioni degli utenti servono a costruirlo." : {
       "localizations" : {
         "en" : {
@@ -4327,6 +4369,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Reading %@"
+          }
+        }
+      }
+    },
+    "Lieve inquinamento luminoso" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Slight light pollution"
           }
         }
       }

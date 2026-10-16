@@ -15,6 +15,7 @@ The Norður source code is covered by [LICENSE](LICENSE). The components and dat
 | Data | Where | Source and terms |
 |---|---|---|
 | IGRF-13 dipole coefficients (epoch 2020.5) | `Shared/Services/AuroraEngine.swift` | International Association of Geomagnetism and Aeronomy (IAGA), International Geomagnetic Reference Field |
+| Sky-glow grid for Iceland derived from NASA Black Marble VNP46A4 (2025 annual composite) | `Shared/Services/SkyGlowGrid.swift` | NASA LAADS DAAC / Earthdata, open data — Román, M.O. et al. (2018), NASA's Black Marble nighttime lights product suite |
 | Corrected geomagnetic latitudes of magnetic observatories | `Shared/Services/AuroraEngine.swift` | Observatory metadata published by ISGI / INTERMAGNET; used as calibration points |
 
 ## Data services used at run time

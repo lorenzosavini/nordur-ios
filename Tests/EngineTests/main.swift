@@ -135,5 +135,20 @@ do {
     check(kpLow.category == .none, "low aurora hidden by a 12° skyline", "\(kpLow)")
 }
 
+// MARK: Light pollution (Black Marble sky-glow grid)
+
+do {
+    let city = LightPollution.factor(at: Coordinate(lat: 64.146, lon: -21.94)).value
+    let selfoss = LightPollution.factor(at: Coordinate(lat: 63.93, lon: -21.0)).value
+    let vik = LightPollution.factor(at: Coordinate(lat: 63.42, lon: -19.0)).value
+    let glacier = LightPollution.factor(at: Coordinate(lat: 64.4, lon: -16.5)).value
+    check(SkyGlowGrid.values.count == SkyGlowGrid.nLat * SkyGlowGrid.nLon, "sky-glow grid decodes")
+    check(city > 0.45 && city < 0.62, "central Reykjavík strongly lit", "\(city)")
+    check(selfoss > city && selfoss < 0.85, "Selfoss less lit than Reykjavík", "\(selfoss)")
+    check(vik > 0.95 && glacier > 0.99, "Vík and Vatnajökull dark", "\(vik) \(glacier)")
+    check(LightPollution.factor(at: Coordinate(lat: 45, lon: 9)).value == 1, "outside Iceland: no data, neutral")
+}
+
 print(failures == 0 ? "ALL ENGINE TESTS PASSED" : "\(failures) FAILURES")
 exit(failures == 0 ? 0 : 1)
+

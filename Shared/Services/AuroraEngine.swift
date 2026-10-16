@@ -248,22 +248,16 @@ enum SkyModel {
 // MARK: - Light pollution proxy
 
 enum LightPollution {
-    /// No openly licensed sky-brightness API is integrated. Proxy: distance from
-    /// Iceland's largest built-up areas (Statistics Iceland). Shown as a proxy.
-    static let towns: [(name: String, c: Coordinate, radiusKm: Double)] = [
-        (String(localized: "Area di Reykjavík"), Coordinate(lat: 64.12, lon: -21.88), 12),
-        ("Reykjanesbær", Coordinate(lat: 63.99, lon: -22.56), 5),
-        ("Akureyri", Coordinate(lat: 65.68, lon: -18.10), 5),
-        ("Selfoss", Coordinate(lat: 63.93, lon: -21.00), 3),
-    ]
-
+    /// Artificial sky glow from NASA Black Marble night lights (SkyGlowGrid):
+    /// 1 far from lights, about 0.5 in central Reykjavík. Night lights measure
+    /// light emitted upwards, not sky brightness at the observer: an indicator.
     static func factor(at c: Coordinate) -> (value: Double, note: String?) {
-        for town in towns {
-            let km = Geo.distanceKm(c, town.c)
-            if km <= town.radiusKm { return (0.7, String(localized: "Dentro \(town.name): cielo illuminato")) }
-            if km <= town.radiusKm + 10 { return (0.88, String(localized: "Vicino a \(town.name)")) }
-        }
-        return (1, nil)
+        guard let s = SkyGlowGrid.index(at: c) else { return (1, nil) }
+        let value = pow(1 + s / 3, -0.25)
+        if value < 0.65 { return (value, String(localized: "Cielo molto illuminato dalle luci della città")) }
+        if value < 0.8 { return (value, String(localized: "Cielo illuminato dalle luci vicine")) }
+        if value < 0.93 { return (value, String(localized: "Lieve inquinamento luminoso")) }
+        return (value, nil)
     }
 }
 

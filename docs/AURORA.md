@@ -128,7 +128,10 @@ Il valore OVATION non viene presentato come probabilità di osservazione da terr
 - **Nubi**: sovrapposizione casuale degli strati, sereno = (1−basse)·(1−medie)·(1−0,5·alte). Le nubi alte valgono metà, perché il cirro sottile lascia spesso passare l'aurora. Nebbia ≥ 50 % o visibilità < 1 km chiudono il cielo.
 - **Buio**: altezza del Sole, con le classi giorno, civile, nautico, astronomico e notte. Fattori 0 / 0,05 / 0,5 / 0,85 / 1. Il crepuscolo nautico non è considerato impossibile.
 - **Luna**: posizione topocentrica e frazione illuminata. Fattore 1 − 0,35 · illuminazione · altezza normalizzata.
-- **Inquinamento luminoso**: indicatore basato sulla distanza dai centri principali (area di Reykjavík, Reykjanesbær, Akureyri, Selfoss). Non è un dato di brillanza del cielo (vedi limiti).
+- **Inquinamento luminoso**: NASA Black Marble VNP46A4 (VIIRS, media annuale 2025, senza neve, collezione 2), scaricato da Earthdata Cloud. Alla radianza si sottrae il fondo naturale sulla terraferma (1 nW/cm²·sr), poi si sommano le sorgenti entro 80 km pesate con la legge di Walker (d^-2,5). L'indice S è salvato in una griglia di 71 × 113 celle (0,05° × 0,1°, `SkyGlowGrid.swift`, circa 8 KB) e convertito in fattore 1/(1 + S/3)^0,25.
+  - Valori: centro di Reykjavík 0,56, Akureyri 0,60, Selfoss 0,81, Höfn 0,88, Vík 0,99, Vatnajökull 1,00.
+  - Hveragerði risulta illuminata per le serre: è un dato reale.
+  - È luce emessa verso l'alto, non brillanza del cielo misurata a terra: resta un indicatore. Fuori dall'Islanda il fattore è neutro (1).
 
 ### Indice di osservabilità
 
@@ -207,7 +210,7 @@ La visibilità locale non è ancora validabile: richiede gli avvistamenti. L'ass
 
 ## Limiti noti
 
-- **Inquinamento luminoso**: si usa un indicatore basato sulla distanza dai centri abitati. Il World Atlas 2015 (Falchi) è CC BY-NC 4.0 e si ottiene con un modulo di richiesta; VIIRS Black Marble (VNP46) richiede un account NASA Earthdata. Entrambi richiedono un'azione del proprietario dell'app.
+- **Inquinamento luminoso**: il satellite misura la luce emessa verso l'alto e non la brillanza del cielo vista da terra; la calibrazione del fattore è euristica. Il World Atlas 2015 (Falchi, brillanza modellata) è CC BY-NC 4.0 e non è usato.
 - **Orizzonte**: risoluzione 25 m e 16 direzioni; edifici e alberi non sono nel DEM.
 - **Magnetometri**: SuperMAG richiede registrazione e accettazione dei termini, quindi non è integrato. GFZ è integrato solo come Kp.
 - **Latitudine geomagnetica**: approssimazione della CGM (0,3–0,6° rms), non il calcolo AACGM completo.
