@@ -45,7 +45,22 @@ struct RoadInfo: Decodable {
         let to: String?
     }
 
-    struct Weight: Decodable, Hashable { let limit: String?; var text: String? }
+    struct Weight: Decodable, Hashable {
+        /// Axle-load limit in tonnes; umferdin.is sends a number, older copies a string.
+        let limit: String?
+        var text: String?
+
+        private enum CodingKeys: String, CodingKey { case limit, text }
+        init(from decoder: Decoder) throws {
+            let c = try decoder.container(keyedBy: CodingKeys.self)
+            if let n = try? c.decodeIfPresent(Double.self, forKey: .limit) {
+                limit = n == n.rounded() ? "\(Int(n)) t" : "\(Fmt.number(n, decimals: 1)) t"
+            } else {
+                limit = try? c.decodeIfPresent(String.self, forKey: .limit)
+            }
+            text = try? c.decodeIfPresent(String.self, forKey: .text)
+        }
+    }
     struct Toll: Decodable, Hashable { let type: String?; var text: String?; let at: Point? }
     struct RoadRef: Decodable, Hashable { let nr: String; let name: String? }
 
