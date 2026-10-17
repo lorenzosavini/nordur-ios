@@ -5844,6 +5844,17 @@
         }
       }
     },
+    "Mostra legenda" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Show legend"
+          }
+        }
+      }
+    },
     "Mostra meteo e strade sul percorso" : {
       "localizations" : {
         "en" : {
@@ -6125,6 +6136,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "LOADING CLOUD COVER"
+          }
+        }
+      }
+    },
+    "Nascondi legenda" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hide legend"
           }
         }
       }

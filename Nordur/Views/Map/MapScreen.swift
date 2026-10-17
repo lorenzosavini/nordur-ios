@@ -143,19 +143,52 @@ struct MapScreen: View {
 
     // MARK: Bottom panel
 
+    @AppStorage("map.legendOpen") private var legendOpen = true
+
+    /// Probe card and legends scroll inside a capped height; the time slider
+    /// always stays visible at the bottom, above the tab bar.
     private var bottomPanel: some View {
-        VStack(alignment: .leading, spacing: 8) {
-            if let probe { ProbeCard(coordinate: probe, hour: hourIndex) { self.probe = nil } }
-            VStack(alignment: .leading, spacing: 8) {
-                legend
-                if showRoadInfo && model.roadGeometry != nil && model.roadInfo != nil { roadLegend }
-                timeControls
+        VStack(alignment: .leading, spacing: 6) {
+            ViewThatFits(in: .vertical) {
+                panelDetails
+                ScrollView { panelDetails }.scrollBounceBehavior(.basedOnSize)
             }
-            .padding(12)
+            .frame(maxHeight: 300)
+            .fixedSize(horizontal: false, vertical: true)
+            HStack(alignment: .center, spacing: 10) {
+                timeControls.frame(maxWidth: .infinity, alignment: .leading)
+                Button {
+                    withAnimation(.snappy) { legendOpen.toggle() }
+                } label: {
+                    Image(systemName: legendOpen ? "chevron.down" : "list.bullet.below.rectangle")
+                        .font(.system(size: 15, weight: .semibold))
+                        .frame(width: 36, height: 36)
+                        .contentShape(Rectangle())
+                }
+                .buttonStyle(.plain)
+                .foregroundStyle(Theme.text)
+                .accessibilityLabel(legendOpen ? String(localized: "Nascondi legenda") : String(localized: "Mostra legenda"))
+            }
+            .padding(.horizontal, 12).padding(.vertical, 8)
             .background(Theme.bg.opacity(0.94)).overlay(Rectangle().strokeBorder(Theme.hairline))
         }
         .padding(.horizontal)
-        .padding(.bottom, 6)
+        .padding(.bottom, 10)
+    }
+
+    @ViewBuilder private var panelDetails: some View {
+        VStack(alignment: .leading, spacing: 6) {
+            if let probe { ProbeCard(coordinate: probe, hour: hourIndex) { self.probe = nil } }
+            if legendOpen {
+                VStack(alignment: .leading, spacing: 8) {
+                    legend
+                    if showRoadInfo && model.roadGeometry != nil && model.roadInfo != nil { roadLegend }
+                }
+                .padding(12)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .background(Theme.bg.opacity(0.94)).overlay(Rectangle().strokeBorder(Theme.hairline))
+            }
+        }
     }
 
     @ViewBuilder private var legend: some View {
