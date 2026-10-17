@@ -87,6 +87,10 @@ struct RootView: View {
         }
         .safeAreaInset(edge: .bottom, spacing: 0) {
             NordurTabBar(selection: $tab, badge: alerts.unreadCount, recording: recorder.isRecording)
+                .background(GeometryReader { g in
+                    Color.clear.onAppear { model.tabBarHeight = g.size.height }
+                        .onChange(of: g.size.height) { model.tabBarHeight = g.size.height }
+                })
         }
         .onChange(of: model.requestedTab) {
             if let raw = model.requestedTab, let target = Tab(rawValue: raw) { tab = target }

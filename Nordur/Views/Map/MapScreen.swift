@@ -179,7 +179,7 @@ struct MapScreen: View {
             .background(Theme.bg.opacity(0.94)).overlay(Rectangle().strokeBorder(Theme.hairline))
         }
         .padding(.horizontal)
-        .padding(.bottom, 10)
+        .padding(.bottom, 10 + model.tabBarHeight)
     }
 
     @ViewBuilder private var panelDetails: some View {
