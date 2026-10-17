@@ -25,7 +25,7 @@ struct OfflineView: View {
                     Text(line.loc).font(.app(.caption2)).foregroundStyle(.secondary)
                 }
             } header: {
-                Text("Dati dell'app")
+                Text("Dati dell'app").pinnedHeader()
             }
 
             Section {
@@ -35,10 +35,10 @@ struct OfflineView: View {
                     Link(destination: url) { Label("Apri Apple Mappe", systemImage: "map") }
                 }
             } header: {
-                Text("Mappa di base")
+                Text("Mappa di base").pinnedHeader()
             }
 
-            Section("Distributori salvati sul telefono") {
+            Section {
                 if let fuel = model.fuel {
                     let stations = fuel.value
                     LabeledContent("Carburante", value: "\(stations.filter { $0.kind == .fuel }.count)")
@@ -47,7 +47,7 @@ struct OfflineView: View {
                 } else {
                     ErrorNote(message: model.errors[.fuel] ?? String(localized: "Non ancora scaricati"))
                 }
-            }
+            } header: { Text("Distributori salvati sul telefono").pinnedHeader() }
         }
         .themedList()
         .navigationTitle("Pacchetto offline")

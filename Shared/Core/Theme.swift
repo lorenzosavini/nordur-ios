@@ -151,6 +151,16 @@ extension View {
             .listSectionSeparator(.hidden)
     }
 
+    /// List section header on the app background: plain lists keep the header
+    /// pinned at the top while scrolling, and a transparent one overlaps the rows.
+    func pinnedHeader() -> some View {
+        frame(maxWidth: .infinity, alignment: .leading)
+            .padding(.vertical, 4)
+            .padding(.horizontal, 24)
+            .background(Theme.bg)
+            .padding(.horizontal, -24)
+    }
+
     /// Instrument panel: square, ruled, no fill, no shadow.
     func panel(padding: CGFloat = 16, radius: CGFloat = Theme.radius) -> some View {
         self.padding(padding)

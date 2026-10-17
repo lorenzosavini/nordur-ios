@@ -144,17 +144,23 @@ struct MapScreen: View {
     // MARK: Bottom panel
 
     @AppStorage("map.legendOpen") private var legendOpen = true
+    @State private var detailsHeight: CGFloat = 120
 
     /// Probe card and legends scroll inside a capped height; the time slider
     /// always stays visible at the bottom, above the tab bar.
     private var bottomPanel: some View {
         VStack(alignment: .leading, spacing: 6) {
-            ViewThatFits(in: .vertical) {
-                panelDetails
-                ScrollView { panelDetails }.scrollBounceBehavior(.basedOnSize)
+            if probe != nil || legendOpen {
+                ScrollView {
+                    panelDetails
+                        .background(GeometryReader { g in
+                            Color.clear.preference(key: PanelHeightKey.self, value: g.size.height)
+                        })
+                }
+                .scrollBounceBehavior(.basedOnSize)
+                .frame(height: min(max(detailsHeight, 1), 300))
+                .onPreferenceChange(PanelHeightKey.self) { detailsHeight = $0 }
             }
-            .frame(maxHeight: 300)
-            .fixedSize(horizontal: false, vertical: true)
             HStack(alignment: .center, spacing: 10) {
                 timeControls.frame(maxWidth: .infinity, alignment: .leading)
                 Button {
@@ -635,4 +641,10 @@ final class RoadLines {
         case nil: return (style(for: nil), 1.5)
         }
     }
+}
+
+/// Height of the map's bottom panel content (scrolls past 300 pt).
+private struct PanelHeightKey: PreferenceKey {
+    static let defaultValue: CGFloat = 0
+    static func reduce(value: inout CGFloat, nextValue: () -> CGFloat) { value = max(value, nextValue()) }
 }

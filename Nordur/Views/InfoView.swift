@@ -14,10 +14,10 @@ struct InfoView: View {
                     LinkRow(title: String(localized: "Registra il piano di viaggio"), subtitle: String(localized: "SafeTravel – i soccorsi sapranno dove cercarti"), url: "https://safetravel.is/travel-plan", systemImage: "doc.text.fill")
                     LinkRow(title: String(localized: "Guardia medica 1700"), subtitle: String(localized: "Consulenza sanitaria non urgente"), url: "tel:1700", systemImage: "cross.case.fill")
                 } header: {
-                    Text("Sicurezza")
+                    Text("Sicurezza").pinnedHeader()
                 }
 
-                Section("Strumenti") {
+                Section {
                     NavigationLink { AlertSettingsView() } label: { Label("Allerte e notifiche", systemImage: "bell.badge") }
                     NavigationLink { AlertsView() } label: { Label("Storico allerte", systemImage: "tray.full") }
                     NavigationLink { OfflineView() } label: { Label("Pacchetto offline", systemImage: "arrow.down.circle") }
@@ -25,24 +25,24 @@ struct InfoView: View {
                     NavigationLink { WebcamsView() } label: { Label("Webcam stradali", systemImage: "video") }
                     NavigationLink { RoadsView() } label: { Label("Condizioni delle strade", systemImage: "road.lanes") }
                     NavigationLink { QuakesView() } label: { Label("Terremoti e vulcani", systemImage: "waveform.path.ecg") }
-                }
+                } header: { Text("Strumenti").pinnedHeader() }
 
 
-                Section("Meteo") {
+                Section {
                     LinkRow(title: String(localized: "Vedur.is – Meteo ufficiale islandese"), subtitle: String(localized: "Previsioni, allerte, mappe del vento"), url: "https://en.vedur.is/")
                     LinkRow(title: String(localized: "Windy"), subtitle: String(localized: "Modelli a confronto, vento e raffiche"), url: "https://www.windy.com/?64.9,-18.6,6")
                     LinkRow(title: "Yr.no", subtitle: String(localized: "Previsioni norvegesi (MET Norway)"), url: "https://www.yr.no/en")
                     LinkRow(title: String(localized: "Blika.is"), subtitle: String(localized: "Previsioni islandesi dettagliate"), url: "https://blika.is/")
-                }
+                } header: { Text("Meteo").pinnedHeader() }
 
-                Section("Strade") {
+                Section {
                     LinkRow(title: String(localized: "Umferdin.is"), subtitle: String(localized: "Mappa ufficiale di strade, chiusure e webcam"), url: "https://umferdin.is/en", systemImage: "map")
                     LinkRow(title: String(localized: "SafeTravel – condizioni"), subtitle: String(localized: "Avvisi e mappa delle condizioni"), url: "https://safetravel.is/", systemImage: "exclamationmark.shield")
                     LinkRow(title: String(localized: "Strade F (Highlands)"), subtitle: String(localized: "Date di apertura – solo 4x4, guadi"), url: "https://www.road.is/travel-info/highland-roads/", systemImage: "mountain.2")
                     LinkRow(title: String(localized: "Distributori e ricarica"), subtitle: String(localized: "Mappa di N1 / Orkan / Olís"), url: "https://www.n1.is/en/", systemImage: "fuelpump")
-                }
+                } header: { Text("Strade").pinnedHeader() }
 
-                Section("Voli, bus e traghetti") {
+                Section {
                     LinkRow(title: String(localized: "Keflavík – arrivi e partenze"), subtitle: String(localized: "Isavia KEF"), url: "https://www.isavia.is/en/keflavik-airport", systemImage: "airplane")
                     LinkRow(title: String(localized: "Voli interni"), subtitle: String(localized: "Icelandair, Norlandair, Mýflug"), url: "https://www.icelandair.com/", systemImage: "airplane.circle")
                     LinkRow(title: String(localized: "Flybus / Airport Direct"), subtitle: String(localized: "Navette aeroporto ↔ Reykjavík"), url: "https://www.re.is/", systemImage: "bus")
@@ -50,9 +50,9 @@ struct InfoView: View {
                     LinkRow(title: String(localized: "Herjólfur"), subtitle: String(localized: "Traghetto per Vestmannaeyjar"), url: "https://www.herjolfur.is/en/", systemImage: "ferry")
                     LinkRow(title: String(localized: "Baldur (Sæferðir)"), subtitle: String(localized: "Traghetto Stykkishólmur – Brjánslækur"), url: "https://www.saeferdir.is/en/", systemImage: "ferry.fill")
                     LinkRow(title: String(localized: "Smyril Line"), subtitle: String(localized: "Traghetto Seyðisfjörður – Fær Øer – Danimarca"), url: "https://www.smyrilline.com/", systemImage: "ferry")
-                }
+                } header: { Text("Voli, bus e traghetti").pinnedHeader() }
 
-                Section("Consigli per guidare in Islanda") {
+                Section {
                     VStack(alignment: .leading, spacing: 6) {
                         Text("• Con vento forte apri la portiera tenendola con due mani: il vento può strapparla (danno non coperto dall'assicurazione).")
                         Text("• Fuoristrada vietato per legge. Le strade F richiedono un 4x4 e i guadi non sono coperti dall'assicurazione.")
@@ -61,9 +61,9 @@ struct InfoView: View {
                         Text("• In inverno le giornate sono brevi: pianifica le tratte nelle ore di luce.")
                     }
                     .font(.app(.caption))
-                }
+                } header: { Text("Consigli per guidare in Islanda").pinnedHeader() }
 
-                Section("Stato delle fonti") {
+                Section {
                     ForEach(AppModel.Source.allCases, id: \.self) { source in
                         HStack {
                             Text(source.rawValue.loc)
@@ -78,7 +78,7 @@ struct InfoView: View {
                     }
                     Text("Veðurstofa Íslands (vedur.is), Vegagerðin (umferdin.is), Open-Meteo, NOAA Space Weather Prediction Center, SafeTravel.is. L'app aggrega dati pubblici: in caso di dubbio prevalgono le fonti ufficiali.")
                         .font(.app(.caption2)).foregroundStyle(.secondary)
-                }
+                } header: { Text("Stato delle fonti").pinnedHeader() }
             }
             .themedList()
             .navigationTitle("Info & SOS")

@@ -14,7 +14,7 @@ struct RoutePlannerSheet: View {
 
     var body: some View {
         Form {
-            Section("Percorso") {
+            Section {
                 Button { picking = .from } label: {
                     LabeledContent("Partenza", value: from?.name ?? String(localized: "Posizione attuale"))
                 }
@@ -22,7 +22,7 @@ struct RoutePlannerSheet: View {
                     LabeledContent("Arrivo", value: to?.name ?? String(localized: "Scegli…"))
                 }
                 DatePicker(String(localized: "Partenza alle"), selection: $departure, in: Date().addingTimeInterval(-3600)...Date().addingTimeInterval(15 * 24 * 3600))
-            }
+            } header: { Text("Percorso").pinnedHeader() }
             if let to {
                 Section {
                     NavigationLink {
@@ -137,12 +137,12 @@ struct RouteForecastView: View {
         }
 
         if !plan.warnings.isEmpty {
-            Section("Allerte IMO sul percorso all'ora del passaggio") {
+            Section {
                 ForEach(plan.warnings) { WarningRow(warning: $0) }
-            }
+            } header: { Text("Allerte IMO sul percorso all'ora del passaggio").pinnedHeader() }
         }
 
-        Section("Meteo previsto quando passi") {
+        Section {
             ForEach(plan.waypoints) { w in
                 HStack(spacing: 10) {
                     VStack(alignment: .leading) {
@@ -165,10 +165,10 @@ struct RouteForecastView: View {
                     }
                 }
             }
-        }
+        } header: { Text("Meteo previsto quando passi").pinnedHeader() }
 
         if !plan.problemSegments.isEmpty {
-            Section("Strade: problemi adesso") {
+            Section {
                 ForEach(plan.problemSegments) { segment in
                     HStack {
                         Circle().fill((segment.risk ?? .ok).color).frame(width: 8, height: 8)
@@ -177,19 +177,19 @@ struct RouteForecastView: View {
                         Text(segment.conditionItalian).font(.app(.caption2)).foregroundStyle((segment.risk ?? .ok).color)
                     }
                 }
-            }
+            } header: { Text("Strade: problemi adesso").pinnedHeader() }
         }
 
         if let network = model.roads?.value, !plan.stations.isEmpty {
-            Section("Stazioni stradali lungo il percorso (\(plan.stations.count))") {
+            Section {
                 ForEach(plan.stations.sorted { ($0.Vindhvida ?? 0) > ($1.Vindhvida ?? 0) }.prefix(8)) { station in
                     StationRow(station: station, network: network)
                 }
-            }
+            } header: { Text("Stazioni stradali lungo il percorso (\(plan.stations.count))").pinnedHeader() }
         }
 
         if !plan.webcams.isEmpty {
-            Section("Webcam lungo il percorso") {
+            Section {
                 ScrollView(.horizontal, showsIndicators: false) {
                     HStack {
                         ForEach(plan.webcams) { site in
@@ -197,15 +197,15 @@ struct RouteForecastView: View {
                         }
                     }
                 }
-            }
+            } header: { Text("Webcam lungo il percorso").pinnedHeader() }
         }
 
         if !plan.fuel.isEmpty {
-            Section("Distributori sul percorso (\(plan.fuel.count))") {
+            Section {
                 ForEach(plan.fuel.prefix(10)) { station in
                     Label("\(station.name)\(station.openingHours.map { " · \($0)" } ?? "")", systemImage: "fuelpump.fill").font(.app(.caption))
                 }
-            }
+            } header: { Text("Distributori sul percorso (\(plan.fuel.count))").pinnedHeader() }
         }
     }
 }

@@ -88,7 +88,7 @@ struct DriveView: View {
                     Toggle("Avviso se superi il limite", isOn: $recorder.settings.speedAlerts)
                     Toggle("Avvisi vocali", isOn: $recorder.settings.spokenAlerts)
                 } header: {
-                    Text("Auto e chilometraggio").eyebrow()
+                    Text("Auto e chilometraggio").eyebrow().pinnedHeader()
                 } footer: {
                     Text("Inserisci i km al ritiro dell'auto: si aggiornano a ogni percorso. Limiti: 90 km/h asfalto, 80 sterrato, 50 centri abitati.")
                 }
@@ -175,7 +175,7 @@ struct DriveView: View {
                 removed.forEach { store.delete($0) }
             }
         } header: {
-            Text("Storico percorsi").eyebrow()
+            Text("Storico percorsi").eyebrow().pinnedHeader()
         }
     }
 }
@@ -314,7 +314,7 @@ struct DriveDetailView: View {
                 }
             }
 
-            Section("Riepilogo") {
+            Section {
                 let s = session.stats
                 let total = session.durationSeconds()
                 LabeledContent("Distanza", value: Fmt.number(s.km, decimals: 2, unit: "km"))
@@ -337,16 +337,16 @@ struct DriveDetailView: View {
                 LabeledContent("Carburante stimato", value: "\(Fmt.number(s.fuelLitres(recorder.settings), decimals: 1, unit: "l")) · \(Fmt.number(s.fuelCost(recorder.settings), unit: "ISK"))")
                 LabeledContent("Inizio", value: Fmt.dayTime(session.start))
                 if let end = session.end { LabeledContent("Fine", value: Fmt.dayTime(end)) }
-            }
+            } header: { Text("Riepilogo").pinnedHeader() }
 
             if session.points.count > 10 {
-                Section("Velocità e quota") {
+                Section {
                     SpeedAltitudeChart(points: DriveMath.downsample(session.points, maxPoints: 400))
                         .frame(height: 200)
-                }
+                } header: { Text("Velocità e quota").pinnedHeader() }
             }
 
-            Section("Dettagli") {
+            Section {
                 TextField("Nome", text: $name)
                 TextField("Note", text: $notes, axis: .vertical)
                 Button("Salva modifiche") {
@@ -355,7 +355,7 @@ struct DriveDetailView: View {
                     updated.notes = notes
                     store.updateMetadata(updated)
                 }
-            }
+            } header: { Text("Dettagli").pinnedHeader() }
 
             Section {
                 if let gpxURL {

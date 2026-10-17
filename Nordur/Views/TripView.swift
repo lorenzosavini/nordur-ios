@@ -247,7 +247,7 @@ struct StopEditor: View {
     var body: some View {
         NavigationStack {
             Form {
-                Section("Luogo") {
+                Section {
                     Button {
                         pickingPlace = true
                     } label: {
@@ -257,21 +257,21 @@ struct StopEditor: View {
                             Image(systemName: "chevron.right").foregroundStyle(.secondary)
                         }
                     }
-                }
-                Section("Quando") {
+                } header: { Text("Luogo").pinnedHeader() }
+                Section {
                     DatePicker(String(localized: "Arrivo"), selection: $date, displayedComponents: [.date, .hourAndMinute])
                     Stepper("Notti: \(nights)", value: $nights, in: 0...30)
-                }
-                Section("Come ci arrivi") {
+                } header: { Text("Quando").pinnedHeader() }
+                Section {
                     Picker("Mezzo", selection: $transport) {
                         ForEach(Transport.allCases) { t in
                             Label(t.label, systemImage: t.symbol).tag(t)
                         }
                     }
-                }
-                Section("Note") {
+                } header: { Text("Come ci arrivi").pinnedHeader() }
+                Section {
                     TextField("Prenotazioni, orari, telefono alloggio…", text: $notes, axis: .vertical)
-                }
+                } header: { Text("Note").pinnedHeader() }
                 if let original {
                     Section {
                         Button("Elimina tappa", role: .destructive) {

@@ -34,7 +34,7 @@ struct RoadSectionView: View {
                 }
             }
 
-            Section("Condizioni") {
+            Section {
                 conditionRow(String(localized: "Adesso"), section.condition, highlight: true)
                 if let previous = section.previous {
                     conditionRow(String(localized: "Prima"), previous, highlight: false)
@@ -50,10 +50,10 @@ struct RoadSectionView: View {
                 if let text = info?.explanation(section.condition?.category), !text.isEmpty {
                     Text(text).font(.app(.caption)).foregroundStyle(Theme.dim)
                 }
-            }
+            } header: { Text("Condizioni").pinnedHeader() }
 
             if !section.hazards.isEmpty {
-                Section("Lavori e pericoli") {
+                Section {
                     ForEach(section.hazards) { hazard in
                         let kind = RoadCode.hazard(hazard.code)
                         VStack(alignment: .leading, spacing: 3) {
@@ -64,11 +64,11 @@ struct RoadSectionView: View {
                                 .font(.app(.caption2)).foregroundStyle(Theme.faint)
                         }
                     }
-                }
+                } header: { Text("Lavori e pericoli").pinnedHeader() }
             }
 
             if section.weight != nil || section.toll != nil {
-                Section("Limitazioni") {
+                Section {
                     if let weight = section.weight {
                         LabeledContent(String(localized: "Limite di peso"), value: weight.limit ?? "–")
                         if let text = weight.text, !text.isEmpty { Text(text).font(.app(.caption)).foregroundStyle(Theme.dim) }
@@ -77,10 +77,10 @@ struct RoadSectionView: View {
                         LabeledContent(String(localized: "Pedaggio"), value: toll.type ?? "–")
                         if let text = toll.text, !text.isEmpty { Text(text).font(.app(.caption)).foregroundStyle(Theme.dim) }
                     }
-                }
+                } header: { Text("Limitazioni").pinnedHeader() }
             }
 
-            Section("Che strada è") {
+            Section {
                 ForEach(section.roads, id: \.self) { road in
                     VStack(alignment: .leading, spacing: 2) {
                         Text("\(road.nr) · \(road.name ?? "")").font(.app(.subheadline, .semibold))
@@ -90,7 +90,7 @@ struct RoadSectionView: View {
                 if let service = section.service {
                     LabeledContent(String(localized: "Classe di servizio Vegagerðin"), value: "\(service)")
                 }
-            }
+            } header: { Text("Che strada è").pinnedHeader() }
 
             if !section.hours.isEmpty {
                 Section {
@@ -98,7 +98,7 @@ struct RoadSectionView: View {
                         LabeledContent(day.name, value: section.serviceHours(on: day.day) ?? String(localized: "Nessun servizio"))
                     }
                 } header: {
-                    Text("Servizio invernale (sgombero neve)")
+                    Text("Servizio invernale (sgombero neve)").pinnedHeader()
                 } footer: {
                     Text("Fuori da questi orari la strada non viene controllata né pulita: le condizioni possono peggiorare senza aggiornamenti.")
                 }
@@ -154,11 +154,11 @@ struct RoadSectionView: View {
                 .compactMap { s in s.coordinate.map { (station: s, km: Geo.distanceKm($0, c)) } }
                 .filter { $0.km <= 20 }.sorted { $0.km < $1.km }.prefix(3)
             if !near.isEmpty {
-                Section("Stazioni meteo stradali vicine") {
+                Section {
                     ForEach(Array(near.enumerated()), id: \.offset) { entry in
                         StationRow(station: entry.element.station, network: network, distance: entry.element.km)
                     }
-                }
+                } header: { Text("Stazioni meteo stradali vicine").pinnedHeader() }
             }
         }
     }
@@ -167,7 +167,7 @@ struct RoadSectionView: View {
         let near = (model.webcams?.value ?? []).map { (site: $0, km: Geo.distanceKm($0.coordinate, c)) }
             .filter { $0.km <= 15 }.sorted { $0.km < $1.km }.prefix(4)
         if !near.isEmpty {
-            Section("Webcam vicine") {
+            Section {
                 ForEach(Array(near.enumerated()), id: \.offset) { entry in
                     let item = entry.element
                     NavigationLink { WebcamSiteView(site: item.site) } label: {
@@ -180,7 +180,7 @@ struct RoadSectionView: View {
                         }
                     }
                 }
-            }
+            } header: { Text("Webcam vicine").pinnedHeader() }
         }
     }
 

@@ -27,17 +27,17 @@ struct AlertDetailView: View {
                 .padding(.vertical, 4)
             }
 
-            Section("Quando") {
+            Section {
                 LabeledContent(String(localized: "Ricevuta"), value: "\(Fmt.dayTime(event.date)) · \(Fmt.relative(event.date))")
                 if let expires = event.expires {
                     LabeledContent(expired ? String(localized: "Non più valida dalle") : String(localized: "Valida fino alle"),
                                    value: Fmt.dayTime(expires))
                 }
                 LabeledContent(String(localized: "Livello"), value: riskLabel)
-            }
+            } header: { Text("Quando").pinnedHeader() }
 
             if let c = event.coordinate {
-                Section("Dove") {
+                Section {
                     ExpandableMap(height: 200, title: event.title) {
                         Map(initialPosition: .region(MKCoordinateRegion(center: c.clCoordinate,
                                                                         span: MKCoordinateSpan(latitudeDelta: 0.6, longitudeDelta: 1.2)))) {
@@ -53,12 +53,12 @@ struct AlertDetailView: View {
                     if let url = URL(string: "http://maps.apple.com/?daddr=\(c.lat),\(c.lon)") {
                         Link(destination: url) { Label("Indicazioni in Mappe", systemImage: "arrow.triangle.turn.up.right.diamond") }
                     }
-                }
+                } header: { Text("Dove").pinnedHeader() }
             }
 
-            Section("Dati aggiornati") {
+            Section {
                 related
-            }
+            } header: { Text("Dati aggiornati").pinnedHeader() }
 
             Section {
                 ShareLink(item: "\(event.title)\n\(event.body)\n\(Fmt.dayTime(event.date))") {

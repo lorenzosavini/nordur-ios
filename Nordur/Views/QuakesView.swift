@@ -40,7 +40,7 @@ struct QuakesView: View {
                 ErrorNote(message: model.errors[.quakes])
             }
 
-            Section("\(filtered.count) scosse – ultime 48 ore") {
+            Section {
                 ForEach(filtered) { quake in
                     HStack {
                         Text("M\(Fmt.number(quake.magnitude, decimals: 1))")
@@ -57,16 +57,16 @@ struct QuakesView: View {
                             .font(.app(.caption)).foregroundStyle(.secondary)
                     }
                 }
-            }
+            } header: { Text("\(filtered.count) scosse – ultime 48 ore").pinnedHeader() }
 
-            Section("Vulcani ed eruzioni") {
+            Section {
                 Text("Zone di pericolo e chiusure: IMO e Protezione Civile.")
                     .font(.app(.caption)).foregroundStyle(.secondary)
                 LinkRow(title: String(localized: "Vedur.is – Terremoti"), subtitle: String(localized: "Mappa ufficiale in tempo reale"), url: "https://en.vedur.is/earthquakes-and-volcanism/earthquakes/", systemImage: "waveform.path.ecg")
                 LinkRow(title: String(localized: "Vedur.is – Vulcani e mappa dei pericoli"), subtitle: String(localized: "Livelli di allerta aviazione e pericolo"), url: "https://en.vedur.is/earthquakes-and-volcanism/", systemImage: "mountain.2.fill")
                 LinkRow(title: String(localized: "Previsione gas vulcanici"), subtitle: String(localized: "Dispersione SO₂ durante le eruzioni"), url: "https://en.vedur.is/pollution-and-radiation/volcanic-gas/", systemImage: "aqi.high")
                 LinkRow(title: String(localized: "Protezione Civile (Almannavarnir)"), subtitle: String(localized: "Evacuazioni e zone chiuse"), url: "https://www.almannavarnir.is/english/", systemImage: "shield.lefthalf.filled")
-            }
+            } header: { Text("Vulcani ed eruzioni").pinnedHeader() }
         }
         .themedList()
         .navigationTitle("Terremoti e vulcani")

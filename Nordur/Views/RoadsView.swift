@@ -42,11 +42,11 @@ struct RoadsView: View {
                 NavigationLink { WebcamsView() } label: { Label("Webcam stradali (\(model.webcams?.value.count ?? 0) siti)", systemImage: "video") }
             }
 
-            Section("Ufficiale") {
+            Section {
                 LinkRow(title: String(localized: "Umferdin.is – mappa strade in tempo reale"), subtitle: String(localized: "Chiusure, condizioni, webcam"), url: "https://umferdin.is/en", systemImage: "map")
                 LinkRow(title: String(localized: "Road.is – Vegagerðin"), subtitle: String(localized: "Info stradali, strade F nelle Highlands"), url: "https://www.road.is/", systemImage: "road.lanes")
                 LinkRow(title: String(localized: "Chiama il 1777"), subtitle: String(localized: "Informazioni stradali (8–16, inverno anche 6:30–22)"), url: "tel:1777", systemImage: "phone.fill")
-            }
+            } header: { Text("Ufficiale").pinnedHeader() }
         }
         .themedList()
         .navigationTitle("Strade")
@@ -79,7 +79,7 @@ struct RoadsView: View {
                     .padding(.vertical, 2)
                 }
             } header: {
-                Text("Notizie in tempo reale")
+                Text("Notizie in tempo reale").pinnedHeader()
             } footer: {
                 Text("Testi originali di Vegagerðin (in inglese), aggiornati ogni 5 minuti.")
             }
@@ -96,22 +96,22 @@ struct RoadsView: View {
                 .filter { ($0.risk ?? .ok) >= .caution && matches($0) }
                 .map { RoadItem(section: $0, km: model.roadGeometry?.value.distanceKm(from: here, to: $0.id) ?? $0.distanceKm(to: here) ?? .infinity) }
                 .sorted { ($0.section.risk ?? .ok) != ($1.section.risk ?? .ok) ? ($0.section.risk ?? .ok) > ($1.section.risk ?? .ok) : $0.km < $1.km }
-            Section("\(critical.count) tratti con problemi") {
+            Section {
                 if critical.isEmpty { Label("Nessun problema segnalato", systemImage: "checkmark.circle").foregroundStyle(.green) }
                 ForEach(critical) { item in
                     NavigationLink { RoadSectionView(section: item.section) } label: { RoadSectionRow(section: item.section, km: item.km) }
                 }
-            }
+            } header: { Text("\(critical.count) tratti con problemi").pinnedHeader() }
             let hazards = info.sections.filter { matches($0) }
                 .flatMap { section in section.hazards.map { HazardItem(section: section, hazard: $0, km: $0.at.map { Geo.distanceKm(here, $0.coordinate) } ?? .infinity) } }
                 .sorted { $0.km < $1.km }
-            Section("Lavori e pericoli (\(hazards.count))") {
+            Section {
                 ForEach(hazards) { entry in
                     NavigationLink { RoadSectionView(section: entry.section) } label: {
                         HazardRow(hazard: entry.hazard, section: entry.section, km: entry.km)
                     }
                 }
-            }
+            } header: { Text("Lavori e pericoli (\(hazards.count))").pinnedHeader() }
         } else if let network = model.roads?.value {
             legacyProblems(network)
         } else if model.errors[.roadInfo] == nil {
@@ -126,11 +126,11 @@ struct RoadsView: View {
             let list = info.sections.filter { matches($0) }
                 .map { RoadItem(section: $0, km: model.roadGeometry?.value.distanceKm(from: here, to: $0.id) ?? $0.distanceKm(to: here) ?? .infinity) }
                 .sorted { $0.km < $1.km }
-            Section("\(list.count) tratti · ordinati per distanza da \(model.activePlace.name)") {
+            Section {
                 ForEach(Array(list.prefix(query.isEmpty ? 150 : 400))) { item in
                     NavigationLink { RoadSectionView(section: item.section) } label: { RoadSectionRow(section: item.section, km: item.km) }
                 }
-            }
+            } header: { Text("\(list.count) tratti · ordinati per distanza da \(model.activePlace.name)").pinnedHeader() }
         } else if model.errors[.roadInfo] == nil {
             ProgressView()
         }
@@ -138,7 +138,7 @@ struct RoadsView: View {
 
     @ViewBuilder private func legacyProblems(_ network: RoadNetwork) -> some View {
         let list = network.problemSegments.filter { query.isEmpty || $0.name.localizedCaseInsensitiveContains(query) }
-        Section("\(list.count) tratti con problemi") {
+        Section {
             if list.isEmpty {
                 Label("Nessun problema segnalato", systemImage: "checkmark.circle").foregroundStyle(.green)
             }
@@ -154,7 +154,7 @@ struct RoadsView: View {
                     }
                 }
             }
-        }
+        } header: { Text("\(list.count) tratti con problemi").pinnedHeader() }
     }
 
     @ViewBuilder private func stations(_ network: RoadNetwork) -> some View {
@@ -162,11 +162,11 @@ struct RoadsView: View {
             .filter { !$0.isOutdated && $0.coordinate != nil }
             .filter { query.isEmpty || $0.name.localizedCaseInsensitiveContains(query) }
             .sorted { Geo.distanceKm(here, $0.coordinate!) < Geo.distanceKm(here, $1.coordinate!) }
-        Section("Ordinate per distanza da \(model.activePlace.name)") {
+        Section {
             ForEach(list) { station in
                 StationRow(station: station, network: network, distance: station.coordinate.map { Geo.distanceKm(here, $0) })
             }
-        }
+        } header: { Text("Ordinate per distanza da \(model.activePlace.name)").pinnedHeader() }
     }
 }
 

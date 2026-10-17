@@ -23,11 +23,11 @@ struct WarningsView: View {
                     WarningRow(warning: warning, coversYou: warning.covers(model.activePlace.coordinate))
                 }
             }
-            Section("Cosa significano i colori") {
+            Section {
                 Text("Giallo: possibili disagi.\nArancione: impatti significativi, valuta di rimandare.\nRosso: evento estremo, non metterti in viaggio.")
                     .font(.app(.caption))
                 LinkRow(title: String(localized: "Allerte su vedur.is"), subtitle: nil, url: "https://en.vedur.is/weather/forecasts/areas/")
-            }
+            } header: { Text("Cosa significano i colori").pinnedHeader() }
         }
         .themedList()
         .navigationTitle("Allerte meteo")
@@ -83,19 +83,19 @@ struct WarningDetail: View {
                     .listRowInsets(EdgeInsets())
                 }
             }
-            Section("Descrizione (IMO)") {
+            Section {
                 Text(warning.details)
                 if let icelandic = warning.headlineIcelandic {
                     Text(icelandic).font(.app(.caption)).foregroundStyle(.secondary)
                 }
-            }
-            Section("Dettagli") {
+            } header: { Text("Descrizione (IMO)").pinnedHeader() }
+            Section {
                 LabeledContent("Evento", value: warning.event)
                 LabeledContent("Gravità", value: warning.severity ?? "–")
                 LabeledContent("Certezza", value: warning.certainty ?? "–")
                 LabeledContent("Inizio", value: Fmt.dayTime(warning.onset, in: .iceland))
                 LabeledContent("Fine", value: Fmt.dayTime(warning.expires, in: .iceland))
-            }
+            } header: { Text("Dettagli").pinnedHeader() }
         }
         .themedList()
         .navigationTitle(warning.color.label)

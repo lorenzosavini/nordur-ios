@@ -51,7 +51,7 @@ struct TransportView: View {
                 LinkRow(title: String(localized: "Baldur (Sæferðir)"), subtitle: String(localized: "Stykkishólmur – Flatey – Brjánslækur"), url: "https://www.saeferdir.is/en/", systemImage: "ferry.fill")
                 LinkRow(title: String(localized: "Smyril Line"), subtitle: String(localized: "Seyðisfjörður – Fær Øer – Danimarca"), url: "https://www.smyrilline.com/", systemImage: "ferry")
             } header: {
-                Text("Traghetti")
+                Text("Traghetti").pinnedHeader()
             }
 
             Section {
@@ -71,16 +71,16 @@ struct TransportView: View {
                     }
                 }
             } header: {
-                Text("Aeroporto di Keflavík (oggi)")
+                Text("Aeroporto di Keflavík (oggi)").pinnedHeader()
             } footer: {
                 Text("Con la stella ricevi una notifica a ogni cambio di stato, orario o gate.")
             }
 
-            Section("Altri collegamenti") {
+            Section {
                 LinkRow(title: String(localized: "Voli interni (Reykjavík RKV, Akureyri…)"), subtitle: String(localized: "Isavia"), url: "https://www.isavia.is/en", systemImage: "airplane.circle")
                 LinkRow(title: String(localized: "Flybus / Airport Direct"), subtitle: String(localized: "Navette KEF ↔ Reykjavík"), url: "https://www.re.is/", systemImage: "bus")
                 LinkRow(title: String(localized: "Strætó"), subtitle: String(localized: "Bus urbani e di lunga distanza"), url: "https://www.straeto.is/en", systemImage: "bus.fill")
-            }
+            } header: { Text("Altri collegamenti").pinnedHeader() }
         }
         .themedList()
         .navigationTitle("Voli e traghetti")

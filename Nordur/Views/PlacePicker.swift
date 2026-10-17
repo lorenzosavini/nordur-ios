@@ -29,7 +29,7 @@ struct PlacePicker: View {
                 }
 
                 if !query.isEmpty {
-                    Section("Risultati") {
+                    Section {
                         if searching { ProgressView() }
                         ForEach(results) { place in
                             row(place)
@@ -37,14 +37,14 @@ struct PlacePicker: View {
                         if !searching && results.isEmpty {
                             Text("Nessun risultato").foregroundStyle(.secondary)
                         }
-                    }
+                    } header: { Text("Risultati").pinnedHeader() }
                 }
 
-                Section("Islanda – luoghi principali") {
+                Section {
                     ForEach(filteredPresets) { place in
                         row(place)
                     }
-                }
+                } header: { Text("Islanda – luoghi principali").pinnedHeader() }
             }
             .themedList()
             .navigationTitle("Scegli un luogo")

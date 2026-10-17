@@ -100,7 +100,7 @@ struct AlertsView: View {
                         }
                     }
                 } header: {
-                    Text("\(dayTitle(group.day)) · \(group.events.count)")
+                    Text("\(dayTitle(group.day)) · \(group.events.count)").pinnedHeader()
                 }
             }
         }
@@ -193,12 +193,12 @@ struct AlertSettingsView: View {
                     }
                 }
             } header: {
-                Text("Cosa monitorare")
+                Text("Cosa monitorare").pinnedHeader()
             } footer: {
                 Text("Le allerte IMO e i terremoti vengono controllati per la tua posizione e per le tappe del viaggio dei prossimi 3 giorni.")
             }
 
-            Section("Soglie") {
+            Section {
                 Toggle("Includi allerte gialle", isOn: $draft.includeYellow)
                 Stepper("Raffiche da \(Int(draft.gustThreshold)) m/s", value: $draft.gustThreshold, in: 12...40, step: 1)
                 Stepper("…entro \(Int(draft.gustRadiusKm)) km", value: $draft.gustRadiusKm, in: 5...100, step: 5)
@@ -209,7 +209,7 @@ struct AlertSettingsView: View {
                     ForEach([ObservabilityClass.moderate, .good, .excellent], id: \.rawValue) { Text($0.label).tag($0.rawValue) }
                 }
                 Stepper("Avvisi NOAA e CME NASA da Kp \(Fmt.number(draft.auroraKp))", value: Binding(get: { draft.auroraKp }, set: { draft.auroraKpAlert = $0 }), in: 3...8, step: 1)
-            }
+            } header: { Text("Soglie").pinnedHeader() }
 
             Section {
                 Toggle("Avvisi vocali durante la guida", isOn: $draft.spoken)
@@ -222,12 +222,12 @@ struct AlertSettingsView: View {
                     }
                 }
             } header: {
-                Text("In viaggio")
+                Text("In viaggio").pinnedHeader()
             } footer: {
                 Text("Ogni volta che ti sposti di circa 2 km l'app controlla allerte, strade, vento e terremoti intorno a te, anche se non stai registrando un percorso. Serve l'accesso alla posizione «Sempre».")
             }
 
-            Section("Voli seguiti") {
+            Section {
                 ForEach(draft.followedFlights, id: \.self) { flight in
                     Text(flight)
                 }
@@ -243,7 +243,7 @@ struct AlertSettingsView: View {
                     }
                     .disabled(newFlight.isEmpty)
                 }
-            }
+            } header: { Text("Voli seguiti").pinnedHeader() }
 
             Section {
                 Button("Invia una notifica di prova") {
