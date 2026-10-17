@@ -90,12 +90,35 @@ jobs:
           xcodebuild -exportLocalizations -project Nordur.xcodeproj -localizationPath loc -exportLanguage en > loc.log 2>&1 || tail -40 loc.log
           ls -R loc | head -20 || true
 
+      - name: Tap test on the map (real taps on every layer button)
+        continue-on-error: true
+        run: |
+          brew tap facebook/fb >/dev/null && brew install -q idb-companion >/dev/null
+          python3 -m pip install -q --break-system-packages fb-idb || pipx install fb-idb
+          UDID=$(xcrun simctl list devices available -j | python3 -c "import json,sys; d=json.load(sys.stdin)['devices']; print(next(x['udid'] for k,v in sorted(d.items(), reverse=True) if 'iOS' in k for x in v if x['name'].startswith('iPhone')))")
+          xcrun simctl boot "$UDID"; xcrun simctl bootstatus "$UDID" -b
+          xcrun simctl install "$UDID" build/Debug-iphonesimulator/Nordur.app
+          xcrun simctl privacy "$UDID" grant location-always it.lorenzosavini.nordur || true
+          idb_companion --udid "$UDID" > /tmp/idb.log 2>&1 &
+          sleep 5
+          idb connect localhost 10882 || idb connect "$UDID" || true
+          # No -map.layer here: launch arguments would override what the taps save.
+          xcrun simctl launch "$UDID" it.lorenzosavini.nordur -initialTab map -AppleLanguages "(it)" -AppleLocale it_IT
+          sleep 20
+          mkdir -p shots
+          status=0
+          python3 tools/ci/map_tap_test.py "$UDID" shots || status=$?
+          xcrun simctl terminate "$UDID" it.lorenzosavini.nordur || true
+          xcrun simctl uninstall "$UDID" it.lorenzosavini.nordur || true
+          xcrun simctl shutdown "$UDID" || true
+          exit $status
+
       - name: Run in the iPhone simulator and take screenshots
         run: |
           set -x
           UDID=$(xcrun simctl list devices available -j | python3 -c "import json,sys; d=json.load(sys.stdin)['devices']; print(next(x['udid'] for k,v in sorted(d.items(), reverse=True) if 'iOS' in k for x in v if x['name'].startswith('iPhone')))")
           echo "Device $UDID"
-          xcrun simctl boot "$UDID"
+          xcrun simctl boot "$UDID" || true
           xcrun simctl bootstatus "$UDID" -b
           xcrun simctl status_bar "$UDID" override --time 12:00 || true
           xcrun simctl install "$UDID" build/Debug-iphonesimulator/Nordur.app

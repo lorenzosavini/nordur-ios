@@ -111,6 +111,8 @@ struct MapScreen: View {
                             .contentShape(Rectangle())
                     }
                     .buttonStyle(.plain)
+                    .accessibilityIdentifier("layer.\(item.rawValue)")
+                    .accessibilityAddTraits(layer == item ? .isSelected : [])
                 }
             }
             .padding(.horizontal)
@@ -131,6 +133,7 @@ struct MapScreen: View {
                         .padding(.horizontal, 10).padding(.vertical, 7)
                         .background(Theme.bg.opacity(0.94)).overlay(Rectangle().strokeBorder(Theme.hairline))
                 }
+                .accessibilityIdentifier("layers.menu")
                 Spacer()
             }
             .padding(.horizontal)
