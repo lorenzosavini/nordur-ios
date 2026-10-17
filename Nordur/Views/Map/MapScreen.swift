@@ -213,13 +213,32 @@ struct MapScreen: View {
                 }
             }
         } else if layer == .aurora {
-            HStack {
-                Image(systemName: "moon.stars.fill").foregroundStyle(.secondary)
-                Text("Ovale OVATION previsto per le \(Fmt.time(model.ovation?.value.forecastTime, in: .iceland)) · Kp \(Fmt.number(model.kp.flatMap { KpLookup.kp(at: Date(), in: $0.value) }, decimals: 1))")
-                    .font(.app(.caption))
-                Spacer()
+            VStack(alignment: .leading, spacing: 4) {
+                HStack {
+                    Image(systemName: "moon.stars.fill").foregroundStyle(.secondary)
+                    Text("Ovale OVATION previsto per le \(Fmt.time(model.ovation?.value.forecastTime, in: .iceland)) · Kp \(Fmt.number(model.kp.flatMap { KpLookup.kp(at: Date(), in: $0.value) }, decimals: 1))")
+                        .font(.app(.caption))
+                    Spacer()
+                }
+                if let peak = icelandAuroraPeak {
+                    Text(peak < 4
+                         ? String(localized: "Sull'Islanda adesso il valore massimo è \(Int(peak.rounded())): troppo basso per essere colorato (scala da 4). Il colore compare quando l'ovale si allarga verso sud.")
+                         : String(localized: "Valore massimo sull'Islanda adesso: \(Int(peak.rounded()))."))
+                        .font(.app(.caption2)).foregroundStyle(.secondary)
+                        .fixedSize(horizontal: false, vertical: true)
+                }
             }
         }
+    }
+
+    /// Highest OVATION value over Iceland right now (1° grid).
+    private var icelandAuroraPeak: Double? {
+        guard let ovation = model.ovation?.value else { return nil }
+        var peak = 0.0
+        for lat in stride(from: 63.0, through: 67.0, by: 0.5) {
+            for lon in stride(from: -25.0, through: -13.0, by: 0.5) { peak = max(peak, ovation.interpolated(lat: lat, lon: lon)) }
+        }
+        return peak
     }
 
     // MARK: Raster

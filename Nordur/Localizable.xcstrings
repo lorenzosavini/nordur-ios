@@ -8319,6 +8319,16 @@
         }
       }
     },
+    "Sull'Islanda adesso il valore massimo è %lld: troppo basso per essere colorato (scala da 4). Il colore compare quando l'ovale si allarga verso sud." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Over Iceland the highest value right now is %lld: too low to be coloured (scale starts at 4). Colour appears when the oval expands southwards."
+          }
+        }
+      }
+    },
     "Svuota" : {
       "localizations" : {
         "en" : {
@@ -8935,6 +8945,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Avalanches"
+          }
+        }
+      }
+    },
+    "Valore massimo sull'Islanda adesso: %lld." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Highest value over Iceland right now: %lld."
           }
         }
       }
