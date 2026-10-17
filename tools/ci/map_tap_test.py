@@ -46,12 +46,19 @@ def shot(name):
 failures, report = 0, []
 time.sleep(2)
 for raw, legend in LAYERS:
-    button = find(ident=f"layer.{raw}")
+    button = None
+    for attempt in range(5):  # a busy main thread delays the accessibility tree
+        button = find(ident=f"layer.{raw}")
+        if button: break
+        time.sleep(2)
     if not button:
         report.append(f"FAIL {raw}: button not found"); failures += 1; continue
     x, y = tap(button)
-    time.sleep(3)
-    ok_legend = find(label=legend) is not None
+    ok_legend = False
+    for attempt in range(4):
+        time.sleep(2)
+        if find(label=legend) is not None:
+            ok_legend = True; break
     selected = any(e.get("AXUniqueId") == f"layer.{raw}" and "selected" in json.dumps(e).lower() for e in elements())
     shot(f"tap-layer-{raw}")
     status = "ok  " if ok_legend else "FAIL"

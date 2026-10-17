@@ -52,7 +52,11 @@ final class WindParticleView: UIView {
     private var context: CGContext?
     private var lastMapRect = MKMapRect.null
     private var lastTimestamp: CFTimeInterval = 0
+    #if targetEnvironment(simulator)
+    private let pixelScale: CGFloat = 1.0
+    #else
     private let pixelScale: CGFloat = 1.5
+    #endif
     /// Particle budget, lowered when frames cost too much main-thread time so
     /// touches stay responsive on slow devices and in the simulator.
     #if targetEnvironment(simulator)
@@ -103,12 +107,18 @@ final class WindParticleView: UIView {
         Int(min(Double(budget), max(Double(min(budget, 600)), bounds.width * bounds.height / 220)))
     }
 
-    /// More than ~8 ms per frame for a few frames: fewer particles (down to 150).
+    /// More than ~8 ms per frame for a few frames: fewer particles (down to 150),
+    /// then fewer frames per second (down to 8), so the main thread stays free for touches.
     private func adapt(_ cost: CFTimeInterval) {
         slowFrames = cost > 0.008 ? slowFrames + 1 : max(0, slowFrames - 1)
-        guard slowFrames >= 5, budget > 150 else { return }
-        budget = max(150, budget * 2 / 3)
+        guard slowFrames >= 5 else { return }
         slowFrames = 0
+        if budget > 150 {
+            budget = max(150, budget * 2 / 3)
+        } else if let link = displayLink, link.preferredFrameRateRange.preferred ?? 30 > 8 {
+            let fps = max(8, (link.preferredFrameRateRange.preferred ?? 30) / 2)
+            link.preferredFrameRateRange = CAFrameRateRange(minimum: 6, maximum: fps, preferred: fps)
+        }
     }
 
     private func resetParticles() {
