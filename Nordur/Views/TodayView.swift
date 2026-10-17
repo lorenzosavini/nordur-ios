@@ -20,6 +20,7 @@ struct TodayView: View {
                         statusBanner
                         now
                     }
+                    exploreSection
                     nextHours
                     windSection
                     warningsSection
@@ -44,10 +45,61 @@ struct TodayView: View {
         }
     }
 
+    // MARK: Explore
+
+    /// Photo tiles to the main sections, each with one live line.
+    private var exploreSection: some View {
+        VStack(alignment: .leading, spacing: 10) {
+            SectionLabel(title: String(localized: "Esplora"))
+            LazyVGrid(columns: [GridItem(.flexible(), spacing: 6), GridItem(.flexible(), spacing: 6)], spacing: 6) {
+                NavigationLink { AuroraView() } label: {
+                    HeroTile(hero: .aurora, title: String(localized: "Aurora"), status: auroraStatus,
+                             statusColor: (model.auroraBestTonight?.observability ?? .veryPoor) >= .good ? Color(red: 0.55, green: 1, blue: 0.8) : .white)
+                }
+                NavigationLink { RoadsView() } label: {
+                    HeroTile(hero: .roads, title: String(localized: "Strade"), status: roadsStatus)
+                }
+                Button { model.requestedTab = "map" } label: {
+                    HeroTile(hero: .map, title: String(localized: "Mappa"), status: String(localized: "Vento, pioggia, neve, radar, strade"))
+                }
+                Button { model.requestedTab = "weather" } label: {
+                    HeroTile(hero: .weather, title: String(localized: "Meteo"), status: weatherStatus)
+                }
+                NavigationLink { QuakesView() } label: {
+                    HeroTile(hero: .volcano, title: String(localized: "Vulcani e terremoti"),
+                             status: String(localized: "\(model.recentQuakes24h.count) scosse nelle ultime 24 h"))
+                }
+                Button { model.requestedTab = "trip" } label: {
+                    HeroTile(hero: .trip, title: String(localized: "Viaggio"), status: String(localized: "Tappe, meteo e strade lungo il percorso"))
+                }
+            }
+            .buttonStyle(.plain)
+        }
+    }
+
+    private var auroraStatus: String {
+        guard let best = model.auroraBestTonight else { return String(localized: "Previsione per stanotte") }
+        return String(localized: "\(best.observability.label) verso le \(Fmt.time(best.date, in: zone))")
+    }
+
+    private var roadsStatus: String {
+        guard let info = model.roadInfo?.value else { return String(localized: "Condizioni e notizie Vegagerðin") }
+        let closed = info.sections.filter(\.isClosed).count
+        let difficult = info.sections.filter { !$0.isClosed && ($0.risk ?? .ok) >= .warning }.count
+        return String(localized: "\(closed) tratti chiusi · \(difficult) difficili")
+    }
+
+    private var weatherStatus: String {
+        guard let current = model.forecast?.value.current else { return String(localized: "Previsioni ora per ora") }
+        let info = WeatherCode.describe(current.weather_code, isDay: current.is_day != 0)
+        return "\(Fmt.temp(current.temperature_2m)) · \(info.text)"
+    }
+
     // MARK: Top bar
 
     private var topBar: some View {
         HStack(spacing: 8) {
+            LogoMark(size: 20)
             Text("NORÐUR").font(.mono(13, .semibold)).tracking(2.5).foregroundStyle(Theme.text)
             Text(Fmt.time(Date(), in: .iceland)).font(.mono(10.5)).foregroundStyle(Theme.faint)
             if model.isRefreshing { ProgressView().controlSize(.mini).tint(Theme.dim) }

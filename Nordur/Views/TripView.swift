@@ -23,6 +23,13 @@ struct TripView: View {
                 .listRowBackground(Color.clear)
                 .listRowInsets(EdgeInsets(top: 0, leading: 4, bottom: 0, trailing: 4))
 
+                Section {
+                    HeroHeader(hero: .trip, eyebrow: String(localized: "Kirkjufell · Snæfellsnes"), title: String(localized: "Il tuo viaggio"),
+                               subtitle: String(localized: "Per ogni tappa: meteo, allerte, strade e aurora"), height: 150)
+                        .heroRow()
+                }
+                .listSectionSeparator(.hidden)
+
                 if trip.stops.isEmpty {
                     VStack(alignment: .leading, spacing: 12) {
                         Text("NESSUNA TAPPA").font(.display(28, .bold)).foregroundStyle(Theme.text)

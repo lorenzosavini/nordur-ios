@@ -29,6 +29,8 @@ final class AppModel {
     }
 
     let location = LocationManager()
+    /// A screen asks the root view to switch tab ("map", "weather", "trip"…).
+    var requestedTab: String?
 
     private(set) var useCurrentLocation: Bool
     private(set) var chosenPlace: Place

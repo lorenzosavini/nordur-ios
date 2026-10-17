@@ -38,3 +38,20 @@ None of this data is stored in the repository. The app and the backend request i
 | RainViewer | Precipitation radar tiles | RainViewer API terms |
 
 The names and logos of the services above are trademarks of their owners. Norður is not affiliated with or endorsed by any of them.
+
+## Photographs (hero images)
+
+Bundled in `Nordur/Assets.xcassets/hero-*.imageset`, resized to 1400 px and
+recompressed; otherwise unchanged. From Wikimedia Commons, under the licence of
+each file (CC BY and CC BY-SA require attribution; CC BY-SA derivatives of the
+image keep the same licence). Also credited in the app (Info › Crediti foto).
+
+| Asset | File | Author | Licence |
+|---|---|---|---|
+| `hero-aurora` | [Church of light.jpg](https://commons.wikimedia.org/wiki/File:Church_of_light.jpg) | AstroAnthony | CC BY 4.0 |
+| `hero-roads` | [Driving in Iceland can be challenging (40217475782).jpg](https://commons.wikimedia.org/wiki/File:Driving_in_Iceland_can_be_challenging_(40217475782).jpg) | Winniepix | CC BY 2.0 |
+| `hero-weather` | [Crepuscular rays break through clouds in Iceland.jpg](https://commons.wikimedia.org/wiki/File:Crepuscular_rays_break_through_clouds_in_Iceland.jpg) | Thomas  Heins from Friesenheim, Deutschland | CC BY 4.0 |
+| `hero-map` | [Iceland (15082529060).jpg](https://commons.wikimedia.org/wiki/File:Iceland_(15082529060).jpg) | NASA Goddard Space Flight Center from Greenbelt, MD, USA | Public domain |
+| `hero-trip` | [Kirkjufell, Iceland (Unsplash LoKG7kKx7Zc).jpg](https://commons.wikimedia.org/wiki/File:Kirkjufell,_Iceland_(Unsplash_LoKG7kKx7Zc).jpg) | Steven Diaz stevendiazphoto | CC0 |
+| `hero-volcano` | [Iceland's Fagradalsfjall volcano.png](https://commons.wikimedia.org/wiki/File:Iceland%27s_Fagradalsfjall_volcano.png) | Mokslo Sriuba | CC BY-SA 4.0 |
+| `hero-drive` | [Saturday Winter Afternoon on the Road from the Factory, Iceland - panoramio.jpg](https://commons.wikimedia.org/wiki/File:Saturday_Winter_Afternoon_on_the_Road_from_the_Factory,_Iceland_-_panoramio.jpg) | Petr Kraumann | CC BY 3.0 |

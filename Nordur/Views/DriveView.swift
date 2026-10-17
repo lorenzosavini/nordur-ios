@@ -33,6 +33,15 @@ struct DriveView: View {
                 .listRowBackground(Color.clear)
                 .listRowInsets(EdgeInsets(top: 0, leading: 4, bottom: 0, trailing: 4))
 
+                if !recorder.isRecording {
+                    Section {
+                        HeroHeader(hero: .drive, eyebrow: String(localized: "Ring Road · Hringvegur"), title: String(localized: "In auto"),
+                                   subtitle: String(localized: "Registra il percorso: strade davanti, vento, limiti e alert vocali"), height: 150)
+                            .heroRow()
+                    }
+                    .listSectionSeparator(.hidden)
+                }
+
                 if let recovered = recorder.recoverable {
                     Section {
                         Label("Una registrazione del \(Fmt.dayTime(recovered.start)) si è interrotta (\(Fmt.number(recovered.stats.km, decimals: 1, unit: "km"))).", systemImage: "exclamationmark.arrow.circlepath")

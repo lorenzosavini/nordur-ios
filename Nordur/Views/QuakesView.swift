@@ -12,6 +12,11 @@ struct QuakesView: View {
     var body: some View {
         List {
             Section {
+                HeroHeader(hero: .volcano, eyebrow: String(localized: "Veðurstofa Íslands"), title: String(localized: "Vulcani e terremoti"), subtitle: String(localized: "\(model.recentQuakes24h.count) scosse nelle ultime 24 ore"))
+                    .heroRow()
+            }
+            .listSectionSeparator(.hidden)
+            Section {
                 ExpandableMap(height: 260, title: String(localized: "Terremoti")) {
                 Map(initialPosition: .region(MKCoordinateRegion(
                     center: CLLocationCoordinate2D(latitude: 64.9, longitude: -18.6),
@@ -70,6 +75,7 @@ struct QuakesView: View {
         }
         .themedList()
         .navigationTitle("Terremoti e vulcani")
+        .navigationBarTitleDisplayMode(.inline)
         .refreshable { await model.refreshGlobal(force: true) }
     }
 }

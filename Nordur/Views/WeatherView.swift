@@ -12,6 +12,11 @@ struct WeatherView: View {
                         ScreenHeader(title: String(localized: "Meteo"), subtitle: String(localized: "Previsioni · 10 giorni"), index: "02") { AppearanceButton() }
                         PlaceHeader(size: 34)
                     }
+                    HeroHeader(hero: .weather, eyebrow: String(localized: "Veðurstofa Íslands · MET Norway · Open-Meteo"),
+                               title: model.forecast?.value.current.map { WeatherCode.describe($0.weather_code, isDay: $0.is_day != 0).text } ?? String(localized: "Previsioni"),
+                               subtitle: model.forecast?.value.current.map { String(localized: "\(Fmt.temp($0.temperature_2m)) · vento \(Fmt.ms($0.wind_speed_10m)), raffiche \(Fmt.ms($0.wind_gusts_10m))") },
+                               height: 170)
+                        .padding(.horizontal, -18)
                     if let fetched = model.forecast {
                         let forecast = fetched.value
                         let next48 = forecast.upcomingHours(48)

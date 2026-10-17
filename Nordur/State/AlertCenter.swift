@@ -292,8 +292,10 @@ final class AlertCenter: NSObject {
     private func post(_ event: AlertEvent) {
         let content = UNMutableNotificationContent()
         content.title = event.title
+        content.subtitle = event.category.shortLabel
         content.body = event.body
         content.sound = .default
+        if let picture = NotificationIcon.attachment(for: event) { content.attachments = [picture] }
         content.threadIdentifier = event.category.rawValue
         content.interruptionLevel = event.risk >= .warning ? .timeSensitive : .active
         content.relevanceScore = Double(event.severity) / 3

@@ -25,7 +25,9 @@ struct AuroraView: View {
         ScrollView {
             VStack(alignment: .leading, spacing: 28) {
                 VStack(alignment: .leading, spacing: 16) {
-                    ScreenHeader(title: String(localized: "Aurora"), subtitle: String(localized: "NOAA · GFZ · NASA · MET Norway"))
+                    HeroHeader(hero: .aurora, eyebrow: String(localized: "NOAA · GFZ · NASA · MET Norway"), title: String(localized: "Aurora"),
+                               subtitle: String(localized: "Attività, cielo qui e conferme della community"))
+                        .padding(.horizontal, -18)
                     PlaceHeader(size: 30)
                     summary
                     modePicker

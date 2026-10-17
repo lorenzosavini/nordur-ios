@@ -582,3 +582,117 @@ struct FlowLayout: Layout {
         return rows.filter { !$0.items.isEmpty }
     }
 }
+
+/// Norður logo mark: a tall Ð (Barlow Condensed Bold) with the crossbar in the
+/// signal orange, the same drawing as the app icon (tools/brand/make_icon.py).
+struct LogoMark: View {
+    var size: CGFloat = 22
+
+    var body: some View {
+        Text("D")
+            .font(.custom("BarlowCondensed-Bold", fixedSize: size * 1.25))
+            .foregroundStyle(Theme.text)
+            .overlay(alignment: .leading) {
+                Theme.accent
+                    .frame(width: size * 0.42, height: max(2, size * 0.11))
+                    .offset(x: -size * 0.12, y: size * 0.04)
+            }
+            .frame(height: size)
+            .accessibilityHidden(true)
+    }
+}
+
+// MARK: - Hero images
+
+/// Photographs bundled with the app (Wikimedia Commons, free licences; credits
+/// in THIRD_PARTY_NOTICES.md and in Info › Crediti).
+enum Hero: String, CaseIterable {
+    case aurora, roads, weather, map, trip, volcano, drive
+
+    var asset: String { "hero-\(rawValue)" }
+
+    /// Title, author, licence and source page (Wikimedia Commons).
+    var credit: (title: String, author: String, license: String, page: String) {
+        switch self {
+        case .aurora: return ("Church of light.jpg", "AstroAnthony", "CC BY 4.0", "https://commons.wikimedia.org/wiki/File:Church_of_light.jpg")
+        case .roads: return ("Driving in Iceland can be challenging (40217475782).jpg", "Winniepix", "CC BY 2.0", "https://commons.wikimedia.org/wiki/File:Driving_in_Iceland_can_be_challenging_(40217475782).jpg")
+        case .weather: return ("Crepuscular rays break through clouds in Iceland.jpg", "Thomas Heins", "CC BY 4.0", "https://commons.wikimedia.org/wiki/File:Crepuscular_rays_break_through_clouds_in_Iceland.jpg")
+        case .map: return ("Iceland (15082529060).jpg", "NASA Goddard Space Flight Center", "Public domain", "https://commons.wikimedia.org/wiki/File:Iceland_(15082529060).jpg")
+        case .trip: return ("Kirkjufell, Iceland (Unsplash LoKG7kKx7Zc).jpg", "Steven Diaz stevendiazphoto", "CC0", "https://commons.wikimedia.org/wiki/File:Kirkjufell,_Iceland_(Unsplash_LoKG7kKx7Zc).jpg")
+        case .volcano: return ("Iceland's Fagradalsfjall volcano.png", "Mokslo Sriuba", "CC BY-SA 4.0", "https://commons.wikimedia.org/wiki/File:Iceland%27s_Fagradalsfjall_volcano.png")
+        case .drive: return ("Saturday Winter Afternoon on the Road from the Factory, Iceland - panoramio.jpg", "Petr Kraumann", "CC BY 3.0", "https://commons.wikimedia.org/wiki/File:Saturday_Winter_Afternoon_on_the_Road_from_the_Factory,_Iceland_-_panoramio.jpg")
+        }
+    }
+}
+
+/// Full-width photograph with the section title over a dark gradient.
+struct HeroHeader: View {
+    let hero: Hero
+    var eyebrow: String?
+    let title: String
+    var subtitle: String?
+    var height: CGFloat = 210
+
+    var body: some View {
+        ZStack(alignment: .bottomLeading) {
+            Image(hero.asset)
+                .resizable()
+                .scaledToFill()
+                .frame(height: height)
+                .frame(maxWidth: .infinity)
+                .clipped()
+                .accessibilityHidden(true)
+            LinearGradient(colors: [.black.opacity(0), .black.opacity(0.25), .black.opacity(0.78)],
+                           startPoint: .top, endPoint: .bottom)
+            VStack(alignment: .leading, spacing: 4) {
+                if let eyebrow {
+                    Text(eyebrow.uppercased()).font(.mono(10, .semibold)).tracking(0.9).foregroundStyle(.white.opacity(0.85))
+                }
+                Text(title).font(.display(38, .bold)).foregroundStyle(.white)
+                    .lineLimit(2).minimumScaleFactor(0.7)
+                if let subtitle {
+                    Text(subtitle).font(.sans(13.5, .medium)).foregroundStyle(.white.opacity(0.88))
+                        .lineLimit(2).fixedSize(horizontal: false, vertical: true)
+                }
+            }
+            .padding(.horizontal, 18)
+            .padding(.bottom, 16)
+        }
+        .frame(height: height)
+        .clipped()
+    }
+}
+
+/// Tile with a photograph, a title and one live line, for the Today screen.
+struct HeroTile: View {
+    let hero: Hero
+    let title: String
+    var status: String?
+    var statusColor: Color = .white
+
+    var body: some View {
+        ZStack(alignment: .bottomLeading) {
+            Image(hero.asset).resizable().scaledToFill()
+                .frame(height: 118).frame(maxWidth: .infinity).clipped()
+                .accessibilityHidden(true)
+            LinearGradient(colors: [.black.opacity(0.05), .black.opacity(0.75)], startPoint: .top, endPoint: .bottom)
+            VStack(alignment: .leading, spacing: 2) {
+                Text(title.uppercased()).font(.mono(11, .semibold)).tracking(0.7).foregroundStyle(.white)
+                if let status {
+                    Text(status).font(.sans(12.5, .medium)).foregroundStyle(statusColor).lineLimit(2)
+                }
+            }
+            .padding(10)
+        }
+        .frame(height: 118)
+        .clipped()
+        .contentShape(Rectangle())
+    }
+}
+
+extension View {
+    /// A hero header as the first row of a List: edge to edge, no separator.
+    func heroRow() -> some View {
+        listRowInsets(EdgeInsets()).listRowSeparator(.hidden).listRowBackground(Color.clear)
+    }
+}

@@ -133,6 +133,17 @@
         }
       }
     },
+    "%@ verso le %@" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ around %@"
+          }
+        }
+      }
+    },
     "%@ · %@" : {
       "shouldTranslate" : false
     },
@@ -168,6 +179,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "%1$@ · ARRIVAL %2$@ ±%3$lld H"
+          }
+        }
+      }
+    },
+    "%@ · Wikimedia Commons" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ · Wikimedia Commons"
           }
         }
       }
@@ -208,6 +230,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "%1$@ · gusts %2$@%3$@"
+          }
+        }
+      }
+    },
+    "%@ · vento %@, raffiche %@" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ · wind %@, gusts %@"
           }
         }
       }
@@ -402,6 +435,28 @@
         }
       }
     },
+    "%lld scosse nelle ultime 24 h" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld earthquakes in the last 24 h"
+          }
+        }
+      }
+    },
+    "%lld scosse nelle ultime 24 ore" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld earthquakes in the last 24 hours"
+          }
+        }
+      }
+    },
     "%lld scosse – ultime 48 ore" : {
       "localizations" : {
         "en" : {
@@ -438,6 +493,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "%lld stops"
+          }
+        }
+      }
+    },
+    "%lld tratti chiusi · %lld difficili" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld sections closed · %lld difficult"
           }
         }
       }
@@ -1414,6 +1480,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Steady activity in the next hour"
+          }
+        }
+      }
+    },
+    "Attività, cielo qui e conferme della community" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Activity, your sky and community reports"
           }
         }
       }
@@ -2671,6 +2748,17 @@
         }
       }
     },
+    "Condizioni e notizie Vegagerðin" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vegagerðin conditions and news"
+          }
+        }
+      }
+    },
     "Condizioni sconosciute fuori dall'orario di servizio" : {
       "localizations" : {
         "en" : {
@@ -2687,6 +2775,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Difficult road conditions"
+          }
+        }
+      }
+    },
+    "Condizioni, chiusure, lavori e notizie in tempo reale" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Conditions, closures, roadworks and live news"
           }
         }
       }
@@ -2869,6 +2968,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Create account"
+          }
+        }
+      }
+    },
+    "Crediti foto" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Photo credits"
           }
         }
       }
@@ -3507,6 +3617,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "An account with this email already exists"
+          }
+        }
+      }
+    },
+    "Esplora" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Explore"
           }
         }
       }
@@ -4351,6 +4472,17 @@
         }
       }
     },
+    "Il tuo viaggio" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Your trip"
+          }
+        }
+      }
+    },
     "Il vento misurato ora da %@ a %@ mila km arriva alla Terra tra circa %lld ± %lld minuti (ritardo piatto X/Vx). La risposta di magnetosfera e ionosfera richiede poi da alcuni minuti a decine di minuti: non è l'orario di comparsa dell'aurora." : {
       "localizations" : {
         "en" : {
@@ -4447,6 +4579,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Speeding fines in Iceland are very high. On gravel the limit is 80 km/h, in towns 50."
+          }
+        }
+      }
+    },
+    "In auto" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "On the road"
           }
         }
       }
@@ -4780,6 +4923,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Keflavík – arrivals and departures"
+          }
+        }
+      }
+    },
+    "Kirkjufell · Snæfellsnes" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kirkjufell · Snæfellsnes"
           }
         }
       }
@@ -5127,6 +5281,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Reports exceed the model: it may be local activity the model missed."
+          }
+        }
+      }
+    },
+    "Le strade come sono adesso" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The roads as they are right now"
           }
         }
       }
@@ -7512,6 +7677,17 @@
         }
       }
     },
+    "Per ogni tappa: meteo, allerte, strade e aurora" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "For every stop: weather, warnings, roads and aurora"
+          }
+        }
+      }
+    },
     "Percorribile" : {
       "localizations" : {
         "en" : {
@@ -7894,6 +8070,17 @@
         }
       }
     },
+    "Previsione per stanotte" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tonight's forecast"
+          }
+        }
+      }
+    },
     "Previsione per stazione di Veðurstofa Íslands%@" : {
       "localizations" : {
         "en" : {
@@ -7940,6 +8127,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Norwegian forecasts (MET Norway)"
+          }
+        }
+      }
+    },
+    "Previsioni ora per ora" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hour-by-hour forecast"
           }
         }
       }
@@ -8336,6 +8534,17 @@
         }
       }
     },
+    "Registra il percorso: strade davanti, vento, limiti e alert vocali" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Record your drive: roads ahead, wind, limits and spoken alerts"
+          }
+        }
+      }
+    },
     "Registra il piano di viaggio" : {
       "localizations" : {
         "en" : {
@@ -8443,6 +8652,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Remove destination"
+          }
+        }
+      }
+    },
+    "Ring Road · Hringvegur" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ring Road · Hringvegur"
           }
         }
       }
@@ -9693,6 +9913,17 @@
         }
       }
     },
+    "Tappe, meteo e strade lungo il percorso" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Stops, weather and roads along the way"
+          }
+        }
+      }
+    },
     "Temp." : {
       "localizations" : {
         "en" : {
@@ -10590,6 +10821,17 @@
         }
       }
     },
+    "Vento, pioggia, neve, radar, strade" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wind, rain, snow, radar, roads"
+          }
+        }
+      }
+    },
     "Verso %@" : {
       "localizations" : {
         "en" : {
@@ -10626,6 +10868,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Veðurstofa Íslands (vedur.is), Vegagerðin (umferdin.is), Open-Meteo, NOAA Space Weather Prediction Center, SafeTravel.is. The app aggregates public data: when in doubt, the official sources prevail."
+          }
+        }
+      }
+    },
+    "Veðurstofa Íslands · MET Norway · Open-Meteo" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Veðurstofa Íslands · MET Norway · Open-Meteo"
           }
         }
       }
@@ -10847,6 +11100,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Flight, city or airline"
+          }
+        }
+      }
+    },
+    "Vulcani e terremoti" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Volcanoes and earthquakes"
           }
         }
       }

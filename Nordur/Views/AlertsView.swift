@@ -154,10 +154,15 @@ struct AlertRow: View {
 
     var body: some View {
         HStack(alignment: .top, spacing: 10) {
+            // Same picture as the notification: category colour and symbol.
             Image(systemName: event.category.symbol)
-                .foregroundStyle(event.risk.color)
-                .font(.app(.title3))
-                .frame(width: 28)
+                .font(.system(size: 15, weight: .semibold))
+                .foregroundStyle(.white)
+                .frame(width: 34, height: 34)
+                .background(Color(NotificationIcon.color(event.category)))
+                .overlay(alignment: .bottom) {
+                    if event.risk >= .warning { event.risk.color.frame(height: 3) }
+                }
             VStack(alignment: .leading, spacing: 3) {
                 HStack {
                     Text(event.title).font(.app(.subheadline, event.read ? .regular : .semibold))

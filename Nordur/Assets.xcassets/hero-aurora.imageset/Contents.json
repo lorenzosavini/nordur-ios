@@ -1,0 +1,12 @@
+{
+  "images": [
+    {
+      "filename": "hero-aurora.jpg",
+      "idiom": "universal"
+    }
+  ],
+  "info": {
+    "author": "xcode",
+    "version": 1
+  }
+}

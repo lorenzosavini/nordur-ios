@@ -79,6 +79,23 @@ struct InfoView: View {
                     Text("Veðurstofa Íslands (vedur.is), Vegagerðin (umferdin.is), Open-Meteo, NOAA Space Weather Prediction Center, SafeTravel.is. L'app aggrega dati pubblici: in caso di dubbio prevalgono le fonti ufficiali.")
                         .font(.app(.caption2)).foregroundStyle(.secondary)
                 } header: { Text("Stato delle fonti").pinnedHeader() }
+
+                Section {
+                    ForEach(Hero.allCases, id: \.self) { hero in
+                        let credit = hero.credit
+                        if let url = URL(string: credit.page) {
+                            Link(destination: url) {
+                                HStack(spacing: 10) {
+                                    Image(hero.asset).resizable().scaledToFill().frame(width: 54, height: 36).clipped()
+                                    VStack(alignment: .leading, spacing: 1) {
+                                        Text(credit.author).font(.app(.caption, .semibold)).foregroundStyle(Theme.text)
+                                        Text("\(credit.license) · Wikimedia Commons").font(.app(.caption2)).foregroundStyle(.secondary)
+                                    }
+                                }
+                            }
+                        }
+                    }
+                } header: { Text("Crediti foto").pinnedHeader() }
             }
             .themedList()
             .navigationTitle("Info & SOS")

@@ -88,6 +88,10 @@ struct RootView: View {
         .safeAreaInset(edge: .bottom, spacing: 0) {
             NordurTabBar(selection: $tab, badge: alerts.unreadCount, recording: recorder.isRecording)
         }
+        .onChange(of: model.requestedTab) {
+            if let raw = model.requestedTab, let target = Tab(rawValue: raw) { tab = target }
+            model.requestedTab = nil
+        }
         .sheet(isPresented: $alerts.openInbox, onDismiss: { alerts.markAllRead() }) {
             NavigationStack { AlertsView() }
         }

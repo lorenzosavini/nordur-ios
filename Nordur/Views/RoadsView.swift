@@ -18,6 +18,11 @@ struct RoadsView: View {
     var body: some View {
         List {
             Section {
+                HeroHeader(hero: .roads, eyebrow: String(localized: "Vegagerðin · umferdin.is"), title: String(localized: "Strade"), subtitle: String(localized: "Condizioni, chiusure, lavori e notizie in tempo reale"))
+                    .heroRow()
+            }
+            .listSectionSeparator(.hidden)
+            Section {
                 Picker("Vista", selection: $mode) {
                     ForEach(Mode.allCases) { Text($0.rawValue.loc).tag($0) }
                 }
@@ -50,6 +55,7 @@ struct RoadsView: View {
         }
         .themedList()
         .navigationTitle("Strade")
+        .navigationBarTitleDisplayMode(.inline)
         .searchable(text: $query, prompt: String(localized: "Cerca strada, numero o località"))
         .refreshable { await model.refreshGlobal(force: true) }
     }
