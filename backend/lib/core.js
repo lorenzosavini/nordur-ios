@@ -61,8 +61,10 @@ export function verifyToken(header) {
 // otherwise the private Vercel Blob store. Keys are paths derived with a
 // secret; content is always encrypted. Redis has a far larger free allowance:
 // the Blob store was suspended for exceeding the Hobby operations quota.
-const REDIS_URL = process.env.KV_REST_API_URL || process.env.UPSTASH_REDIS_REST_URL || "";
-const REDIS_TOKEN = process.env.KV_REST_API_TOKEN || process.env.UPSTASH_REDIS_REST_TOKEN || "";
+// Any prefix chosen when connecting the integration works (KV_, STORAGE_, …).
+const restPrefix = Object.keys(process.env).find((k) => k.endsWith("_REST_API_URL") && process.env[k.replace(/_URL$/, "_TOKEN")]);
+const REDIS_URL = process.env.KV_REST_API_URL || process.env.UPSTASH_REDIS_REST_URL || (restPrefix ? process.env[restPrefix] : "") || "";
+const REDIS_TOKEN = process.env.KV_REST_API_TOKEN || process.env.UPSTASH_REDIS_REST_TOKEN || (restPrefix ? process.env[restPrefix.replace(/_URL$/, "_TOKEN")] : "") || "";
 export const storage = REDIS_URL && REDIS_TOKEN ? "redis" : "blob";
 
 async function redis(...command) {
