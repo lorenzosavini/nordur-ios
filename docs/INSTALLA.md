@@ -1,6 +1,6 @@
 # Installare Norður sull'iPhone
 
-Ci sono due strade. La prima è gratuita e immediata, la seconda serve per distribuirla.
+Ci sono tre strade. Le prime due sono gratuite (l'app va reinstallata ogni 7 giorni), la terza serve per usarla a lungo e distribuirla.
 
 ## A · Dal Mac con Xcode (gratis, account Apple personale)
 
@@ -23,6 +23,22 @@ Ci sono due strade. La prima è gratuita e immediata, la seconda serve per distr
 7. Al primo avvio vai in Impostazioni › Generali › VPN e gestione dispositivi, e autorizza il certificato.
 
 Con un account gratuito l'app scade dopo **7 giorni**: basta reinstallarla da Xcode. Con l'Apple Developer Program (99 €/anno) dura un anno e si può usare TestFlight.
+
+## A2 · Senza Xcode: Sideloadly (gratis, Windows o Mac)
+
+La CI produce a ogni commit un `.ipa` per iPhone non firmato: lo firma Sideloadly con il tuo Apple ID.
+
+1. Scarica **Nordur.ipa**: <https://github.com/lorenzosavini/nordur-ios/raw/ci-screenshots/Nordur.ipa>
+2. Installa **Sideloadly** da <https://sideloadly.io> (su Windows serve anche iTunes e iCloud nella versione dal sito Apple, non dal Microsoft Store).
+3. Collega l'iPhone con il cavo, sblocca e tocca «Autorizza» su «Vuoi autorizzare questo computer?».
+4. In Sideloadly trascina `Nordur.ipa`, scegli l'iPhone, scrivi il tuo Apple ID e premi **Start**. Inserisci la password dell'Apple ID quando la chiede (va solo ad Apple).
+   - Se dà errore sul bundle ID, in *Advanced options* attiva **Change bundle ID** (es. `it.tuonome.nordur`).
+5. Sull'iPhone:
+   - Impostazioni › Generali › **VPN e gestione dispositivi** › il tuo Apple ID › **Autorizza**;
+   - Impostazioni › Privacy e sicurezza › **Modalità sviluppatore** › attiva e riavvia (iOS lo chiede la prima volta).
+6. Apri Norður.
+
+Dopo 7 giorni l'app non si apre più: ripeti il punto 4 (i dati restano, se reinstalli sopra senza eliminarla). Con un account gratuito puoi avere al massimo 3 app installate così.
 
 ## B · TestFlight (Apple Developer Program)
 
