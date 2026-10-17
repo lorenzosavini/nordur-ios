@@ -21,6 +21,11 @@ struct TodayView: View {
                         statusBanner
                         now
                     }
+                    .background(alignment: .top) {
+                        PlaceBackdrop()
+                            .padding(.horizontal, -18)
+                            .padding(.top, -120)  // reaches under the status bar
+                    }
                     warningsSection
                     exploreSection
                     nextHours
@@ -92,10 +97,15 @@ struct TodayView: View {
             Group {
                 switch current {
                 case .wind: windSection
-                case .roads: roadsSection
-                case .webcams: webcamsSection
-                case .more: moreSection
-                case .news: newsSection
+                case .roads:
+                    if model.inIceland { roadsSection } else { CoverageNote(feature: String(localized: "Strade, chiusure e stazioni Vegagerðin")) }
+                case .webcams:
+                    if model.inIceland { webcamsSection } else { CoverageNote(feature: String(localized: "Le webcam stradali")) }
+                case .more:
+                    if !model.inIceland { CoverageNote(feature: String(localized: "Terremoti, distributori, voli KEF e traghetti"), showsIcelandData: true) }
+                    moreSection
+                case .news:
+                    if model.inIceland { newsSection } else { CoverageNote(feature: String(localized: "Gli avvisi SafeTravel")) }
                 case .light: daylight
                 }
             }
@@ -118,14 +128,15 @@ struct TodayView: View {
                     HeroTile(hero: .roads, title: String(localized: "Strade"), status: roadsStatus)
                 }
                 Button { model.requestedTab = "map" } label: {
-                    HeroTile(hero: .map, title: String(localized: "Mappa"), status: String(localized: "Vento, pioggia, neve, radar, strade"))
+                    HeroTile(hero: .map, title: String(localized: "Mappa"),
+                             status: model.inIceland ? String(localized: "Vento, pioggia, neve, radar, strade") : String(localized: "Mappa meteo dell'Islanda"))
                 }
                 Button { model.requestedTab = "weather" } label: {
                     HeroTile(hero: .weather, title: String(localized: "Meteo"), status: weatherStatus)
                 }
                 NavigationLink { QuakesView() } label: {
                     HeroTile(hero: .volcano, title: String(localized: "Vulcani e terremoti"),
-                             status: String(localized: "\(model.recentQuakes24h.count) scosse nelle ultime 24 h"))
+                             status: model.inIceland ? String(localized: "\(model.recentQuakes24h.count) scosse nelle ultime 24 h") : String(localized: "Solo in Islanda, per ora"))
                 }
                 Button { model.requestedTab = "trip" } label: {
                     HeroTile(hero: .trip, title: String(localized: "Viaggio"), status: String(localized: "Tappe, meteo e strade lungo il percorso"))
@@ -141,6 +152,7 @@ struct TodayView: View {
     }
 
     private var roadsStatus: String {
+        guard model.inIceland else { return String(localized: "Solo in Islanda, per ora") }
         guard let info = model.roadInfo?.value else { return String(localized: "Condizioni e notizie Vegagerðin") }
         let closed = info.sections.filter(\.isClosed).count
         let difficult = info.sections.filter { !$0.isClosed && ($0.risk ?? .ok) >= .warning }.count
@@ -315,7 +327,8 @@ struct TodayView: View {
     @ViewBuilder private var warningsSection: some View {
         let here = model.warningsHere
         VStack(alignment: .leading, spacing: 12) {
-            SectionLabel(index: "01", title: String(localized: "Allerte"), trailing: String(localized: "\(model.warnings?.value.count ?? 0) IN ISLANDA"))
+            SectionLabel(index: "01", title: String(localized: "Allerte"),
+                         trailing: model.inIceland ? String(localized: "\(model.warnings?.value.count ?? 0) IN ISLANDA") : nil)
 
             if recorder.isRecording, let session = recorder.session {
                 HStack(spacing: 10) {
@@ -329,6 +342,9 @@ struct TodayView: View {
                 Rule()
             }
 
+            if !model.inIceland {
+                CoverageNote(feature: String(localized: "Le allerte meteo ufficiali (IMO)"))
+            } else {
             NavigationLink { WarningsView() } label: {
                 VStack(alignment: .leading, spacing: 0) {
                     if here.isEmpty {
@@ -355,6 +371,7 @@ struct TodayView: View {
             }
             .buttonStyle(.plain)
             ErrorNote(message: model.errors[.warnings])
+            }
 
             if let latest = alerts.latest, !latest.read, Date().timeIntervalSince(latest.date) < 6 * 3600 {
                 Button { alerts.openInbox = true } label: {

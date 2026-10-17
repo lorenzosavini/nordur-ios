@@ -42,6 +42,13 @@ struct DriveView: View {
                     .listSectionSeparator(.hidden)
                 }
 
+                if !model.inIceland {
+                    Section {
+                        CoverageNote(feature: String(localized: "Strade davanti, stazioni del vento e limiti di velocità"))
+                    }
+                    .listRowSeparator(.hidden)
+                }
+
                 if let recovered = recorder.recoverable {
                     Section {
                         Label("Una registrazione del \(Fmt.dayTime(recovered.start)) si è interrotta (\(Fmt.number(recovered.stats.km, decimals: 1, unit: "km"))).", systemImage: "exclamationmark.arrow.circlepath")
@@ -97,7 +104,7 @@ struct DriveView: View {
                     Toggle("Avviso se superi il limite", isOn: $recorder.settings.speedAlerts)
                     Toggle("Avvisi vocali", isOn: $recorder.settings.spokenAlerts)
                 } header: {
-                    Text("Auto e chilometraggio").eyebrow().pinnedHeader().pinnedHeader()
+                    Text("Auto e chilometraggio").eyebrow().pinnedHeader().pinnedHeader().pinnedHeader()
                 } footer: {
                     Text("Inserisci i km al ritiro dell'auto: si aggiornano a ogni percorso. Limiti: 90 km/h asfalto, 80 sterrato, 50 centri abitati.")
                 }
@@ -184,7 +191,7 @@ struct DriveView: View {
                 removed.forEach { store.delete($0) }
             }
         } header: {
-            Text("Storico percorsi").eyebrow().pinnedHeader().pinnedHeader()
+            Text("Storico percorsi").eyebrow().pinnedHeader().pinnedHeader().pinnedHeader()
         }
     }
 }

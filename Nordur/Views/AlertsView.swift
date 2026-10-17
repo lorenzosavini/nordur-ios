@@ -100,7 +100,7 @@ struct AlertsView: View {
                         }
                     }
                 } header: {
-                    Text("\(dayTitle(group.day)) · \(group.events.count)").pinnedHeader().pinnedHeader()
+                    Text("\(dayTitle(group.day)) · \(group.events.count)").pinnedHeader().pinnedHeader().pinnedHeader()
                 }
             }
         }
@@ -198,7 +198,7 @@ struct AlertSettingsView: View {
                     }
                 }
             } header: {
-                Text("Cosa monitorare").pinnedHeader().pinnedHeader()
+                Text("Cosa monitorare").pinnedHeader().pinnedHeader().pinnedHeader()
             } footer: {
                 Text("Le allerte IMO e i terremoti vengono controllati per la tua posizione e per le tappe del viaggio dei prossimi 3 giorni.")
             }
@@ -227,7 +227,7 @@ struct AlertSettingsView: View {
                     }
                 }
             } header: {
-                Text("In viaggio").pinnedHeader().pinnedHeader()
+                Text("In viaggio").pinnedHeader().pinnedHeader().pinnedHeader()
             } footer: {
                 Text("Ogni volta che ti sposti di circa 2 km l'app controlla allerte, strade, vento e terremoti intorno a te, anche se non stai registrando un percorso. Serve l'accesso alla posizione «Sempre».")
             }

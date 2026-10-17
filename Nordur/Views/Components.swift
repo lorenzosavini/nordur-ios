@@ -756,3 +756,76 @@ struct RemoteImage: View {
         if image == nil { failed = true }
     }
 }
+
+// MARK: - Place backdrop
+
+/// Blurred photograph of the active place behind Today's header: soft enough
+/// that the text on top stays fully readable (heavy blur plus a wash of the
+/// background colour that grows to opaque at the bottom), with a small credit.
+struct PlaceBackdrop: View {
+    @Environment(AppModel.self) private var model
+    var height: CGFloat = 330
+    @State private var photo: PlacePhoto?
+
+    var body: some View {
+        ZStack(alignment: .bottomTrailing) {
+            if let photo {
+                RemoteImage(url: photo.imageURL)
+                    .frame(height: height)
+                    .frame(maxWidth: .infinity)
+                    .clipped()
+                    .blur(radius: 6, opaque: true)
+                    .overlay {
+                        LinearGradient(stops: [
+                            .init(color: Theme.bg.opacity(0.55), location: 0),
+                            .init(color: Theme.bg.opacity(0.62), location: 0.55),
+                            .init(color: Theme.bg, location: 1),
+                        ], startPoint: .top, endPoint: .bottom)
+                    }
+                    .transition(.opacity)
+                Text(photo.credit)
+                    .font(.mono(7.5)).foregroundStyle(Theme.faint)
+                    .lineLimit(1)
+                    .padding(.trailing, 18).padding(.bottom, 6)
+            }
+        }
+        .frame(height: height)
+        .frame(maxWidth: .infinity)
+        .clipped()
+        .accessibilityHidden(true)
+        .task(id: model.activePlace.name + model.placeKey) {
+            let found = await PlacePhotoService.shared.photo(for: model.activePlace)
+            withAnimation(.easeInOut(duration: 0.4)) { photo = found }
+        }
+    }
+}
+
+// MARK: - Coverage
+
+/// Shown where a section's data exist for Iceland only and the active place is
+/// elsewhere: says so instead of showing Icelandic data that do not apply.
+struct CoverageNote: View {
+    let feature: String
+    var showsIcelandData = false
+
+    var body: some View {
+        HStack(alignment: .top, spacing: 12) {
+            Image(systemName: "globe.europe.africa.fill")
+                .font(.system(size: 20, weight: .semibold))
+                .foregroundStyle(Theme.caution)
+                .frame(width: 28)
+            VStack(alignment: .leading, spacing: 3) {
+                Text("FUORI COPERTURA").font(.mono(10, .semibold)).tracking(0.8).foregroundStyle(Theme.caution)
+                Text(showsIcelandData
+                     ? String(localized: "\(feature): per ora solo in Islanda. Qui sotto vedi i dati dell'Islanda, non della tua zona.")
+                     : String(localized: "\(feature): per ora solo in Islanda, per la tua zona non ci sono dati. Meteo, mare, qualità dell'aria e aurora restano attivi."))
+                    .font(.app(.subheadline)).foregroundStyle(Theme.text)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
+            Spacer(minLength: 0)
+        }
+        .padding(12)
+        .overlay(alignment: .leading) { Theme.caution.frame(width: 3) }
+        .overlay(Rectangle().strokeBorder(Theme.hairline))
+    }
+}

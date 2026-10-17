@@ -137,6 +137,14 @@ struct MapScreen: View {
                 Spacer()
             }
             .padding(.horizontal)
+            if !model.inIceland {
+                Label("Fuori copertura: la mappa meteo e le strade coprono solo l'Islanda", systemImage: "globe.europe.africa.fill")
+                    .font(.app(.caption, .medium)).foregroundStyle(Theme.text)
+                    .padding(.horizontal, 10).padding(.vertical, 8)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .background(Theme.bg.opacity(0.94)).overlay(alignment: .leading) { Theme.caution.frame(width: 3) }
+                    .padding(.horizontal)
+            }
         }
         .padding(.top, 54)
     }

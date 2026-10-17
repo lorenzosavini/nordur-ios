@@ -157,7 +157,8 @@ struct RootView: View {
             await alerts.check()
         }
         .task(id: model.placeKey) {
-            await model.refreshPlace()
+            await model.placeChanged()
+            await alerts.check()
         }
         .task {
             // Foreground polling: every 5 minutes while the app is open.

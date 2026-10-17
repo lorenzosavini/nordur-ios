@@ -76,3 +76,18 @@ enum Geo {
         }
     }
 }
+
+/// Where the app has data. Weather, sea, air and aurora are worldwide; the
+/// Icelandic sources (IMO warnings and stations, Vegagerðin roads and webcams,
+/// earthquakes, SafeTravel, fuel, KEF flights, Herjólfur, the weather map)
+/// cover Iceland only, for now.
+enum Coverage {
+    static func iceland(_ c: Coordinate) -> Bool {
+        (62.8...67.7).contains(c.lat) && (-25.5 ... -12.5).contains(c.lon)
+    }
+
+    /// MET Norway's MEPS 2.5 km domain (Nordic countries, Iceland, the Baltic), roughly.
+    static func meps(_ c: Coordinate) -> Bool {
+        (53.0...73.5).contains(c.lat) && (-26.0...42.0).contains(c.lon)
+    }
+}

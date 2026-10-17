@@ -16,6 +16,10 @@ struct QuakesView: View {
                     .heroRow()
             }
             .listSectionSeparator(.hidden)
+            if !model.inIceland {
+                Section { CoverageNote(feature: String(localized: "Terremoti e vulcani"), showsIcelandData: true) }
+                    .listRowSeparator(.hidden)
+            }
             Section {
                 ExpandableMap(height: 260, title: String(localized: "Terremoti")) {
                 Map(initialPosition: .region(MKCoordinateRegion(

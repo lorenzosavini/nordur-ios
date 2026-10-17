@@ -22,6 +22,10 @@ struct RoadsView: View {
                     .heroRow()
             }
             .listSectionSeparator(.hidden)
+            if !model.inIceland {
+                Section { CoverageNote(feature: String(localized: "Strade e condizioni Vegagerðin"), showsIcelandData: true) }
+                    .listRowSeparator(.hidden)
+            }
             Section {
                 Picker("Vista", selection: $mode) {
                     ForEach(Mode.allCases) { Text($0.rawValue.loc).tag($0) }
@@ -85,7 +89,7 @@ struct RoadsView: View {
                     .padding(.vertical, 2)
                 }
             } header: {
-                Text("Notizie in tempo reale").pinnedHeader().pinnedHeader()
+                Text("Notizie in tempo reale").pinnedHeader().pinnedHeader().pinnedHeader()
             } footer: {
                 Text("Testi originali di Vegagerðin (in inglese), aggiornati ogni 5 minuti.")
             }

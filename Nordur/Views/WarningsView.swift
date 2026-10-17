@@ -6,6 +6,10 @@ struct WarningsView: View {
 
     var body: some View {
         List {
+            if !model.inIceland {
+                Section { CoverageNote(feature: String(localized: "Le allerte meteo ufficiali (IMO)"), showsIcelandData: true) }
+                    .listRowSeparator(.hidden)
+            }
             let warnings = model.warnings?.value ?? []
             Section {
                 if let fetched = model.warnings {

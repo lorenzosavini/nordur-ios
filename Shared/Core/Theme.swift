@@ -13,8 +13,9 @@ enum Theme {
     static let hairline = dynamic(0x000000, 0xFFFFFF, lightAlpha: 0.13, darkAlpha: 0.16)
     static let rule = dynamic(0x000000, 0xFFFFFF, lightAlpha: 0.9, darkAlpha: 0.85)
     static let text = dynamic(0x0A0A0A, 0xF2F2F0)
-    static let dim = dynamic(0x5E5E5E, 0x9C9C9A)
-    static let faint = dynamic(0x9C9C9C, 0x5E5E5E)
+    // Secondary text kept above WCAG AA contrast on both backgrounds.
+    static let dim = dynamic(0x4F4F4F, 0xA8A8A6)
+    static let faint = dynamic(0x767676, 0x8A8A88)
     static let accent = dynamic(0xF04A00, 0xFF5A1F)
     static let onAccent = Color.white
     static let aurora = dynamic(0x00A37A, 0x3DE0A8)
@@ -103,8 +104,10 @@ extension Font {
     }
 
     /// Labels, codes, tables.
+    /// Labels, codes, tables. Very small sizes are raised by one point: below
+    /// ~10.5 pt the mono labels were hard to read on a phone held at arm's length.
     static func mono(_ size: CGFloat, _ weight: Font.Weight = .medium, relativeTo style: Font.TextStyle = .caption) -> Font {
-        .custom(AppFontName.mono(weight), size: size, relativeTo: style)
+        .custom(AppFontName.mono(weight), size: size < 10.5 ? size + 1 : size, relativeTo: style)
     }
 
     /// Headlines: condensed, set in capitals by the caller when needed.
@@ -183,15 +186,23 @@ struct SectionLabel: View {
     var trailing: String?
     var trailingColor: Color = Theme.dim
 
+    /// Section title: a condensed headline with its number, a rule below; the
+    /// trailing note (status, count, "all →") sits on the right.
     var body: some View {
-        HStack(alignment: .firstTextBaseline, spacing: 8) {
-            if let index { Text(index).font(.mono(10.5, .semibold)).foregroundStyle(Theme.accent) }
-            Text(title.loc).font(.mono(10.5, .semibold)).tracking(1).textCase(.uppercase).foregroundStyle(Theme.text)
-                .fixedSize()
-            Rectangle().fill(Theme.hairline).frame(height: 1).alignmentGuide(.firstTextBaseline) { d in d[.bottom] + 3 }
-            if let trailing {
-                Text(trailing.loc).font(.mono(10.5, .medium)).foregroundStyle(trailingColor).fixedSize()
+        VStack(alignment: .leading, spacing: 6) {
+            HStack(alignment: .lastTextBaseline, spacing: 8) {
+                if let index {
+                    Text(index).font(.mono(11, .semibold)).foregroundStyle(Theme.accent)
+                }
+                Text(title.loc.uppercased()).font(.display(23, .bold)).foregroundStyle(Theme.text)
+                    .lineLimit(1).minimumScaleFactor(0.7)
+                Spacer(minLength: 8)
+                if let trailing {
+                    Text(trailing.loc).font(.mono(10.5, .semibold)).foregroundStyle(trailingColor)
+                        .lineLimit(1).minimumScaleFactor(0.8)
+                }
             }
+            Rectangle().fill(Theme.rule).frame(height: 1.5)
         }
     }
 }

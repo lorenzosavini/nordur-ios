@@ -315,6 +315,28 @@
         }
       }
     },
+    "%@: per ora solo in Islanda, per la tua zona non ci sono dati. Meteo, mare, qualità dell'aria e aurora restano attivi." : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@: Iceland only, for now; there are no data for your area. Weather, sea, air quality and aurora still work here."
+          }
+        }
+      }
+    },
+    "%@: per ora solo in Islanda. Qui sotto vedi i dati dell'Islanda, non della tua zona." : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@: Iceland only, for now. Below are Iceland's data, not your area's."
+          }
+        }
+      }
+    },
     "%@–%@" : {
       "shouldTranslate" : false
     },
@@ -409,6 +431,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "%1$lld km from %2$@"
+          }
+        }
+      }
+    },
+    "%lld km in linea d'aria da %@" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld km as the crow flies from %@"
           }
         }
       }
@@ -810,6 +843,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "ADD THE FIRST STOP"
+          }
+        }
+      }
+    },
+    "AGGIUNGI TAPPA" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ADD STOP"
           }
         }
       }
@@ -2448,6 +2492,17 @@
         }
       }
     },
+    "Cerca una città, un hotel, una cascata…" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Search a town, a hotel, a waterfall…"
+          }
+        }
+      }
+    },
     "Cerca webcam o strada" : {
       "localizations" : {
         "en" : {
@@ -3402,6 +3457,17 @@
         }
       }
     },
+    "Dove vai?" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Where to?"
+          }
+        }
+      }
+    },
     "Download in corso" : {
       "localizations" : {
         "en" : {
@@ -3562,6 +3628,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Delete the data saved online?"
+          }
+        }
+      }
+    },
+    "Eliminare questa tappa?" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Delete this stop?"
           }
         }
       }
@@ -3778,6 +3855,17 @@
         }
       }
     },
+    "FUORI COPERTURA" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "OUT OF COVERAGE"
+          }
+        }
+      }
+    },
     "Falce calante" : {
       "localizations" : {
         "en" : {
@@ -3910,12 +3998,34 @@
         }
       }
     },
+    "Foto: %@" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Photo: %@"
+          }
+        }
+      }
+    },
     "Fulmini" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Lightning"
+          }
+        }
+      }
+    },
+    "Fuori copertura: la mappa meteo e le strade coprono solo l'Islanda" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Out of coverage: the weather map and roads cover Iceland only"
           }
         }
       }
@@ -4108,6 +4218,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Day"
+          }
+        }
+      }
+    },
+    "Gli avvisi SafeTravel" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SafeTravel notices"
           }
         }
       }
@@ -5331,6 +5452,17 @@
         }
       }
     },
+    "Le allerte meteo ufficiali (IMO)" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Official weather warnings (IMO)"
+          }
+        }
+      }
+    },
     "Le condizioni sono peggiorate rispetto alla rilevazione precedente." : {
       "extractionState" : "manual",
       "localizations" : {
@@ -5380,6 +5512,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "The roads as they are right now"
+          }
+        }
+      }
+    },
+    "Le webcam stradali" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Road webcams"
           }
         }
       }
@@ -5577,6 +5720,17 @@
         }
       }
     },
+    "Luoghi principali d'Islanda o qualsiasi indirizzo" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Main places in Iceland or any address"
+          }
+        }
+      }
+    },
     "Luogo" : {
       "localizations" : {
         "en" : {
@@ -5676,12 +5830,34 @@
         }
       }
     },
+    "MET Norway · ECMWF" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "MET Norway · ECMWF"
+          }
+        }
+      }
+    },
     "MET Norway · MEPS 2,5 km" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "MET Norway · MEPS 2.5 km"
+          }
+        }
+      }
+    },
+    "MET Norway · Open-Meteo" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "MET Norway · Open-Meteo"
           }
         }
       }
@@ -5833,6 +6009,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Weather map"
+          }
+        }
+      }
+    },
+    "Mappa meteo dell'Islanda" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Iceland weather map"
           }
         }
       }
@@ -7527,6 +7714,17 @@
         }
       }
     },
+    "PARTENZA" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "DEPARTURE"
+          }
+        }
+      }
+    },
     "PASSWORD" : {
       "localizations" : {
         "en" : {
@@ -8923,12 +9121,34 @@
     "S" : {
       "shouldTranslate" : false
     },
+    "SALVA MODIFICHE" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SAVE CHANGES"
+          }
+        }
+      }
+    },
     "SCADUTO" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "EXPIRED"
+          }
+        }
+      }
+    },
+    "SCEGLI" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "CHOOSE"
           }
         }
       }
@@ -8970,6 +9190,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "SW"
+          }
+        }
+      }
+    },
+    "SOLO DI PASSAGGIO" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "PASSING THROUGH"
           }
         }
       }
@@ -9480,6 +9711,17 @@
         }
       }
     },
+    "Solo in Islanda, per ora" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Iceland only, for now"
+          }
+        }
+      }
+    },
     "Solo in foto" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -9864,6 +10106,28 @@
         }
       }
     },
+    "Strade davanti, stazioni del vento e limiti di velocità" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Roads ahead, wind stations and speed limits"
+          }
+        }
+      }
+    },
+    "Strade e condizioni Vegagerðin" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vegagerðin roads and conditions"
+          }
+        }
+      }
+    },
     "Strade e notizie" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -9882,6 +10146,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Roads and stations"
+          }
+        }
+      }
+    },
+    "Strade, chiusure e stazioni Vegagerðin" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vegagerðin roads, closures and stations"
           }
         }
       }
@@ -10054,6 +10329,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "ALL →"
+          }
+        }
+      }
+    },
+    "Tappa" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Stop"
           }
         }
       }
@@ -10287,6 +10573,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Earthquakes and volcanoes"
+          }
+        }
+      }
+    },
+    "Terremoti, distributori, voli KEF e traghetti" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Earthquakes, fuel, KEF flights and ferries"
           }
         }
       }
@@ -11218,6 +11515,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "KEF flights and ferries"
+          }
+        }
+      }
+    },
+    "Voli KEF e traghetto Herjólfur" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "KEF flights and Herjólfur ferry"
           }
         }
       }

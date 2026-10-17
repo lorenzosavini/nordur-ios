@@ -27,7 +27,7 @@ struct InfoView: View {
                     LinkRow(title: String(localized: "Registra il piano di viaggio"), subtitle: String(localized: "SafeTravel – i soccorsi sapranno dove cercarti"), url: "https://safetravel.is/travel-plan", systemImage: "doc.text.fill")
                     LinkRow(title: String(localized: "Guardia medica 1700"), subtitle: String(localized: "Consulenza sanitaria non urgente"), url: "tel:1700", systemImage: "cross.case.fill")
                 } header: {
-                    Text("Sicurezza").pinnedHeader().pinnedHeader()
+                    Text("Sicurezza").pinnedHeader().pinnedHeader().pinnedHeader()
                 }
 
                 Section {

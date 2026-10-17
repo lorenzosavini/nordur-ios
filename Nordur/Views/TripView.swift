@@ -241,6 +241,8 @@ struct StopEditor: View {
     @State private var transport: Transport
     @State private var notes: String
     @State private var pickingPlace = false
+    @State private var photo: PlacePhoto?
+    @State private var confirmDelete = false
 
     init(stop: TripStop?) {
         original = stop
@@ -251,61 +253,213 @@ struct StopEditor: View {
         _notes = State(initialValue: stop?.notes ?? "")
     }
 
+    /// The stop before this one (by date), for the distance line.
+    private var previous: TripStop? {
+        trip.stops.filter { $0.id != original?.id && $0.date < date }.max { $0.date < $1.date }
+    }
+
     var body: some View {
         NavigationStack {
-            Form {
-                Section {
-                    Button {
-                        pickingPlace = true
-                    } label: {
-                        HStack {
-                            Text(place?.name ?? String(localized: "Scegli un luogo…")).foregroundStyle(place == nil ? Color.accentColor : Color.primary)
-                            Spacer()
-                            Image(systemName: "chevron.right").foregroundStyle(.secondary)
+            ScrollView {
+                VStack(alignment: .leading, spacing: 26) {
+                    hero
+                    VStack(alignment: .leading, spacing: 26) {
+                        step("01", String(localized: "Luogo")) { placeCard }
+                        step("02", String(localized: "Quando")) { whenCard }
+                        step("03", String(localized: "Come ci arrivi")) { transportGrid }
+                        step("04", String(localized: "Note")) { notesBox }
+                        saveButton
+                        if original != nil {
+                            Button(role: .destructive) { confirmDelete = true } label: {
+                                Label("Elimina tappa", systemImage: "trash").font(.mono(11, .semibold))
+                                    .frame(maxWidth: .infinity).frame(height: 44)
+                            }
+                            .buttonStyle(.plain)
+                            .foregroundStyle(Theme.danger)
                         }
                     }
-                } header: { Text("Luogo").pinnedHeader() }
-                Section {
-                    DatePicker(String(localized: "Arrivo"), selection: $date, displayedComponents: [.date, .hourAndMinute])
-                    Stepper("Notti: \(nights)", value: $nights, in: 0...30)
-                } header: { Text("Quando").pinnedHeader() }
-                Section {
-                    Picker("Mezzo", selection: $transport) {
-                        ForEach(Transport.allCases) { t in
-                            Label(t.label, systemImage: t.symbol).tag(t)
-                        }
-                    }
-                } header: { Text("Come ci arrivi").pinnedHeader() }
-                Section {
-                    TextField("Prenotazioni, orari, telefono alloggio…", text: $notes, axis: .vertical)
-                } header: { Text("Note").pinnedHeader() }
-                if let original {
-                    Section {
-                        Button("Elimina tappa", role: .destructive) {
-                            trip.delete(original)
-                            dismiss()
-                        }
-                    }
+                    .padding(.horizontal, 18)
                 }
+                .padding(.bottom, 30)
             }
-            .themedList()
+            .scrollDismissesKeyboard(.interactively)
+            .background(Theme.bg.ignoresSafeArea())
             .navigationTitle(original == nil ? String(localized: "Nuova tappa") : String(localized: "Modifica tappa"))
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
-                ToolbarItem(placement: .cancellationAction) {
-                    Button("Annulla") { dismiss() }
-                }
-                ToolbarItem(placement: .confirmationAction) {
-                    Button("Salva") { save() }
-                        .disabled(place == nil)
-                }
+                ToolbarItem(placement: .cancellationAction) { Button("Annulla") { dismiss() } }
             }
             .sheet(isPresented: $pickingPlace) {
                 PlacePicker(allowCurrentLocation: false) { choice in
                     if case .place(let picked) = choice { place = picked }
                 }
             }
+            .confirmationDialog(String(localized: "Eliminare questa tappa?"), isPresented: $confirmDelete, titleVisibility: .visible) {
+                Button("Elimina tappa", role: .destructive) {
+                    if let original { trip.delete(original) }
+                    dismiss()
+                }
+            }
+            .task(id: place?.coordinate.key) {
+                photo = nil
+                if let place { photo = await PlacePhotoService.shared.photo(for: place) }
+            }
         }
+    }
+
+    // MARK: Parts
+
+    private var hero: some View {
+        ZStack(alignment: .bottomLeading) {
+            if let photo {
+                RemoteImage(url: photo.imageURL).frame(height: 200).frame(maxWidth: .infinity).clipped()
+            } else {
+                HeroPhoto(hero: .trip).frame(height: 200)
+            }
+            LinearGradient(colors: [.black.opacity(0), .black.opacity(0.7)], startPoint: .top, endPoint: .bottom)
+            VStack(alignment: .leading, spacing: 4) {
+                Text((place == nil ? String(localized: "Nuova tappa") : String(localized: "Tappa")).uppercased())
+                    .font(.mono(10, .semibold)).tracking(0.9).foregroundStyle(.white.opacity(0.85))
+                Text(place?.name ?? String(localized: "Dove vai?"))
+                    .font(.display(40, .bold)).foregroundStyle(.white).lineLimit(2).minimumScaleFactor(0.6)
+                if let photo {
+                    Text(photo.credit).font(.mono(8)).foregroundStyle(.white.opacity(0.65)).lineLimit(1)
+                }
+            }
+            .padding(.horizontal, 18).padding(.bottom, 14)
+        }
+        .frame(height: 200)
+        .clipped()
+    }
+
+    private func step<Content: View>(_ index: String, _ title: String, @ViewBuilder content: () -> Content) -> some View {
+        VStack(alignment: .leading, spacing: 10) {
+            SectionLabel(index: index, title: title)
+            content()
+        }
+    }
+
+    private var placeCard: some View {
+        Button { pickingPlace = true } label: {
+            HStack(spacing: 14) {
+                Image(systemName: place == nil ? "magnifyingglass" : "mappin.and.ellipse")
+                    .font(.system(size: 20, weight: .semibold))
+                    .foregroundStyle(Theme.onAccent)
+                    .frame(width: 46, height: 46)
+                    .background(Theme.accent)
+                VStack(alignment: .leading, spacing: 3) {
+                    Text(place?.name ?? String(localized: "Cerca una città, un hotel, una cascata…"))
+                        .font(.sans(16, .semibold)).foregroundStyle(Theme.text).multilineTextAlignment(.leading)
+                    if let place {
+                        Text([place.subtitle, Fmt.coordinate(place.coordinate)].compactMap { $0 }.joined(separator: " · "))
+                            .font(.mono(10)).foregroundStyle(Theme.dim)
+                        if let previous {
+                            Text(String(localized: "\(Int(Geo.distanceKm(previous.place.coordinate, place.coordinate).rounded())) km in linea d'aria da \(previous.place.name)"))
+                                .font(.mono(10)).foregroundStyle(Theme.faint)
+                        }
+                    } else {
+                        Text("Luoghi principali d'Islanda o qualsiasi indirizzo").font(.app(.caption)).foregroundStyle(Theme.dim)
+                    }
+                }
+                Spacer(minLength: 0)
+                Text(place == nil ? String(localized: "SCEGLI") : String(localized: "CAMBIA")).font(.mono(10, .semibold)).foregroundStyle(Theme.accent)
+            }
+            .padding(12)
+            .overlay(Rectangle().strokeBorder(place == nil ? Theme.accent : Theme.hairline, lineWidth: 1))
+            .contentShape(Rectangle())
+        }
+        .buttonStyle(.plain)
+    }
+
+    private var whenCard: some View {
+        VStack(spacing: 0) {
+            HStack {
+                Label("Arrivo", systemImage: "calendar").font(.app(.subheadline, .medium)).foregroundStyle(Theme.text)
+                Spacer()
+                DatePicker("", selection: $date, displayedComponents: [.date, .hourAndMinute])
+                    .labelsHidden()
+                    .environment(\.locale, Fmt.italian)
+            }
+            .padding(12)
+            Rule()
+            HStack(spacing: 12) {
+                Label("Notti", systemImage: "moon.zzz.fill").font(.app(.subheadline, .medium)).foregroundStyle(Theme.text)
+                Spacer()
+                squareButton("minus") { nights = max(0, nights - 1) }.disabled(nights == 0)
+                Text("\(nights)").font(.metric(30, .semibold)).foregroundStyle(Theme.text).frame(minWidth: 40)
+                squareButton("plus") { nights = min(30, nights + 1) }.disabled(nights == 30)
+            }
+            .padding(12)
+            Rule()
+            HStack {
+                Text(nights == 0 ? String(localized: "SOLO DI PASSAGGIO") : String(localized: "PARTENZA"))
+                    .font(.mono(9.5)).foregroundStyle(Theme.faint)
+                Spacer()
+                if nights > 0 {
+                    Text(Fmt.day(Calendar.current.date(byAdding: .day, value: nights, to: date) ?? date))
+                        .font(.mono(11, .semibold)).foregroundStyle(Theme.text)
+                }
+            }
+            .padding(.horizontal, 12).padding(.vertical, 10)
+        }
+        .overlay(Rectangle().strokeBorder(Theme.hairline))
+    }
+
+    private func squareButton(_ symbol: String, action: @escaping () -> Void) -> some View {
+        Button(action: action) {
+            Image(systemName: symbol).font(.system(size: 15, weight: .bold))
+                .frame(width: 38, height: 38)
+                .overlay(Rectangle().strokeBorder(Theme.rule))
+                .contentShape(Rectangle())
+        }
+        .buttonStyle(.plain)
+        .foregroundStyle(Theme.text)
+    }
+
+    private var transportGrid: some View {
+        LazyVGrid(columns: [GridItem(.flexible(), spacing: 6), GridItem(.flexible(), spacing: 6), GridItem(.flexible(), spacing: 6)], spacing: 6) {
+            ForEach(Transport.allCases) { t in
+                let selected = transport == t
+                Button { transport = t } label: {
+                    VStack(spacing: 6) {
+                        Image(systemName: t.symbol).font(.system(size: 22, weight: .semibold))
+                        Text(t.label).font(.mono(9.5, .semibold)).multilineTextAlignment(.center).lineLimit(2).minimumScaleFactor(0.8)
+                    }
+                    .frame(maxWidth: .infinity, minHeight: 76)
+                    .padding(.horizontal, 4)
+                    .foregroundStyle(selected ? Theme.onAccent : Theme.text)
+                    .background(selected ? Theme.accent : Color.clear)
+                    .overlay(Rectangle().strokeBorder(selected ? Color.clear : Theme.hairline))
+                    .contentShape(Rectangle())
+                }
+                .buttonStyle(.plain)
+                .accessibilityAddTraits(selected ? .isSelected : [])
+            }
+        }
+    }
+
+    private var notesBox: some View {
+        TextField("Prenotazioni, orari, telefono alloggio…", text: $notes, axis: .vertical)
+            .lineLimit(3...8)
+            .font(.app(.subheadline))
+            .padding(12)
+            .overlay(Rectangle().strokeBorder(Theme.hairline))
+    }
+
+    private var saveButton: some View {
+        Button { save() } label: {
+            HStack {
+                Text(original == nil ? String(localized: "AGGIUNGI TAPPA") : String(localized: "SALVA MODIFICHE"))
+                    .font(.mono(13, .semibold)).tracking(1)
+                Spacer()
+                Image(systemName: "arrow.right").font(.system(size: 15, weight: .bold))
+            }
+            .foregroundStyle(Theme.onAccent)
+            .padding(.horizontal, 16).frame(height: 52)
+            .background(place == nil ? Theme.faint : Theme.accent)
+        }
+        .buttonStyle(.plain)
+        .disabled(place == nil)
     }
 
     private func save() {

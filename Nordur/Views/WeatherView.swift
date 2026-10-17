@@ -12,7 +12,7 @@ struct WeatherView: View {
                         ScreenHeader(title: String(localized: "Meteo"), subtitle: String(localized: "Previsioni · 10 giorni"), index: "02") { AppearanceButton() }
                         PlaceHeader(size: 34)
                     }
-                    HeroHeader(hero: .weather, eyebrow: String(localized: "Veðurstofa Íslands · MET Norway · Open-Meteo"),
+                    HeroHeader(hero: .weather, eyebrow: model.inIceland ? String(localized: "Veðurstofa Íslands · MET Norway · Open-Meteo") : String(localized: "MET Norway · Open-Meteo"),
                                title: model.forecast?.value.current.map { WeatherCode.describe($0.weather_code, isDay: $0.is_day != 0).text } ?? String(localized: "Previsioni"),
                                subtitle: model.forecast?.value.current.map { String(localized: "\(Fmt.temp($0.temperature_2m)) · vento \(Fmt.ms($0.wind_speed_10m)), raffiche \(Fmt.ms($0.wind_gusts_10m))") },
                                height: 170)
@@ -48,10 +48,10 @@ struct WeatherView: View {
         return VStack(alignment: .leading, spacing: 6) {
             HStack(alignment: .firstTextBaseline, spacing: 10) {
                 Text("FONTE").font(.mono(9.5)).foregroundStyle(Theme.faint).frame(width: 52, alignment: .leading)
-                Text(primary == "MET Norway" ? String(localized: "MET Norway · MEPS 2,5 km") : primary)
+                Text(primary == "MET Norway" ? (Coverage.meps(Coordinate(lat: forecast.latitude, lon: forecast.longitude)) ? String(localized: "MET Norway · MEPS 2,5 km") : String(localized: "MET Norway · ECMWF")) : primary)
                     .font(.mono(11, .semibold)).foregroundStyle(Theme.text)
             }
-            if primary == "MET Norway" {
+            if primary == "MET Norway", Coverage.meps(Coordinate(lat: forecast.latitude, lon: forecast.longitude)) {
                 HStack(alignment: .firstTextBaseline, spacing: 10) {
                     Text("").frame(width: 52)
                     Text("Modello nordico gestito con Veðurstofa Íslands, lo stesso di yr.no. Dopo \(forecast.primaryUntil.map { Fmt.dayTime($0, in: forecast.timeZone) } ?? String(localized: "60 ore")) e per le raffiche: ECMWF/ICON via Open-Meteo.")

@@ -97,6 +97,9 @@ final class AppModel {
         return chosenPlace
     }
 
+    /// The active place is in Iceland: the Icelandic sources apply.
+    var inIceland: Bool { Coverage.iceland(activePlace.coordinate) }
+
     /// Changes whenever the place-dependent data must be reloaded.
     var placeKey: String { activePlace.coordinate.key }
 
@@ -143,6 +146,27 @@ final class AppModel {
         async let place: Void = refreshPlace()
         async let global: Void = refreshGlobal(force: true)
         _ = await (place, global)
+        isRefreshing = false
+    }
+
+    private var loadedPlaceKey: String?
+
+    /// The active place changed (picked from the list, or "my position" got a
+    /// fix): drop the previous place's data so nothing stale is shown, then reload
+    /// everything that depends on the place, without a manual refresh.
+    func placeChanged() async {
+        let key = placeKey
+        if let loaded = loadedPlaceKey, loaded != key {
+            forecast = nil
+            stationForecast = nil
+            marine = nil
+            air = nil
+        }
+        isRefreshing = true
+        await refreshPlace()
+        guard key == placeKey else { return }
+        loadedPlaceKey = key
+        await refreshAurora()
         isRefreshing = false
     }
 

@@ -15,6 +15,10 @@ struct WebcamsView: View {
                     .heroRow()
             }
             .listSectionSeparator(.hidden)
+            if !model.inIceland {
+                Section { CoverageNote(feature: String(localized: "Le webcam stradali"), showsIcelandData: true) }
+                    .listRowSeparator(.hidden)
+            }
             if let fetched = model.webcams {
                 FreshnessLabel(date: fetched.date, isStale: fetched.isStale, source: String(localized: "Vegagerðin"))
             }
