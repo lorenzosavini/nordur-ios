@@ -170,7 +170,8 @@ struct MapScreen: View {
                 .onPreferenceChange(PanelHeightKey.self) { detailsHeight = $0 }
             }
             HStack(alignment: .center, spacing: 10) {
-                timeControls.frame(maxWidth: .infinity, alignment: .leading)
+                VStack(alignment: .leading, spacing: 4) { timeControls }
+                    .frame(maxWidth: .infinity, alignment: .leading)
                 Button {
                     withAnimation(.snappy) { legendOpen.toggle() }
                 } label: {

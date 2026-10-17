@@ -32,9 +32,6 @@ final class AppModel {
     /// A screen asks the root view to switch tab ("map", "weather", "trip"…).
     var requestedTab: String?
     var showSettings = false
-    /// Height of the custom tab bar: the map's bottom panel sits above it
-    /// (TabView pages do not receive the root's safe-area inset).
-    var tabBarHeight: CGFloat = 0
 
     private(set) var useCurrentLocation: Bool
     private(set) var chosenPlace: Place

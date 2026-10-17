@@ -15,7 +15,7 @@ SCREENS = [
     ("aurora", ["-initialTab", "kp"]), ("aurora-live", ["-initialTab", "aurora"]),
     ("account", ["-initialTab", "account"]),
 ] + [(f"s.{s}", ["-ciScreen", s]) for s in
-     ["alerts", "alertSettings", "info", "roads", "quakes", "warnings", "transport", "webcams", "offline"]]
+     ["alerts", "alertSettings", "info", "roads", "quakes", "warnings", "transport", "webcams", "offline", "stop", "settings"]]
 
 def idb(*args):
     return subprocess.run(["idb", *args, "--udid", udid], capture_output=True, text=True, timeout=60)

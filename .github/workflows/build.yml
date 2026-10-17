@@ -131,7 +131,7 @@ jobs:
           # name[:layer][@appearance][+language]; "s.<screen>" opens a secondary screen (-ciScreen) over Today.
           SHOTS="today@light today weather@light weather map:wind map:temperature@light map:precipitation map:cloud map:aurora map:radar
             drive@light trip@light kp@light kp kp:day@light kp:three@light kp:long@light aurora@light account@light
-            s.alerts@light s.alertSettings@light s.info@light s.quakes@light s.roads@light s.transport@light s.webcams@light s.warnings@light s.offline@light
+            s.alerts@light s.alertSettings@light s.info@light s.quakes@light s.roads@light s.transport@light s.webcams@light s.warnings@light s.offline@light s.stop@light s.settings@light
             today@light+en weather@light+en kp@light+en kp:day@light+en s.info@light+en"
           for shot in $SHOTS; do
             lang="it"; spec="$shot"; [ "${shot%+*}" != "$shot" ] && lang="${shot##*+}" && spec="${shot%+*}"

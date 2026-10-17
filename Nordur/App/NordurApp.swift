@@ -57,12 +57,6 @@ struct NordurApp: App {
     }
 }
 
-private extension View {
-    func tabBarSpace(_ height: CGFloat) -> some View {
-        safeAreaInset(edge: .bottom, spacing: 0) { Color.clear.frame(height: height) }
-    }
-}
-
 struct RootView: View {
     @Environment(AppModel.self) private var model
     @Environment(AlertCenter.self) private var alerts
@@ -79,31 +73,27 @@ struct RootView: View {
     @State private var ciScreen = UserDefaults.standard.string(forKey: "ciScreen").flatMap(CIScreen.init(rawValue:))
 
     enum CIScreen: String, Identifiable {
-        case alerts, alertSettings, info, quakes, roads, transport, webcams, warnings, offline
+        case alerts, alertSettings, info, quakes, roads, transport, webcams, warnings, offline, stop, settings
         var id: String { rawValue }
     }
 
     var body: some View {
         @Bindable var alerts = alerts
         @Bindable var model = model
-        TabView(selection: $tab) {
-            // Each page reserves the custom tab bar's height at the bottom: TabView
-            // pages do not receive the root's safe-area inset, so the last lines of
-            // every screen (and the map's panel) ended up under the bar.
-            TodayView().tag(Tab.today).toolbar(.hidden, for: .tabBar).tabBarSpace(model.tabBarHeight)
-            WeatherView().tag(Tab.weather).toolbar(.hidden, for: .tabBar).tabBarSpace(model.tabBarHeight)
-            MapScreen().tag(Tab.map).toolbar(.hidden, for: .tabBar).tabBarSpace(model.tabBarHeight)
-            DriveView().tag(Tab.drive).toolbar(.hidden, for: .tabBar).tabBarSpace(model.tabBarHeight)
-            TripView().tag(Tab.trip).toolbar(.hidden, for: .tabBar).tabBarSpace(model.tabBarHeight)
-        }
-        .id(windUnit)  // every screen redraws with the new wind unit
-        .safeAreaInset(edge: .bottom, spacing: 0) {
+        // The tab bar takes its own place under the pages (not an inset over them):
+        // nothing on any screen can end up underneath it.
+        VStack(spacing: 0) {
+            TabView(selection: $tab) {
+                TodayView().tag(Tab.today).toolbar(.hidden, for: .tabBar)
+                WeatherView().tag(Tab.weather).toolbar(.hidden, for: .tabBar)
+                MapScreen().tag(Tab.map).toolbar(.hidden, for: .tabBar)
+                DriveView().tag(Tab.drive).toolbar(.hidden, for: .tabBar)
+                TripView().tag(Tab.trip).toolbar(.hidden, for: .tabBar)
+            }
+            .id(windUnit)  // every screen redraws with the new wind unit
             NordurTabBar(selection: $tab, badge: alerts.unreadCount, recording: recorder.isRecording)
-                .background(GeometryReader { g in
-                    Color.clear.onAppear { model.tabBarHeight = g.size.height }
-                        .onChange(of: g.size.height) { model.tabBarHeight = g.size.height }
-                })
         }
+        .ignoresSafeArea(.keyboard, edges: .bottom)
         .onChange(of: model.requestedTab) {
             if let raw = model.requestedTab, let target = Tab(rawValue: raw) { tab = target }
             model.requestedTab = nil
@@ -129,6 +119,8 @@ struct RootView: View {
                 case .webcams: WebcamsView()
                 case .warnings: WarningsView()
                 case .offline: OfflineView()
+                case .stop: StopEditor(stop: nil)
+                case .settings: SettingsView()
                 }
             }
         }
