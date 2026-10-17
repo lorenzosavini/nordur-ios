@@ -1,0 +1,32 @@
+name: Hero candidates
+
+# One-off: downloads candidate hero photographs (free licences) from Wikimedia
+# Commons into the hero-candidates branch, to be picked by hand.
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: [tools/brand/fetch_heroes.py]
+
+permissions:
+  contents: write
+
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Download
+        run: |
+          mkdir -p /tmp/heroes
+          python3 tools/brand/fetch_heroes.py /tmp/heroes
+          ls -la /tmp/heroes
+      - name: Publish to hero-candidates
+        env:
+          TOKEN: ${{ github.token }}
+        run: |
+          cd /tmp/heroes
+          git init -q -b hero-candidates
+          git -c user.name=nordur-ci -c user.email=ci@users.noreply.github.com add -A
+          git -c user.name=nordur-ci -c user.email=ci@users.noreply.github.com commit -qm "Hero candidates"
+          git push -qf "https://x-access-token:${TOKEN}@github.com/${GITHUB_REPOSITORY}.git" HEAD:hero-candidates
