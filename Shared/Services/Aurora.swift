@@ -59,6 +59,20 @@ struct OvationGrid {
     }
 }
 
+extension OvationGrid {
+    /// nordur-api's copy of the same run (30–90°N, 1° cells), used when NOAA
+    /// cannot be reached from the device.
+    init(backend o: AuroraState.Ovation) {
+        var values = [Double](repeating: 0, count: 360 * 181)
+        for row in 0..<o.rows where (-90...90).contains(o.latMin + row) {
+            for lon in 0..<360 where o.grid.indices.contains(row * 360 + lon) {
+                values[lon * 181 + (o.latMin + row + 90)] = Double(o.grid[row * 360 + lon])
+            }
+        }
+        self.init(forecastTime: DateParse.iso(o.forecastTime), values: values)
+    }
+}
+
 /// NOAA polar-view images of the northern oval, every 5 minutes over 24 h.
 struct OvationFrame: Identifiable, Hashable {
     let time: Date

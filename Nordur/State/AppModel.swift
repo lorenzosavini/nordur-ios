@@ -242,6 +242,11 @@ final class AppModel {
         let (rs, rt) = await (state, sites)
         apply(rs, .aurora) { self.aurora = $0 }
         apply(rt, .sites) { if let fresh = $0 { self.auroraSites = fresh } }
+        // NOAA unreachable from this network (or only a cached copy): use the backend's OVATION run.
+        if let state = aurora, let backendOvation = state.value.ovation, ovation == nil || ovation?.isStale == true {
+            ovation = Fetched(value: OvationGrid(backend: backendOvation), date: state.date, isStale: state.isStale)
+            if !state.isStale { errors[.ovation] = nil }
+        }
         recomputeAurora()
         await loadHorizons()
     }
