@@ -113,6 +113,8 @@ struct AlertInput {
     var auroraSlots: [AuroraSlot] = []
     var auroraState: AuroraState?
     var auroraZone: TimeZone = .iceland
+    /// Aurora reports from Norður users (last hours), crossed with the slots above.
+    var sightings: [SightingReport] = []
     var flights: [Flight] = []
     var ferry: FerryNotice?
     var now = Date()
@@ -234,6 +236,24 @@ extension AlertEngine {
         let now = input.now, zone = input.auroraZone
         let bucket3h = Int(now.timeIntervalSince1970 / 10800)
         let minClass = settings.auroraClass
+
+        // People are seeing it near you (community reports, after dark only).
+        if let here = input.watched.first(where: \.isCurrent) {
+            let slot = input.auroraSlots.first { abs($0.date.timeIntervalSince(now)) < 1800 }
+            let confirmation = AuroraConfirmation.evaluate(input.sightings, at: here.coordinate, now: now,
+                                                           modelActivity: slot?.activityFactor, clear: slot?.clear)
+            if confirmation.status >= .likely, (slot?.darkness ?? .night) >= .nautical {
+                let confirmed = confirmation.status == .confirmed
+                events.append(AlertEvent(
+                    id: "\(confirmed ? "seen-confirmed" : "seen"):\(Int(now.timeIntervalSince1970 / 7200))", date: now, category: .aurora,
+                    severity: (confirmed ? Risk.warning : Risk.caution).rawValue,
+                    title: confirmed ? String(localized: "Aurora in corso: confermata da \(confirmation.positives) persone vicino a te")
+                                     : String(localized: "Aurora segnalata a \(Int((confirmation.nearestKm ?? 0).rounded())) km da te"),
+                    body: confirmation.detail,
+                    coordinate: here.coordinate,
+                    expires: now.addingTimeInterval(60 * 60)))
+            }
+        }
 
         // Observing conditions here, now (OVATION-based when valid).
         if let slot = input.auroraSlots.first(where: { abs($0.date.timeIntervalSince(now)) < 1800 }),

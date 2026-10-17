@@ -33,6 +33,8 @@ final class AlertCenter: NSObject {
     private(set) var notificationsAllowed = false
     /// Set when the user taps a notification; the UI opens the inbox.
     var openInbox = false
+    /// The alert whose notification was tapped; the inbox opens on its detail.
+    var focusedAlertID: String?
     /// True while DriveRecorder is recording (enables spoken alerts).
     var isDriving = false
     /// True when the last background fix was at driving speed.
@@ -149,6 +151,13 @@ final class AlertCenter: NSObject {
         save()
     }
 
+    func markRead(_ event: AlertEvent) {
+        guard let i = events.firstIndex(where: { $0.id == event.id }), !events[i].read else { return }
+        events[i].read = true
+        UNUserNotificationCenter.current().setBadgeCount(unreadCount)
+        save()
+    }
+
     func delete(_ event: AlertEvent) {
         events.removeAll { $0.id == event.id }
         save()
@@ -236,6 +245,11 @@ final class AlertCenter: NSObject {
             input.auroraSlots = AuroraEngine.forecast(inputs, hours: 12)
             input.auroraState = state
             input.auroraZone = weather?.timeZone ?? .iceland
+            if let model {
+                input.sightings = model.sightings?.value.recent ?? []
+            } else {
+                input.sightings = (try? await SightingsFeed.loadFetched().value.recent) ?? []
+            }
         }
 
         if settings.isOn(.flight), !settings.followedFlights.isEmpty {
@@ -327,7 +341,11 @@ extension AlertCenter: UNUserNotificationCenterDelegate {
     }
 
     nonisolated func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse) async {
-        await MainActor.run { AlertCenter.shared.openInbox = true }
+        let id = response.notification.request.content.userInfo["alertID"] as? String
+        await MainActor.run {
+            AlertCenter.shared.focusedAlertID = id
+            AlertCenter.shared.openInbox = true
+        }
     }
 }
 

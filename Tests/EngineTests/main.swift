@@ -166,6 +166,30 @@ do {
     check(AuroraEngine.nextHourSummary(steps)?.contains("Bz") == true, "summary names the southward Bz", AuroraEngine.nextHourSummary(steps) ?? "nil")
 }
 
+// MARK: Community confirmation
+
+do {
+    let now = date("2026-01-15T22:00:00Z")
+    func report(_ minutesAgo: Double, _ dLat: Double, seen: Bool = true, nakedEye: Bool = true, sky: String? = nil) -> SightingReport {
+        SightingReport(t: ISO8601DateFormatter().string(from: now.addingTimeInterval(-minutesAgo * 60)),
+                       lat: reykjavik.lat + dLat, lon: reykjavik.lon, seen: seen, nakedEye: nakedEye, camera: false, strength: "moderata", sky: sky)
+    }
+    let none = AuroraConfirmation.evaluate([], at: reykjavik, now: now)
+    check(none.status == .noReports, "no reports, no confirmation")
+    let two = AuroraConfirmation.evaluate([report(5, 0.05), report(12, 0.2)], at: reykjavik, now: now, modelActivity: 0.4)
+    check(two.status == .confirmed && two.positives == 2, "two recent naked-eye reports nearby confirm", "\(two.status) \(two.score)")
+    let old = AuroraConfirmation.evaluate([report(90, 0.05), report(10, 3)], at: reykjavik, now: now)
+    check(old.status == .noReports, "old or far reports are ignored")
+    let photo = AuroraConfirmation.evaluate([report(30, 0.6, nakedEye: false)], at: reykjavik, now: now, modelActivity: 0.05)
+    check(photo.status == .reported, "one distant camera-only report stays a report", "\(photo.status) \(photo.score)")
+    let cloudyNo = AuroraConfirmation.evaluate([report(5, 0, seen: false, sky: "coperto")], at: reykjavik, now: now)
+    check(cloudyNo.status == .noReports, "a cloudy negative says nothing")
+    let clearNo = AuroraConfirmation.evaluate([report(5, 0, seen: false, sky: "sereno")], at: reykjavik, now: now, modelActivity: 0.6)
+    check(clearNo.status == .clearNegative && clearNo.disagreesWithModel, "a clear-sky negative against a strong model is flagged")
+    let lone = AuroraConfirmation.evaluate([report(5, 0.05)], at: reykjavik, now: now, modelActivity: 0.02)
+    check(lone.status == .likely && lone.disagreesWithModel, "a report the model does not explain is shown as a disagreement")
+}
+
 print(failures == 0 ? "ALL ENGINE TESTS PASSED" : "\(failures) FAILURES")
 exit(failures == 0 ? 0 : 1)
 

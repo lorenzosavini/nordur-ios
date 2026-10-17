@@ -6,10 +6,30 @@ struct AlertsView: View {
     @Environment(AlertCenter.self) private var alerts
     @Environment(\.dismiss) private var dismiss
     @State private var filter: AlertCategory?
+    @State private var query = ""
+    @State private var onlyUnread = false
+    @State private var opened: AlertEvent?
 
     private var shown: [AlertEvent] {
-        guard let filter else { return alerts.events }
-        return alerts.events.filter { $0.category == filter }
+        alerts.events.filter { event in
+            (filter == nil || event.category == filter)
+                && (!onlyUnread || !event.read)
+                && (query.isEmpty || event.title.localizedCaseInsensitiveContains(query) || event.body.localizedCaseInsensitiveContains(query))
+        }
+    }
+
+    /// Shown alerts grouped by calendar day, newest day first.
+    private var days: [(day: Date, events: [AlertEvent])] {
+        let calendar = Calendar.current
+        let groups = Dictionary(grouping: shown) { calendar.startOfDay(for: $0.date) }
+        return groups.keys.sorted(by: >).map { (day: $0, events: groups[$0]!.sorted { $0.date > $1.date }) }
+    }
+
+    private func dayTitle(_ day: Date) -> String {
+        let calendar = Calendar.current
+        if calendar.isDateInToday(day) { return String(localized: "Oggi") }
+        if calendar.isDateInYesterday(day) { return String(localized: "Ieri") }
+        return Fmt.day(day)
     }
 
     var body: some View {
@@ -43,6 +63,8 @@ struct AlertsView: View {
             }
 
             Section {
+                Toggle(isOn: $onlyUnread) { Label("Solo da leggere (\(alerts.unreadCount))", systemImage: "envelope.badge") }
+                    .font(.app(.subheadline))
                 ScrollView(.horizontal, showsIndicators: false) {
                     HStack {
                         chip(nil, String(localized: "Tutte"))
@@ -55,17 +77,39 @@ struct AlertsView: View {
             }
 
             if shown.isEmpty {
-                ContentUnavailableView("Nessuna allerta", systemImage: "checkmark.seal",
-                                       description: Text("Qui compaiono le allerte inviate."))
+                if alerts.events.isEmpty {
+                    ContentUnavailableView("Nessuna allerta", systemImage: "checkmark.seal",
+                                           description: Text("Qui compaiono le allerte inviate."))
+                } else {
+                    ContentUnavailableView.search(text: query)
+                }
             }
 
-            ForEach(shown) { event in
-                AlertRow(event: event)
-                    .swipeActions {
-                        Button(role: .destructive) { alerts.delete(event) } label: { Label("Elimina", systemImage: "trash") }
+            ForEach(days, id: \.day) { group in
+                Section {
+                    ForEach(group.events) { event in
+                        NavigationLink(value: event) {
+                            AlertRow(event: event)
+                        }
+                        .swipeActions {
+                            Button(role: .destructive) { alerts.delete(event) } label: { Label("Elimina", systemImage: "trash") }
+                        }
+                        .swipeActions(edge: .leading) {
+                            if !event.read {
+                                Button { alerts.markRead(event) } label: { Label("Letta", systemImage: "envelope.open") }.tint(.blue)
+                            }
+                        }
                     }
+                } header: {
+                    Text("\(dayTitle(group.day)) · \(group.events.count)")
+                }
             }
         }
+        .searchable(text: $query, prompt: Text("Cerca nelle allerte"))
+        .navigationDestination(for: AlertEvent.self) { AlertDetailView(event: $0) }
+        .navigationDestination(item: $opened) { AlertDetailView(event: $0) }
+        .onAppear(perform: openFocused)
+        .onChange(of: alerts.focusedAlertID) { openFocused() }
         .themedList()
         .navigationTitle("Allerte")
         .toolbar {
@@ -82,7 +126,13 @@ struct AlertsView: View {
             }
         }
         .refreshable { await alerts.check() }
-        .onDisappear { alerts.markAllRead() }
+    }
+
+    /// Opens the alert whose notification was tapped.
+    private func openFocused() {
+        guard let id = alerts.focusedAlertID else { return }
+        alerts.focusedAlertID = nil
+        opened = alerts.events.first { $0.id == id }
     }
 
     private func chip(_ category: AlertCategory?, _ title: String) -> some View {
@@ -114,8 +164,16 @@ struct AlertRow: View {
                     Text(event.title).font(.app(.subheadline, event.read ? .regular : .semibold))
                     if !event.read { Circle().fill(Color.accentColor).frame(width: 7, height: 7) }
                 }
-                Text(event.body).font(.app(.caption)).foregroundStyle(.secondary)
-                Text(Fmt.dayTime(event.date)).font(.app(.caption2)).foregroundStyle(.tertiary)
+                Text(event.body).font(.app(.caption)).foregroundStyle(.secondary).lineLimit(3)
+                HStack(spacing: 6) {
+                    Text(Fmt.time(event.date)).font(.app(.caption2)).foregroundStyle(.tertiary)
+                    if let expires = event.expires, expires < Date() {
+                        Text("· scaduta").font(.app(.caption2)).foregroundStyle(.tertiary)
+                    }
+                    if event.coordinate != nil {
+                        Image(systemName: "mappin.and.ellipse").font(.app(.caption2)).foregroundStyle(.tertiary)
+                    }
+                }
             }
         }
     }

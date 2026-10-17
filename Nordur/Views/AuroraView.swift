@@ -9,9 +9,8 @@ struct AuroraView: View {
     @Environment(Account.self) private var account
     // `-auroraMode day|three|long` as launch argument opens a mode (CI screenshots).
     @State private var mode: Mode = ["day": .day, "three": .three, "long": .long][UserDefaults.standard.string(forKey: "auroraMode") ?? ""] ?? .live
-    @State private var sightings: SightingsResponse?
     @State private var backtest: BacktestResponse?
-    @State private var reporting = false
+    @State private var reporting: SightingSheet.Kind?
 
     enum Mode: String, CaseIterable, Identifiable {
         case live = "LIVE", day = "24 ORE", three = "3 GIORNI", long = "27 GIORNI"
@@ -47,9 +46,10 @@ struct AuroraView: View {
         .navigationBarTitleDisplayMode(.inline)
         .refreshable { await model.refreshAurora() }
         .task { await model.refreshAurora() }
-        .task { sightings = try? await SightingsResponse.load() }
         .task { backtest = try? await BacktestResponse.load() }
-        .sheet(isPresented: $reporting) { SightingSheet(coordinate: model.location.coordinate ?? place) }
+        .sheet(item: $reporting, onDismiss: { Task { await model.refreshSightings() } }) { kind in
+            SightingSheet(coordinate: model.location.coordinate ?? place, kind: kind)
+        }
     }
 
     // MARK: Summary — the three answers
@@ -71,6 +71,17 @@ struct AuroraView: View {
             .fixedSize(horizontal: false, vertical: true)
             .padding(.vertical, 12)
             Rule()
+            let confirmation = model.auroraConfirmation
+            if confirmation.status != .noReports {
+                HStack(alignment: .firstTextBaseline) {
+                    Text("COMMUNITY").font(.mono(9.5)).foregroundStyle(Theme.faint)
+                    Spacer()
+                    Text(confirmation.headline).font(.mono(10.5, .semibold)).foregroundStyle(confirmationColor(confirmation.status))
+                        .multilineTextAlignment(.trailing)
+                }
+                .padding(.vertical, 10)
+                Rule()
+            }
             if let now, !now.reasons.isEmpty {
                 VStack(alignment: .leading, spacing: 4) {
                     ForEach(now.reasons.prefix(3), id: \.self) { reason in
@@ -402,26 +413,90 @@ struct AuroraView: View {
     }
 
     @ViewBuilder private var sightingsSection: some View {
+        let confirmation = model.auroraConfirmation
         VStack(alignment: .leading, spacing: 10) {
-            SectionLabel(index: "06", title: String(localized: "Avvistamenti"), trailing: String(localized: "ULTIME 3 ORE"))
-            let near = (sightings?.cells ?? []).filter { Geo.distanceKm(place, Coordinate(lat: $0.lat, lon: $0.lon)) < 150 }
-            Text(near.isEmpty
-                 ? String(localized: "Nessuna segnalazione entro 150 km. L'assenza di segnalazioni non indica assenza di aurora.")
-                 : String(localized: "\(near.reduce(0) { $0 + $1.reports }) segnalazioni entro 150 km (\(near.reduce(0) { $0 + $1.nakedEye }) a occhio nudo)."))
-                .font(.app(.caption)).foregroundStyle(Theme.text)
-            Button { reporting = true } label: {
-                HStack {
-                    Text(account.isSignedIn ? String(localized: "HO VISTO L'AURORA") : String(localized: "ACCEDI PER SEGNALARE")).font(.mono(11, .semibold)).tracking(0.6)
-                    Spacer()
-                    Text("+").font(.mono(15, .semibold))
+            SectionLabel(index: "06", title: String(localized: "Conferme dalla community"),
+                         trailing: String(localized: "ULTIMI \(confirmation.windowMinutes) MIN"))
+            HStack(alignment: .top, spacing: 10) {
+                Rectangle().fill(confirmationColor(confirmation.status)).frame(width: 3)
+                VStack(alignment: .leading, spacing: 4) {
+                    Text(confirmation.headline).font(.sans(16, .semibold)).foregroundStyle(Theme.text)
+                    Text(confirmation.detail).font(.app(.caption)).foregroundStyle(Theme.dim)
+                        .fixedSize(horizontal: false, vertical: true)
                 }
-                .foregroundStyle(Theme.text).padding(.horizontal, 14).frame(height: 42)
-                .overlay(Rectangle().strokeBorder(Theme.rule, lineWidth: 1))
             }
-            .buttonStyle(.plain)
+            .fixedSize(horizontal: false, vertical: true)
+            let reports = (model.sightings?.value.recent ?? [])
+                .map { (report: $0, km: Geo.distanceKm(place, $0.coordinate)) }
+                .filter { $0.km <= 150 }
+                .prefix(6)
+            if !reports.isEmpty {
+                VStack(spacing: 0) {
+                    ForEach(Array(reports.enumerated()), id: \.offset) { entry in
+                        sightingRow(entry.element.report, km: entry.element.km)
+                        Rule()
+                    }
+                }
+            }
+            HStack(spacing: 8) {
+                reportButton(account.isSignedIn ? String(localized: "LA VEDO") : String(localized: "ACCEDI PER SEGNALARE"), "+") { reporting = .seen }
+                if account.isSignedIn {
+                    reportButton(String(localized: "NON LA VEDO"), "–") { reporting = .notSeen }
+                }
+            }
             .disabled(!account.isSignedIn)
-            Text("Le segnalazioni restano separate da previsioni e misure: servono a verificare e calibrare il modello.")
+            Text("Segnalazioni anonime degli utenti Norður (ultime 3 ore, posizione arrotondata). Pesano di più quelle vicine, recenti e a occhio nudo; «non la vedo» conta solo con cielo sereno. Restano separate dal modello: se non coincidono, lo vedi scritto.")
                 .font(.app(.caption)).foregroundStyle(Theme.dim)
+        }
+    }
+
+    private func sightingRow(_ r: SightingReport, km: Double) -> some View {
+        HStack(alignment: .firstTextBaseline, spacing: 8) {
+            Text(r.date.map { Fmt.time($0, in: zone) } ?? "–").font(.mono(10.5, .medium)).foregroundStyle(Theme.dim).frame(width: 44, alignment: .leading)
+            Text("\(Int(km.rounded())) km").font(.mono(10.5)).foregroundStyle(Theme.dim).frame(width: 52, alignment: .leading)
+            Text(sightingText(r)).font(.app(.caption, r.isPositive ? .semibold : .regular))
+                .foregroundStyle(r.isPositive ? Theme.aurora : Theme.dim)
+            Spacer(minLength: 0)
+        }
+        .frame(minHeight: 28)
+    }
+
+    private func sightingText(_ r: SightingReport) -> String {
+        guard r.isPositive else {
+            switch r.sky {
+            case "sereno": return String(localized: "Niente aurora · cielo sereno")
+            case "parziale": return String(localized: "Niente aurora · cielo in parte nuvoloso")
+            default: return String(localized: "Niente aurora · cielo coperto")
+            }
+        }
+        var parts = [r.nakedEye == true ? String(localized: "A occhio nudo") : String(localized: "Solo in foto")]
+        switch r.strength {
+        case "debole": parts.append(String(localized: "debole"))
+        case "moderata": parts.append(String(localized: "moderata"))
+        case "forte": parts.append(String(localized: "forte"))
+        default: break
+        }
+        return parts.joined(separator: " · ")
+    }
+
+    private func reportButton(_ title: String, _ symbol: String, action: @escaping () -> Void) -> some View {
+        Button(action: action) {
+            HStack {
+                Text(title).font(.mono(11, .semibold)).tracking(0.6).lineLimit(1).minimumScaleFactor(0.7)
+                Spacer()
+                Text(symbol).font(.mono(15, .semibold))
+            }
+            .foregroundStyle(Theme.text).padding(.horizontal, 14).frame(height: 42)
+            .overlay(Rectangle().strokeBorder(Theme.rule, lineWidth: 1))
+        }
+        .buttonStyle(.plain)
+    }
+
+    private func confirmationColor(_ status: AuroraConfirmation.Status) -> Color {
+        switch status {
+        case .confirmed, .likely: return Theme.aurora
+        case .reported: return Theme.caution
+        case .clearNegative, .noReports: return Theme.faint
         }
     }
 
@@ -790,14 +865,10 @@ struct AuroraView: View {
 
 // MARK: - Sightings and backtest (nordur-api)
 
-struct SightingsResponse: Decodable {
-    struct Cell: Decodable { let lat: Double; let lon: Double; let reports: Int; let nakedEye: Int; let camera: Int; let latest: String }
-    let hours: Int
-    let total: Int
-    let cells: [Cell]
-
-    static func load() async throws -> SightingsResponse {
-        try await HTTP.json(SightingsResponse.self, from: URL(string: "https://nordur-api.vercel.app/api/sightings?hours=3")!, cacheKey: "nordur_sightings").value
+extension SightingsFeed {
+    static func loadFetched(hours: Int = 3) async throws -> Fetched<SightingsFeed> {
+        try await HTTP.json(SightingsFeed.self, from: URL(string: "https://nordur-api.vercel.app/api/sightings?hours=\(hours)")!,
+                            cacheKey: "nordur_sightings_\(hours)")
     }
 }
 
@@ -815,30 +886,48 @@ struct BacktestResponse: Decodable {
 }
 
 struct SightingSheet: View {
+    enum Kind: String, Identifiable { case seen, notSeen; var id: String { rawValue } }
+
     let coordinate: Coordinate
+    var kind: Kind = .seen
     @Environment(Account.self) private var account
     @Environment(\.dismiss) private var dismiss
     @State private var nakedEye = true
     @State private var camera = false
     @State private var strength = "moderata"
+    @State private var sky = "sereno"
     @State private var message: String?
     @State private var sending = false
 
     var body: some View {
         NavigationStack {
             VStack(alignment: .leading, spacing: 18) {
-                ScreenHeader(title: String(localized: "Avvistamento"), subtitle: Fmt.coordinate(coordinate))
-                Toggle("Visibile a occhio nudo", isOn: $nakedEye).font(.app(.subheadline))
-                Toggle("Visibile in foto", isOn: $camera).font(.app(.subheadline))
-                Picker("Intensità", selection: $strength) {
-                    Text("Debole").tag("debole"); Text("Moderata").tag("moderata"); Text("Forte").tag("forte")
+                ScreenHeader(title: kind == .seen ? String(localized: "Avvistamento") : String(localized: "Nessuna aurora"),
+                             subtitle: Fmt.coordinate(coordinate))
+                if kind == .seen {
+                    Toggle("Visibile a occhio nudo", isOn: $nakedEye).font(.app(.subheadline))
+                    Toggle("Visibile in foto", isOn: $camera).font(.app(.subheadline))
+                    Picker("Intensità", selection: $strength) {
+                        Text("Debole").tag("debole"); Text("Moderata").tag("moderata"); Text("Forte").tag("forte")
+                    }
+                    .pickerStyle(.segmented)
+                } else {
+                    Text("Stai guardando il cielo a nord e non vedi aurora? Dicci com'è il cielo: con cielo sereno la tua segnalazione aiuta gli altri a non uscire per niente.")
+                        .font(.app(.subheadline)).foregroundStyle(Theme.text)
+                    Picker("Cielo", selection: $sky) {
+                        Text("Sereno").tag("sereno"); Text("In parte nuvoloso").tag("parziale"); Text("Coperto").tag("coperto")
+                    }
+                    .pickerStyle(.segmented)
                 }
-                .pickerStyle(.segmented)
                 Button {
                     sending = true
                     Task {
                         do {
-                            try await account.reportSighting(at: coordinate, nakedEye: nakedEye, camera: camera, strength: strength)
+                            if kind == .seen {
+                                try await account.reportSighting(at: coordinate, seen: true, nakedEye: nakedEye, camera: camera, strength: strength, sky: nil)
+                            } else {
+                                try await account.reportSighting(at: coordinate, seen: false, nakedEye: false, camera: false, strength: nil, sky: sky)
+                            }
                             message = String(localized: "Segnalazione registrata. Grazie.")
                         } catch { message = error.localizedDescription }
                         sending = false
@@ -852,7 +941,7 @@ struct SightingSheet: View {
                     .foregroundStyle(Theme.onAccent).padding(.horizontal, 14).frame(height: 48).background(Theme.accent)
                 }
                 .buttonStyle(.plain)
-                .disabled(sending || (!nakedEye && !camera))
+                .disabled(sending || (kind == .seen && !nakedEye && !camera))
                 if let message { Text(message.loc).font(.app(.footnote)).foregroundStyle(Theme.text) }
                 Text("Posizione arrotondata a ~1 km. Una segnalazione ogni 20 minuti. Le segnalazioni sono anonime per gli altri utenti.")
                     .font(.app(.caption)).foregroundStyle(Theme.dim)

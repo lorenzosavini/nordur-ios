@@ -177,3 +177,21 @@ test("roads: umferdin.is GraphQL is reduced to sections, hazards, news and codes
   assert.equal(out.news[0].text, "Road closed.");
   assert.equal(out.codes[0].text, "Closed.");
 });
+
+import { aggregate as aggregateSightings } from "../api/sightings.js";
+
+test("sightings: negatives kept apart, old records count as positive, positions coarsened", () => {
+  const t = (m) => new Date(Date.parse("2026-01-15T22:00:00Z") - m * 60e3).toISOString();
+  const out = aggregateSightings([
+    { t: t(5), lat: 64.123, lon: -21.876, nakedEye: true, camera: false, strength: "forte" },     // before `seen` existed
+    { t: t(10), lat: 64.14, lon: -21.9, seen: false, sky: "sereno", nakedEye: false, camera: false },
+    { t: t(300), lat: 65.0, lon: -18.0, seen: true, nakedEye: true },                              // too old
+  ], Date.parse("2026-01-15T21:00:00Z"));
+  assert.equal(out.total, 1);
+  assert.equal(out.negative, 1);
+  assert.equal(out.cells.length, 1);
+  assert.equal(out.cells[0].reports, 1);
+  assert.equal(out.cells[0].negative, 1);
+  assert.deepEqual(out.recent.map((r) => [r.seen, r.lat, r.lon, r.sky]), [[true, 64.1, -21.9, null], [false, 64.1, -21.9, "sereno"]]);
+  assert.ok(out.recent.every((r) => !("id" in r)));
+});

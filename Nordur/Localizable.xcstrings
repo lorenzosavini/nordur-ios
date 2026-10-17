@@ -316,6 +316,17 @@
         }
       }
     },
+    "%lld avvistamenti entro %lld km negli ultimi %lld min (%lld a occhio nudo)." : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld sightings within %lld km in the last %lld min (%lld with the naked eye)."
+          }
+        }
+      }
+    },
     "%lld elementi ripristinati." : {
       "localizations" : {
         "en" : {
@@ -376,6 +387,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "%lld min"
+          }
+        }
+      }
+    },
+    "%lld osservatori con cielo sereno non la vedono." : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld observers under a clear sky do not see it."
           }
         }
       }
@@ -603,6 +625,17 @@
         }
       }
     },
+    "A occhio nudo" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Naked eye"
+          }
+        }
+      }
+    },
     "A piedi / trekking" : {
       "localizations" : {
         "en" : {
@@ -729,6 +762,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "ACTIVITY"
+          }
+        }
+      }
+    },
+    "AURORA VISTA" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "AURORA SEEN"
           }
         }
       }
@@ -939,6 +983,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Driving"
+          }
+        }
+      }
+    },
+    "Allerta IMO completa" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Full IMO warning"
           }
         }
       }
@@ -1373,6 +1428,28 @@
         }
       }
     },
+    "Aurora confermata dalla community" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aurora confirmed by the community"
+          }
+        }
+      }
+    },
+    "Aurora in corso: confermata da %lld persone vicino a te" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aurora now: confirmed by %lld people near you"
+          }
+        }
+      }
+    },
     "Aurora live" : {
       "localizations" : {
         "en" : {
@@ -1383,12 +1460,45 @@
         }
       }
     },
+    "Aurora segnalata a %lld km da te" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aurora reported %lld km from you"
+          }
+        }
+      }
+    },
+    "Aurora segnalata vicino a te" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aurora reported near you"
+          }
+        }
+      }
+    },
     "Aurora stanotte" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Aurora tonight"
+          }
+        }
+      }
+    },
+    "Aurora vista" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aurora seen"
           }
         }
       }
@@ -1503,6 +1613,17 @@
         }
       }
     },
+    "Avvisi ufficiali per chi viaggia" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Official notices for travellers"
+          }
+        }
+      }
+    },
     "Avvisi vocali" : {
       "localizations" : {
         "en" : {
@@ -1559,6 +1680,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Sightings"
+          }
+        }
+      }
+    },
+    "Avvistamenti aurora (community)" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aurora sightings (community)"
           }
         }
       }
@@ -2123,6 +2255,17 @@
         }
       }
     },
+    "Cerca nelle allerte" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Search alerts"
+          }
+        }
+      }
+    },
     "Cerca strada o località" : {
       "localizations" : {
         "en" : {
@@ -2254,6 +2397,17 @@
         }
       }
     },
+    "Cielo" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sky"
+          }
+        }
+      }
+    },
     "Cielo ancora chiaro (crepuscolo civile)" : {
       "localizations" : {
         "en" : {
@@ -2290,6 +2444,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Sky strongly lit by city lights"
+          }
+        }
+      }
+    },
+    "Cielo sereno senza aurora, secondo chi guarda" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Clear sky and no aurora, say those watching"
           }
         }
       }
@@ -2435,6 +2600,17 @@
         }
       }
     },
+    "Condividi" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Share"
+          }
+        }
+      }
+    },
     "Condizioni" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -2492,6 +2668,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Difficult road conditions"
+          }
+        }
+      }
+    },
+    "Conferme dalla community" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Community confirmations"
           }
         }
       }
@@ -2592,6 +2779,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Check now"
+          }
+        }
+      }
+    },
+    "Coordinate" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Coordinates"
           }
         }
       }
@@ -2753,6 +2951,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Opening dates – 4x4 only, river crossings"
+          }
+        }
+      }
+    },
+    "Dati aggiornati" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Live data"
           }
         }
       }
@@ -2937,6 +3146,17 @@
         }
       }
     },
+    "Distanza da te ora" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Distance from you now"
+          }
+        }
+      }
+    },
     "Distributore più vicino: %@ a %@" : {
       "localizations" : {
         "en" : {
@@ -2993,6 +3213,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "No entry for motor vehicles"
+          }
+        }
+      }
+    },
+    "Dove" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Where"
           }
         }
       }
@@ -3106,6 +3337,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Delete account"
+          }
+        }
+      }
+    },
+    "Elimina dallo storico" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Delete from history"
           }
         }
       }
@@ -3953,6 +4195,17 @@
         }
       }
     },
+    "Ieri" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Yesterday"
+          }
+        }
+      }
+    },
     "Il campo interplanetario è orientato a sud: favorisce l'attività geomagnetica.%@ Non garantisce un'aurora visibile." : {
       "localizations" : {
         "en" : {
@@ -3983,6 +4236,39 @@
         }
       }
     },
+    "Il modello indica attività debole qui." : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The model shows weak activity here."
+          }
+        }
+      }
+    },
+    "Il modello indica attività forte qui." : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The model shows strong activity here."
+          }
+        }
+      }
+    },
+    "Il modello indica attività moderata qui." : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The model shows moderate activity here."
+          }
+        }
+      }
+    },
     "Il modello non prevede materiale di CME alla Terra fino al %@. ENLIL prevede velocità e densità, non il Bz: non può dire da solo quanto sarà forte una tempesta." : {
       "localizations" : {
         "en" : {
@@ -3993,12 +4279,34 @@
         }
       }
     },
+    "Il modello prevede attività ma chi guarda non la vede: può essere ancora debole o coperta dalla luce." : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The model expects activity but observers do not see it: it may still be faint or washed out by light."
+          }
+        }
+      }
+    },
     "Il nuovo codice sostituisce quello precedente, che smette di funzionare." : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "The new code replaces the previous one, which stops working."
+          }
+        }
+      }
+    },
+    "Il più vicino a %lld km, l'ultimo %@." : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nearest %lld km away, latest %@."
           }
         }
       }
@@ -4019,6 +4327,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "The phone was already up to date."
+          }
+        }
+      }
+    },
+    "Il testo è quello inviato al momento dell'allerta. Per la situazione attuale apri i dati aggiornati." : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "This is the text sent when the alert was raised. Open the live data for the current situation."
           }
         }
       }
@@ -4164,6 +4483,17 @@
         }
       }
     },
+    "In parte nuvoloso" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Partly cloudy"
+          }
+        }
+      }
+    },
     "In pausa" : {
       "localizations" : {
         "en" : {
@@ -4210,6 +4540,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Directions"
+          }
+        }
+      }
+    },
+    "Indicazioni in Mappe" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Directions in Maps"
           }
         }
       }
@@ -4270,6 +4611,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Privacy policy"
+          }
+        }
+      }
+    },
+    "Informazione" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Information"
           }
         }
       }
@@ -4554,6 +4906,17 @@
         }
       }
     },
+    "L'assenza di segnalazioni non indica assenza di aurora." : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No reports does not mean no aurora."
+          }
+        }
+      }
+    },
     "L'indice di osservabilità è una stima euristica trasparente, non una probabilità: moltiplica attività prevista (OVATION entro la sua validità, poi Kp e posizione dell'ovale su latitudine geomagnetica), cielo sereno per strati, buio (altezza del Sole), Luna (fase e altezza) e le luci artificiali misurate dal satellite VIIRS (NASA Black Marble, media annuale) pesate con la distanza, e l'orizzonte del terreno. Le percentuali di probabilità richiedono un modello calibrato su osservazioni reali: le segnalazioni degli utenti servono a costruirlo." : {
       "extractionState" : "manual",
       "localizations" : {
@@ -4581,6 +4944,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "YOUR AREA"
+          }
+        }
+      }
+    },
+    "LA VEDO" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "I SEE IT"
           }
         }
       }
@@ -4738,6 +5112,28 @@
         }
       }
     },
+    "Le segnalazioni superano il modello: può essere un'attività locale non prevista." : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reports exceed the model: it may be local activity the model missed."
+          }
+        }
+      }
+    },
+    "Letta" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Read"
+          }
+        }
+      }
+    },
     "Lettura %@" : {
       "localizations" : {
         "en" : {
@@ -4835,6 +5231,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Aviation colour codes and hazard levels"
+          }
+        }
+      }
+    },
+    "Livello" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Level"
           }
         }
       }
@@ -5123,6 +5530,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Full-screen map"
+          }
+        }
+      }
+    },
+    "Mappa dell'ovale e avvistamenti" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Oval map and sightings"
           }
         }
       }
@@ -5630,6 +6048,28 @@
         }
       }
     },
+    "NON LA VEDO" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "I DON'T SEE IT"
+          }
+        }
+      }
+    },
+    "NON VISTA" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "NOT SEEN"
+          }
+        }
+      }
+    },
     "NORÐUR" : {
       "localizations" : {
         "en" : {
@@ -5820,6 +6260,17 @@
         }
       }
     },
+    "Nessuna aurora" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No aurora"
+          }
+        }
+      }
+    },
     "Nessuna criticità nelle prossime 12 ore" : {
       "localizations" : {
         "en" : {
@@ -5877,6 +6328,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "No reports within 150 km. No reports does not mean no aurora."
+          }
+        }
+      }
+    },
+    "Nessuna segnalazione recente" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No recent reports"
           }
         }
       }
@@ -6001,6 +6463,39 @@
         }
       }
     },
+    "Niente aurora · cielo coperto" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No aurora · overcast"
+          }
+        }
+      }
+    },
+    "Niente aurora · cielo in parte nuvoloso" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No aurora · partly cloudy"
+          }
+        }
+      }
+    },
+    "Niente aurora · cielo sereno" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No aurora · clear sky"
+          }
+        }
+      }
+    },
     "Niente buio stanotte" : {
       "localizations" : {
         "en" : {
@@ -6057,6 +6552,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Not serviced at this time"
+          }
+        }
+      }
+    },
+    "Non più valida dalle" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No longer valid since"
           }
         }
       }
@@ -7055,6 +7561,17 @@
         }
       }
     },
+    "Pericolo" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Danger"
+          }
+        }
+      }
+    },
     "Pericoloso" : {
       "localizations" : {
         "en" : {
@@ -7616,6 +8133,28 @@
         }
       }
     },
+    "Qui ora il cielo è in gran parte coperto." : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The sky here is mostly overcast now."
+          }
+        }
+      }
+    },
+    "Qui ora il cielo è sereno al %lld%%." : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The sky here is %lld%% clear now."
+          }
+        }
+      }
+    },
     "Quota" : {
       "localizations" : {
         "en" : {
@@ -7856,6 +8395,17 @@
         }
       }
     },
+    "Ricevuta" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Received"
+          }
+        }
+      }
+    },
     "Riepilogo" : {
       "localizations" : {
         "en" : {
@@ -8019,6 +8569,17 @@
         }
       }
     },
+    "SEGNALAZIONI ULTIME 3 H" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "REPORTS, LAST 3 H"
+          }
+        }
+      }
+    },
     "SO" : {
       "localizations" : {
         "en" : {
@@ -8115,6 +8676,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "SafeTravel – rescuers will know where to look"
+          }
+        }
+      }
+    },
+    "SafeTravel.is" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SafeTravel.is"
           }
         }
       }
@@ -8339,6 +8911,17 @@
         }
       }
     },
+    "Segnalazioni anonime degli utenti Norður (ultime 3 ore, posizione arrotondata). Pesano di più quelle vicine, recenti e a occhio nudo; «non la vedo» conta solo con cielo sereno. Restano separate dal modello: se non coincidono, lo vedi scritto." : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Anonymous reports from Norður users (last 3 hours, rounded positions). Nearby, recent and naked-eye reports weigh more; “I don't see it” counts only under a clear sky. They stay separate from the model: when the two disagree, it says so."
+          }
+        }
+      }
+    },
     "Senza destinazione: stazioni nella direzione di marcia, entro 60 km." : {
       "localizations" : {
         "en" : {
@@ -8480,6 +9063,28 @@
         }
       }
     },
+    "Solo da leggere (%lld)" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Unread only (%lld)"
+          }
+        }
+      }
+    },
+    "Solo in foto" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Camera only"
+          }
+        }
+      }
+    },
     "Solo veicoli 4x4 da montagna" : {
       "localizations" : {
         "en" : {
@@ -8556,6 +9161,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Black beach – sneaker waves"
+          }
+        }
+      }
+    },
+    "Stai guardando il cielo a nord e non vedi aurora? Dicci com'è il cielo: con cielo sereno la tua segnalazione aiuta gli altri a non uscire per niente." : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Looking at the northern sky and seeing no aurora? Tell us what the sky is like: under a clear sky your report saves others a pointless trip."
           }
         }
       }
@@ -8828,6 +9444,28 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Closed or impassable roads"
+          }
+        }
+      }
+    },
+    "Strade e notizie" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Roads and news"
+          }
+        }
+      }
+    },
+    "Strade e stazioni" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Roads and stations"
           }
         }
       }
@@ -9324,6 +9962,17 @@
         }
       }
     },
+    "Tratto %@ · %@" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Section %@ · %@"
+          }
+        }
+      }
+    },
     "Tratto %@. Aggiornato %@. Fonte: Vegagerðin (umferdin.is), informazioni 1777." : {
       "localizations" : {
         "en" : {
@@ -9364,6 +10013,17 @@
         }
       }
     },
+    "Tutte le allerte IMO" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "All IMO warnings"
+          }
+        }
+      }
+    },
     "ULTIMA COPIA SALVATA" : {
       "localizations" : {
         "en" : {
@@ -9390,6 +10050,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "LAST 3 HOURS"
+          }
+        }
+      }
+    },
+    "ULTIMI %lld MIN" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "LAST %lld MIN"
           }
         }
       }
@@ -9494,6 +10165,17 @@
         }
       }
     },
+    "Una segnalazione da verificare" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "One report, not yet confirmed"
+          }
+        }
+      }
+    },
     "Usa la mia posizione" : {
       "localizations" : {
         "en" : {
@@ -9590,6 +10272,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Avalanches"
+          }
+        }
+      }
+    },
+    "Valida fino alle" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Valid until"
           }
         }
       }
@@ -10310,6 +11003,17 @@
         }
       }
     },
+    "debole" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "faint"
+          }
+        }
+      }
+    },
     "drive.average" : {
       "localizations" : {
         "it" : {
@@ -10322,6 +11026,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Average"
+          }
+        }
+      }
+    },
+    "forte" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "strong"
           }
         }
       }
@@ -10415,6 +11130,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "mm"
+          }
+        }
+      }
+    },
+    "moderata" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "moderate"
           }
         }
       }
@@ -10603,6 +11329,17 @@
     },
     "· %@" : {
       "shouldTranslate" : false
+    },
+    "· scaduta" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "· expired"
+          }
+        }
+      }
     },
     "È giorno" : {
       "localizations" : {

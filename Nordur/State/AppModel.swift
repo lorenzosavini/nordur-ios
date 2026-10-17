@@ -25,6 +25,7 @@ final class AppModel {
         case radar = "Radar"
         case aurora = "Aurora (NOAA/GFZ/NASA)"
         case sites = "Località aurora"
+        case sightings = "Avvistamenti aurora (community)"
     }
 
     let location = LocationManager()
@@ -41,6 +42,8 @@ final class AppModel {
     var quakes: Fetched<[Quake]>?
     var roads: Fetched<RoadNetwork>?
     var roadInfo: Fetched<RoadInfo>?
+    /// Aurora reports from Norður users, last 3 hours.
+    var sightings: Fetched<SightingsFeed>?
     var kp: Fetched<[KpPoint]>?
     var ovation: Fetched<OvationGrid>?
     var solarWind: Fetched<SolarWind>?
@@ -252,7 +255,19 @@ final class AppModel {
             if !state.isStale { errors[.ovation] = nil }
         }
         recomputeAurora()
+        await refreshSightings()
         await loadHorizons()
+    }
+
+    func refreshSightings() async {
+        apply(await attempt { try await SightingsFeed.loadFetched() }, .sightings) { self.sightings = $0 }
+    }
+
+    /// Community reports crossed with the model and the clouds at the active place.
+    var auroraConfirmation: AuroraConfirmation {
+        let now = auroraNow.flatMap { abs($0.date.timeIntervalSinceNow) < 1800 ? $0 : nil }
+        return AuroraConfirmation.evaluate(sightings?.value.recent ?? [], at: activePlace.coordinate,
+                                           modelActivity: now?.activityFactor, clear: now?.clear)
     }
 
     func auroraInputs(for place: Coordinate, forecast: Forecast?) -> AuroraInputs {

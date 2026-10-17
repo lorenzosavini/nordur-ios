@@ -126,8 +126,16 @@ struct AuroraLiveView: View {
             PoiAnnotation(kind: .stop, key: "trip-\(stop.id)", coordinate: stop.place.coordinate.clCoordinate,
                           title: stop.place.name, subtitle: String(localized: "Tappa del viaggio"), color: UIColor(white: 0.5, alpha: 1), size: 16)
         }
+        // Community reports, last 3 hours (anonymous, positions rounded to 0.1°).
+        let reports = model.sightings?.value.recent ?? []
+        pois += reports.enumerated().map { i, r in
+            PoiAnnotation(kind: r.isPositive ? .sighting : .noSighting, key: "sighting-\(i)-\(r.t)", coordinate: r.coordinate.clCoordinate,
+                          title: r.isPositive ? String(localized: "Aurora vista") : String(localized: "Nessuna aurora"),
+                          subtitle: r.date.map { Fmt.time($0, in: .iceland) },
+                          color: r.isPositive ? UIColor(red: 0.24, green: 0.82, blue: 0.6, alpha: 1) : UIColor(white: 0.5, alpha: 1), size: 16)
+        }
         c.pois = pois
-        c.poisKey = "sites-\(model.siteRanking.map { "\($0.id)\($0.best?.observability.rawValue ?? -1)" }.joined())-\(trip.stops.count)"
+        c.poisKey = "sites-\(model.siteRanking.map { "\($0.id)\($0.best?.observability.rawValue ?? -1)" }.joined())-\(trip.stops.count)-\(reports.count)-\(reports.first?.t ?? "")"
         return c
     }
 
@@ -154,6 +162,12 @@ struct AuroraLiveView: View {
                 }
                 Text("4 = MOLTO FAVOREVOLE").font(.mono(8.5)).foregroundStyle(Theme.faint)
             }
+            HStack(spacing: 10) {
+                Label("AURORA VISTA", systemImage: "eye.fill").foregroundStyle(Theme.aurora)
+                Label("NON VISTA", systemImage: "eye.slash").foregroundStyle(Theme.dim)
+                Text("SEGNALAZIONI ULTIME 3 H").foregroundStyle(Theme.faint)
+            }
+            .font(.mono(8.5))
         }
     }
 
