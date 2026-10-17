@@ -47,9 +47,9 @@ enum WarningColor: Int, Comparable {
 
 struct WeatherWarning: Decodable, Identifiable {
     let identifier: String
-    let headline: String
-    let event: String
-    let details: String
+    var headline: String
+    var event: String
+    var details: String
     let headlineIcelandic: String?
     let severity: String?
     let certainty: String?
@@ -71,7 +71,7 @@ struct WeatherWarning: Decodable, Identifiable {
     init(from decoder: Decoder) throws {
         let c = try decoder.container(keyedBy: CodingKeys.self)
         identifier = try c.decode(String.self, forKey: .identifier)
-        headline = (try? c.decodeIfPresent(String.self, forKey: .headline_en)) ?? String(localized: "Avviso meteo")
+        headline = (try? c.decodeIfPresent(String.self, forKey: .headline_en)) ?? String(localized: "Allerta meteo")
         headlineIcelandic = try? c.decodeIfPresent(String.self, forKey: .headline_is)
         event = (try? c.decodeIfPresent(String.self, forKey: .event_en)) ?? ""
         details = (try? c.decodeIfPresent(String.self, forKey: .description_en)) ?? ""

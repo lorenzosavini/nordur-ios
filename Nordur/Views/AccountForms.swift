@@ -144,7 +144,7 @@ struct RecoveryCodeSheet: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 18) {
             ScreenHeader(title: String(localized: "Codice"), subtitle: String(localized: "Codice di recupero"))
-            Text("Conservalo in un posto sicuro (ad esempio nel portachiavi delle password). È l'unico modo per reimpostare la password: non viene inviata nessuna email e Norður non può recuperarlo.")
+            Text("Conservalo in un posto sicuro (ad esempio in un gestore di password). È l'unico modo per reimpostare la password: non viene inviata nessuna email e Norður non può recuperarlo.")
                 .font(.app(.subheadline)).foregroundStyle(Theme.text)
             Text(code)
                 .font(.mono(24, .semibold))

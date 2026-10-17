@@ -175,8 +175,35 @@ final class AppModel {
         apply(ro, .ovation) { self.ovation = $0 }
         apply(rs, .solarWind) { self.solarWind = $0 }
         apply(rn, .news) { self.news = $0 }
+        await localizeWebText()
         await refreshAurora()
         await refreshStatic()
+    }
+
+    /// Web text (IMO, SafeTravel, Vegagerðin, Herjólfur, NOAA) in the app language.
+    /// The originals are shown first; the translations replace them when ready.
+    func localizeWebText() async {
+        let translator = Translator.shared
+        if let w = warnings {
+            let localized = await translator.localize(w.value)
+            if warnings?.date == w.date { warnings = Fetched(value: localized, date: w.date, isStale: w.isStale) }
+        }
+        if let n = news {
+            let localized = await translator.localize(n.value)
+            if news?.date == n.date { news = Fetched(value: localized, date: n.date, isStale: n.isStale) }
+        }
+        if let r = roadInfo {
+            let localized = await translator.localize(r.value)
+            if roadInfo?.date == r.date { roadInfo = Fetched(value: localized, date: r.date, isStale: r.isStale) }
+        }
+        if let f = ferry, let notice = f.value {
+            let localized = await translator.localize(notice)
+            if ferry?.date == f.date { ferry = Fetched(value: localized, date: f.date, isStale: f.isStale) }
+        }
+        if let a = aurora {
+            let localized = await translator.localize(a.value)
+            if aurora?.date == a.date { aurora = Fetched(value: localized, date: a.date, isStale: a.isStale) }
+        }
     }
 
     /// Slow-changing data: webcam list (every 6 h) and fuel stations (30-day on-device copy).
@@ -215,6 +242,7 @@ final class AppModel {
         let (rfl, rfe) = await (fl, fe)
         apply(rfl, .flights) { self.flights = $0 }
         apply(rfe, .ferry) { self.ferry = $0 }
+        await localizeWebText()
     }
 
     private func apply<T>(_ result: Result<T, Error>, _ source: Source, _ assign: (T) -> Void) {
@@ -255,6 +283,10 @@ final class AppModel {
             if !state.isStale { errors[.ovation] = nil }
         }
         recomputeAurora()
+        if let a = aurora {
+            let localized = await Translator.shared.localize(a.value)
+            if aurora?.date == a.date { aurora = Fetched(value: localized, date: a.date, isStale: a.isStale) }
+        }
         await refreshSightings()
         await loadHorizons()
     }

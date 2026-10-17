@@ -16,7 +16,7 @@ struct OfflineView: View {
                     Task { await downloadAll() }
                 } label: {
                     HStack {
-                        Label("Scarica tutto per l'offline", systemImage: "arrow.down.circle.fill")
+                        Label("Scarica tutto per l'uso offline", systemImage: "arrow.down.circle.fill")
                         if running { Spacer(); ProgressView() }
                     }
                 }

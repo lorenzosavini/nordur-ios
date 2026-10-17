@@ -439,7 +439,7 @@ enum IMOForecast {
             "light rain": String(localized: "Pioggia debole"), "rain": String(localized: "Pioggia"), "heavy rain": String(localized: "Pioggia forte"), "drizzle": String(localized: "Pioviggine"),
             "light sleet": String(localized: "Nevischio debole"), "sleet": String(localized: "Nevischio"), "light snow": String(localized: "Neve debole"), "snow": String(localized: "Neve"),
             "heavy snow": String(localized: "Neve forte"), "rain showers": String(localized: "Rovesci"), "light rain showers": String(localized: "Rovesci deboli"),
-            "sleet showers": String(localized: "Rovesci di nevischio"), "snow showers": String(localized: "Rovesci di neve"), "light snow showers": String(localized: "Deboli rovesci di neve"),
+            "sleet showers": String(localized: "Rovesci di nevischio"), "snow showers": String(localized: "Rovesci di neve"), "light snow showers": String(localized: "Rovesci di neve deboli"),
             "fog": String(localized: "Nebbia"), "dust": String(localized: "Polvere"), "thunder": String(localized: "Temporale"), "freezing rain": String(localized: "Pioggia gelata"),
             "light drizzle": String(localized: "Pioviggine debole"), "freezing drizzle": String(localized: "Pioviggine gelata"),
         ]

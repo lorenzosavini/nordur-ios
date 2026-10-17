@@ -134,7 +134,7 @@ struct DriveView: View {
             }
             .buttonStyle(.plain)
             if recorder.authorization == .denied || recorder.authorization == .restricted {
-                Label("Posizione negata: abilitala in Impostazioni › Norður.", systemImage: "location.slash").font(.app(.caption)).foregroundStyle(.red)
+                Label("Accesso alla posizione negato: attivalo in Impostazioni › Norður.", systemImage: "location.slash").font(.app(.caption)).foregroundStyle(.red)
             }
         }
         .padding(.vertical, 4)

@@ -173,10 +173,14 @@ final class AlertCenter: NSObject {
     func record(_ event: AlertEvent, notify: Bool, speak: Bool) {
         guard fired[event.id] == nil else { return }
         fired[event.id] = event.date
-        events.insert(event, at: 0)
-        if notify { post(event) }
-        if speak { say(event.title) }
-        save()
+        Task {
+            var event = event
+            if Self.quotesWeb(event) { event = await Translator.shared.localize(event) }
+            events.insert(event, at: 0)
+            if notify { post(event) }
+            if speak { say(event.title) }
+            save()
+        }
     }
 
     // MARK: - Checking
@@ -188,7 +192,7 @@ final class AlertCenter: NSObject {
         defer { isChecking = false }
         let input = await buildInput(position: position)
         let candidates = AlertEngine.evaluate(input, settings: settings)
-        deliver(candidates)
+        await deliver(candidates)
         lastCheck = Date()
     }
 
@@ -261,11 +265,14 @@ final class AlertCenter: NSObject {
         return input
     }
 
-    private func deliver(_ candidates: [AlertEvent]) {
+    private func deliver(_ candidates: [AlertEvent]) async {
         let fresh = candidates.filter { fired[$0.id] == nil }.sorted { $0.severity > $1.severity }
         guard !fresh.isEmpty else { return }
-        for event in fresh {
-            fired[event.id] = event.date
+        for event in fresh { fired[event.id] = event.date }
+        for original in fresh {
+            // Alerts quoting web text (IMO, SafeTravel, Vegagerðin, Herjólfur, NOAA) in the app language.
+            var event = original
+            if Self.quotesWeb(original) { event = await Translator.shared.localize(original) }
             events.insert(event, at: 0)
             post(event)
             if (isDriving || isMoving) && settings.spoken && event.risk >= .warning {
@@ -273,6 +280,11 @@ final class AlertCenter: NSObject {
             }
         }
         save()
+    }
+
+    private static func quotesWeb(_ event: AlertEvent) -> Bool {
+        let prefix = event.id.split(separator: ":").first.map(String.init) ?? ""
+        return ["w", "s", "h", "swpc", "ri", "rh", "rwh", "rwi", "r", "rw"].contains(prefix)
     }
 
     private func post(_ event: AlertEvent) {

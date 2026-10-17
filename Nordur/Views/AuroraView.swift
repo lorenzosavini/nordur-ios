@@ -233,7 +233,7 @@ struct AuroraView: View {
                         .overlay(alignment: .bottom) { Rule() }
                     }
                 }
-                Text("Il vento solare che raggiungerà la Terra nei prossimi minuti è già stato misurato dal satellite in L1, a 1,5 milioni di km: ogni misura è spostata del suo tempo di viaggio. Kp atteso = Kp attuale corretto con la variazione dell'accoppiamento di Newell del vento in arrivo; finché è valido, la geometria usa OVATION. L'aurora risponde con alcuni minuti fino a 20–30 minuti di ritardo. Oltre l'ultimo dato misurato (–) resta il Kp attuale.")
+                Text("Il vento solare che raggiungerà la Terra nei prossimi minuti è già stato misurato dal satellite in L1, a 1,5 milioni di km: ogni misura è spostata del suo tempo di viaggio. Kp atteso = Kp attuale corretto con la variazione dell'accoppiamento di Newell del vento in arrivo; finché è valido, la geometria usa OVATION. L'aurora risponde con un ritardo che va da alcuni minuti a 20–30 minuti. Oltre l'ultimo dato misurato (–) resta il Kp attuale.")
                     .font(.app(.caption)).foregroundStyle(Theme.dim)
             }
         }
@@ -282,7 +282,7 @@ struct AuroraView: View {
                             Rectangle().fill(Theme.accent).frame(width: 3)
                             VStack(alignment: .leading, spacing: 2) {
                                 Text("POSSIBILE SHOCK INTERPLANETARIO · \(Fmt.time(shock.date, in: zone))").font(.mono(9.5, .semibold)).foregroundStyle(Theme.accent)
-                                Text("Salto di velocità +\(Int(shock.dv)) km/s, densità ×\(Fmt.number(shock.densityRatio, decimals: 1)), campo ×\(Fmt.number(shock.fieldRatio, decimals: 1)). Candidato automatico, non confermato.")
+                                Text("Salto di velocità +\(Int(shock.dv)) km/s, densità ×\(Fmt.number(shock.densityRatio, decimals: 1)), campo ×\(Fmt.number(shock.fieldRatio, decimals: 1)). Rilevamento automatico, non confermato.")
                                     .font(.app(.caption)).foregroundStyle(Theme.text)
                             }
                         }
@@ -652,7 +652,7 @@ struct AuroraView: View {
     @ViewBuilder private var nightsSection: some View {
         let nights = nightBests()
         VStack(alignment: .leading, spacing: 8) {
-            SectionLabel(index: "02", title: String(localized: "Notti"), trailing: String(localized: "MIGLIORE ORA PER NOTTE"))
+            SectionLabel(index: "02", title: String(localized: "Notti"), trailing: String(localized: "ORA MIGLIORE PER NOTTE"))
             ForEach(nights, id: \.date) { s in
                 HStack(spacing: 10) {
                     Text(Fmt.day(s.date, in: zone).uppercased()).font(.mono(10, .semibold)).foregroundStyle(Theme.text).frame(width: 96, alignment: .leading)
@@ -702,8 +702,8 @@ struct AuroraView: View {
                 }
                 .frame(height: 110)
                 Text(enlil.cmeArrivals.isEmpty
-                     ? String(localized: "Il modello non prevede materiale di CME alla Terra fino al \(enlil.modelEnd.flatMap { DateParse.iso($0) }.map { Fmt.day($0, in: zone) } ?? String(localized: "termine del modello")). ENLIL prevede velocità e densità, non il Bz: non può dire da solo quanto sarà forte una tempesta.")
-                     : String(localized: "Materiale di CME previsto alla Terra: \(enlil.cmeArrivals.compactMap { $0.date.map { Fmt.dayTime($0, in: zone) } }.joined(separator: ", ")) (barre arancioni). L'intensità dipenderà dal Bz all'arrivo, misurabile solo ~1 ora prima a L1."))
+                     ? String(localized: "Il modello non prevede l'arrivo di materiale di CME sulla Terra fino al \(enlil.modelEnd.flatMap { DateParse.iso($0) }.map { Fmt.day($0, in: zone) } ?? String(localized: "termine del modello")). ENLIL prevede velocità e densità, non il Bz: da solo non può dire quanto sarà forte una tempesta.")
+                     : String(localized: "Arrivo di materiale di CME previsto sulla Terra: \(enlil.cmeArrivals.compactMap { $0.date.map { Fmt.dayTime($0, in: zone) } }.joined(separator: ", ")) (barre arancioni). L'intensità dipenderà dal Bz all'arrivo, misurabile solo ~1 ora prima a L1."))
                     .font(.app(.caption)).foregroundStyle(Theme.dim)
             }
         }
@@ -756,7 +756,7 @@ struct AuroraView: View {
             Text("NOAA pubblica ogni settimana il Kp massimo atteso per giorno, basato sulla rotazione solare di 27 giorni (ricorrenza dei buchi coronali). Non esiste una previsione affidabile di aurora o nuvole a queste distanze: qui trovi attività attesa, ore di buio e Luna. Il dettaglio aumenta avvicinandosi alla data.")
                 .font(.app(.caption)).foregroundStyle(Theme.dim)
             if days.isEmpty {
-                ErrorNote(message: String(localized: "Outlook a 27 giorni non disponibile"))
+                ErrorNote(message: String(localized: "Tendenza a 27 giorni non disponibile"))
             } else {
                 VStack(spacing: 0) {
                     HStack(spacing: 0) {
@@ -834,7 +834,7 @@ struct AuroraView: View {
         [
             "kpForecast": String(localized: "Kp previsto NOAA"), "kpEstimated": String(localized: "Kp stimato NOAA (1 min)"), "kpGFZ": String(localized: "Kp GFZ Potsdam"),
             "solarWind": String(localized: "Vento solare RTSW"), "ovation": String(localized: "OVATION Prime"), "enlil": String(localized: "WSA-ENLIL NOAA"), "scales": String(localized: "Scale NOAA"),
-            "alerts": String(localized: "Avvisi NOAA"), "hemisphericPower": String(localized: "Potenza emisferica"), "outlook27": String(localized: "Outlook 27 giorni"),
+            "alerts": String(localized: "Avvisi NOAA"), "hemisphericPower": String(localized: "Potenza emisferica"), "outlook27": String(localized: "Tendenza 27 giorni"),
             "forecast45": String(localized: "Previsione 45 giorni"), "donki": String(localized: "NASA DONKI"),
         ][key] ?? key
     }
@@ -912,7 +912,7 @@ struct SightingSheet: View {
                     }
                     .pickerStyle(.segmented)
                 } else {
-                    Text("Stai guardando il cielo a nord e non vedi aurora? Dicci com'è il cielo: con cielo sereno la tua segnalazione aiuta gli altri a non uscire per niente.")
+                    Text("Stai guardando il cielo a nord e non vedi l'aurora? Dicci com'è il cielo: con cielo sereno la tua segnalazione aiuta gli altri a non uscire per niente.")
                         .font(.app(.subheadline)).foregroundStyle(Theme.text)
                     Picker("Cielo", selection: $sky) {
                         Text("Sereno").tag("sereno"); Text("In parte nuvoloso").tag("parziale"); Text("Coperto").tag("coperto")

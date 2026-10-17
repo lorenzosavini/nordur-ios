@@ -5,8 +5,8 @@ import Foundation
 
 struct NewsItem: Identifiable {
     let id: Int
-    let title: String
-    let summary: String
+    var title: String
+    var summary: String
     let link: URL?
     let date: Date?
     /// SafeTravel's own label colour ("red", "yellow", …), if any.

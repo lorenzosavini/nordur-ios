@@ -118,7 +118,7 @@ struct AuroraState: Decodable {
         let code: String?
         let issued: String?
         let validTo: String?
-        let headline: String
+        var headline: String
         let kp: Int?
         let g: Int?
         let active: Bool?
@@ -156,7 +156,7 @@ struct AuroraState: Decodable {
     let ovation: Ovation?
     let enlil: Enlil?
     let scales: [Scale]?
-    let alerts: [Alert]?
+    var alerts: [Alert]?
     let hemisphericPower: HemisphericPower?
     let donki: DonkiDigest?
     let longTerm: LongTerm?

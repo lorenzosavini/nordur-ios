@@ -615,7 +615,7 @@
         }
       }
     },
-    "A L1 alle %@: velocità +%lld km/s, densità ×%@. Candidato automatico: l'attività potrebbe aumentare nella prossima ora." : {
+    "A L1 alle %@: velocità +%lld km/s, densità ×%@. Rilevamento automatico: l'attività potrebbe aumentare nella prossima ora." : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -837,6 +837,16 @@
         }
       }
     },
+    "Accesso alla posizione negato: attivalo in Impostazioni › Norður." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Location denied: enable it in Settings › Norður."
+          }
+        }
+      }
+    },
     "Accesso eseguito. Da ora i dati vengono salvati online." : {
       "localizations" : {
         "en" : {
@@ -1014,6 +1024,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Yellow warning"
+          }
+        }
+      }
+    },
+    "Allerta meteo" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Weather warning"
           }
         }
       }
@@ -1274,6 +1294,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Arrival at Earth"
+          }
+        }
+      }
+    },
+    "Arrivo di materiale di CME previsto sulla Terra: %@ (barre arancioni). L'intensità dipenderà dal Bz all'arrivo, misurabile solo ~1 ora prima a L1." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "CME material forecast at Earth: %@ (orange bars). The intensity will depend on Bz on arrival, measurable only ~1 hour before at L1."
           }
         }
       }
@@ -1654,16 +1684,6 @@
         }
       }
     },
-    "Avviso meteo" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Weather warning"
-          }
-        }
-      }
-    },
     "Avviso se superi il limite" : {
       "localizations" : {
         "en" : {
@@ -1885,7 +1905,7 @@
         }
       }
     },
-    "Buio, cielo in gran parte sereno e attività adeguata" : {
+    "Buio, cielo in gran parte sereno e attività sufficiente" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1975,7 +1995,7 @@
         }
       }
     },
-    "Bz verso sud in arrivo verso le %@: l'attività può aumentare" : {
+    "Bz verso sud in arrivo intorno alle %@: l'attività può aumentare" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -2448,8 +2468,7 @@
         }
       }
     },
-    "Cielo sereno senza aurora, secondo chi guarda" : {
-      "extractionState" : "manual",
+    "Cielo sereno senza aurora, secondo gli osservatori" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -2652,7 +2671,7 @@
         }
       }
     },
-    "Condizioni sconosciute fuori orario di servizio" : {
+    "Condizioni sconosciute fuori dall'orario di servizio" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -2693,7 +2712,7 @@
         }
       }
     },
-    "Conservalo in un posto sicuro (ad esempio nel portachiavi delle password). È l'unico modo per reimpostare la password: non viene inviata nessuna email e Norður non può recuperarlo." : {
+    "Conservalo in un posto sicuro (ad esempio in un gestore di password). È l'unico modo per reimpostare la password: non viene inviata nessuna email e Norður non può recuperarlo." : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -3012,16 +3031,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Weak"
-          }
-        }
-      }
-    },
-    "Deboli rovesci di neve" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Light snow showers"
           }
         }
       }
@@ -3865,16 +3874,6 @@
         }
       }
     },
-    "Ghiaia che vola" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Flying gravel"
-          }
-        }
-      }
-    },
     "Giallo: possibili disagi.\nArancione: impatti significativi, valuta di rimandare.\nRosso: evento estremo, non metterti in viaggio." : {
       "localizations" : {
         "en" : {
@@ -4226,7 +4225,7 @@
         }
       }
     },
-    "Il modello WSA-ENLIL di NOAA prevede materiale di CME alla Terra (picco ~%lld km/s). Intensità non prevedibile prima dell'arrivo." : {
+    "Il modello WSA-ENLIL di NOAA prevede l'arrivo di materiale di CME sulla Terra (picco ~%lld km/s). Intensità non prevedibile prima dell'arrivo." : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -4269,7 +4268,7 @@
         }
       }
     },
-    "Il modello non prevede materiale di CME alla Terra fino al %@. ENLIL prevede velocità e densità, non il Bz: non può dire da solo quanto sarà forte una tempesta." : {
+    "Il modello non prevede l'arrivo di materiale di CME sulla Terra fino al %@. ENLIL prevede velocità e densità, non il Bz: da solo non può dire quanto sarà forte una tempesta." : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -4279,8 +4278,7 @@
         }
       }
     },
-    "Il modello prevede attività ma chi guarda non la vede: può essere ancora debole o coperta dalla luce." : {
-      "extractionState" : "manual",
+    "Il modello prevede attività ma gli osservatori non la vedono: potrebbe essere ancora debole o coperta dalla luce." : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -4352,8 +4350,7 @@
         }
       }
     },
-    "Il vento solare che raggiungerà la Terra nei prossimi minuti è già stato misurato dal satellite in L1, a 1,5 milioni di km: ogni misura è spostata del suo tempo di viaggio. Kp atteso = Kp attuale corretto con la variazione dell'accoppiamento di Newell del vento in arrivo; finché è valido, la geometria usa OVATION. L'aurora risponde con alcuni minuti fino a 20–30 minuti di ritardo. Oltre l'ultimo dato misurato (–) resta il Kp attuale." : {
-      "extractionState" : "manual",
+    "Il vento solare che raggiungerà la Terra nei prossimi minuti è già stato misurato dal satellite in L1, a 1,5 milioni di km: ogni misura è spostata del suo tempo di viaggio. Kp atteso = Kp attuale corretto con la variazione dell'accoppiamento di Newell del vento in arrivo; finché è valido, la geometria usa OVATION. L'aurora risponde con un ritardo che va da alcuni minuti a 20–30 minuti. Oltre l'ultimo dato misurato (–) resta il Kp attuale." : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -5434,16 +5431,6 @@
         }
       }
     },
-    "MIGLIORE ORA PER NOTTE" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "BEST HOUR PER NIGHT"
-          }
-        }
-      }
-    },
     "MIN / MAX" : {
       "localizations" : {
         "en" : {
@@ -5631,16 +5618,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Coastal flooding"
-          }
-        }
-      }
-    },
-    "Materiale di CME previsto alla Terra: %@ (barre arancioni). L'intensità dipenderà dal Bz all'arrivo, misurabile solo ~1 ora prima a L1." : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "CME material forecast at Earth: %@ (orange bars). The intensity will depend on Bz on arrival, measurable only ~1 hour before at L1."
           }
         }
       }
@@ -6880,6 +6857,16 @@
         }
       }
     },
+    "ORA MIGLIORE PER NOTTE" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "BEST HOUR PER NIGHT"
+          }
+        }
+      }
+    },
     "OSO" : {
       "localizations" : {
         "en" : {
@@ -7140,32 +7127,12 @@
         }
       }
     },
-    "Orizzonte del terreno non disponibile: assunto libero" : {
+    "Orizzonte del terreno non disponibile: considerato libero" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Terrain horizon not available: assumed open"
-          }
-        }
-      }
-    },
-    "Outlook 27 giorni" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "27-day outlook"
-          }
-        }
-      }
-    },
-    "Outlook a 27 giorni non disponibile" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "27-day outlook not available"
           }
         }
       }
@@ -7732,16 +7699,6 @@
         }
       }
     },
-    "Posizione negata: abilitala in Impostazioni › Norður." : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Location denied: enable it in Settings › Norður."
-          }
-        }
-      }
-    },
     "Posizione non valida" : {
       "localizations" : {
         "en" : {
@@ -8019,6 +7976,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "First quarter"
+          }
+        }
+      }
+    },
+    "Proiezione di ghiaia" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Flying gravel"
           }
         }
       }
@@ -8516,6 +8483,16 @@
         }
       }
     },
+    "Rovesci di neve deboli" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Light snow showers"
+          }
+        }
+      }
+    },
     "Rovesci di nevischio" : {
       "localizations" : {
         "en" : {
@@ -8711,7 +8688,7 @@
         }
       }
     },
-    "Salto di velocità +%lld km/s, densità ×%@, campo ×%@. Candidato automatico, non confermato." : {
+    "Salto di velocità +%lld km/s, densità ×%@, campo ×%@. Rilevamento automatico, non confermato." : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -8771,7 +8748,7 @@
         }
       }
     },
-    "Scarica tutto per l'offline" : {
+    "Scarica tutto per l'uso offline" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -9165,8 +9142,7 @@
         }
       }
     },
-    "Stai guardando il cielo a nord e non vedi aurora? Dicci com'è il cielo: con cielo sereno la tua segnalazione aiuta gli altri a non uscire per niente." : {
-      "extractionState" : "manual",
+    "Stai guardando il cielo a nord e non vedi l'aurora? Dicci com'è il cielo: con cielo sereno la tua segnalazione aiuta gli altri a non uscire per niente." : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -9551,7 +9527,7 @@
         }
       }
     },
-    "Sull'Islanda adesso il valore massimo è %lld: troppo basso per essere colorato (scala da 4). Il colore compare quando l'ovale si allarga verso sud." : {
+    "Sull'Islanda adesso il valore massimo è %lld: troppo basso per essere colorato (la scala parte da 4). Il colore compare quando l'ovale si allarga verso sud." : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -9746,7 +9722,17 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "27-day trend"
+            "value" : "27-day outlook"
+          }
+        }
+      }
+    },
+    "Tendenza a 27 giorni non disponibile" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "27-day outlook not available"
           }
         }
       }
@@ -11397,7 +11383,7 @@
         }
       }
     },
-    "• In inverno le giornate sono brevi: pianifica le tratte con la luce." : {
+    "• In inverno le giornate sono brevi: pianifica le tratte nelle ore di luce." : {
       "localizations" : {
         "en" : {
           "stringUnit" : {

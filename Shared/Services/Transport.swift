@@ -55,7 +55,7 @@ struct Flight: Identifiable, Hashable, Decodable {
 }
 
 struct FerryNotice {
-    let text: String
+    var text: String
     let url: URL
 }
 

@@ -58,7 +58,7 @@ struct InfoView: View {
                         Text("• Fuoristrada vietato per legge. Le strade F richiedono un 4x4 e i guadi non sono coperti dall'assicurazione.")
                         Text("• Ponti a una corsia: ha la precedenza chi arriva prima.")
                         Text("• Fai rifornimento appena puoi nell'Est e nei fiordi occidentali: i distributori sono distanti.")
-                        Text("• In inverno le giornate sono brevi: pianifica le tratte con la luce.")
+                        Text("• In inverno le giornate sono brevi: pianifica le tratte nelle ore di luce.")
                     }
                     .font(.app(.caption))
                 }

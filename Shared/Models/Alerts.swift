@@ -296,7 +296,7 @@ extension AlertEngine {
             events.append(AlertEvent(
                 id: "shock:\(Int(shock.t))", date: now, category: .aurora, severity: Risk.caution.rawValue,
                 title: String(localized: "Possibile shock nel vento solare"),
-                body: String(localized: "A L1 alle \(Fmt.time(shock.date, in: zone)): velocità +\(Int(shock.dv)) km/s, densità ×\(Fmt.number(shock.densityRatio, decimals: 1)). Candidato automatico: l'attività potrebbe aumentare nella prossima ora."),
+                body: String(localized: "A L1 alle \(Fmt.time(shock.date, in: zone)): velocità +\(Int(shock.dv)) km/s, densità ×\(Fmt.number(shock.densityRatio, decimals: 1)). Rilevamento automatico: l'attività potrebbe aumentare nella prossima ora."),
                 expires: now.addingTimeInterval(3 * 3600)))
         }
         // NOAA K-index warnings/alerts in force.
@@ -324,7 +324,7 @@ extension AlertEngine {
             events.append(AlertEvent(
                 id: "enlil:\(Int(t.timeIntervalSince1970 / 3600))", date: now, category: .aurora, severity: Risk.ok.rawValue,
                 title: String(localized: "Possibile arrivo di una CME verso \(Fmt.dayTime(t, in: zone))"),
-                body: String(localized: "Il modello WSA-ENLIL di NOAA prevede materiale di CME alla Terra (picco ~\(Int(arrival.peakSpeed)) km/s). Intensità non prevedibile prima dell'arrivo."),
+                body: String(localized: "Il modello WSA-ENLIL di NOAA prevede l'arrivo di materiale di CME sulla Terra (picco ~\(Int(arrival.peakSpeed)) km/s). Intensità non prevedibile prima dell'arrivo."),
                 expires: t.addingTimeInterval(24 * 3600)))
         }
         return events

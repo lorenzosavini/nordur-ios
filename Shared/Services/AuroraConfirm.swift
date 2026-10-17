@@ -100,7 +100,7 @@ struct AuroraConfirmation {
         case .confirmed: return String(localized: "Aurora confermata dalla community")
         case .likely: return String(localized: "Aurora segnalata vicino a te")
         case .reported: return String(localized: "Una segnalazione da verificare")
-        case .clearNegative: return String(localized: "Cielo sereno senza aurora, secondo chi guarda")
+        case .clearNegative: return String(localized: "Cielo sereno senza aurora, secondo gli osservatori")
         case .noReports: return String(localized: "Nessuna segnalazione recente")
         }
     }
@@ -127,7 +127,7 @@ struct AuroraConfirmation {
         if disagreesWithModel {
             parts.append(status >= .likely
                          ? String(localized: "Le segnalazioni superano il modello: può essere un'attività locale non prevista.")
-                         : String(localized: "Il modello prevede attività ma chi guarda non la vede: può essere ancora debole o coperta dalla luce."))
+                         : String(localized: "Il modello prevede attività ma gli osservatori non la vedono: potrebbe essere ancora debole o coperta dalla luce."))
         }
         if let clear, status >= .reported {
             parts.append(clear < 0.3 ? String(localized: "Qui ora il cielo è in gran parte coperto.")

@@ -23,8 +23,8 @@ struct RoadInfo: Decodable {
     struct Hazard: Decodable, Identifiable, Hashable {
         let id: String
         let code: String?
-        let title: String?
-        let text: String?
+        var title: String?
+        var text: String?
         let from: String?
         let to: String?
         let at: Point?
@@ -34,7 +34,7 @@ struct RoadInfo: Decodable {
 
     struct Note: Decodable, Hashable {
         let code: String?
-        let text: String?
+        var text: String?
         let date: String?
     }
 
@@ -45,8 +45,8 @@ struct RoadInfo: Decodable {
         let to: String?
     }
 
-    struct Weight: Decodable, Hashable { let limit: String?; let text: String? }
-    struct Toll: Decodable, Hashable { let type: String?; let text: String?; let at: Point? }
+    struct Weight: Decodable, Hashable { let limit: String?; var text: String? }
+    struct Toll: Decodable, Hashable { let type: String?; var text: String?; let at: Point? }
     struct RoadRef: Decodable, Hashable { let nr: String; let name: String? }
 
     struct Section: Decodable, Identifiable, Hashable {
@@ -58,10 +58,10 @@ struct RoadInfo: Decodable {
         let hours: [Hours]
         let condition: Condition?
         let previous: Condition?
-        let hazards: [Hazard]
-        let notes: [Note]
-        let weight: Weight?
-        let toll: Toll?
+        var hazards: [Hazard]
+        var notes: [Note]
+        var weight: Weight?
+        var toll: Toll?
         let bbox: [Double]?       // west, south, east, north
         let center: Point?
         let updated: String?
@@ -72,7 +72,7 @@ struct RoadInfo: Decodable {
         let region: String?
         let key: String?
         let place: String?
-        let text: String
+        var text: String
         let date: String?
         var published: Date? { DateParse.iso(date) }
     }
@@ -80,15 +80,15 @@ struct RoadInfo: Decodable {
     struct Code: Decodable, Hashable {
         let code: String
         let type: String?
-        let title: String?
-        let text: String?
+        var title: String?
+        var text: String?
     }
 
     let generated: String?
     let lastUpdate: String?
-    let sections: [Section]
-    let news: [News]
-    let codes: [Code]
+    var sections: [Section]
+    var news: [News]
+    var codes: [Code]
     let stale: Bool?
 
     /// Official explanation of a condition, weather or hazard code (English, from Vegagerðin).
@@ -145,7 +145,7 @@ enum RoadCode {
         case "6": return String(localized: "Sgombero neve in corso")
         case "7": return String(localized: "Sabbia sollevata dal vento")
         case "16": return String(localized: "Rovesci di neve")
-        case "18": return String(localized: "Condizioni sconosciute fuori orario di servizio")
+        case "18": return String(localized: "Condizioni sconosciute fuori dall'orario di servizio")
         default: return nil
         }
     }
@@ -156,7 +156,7 @@ enum RoadCode {
         case "VEGAVINNA", "8": return (String(localized: "Lavori stradali"), "cone.fill")
         case "HOLUR_I_VEGI", "19": return (String(localized: "Buche sulla strada"), "exclamationmark.triangle.fill")
         case "GRJOTHRUN": return (String(localized: "Caduta massi"), "mountain.2.fill")
-        case "10": return (String(localized: "Ghiaia che vola"), "aqi.medium")
+        case "10": return (String(localized: "Proiezione di ghiaia"), "aqi.medium")
         case "WEIGHT_RESTRICTION": return (String(localized: "Limiti di peso"), "scalemass.fill")
         case "OSLETTUR_VEGUR": return (String(localized: "Strada dissestata"), "road.lanes")
         case "ALLUR_AKSTUR_BANN", "17": return (String(localized: "Divieto di transito"), "nosign")

@@ -218,7 +218,7 @@ struct MapScreen: View {
                 }
                 if let peak = icelandAuroraPeak {
                     Text(peak < 4
-                         ? String(localized: "Sull'Islanda adesso il valore massimo è \(Int(peak.rounded())): troppo basso per essere colorato (scala da 4). Il colore compare quando l'ovale si allarga verso sud.")
+                         ? String(localized: "Sull'Islanda adesso il valore massimo è \(Int(peak.rounded())): troppo basso per essere colorato (la scala parte da 4). Il colore compare quando l'ovale si allarga verso sud.")
                          : String(localized: "Valore massimo sull'Islanda adesso: \(Int(peak.rounded()))."))
                         .font(.app(.caption2)).foregroundStyle(.secondary)
                         .fixedSize(horizontal: false, vertical: true)

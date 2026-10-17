@@ -403,7 +403,7 @@ enum AuroraEngine {
             let towardPole = h.angle(toward: ViewingGeometry.bearing(from: place, to: Coordinate(lat: Geomagnetic.poleLat, lon: Geomagnetic.poleLon)))
             if towardPole >= 5 { reasons.append((min(1, towardPole / 20), String(localized: "Rilievi verso nord-ovest: orizzonte a \(Int(towardPole.rounded()))°"))) }
         } else {
-            notes.append(String(localized: "Orizzonte del terreno non disponibile: assunto libero"))
+            notes.append(String(localized: "Orizzonte del terreno non disponibile: considerato libero"))
         }
 
         let light = LightPollution.factor(at: place)
@@ -412,7 +412,7 @@ enum AuroraEngine {
         let index = activity * clearFactor * darkFactor * moonFactor * light.value
         let cls = ObservabilityClass(index: index)
         if reasons.isEmpty && cls >= .good {
-            reasons.append((0, String(localized: "Buio, cielo in gran parte sereno e attività adeguata")))
+            reasons.append((0, String(localized: "Buio, cielo in gran parte sereno e attività sufficiente")))
         }
 
         // 3 · reliability
@@ -510,7 +510,7 @@ extension AuroraEngine {
         let known = steps.filter(\.known)
         guard let first = known.first, let last = known.last else { return nil }
         if let south = known.first(where: { ($0.bz ?? 0) <= -5 }) {
-            return String(localized: "Bz verso sud in arrivo verso le \(Fmt.time(south.date, in: .iceland)): l'attività può aumentare")
+            return String(localized: "Bz verso sud in arrivo intorno alle \(Fmt.time(south.date, in: .iceland)): l'attività può aumentare")
         }
         let change = (last.kp ?? 0) - (first.kp ?? 0)
         if change >= 0.5 { return String(localized: "Attività in aumento nella prossima ora") }

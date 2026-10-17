@@ -53,6 +53,14 @@ final class WindParticleView: UIView {
     private var lastMapRect = MKMapRect.null
     private var lastTimestamp: CFTimeInterval = 0
     private let pixelScale: CGFloat = 1.5
+    /// Particle budget, lowered when frames cost too much main-thread time so
+    /// touches stay responsive on slow devices and in the simulator.
+    #if targetEnvironment(simulator)
+    private var budget = 500
+    #else
+    private var budget = 2200
+    #endif
+    private var slowFrames = 0
     private static let buckets: [(limit: Double, color: CGColor)] = {
         WeatherLayer.wind.legendValues.map { value in
             let c = ColorStop.color(for: value + 2.5, in: WeatherLayer.wind.ramp)
@@ -73,7 +81,11 @@ final class WindParticleView: UIView {
         super.didMoveToWindow()
         if window != nil, displayLink == nil {
             let link = CADisplayLink(target: self, selector: #selector(step(_:)))
+            #if targetEnvironment(simulator)
+            link.preferredFrameRateRange = CAFrameRateRange(minimum: 10, maximum: 20, preferred: 15)
+            #else
             link.preferredFrameRateRange = CAFrameRateRange(minimum: 20, maximum: 30, preferred: 30)
+            #endif
             link.add(to: .main, forMode: .common)
             displayLink = link
         } else if window == nil {
@@ -88,7 +100,15 @@ final class WindParticleView: UIView {
     }
 
     private var particleCount: Int {
-        Int(min(2200, max(600, bounds.width * bounds.height / 220)))
+        Int(min(Double(budget), max(Double(min(budget, 600)), bounds.width * bounds.height / 220)))
+    }
+
+    /// More than ~8 ms per frame for a few frames: fewer particles (down to 150).
+    private func adapt(_ cost: CFTimeInterval) {
+        slowFrames = cost > 0.008 ? slowFrames + 1 : max(0, slowFrames - 1)
+        guard slowFrames >= 5, budget > 150 else { return }
+        budget = max(150, budget * 2 / 3)
+        slowFrames = 0
     }
 
     private func resetParticles() {
@@ -135,6 +155,8 @@ final class WindParticleView: UIView {
         }
         if context == nil { context = makeContext(); lastMapRect = .null }
         guard let ctx = context else { return }
+        let started = CACurrentMediaTime()
+        defer { adapt(CACurrentMediaTime() - started) }
 
         let rect = map.visibleMapRect
         let region = map.region

@@ -195,3 +195,14 @@ test("sightings: negatives kept apart, old records count as positive, positions 
   assert.deepEqual(out.recent.map((r) => [r.seen, r.lat, r.lon, r.sky]), [[true, 64.1, -21.9, null], [false, 64.1, -21.9, "sereno"]]);
   assert.ok(out.recent.every((r) => !("id" in r)));
 });
+
+import { parseTranslations, systemPrompt } from "../api/translate.js";
+
+test("translate: model answer parsed strictly, prompt keeps names and numbers", () => {
+  assert.deepEqual(parseTranslations('```json\n{"translations": ["Allerta gialla", "Strada 1 chiusa"]}\n```', 2), ["Allerta gialla", "Strada 1 chiusa"]);
+  assert.throws(() => parseTranslations('{"translations": ["solo uno"]}', 2));
+  assert.throws(() => parseTranslations("nessun json", 1));
+  assert.match(systemPrompt("it"), /Italian/);
+  assert.match(systemPrompt("it"), /Never translate proper names/);
+  assert.match(systemPrompt("en"), /British English/);
+});
