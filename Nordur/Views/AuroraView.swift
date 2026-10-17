@@ -901,6 +901,7 @@ struct SightingSheet: View {
 
     var body: some View {
         NavigationStack {
+            ScrollView {
             VStack(alignment: .leading, spacing: 18) {
                 ScreenHeader(title: kind == .seen ? String(localized: "Avvistamento") : String(localized: "Nessuna aurora"),
                              subtitle: Fmt.coordinate(coordinate))
@@ -945,9 +946,11 @@ struct SightingSheet: View {
                 if let message { Text(message.loc).font(.app(.footnote)).foregroundStyle(Theme.text) }
                 Text("Posizione arrotondata a ~1 km. Una segnalazione ogni 20 minuti. Le segnalazioni sono anonime per gli altri utenti.")
                     .font(.app(.caption)).foregroundStyle(Theme.dim)
-                Spacer()
+                    .fixedSize(horizontal: false, vertical: true)
             }
             .padding(18)
+            }
+            .scrollBounceBehavior(.basedOnSize)
             .background(Theme.bg.ignoresSafeArea())
             .toolbar { ToolbarItem(placement: .confirmationAction) { Button("Fine") { dismiss() } } }
         }
