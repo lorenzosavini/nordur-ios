@@ -3,8 +3,11 @@
   "private": true,
   "license": "UNLICENSED",
   "type": "module",
-  "engines": { "node": "22.x" },
+  "engines": {
+    "node": "22.x"
+  },
   "dependencies": {
-    "@vercel/blob": "^2.0.0"
+    "@vercel/blob": "^2.0.0",
+    "redis": "^5.12.1"
   }
 }

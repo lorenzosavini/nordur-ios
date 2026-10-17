@@ -56,21 +56,42 @@ export function verifyToken(header) {
   return payload.exp > Date.now() ? payload.uid : null;
 }
 
-// Storage: Upstash Redis when connected (Vercel Marketplace, env
-// KV_REST_API_URL / KV_REST_API_TOKEN or UPSTASH_REDIS_REST_URL / _TOKEN),
-// otherwise the private Vercel Blob store. Keys are paths derived with a
-// secret; content is always encrypted. Redis has a far larger free allowance:
-// the Blob store was suspended for exceeding the Hobby operations quota.
-// Any prefix chosen when connecting the integration works (KV_, STORAGE_, …).
-const restPrefix = Object.keys(process.env).find((k) => k.endsWith("_REST_API_URL") && process.env[k.replace(/_URL$/, "_TOKEN")]);
-const REDIS_URL = process.env.KV_REST_API_URL || process.env.UPSTASH_REDIS_REST_URL || (restPrefix ? process.env[restPrefix] : "") || "";
-const REDIS_TOKEN = process.env.KV_REST_API_TOKEN || process.env.UPSTASH_REDIS_REST_TOKEN || (restPrefix ? process.env[restPrefix.replace(/_URL$/, "_TOKEN")] : "") || "";
-export const storage = REDIS_URL && REDIS_TOKEN ? "redis" : "blob";
+// Storage: Redis when connected (Vercel Marketplace), otherwise the private
+// Vercel Blob store. Two kinds of connection: Upstash's REST API
+// (KV_REST_API_URL / KV_REST_API_TOKEN, UPSTASH_REDIS_REST_URL / _TOKEN) or a
+// plain Redis URL (REDIS_URL, redis:// or rediss://). Any prefix chosen when
+// connecting the integration works (KV_, STORAGE_, kv_, …). Keys are paths
+// derived with a secret; content is always encrypted. Redis has a far larger
+// free allowance: the Blob store was suspended for exceeding the Hobby
+// operations quota.
+const envKeys = Object.keys(process.env);
+const restPrefix = envKeys.find((k) => k.endsWith("_REST_API_URL") && process.env[k.replace(/_URL$/, "_TOKEN")]);
+const REST_URL = process.env.KV_REST_API_URL || process.env.UPSTASH_REDIS_REST_URL || (restPrefix ? process.env[restPrefix] : "") || "";
+const REST_TOKEN = process.env.KV_REST_API_TOKEN || process.env.UPSTASH_REDIS_REST_TOKEN || (restPrefix ? process.env[restPrefix.replace(/_URL$/, "_TOKEN")] : "") || "";
+const urlKey = ["REDIS_URL", "KV_URL"].find((k) => process.env[k])
+  || envKeys.find((k) => /(^|_)(REDIS|KV)_URL$/i.test(k) && /^rediss?:\/\//.test(process.env[k] || ""));
+const TCP_URL = urlKey ? process.env[urlKey] : "";
+export const storage = (REST_URL && REST_TOKEN) || TCP_URL ? "redis" : "blob";
+
+let tcpClient = null;
+async function tcp() {
+  if (!tcpClient) {
+    const { createClient } = await import("redis");
+    const client = createClient({ url: TCP_URL, socket: { connectTimeout: 8000 } });
+    client.on("error", (e) => console.error("redis", e.message));
+    tcpClient = client.connect().then(() => client).catch((e) => { tcpClient = null; throw e; });
+  }
+  return tcpClient;
+}
 
 async function redis(...command) {
-  const res = await fetch(REDIS_URL, {
+  if (!(REST_URL && REST_TOKEN)) {
+    const client = await tcp();
+    return client.sendCommand(command.map(String));
+  }
+  const res = await fetch(REST_URL, {
     method: "POST",
-    headers: { Authorization: `Bearer ${REDIS_TOKEN}`, "Content-Type": "application/json" },
+    headers: { Authorization: `Bearer ${REST_TOKEN}`, "Content-Type": "application/json" },
     body: JSON.stringify(command),
   });
   const json = await res.json().catch(() => ({}));
