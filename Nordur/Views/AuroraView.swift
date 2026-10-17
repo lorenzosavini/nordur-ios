@@ -137,8 +137,9 @@ struct AuroraView: View {
     // MARK: LIVE (now → 90 min)
 
     @ViewBuilder private var liveMode: some View {
+        nextHourSection
         VStack(alignment: .leading, spacing: 12) {
-            SectionLabel(index: "01", title: String(localized: "Ovale adesso"), trailing: ovationValidity)
+            SectionLabel(index: "02", title: String(localized: "Ovale adesso"), trailing: ovationValidity)
             if let now = model.auroraNow, now.activitySource == "OVATION" {
                 HStack(alignment: .firstTextBaseline, spacing: 12) {
                     Text(now.ovationValue.map { "\(Int($0))" } ?? "0").font(.metric(72, .bold))
@@ -173,6 +174,60 @@ struct AuroraView: View {
         sightingsSection
     }
 
+    // MARK: Next 60 minutes (solar wind already measured at L1)
+
+    @ViewBuilder private var nextHourSection: some View {
+        let steps = model.auroraNextHour
+        VStack(alignment: .leading, spacing: 10) {
+            SectionLabel(index: "01", title: String(localized: "Prossimi 60 minuti"),
+                         trailing: state?.solarWind?.nowcast.map { String(localized: "MISURATO FINO A +\($0.coveredMinutes) MIN") } ?? "")
+            if steps.isEmpty {
+                Text("Previsione a breve termine non disponibile: serve il vento solare aggiornato.")
+                    .font(.app(.caption)).foregroundStyle(Theme.dim)
+            } else {
+                if let summary = AuroraEngine.nextHourSummary(steps) {
+                    Text(summary).font(.sans(15, .medium)).foregroundStyle(Theme.text)
+                        .fixedSize(horizontal: false, vertical: true)
+                }
+                VStack(spacing: 0) {
+                    HStack(spacing: 0) {
+                        cellHead(String(localized: "ORA"), 64, .leading)
+                        cellHead("BZ", 46)
+                        cellHead("KM/S", 50)
+                        cellHead("KP", 40)
+                        cellHead(String(localized: "OSSERVABILITÀ"), nil, .leading).padding(.leading, 12)
+                    }
+                    .padding(.bottom, 5)
+                    Rule()
+                    ForEach(steps, id: \.minutes) { s in
+                        HStack(spacing: 0) {
+                            VStack(alignment: .leading, spacing: 1) {
+                                Text(s.minutes == 0 ? String(localized: "now.short", defaultValue: "ORA") : "+\(s.minutes)'")
+                                    .font(.mono(10, .semibold)).foregroundStyle(s.minutes == 0 ? Theme.accent : Theme.text)
+                                Text(Fmt.time(s.date, in: zone)).font(.mono(8.5)).foregroundStyle(Theme.faint)
+                            }
+                            .frame(width: 64, alignment: .leading)
+                            Text(s.known ? Fmt.number(s.bz, decimals: 1) : "–").font(.metric(16, .semibold))
+                                .foregroundStyle(!s.known ? Theme.faint : (s.bz ?? 0) <= -5 ? Theme.aurora : Theme.text)
+                                .frame(width: 46, alignment: .trailing)
+                            Text(s.known ? Fmt.number(s.speed) : "–").font(.metric(16, .semibold))
+                                .foregroundStyle(s.known ? Theme.text : Theme.faint).frame(width: 50, alignment: .trailing)
+                            Text(Fmt.number(s.kp, decimals: 1)).font(.metric(16, .semibold))
+                                .foregroundStyle(s.known ? Theme.text : Theme.faint).frame(width: 40, alignment: .trailing)
+                            Text(s.slot.observability.label).font(.mono(9.5)).foregroundStyle(classColor(s.slot.observability))
+                                .lineLimit(1).minimumScaleFactor(0.7)
+                                .frame(maxWidth: .infinity, alignment: .leading).padding(.leading, 12)
+                        }
+                        .padding(.vertical, 7)
+                        .overlay(alignment: .bottom) { Rule() }
+                    }
+                }
+                Text("Il vento solare che raggiungerà la Terra nei prossimi minuti è già stato misurato dal satellite in L1, a 1,5 milioni di km: ogni misura è spostata del suo tempo di viaggio. Kp atteso = Kp attuale corretto con la variazione dell'accoppiamento di Newell del vento in arrivo; finché è valido, la geometria usa OVATION. L'aurora risponde con alcuni minuti fino a 20–30 minuti di ritardo. Oltre l'ultimo dato misurato (–) resta il Kp attuale.")
+                    .font(.app(.caption)).foregroundStyle(Theme.dim)
+            }
+        }
+    }
+
     private var ovationValidity: String {
         guard let o = state?.ovation, let v = o.validAt else {
             return model.ovation?.value.forecastTime.map { String(localized: "VALIDO \(Fmt.time($0, in: zone))") } ?? ""
@@ -182,7 +237,7 @@ struct AuroraView: View {
 
     @ViewBuilder private var solarWindSection: some View {
         VStack(alignment: .leading, spacing: 12) {
-            SectionLabel(index: "02", title: String(localized: "Vento solare a L1"), trailing: swTrailing.text, trailingColor: swTrailing.color)
+            SectionLabel(index: "03", title: String(localized: "Vento solare a L1"), trailing: swTrailing.text, trailingColor: swTrailing.color)
             if let sw = state?.solarWind {
                 VStack(spacing: 0) {
                     HStack(spacing: 0) {
@@ -293,7 +348,7 @@ struct AuroraView: View {
 
     @ViewBuilder private var kpNowSection: some View {
         VStack(alignment: .leading, spacing: 10) {
-            SectionLabel(index: "03", title: String(localized: "Indice Kp"), trailing: String(localized: "MISURATO ≠ PREVISTO"))
+            SectionLabel(index: "04", title: String(localized: "Indice Kp"), trailing: String(localized: "MISURATO ≠ PREVISTO"))
             VStack(spacing: 0) {
                 kpRow(String(localized: "Stima NOAA (1 min)"), String(localized: "provvisoria, magnetometri a terra"), state?.kp.estimated?.kp, state?.kp.estimated?.date)
                 kpRow(String(localized: "Kp GFZ Potsdam"), String(localized: "produttore ufficiale · \(state?.kp.gfz.last?.status ?? "–")"), state?.kp.gfz.last?.kp, state?.kp.gfz.last?.date)
@@ -330,7 +385,7 @@ struct AuroraView: View {
         let active = (state?.alerts ?? []).filter { $0.active == true }
         let recent = (state?.alerts ?? []).filter { $0.active != true }.prefix(3)
         VStack(alignment: .leading, spacing: 8) {
-            SectionLabel(index: "04", title: String(localized: "Avvisi NOAA"), trailing: active.isEmpty ? String(localized: "NESSUNO ATTIVO") : String(localized: "\(active.count) ATTIVI"),
+            SectionLabel(index: "05", title: String(localized: "Avvisi NOAA"), trailing: active.isEmpty ? String(localized: "NESSUNO ATTIVO") : String(localized: "\(active.count) ATTIVI"),
                          trailingColor: active.isEmpty ? Theme.dim : Theme.warning)
             ForEach(active + Array(recent)) { alert in
                 HStack(alignment: .top, spacing: 10) {
@@ -348,7 +403,7 @@ struct AuroraView: View {
 
     @ViewBuilder private var sightingsSection: some View {
         VStack(alignment: .leading, spacing: 10) {
-            SectionLabel(index: "05", title: String(localized: "Avvistamenti"), trailing: String(localized: "ULTIME 3 ORE"))
+            SectionLabel(index: "06", title: String(localized: "Avvistamenti"), trailing: String(localized: "ULTIME 3 ORE"))
             let near = (sightings?.cells ?? []).filter { Geo.distanceKm(place, Coordinate(lat: $0.lat, lon: $0.lon)) < 150 }
             Text(near.isEmpty
                  ? String(localized: "Nessuna segnalazione entro 150 km. L'assenza di segnalazioni non indica assenza di aurora.")

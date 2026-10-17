@@ -149,6 +149,23 @@ do {
     check(LightPollution.factor(at: Coordinate(lat: 45, lon: 9)).value == 1, "outside Iceland: no data, neutral")
 }
 
+// MARK: Next hour (nowcast)
+
+do {
+    let now = date("2026-01-15T00:00:00Z")
+    let inputs = AuroraInputs(place: reykjavik, sky: [SkyHour(date: now.addingTimeInterval(-600), cloudLow: 0, cloudMid: 0, cloudHigh: 0)],
+                              kp: [KpBlock(start: now.addingTimeInterval(-3600), value: 3, isObserved: false)], field: nil, now: now)
+    let rising = (0...6).map { i in
+        NowcastInput(date: now.addingTimeInterval(Double(i) * 600), minutes: i * 10, known: i < 6, bz: i >= 3 ? -8 : 2, speed: 500, newellKp: 2 + Double(i) * 0.3)
+    }
+    let steps = AuroraEngine.nextHour(inputs, steps: rising)
+    check(steps.count == 7 && abs((steps[0].kp ?? 0) - 3) < 1e-9, "next hour starts from the current Kp")
+    check(abs((steps[5].kp ?? 0) - 4.5) < 1e-9, "expected Kp follows the Newell change of the arriving wind", "\(steps[5].kp ?? -1)")
+    check(steps[6].kp == 3, "beyond the measured wind: current Kp")
+    check(steps[5].slot.index >= steps[0].slot.index, "rising activity does not lower observability")
+    check(AuroraEngine.nextHourSummary(steps)?.contains("Bz") == true, "summary names the southward Bz", AuroraEngine.nextHourSummary(steps) ?? "nil")
+}
+
 print(failures == 0 ? "ALL ENGINE TESTS PASSED" : "\(failures) FAILURES")
 exit(failures == 0 ? 0 : 1)
 

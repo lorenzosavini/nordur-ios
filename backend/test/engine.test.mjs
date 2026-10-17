@@ -1,7 +1,7 @@
 // node --test backend/test
 import test from "node:test";
 import assert from "node:assert/strict";
-import { mergeSeries, analyse, newellCoupling, newellKp, shockCandidates, propagation } from "../lib/solarwind.js";
+import { mergeSeries, analyse, newellCoupling, newellKp, shockCandidates, propagation, nowcast } from "../lib/solarwind.js";
 import { blend, weighted } from "../lib/kp.js";
 import { utc } from "../lib/fetch.js";
 
@@ -53,6 +53,24 @@ test("propagation uses spacecraft X_GSE and |Vx|", () => {
   assert.equal(p.minutes, 50);
   assert.ok(p.uncertaintyMinutes >= 10);
   assert.equal(propagation(rows, null), null);
+});
+
+test("nowcast: plasma measured at L1 is shifted to its arrival time at Earth", () => {
+  // 90 min of data at 500 km/s from 1.5 million km: 50 min travel time.
+  // Bz turns south at minute 60 at L1, i.e. it reaches Earth at minute 110.
+  const rows = mergeSeries(
+    Array.from({ length: 90 }, (_, i) => ({ t: T0 + i * minute, bt: 10, by: 0, bz: i >= 60 ? -10 : 3 })),
+    Array.from({ length: 90 }, (_, i) => ({ t: T0 + i * minute, v: 500, n: 5, vx: -500 })),
+  );
+  const now = T0 + 90 * minute;
+  const n = nowcast(rows, { x: 1.5e6 }, { now });
+  assert.equal(n.steps.length, 7);
+  assert.ok(n.coveredMinutes >= 48 && n.coveredMinutes <= 50, String(n.coveredMinutes));
+  assert.equal(n.steps[0].bz, 3);
+  assert.equal(n.steps[3].bz, -10);
+  assert.ok(n.steps[4].newellKp > n.steps[0].newellKp);
+  assert.equal(n.steps[6].known, false);
+  assert.equal(nowcast(rows, null, { now }), null);
 });
 
 test("analyse reports persistence of southward Bz and moving averages", () => {

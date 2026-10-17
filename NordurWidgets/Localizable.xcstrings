@@ -1228,6 +1228,26 @@
         }
       }
     },
+    "Attività in aumento nella prossima ora" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Activity rising in the next hour"
+          }
+        }
+      }
+    },
+    "Attività in calo nella prossima ora" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Activity falling in the next hour"
+          }
+        }
+      }
+    },
     "Attività prevista debole" : {
       "localizations" : {
         "en" : {
@@ -1244,6 +1264,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Weak expected activity (Kp %@)"
+          }
+        }
+      }
+    },
+    "Attività stabile nella prossima ora" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Steady activity in the next hour"
           }
         }
       }
@@ -1724,6 +1754,26 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Continuous southward Bz"
+          }
+        }
+      }
+    },
+    "Bz verso nord: attività stabile e debole nella prossima ora" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Northward Bz: steady, weak activity in the next hour"
+          }
+        }
+      }
+    },
+    "Bz verso sud in arrivo verso le %@: l'attività può aumentare" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Southward Bz arriving around %@: activity may increase"
           }
         }
       }
@@ -3722,6 +3772,17 @@
         }
       }
     },
+    "Il vento solare che raggiungerà la Terra nei prossimi minuti è già stato misurato dal satellite in L1, a 1,5 milioni di km: ogni misura è spostata del suo tempo di viaggio. Kp atteso = Kp attuale corretto con la variazione dell'accoppiamento di Newell del vento in arrivo; finché è valido, la geometria usa OVATION. L'aurora risponde con alcuni minuti fino a 20–30 minuti di ritardo. Oltre l'ultimo dato misurato (–) resta il Kp attuale." : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The solar wind reaching Earth in the next minutes has already been measured by the satellite at L1, 1.5 million km away: each measurement is shifted by its travel time. Expected Kp = current Kp adjusted by the change in Newell coupling of the arriving wind; while it is valid, the geometry uses OVATION. The aurora responds a few minutes to 20–30 minutes later. Beyond the last measured data (–) the current Kp is kept."
+          }
+        }
+      }
+    },
     "Imbarco in corso" : {
       "localizations" : {
         "en" : {
@@ -4657,6 +4718,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "LOW"
+          }
+        }
+      }
+    },
+    "MISURATO FINO A +%lld MIN" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "MEASURED UP TO +%lld MIN"
           }
         }
       }
@@ -6814,6 +6885,17 @@
         }
       }
     },
+    "Previsione a breve termine non disponibile: serve il vento solare aggiornato." : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Short-term forecast not available: up-to-date solar wind is needed."
+          }
+        }
+      }
+    },
     "Previsione gas vulcanici" : {
       "localizations" : {
         "en" : {
@@ -6960,6 +7042,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Next hours"
+          }
+        }
+      }
+    },
+    "Prossimi 60 minuti" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Next 60 minutes"
           }
         }
       }

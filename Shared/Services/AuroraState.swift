@@ -53,6 +53,17 @@ struct AuroraState: Decodable {
         struct Shock: Decodable { let t: Double; let dv: Double; let densityRatio: Double; let fieldRatio: Double; var date: Date { Date(timeIntervalSince1970: t / 1000) } }
         struct Propagation: Decodable { let distanceKm: Double; let speedKmS: Double; let minutes: Double; let uncertaintyMinutes: Double; let ephemerisTime: String? }
         struct Coupling: Decodable { let newell30: Double?; let newell60: Double? }
+        struct Nowcast: Decodable {
+            struct Step: Decodable {
+                let t: String; let minutes: Int; let known: Bool; let bz: Double?; let v: Double?; let n: Double?; let newellKp: Double?
+                var date: Date? { DateParse.iso(t) }
+            }
+            let coveredMinutes: Int
+            let steps: [Step]
+            var inputs: [NowcastInput] {
+                steps.compactMap { s in s.date.map { NowcastInput(date: $0, minutes: s.minutes, known: s.known, bz: s.bz, speed: s.v, newellKp: s.newellKp) } }
+            }
+        }
 
         let spacecraft: String?
         let lastSample: Double
@@ -68,6 +79,7 @@ struct AuroraState: Decodable {
         let newellKp: Double?
         let shocks: [Shock]
         let propagation: Propagation?
+        let nowcast: Nowcast?
         let series: [[Double?]]
 
         var lastDate: Date { Date(timeIntervalSince1970: lastSample / 1000) }

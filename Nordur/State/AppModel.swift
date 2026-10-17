@@ -276,6 +276,13 @@ final class AppModel {
         }
     }
 
+    /// The next 60 minutes at the active place, from the solar wind already measured at L1.
+    var auroraNextHour: [NowcastStep] {
+        guard let nowcast = aurora?.value.solarWind?.nowcast else { return [] }
+        let inputs = auroraInputs(for: activePlace.coordinate, forecast: forecast?.value)
+        return AuroraEngine.nextHour(inputs, steps: nowcast.inputs)
+    }
+
     var auroraNow: AuroraSlot? { auroraSlots.first { abs($0.date.timeIntervalSinceNow) < 1800 } ?? auroraSlots.first }
     var auroraBestTonight: AuroraSlot? { AuroraEngine.best(auroraSlots, within: 24) }
 

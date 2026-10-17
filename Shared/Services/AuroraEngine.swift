@@ -457,3 +457,65 @@ enum AuroraEngine {
         return names[Int((azimuth / 22.5).rounded()) % 16]
     }
 }
+
+// MARK: - Next hour (nowcast)
+
+/// One step of the solar wind reaching Earth, as measured at L1 and shifted by its travel time.
+struct NowcastInput {
+    let date: Date
+    let minutes: Int
+    let known: Bool
+    let bz: Double?
+    let speed: Double?
+    let newellKp: Double?
+}
+
+struct NowcastStep {
+    let date: Date
+    let minutes: Int
+    let known: Bool
+    let bz: Double?
+    let speed: Double?
+    let kp: Double?
+    let slot: AuroraSlot
+}
+
+extension AuroraEngine {
+    /// The next hour at the observer. The plasma arriving at Earth in the next ~50
+    /// minutes has already been measured at L1. Expected Kp = current combined Kp
+    /// moved by the change of the Newell-coupling Kp of the arriving plasma (Newell
+    /// alone runs high in quiet conditions). OVATION, when valid, still drives the
+    /// geometry; clouds come from the hour containing each step.
+    static func nextHour(_ inputs: AuroraInputs, steps: [NowcastInput]) -> [NowcastStep] {
+        let base = kp(at: inputs.now, in: inputs.kp)?.value
+        let reference = steps.first { $0.known && $0.newellKp != nil }?.newellKp
+        return steps.map { step in
+            var expected = base
+            if step.known, let b = base, let r = reference, let n = step.newellKp {
+                expected = min(9, max(0, b + n - r))
+            }
+            var local = inputs
+            if let k = expected {
+                local.kp = [KpBlock(start: step.date.addingTimeInterval(-3600), value: k, isObserved: false)]
+            }
+            var sky = inputs.sky.last { $0.date <= step.date } ?? inputs.sky.first ?? SkyHour(date: step.date)
+            sky.date = step.date
+            return NowcastStep(date: step.date, minutes: step.minutes, known: step.known, bz: step.bz, speed: step.speed,
+                               kp: expected, slot: slot(for: sky, inputs: local))
+        }
+    }
+
+    /// One-line reading of the next hour.
+    static func nextHourSummary(_ steps: [NowcastStep]) -> String? {
+        let known = steps.filter(\.known)
+        guard let first = known.first, let last = known.last else { return nil }
+        if let south = known.first(where: { ($0.bz ?? 0) <= -5 }) {
+            return String(localized: "Bz verso sud in arrivo verso le \(Fmt.time(south.date, in: .iceland)): l'attività può aumentare")
+        }
+        let change = (last.kp ?? 0) - (first.kp ?? 0)
+        if change >= 0.5 { return String(localized: "Attività in aumento nella prossima ora") }
+        if change <= -0.5 { return String(localized: "Attività in calo nella prossima ora") }
+        if known.allSatisfy({ ($0.bz ?? 0) > 0 }) { return String(localized: "Bz verso nord: attività stabile e debole nella prossima ora") }
+        return String(localized: "Attività stabile nella prossima ora")
+    }
+}

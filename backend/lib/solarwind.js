@@ -103,6 +103,38 @@ export function propagation(rows, ephemeris) {
   };
 }
 
+/**
+ * The next hour at Earth. Each L1 sample reaches the bow shock after its own
+ * flat delay X/|Vx|, so the plasma arriving between now and ~X/|Vx| from now
+ * has already been measured. For every step: mean Bz, speed and density of the
+ * plasma arriving in the 10 minutes before it, and the Newell-coupling Kp of the
+ * 30 minutes before it. Steps past the last measured arrival are not known.
+ * The magnetosphere and ionosphere then respond within minutes to tens of minutes.
+ */
+export function nowcast(rows, ephemeris, { now = Date.now(), horizon = 60, step = 10 } = {}) {
+  if (!ephemeris || ephemeris.x == null || !rows.length) return null;
+  const arriving = rows
+    .map((r) => {
+      const vx = r.vx != null ? Math.abs(r.vx) : r.v;
+      return vx ? { ...r, at: r.t + (ephemeris.x / vx) * 1000 } : null;
+    })
+    .filter(Boolean);
+  if (!arriving.length) return null;
+  const lastArrival = Math.max(...arriving.map((r) => r.at));
+  const steps = [];
+  for (let m = 0; m <= horizon; m += step) {
+    const t = now + m * 60e3;
+    const recent = arriving.filter((r) => r.at > t - 10 * 60e3 && r.at <= t);
+    const window = arriving.filter((r) => r.at > t - 30 * 60e3 && r.at <= t);
+    steps.push({
+      t: new Date(t).toISOString(), minutes: m, known: t <= lastArrival && recent.length > 0,
+      bz: round(mean(recent, "bz"), 1), v: round(mean(recent, "v"), 0), n: round(mean(recent, "n"), 1),
+      newellKp: round(newellKp(window), 2),
+    });
+  }
+  return { coveredMinutes: Math.max(0, Math.round((lastArrival - now) / 60e3)), steps };
+}
+
 export function analyse(rows, { ephemeris = null, spacecraft = null, now = Date.now() } = {}) {
   if (!rows.length) return null;
   const last = rows[rows.length - 1];
@@ -151,6 +183,7 @@ export function analyse(rows, { ephemeris = null, spacecraft = null, now = Date.
     newellKp: round(newellKp(hour), 2),
     shocks: shockCandidates(rows),
     propagation: propagation(rows, ephemeris),
+    nowcast: nowcast(rows, ephemeris, { now }),
     series: rows.filter((_, i) => i % 2 === 0 || i === rows.length - 1).map((r) => [Math.round(r.t / 1000), num(r.bz), num(r.bt), num(r.v), num(r.n)]),
   };
 }
