@@ -183,6 +183,14 @@ enum WeatherGridService {
         var points: [Coordinate] = []
         for lat in lats { for lon in lons { points.append(Coordinate(lat: lat, lon: lon)) } }
 
+        // nordur-api serves the same grid, fetched once per hour for everyone: Open-Meteo
+        // counts each of the 260 points as a call per IP, which shared networks exhaust.
+        if let url = URL(string: "https://nordur-api.vercel.app/api/grid"),
+           let fetched = try? await HTTP.get(url, cacheKey: "grid_iceland_api"), !fetched.isStale,
+           let decoded = try? RouteWeather.decodeMany(fetched.value), decoded.count == points.count {
+            return Fetched(value: build(lats: lats, lons: lons, forecasts: decoded), date: fetched.date, isStale: false)
+        }
+
         var forecasts: [Forecast?] = Array(repeating: nil, count: points.count)
         var newestDate = Date.distantPast
         var stale = false
