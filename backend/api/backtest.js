@@ -6,8 +6,7 @@
 // Kp ≥ 4 and Kp ≥ 5 a contingency table with precision, POD (recall), FAR
 // and the Brier score of the 0/1 forecast. These are deterministic forecasts:
 // the Brier score here equals the error rate, it is not a probabilistic score.
-import { list } from "@vercel/blob";
-import { readObject, send } from "../lib/core.js";
+import { readObject, listObjects, send } from "../lib/core.js";
 import { fetchJSON, utc } from "../lib/fetch.js";
 import * as S from "../lib/sources.js";
 
@@ -62,8 +61,7 @@ export default async function handler(req, res) {
     const keys = [];
     for (let d = 0; d <= days; d++) {
       const prefix = `archive/aurora/${new Date(Date.now() - d * 864e5).toISOString().slice(0, 10)}/`;
-      const page = await list({ prefix, limit: 100 });
-      keys.push(...page.blobs.map((b) => b.pathname));
+      keys.push(...(await listObjects(prefix, { limit: 100 })).map((b) => b.pathname));
     }
     const snapshots = [];
     for (let i = 0; i < keys.length; i += 10) {

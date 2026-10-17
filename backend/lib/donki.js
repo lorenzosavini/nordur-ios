@@ -98,7 +98,7 @@ export async function loadDonki({ force = false } = {}) {
     try {
       const stored = await readObject(CACHE).catch(() => null);
       const hash = (x) => crypto.createHash("sha1").update(JSON.stringify(x)).digest("hex");
-      if (!stored || hash(stored.digest) !== hash(fresh.digest)) await writeObject(CACHE, fresh);
+      if (!stored || hash(stored.digest) !== hash(fresh.digest)) await writeObject(CACHE, fresh, { ttl: 7 * 86400 });
     } catch (e) {
       console.error("donki cache", e.message);
     }

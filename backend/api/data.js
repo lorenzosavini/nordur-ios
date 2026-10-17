@@ -17,11 +17,12 @@ export default async function handler(req, res) {
   try {
     if (req.method === "GET" && !doc) {
       const blobs = await listObjects(docPrefix(uid));
-      const docs = blobs.map((b) => ({
+      // Redis keeps no upload time: read it from the (small) documents.
+      const docs = await Promise.all(blobs.map(async (b) => ({
         doc: b.pathname.split("/").pop().replace(/\.bin$/, ""),
-        updatedAt: b.uploadedAt,
+        updatedAt: b.uploadedAt || (await readObject(b.pathname).catch(() => null))?.updatedAt || null,
         size: b.size,
-      }));
+      })));
       return send(res, 200, { docs });
     }
     if (req.method === "GET") {
@@ -39,7 +40,7 @@ export default async function handler(req, res) {
     if (req.method === "DELETE") {
       const blobs = await listObjects(docPrefix(uid));
       const target = doc ? blobs.filter((b) => b.pathname.endsWith(`/${doc}.bin`)) : blobs;
-      await deleteObjects(target.map((b) => b.url));
+      await deleteObjects(target);
       return send(res, 200, { ok: true });
     }
     return send(res, 405, { error: "method" });

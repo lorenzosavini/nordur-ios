@@ -11,10 +11,10 @@
 // is the server time (no back-dating), duplicates in the same cell/30 min from
 // the same user are rejected. Absence of reports does not mean absence of aurora.
 import crypto from "node:crypto";
-import { list } from "@vercel/blob";
-import { verifyToken, readObject, writeObject, readJSON, send, hmac, isRevoked } from "../lib/core.js";
+import { verifyToken, readObject, writeObject, listObjects, readJSON, send, hmac, isRevoked } from "../lib/core.js";
 
 const lastByUser = new Map(); // per instance, first line of defence; the blob key enforces the rest
+const recentCache = new Map(); // hours -> { at, body }: one storage listing per minute at most
 
 export default async function handler(req, res) {
   if (req.method === "POST") {
@@ -56,15 +56,21 @@ export default async function handler(req, res) {
   if (req.method === "GET") {
     const hours = Math.min(24, Math.max(1, Number(new URL(req.url, "http://x").searchParams.get("hours")) || 3));
     const since = Date.now() - hours * 3600e3;
+    res.setHeader("Cache-Control", "public, s-maxage=60");
+    const hit = recentCache.get(hours);
+    if (hit && Date.now() - hit.at < 60e3) return send(res, 200, hit.body);
     const days = [...new Set([0, 1].map((d) => new Date(Date.now() - d * 864e5).toISOString().slice(0, 10)))];
+    const sinceSlot = Math.floor(since / (30 * 60e3));
     const keys = [];
     for (const day of days) {
-      const page = await list({ prefix: `sightings/${day}/`, limit: 500 });
-      keys.push(...page.blobs.filter((b) => Date.parse(b.uploadedAt) >= since).map((b) => b.pathname));
+      // The key starts with the 30-minute slot of the report: no upload time needed.
+      const objects = await listObjects(`sightings/${day}/`, { limit: 500 });
+      keys.push(...objects.map((b) => b.pathname).filter((k) => Number(k.split("/").pop().split("-")[0]) >= sinceSlot));
     }
     const records = (await Promise.all(keys.slice(0, 200).map((k) => readObject(k).catch(() => null)))).filter(Boolean);
-    res.setHeader("Cache-Control", "public, s-maxage=60");
-    return send(res, 200, { hours, ...aggregate(records, since) });
+    const body = { hours, ...aggregate(records, since) };
+    recentCache.set(hours, { at: Date.now(), body });
+    return send(res, 200, body);
   }
   return send(res, 405, { error: "method" });
 }

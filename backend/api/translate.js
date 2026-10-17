@@ -106,7 +106,7 @@ export default async function handler(req, res) {
       const t = translated[j];
       out[i] = t;
       memory.set(`${to}:${sha(to, texts[i])}`, t);
-      await writeObject(`translations/${to}/${sha(to, texts[i])}.bin`, { t }).catch((e) => console.error("translate cache", e.message));
+      await writeObject(`translations/${to}/${sha(to, texts[i])}.bin`, { t }, { ttl: 120 * 86400 }).catch((e) => console.error("translate cache", e.message));
     }));
   }
   if (memory.size > 20000) memory.clear();

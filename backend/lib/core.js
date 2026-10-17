@@ -56,8 +56,31 @@ export function verifyToken(header) {
   return payload.exp > Date.now() ? payload.uid : null;
 }
 
-// Private Blob store; paths derived with a secret, content encrypted.
+// Storage: Upstash Redis when connected (Vercel Marketplace, env
+// KV_REST_API_URL / KV_REST_API_TOKEN or UPSTASH_REDIS_REST_URL / _TOKEN),
+// otherwise the private Vercel Blob store. Keys are paths derived with a
+// secret; content is always encrypted. Redis has a far larger free allowance:
+// the Blob store was suspended for exceeding the Hobby operations quota.
+const REDIS_URL = process.env.KV_REST_API_URL || process.env.UPSTASH_REDIS_REST_URL || "";
+const REDIS_TOKEN = process.env.KV_REST_API_TOKEN || process.env.UPSTASH_REDIS_REST_TOKEN || "";
+export const storage = REDIS_URL && REDIS_TOKEN ? "redis" : "blob";
+
+async function redis(...command) {
+  const res = await fetch(REDIS_URL, {
+    method: "POST",
+    headers: { Authorization: `Bearer ${REDIS_TOKEN}`, "Content-Type": "application/json" },
+    body: JSON.stringify(command),
+  });
+  const json = await res.json().catch(() => ({}));
+  if (!res.ok || json.error) throw new Error(`redis ${command[0]}: ${json.error || res.status}`);
+  return json.result;
+}
+
 export async function readObject(pathname) {
+  if (storage === "redis") {
+    const value = await redis("GET", pathname);
+    return value == null ? null : decrypt(Buffer.from(value, "base64"));
+  }
   const result = await get(pathname, { access: "private", useCache: false });
   if (!result) return null;
   const chunks = [];
@@ -65,7 +88,16 @@ export async function readObject(pathname) {
   return decrypt(Buffer.concat(chunks));
 }
 
-export async function writeObject(pathname, obj, { overwrite = true } = {}) {
+/** `ttl` (seconds) only applies with Redis: caches expire on their own. */
+export async function writeObject(pathname, obj, { overwrite = true, ttl } = {}) {
+  if (storage === "redis") {
+    const args = ["SET", pathname, encrypt(obj).toString("base64")];
+    if (!overwrite) args.push("NX");
+    if (ttl) args.push("EX", String(Math.round(ttl)));
+    const ok = await redis(...args);
+    if (!overwrite && ok == null) throw new Error("blob already exists");
+    return;
+  }
   await put(pathname, encrypt(obj), {
     access: "private",
     addRandomSuffix: false,
@@ -74,19 +106,35 @@ export async function writeObject(pathname, obj, { overwrite = true } = {}) {
   });
 }
 
-export async function listObjects(prefix) {
+/** Objects under a prefix: [{ pathname, url, uploadedAt }] (uploadedAt is null with Redis). */
+export async function listObjects(prefix, { limit = Infinity } = {}) {
   const out = [];
+  if (storage === "redis") {
+    let cursor = "0";
+    do {
+      const [next, keys] = await redis("SCAN", cursor, "MATCH", `${prefix}*`, "COUNT", "1000");
+      out.push(...keys.map((k) => ({ pathname: k, url: k, uploadedAt: null })));
+      cursor = next;
+    } while (cursor !== "0" && out.length < limit);
+    return out.slice(0, limit === Infinity ? undefined : limit);
+  }
   let cursor;
   do {
-    const page = await list({ prefix, cursor, limit: 1000 });
+    const page = await list({ prefix, cursor, limit: Math.min(1000, limit) });
     out.push(...page.blobs);
-    cursor = page.hasMore ? page.cursor : undefined;
+    cursor = page.hasMore && out.length < limit ? page.cursor : undefined;
   } while (cursor);
   return out;
 }
 
-export async function deleteObjects(urls) {
-  if (urls.length) await del(urls);
+/** Deletes objects returned by listObjects. */
+export async function deleteObjects(objects) {
+  if (!objects.length) return;
+  if (storage === "redis") {
+    for (let i = 0; i < objects.length; i += 500) await redis("DEL", ...objects.slice(i, i + 500).map((o) => o.pathname));
+    return;
+  }
+  await del(objects.map((o) => o.url));
 }
 
 export const userPath = (email) => `users/${hmac(email.trim().toLowerCase(), "user")}.bin`;

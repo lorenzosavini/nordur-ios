@@ -25,6 +25,7 @@ const NOTIFICATIONS = `query RoadNotifications($language: RoadNotificationsLangu
 const INFO = `query RoadConditionInfo($lang: Languages!) { RoadConditionInfo(lang: $lang) { title description code type } }`;
 
 let memory = null; // { at, body }
+let persistedAt = 0; // the storage copy is only a fallback: refreshed hourly, not every 5 minutes
 
 async function graphql(query, variables) {
   const res = await fetchWithRetry(ENDPOINT, {
@@ -82,7 +83,10 @@ export default async function handler(req, res) {
       ]);
       memory = { at: Date.now(), body: compact(sections, notifications, info) };
       if (!memory.body.sections.length) throw new Error("umferdin.is: nessun tratto");
-      await writeObject(CACHE, memory).catch((e) => console.error("roads cache", e.message));
+      if (Date.now() - persistedAt > 3600e3) {
+        persistedAt = Date.now();
+        await writeObject(CACHE, memory, { ttl: 2 * 86400 }).catch((e) => console.error("roads cache", e.message));
+      }
     } catch (e) {
       console.error("roads", e.message);
       const stored = memory || (await readObject(CACHE).catch(() => null));

@@ -57,7 +57,7 @@ export default async function handler(req, res) {
   if (!memory || Date.now() - memory.at > TTL) {
     try {
       memory = { at: Date.now(), body: await fetchGrid() };
-      await writeObject(CACHE, memory).catch((e) => console.error("grid cache", e.message));
+      await writeObject(CACHE, memory, { ttl: 2 * 86400 }).catch((e) => console.error("grid cache", e.message));
     } catch (e) {
       console.error("grid", e.message);
       const stored = memory || (await readObject(CACHE).catch(() => null));

@@ -11,7 +11,6 @@
 // Deleting the account removes the user record, every backed-up document and
 // the user's aurora sightings.
 import crypto from "node:crypto";
-import { list, del } from "@vercel/blob";
 import { hashPassword, safeEqual, issueToken, verifyToken, readObject, writeObject, userPath, docPrefix, revokedPath, listObjects, deleteObjects, readJSON, send, hmac } from "../lib/core.js";
 
 const EMAIL = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
@@ -49,18 +48,12 @@ export default async function handler(req, res) {
       if (!uid || !existing || existing.userId !== uid) return send(res, 401, { error: "Sessione non valida, accedi di nuovo" });
       if (!(await checkPassword(existing, body.password))) return send(res, 401, { error: "Password errata" });
       const docs = await listObjects(docPrefix(uid));
-      await deleteObjects(docs.map((b) => b.url));
+      await deleteObjects(docs);
       const tag = hmac(uid, "sighting").slice(0, 16);
-      let sightings = 0, cursor;
-      do {
-        const page = await list({ prefix: "sightings/", cursor, limit: 1000 });
-        const mine = page.blobs.filter((b) => b.pathname.endsWith(`-${tag}.bin`));
-        if (mine.length) await del(mine.map((b) => b.url));
-        sightings += mine.length;
-        cursor = page.hasMore ? page.cursor : undefined;
-      } while (cursor);
-      const userBlob = (await list({ prefix: path, limit: 1 })).blobs[0];
-      if (userBlob) await del(userBlob.url);
+      const mine = (await listObjects("sightings/")).filter((b) => b.pathname.endsWith(`-${tag}.bin`));
+      await deleteObjects(mine);
+      const sightings = mine.length;
+      await deleteObjects(await listObjects(path, { limit: 1 }));
       // Tokens are stateless: mark the account so they can no longer write.
       await writeObject(revokedPath(uid), { deleted: new Date().toISOString() });
       return send(res, 200, { ok: true, deleted: { documents: docs.length, sightings } });
