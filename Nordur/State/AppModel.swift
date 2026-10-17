@@ -215,9 +215,7 @@ final class AppModel {
             let result = await attempt { try await Webcams.sites() }
             apply(result, .webcams) { self.webcams = $0 }
         }
-        if roadGeometry == nil || force {
-            if case .success(let geometry) = await attempt({ try await RoadGeometry.load() }) { roadGeometry = geometry }
-        }
+        await loadRoadGeometry(force: force)
         if fuel == nil || force {
             let maxAge: TimeInterval = force ? 0 : 30 * 24 * 3600
             let result = await attempt { try await FuelStations.all(maxAge: maxAge) }
@@ -225,8 +223,18 @@ final class AppModel {
         }
     }
 
+    /// Lines of the road sections for the map (static, kept a week on the phone).
+    func loadRoadGeometry(force: Bool = false) async {
+        guard roadGeometry == nil || force else { return }
+        if case .success(let geometry) = await attempt({ try await RoadGeometry.load() }) { roadGeometry = geometry }
+    }
+
     /// Forecast grid for the weather map (refreshed at most hourly) and radar frames.
     func refreshMapData(force: Bool = false) async {
+        await loadRoadGeometry()
+        if roadInfo == nil {
+            apply(await attempt { try await RoadInfoService.load() }, .roadInfo) { self.roadInfo = $0 }
+        }
         let gridOld = weatherGrid.map { Date().timeIntervalSince($0.date) > 3600 || $0.isStale } ?? true
         if gridOld || force {
             let result = await attempt { try await WeatherGridService.iceland() }

@@ -71,6 +71,20 @@ jobs:
           zip -qry Nordur.ipa Payload
           ls -l Nordur.ipa
 
+      - name: Publish the builds right away (ci-screenshots)
+        # The .ipa and the Appetize zip are usable before the screenshots finish;
+        # the last step republishes them together with the screenshots.
+        env:
+          TOKEN: ${{ github.token }}
+        run: |
+          (cd build/Debug-iphonesimulator && ditto -c -k --keepParent Nordur.app ../../Nordur-simulator.zip)
+          rm -rf /tmp/early && mkdir -p /tmp/early && cp Nordur.ipa Nordur-simulator.zip /tmp/early/
+          cd /tmp/early
+          git init -q -b ci-screenshots
+          git -c user.name=nordur-ci -c user.email=ci@users.noreply.github.com add -A
+          git -c user.name=nordur-ci -c user.email=ci@users.noreply.github.com commit -qm "Builds for ${GITHUB_SHA} (screenshots in progress)"
+          git push -qf "https://x-access-token:${TOKEN}@github.com/${GITHUB_REPOSITORY}.git" HEAD:ci-screenshots
+
       - name: Export strings for localization (XLIFF)
         run: |
           xcodebuild -exportLocalizations -project Nordur.xcodeproj -localizationPath loc -exportLanguage en > loc.log 2>&1 || tail -40 loc.log
