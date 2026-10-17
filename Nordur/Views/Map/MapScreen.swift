@@ -45,6 +45,9 @@ struct MapScreen: View {
         return frames[index]
     }
 
+    /// Road-section lines, rebuilt only when the conditions or the geometry change.
+    private static let roadLines = RoadLines()
+
     static let iceland = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: 64.95, longitude: -18.8),
                                             span: MKCoordinateSpan(latitudeDelta: 5.2, longitudeDelta: 13))
 
@@ -54,7 +57,8 @@ struct MapScreen: View {
                 content: content,
                 initialRegion: Self.iceland,
                 onTap: { coordinate in probe = Coordinate(coordinate) },
-                onSelect: select
+                onSelect: select,
+                onSelectSection: showRoadInfo ? { id in selectedSection = model.roadInfo?.value.sections.first { $0.id == id } } : nil
             )
             .ignoresSafeArea(edges: .top)
             .overlay(alignment: .top) { layerChips }
@@ -90,26 +94,26 @@ struct MapScreen: View {
 
     private var layerChips: some View {
         VStack(spacing: 8) {
-            ScrollView(.horizontal, showsIndicators: false) {
-                HStack(spacing: 8) {
-                    ForEach(WeatherLayer.allCases) { item in
-                        Button {
-                            layerRaw = item.rawValue
-                            playing = false
-                        } label: {
-                            Text(item.label.loc.uppercased())
-                                .font(.mono(10.5, .semibold))
-                                .padding(.horizontal, 10)
-                                .padding(.vertical, 7)
-                                .background(layer == item ? Theme.accent : Theme.bg.opacity(0.94))
-                                .foregroundStyle(layer == item ? Theme.onAccent : Theme.text)
-                                .overlay(Rectangle().strokeBorder(Theme.hairline))
-                        }
-                        .buttonStyle(.plain)
+            FlowLayout(spacing: 6, lineSpacing: 6) {
+                ForEach(WeatherLayer.allCases) { item in
+                    Button {
+                        layerRaw = item.rawValue
+                        playing = false
+                    } label: {
+                        Label(item.label.loc.uppercased(), systemImage: item.symbol)
+                            .labelStyle(.titleAndIcon)
+                            .font(.mono(10, .semibold))
+                            .padding(.horizontal, 8)
+                            .padding(.vertical, 6)
+                            .background(layer == item ? Theme.accent : Theme.bg.opacity(0.94))
+                            .foregroundStyle(layer == item ? Theme.onAccent : Theme.text)
+                            .overlay(Rectangle().strokeBorder(Theme.hairline))
+                            .contentShape(Rectangle())
                     }
+                    .buttonStyle(.plain)
                 }
-                .padding(.horizontal)
             }
+            .padding(.horizontal)
             HStack {
                 Menu {
                     Toggle("Allerte meteo IMO", systemImage: "exclamationmark.triangle", isOn: $showWarnings)
@@ -141,6 +145,7 @@ struct MapScreen: View {
             if let probe { ProbeCard(coordinate: probe, hour: hourIndex) { self.probe = nil } }
             VStack(alignment: .leading, spacing: 8) {
                 legend
+                if showRoadInfo && model.roadGeometry != nil && model.roadInfo != nil { roadLegend }
                 timeControls
             }
             .padding(12)
@@ -175,6 +180,29 @@ struct MapScreen: View {
                 .font(.app(.caption2)).foregroundStyle(.secondary)
         } else {
             Text("Tocca la mappa per i valori in un punto").font(.app(.caption2)).foregroundStyle(.secondary)
+        }
+    }
+
+    /// Colours of the road lines (umferdin.is surface conditions).
+    private var roadLegend: some View {
+        let items: [(String, UIColor, Bool)] = [
+            (String(localized: "Percorribile"), RoadLines.style(for: .ok), false),
+            (String(localized: "Ghiaccio a tratti"), RoadLines.style(for: .caution), false),
+            (String(localized: "Scivolosa / neve"), RoadLines.style(for: .warning), false),
+            (String(localized: "Difficile"), RoadLines.style(for: .danger), false),
+            (String(localized: "Chiusa"), RoadLines.closedColor, true),
+            (String(localized: "Nessun servizio"), RoadLines.style(for: nil), false),
+        ]
+        return VStack(alignment: .leading, spacing: 4) {
+            FlowLayout(spacing: 10, lineSpacing: 4) {
+                ForEach(items, id: \.0) { item in
+                    HStack(spacing: 4) {
+                        Capsule().fill(Color(item.1)).frame(width: 14, height: item.2 ? 4 : 3)
+                        Text(item.0).font(.app(.caption2)).foregroundStyle(.secondary)
+                    }
+                }
+            }
+            Text("Strade: condizioni Vegagerðin. Tocca una strada per i dettagli.").font(.app(.caption2)).foregroundStyle(.tertiary)
         }
     }
 
@@ -347,7 +375,8 @@ struct MapScreen: View {
         }
         if showRoadInfo, let info = model.roadInfo?.value {
             for section in info.sections {
-                if let risk = section.risk, risk >= .warning, let center = section.center {
+                // Lines show every section; closures also get a marker, visible at any zoom.
+                if section.isClosed, let risk = section.risk, let center = section.center {
                     pois.append(PoiAnnotation(kind: .roadSection, key: "rs\(section.id)", coordinate: center.coordinate.clCoordinate,
                                               title: "\(section.label): \(section.name)", color: UIColor(risk.color)))
                 }
@@ -427,6 +456,11 @@ struct MapScreen: View {
                 linesKey += "rec\(coords.count / 10)"
             }
         }
+        if showRoadInfo, let info = model.roadInfo, let geometry = model.roadGeometry {
+            let key = "roads\(info.date.timeIntervalSince1970)-\(geometry.date.timeIntervalSince1970)"
+            lines = Self.roadLines.lines(key: key, info: info.value, geometry: geometry.value) + lines
+            linesKey = key + linesKey
+        }
         c.polylines = lines
         c.polylinesKey = linesKey
         return c
@@ -501,5 +535,64 @@ struct ProbeCard: View {
         }
         .padding(12)
         .background(Theme.bg.opacity(0.94)).overlay(Rectangle().strokeBorder(Theme.hairline))
+    }
+}
+
+/// Every road section as a line coloured by its surface condition (umferdin.is
+/// categories): green passable, yellow icy patches or wet snow, orange slippery
+/// or snowy, red difficult or extremely slippery, dark red dashed closed, grey
+/// no winter service or unknown.
+final class RoadLines {
+    private var key = ""
+    private var cached: [TitledPolyline] = []
+
+    func lines(key: String, info: RoadInfo, geometry: RoadGeometry) -> [TitledPolyline] {
+        if key == self.key { return cached }
+        var out: [TitledPolyline] = []
+        // Worst on top: grey, green, then rising risk, closures last.
+        let ordered = info.sections.sorted { Self.rank($0) < Self.rank($1) }
+        for section in ordered {
+            guard let parts = geometry.lines[section.id] else { continue }
+            let style = Self.style(section)
+            for part in parts where part.count >= 2 {
+                let coords = part.map(\.clCoordinate)
+                let line = TitledPolyline(coordinates: coords, count: coords.count)
+                line.strokeColor = style.color
+                line.width = style.width
+                line.dashed = section.isClosed
+                line.sectionID = section.id
+                out.append(line)
+            }
+        }
+        self.key = key
+        cached = out
+        return out
+    }
+
+    static func rank(_ s: RoadInfo.Section) -> Int {
+        if s.isClosed { return 5 }
+        return (s.risk?.rawValue).map { $0 + 1 } ?? 0
+    }
+
+    static let closedColor = UIColor(red: 0.55, green: 0, blue: 0.08, alpha: 1)
+    static func style(for risk: Risk?) -> UIColor {
+        switch risk {
+        case .ok: return UIColor(red: 0.13, green: 0.66, blue: 0.33, alpha: 0.9)
+        case .caution: return UIColor(red: 0.98, green: 0.80, blue: 0.10, alpha: 1)
+        case .warning: return UIColor(red: 0.98, green: 0.50, blue: 0.05, alpha: 1)
+        case .danger: return UIColor(red: 0.90, green: 0.12, blue: 0.10, alpha: 1)
+        case nil: return UIColor(white: 0.55, alpha: 0.8)
+        }
+    }
+
+    static func style(_ s: RoadInfo.Section) -> (color: UIColor, width: CGFloat) {
+        if s.isClosed { return (closedColor, 4) }
+        switch s.risk {
+        case .ok: return (style(for: .ok), 2.5)
+        case .caution: return (style(for: .caution), 3)
+        case .warning: return (style(for: .warning), 3.5)
+        case .danger: return (style(for: .danger), 4)
+        case nil: return (style(for: nil), 1.5)
+        }
     }
 }

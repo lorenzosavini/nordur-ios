@@ -105,6 +105,8 @@ final class TitledPolyline: MKPolyline {
     var strokeColor: UIColor = .systemIndigo
     var width: CGFloat = 3
     var dashed = false
+    /// A road section (umferdin.is id): tapping the line selects it.
+    var sectionID: String?
 }
 
 // MARK: - Map content description (built by SwiftUI, applied by the coordinator)
@@ -133,6 +135,8 @@ struct WeatherMapView: UIViewRepresentable {
     var initialRegion: MKCoordinateRegion
     var onTap: (CLLocationCoordinate2D) -> Void
     var onSelect: (PoiAnnotation) -> Void
+    /// Tap on a road-section line (within ~22 pt).
+    var onSelectSection: ((String) -> Void)? = nil
 
     func makeCoordinator() -> Coordinator { Coordinator(self) }
 
@@ -266,7 +270,33 @@ struct WeatherMapView: UIViewRepresentable {
             let point = gesture.location(in: map)
             // Ignore taps on annotations (they have their own selection).
             if let hit = map.hitTest(point, with: nil), hit is MKAnnotationView || hit.superview is MKAnnotationView { return }
+            if let select = parent.onSelectSection, let id = nearestSection(to: point, in: map, within: 22) {
+                select(id)
+                return
+            }
             parent.onTap(map.convert(point, toCoordinateFrom: map))
+        }
+
+        /// The road-section line closest to a screen point, if within `tolerance` points.
+        private func nearestSection(to point: CGPoint, in map: MKMapView, within tolerance: CGFloat) -> String? {
+            let visible = map.visibleMapRect
+            var best: (id: String, d: CGFloat)?
+            for case let line as TitledPolyline in map.overlays {
+                guard let id = line.sectionID, line.boundingMapRect.intersects(visible) else { continue }
+                let pts = line.points()
+                var previous: CGPoint?
+                for i in 0..<line.pointCount {
+                    let p = map.convert(pts[i].coordinate, toPointTo: map)
+                    if let a = previous {
+                        let dx = p.x - a.x, dy = p.y - a.y, len2 = dx * dx + dy * dy
+                        let t = len2 > 0 ? max(0, min(1, ((point.x - a.x) * dx + (point.y - a.y) * dy) / len2)) : 0
+                        let d = hypot(a.x + t * dx - point.x, a.y + t * dy - point.y)
+                        if d <= tolerance, d < best?.d ?? .infinity { best = (id, d) }
+                    }
+                    previous = p
+                }
+            }
+            return best?.id
         }
 
         func gestureRecognizer(_ g: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith other: UIGestureRecognizer) -> Bool { true }

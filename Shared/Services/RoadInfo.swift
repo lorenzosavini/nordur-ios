@@ -215,3 +215,80 @@ enum RoadInfoService {
         try await HTTP.json(RoadInfo.self, from: endpoint, cacheKey: "road_info")
     }
 }
+
+// MARK: - Section geometry
+
+/// The lines of every road section (Vegagerðin's road network from umferdin.is,
+/// built by tools/roads/build-geometry.mjs, served as a static file by
+/// nordur-api and from the repository), keyed by the same section id as RoadInfo.
+struct RoadGeometry {
+    let lines: [String: [[Coordinate]]]
+
+    private struct File: Decodable {
+        let scale: Double
+        let sections: [String: [[Int]]]
+    }
+
+    /// nordur-api first, then the copy in the (public) repository.
+    static let endpoints = [URL(string: "https://nordur-api.vercel.app/roadgeom.json")!,
+                            URL(string: "https://raw.githubusercontent.com/lorenzosavini/nordur-ios/main/backend/public/roadgeom.json")!]
+
+    init(lines: [String: [[Coordinate]]]) { self.lines = lines }
+
+    init(data: Data) throws {
+        let file = try JSONDecoder().decode(File.self, from: data)
+        var lines: [String: [[Coordinate]]] = [:]
+        for (id, encoded) in file.sections {
+            lines[id] = encoded.map { deltas in
+                var x = 0, y = 0
+                var points: [Coordinate] = []
+                points.reserveCapacity(deltas.count / 2)
+                var i = 0
+                while i + 1 < deltas.count {
+                    x += deltas[i]; y += deltas[i + 1]
+                    points.append(Coordinate(lat: Double(y) / file.scale, lon: Double(x) / file.scale))
+                    i += 2
+                }
+                return points
+            }
+        }
+        self.lines = lines
+    }
+
+    /// Kept on the phone: the road network changes rarely (refreshed weekly).
+    static func load() async throws -> Fetched<RoadGeometry> {
+        if let cached = DiskCache.read("road_geometry"), Date().timeIntervalSince(cached.date) < 7 * 24 * 3600,
+           let geometry = try? RoadGeometry(data: cached.data) {
+            return Fetched(value: geometry, date: cached.date, isStale: false)
+        }
+        var lastError: Error = HTTPError.invalidURL
+        for url in endpoints {
+            do {
+                let fetched = try await HTTP.get(url, cacheKey: "road_geometry").map { try RoadGeometry(data: $0) }
+                if !fetched.isStale || url == endpoints.last { return fetched }
+            } catch { lastError = error }
+        }
+        throw lastError
+    }
+
+    /// Shortest distance (km) from a point to a section's line, nil without geometry.
+    func distanceKm(from c: Coordinate, to section: String) -> Double? {
+        guard let parts = lines[section] else { return nil }
+        // Local equirectangular projection around the point: exact enough within ~100 km.
+        let k = cos(c.lat * .pi / 180), r = Geo.earthRadiusKm * .pi / 180
+        func xy(_ p: Coordinate) -> (Double, Double) { ((p.lon - c.lon) * k * r, (p.lat - c.lat) * r) }
+        var best: Double?
+        for line in parts {
+            guard var a = line.first.map(xy) else { continue }
+            best = min(best ?? .infinity, hypot(a.0, a.1))
+            for p in line.dropFirst() {
+                let b = xy(p)
+                let dx = b.0 - a.0, dy = b.1 - a.1, len2 = dx * dx + dy * dy
+                let t = len2 > 0 ? max(0, min(1, -(a.0 * dx + a.1 * dy) / len2)) : 0
+                best = min(best ?? .infinity, hypot(a.0 + t * dx, a.1 + t * dy))
+                a = b
+            }
+        }
+        return best
+    }
+}

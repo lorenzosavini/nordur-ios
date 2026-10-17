@@ -19,6 +19,21 @@ enum AlertCategory: String, Codable, CaseIterable, Identifiable {
         }
     }
 
+    /// Compact name for filter chips.
+    var shortLabel: String {
+        switch self {
+        case .weatherWarning: return String(localized: "Meteo IMO")
+        case .wind: return String(localized: "Raffiche")
+        case .road: return String(localized: "Strade")
+        case .quake: return String(localized: "Terremoti")
+        case .safeTravel: return String(localized: "SafeTravel")
+        case .aurora: return String(localized: "Aurora")
+        case .flight: return String(localized: "Voli")
+        case .ferry: return String(localized: "Traghetto")
+        case .speed: return String(localized: "Velocità")
+        }
+    }
+
     var symbol: String {
         switch self {
         case .weatherWarning: return "exclamationmark.triangle.fill"
@@ -107,6 +122,8 @@ struct AlertInput {
     var roads: RoadNetwork?
     /// umferdin.is: road sections with positions, hazards and roadworks.
     var roadInfo: RoadInfo?
+    /// Section lines, for exact distances (bounding boxes otherwise).
+    var roadGeometry: RoadGeometry?
     var quakes: [Quake] = []
     var news: [NewsItem] = []
     /// Aurora engine output at the current position, and the space-weather state behind it.
@@ -344,7 +361,7 @@ extension AlertEngine {
         for place in input.watched {
             for section in info.sections {
                 guard let risk = section.risk, risk >= .warning || section.isClosed,
-                      let km = section.distanceKm(to: place.coordinate) else { continue }
+                      let km = input.roadGeometry?.distanceKm(from: place.coordinate, to: section.id) ?? section.distanceKm(to: place.coordinate) else { continue }
                 if !place.isCurrent && !section.isClosed { continue }
                 // Closures and dangerous surfaces within the road radius; slippery or snowy ones close by.
                 let radius = section.isClosed || risk == .danger ? settings.roadRadiusKm : min(settings.roadRadiusKm, 15)

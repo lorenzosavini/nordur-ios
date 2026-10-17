@@ -42,6 +42,8 @@ final class AppModel {
     var quakes: Fetched<[Quake]>?
     var roads: Fetched<RoadNetwork>?
     var roadInfo: Fetched<RoadInfo>?
+    /// Lines of the road sections (static, refreshed weekly).
+    var roadGeometry: Fetched<RoadGeometry>?
     /// Aurora reports from Norður users, last 3 hours.
     var sightings: Fetched<SightingsFeed>?
     var kp: Fetched<[KpPoint]>?
@@ -212,6 +214,9 @@ final class AppModel {
         if webcamsOld || force {
             let result = await attempt { try await Webcams.sites() }
             apply(result, .webcams) { self.webcams = $0 }
+        }
+        if roadGeometry == nil || force {
+            if case .success(let geometry) = await attempt({ try await RoadGeometry.load() }) { roadGeometry = geometry }
         }
         if fuel == nil || force {
             let maxAge: TimeInterval = force ? 0 : 30 * 24 * 3600

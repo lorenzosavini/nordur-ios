@@ -216,6 +216,7 @@ final class AlertCenter: NSObject {
             input.warnings = model.warnings?.value ?? []
             input.roads = model.roads?.value
             input.roadInfo = model.roadInfo?.value
+            input.roadGeometry = model.roadGeometry?.value
             input.quakes = model.quakes?.value ?? []
             input.news = model.news?.value ?? []
         } else {
@@ -226,6 +227,7 @@ final class AlertCenter: NSObject {
             input.warnings = (try? await w.get()) ?? []
             input.roads = try? await r.get()
             input.roadInfo = try? await RoadInfoService.load().value
+            input.roadGeometry = try? await RoadGeometry.load().value
             input.quakes = (try? await q.get()) ?? []
             input.news = (try? await n.get()) ?? []
         }

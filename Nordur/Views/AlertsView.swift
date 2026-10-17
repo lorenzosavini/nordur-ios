@@ -65,12 +65,11 @@ struct AlertsView: View {
             Section {
                 Toggle(isOn: $onlyUnread) { Label("Solo da leggere (\(alerts.unreadCount))", systemImage: "envelope.badge") }
                     .font(.app(.subheadline))
-                ScrollView(.horizontal, showsIndicators: false) {
-                    HStack {
-                        chip(nil, String(localized: "Tutte"))
-                        ForEach(AlertCategory.allCases) { category in
-                            chip(category, category.label)
-                        }
+                FlowLayout(spacing: 6, lineSpacing: 6) {
+                    chip(nil, String(localized: "Tutte"), count: alerts.events.count)
+                    ForEach(AlertCategory.allCases) { category in
+                        let count = alerts.events.filter { $0.category == category }.count
+                        if count > 0 || filter == category { chip(category, category.shortLabel, count: count) }
                     }
                 }
                 .listRowInsets(EdgeInsets(top: 6, leading: 12, bottom: 6, trailing: 12))
@@ -135,11 +134,11 @@ struct AlertsView: View {
         opened = alerts.events.first { $0.id == id }
     }
 
-    private func chip(_ category: AlertCategory?, _ title: String) -> some View {
+    private func chip(_ category: AlertCategory?, _ title: String, count: Int) -> some View {
         Button {
             filter = category
         } label: {
-            Label(title, systemImage: category?.symbol ?? "tray.full")
+            Label("\(title) \(count)", systemImage: category?.symbol ?? "tray.full")
                 .font(.app(.caption))
                 .padding(.horizontal, 10)
                 .padding(.vertical, 6)

@@ -94,7 +94,7 @@ struct RoadsView: View {
         if let info = model.roadInfo?.value {
             let critical = info.sections
                 .filter { ($0.risk ?? .ok) >= .caution && matches($0) }
-                .map { RoadItem(section: $0, km: $0.distanceKm(to: here) ?? .infinity) }
+                .map { RoadItem(section: $0, km: model.roadGeometry?.value.distanceKm(from: here, to: $0.id) ?? $0.distanceKm(to: here) ?? .infinity) }
                 .sorted { ($0.section.risk ?? .ok) != ($1.section.risk ?? .ok) ? ($0.section.risk ?? .ok) > ($1.section.risk ?? .ok) : $0.km < $1.km }
             Section("\(critical.count) tratti con problemi") {
                 if critical.isEmpty { Label("Nessun problema segnalato", systemImage: "checkmark.circle").foregroundStyle(.green) }
@@ -124,7 +124,7 @@ struct RoadsView: View {
     @ViewBuilder private var allRoads: some View {
         if let info = model.roadInfo?.value {
             let list = info.sections.filter { matches($0) }
-                .map { RoadItem(section: $0, km: $0.distanceKm(to: here) ?? .infinity) }
+                .map { RoadItem(section: $0, km: model.roadGeometry?.value.distanceKm(from: here, to: $0.id) ?? $0.distanceKm(to: here) ?? .infinity) }
                 .sorted { $0.km < $1.km }
             Section("\(list.count) tratti · ordinati per distanza da \(model.activePlace.name)") {
                 ForEach(Array(list.prefix(query.isEmpty ? 150 : 400))) { item in

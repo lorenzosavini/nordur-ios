@@ -3874,6 +3874,17 @@
         }
       }
     },
+    "Ghiaccio a tratti" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Icy patches"
+          }
+        }
+      }
+    },
     "Giallo: possibili disagi.\nArancione: impatti significativi, valuta di rimandare.\nRosso: evento estremo, non metterti in viaggio." : {
       "localizations" : {
         "en" : {
@@ -5668,6 +5679,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Weather"
+          }
+        }
+      }
+    },
+    "Meteo IMO" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "IMO weather"
           }
         }
       }
@@ -8828,6 +8850,17 @@
         }
       }
     },
+    "Scivolosa / neve" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Slippery / snow"
+          }
+        }
+      }
+    },
     "Sconosciuto" : {
       "localizations" : {
         "en" : {
@@ -9453,6 +9486,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Roads: closures, roadworks and hazards"
+          }
+        }
+      }
+    },
+    "Strade: condizioni Vegagerðin. Tocca una strada per i dettagli." : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Roads: Vegagerðin conditions. Tap a road for details."
           }
         }
       }
@@ -10353,6 +10397,17 @@
         }
       }
     },
+    "Velocità" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Speed"
+          }
+        }
+      }
+    },
     "Velocità %lld km/h – limite %lld" : {
       "localizations" : {
         "en" : {
@@ -10659,6 +10714,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "NOAA polar view, last 3 hours"
+          }
+        }
+      }
+    },
+    "Voli" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Flights"
           }
         }
       }

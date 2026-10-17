@@ -24,7 +24,7 @@ struct RoadSectionView: View {
                         }
                     }
                     Text(section.name).font(.display(26, .bold)).foregroundStyle(Theme.text)
-                    if let km = section.distanceKm(to: model.activePlace.coordinate) {
+                    if let km = model.roadGeometry?.value.distanceKm(from: model.activePlace.coordinate, to: section.id) ?? section.distanceKm(to: model.activePlace.coordinate) {
                         Text("\(Int(km.rounded())) km da \(model.activePlace.name)").font(.mono(10)).foregroundStyle(Theme.dim)
                     }
                 }
@@ -184,23 +184,38 @@ struct RoadSectionView: View {
         }
     }
 
+    private var line: [[Coordinate]] { model.roadGeometry?.value.lines[section.id] ?? [] }
+
     private func map(_ anchor: Coordinate) -> some View {
-        let box: [CLLocationCoordinate2D]? = section.bbox.flatMap { b in
+        let points = line.flatMap { $0 }
+        let box: [CLLocationCoordinate2D]? = points.isEmpty ? section.bbox.flatMap { b in
             b.count == 4 ? [CLLocationCoordinate2D(latitude: b[1], longitude: b[0]), CLLocationCoordinate2D(latitude: b[1], longitude: b[2]),
                             CLLocationCoordinate2D(latitude: b[3], longitude: b[2]), CLLocationCoordinate2D(latitude: b[3], longitude: b[0])] : nil
-        }
-        let color = (section.risk ?? .ok) > .ok ? (section.risk ?? .ok).color : Color.blue
-        return Map(initialPosition: .region(MKCoordinateRegion(center: anchor.clCoordinate,
-                                                               span: MKCoordinateSpan(latitudeDelta: max(0.08, spanLat * 1.6), longitudeDelta: max(0.16, spanLon * 1.6))))) {
+        } : nil
+        let lats = points.map(\.lat), lons = points.map(\.lon)
+        let center = points.isEmpty ? anchor.clCoordinate
+            : CLLocationCoordinate2D(latitude: (lats.min()! + lats.max()!) / 2, longitude: (lons.min()! + lons.max()!) / 2)
+        let spanLat = points.isEmpty ? self.spanLat : lats.max()! - lats.min()!
+        let spanLon = points.isEmpty ? self.spanLon : lons.max()! - lons.min()!
+        let color = section.isClosed ? Color(RoadLines.closedColor) : Color(RoadLines.style(for: section.risk))
+        return Map(initialPosition: .region(MKCoordinateRegion(center: center,
+                                                               span: MKCoordinateSpan(latitudeDelta: max(0.08, spanLat * 1.4), longitudeDelta: max(0.16, spanLon * 1.4))))) {
+            ForEach(Array(line.enumerated()), id: \.offset) { part in
+                MapPolyline(coordinates: part.element.map(\.clCoordinate))
+                    .stroke(color, style: StrokeStyle(lineWidth: 5, lineCap: .round, lineJoin: .round, dash: section.isClosed ? [8, 6] : []))
+            }
             if let box {
                 MapPolygon(coordinates: box).foregroundStyle(color.opacity(0.12)).stroke(color, lineWidth: 2)
             }
-            Marker(section.name, systemImage: "road.lanes", coordinate: anchor.clCoordinate).tint(color)
+            if points.isEmpty {
+                Marker(section.name, systemImage: "road.lanes", coordinate: anchor.clCoordinate).tint(color)
+            }
             ForEach(section.hazards) { hazard in
                 if let at = hazard.at {
                     Marker(RoadCode.hazard(hazard.code).label, systemImage: RoadCode.hazard(hazard.code).symbol, coordinate: at.coordinate.clCoordinate).tint(.orange)
                 }
             }
+            UserAnnotation()
         }
     }
 
