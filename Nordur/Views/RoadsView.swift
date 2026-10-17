@@ -85,7 +85,7 @@ struct RoadsView: View {
                     .padding(.vertical, 2)
                 }
             } header: {
-                Text("Notizie in tempo reale").pinnedHeader()
+                Text("Notizie in tempo reale").pinnedHeader().pinnedHeader()
             } footer: {
                 Text("Testi originali di Vegagerðin (in inglese), aggiornati ogni 5 minuti.")
             }

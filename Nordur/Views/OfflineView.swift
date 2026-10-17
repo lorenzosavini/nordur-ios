@@ -25,7 +25,7 @@ struct OfflineView: View {
                     Text(line.loc).font(.app(.caption2)).foregroundStyle(.secondary)
                 }
             } header: {
-                Text("Dati dell'app").pinnedHeader()
+                Text("Dati dell'app").pinnedHeader().pinnedHeader()
             }
 
             Section {
@@ -35,7 +35,7 @@ struct OfflineView: View {
                     Link(destination: url) { Label("Apri Apple Mappe", systemImage: "map") }
                 }
             } header: {
-                Text("Mappa di base").pinnedHeader()
+                Text("Mappa di base").pinnedHeader().pinnedHeader()
             }
 
             Section {

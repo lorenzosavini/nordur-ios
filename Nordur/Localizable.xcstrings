@@ -123,6 +123,17 @@
         }
       }
     },
+    "%@ RAFFICHE" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ GUSTS"
+          }
+        }
+      }
+    },
     "%@ a %lld km: %@" : {
       "localizations" : {
         "en" : {
@@ -179,6 +190,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "%1$@ · ARRIVAL %2$@ ±%3$lld H"
+          }
+        }
+      }
+    },
+    "%@ · PERICOLO" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ · DANGER"
           }
         }
       }
@@ -893,6 +915,17 @@
         }
       }
     },
+    "Accedi o crea un account" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sign in or create an account"
+          }
+        }
+      }
+    },
     "Accedi per inviare un avvistamento" : {
       "localizations" : {
         "en" : {
@@ -1264,6 +1297,17 @@
         }
       }
     },
+    "App" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "App"
+          }
+        }
+      }
+    },
     "Apple Mappe: foto profilo › Mappe offline › Scarica nuova mappa › Islanda." : {
       "localizations" : {
         "en" : {
@@ -1370,6 +1414,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "CME material forecast at Earth: %@ (orange bars). The intensity will depend on Bz on arrival, measurable only ~1 hour before at L1."
+          }
+        }
+      }
+    },
+    "Aspetto" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Appearance"
           }
         }
       }
@@ -3611,6 +3666,17 @@
         }
       }
     },
+    "Esempio: 15 m/s = %lld km/h = %lld nodi. Le soglie degli avvisi restano le stesse, cambia solo come vengono mostrate." : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Example: 15 m/s = %lld km/h = %lld knots. Alert thresholds stay the same; only the display changes."
+          }
+        }
+      }
+    },
     "Esiste già un account con questa email" : {
       "localizations" : {
         "en" : {
@@ -4756,6 +4822,17 @@
         }
       }
     },
+    "Info, SOS, fonti e crediti" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Info, SOS, sources and credits"
+          }
+        }
+      }
+    },
     "Informativa sulla privacy" : {
       "localizations" : {
         "en" : {
@@ -4773,6 +4850,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Information"
+          }
+        }
+      }
+    },
+    "Informazioni" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "About"
           }
         }
       }
@@ -5543,6 +5631,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "SEA · WAVES"
+          }
+        }
+      }
+    },
+    "MAX %@" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "MAX %@"
           }
         }
       }
@@ -6346,6 +6445,17 @@
         }
       }
     },
+    "Nessun avviso SafeTravel in questo momento." : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No SafeTravel notices right now."
+          }
+        }
+      }
+    },
     "Nessun percorso registrato." : {
       "localizations" : {
         "en" : {
@@ -6535,6 +6645,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "No road station ahead of you within the checked range."
+          }
+        }
+      }
+    },
+    "Nessuna webcam entro 60 km: vedi tutte le webcam stradali" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No webcam within 60 km: see all road webcams"
           }
         }
       }
@@ -8312,6 +8433,17 @@
         }
       }
     },
+    "Quando i due modelli differiscono di %@ o più il valore MET è evidenziato: in quel caso considera lo scenario peggiore." : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "When the two models differ by %@ or more the MET value is highlighted: in that case plan for the worse scenario."
+          }
+        }
+      }
+    },
     "Quando i due modelli differiscono di 4 m/s o più il valore MET è evidenziato: in quel caso considera lo scenario peggiore." : {
       "localizations" : {
         "en" : {
@@ -8480,6 +8612,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Gusts %1$@ at %2$@ in %3$lld km (%4$lld min)"
+          }
+        }
+      }
+    },
+    "Raffiche da %@" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gusts from %@"
           }
         }
       }
@@ -9092,6 +9235,17 @@
         }
       }
     },
+    "Schermo" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Display"
+          }
+        }
+      }
+    },
     "Scivolosa / neve" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -9343,6 +9497,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Mountain 4x4 vehicles only"
+          }
+        }
+      }
+    },
+    "Sopra %@ le portiere si aprono a fatica e i mezzi alti rischiano di ribaltarsi: tieni la portiera con due mani." : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Above %@ doors are hard to open and tall vehicles risk tipping over: hold the door with both hands."
           }
         }
       }
@@ -9944,6 +10109,17 @@
         }
       }
     },
+    "Temperatura, pioggia, distanze" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Temperature, rain, distances"
+          }
+        }
+      }
+    },
     "Temperatura, vento, raffiche e allerte IMO per un luogo." : {
       "localizations" : {
         "en" : {
@@ -10050,6 +10226,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Finish recording?"
+          }
+        }
+      }
+    },
+    "Terra e mare" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Land and sea"
           }
         }
       }
@@ -10455,6 +10642,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "One report, not yet confirmed"
+          }
+        }
+      }
+    },
+    "Unità di misura" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Units"
           }
         }
       }
@@ -11479,6 +11677,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "moderate"
+          }
+        }
+      }
+    },
+    "nodi" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "knots"
           }
         }
       }

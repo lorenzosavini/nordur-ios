@@ -3,9 +3,22 @@ import SwiftUI
 struct InfoView: View {
     @Environment(AppModel.self) private var model
     @Environment(\.dismiss) private var dismiss
+    /// Pushed inside Settings (no own navigation stack or close button).
+    var embedded = false
 
     var body: some View {
-        NavigationStack {
+        if embedded {
+            content
+        } else {
+            NavigationStack {
+                content.toolbar {
+                    ToolbarItem(placement: .cancellationAction) { Button("Chiudi") { dismiss() } }
+                }
+            }
+        }
+    }
+
+    private var content: some View {
             List {
                 Section {
                     LinkRow(title: String(localized: "Emergenza: 112"), subtitle: String(localized: "Polizia, ambulanza, vigili del fuoco, soccorso alpino"), url: "tel:112", systemImage: "phone.fill")
@@ -14,7 +27,7 @@ struct InfoView: View {
                     LinkRow(title: String(localized: "Registra il piano di viaggio"), subtitle: String(localized: "SafeTravel – i soccorsi sapranno dove cercarti"), url: "https://safetravel.is/travel-plan", systemImage: "doc.text.fill")
                     LinkRow(title: String(localized: "Guardia medica 1700"), subtitle: String(localized: "Consulenza sanitaria non urgente"), url: "tel:1700", systemImage: "cross.case.fill")
                 } header: {
-                    Text("Sicurezza").pinnedHeader()
+                    Text("Sicurezza").pinnedHeader().pinnedHeader()
                 }
 
                 Section {
@@ -99,9 +112,5 @@ struct InfoView: View {
             }
             .themedList()
             .navigationTitle("Info & SOS")
-            .toolbar {
-                ToolbarItem(placement: .cancellationAction) { Button("Chiudi") { dismiss() } }
-            }
-        }
     }
 }

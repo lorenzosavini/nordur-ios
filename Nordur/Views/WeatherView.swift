@@ -131,30 +131,30 @@ struct WeatherView: View {
             .chartYAxis { yAxis("") }
             .frame(height: 64)
 
-            chartHeader(String(localized: "VENTO · RAFFICHE"), String(localized: "MAX \(Fmt.number(peak)) M/S"), color: Risk.wind(mean: nil, gust: peak) == .ok ? Theme.dim : Risk.wind(mean: nil, gust: peak).color)
+            chartHeader(String(localized: "VENTO · RAFFICHE"), String(localized: "MAX \(Fmt.ms(peak).uppercased())"), color: Risk.wind(mean: nil, gust: peak) == .ok ? Theme.dim : Risk.wind(mean: nil, gust: peak).color)
             Chart {
                 ForEach(hours) { hour in
                     if let gust = hour.gust {
-                        LineMark(x: .value(String(localized: "Ora"), hour.date, unit: .hour), y: .value("m/s", gust), series: .value("s", "raffica"))
+                        LineMark(x: .value(String(localized: "Ora"), hour.date, unit: .hour), y: .value("wind", gust * WindUnit.current.factor), series: .value("s", "raffica"))
                             .foregroundStyle(Theme.accent)
                             .lineStyle(StrokeStyle(lineWidth: 1.2, dash: [3, 2]))
                             .interpolationMethod(.stepCenter)
                     }
                     if let wind = hour.wind {
-                        LineMark(x: .value(String(localized: "Ora"), hour.date, unit: .hour), y: .value("m/s", wind), series: .value("s", "medio"))
+                        LineMark(x: .value(String(localized: "Ora"), hour.date, unit: .hour), y: .value("wind", wind * WindUnit.current.factor), series: .value("s", "medio"))
                             .foregroundStyle(Theme.text)
                             .lineStyle(StrokeStyle(lineWidth: 1.6))
                             .interpolationMethod(.monotone)
                     }
                 }
-                RuleMark(y: .value("25", 25))
+                RuleMark(y: .value("25", 25 * WindUnit.current.factor))
                     .foregroundStyle(Theme.danger)
                     .lineStyle(StrokeStyle(lineWidth: 1))
                     .annotation(position: .top, alignment: .leading) {
-                        Text("25 M/S · PERICOLO").font(.mono(8.5, .semibold)).foregroundStyle(Theme.danger)
+                        Text("\(Fmt.ms(25).uppercased()) · PERICOLO").font(.mono(8.5, .semibold)).foregroundStyle(Theme.danger)
                     }
             }
-            .chartYScale(domain: 0...max(30, peak + 3))
+            .chartYScale(domain: 0...(max(30, peak + 3) * WindUnit.current.factor))
             .chartXAxis { dayAxis() }
             .chartYAxis { yAxis("") }
             .frame(height: 140)
@@ -218,8 +218,8 @@ struct WeatherView: View {
                         head(String(localized: "ORA"), 40, .leading)
                         head(String(localized: "IMO °C"), 52)
                         head(String(localized: "MET °C"), 52)
-                        head(String(localized: "IMO M/S"), 58)
-                        head(String(localized: "MET M/S"), 58)
+                        head("IMO \(Fmt.windUnit.uppercased())", 58)
+                        head("MET \(Fmt.windUnit.uppercased())", 58)
                         head(String(localized: "CIELO (IMO)"), nil, .leading).padding(.leading, 10)
                     }
                     .padding(.bottom, 6)
@@ -232,8 +232,8 @@ struct WeatherView: View {
                                 .frame(width: 40, alignment: .leading)
                             num(Fmt.number(hour.temperature), 52, Theme.text)
                             num(Fmt.number(met?.temperature), 52, Theme.dim)
-                            num(Fmt.number(hour.wind), 58, (hour.wind ?? 0) >= 15 ? Theme.warning : Theme.text)
-                            num(Fmt.number(met?.wind), 58, diff >= 4 ? Theme.accent : Theme.dim)
+                            num(Fmt.wind(hour.wind), 58, (hour.wind ?? 0) >= 15 ? Theme.warning : Theme.text)
+                            num(Fmt.wind(met?.wind), 58, diff >= 4 ? Theme.accent : Theme.dim)
                             Text("\(hour.direction) · \(hour.text)").font(.app(.caption)).foregroundStyle(Theme.dim)
                                 .lineLimit(1).minimumScaleFactor(0.8)
                                 .frame(maxWidth: .infinity, alignment: .leading).padding(.leading, 10)
@@ -242,7 +242,7 @@ struct WeatherView: View {
                         Rule()
                     }
                 }
-                Text("Quando i due modelli differiscono di 4 m/s o più il valore MET è evidenziato: in quel caso considera lo scenario peggiore.")
+                Text("Quando i due modelli differiscono di \(Fmt.ms(4)) o più il valore MET è evidenziato: in quel caso considera lo scenario peggiore.")
                     .font(.app(.caption)).foregroundStyle(Theme.dim)
                 FreshnessLabel(date: fetched.date, isStale: fetched.isStale, source: "vedur.is")
             }

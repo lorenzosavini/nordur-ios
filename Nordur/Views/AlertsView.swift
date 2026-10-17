@@ -100,7 +100,7 @@ struct AlertsView: View {
                         }
                     }
                 } header: {
-                    Text("\(dayTitle(group.day)) · \(group.events.count)").pinnedHeader()
+                    Text("\(dayTitle(group.day)) · \(group.events.count)").pinnedHeader().pinnedHeader()
                 }
             }
         }
@@ -198,14 +198,14 @@ struct AlertSettingsView: View {
                     }
                 }
             } header: {
-                Text("Cosa monitorare").pinnedHeader()
+                Text("Cosa monitorare").pinnedHeader().pinnedHeader()
             } footer: {
                 Text("Le allerte IMO e i terremoti vengono controllati per la tua posizione e per le tappe del viaggio dei prossimi 3 giorni.")
             }
 
             Section {
                 Toggle("Includi allerte gialle", isOn: $draft.includeYellow)
-                Stepper("Raffiche da \(Int(draft.gustThreshold)) m/s", value: $draft.gustThreshold, in: 12...40, step: 1)
+                Stepper("Raffiche da \(Fmt.ms(draft.gustThreshold))", value: $draft.gustThreshold, in: 12...40, step: 1)
                 Stepper("…entro \(Int(draft.gustRadiusKm)) km", value: $draft.gustRadiusKm, in: 5...100, step: 5)
                 Stepper("Strade chiuse entro \(Int(draft.roadRadiusKm)) km", value: $draft.roadRadiusKm, in: 10...150, step: 10)
                 Stepper("Terremoti da M\(Fmt.number(draft.quakeMagnitude, decimals: 1))", value: $draft.quakeMagnitude, in: 1...6, step: 0.5)
@@ -227,7 +227,7 @@ struct AlertSettingsView: View {
                     }
                 }
             } header: {
-                Text("In viaggio").pinnedHeader()
+                Text("In viaggio").pinnedHeader().pinnedHeader()
             } footer: {
                 Text("Ogni volta che ti sposti di circa 2 km l'app controlla allerte, strade, vento e terremoti intorno a te, anche se non stai registrando un percorso. Serve l'accesso alla posizione «Sempre».")
             }

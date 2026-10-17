@@ -77,12 +77,12 @@ struct NordurTabBar: View {
     var recording: Bool
     @Namespace private var namespace
 
-    private let items: [(tab: RootView.Tab, index: String, title: String)] = [
-        (.today, "01", String(localized: "Oggi")),
-        (.weather, "02", String(localized: "Meteo")),
-        (.map, "03", String(localized: "Mappa")),
-        (.drive, "04", String(localized: "Guida")),
-        (.trip, "05", String(localized: "Viaggio")),
+    private let items: [(tab: RootView.Tab, symbol: String, title: String)] = [
+        (.today, "sun.horizon.fill", String(localized: "Oggi")),
+        (.weather, "cloud.sun.rain.fill", String(localized: "Meteo")),
+        (.map, "map.fill", String(localized: "Mappa")),
+        (.drive, "car.fill", String(localized: "Guida")),
+        (.trip, "suitcase.rolling.fill", String(localized: "Viaggio")),
     ]
 
     var body: some View {
@@ -102,21 +102,27 @@ struct NordurTabBar: View {
                                         .matchedGeometryEffect(id: "tab", in: namespace)
                                 }
                             }
-                            VStack(spacing: 3) {
-                                HStack(spacing: 4) {
-                                    Text(item.index).font(.mono(9, .medium))
-                                        .foregroundStyle(selected ? Theme.accent : Theme.faint)
-                                    if (item.tab == .today && badge > 0) || (item.tab == .drive && recording) {
-                                        Rectangle().fill(Theme.accent).frame(width: 5, height: 5)
+                            VStack(spacing: 4) {
+                                Image(systemName: item.symbol)
+                                    .font(.system(size: 19, weight: selected ? .semibold : .regular))
+                                    .symbolRenderingMode(.monochrome)
+                                    .foregroundStyle(selected ? Theme.accent : Theme.dim)
+                                    .frame(height: 22)
+                                    .overlay(alignment: .topTrailing) {
+                                        if (item.tab == .today && badge > 0) || (item.tab == .drive && recording) {
+                                            Circle().fill(Theme.danger).frame(width: 8, height: 8)
+                                                .overlay(Circle().strokeBorder(Theme.bg, lineWidth: 1.5))
+                                                .offset(x: 6, y: -3)
+                                        }
                                     }
-                                }
                                 Text(item.title.loc.uppercased())
-                                    .font(.mono(11, selected ? .semibold : .medium))
-                                    .tracking(0.6)
+                                    .font(.mono(10, selected ? .semibold : .medium))
+                                    .tracking(0.5)
                                     .foregroundStyle(selected ? Theme.text : Theme.dim)
+                                    .lineLimit(1).minimumScaleFactor(0.8)
                             }
-                            .padding(.top, 8)
-                            .padding(.bottom, 6)
+                            .padding(.top, 7)
+                            .padding(.bottom, 5)
                         }
                         .frame(maxWidth: .infinity)
                         .contentShape(Rectangle())

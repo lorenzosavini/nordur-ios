@@ -51,7 +51,7 @@ struct TransportView: View {
                 LinkRow(title: String(localized: "Baldur (Sæferðir)"), subtitle: String(localized: "Stykkishólmur – Flatey – Brjánslækur"), url: "https://www.saeferdir.is/en/", systemImage: "ferry.fill")
                 LinkRow(title: String(localized: "Smyril Line"), subtitle: String(localized: "Seyðisfjörður – Fær Øer – Danimarca"), url: "https://www.smyrilline.com/", systemImage: "ferry")
             } header: {
-                Text("Traghetti").pinnedHeader()
+                Text("Traghetti").pinnedHeader().pinnedHeader()
             }
 
             Section {
@@ -71,7 +71,7 @@ struct TransportView: View {
                     }
                 }
             } header: {
-                Text("Aeroporto di Keflavík (oggi)").pinnedHeader()
+                Text("Aeroporto di Keflavík (oggi)").pinnedHeader().pinnedHeader()
             } footer: {
                 Text("Con la stella ricevi una notifica a ogni cambio di stato, orario o gate.")
             }

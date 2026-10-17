@@ -51,14 +51,8 @@ struct WebcamThumb: View {
         ZStack(alignment: .bottomLeading) {
             Theme.raised
             if let image = site.images.first {
-                AsyncImage(url: Webcams.fresh(image.url)) { phase in
-                    switch phase {
-                    case .success(let img): img.resizable().scaledToFill()
-                    case .failure: Image(systemName: "video.slash").foregroundStyle(Theme.faint)
-                    default: ProgressView().tint(Theme.dim)
-                    }
-                }
-                .frame(width: width, height: width * 0.62)
+                RemoteImage(url: Webcams.fresh(image.url))
+                    .frame(width: width, height: width * 0.62)
                 .clipped()
             }
             if width >= 140 {
@@ -86,14 +80,10 @@ struct WebcamSiteView: View {
                 Text(site.road).font(.app(.subheadline)).foregroundStyle(.secondary)
                 ForEach(site.images) { image in
                     VStack(alignment: .leading, spacing: 4) {
-                        AsyncImage(url: Webcams.fresh(image.url).appending(queryItems: [URLQueryItem(name: "r", value: String(Int(reload.timeIntervalSince1970)))])) { phase in
-                            switch phase {
-                            case .success(let img): img.resizable().scaledToFit()
-                            case .failure: Label("Immagine non disponibile", systemImage: "video.slash").foregroundStyle(.secondary)
-                            default: ProgressView().frame(maxWidth: .infinity, minHeight: 180)
-                            }
-                        }
-                        .clipShape(Rectangle())
+                        RemoteImage(url: Webcams.fresh(image.url).appending(queryItems: [URLQueryItem(name: "r", value: String(Int(reload.timeIntervalSince1970)))]),
+                                    contentMode: .fit)
+                            .frame(maxWidth: .infinity, minHeight: 180)
+                            .clipShape(Rectangle())
                         Text(image.caption).font(.app(.caption)).foregroundStyle(.secondary)
                     }
                 }

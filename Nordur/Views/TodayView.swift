@@ -6,6 +6,7 @@ struct TodayView: View {
     @Environment(DriveRecorder.self) private var recorder
     @State private var showInfo = false
     @State private var showAccount = false
+    @AppStorage("today.detail") private var detailRaw = Detail.wind.rawValue
     @Environment(Account.self) private var account
 
     private var zone: TimeZone { model.forecast?.value.timeZone ?? .iceland }
@@ -20,16 +21,11 @@ struct TodayView: View {
                         statusBanner
                         now
                     }
+                    warningsSection
                     exploreSection
                     nextHours
-                    windSection
-                    warningsSection
                     outlookSection
-                    roadsSection
-                    webcamsSection
-                    moreSection
-                    newsSection
-                    daylight
+                    detailsSection
                 }
                 .padding(.horizontal, 18)
                 .padding(.bottom, 28)
@@ -42,6 +38,68 @@ struct TodayView: View {
             }
             .sheet(isPresented: $showInfo) { InfoView() }
             .sheet(isPresented: $showAccount) { AccountView() }
+        }
+    }
+
+    // MARK: Details (one topic at a time)
+
+    enum Detail: String, CaseIterable, Identifiable {
+        case wind, roads, webcams, more, news, light
+        var id: String { rawValue }
+        var title: String {
+            switch self {
+            case .wind: return String(localized: "Vento")
+            case .roads: return String(localized: "Strade")
+            case .webcams: return String(localized: "Webcam")
+            case .more: return String(localized: "Terra e mare")
+            case .news: return String(localized: "SafeTravel")
+            case .light: return String(localized: "Luce")
+            }
+        }
+        var symbol: String {
+            switch self {
+            case .wind: return "wind"
+            case .roads: return "road.lanes"
+            case .webcams: return "video.fill"
+            case .more: return "waveform.path.ecg"
+            case .news: return "megaphone.fill"
+            case .light: return "sun.horizon.fill"
+            }
+        }
+    }
+
+    private var detailsSection: some View {
+        let current = Detail(rawValue: detailRaw) ?? .wind
+        return VStack(alignment: .leading, spacing: 14) {
+            SectionLabel(index: "04", title: String(localized: "Dettagli"))
+            FlowLayout(spacing: 6, lineSpacing: 6) {
+                ForEach(Detail.allCases) { item in
+                    Button {
+                        withAnimation(.snappy(duration: 0.2)) { detailRaw = item.rawValue }
+                    } label: {
+                        Label(item.title.uppercased(), systemImage: item.symbol)
+                            .font(.mono(10.5, .semibold))
+                            .padding(.horizontal, 10).padding(.vertical, 8)
+                            .foregroundStyle(current == item ? Theme.onAccent : Theme.text)
+                            .background(current == item ? Theme.accent : Color.clear)
+                            .overlay(Rectangle().strokeBorder(current == item ? Color.clear : Theme.hairline))
+                            .contentShape(Rectangle())
+                    }
+                    .buttonStyle(.plain)
+                    .accessibilityAddTraits(current == item ? .isSelected : [])
+                }
+            }
+            Group {
+                switch current {
+                case .wind: windSection
+                case .roads: roadsSection
+                case .webcams: webcamsSection
+                case .more: moreSection
+                case .news: newsSection
+                case .light: daylight
+                }
+            }
+            .transition(.opacity)
         }
     }
 
@@ -114,9 +172,8 @@ struct TodayView: View {
                     .overlay(Rectangle().strokeBorder(Theme.danger, lineWidth: 1))
             }
             .buttonStyle(.plain)
-            AppearanceButton()
-            HeaderButton(systemImage: account.isSignedIn ? "person.fill" : "person", dot: !account.isSignedIn) { showAccount = true }
-                .accessibilityLabel("Account e backup")
+            HeaderButton(systemImage: "gearshape") { model.showSettings = true }
+                .accessibilityLabel("Impostazioni")
             HeaderButton(systemImage: "bell", tint: Theme.text, dot: alerts.unreadCount > 0) {
                 alerts.openInbox = true
             }
@@ -180,9 +237,9 @@ struct TodayView: View {
                     Spacer(minLength: 0)
                 }
                 ReadingGrid(items: [
-                    Reading(label: String(localized: "Vento"), value: Fmt.number(current.wind_speed_10m), unit: "m/s",
+                    Reading(label: String(localized: "Vento"), value: Fmt.wind(current.wind_speed_10m), unit: Fmt.windUnit,
                             note: current.wind_direction_10m == nil ? nil : String(localized: "da \(Fmt.compass(current.wind_direction_10m))"), size: 28),
-                    Reading(label: String(localized: "Raffiche"), value: Fmt.number(current.wind_gusts_10m), unit: "m/s",
+                    Reading(label: String(localized: "Raffiche"), value: Fmt.wind(current.wind_gusts_10m), unit: Fmt.windUnit,
                             tint: windTint(current.wind_gusts_10m), size: 28),
                     Reading(label: String(localized: "Precip."), value: Fmt.number(current.precipitation, decimals: 1), unit: "mm/h", size: 28),
                     Reading(label: String(localized: "Nuvole"), value: Fmt.number(current.cloud_cover), unit: "%", size: 28),
@@ -221,7 +278,7 @@ struct TodayView: View {
         if let forecast = model.forecast?.value {
             let hours = forecast.upcomingHours(18)
             VStack(alignment: .leading, spacing: 12) {
-                SectionLabel(index: "01", title: String(localized: "Prossime ore"), trailing: String(localized: "ORA LOCALE"))
+                SectionLabel(index: "02", title: String(localized: "Prossime ore"), trailing: String(localized: "ORA LOCALE"))
                 HourTable(hours: hours, zone: forecast.timeZone)
             }
         }
@@ -232,22 +289,22 @@ struct TodayView: View {
     @ViewBuilder private var windSection: some View {
         if let current = model.forecast?.value.current {
             VStack(alignment: .leading, spacing: 14) {
-                SectionLabel(index: "02", title: String(localized: "Vento"), trailing: Risk.wind(mean: current.wind_speed_10m, gust: current.wind_gusts_10m).label.uppercased(),
+                SectionLabel(title: String(localized: "Vento"), trailing: Risk.wind(mean: current.wind_speed_10m, gust: current.wind_gusts_10m).label.uppercased(),
                              trailingColor: Risk.wind(mean: current.wind_speed_10m, gust: current.wind_gusts_10m).color)
                 HStack(alignment: .center, spacing: 20) {
                     WindDial(direction: current.wind_direction_10m, speed: current.wind_speed_10m, gust: current.wind_gusts_10m, size: 118)
                     VStack(alignment: .leading, spacing: 12) {
                         HStack(alignment: .firstTextBaseline, spacing: 6) {
-                            Text(Fmt.number(current.wind_gusts_10m)).font(.metric(48, .bold)).foregroundStyle(windTint(current.wind_gusts_10m))
+                            Text(Fmt.wind(current.wind_gusts_10m)).font(.metric(48, .bold)).foregroundStyle(windTint(current.wind_gusts_10m))
                             VStack(alignment: .leading, spacing: 0) {
-                                Text("M/S RAFFICHE").font(.mono(9.5)).foregroundStyle(Theme.dim)
+                                Text("\(Fmt.windUnit.uppercased()) RAFFICHE").font(.mono(9.5)).foregroundStyle(Theme.dim)
                                 Text("DA \(Fmt.compass(current.wind_direction_10m))").font(.mono(9.5)).foregroundStyle(Theme.faint)
                             }
                         }
                         GustScale(mean: current.wind_speed_10m, gust: current.wind_gusts_10m)
                     }
                 }
-                Text("Sopra 25 m/s le portiere si aprono a fatica e i mezzi alti rischiano di ribaltarsi: tieni la portiera con due mani.")
+                Text("Sopra \(Fmt.ms(25)) le portiere si aprono a fatica e i mezzi alti rischiano di ribaltarsi: tieni la portiera con due mani.")
                     .font(.app(.caption)).foregroundStyle(Theme.dim)
             }
         }
@@ -258,7 +315,7 @@ struct TodayView: View {
     @ViewBuilder private var warningsSection: some View {
         let here = model.warningsHere
         VStack(alignment: .leading, spacing: 12) {
-            SectionLabel(index: "03", title: String(localized: "Allerte"), trailing: String(localized: "\(model.warnings?.value.count ?? 0) IN ISLANDA"))
+            SectionLabel(index: "01", title: String(localized: "Allerte"), trailing: String(localized: "\(model.warnings?.value.count ?? 0) IN ISLANDA"))
 
             if recorder.isRecording, let session = recorder.session {
                 HStack(spacing: 10) {
@@ -334,7 +391,7 @@ struct TodayView: View {
 
     private var outlookSection: some View {
         VStack(alignment: .leading, spacing: 12) {
-            SectionLabel(index: "04", title: String(localized: "Guida e aurora"))
+            SectionLabel(index: "03", title: String(localized: "Guida e aurora"))
             HStack(alignment: .top, spacing: 0) {
                 drivingColumn.padding(.trailing, 14)
                 Theme.hairline.frame(width: 1)
@@ -406,7 +463,7 @@ struct TodayView: View {
     private var roadsSection: some View {
         NavigationLink { RoadsView() } label: {
             VStack(alignment: .leading, spacing: 12) {
-                SectionLabel(index: "05", title: String(localized: "Strade"), trailing: String(localized: "TUTTE →"), trailingColor: Theme.accent)
+                SectionLabel(title: String(localized: "Strade"), trailing: String(localized: "TUTTE →"), trailingColor: Theme.accent)
                 if let network = model.roads?.value {
                     let risks = network.segments.map(\.risk)
                     let order: [Risk?] = [.ok, .caution, .warning, .danger, nil]
@@ -435,7 +492,7 @@ struct TodayView: View {
                                     Text("\(Int(item.distance)) KM").font(.mono(9.5)).foregroundStyle(Theme.faint)
                                 }
                                 .frame(maxWidth: .infinity, alignment: .leading)
-                                Text("\(Fmt.number(item.station.Vindhradi))/\(Fmt.number(item.station.Vindhvida))")
+                                Text("\(Fmt.wind(item.station.Vindhradi))/\(Fmt.wind(item.station.Vindhvida))")
                                     .font(.metric(18, .semibold))
                                     .foregroundStyle(item.station.windRisk == .ok ? Theme.text : item.station.windRisk.color)
                                     .frame(width: 92, alignment: .trailing)
@@ -474,7 +531,7 @@ struct TodayView: View {
         if !near.isEmpty {
             VStack(alignment: .leading, spacing: 12) {
                 NavigationLink { WebcamsView() } label: {
-                    SectionLabel(index: "06", title: String(localized: "Webcam vicine"), trailing: String(localized: "TUTTE →"), trailingColor: Theme.accent)
+                    SectionLabel(title: String(localized: "Webcam vicine"), trailing: String(localized: "TUTTE →"), trailingColor: Theme.accent)
                 }
                 .buttonStyle(.plain)
                 ScrollView(.horizontal, showsIndicators: false) {
@@ -486,6 +543,12 @@ struct TodayView: View {
                     }
                 }
             }
+        } else {
+            NavigationLink { WebcamsView() } label: {
+                Label("Nessuna webcam entro 60 km: vedi tutte le webcam stradali", systemImage: "video")
+                    .font(.app(.subheadline)).foregroundStyle(Theme.text)
+            }
+            .buttonStyle(.plain)
         }
     }
 
@@ -493,7 +556,7 @@ struct TodayView: View {
 
     private var moreSection: some View {
         VStack(alignment: .leading, spacing: 12) {
-            SectionLabel(index: "07", title: String(localized: "Terra, mare, servizi"))
+            SectionLabel(title: String(localized: "Terra, mare, servizi"))
             VStack(spacing: 0) {
                 HStack(spacing: 0) {
                     quakesCell
@@ -611,7 +674,7 @@ struct TodayView: View {
     @ViewBuilder private var newsSection: some View {
         if let news = model.news?.value, !news.isEmpty {
             VStack(alignment: .leading, spacing: 4) {
-                SectionLabel(index: "08", title: String(localized: "SafeTravel")).padding(.bottom, 8)
+                SectionLabel(title: String(localized: "SafeTravel")).padding(.bottom, 8)
                 ForEach(news.prefix(4)) { item in
                     if let link = item.link {
                         Link(destination: link) { newsRow(item) }
@@ -620,6 +683,8 @@ struct TodayView: View {
                     }
                 }
             }
+        } else {
+            Text("Nessun avviso SafeTravel in questo momento.").font(.app(.subheadline)).foregroundStyle(Theme.dim)
         }
     }
 
@@ -677,7 +742,7 @@ struct HourTable: View {
                                 .foregroundStyle(Theme.text)
                                 .frame(height: 30)
                             cell(Fmt.number(hour.temperature), color: Theme.text)
-                            cell(Fmt.number(hour.wind), color: hour.wind.map { $0 >= 15 ? Theme.warning : Theme.text } ?? Theme.text)
+                            cell(Fmt.wind(hour.wind), color: hour.wind.map { $0 >= 15 ? Theme.warning : Theme.text } ?? Theme.text)
                             gustCell(hour.gust)
                             WindArrow(degrees: hour.windDirection).font(.system(size: 11)).foregroundStyle(Theme.dim).frame(height: 30)
                             cell(precip(hour.precipitation), color: (hour.precipitation ?? 0) >= 2 ? Theme.accent : ((hour.precipitation ?? 0) > 0 ? Theme.text : Theme.faint))
@@ -706,7 +771,7 @@ struct HourTable: View {
     @ViewBuilder private func gustCell(_ gust: Double?) -> some View {
         let value = gust ?? 0
         let background: Color = value >= 25 ? Theme.danger : (value >= 18 ? Theme.warning : .clear)
-        Text(Fmt.number(gust))
+        Text(Fmt.wind(gust))
             .font(.metric(18, .bold))
             .foregroundStyle(value >= 18 ? Theme.onAccent : (value >= 13 ? Theme.caution : Theme.text))
             .frame(maxWidth: .infinity)

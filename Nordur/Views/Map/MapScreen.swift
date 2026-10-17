@@ -179,7 +179,7 @@ struct MapScreen: View {
             .background(Theme.bg.opacity(0.94)).overlay(Rectangle().strokeBorder(Theme.hairline))
         }
         .padding(.horizontal)
-        .padding(.bottom, 10 + model.tabBarHeight)
+        .padding(.bottom, 10)
     }
 
     @ViewBuilder private var panelDetails: some View {
@@ -208,13 +208,13 @@ struct MapScreen: View {
                 .clipShape(Rectangle())
                 GeometryReader { geo in
                     ForEach(layer.legendValues, id: \.self) { value in
-                        Text(Fmt.number(value, decimals: value < 1 && value > 0 ? 1 : 0))
+                        Text(layer.showsArrows ? Fmt.wind(value) : Fmt.number(value, decimals: value < 1 && value > 0 ? 1 : 0))
                             .font(.app(.caption2))
                             .position(x: geo.size.width * (value - minV) / (maxV - minV), y: 6)
                     }
                 }
                 .frame(height: 12)
-                Text("\(layer.label), \(layer.unit)")
+                Text("\(layer.label), \(layer.showsArrows ? Fmt.windUnit : layer.unit)")
                     .font(.app(.caption2)).foregroundStyle(.secondary)
             }
         } else if layer == .radar {

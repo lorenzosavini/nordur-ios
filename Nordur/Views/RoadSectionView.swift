@@ -98,7 +98,7 @@ struct RoadSectionView: View {
                         LabeledContent(day.name, value: section.serviceHours(on: day.day) ?? String(localized: "Nessun servizio"))
                     }
                 } header: {
-                    Text("Servizio invernale (sgombero neve)").pinnedHeader()
+                    Text("Servizio invernale (sgombero neve)").pinnedHeader().pinnedHeader()
                 } footer: {
                     Text("Fuori da questi orari la strada non viene controllata né pulita: le condizioni possono peggiorare senza aggiornamenti.")
                 }

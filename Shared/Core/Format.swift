@@ -9,10 +9,19 @@ enum Fmt {
         return "\(Int(value.rounded()))°"
     }
 
+    /// Wind speed with its unit, in the unit chosen in Settings (values are m/s inside the app).
     static func ms(_ value: Double?) -> String {
         guard let value else { return "–" }
-        return "\(Int(value.rounded())) m/s"
+        return "\(Int((value * WindUnit.current.factor).rounded())) \(WindUnit.current.label)"
     }
+
+    /// Wind speed number only, in the chosen unit.
+    static func wind(_ value: Double?) -> String {
+        guard let value else { return "–" }
+        return "\(Int((value * WindUnit.current.factor).rounded()))"
+    }
+
+    static var windUnit: String { WindUnit.current.label }
 
     static func number(_ value: Double?, decimals: Int = 0, unit: String = "") -> String {
         guard let value else { return "–" }
@@ -139,4 +148,20 @@ enum WeatherCode {
 extension String {
     /// Translation of a label passed around as a plain String (runtime lookup in the string catalog; unchanged when missing).
     var loc: String { Bundle.main.localizedString(forKey: self, value: self, table: nil) }
+}
+
+/// Unit for wind speeds (Settings › Units). Data stay in m/s; only the display changes.
+enum WindUnit: String, CaseIterable, Identifiable {
+    case ms, kmh, knots
+
+    static let key = "units.wind"
+    static var current: WindUnit { WindUnit(rawValue: UserDefaults.standard.string(forKey: key) ?? "") ?? .ms }
+
+    var id: String { rawValue }
+    var factor: Double {
+        switch self { case .ms: return 1; case .kmh: return 3.6; case .knots: return 1.943844 }
+    }
+    var label: String {
+        switch self { case .ms: return "m/s"; case .kmh: return "km/h"; case .knots: return String(localized: "nodi") }
+    }
 }

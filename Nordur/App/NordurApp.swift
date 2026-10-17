@@ -57,6 +57,12 @@ struct NordurApp: App {
     }
 }
 
+private extension View {
+    func tabBarSpace(_ height: CGFloat) -> some View {
+        safeAreaInset(edge: .bottom, spacing: 0) { Color.clear.frame(height: height) }
+    }
+}
+
 struct RootView: View {
     @Environment(AppModel.self) private var model
     @Environment(AlertCenter.self) private var alerts
@@ -65,6 +71,7 @@ struct RootView: View {
     @State private var tab = Tab(rawValue: UserDefaults.standard.string(forKey: "initialTab") ?? "") ?? .today
 
     enum Tab: String, Hashable { case today, weather, map, drive, trip }
+    @AppStorage(WindUnit.key) private var windUnit = WindUnit.ms.rawValue
     @State private var showAuroraLive = UserDefaults.standard.string(forKey: "initialTab") == "aurora"
     @State private var showAccount = UserDefaults.standard.string(forKey: "initialTab") == "account"
     @State private var showAuroraIntel = UserDefaults.standard.string(forKey: "initialTab") == "kp"
@@ -78,13 +85,18 @@ struct RootView: View {
 
     var body: some View {
         @Bindable var alerts = alerts
+        @Bindable var model = model
         TabView(selection: $tab) {
-            TodayView().tag(Tab.today).toolbar(.hidden, for: .tabBar)
-            WeatherView().tag(Tab.weather).toolbar(.hidden, for: .tabBar)
-            MapScreen().tag(Tab.map).toolbar(.hidden, for: .tabBar)
-            DriveView().tag(Tab.drive).toolbar(.hidden, for: .tabBar)
-            TripView().tag(Tab.trip).toolbar(.hidden, for: .tabBar)
+            // Each page reserves the custom tab bar's height at the bottom: TabView
+            // pages do not receive the root's safe-area inset, so the last lines of
+            // every screen (and the map's panel) ended up under the bar.
+            TodayView().tag(Tab.today).toolbar(.hidden, for: .tabBar).tabBarSpace(model.tabBarHeight)
+            WeatherView().tag(Tab.weather).toolbar(.hidden, for: .tabBar).tabBarSpace(model.tabBarHeight)
+            MapScreen().tag(Tab.map).toolbar(.hidden, for: .tabBar).tabBarSpace(model.tabBarHeight)
+            DriveView().tag(Tab.drive).toolbar(.hidden, for: .tabBar).tabBarSpace(model.tabBarHeight)
+            TripView().tag(Tab.trip).toolbar(.hidden, for: .tabBar).tabBarSpace(model.tabBarHeight)
         }
+        .id(windUnit)  // every screen redraws with the new wind unit
         .safeAreaInset(edge: .bottom, spacing: 0) {
             NordurTabBar(selection: $tab, badge: alerts.unreadCount, recording: recorder.isRecording)
                 .background(GeometryReader { g in
@@ -100,6 +112,7 @@ struct RootView: View {
             NavigationStack { AlertsView() }
         }
         .sheet(isPresented: $showAccount) { AccountView() }
+        .sheet(isPresented: $model.showSettings) { SettingsView() }
         .sheet(isPresented: $showAuroraIntel) { NavigationStack { AuroraView() } }
         .sheet(isPresented: $showAuroraLive) {
             NavigationStack { AuroraLiveView() }

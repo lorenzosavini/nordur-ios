@@ -306,7 +306,7 @@ struct GustScale: View {
             }
             .frame(height: 16)
             HStack {
-                ForEach(["0", "10", "18", "25", "40"], id: \.self) { t in
+                ForEach([0.0, 10, 18, 25, 40].map { Fmt.wind($0) }, id: \.self) { t in
                     Text(t).font(.mono(9)).foregroundStyle(Theme.faint)
                     if t != "40" { Spacer() }
                 }
@@ -625,6 +625,19 @@ enum Hero: String, CaseIterable {
     }
 }
 
+/// The photograph fills whatever frame it is given and never widens it
+/// (a wide image with scaledToFill would push a grid cell wider than its column).
+struct HeroPhoto: View {
+    let hero: Hero
+    var body: some View {
+        Color.clear
+            .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
+            .overlay { Image(hero.asset).resizable().scaledToFill() }
+            .clipped()
+            .accessibilityHidden(true)
+    }
+}
+
 /// Full-width photograph with the section title over a dark gradient.
 struct HeroHeader: View {
     let hero: Hero
@@ -635,13 +648,7 @@ struct HeroHeader: View {
 
     var body: some View {
         ZStack(alignment: .bottomLeading) {
-            Image(hero.asset)
-                .resizable()
-                .scaledToFill()
-                .frame(height: height)
-                .frame(maxWidth: .infinity)
-                .clipped()
-                .accessibilityHidden(true)
+            HeroPhoto(hero: hero)
             LinearGradient(colors: [.black.opacity(0), .black.opacity(0.25), .black.opacity(0.78)],
                            startPoint: .top, endPoint: .bottom)
             VStack(alignment: .leading, spacing: 4) {
@@ -672,9 +679,7 @@ struct HeroTile: View {
 
     var body: some View {
         ZStack(alignment: .bottomLeading) {
-            Image(hero.asset).resizable().scaledToFill()
-                .frame(height: 118).frame(maxWidth: .infinity).clipped()
-                .accessibilityHidden(true)
+            HeroPhoto(hero: hero)
             LinearGradient(colors: [.black.opacity(0.05), .black.opacity(0.75)], startPoint: .top, endPoint: .bottom)
             VStack(alignment: .leading, spacing: 2) {
                 Text(title.uppercased()).font(.mono(11, .semibold)).tracking(0.7).foregroundStyle(.white)
@@ -694,5 +699,60 @@ extension View {
     /// A hero header as the first row of a List: edge to edge, no separator.
     func heroRow() -> some View {
         listRowInsets(EdgeInsets()).listRowSeparator(.hidden).listRowBackground(Color.clear)
+    }
+}
+
+// MARK: - Remote images
+
+/// Downloaded pictures kept in memory for the session (webcam frames).
+@MainActor
+final class RemoteImageCache {
+    static let shared = RemoteImageCache()
+    private let cache = NSCache<NSURL, UIImage>()
+    init() { cache.countLimit = 120 }
+    func image(_ url: URL) -> UIImage? { cache.object(forKey: url as NSURL) }
+    func store(_ image: UIImage, _ url: URL) { cache.setObject(image, forKey: url as NSURL) }
+}
+
+/// Image from the network that survives re-renders: SwiftUI's AsyncImage
+/// cancels its download every time a busy screen redraws (Today redraws often),
+/// so webcam previews never appeared there.
+struct RemoteImage: View {
+    let url: URL
+    var contentMode: ContentMode = .fill
+    @State private var image: UIImage?
+    @State private var failed = false
+
+    var body: some View {
+        ZStack {
+            if let image {
+                Image(uiImage: image).resizable().aspectRatio(contentMode: contentMode)
+            } else if failed {
+                Image(systemName: "video.slash").foregroundStyle(Theme.faint)
+            } else {
+                ProgressView().tint(Theme.dim)
+            }
+        }
+        .task(id: url) { await load() }
+    }
+
+    private func load() async {
+        if let cached = RemoteImageCache.shared.image(url) { image = cached; failed = false; return }
+        for attempt in 0..<2 {
+            do {
+                let (data, response) = try await HTTP.session.data(from: url)
+                guard (response as? HTTPURLResponse)?.statusCode == 200, let picture = UIImage(data: data) else { throw URLError(.badServerResponse) }
+                RemoteImageCache.shared.store(picture, url)
+                image = picture
+                failed = false
+                return
+            } catch is CancellationError {
+                return
+            } catch {
+                if Task.isCancelled { return }
+                if attempt == 0 { try? await Task.sleep(nanoseconds: 1_500_000_000) }
+            }
+        }
+        if image == nil { failed = true }
     }
 }
