@@ -90,7 +90,7 @@ jobs:
           xcodebuild -exportLocalizations -project Nordur.xcodeproj -localizationPath loc -exportLanguage en > loc.log 2>&1 || tail -40 loc.log
           ls -R loc | head -20 || true
 
-      - name: Tap test on the map (real taps on every layer button)
+      - name: Tap test on the map and scroll to the bottom of every screen
         continue-on-error: true
         run: |
           brew tap facebook/fb >/dev/null
@@ -110,6 +110,7 @@ jobs:
           mkdir -p shots
           status=0
           python3 tools/ci/map_tap_test.py "$UDID" shots || status=$?
+          python3 tools/ci/scroll_test.py "$UDID" shots || true
           xcrun simctl terminate "$UDID" it.lorenzosavini.nordur || true
           xcrun simctl uninstall "$UDID" it.lorenzosavini.nordur || true
           xcrun simctl shutdown "$UDID" || true
