@@ -1,0 +1,80 @@
+{
+  "source": "/Users/runner/work/nordur-ios/nordur-ios/Nordur/Views/WebcamsView.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Cerca webcam o strada",
+        "location": {
+          "startingColumn": 61,
+          "startingLine": 44
+        }
+      },
+      {
+        "comment": "",
+        "key": "Webcam stradali",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 42
+        }
+      },
+      {
+        "comment": "",
+        "key": "Vegagerðin",
+        "location": {
+          "startingColumn": 104,
+          "startingLine": 23
+        }
+      },
+      {
+        "comment": "",
+        "key": "Vegagerðin",
+        "location": {
+          "startingColumn": 69,
+          "startingLine": 14
+        }
+      },
+      {
+        "comment": "",
+        "key": "Webcam stradali",
+        "location": {
+          "startingColumn": 110,
+          "startingLine": 14
+        }
+      },
+      {
+        "comment": "",
+        "key": "Le strade come sono adesso",
+        "location": {
+          "startingColumn": 158,
+          "startingLine": 14
+        }
+      },
+      {
+        "comment": "",
+        "key": "Le webcam stradali",
+        "location": {
+          "startingColumn": 67,
+          "startingLine": 19
+        }
+      },
+      {
+        "comment": "",
+        "key": "%lld km · %lld immagini",
+        "location": {
+          "startingColumn": 34,
+          "startingLine": 35
+        }
+      },
+      {
+        "comment": "",
+        "key": "Immagini Vegagerðin, aggiornate ogni pochi minuti.",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 94
+        }
+      }
+    ]
+  },
+  "version": 1
+}

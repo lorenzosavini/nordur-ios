@@ -1,0 +1,48 @@
+{
+  "source": "/Users/runner/work/nordur-ios/nordur-ios/Nordur/State/Account.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Accedi al tuo account",
+        "location": {
+          "startingColumn": 81,
+          "startingLine": 189
+        }
+      },
+      {
+        "comment": "",
+        "key": "Accedi al tuo account",
+        "location": {
+          "startingColumn": 77,
+          "startingLine": 65
+        }
+      },
+      {
+        "comment": "",
+        "key": "Accedi al tuo account",
+        "location": {
+          "startingColumn": 77,
+          "startingLine": 72
+        }
+      },
+      {
+        "comment": "",
+        "key": "Accedi al tuo account",
+        "location": {
+          "startingColumn": 77,
+          "startingLine": 79
+        }
+      },
+      {
+        "comment": "",
+        "key": "Errore %lld",
+        "location": {
+          "startingColumn": 115,
+          "startingLine": 197
+        }
+      }
+    ]
+  },
+  "version": 1
+}

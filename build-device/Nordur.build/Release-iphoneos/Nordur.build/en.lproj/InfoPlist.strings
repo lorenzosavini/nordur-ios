@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>With “Always” access Norður checks weather warnings, gusts and closed roads near you even when the app is closed, and keeps recording your drive with the screen locked.</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Norður uses your location for weather, warnings, roads and aurora where you are, and to record your drives.</string>
+</dict>
+</plist>

@@ -1,0 +1,1020 @@
+Command line invocation:
+    /Applications/Xcode_26.6.app/Contents/Developer/usr/bin/xcodebuild -exportLocalizations -project Nordur.xcodeproj -localizationPath loc -exportLanguage en
+
+Localization Export started for Nordur project
+2026-10-17 21:30:50 Started export
+2026-10-17 21:30:50 Extracting strings from code
+
+Building all targets for string extraction
+
+ComputePackagePrebuildTargetDependencyGraph
+
+Prepare packages
+
+CreateBuildRequest
+
+SendProjectDescription
+
+CreateBuildOperation
+
+ComputeTargetDependencyGraph
+note: Building targets in dependency order
+note: Target dependency graph (2 targets)
+    Target 'Nordur' in project 'Nordur'
+        ➜ Explicit dependency on target 'NordurWidgets' in project 'Nordur'
+    Target 'NordurWidgets' in project 'Nordur' (no dependencies)
+
+GatherProvisioningInputs
+
+CreateBuildDescription
+
+ExecuteExternalTool /Applications/Xcode_26.6.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc --version
+
+ExecuteExternalTool /Applications/Xcode_26.6.app/Contents/Developer/usr/bin/actool --print-asset-tag-combinations --output-format xml1 /Users/runner/work/nordur-ios/nordur-ios/Nordur/Assets.xcassets
+
+ExecuteExternalTool /Applications/Xcode_26.6.app/Contents/Developer/usr/bin/actool --version --output-format xml1
+
+ExecuteExternalTool /Applications/Xcode_26.6.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ld -version_details
+
+Build description signature: cbcbdf29d27c18a90eaab4924dcff94a
+Build description path: /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Intermediates.noindex/XCBuildData/cbcbdf29d27c18a90eaab4924dcff94a.xcbuilddata
+CreateBuildDirectory /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Products
+    cd /Users/runner/work/nordur-ios/nordur-ios/Nordur.xcodeproj
+    builtin-create-build-directory /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Products
+
+CreateBuildDirectory /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Intermediates.noindex
+    cd /Users/runner/work/nordur-ios/nordur-ios/Nordur.xcodeproj
+    builtin-create-build-directory /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Intermediates.noindex
+
+CreateBuildDirectory /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Products/Debug-iphoneos
+    cd /Users/runner/work/nordur-ios/nordur-ios/Nordur.xcodeproj
+    builtin-create-build-directory /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Products/Debug-iphoneos
+
+CreateBuildDirectory /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules
+    cd /Users/runner/work/nordur-ios/nordur-ios/Nordur.xcodeproj
+    builtin-create-build-directory /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules
+
+WriteAuxiliaryFile /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Intermediates.noindex/Nordur.build/Debug-iphoneos/Nordur-c323478ed40f8af84c21c9469cf2d35c-VFS-iphoneos/all-product-headers.yaml
+    cd /Users/runner/work/nordur-ios/nordur-ios/Nordur.xcodeproj
+    write-file /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Intermediates.noindex/Nordur.build/Debug-iphoneos/Nordur-c323478ed40f8af84c21c9469cf2d35c-VFS-iphoneos/all-product-headers.yaml
+
+CreateBuildDirectory /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Intermediates.noindex/ExplicitPrecompiledModules
+    cd /Users/runner/work/nordur-ios/nordur-ios/Nordur.xcodeproj
+    builtin-create-build-directory /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Intermediates.noindex/ExplicitPrecompiledModules
+
+CreateBuildDirectory /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Intermediates.noindex/EagerLinkingTBDs/Debug-iphoneos
+    cd /Users/runner/work/nordur-ios/nordur-ios/Nordur.xcodeproj
+    builtin-create-build-directory /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Intermediates.noindex/EagerLinkingTBDs/Debug-iphoneos
+
+WriteAuxiliaryFile /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Intermediates.noindex/Nordur.build/Debug-iphoneos/NordurWidgets.build/Objects-normal/arm64/NordurWidgets_const_extract_protocols.json (in target 'NordurWidgets' from project 'Nordur')
+    cd /Users/runner/work/nordur-ios/nordur-ios
+    write-file /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Intermediates.noindex/Nordur.build/Debug-iphoneos/NordurWidgets.build/Objects-normal/arm64/NordurWidgets_const_extract_protocols.json
+
+WriteAuxiliaryFile /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Intermediates.noindex/Nordur.build/Debug-iphoneos/NordurWidgets.build/Objects-normal/arm64/NordurWidgets.SwiftFileList (in target 'NordurWidgets' from project 'Nordur')
+    cd /Users/runner/work/nordur-ios/nordur-ios
+    write-file /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Intermediates.noindex/Nordur.build/Debug-iphoneos/NordurWidgets.build/Objects-normal/arm64/NordurWidgets.SwiftFileList
+
+WriteAuxiliaryFile /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Intermediates.noindex/Nordur.build/Debug-iphoneos/NordurWidgets.build/Objects-normal/arm64/NordurWidgets.SwiftConstValuesFileList (in target 'NordurWidgets' from project 'Nordur')
+    cd /Users/runner/work/nordur-ios/nordur-ios
+    write-file /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Intermediates.noindex/Nordur.build/Debug-iphoneos/NordurWidgets.build/Objects-normal/arm64/NordurWidgets.SwiftConstValuesFileList
+
+WriteAuxiliaryFile /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Intermediates.noindex/Nordur.build/Debug-iphoneos/NordurWidgets.build/Objects-normal/arm64/NordurWidgets.LinkFileList (in target 'NordurWidgets' from project 'Nordur')
+    cd /Users/runner/work/nordur-ios/nordur-ios
+    write-file /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Intermediates.noindex/Nordur.build/Debug-iphoneos/NordurWidgets.build/Objects-normal/arm64/NordurWidgets.LinkFileList
+
+WriteAuxiliaryFile /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Intermediates.noindex/Nordur.build/Debug-iphoneos/NordurWidgets.build/Objects-normal/arm64/NordurWidgets-OutputFileMap.json (in target 'NordurWidgets' from project 'Nordur')
+    cd /Users/runner/work/nordur-ios/nordur-ios
+    write-file /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Intermediates.noindex/Nordur.build/Debug-iphoneos/NordurWidgets.build/Objects-normal/arm64/NordurWidgets-OutputFileMap.json
+
+WriteAuxiliaryFile /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Intermediates.noindex/Nordur.build/Debug-iphoneos/NordurWidgets.build/NordurWidgets.hmap (in target 'NordurWidgets' from project 'Nordur')
+    cd /Users/runner/work/nordur-ios/nordur-ios
+    write-file /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Intermediates.noindex/Nordur.build/Debug-iphoneos/NordurWidgets.build/NordurWidgets.hmap
+
+WriteAuxiliaryFile /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Intermediates.noindex/Nordur.build/Debug-iphoneos/NordurWidgets.build/NordurWidgets.DependencyStaticMetadataFileList (in target 'NordurWidgets' from project 'Nordur')
+    cd /Users/runner/work/nordur-ios/nordur-ios
+    write-file /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Intermediates.noindex/Nordur.build/Debug-iphoneos/NordurWidgets.build/NordurWidgets.DependencyStaticMetadataFileList
+
+WriteAuxiliaryFile /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Intermediates.noindex/Nordur.build/Debug-iphoneos/NordurWidgets.build/NordurWidgets.DependencyMetadataFileList (in target 'NordurWidgets' from project 'Nordur')
+    cd /Users/runner/work/nordur-ios/nordur-ios
+    write-file /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Intermediates.noindex/Nordur.build/Debug-iphoneos/NordurWidgets.build/NordurWidgets.DependencyMetadataFileList
+
+WriteAuxiliaryFile /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Intermediates.noindex/Nordur.build/Debug-iphoneos/NordurWidgets.build/NordurWidgets-project-headers.hmap (in target 'NordurWidgets' from project 'Nordur')
+    cd /Users/runner/work/nordur-ios/nordur-ios
+    write-file /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Intermediates.noindex/Nordur.build/Debug-iphoneos/NordurWidgets.build/NordurWidgets-project-headers.hmap
+
+WriteAuxiliaryFile /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Intermediates.noindex/Nordur.build/Debug-iphoneos/NordurWidgets.build/NordurWidgets-own-target-headers.hmap (in target 'NordurWidgets' from project 'Nordur')
+    cd /Users/runner/work/nordur-ios/nordur-ios
+    write-file /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Intermediates.noindex/Nordur.build/Debug-iphoneos/NordurWidgets.build/NordurWidgets-own-target-headers.hmap
+
+WriteAuxiliaryFile /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Intermediates.noindex/Nordur.build/Debug-iphoneos/NordurWidgets.build/NordurWidgets-generated-files.hmap (in target 'NordurWidgets' from project 'Nordur')
+    cd /Users/runner/work/nordur-ios/nordur-ios
+    write-file /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Intermediates.noindex/Nordur.build/Debug-iphoneos/NordurWidgets.build/NordurWidgets-generated-files.hmap
+
+WriteAuxiliaryFile /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Intermediates.noindex/Nordur.build/Debug-iphoneos/NordurWidgets.build/NordurWidgets-all-target-headers.hmap (in target 'NordurWidgets' from project 'Nordur')
+    cd /Users/runner/work/nordur-ios/nordur-ios
+    write-file /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Intermediates.noindex/Nordur.build/Debug-iphoneos/NordurWidgets.build/NordurWidgets-all-target-headers.hmap
+
+WriteAuxiliaryFile /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Intermediates.noindex/Nordur.build/Debug-iphoneos/NordurWidgets.build/NordurWidgets-all-non-framework-target-headers.hmap (in target 'NordurWidgets' from project 'Nordur')
+    cd /Users/runner/work/nordur-ios/nordur-ios
+    write-file /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Intermediates.noindex/Nordur.build/Debug-iphoneos/NordurWidgets.build/NordurWidgets-all-non-framework-target-headers.hmap
+
+WriteAuxiliaryFile /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Intermediates.noindex/Nordur.build/Debug-iphoneos/Nordur.build/Objects-normal/arm64/Nordur_const_extract_protocols.json (in target 'Nordur' from project 'Nordur')
+    cd /Users/runner/work/nordur-ios/nordur-ios
+    write-file /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Intermediates.noindex/Nordur.build/Debug-iphoneos/Nordur.build/Objects-normal/arm64/Nordur_const_extract_protocols.json
+
+WriteAuxiliaryFile /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Intermediates.noindex/Nordur.build/Debug-iphoneos/Nordur.build/Objects-normal/arm64/Nordur.SwiftFileList (in target 'Nordur' from project 'Nordur')
+    cd /Users/runner/work/nordur-ios/nordur-ios
+    write-file /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Intermediates.noindex/Nordur.build/Debug-iphoneos/Nordur.build/Objects-normal/arm64/Nordur.SwiftFileList
+
+WriteAuxiliaryFile /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Intermediates.noindex/Nordur.build/Debug-iphoneos/Nordur.build/Objects-normal/arm64/Nordur.SwiftConstValuesFileList (in target 'Nordur' from project 'Nordur')
+    cd /Users/runner/work/nordur-ios/nordur-ios
+    write-file /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Intermediates.noindex/Nordur.build/Debug-iphoneos/Nordur.build/Objects-normal/arm64/Nordur.SwiftConstValuesFileList
+
+WriteAuxiliaryFile /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Intermediates.noindex/Nordur.build/Debug-iphoneos/Nordur.build/Objects-normal/arm64/Nordur.LinkFileList (in target 'Nordur' from project 'Nordur')
+    cd /Users/runner/work/nordur-ios/nordur-ios
+    write-file /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Intermediates.noindex/Nordur.build/Debug-iphoneos/Nordur.build/Objects-normal/arm64/Nordur.LinkFileList
+
+WriteAuxiliaryFile /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Intermediates.noindex/Nordur.build/Debug-iphoneos/Nordur.build/Objects-normal/arm64/Nordur-OutputFileMap.json (in target 'Nordur' from project 'Nordur')
+    cd /Users/runner/work/nordur-ios/nordur-ios
+    write-file /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Intermediates.noindex/Nordur.build/Debug-iphoneos/Nordur.build/Objects-normal/arm64/Nordur-OutputFileMap.json
+
+WriteAuxiliaryFile /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Intermediates.noindex/Nordur.build/Debug-iphoneos/Nordur.build/Nordur.hmap (in target 'Nordur' from project 'Nordur')
+    cd /Users/runner/work/nordur-ios/nordur-ios
+    write-file /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Intermediates.noindex/Nordur.build/Debug-iphoneos/Nordur.build/Nordur.hmap
+
+WriteAuxiliaryFile /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Intermediates.noindex/Nordur.build/Debug-iphoneos/Nordur.build/Nordur.DependencyStaticMetadataFileList (in target 'Nordur' from project 'Nordur')
+    cd /Users/runner/work/nordur-ios/nordur-ios
+    write-file /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Intermediates.noindex/Nordur.build/Debug-iphoneos/Nordur.build/Nordur.DependencyStaticMetadataFileList
+
+WriteAuxiliaryFile /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Intermediates.noindex/Nordur.build/Debug-iphoneos/Nordur.build/Nordur.DependencyMetadataFileList (in target 'Nordur' from project 'Nordur')
+    cd /Users/runner/work/nordur-ios/nordur-ios
+    write-file /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Intermediates.noindex/Nordur.build/Debug-iphoneos/Nordur.build/Nordur.DependencyMetadataFileList
+
+WriteAuxiliaryFile /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Intermediates.noindex/Nordur.build/Debug-iphoneos/Nordur.build/Nordur-project-headers.hmap (in target 'Nordur' from project 'Nordur')
+    cd /Users/runner/work/nordur-ios/nordur-ios
+    write-file /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Intermediates.noindex/Nordur.build/Debug-iphoneos/Nordur.build/Nordur-project-headers.hmap
+
+WriteAuxiliaryFile /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Intermediates.noindex/Nordur.build/Debug-iphoneos/Nordur.build/Nordur-own-target-headers.hmap (in target 'Nordur' from project 'Nordur')
+    cd /Users/runner/work/nordur-ios/nordur-ios
+    write-file /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Intermediates.noindex/Nordur.build/Debug-iphoneos/Nordur.build/Nordur-own-target-headers.hmap
+
+WriteAuxiliaryFile /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Intermediates.noindex/Nordur.build/Debug-iphoneos/Nordur.build/Nordur-generated-files.hmap (in target 'Nordur' from project 'Nordur')
+    cd /Users/runner/work/nordur-ios/nordur-ios
+    write-file /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Intermediates.noindex/Nordur.build/Debug-iphoneos/Nordur.build/Nordur-generated-files.hmap
+
+WriteAuxiliaryFile /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Intermediates.noindex/Nordur.build/Debug-iphoneos/Nordur.build/Nordur-all-target-headers.hmap (in target 'Nordur' from project 'Nordur')
+    cd /Users/runner/work/nordur-ios/nordur-ios
+    write-file /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Intermediates.noindex/Nordur.build/Debug-iphoneos/Nordur.build/Nordur-all-target-headers.hmap
+
+WriteAuxiliaryFile /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Intermediates.noindex/Nordur.build/Debug-iphoneos/Nordur.build/Nordur-all-non-framework-target-headers.hmap (in target 'Nordur' from project 'Nordur')
+    cd /Users/runner/work/nordur-ios/nordur-ios
+    write-file /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Intermediates.noindex/Nordur.build/Debug-iphoneos/Nordur.build/Nordur-all-non-framework-target-headers.hmap
+
+MkDir /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Products/Debug-iphoneos/NordurWidgets.appex (in target 'NordurWidgets' from project 'Nordur')
+    cd /Users/runner/work/nordur-ios/nordur-ios
+    /bin/mkdir -p /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Products/Debug-iphoneos/NordurWidgets.appex
+
+MkDir /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Products/Debug-iphoneos/Nordur.app (in target 'Nordur' from project 'Nordur')
+    cd /Users/runner/work/nordur-ios/nordur-ios
+    /bin/mkdir -p /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Products/Debug-iphoneos/Nordur.app
+
+SwiftDriver NordurWidgets normal arm64 com.apple.xcode.tools.swift.compiler (in target 'NordurWidgets' from project 'Nordur')
+    cd /Users/runner/work/nordur-ios/nordur-ios
+    builtin-SwiftDriver -- /Applications/Xcode_26.6.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc -module-name NordurWidgets -Onone @/Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Intermediates.noindex/Nordur.build/Debug-iphoneos/NordurWidgets.build/Objects-normal/arm64/NordurWidgets.SwiftFileList -DDEBUG -enable-bare-slash-regex -enable-experimental-feature DebugDescriptionMacro -sdk /Applications/Xcode_26.6.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS26.5.sdk -target arm64-apple-ios17.0 -g -module-cache-path /Users/runner/Library/Developer/Xcode/DerivedData/ModuleCache.noindex -Xfrontend -serialize-debugging-options -application-extension -enable-testing -index-store-path /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Index.noindex/DataStore -Xcc -D_LIBCPP_HARDENING_MODE\=_LIBCPP_HARDENING_MODE_DEBUG -swift-version 5 -I /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Products/Debug-iphoneos -F /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Products/Debug-iphoneos -emit-localized-strings -emit-localized-strings-path /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Intermediates.noindex/Nordur.build/Debug-iphoneos/NordurWidgets.build/Objects-normal/arm64 -c -j3 -enable-batch-mode -incremental -output-file-map /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Intermediates.noindex/Nordur.build/Debug-iphoneos/NordurWidgets.build/Objects-normal/arm64/NordurWidgets-OutputFileMap.json -use-frontend-parseable-output -save-temps -no-color-diagnostics -explicit-module-build -module-cache-path /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules -clang-scanner-module-cache-path /Users/runner/Library/Developer/Xcode/DerivedData/ModuleCache.noindex -sdk-module-cache-path /Users/runner/Library/Developer/Xcode/DerivedData/ModuleCache.noindex -serialize-diagnostics -emit-dependencies -emit-module -emit-module-path /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Intermediates.noindex/Nordur.build/Debug-iphoneos/NordurWidgets.build/Objects-normal/arm64/NordurWidgets.swiftmodule -validate-clang-modules-once -clang-build-session-file /Users/runner/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/Session.modulevalidation -Xcc -I/Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Intermediates.noindex/Nordur.build/Debug-iphoneos/NordurWidgets.build/swift-overrides.hmap -emit-const-values -Xfrontend -const-gather-protocols-file -Xfrontend /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Intermediates.noindex/Nordur.build/Debug-iphoneos/NordurWidgets.build/Objects-normal/arm64/NordurWidgets_const_extract_protocols.json -Xcc -iquote -Xcc /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Intermediates.noindex/Nordur.build/Debug-iphoneos/NordurWidgets.build/NordurWidgets-generated-files.hmap -Xcc -I/Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Intermediates.noindex/Nordur.build/Debug-iphoneos/NordurWidgets.build/NordurWidgets-own-target-headers.hmap -Xcc -I/Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Intermediates.noindex/Nordur.build/Debug-iphoneos/NordurWidgets.build/NordurWidgets-all-target-headers.hmap -Xcc -iquote -Xcc /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Intermediates.noindex/Nordur.build/Debug-iphoneos/NordurWidgets.build/NordurWidgets-project-headers.hmap -Xcc -I/Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Products/Debug-iphoneos/include -Xcc -I/Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Intermediates.noindex/Nordur.build/Debug-iphoneos/NordurWidgets.build/DerivedSources-normal/arm64 -Xcc -I/Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Intermediates.noindex/Nordur.build/Debug-iphoneos/NordurWidgets.build/DerivedSources/arm64 -Xcc -I/Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Intermediates.noindex/Nordur.build/Debug-iphoneos/NordurWidgets.build/DerivedSources -Xcc -DDEBUG\=1 -emit-objc-header -emit-objc-header-path /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Intermediates.noindex/Nordur.build/Debug-iphoneos/NordurWidgets.build/Objects-normal/arm64/NordurWidgets-Swift.h -working-directory /Users/runner/work/nordur-ios/nordur-ios -experimental-emit-module-separately -disable-cmo
+
+ProcessInfoPlistFile /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Products/Debug-iphoneos/NordurWidgets.appex/Info.plist /Users/runner/work/nordur-ios/nordur-ios/NordurWidgets-Info.plist (in target 'NordurWidgets' from project 'Nordur')
+    cd /Users/runner/work/nordur-ios/nordur-ios
+    builtin-infoPlistUtility /Users/runner/work/nordur-ios/nordur-ios/NordurWidgets-Info.plist -producttype com.apple.product-type.app-extension -expandbuildsettings -format binary -platform iphoneos -requiredArchitecture arm64 -o /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Products/Debug-iphoneos/NordurWidgets.appex/Info.plist
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/_AvailabilityInternal-BMPRAIZO2W66X9QI256CCN3JP.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/_SwiftConcurrencyShims-3TXAT1PFSO2XG3ROAKNZ6XG0U.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/_Builtin_stdarg-DBM0E7UBYJ0O3Q7KWXA53R3P5.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/_Builtin_stddef-7MTG8H3S6C9WCBNA2QSVTWJVZ.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/_Builtin_stdbool-6TO8E7DJCNS7GV32A8RQ75ZSF.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/ptrauth-5WYQYB5569H01AFGT7MA7BI5A.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/ActivityKit-91XP0VUGWX6WA8FZ200K1UODG.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/ptrcheck-73WVEU6TT70077980OMBZNRP0.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/DeveloperToolsSupport-7Z48CJQE5ERIN3RS45KCGLMDV.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/_Builtin_float-87EFVPOWFWHSMAHS6JEO1POYG.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/SwiftShims-3EI45BLPFAGRFOEPMZ3WPI5Q5.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/_DarwinFoundation1-8XNRWMDTKY4XEMVTESAQMN5XT.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/_DarwinFoundation2-9C68XJRU0K2Y05T88WA4SNVML.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/_Builtin_limits-ACSWIQNAHPZ31E1PVVSOOR16E.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/ExtensionFoundation-BSNLIF3WJ532KGZGX2L3G9HPM.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/_Builtin_tgmath-4DCLEK0TUUFKM7I14RJ5G3U4E.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/_Builtin_stdint-H5RAG65U307W1O29F00AMNNF.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/sys_types-C6JTBAAR0KKXA4K5XB31D7UH3.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/_DarwinFoundation3-A7BRFS5M66RJNYCEG099E7XC8.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/_Builtin_intrinsics-2ZP7WDEI0WOW7D7RT0O8I745B.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/_Builtin_stdatomic-798ILOMIVN5R8CKKAWV7NN631.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/_Builtin_inttypes-5HR22I1JK00RU8GB1UFHJMQOS.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/Darwin-55PAA2YMMMT6VZKWUL2WQ9TGO.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/simd-616J9QN641KLF4KVW7P60B5TU.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/ObjectiveC-BUPBGAQ3EXFSMYPN1X0A5B7HB.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/MachO-DQLTIGM01MW3YHSCTNWEDLJPV.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/os_object-B3AWVWIO7VE3LGZPACHNK0UFV.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/os_workgroup-7D1TZM98365Q3FW6JLFCEHJ2R.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/Spatial-EN2RWFRSD6NMINH466YVNKKK6.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/Dispatch-3SQI4ZSVD6H4H6AGPS3KHYUM8.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/CoreFoundation-8D9TX6XMARB4OV67U752FULCL.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/XPC-3X1VOIY34W8BBP4881XJAE02P.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/dnssd-2J3VINEMKILIUC6JM30AZLEH.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/os-7JKG75SP1TN6M09YSHR330CA.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/CoreGraphics-2CNEUUEGPH6APHBC6A6PRS65Q.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/CFNetwork-3KZCFAA729QN1BD8MDUFVBQJS.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/Security-AL803PST26BSDWSXFFYK77POF.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/ImageIO-CAUK7621B30I4R1T90HNHA5E8.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/CoreText-9VMZFQPKUFEWP7LQPN814X866.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/Foundation-8F1PJFNDU1LA5IH8832UOHH78.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/DataDetection-8UPE05VDGEK0BMB66X4JIAKFW.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/OSLog-4PK5KOZOFD6KUHRN5PKEE6TEJ.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/UserNotifications-7T22P4TRC89ZNKNRHJAAUQHUQ.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/UIUtilities-6DSA20G0S85HV43BGJHGKJSCB.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/AppIntents-C2K7MZ1DK14PVQW0U9BXEPUB2.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/IOSurface-CJEXC54CTYKUI8KGTHUQRCCS5.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/FileProvider-CVXGF7FMRFLKXXF5OK7RA3Z1G.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/RelevanceKit-AU3RADV1CCR9419V6Q83R0O0G.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/CoreTransferable-B987VPWWFC9RBOX78SCMPUKTB.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/Metal-7DZ541JMKZ4VVCN2I5QPJ6L2T.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/Symbols-BTT4GWHWV6UHG4OT2VHN8U33F.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/Network-DJE6MOM087TAQ1GDRUPZJVY2H.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/UniformTypeIdentifiers-B6J56NYRN5AH9DJK7M729AQCE.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/CoreData-8CGSQ3AVX4EC9FNO3V5BW603H.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/_LocationEssentials-7BFA1VXVKGPZ1MHXXQS0XUQI0.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/CoreSpotlight-DXV9D92Q78UP6B5Y51UZFF8T0.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/OpenGLES-5E0SD4MGTWK2UAPKCZNHLYEA2.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/CoreLocation-2JVE8QRHT0Y78U3TC28B2I6WU.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/WidgetKit-B1883K24LCTVQMCNIRHE9CGTC.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/Accessibility-769JA2OPU2KJEXKRBPJWR7G9C.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/CoreVideo-2YO6JLXM9ZDSZNWBSBCIQ3P5N.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/Intents-E4B09RZ55SGAXKF4CK9JB0TRP.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/CoreImage-7L8JMNF0WKAZHJXPSZT5TWPPK.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/QuartzCore-EIPPR33S6LFJYYQRQXP4YQUCE.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/SwiftUICore-4NS71G4ZLBXGM1RZMBTQP2D80.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/UIKit-B7Y30ZN5UEDVE0UMPGVZIB2HU.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/SwiftUI-3064E6OY1G7XUCP03Z07G4YD6.pcm
+
+SwiftEmitModule normal arm64 Emitting\ module\ for\ NordurWidgets (in target 'NordurWidgets' from project 'Nordur')
+
+EmitSwiftModule normal arm64 (in target 'NordurWidgets' from project 'Nordur')
+    cd /Users/runner/work/nordur-ios/nordur-ios
+    
+
+SwiftCompile normal arm64 Compiling\ OpenMeteo.swift,\ RoadInfo.swift,\ Roads.swift,\ RouteWeather.swift,\ SafeTravel.swift,\ SkyGlowGrid.swift,\ Transport.swift,\ Weather.swift,\ WeatherGrid.swift,\ Webcams.swift /Users/runner/work/nordur-ios/nordur-ios/Shared/Services/OpenMeteo.swift /Users/runner/work/nordur-ios/nordur-ios/Shared/Services/RoadInfo.swift /Users/runner/work/nordur-ios/nordur-ios/Shared/Services/Roads.swift /Users/runner/work/nordur-ios/nordur-ios/Shared/Services/RouteWeather.swift /Users/runner/work/nordur-ios/nordur-ios/Shared/Services/SafeTravel.swift /Users/runner/work/nordur-ios/nordur-ios/Shared/Services/SkyGlowGrid.swift /Users/runner/work/nordur-ios/nordur-ios/Shared/Services/Transport.swift /Users/runner/work/nordur-ios/nordur-ios/Shared/Services/Weather.swift /Users/runner/work/nordur-ios/nordur-ios/Shared/Services/WeatherGrid.swift /Users/runner/work/nordur-ios/nordur-ios/Shared/Services/Webcams.swift (in target 'NordurWidgets' from project 'Nordur')
+SwiftCompile normal arm64 /Users/runner/work/nordur-ios/nordur-ios/Shared/Services/OpenMeteo.swift (in target 'NordurWidgets' from project 'Nordur')
+    cd /Users/runner/work/nordur-ios/nordur-ios
+    
+
+SwiftCompile normal arm64 /Users/runner/work/nordur-ios/nordur-ios/Shared/Services/RoadInfo.swift (in target 'NordurWidgets' from project 'Nordur')
+    cd /Users/runner/work/nordur-ios/nordur-ios
+    
+
+SwiftCompile normal arm64 /Users/runner/work/nordur-ios/nordur-ios/Shared/Services/Roads.swift (in target 'NordurWidgets' from project 'Nordur')
+    cd /Users/runner/work/nordur-ios/nordur-ios
+    
+
+SwiftCompile normal arm64 /Users/runner/work/nordur-ios/nordur-ios/Shared/Services/RouteWeather.swift (in target 'NordurWidgets' from project 'Nordur')
+    cd /Users/runner/work/nordur-ios/nordur-ios
+    
+
+SwiftCompile normal arm64 /Users/runner/work/nordur-ios/nordur-ios/Shared/Services/SafeTravel.swift (in target 'NordurWidgets' from project 'Nordur')
+    cd /Users/runner/work/nordur-ios/nordur-ios
+    
+
+SwiftCompile normal arm64 /Users/runner/work/nordur-ios/nordur-ios/Shared/Services/SkyGlowGrid.swift (in target 'NordurWidgets' from project 'Nordur')
+    cd /Users/runner/work/nordur-ios/nordur-ios
+    
+
+SwiftCompile normal arm64 /Users/runner/work/nordur-ios/nordur-ios/Shared/Services/Transport.swift (in target 'NordurWidgets' from project 'Nordur')
+    cd /Users/runner/work/nordur-ios/nordur-ios
+    
+
+SwiftCompile normal arm64 /Users/runner/work/nordur-ios/nordur-ios/Shared/Services/Weather.swift (in target 'NordurWidgets' from project 'Nordur')
+    cd /Users/runner/work/nordur-ios/nordur-ios
+    
+
+SwiftCompile normal arm64 /Users/runner/work/nordur-ios/nordur-ios/Shared/Services/WeatherGrid.swift (in target 'NordurWidgets' from project 'Nordur')
+    cd /Users/runner/work/nordur-ios/nordur-ios
+    
+
+SwiftCompile normal arm64 /Users/runner/work/nordur-ios/nordur-ios/Shared/Services/Webcams.swift (in target 'NordurWidgets' from project 'Nordur')
+    cd /Users/runner/work/nordur-ios/nordur-ios
+    
+
+SwiftCompile normal arm64 Compiling\ Dates.swift,\ Format.swift,\ Geo.swift,\ HTTP.swift,\ Risk.swift,\ Theme.swift,\ Alerts.swift,\ ConditionsWidget.swift,\ DriveLiveActivity.swift,\ NordurWidgetsBundle.swift,\ Drive.swift /Users/runner/work/nordur-ios/nordur-ios/Shared/Core/Dates.swift /Users/runner/work/nordur-ios/nordur-ios/Shared/Core/Format.swift /Users/runner/work/nordur-ios/nordur-ios/Shared/Core/Geo.swift /Users/runner/work/nordur-ios/nordur-ios/Shared/Core/HTTP.swift /Users/runner/work/nordur-ios/nordur-ios/Shared/Core/Risk.swift /Users/runner/work/nordur-ios/nordur-ios/Shared/Core/Theme.swift /Users/runner/work/nordur-ios/nordur-ios/Shared/Models/Alerts.swift /Users/runner/work/nordur-ios/nordur-ios/NordurWidgets/ConditionsWidget.swift /Users/runner/work/nordur-ios/nordur-ios/NordurWidgets/DriveLiveActivity.swift /Users/runner/work/nordur-ios/nordur-ios/NordurWidgets/NordurWidgetsBundle.swift /Users/runner/work/nordur-ios/nordur-ios/Shared/Models/Drive.swift (in target 'NordurWidgets' from project 'Nordur')
+SwiftCompile normal arm64 /Users/runner/work/nordur-ios/nordur-ios/Shared/Core/Dates.swift (in target 'NordurWidgets' from project 'Nordur')
+    cd /Users/runner/work/nordur-ios/nordur-ios
+    
+
+SwiftCompile normal arm64 /Users/runner/work/nordur-ios/nordur-ios/Shared/Core/Format.swift (in target 'NordurWidgets' from project 'Nordur')
+    cd /Users/runner/work/nordur-ios/nordur-ios
+    
+
+SwiftCompile normal arm64 /Users/runner/work/nordur-ios/nordur-ios/Shared/Core/Geo.swift (in target 'NordurWidgets' from project 'Nordur')
+    cd /Users/runner/work/nordur-ios/nordur-ios
+    
+
+SwiftCompile normal arm64 /Users/runner/work/nordur-ios/nordur-ios/Shared/Core/HTTP.swift (in target 'NordurWidgets' from project 'Nordur')
+    cd /Users/runner/work/nordur-ios/nordur-ios
+    
+
+SwiftCompile normal arm64 /Users/runner/work/nordur-ios/nordur-ios/Shared/Core/Risk.swift (in target 'NordurWidgets' from project 'Nordur')
+    cd /Users/runner/work/nordur-ios/nordur-ios
+    
+
+SwiftCompile normal arm64 /Users/runner/work/nordur-ios/nordur-ios/Shared/Core/Theme.swift (in target 'NordurWidgets' from project 'Nordur')
+    cd /Users/runner/work/nordur-ios/nordur-ios
+    
+
+SwiftCompile normal arm64 /Users/runner/work/nordur-ios/nordur-ios/Shared/Models/Alerts.swift (in target 'NordurWidgets' from project 'Nordur')
+    cd /Users/runner/work/nordur-ios/nordur-ios
+    
+
+SwiftCompile normal arm64 /Users/runner/work/nordur-ios/nordur-ios/NordurWidgets/ConditionsWidget.swift (in target 'NordurWidgets' from project 'Nordur')
+    cd /Users/runner/work/nordur-ios/nordur-ios
+    
+
+SwiftCompile normal arm64 /Users/runner/work/nordur-ios/nordur-ios/NordurWidgets/DriveLiveActivity.swift (in target 'NordurWidgets' from project 'Nordur')
+    cd /Users/runner/work/nordur-ios/nordur-ios
+    
+
+SwiftCompile normal arm64 /Users/runner/work/nordur-ios/nordur-ios/NordurWidgets/NordurWidgetsBundle.swift (in target 'NordurWidgets' from project 'Nordur')
+    cd /Users/runner/work/nordur-ios/nordur-ios
+    
+
+SwiftCompile normal arm64 /Users/runner/work/nordur-ios/nordur-ios/Shared/Models/Drive.swift (in target 'NordurWidgets' from project 'Nordur')
+    cd /Users/runner/work/nordur-ios/nordur-ios
+    
+
+SwiftCompile normal arm64 Compiling\ DriveActivity.swift,\ Place.swift,\ Trip.swift,\ Astro.swift,\ Aurora.swift,\ AuroraConfirm.swift,\ AuroraEngine.swift,\ AuroraSites.swift,\ AuroraState.swift,\ FuelStations.swift,\ IMO.swift /Users/runner/work/nordur-ios/nordur-ios/Shared/Models/DriveActivity.swift /Users/runner/work/nordur-ios/nordur-ios/Shared/Models/Place.swift /Users/runner/work/nordur-ios/nordur-ios/Shared/Models/Trip.swift /Users/runner/work/nordur-ios/nordur-ios/Shared/Services/Astro.swift /Users/runner/work/nordur-ios/nordur-ios/Shared/Services/Aurora.swift /Users/runner/work/nordur-ios/nordur-ios/Shared/Services/AuroraConfirm.swift /Users/runner/work/nordur-ios/nordur-ios/Shared/Services/AuroraEngine.swift /Users/runner/work/nordur-ios/nordur-ios/Shared/Services/AuroraSites.swift /Users/runner/work/nordur-ios/nordur-ios/Shared/Services/AuroraState.swift /Users/runner/work/nordur-ios/nordur-ios/Shared/Services/FuelStations.swift /Users/runner/work/nordur-ios/nordur-ios/Shared/Services/IMO.swift (in target 'NordurWidgets' from project 'Nordur')
+
+SwiftCompile normal arm64 /Users/runner/work/nordur-ios/nordur-ios/Shared/Models/DriveActivity.swift (in target 'NordurWidgets' from project 'Nordur')
+    cd /Users/runner/work/nordur-ios/nordur-ios
+    
+
+SwiftCompile normal arm64 /Users/runner/work/nordur-ios/nordur-ios/Shared/Models/Place.swift (in target 'NordurWidgets' from project 'Nordur')
+    cd /Users/runner/work/nordur-ios/nordur-ios
+    
+
+SwiftCompile normal arm64 /Users/runner/work/nordur-ios/nordur-ios/Shared/Models/Trip.swift (in target 'NordurWidgets' from project 'Nordur')
+    cd /Users/runner/work/nordur-ios/nordur-ios
+    
+
+SwiftCompile normal arm64 /Users/runner/work/nordur-ios/nordur-ios/Shared/Services/Astro.swift (in target 'NordurWidgets' from project 'Nordur')
+    cd /Users/runner/work/nordur-ios/nordur-ios
+    
+
+SwiftCompile normal arm64 /Users/runner/work/nordur-ios/nordur-ios/Shared/Services/Aurora.swift (in target 'NordurWidgets' from project 'Nordur')
+    cd /Users/runner/work/nordur-ios/nordur-ios
+    
+
+SwiftCompile normal arm64 /Users/runner/work/nordur-ios/nordur-ios/Shared/Services/AuroraConfirm.swift (in target 'NordurWidgets' from project 'Nordur')
+    cd /Users/runner/work/nordur-ios/nordur-ios
+    
+
+SwiftCompile normal arm64 /Users/runner/work/nordur-ios/nordur-ios/Shared/Services/AuroraEngine.swift (in target 'NordurWidgets' from project 'Nordur')
+    cd /Users/runner/work/nordur-ios/nordur-ios
+    
+
+SwiftCompile normal arm64 /Users/runner/work/nordur-ios/nordur-ios/Shared/Services/AuroraSites.swift (in target 'NordurWidgets' from project 'Nordur')
+    cd /Users/runner/work/nordur-ios/nordur-ios
+    
+
+SwiftCompile normal arm64 /Users/runner/work/nordur-ios/nordur-ios/Shared/Services/AuroraState.swift (in target 'NordurWidgets' from project 'Nordur')
+    cd /Users/runner/work/nordur-ios/nordur-ios
+    
+
+SwiftCompile normal arm64 /Users/runner/work/nordur-ios/nordur-ios/Shared/Services/FuelStations.swift (in target 'NordurWidgets' from project 'Nordur')
+    cd /Users/runner/work/nordur-ios/nordur-ios
+    
+
+SwiftCompile normal arm64 /Users/runner/work/nordur-ios/nordur-ios/Shared/Services/IMO.swift (in target 'NordurWidgets' from project 'Nordur')
+    cd /Users/runner/work/nordur-ios/nordur-ios
+    
+
+SwiftDriverJobDiscovery normal arm64 Emitting module for NordurWidgets (in target 'NordurWidgets' from project 'Nordur')
+
+SwiftDriver\ Compilation\ Requirements NordurWidgets normal arm64 com.apple.xcode.tools.swift.compiler (in target 'NordurWidgets' from project 'Nordur')
+    cd /Users/runner/work/nordur-ios/nordur-ios
+    builtin-Swift-Compilation-Requirements -- /Applications/Xcode_26.6.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc -module-name NordurWidgets -Onone @/Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Intermediates.noindex/Nordur.build/Debug-iphoneos/NordurWidgets.build/Objects-normal/arm64/NordurWidgets.SwiftFileList -DDEBUG -enable-bare-slash-regex -enable-experimental-feature DebugDescriptionMacro -sdk /Applications/Xcode_26.6.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS26.5.sdk -target arm64-apple-ios17.0 -g -module-cache-path /Users/runner/Library/Developer/Xcode/DerivedData/ModuleCache.noindex -Xfrontend -serialize-debugging-options -application-extension -enable-testing -index-store-path /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Index.noindex/DataStore -Xcc -D_LIBCPP_HARDENING_MODE\=_LIBCPP_HARDENING_MODE_DEBUG -swift-version 5 -I /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Products/Debug-iphoneos -F /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Products/Debug-iphoneos -emit-localized-strings -emit-localized-strings-path /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Intermediates.noindex/Nordur.build/Debug-iphoneos/NordurWidgets.build/Objects-normal/arm64 -c -j3 -enable-batch-mode -incremental -output-file-map /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Intermediates.noindex/Nordur.build/Debug-iphoneos/NordurWidgets.build/Objects-normal/arm64/NordurWidgets-OutputFileMap.json -use-frontend-parseable-output -save-temps -no-color-diagnostics -explicit-module-build -module-cache-path /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules -clang-scanner-module-cache-path /Users/runner/Library/Developer/Xcode/DerivedData/ModuleCache.noindex -sdk-module-cache-path /Users/runner/Library/Developer/Xcode/DerivedData/ModuleCache.noindex -serialize-diagnostics -emit-dependencies -emit-module -emit-module-path /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Intermediates.noindex/Nordur.build/Debug-iphoneos/NordurWidgets.build/Objects-normal/arm64/NordurWidgets.swiftmodule -validate-clang-modules-once -clang-build-session-file /Users/runner/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/Session.modulevalidation -Xcc -I/Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Intermediates.noindex/Nordur.build/Debug-iphoneos/NordurWidgets.build/swift-overrides.hmap -emit-const-values -Xfrontend -const-gather-protocols-file -Xfrontend /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Intermediates.noindex/Nordur.build/Debug-iphoneos/NordurWidgets.build/Objects-normal/arm64/NordurWidgets_const_extract_protocols.json -Xcc -iquote -Xcc /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Intermediates.noindex/Nordur.build/Debug-iphoneos/NordurWidgets.build/NordurWidgets-generated-files.hmap -Xcc -I/Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Intermediates.noindex/Nordur.build/Debug-iphoneos/NordurWidgets.build/NordurWidgets-own-target-headers.hmap -Xcc -I/Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Intermediates.noindex/Nordur.build/Debug-iphoneos/NordurWidgets.build/NordurWidgets-all-target-headers.hmap -Xcc -iquote -Xcc /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Intermediates.noindex/Nordur.build/Debug-iphoneos/NordurWidgets.build/NordurWidgets-project-headers.hmap -Xcc -I/Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Products/Debug-iphoneos/include -Xcc -I/Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Intermediates.noindex/Nordur.build/Debug-iphoneos/NordurWidgets.build/DerivedSources-normal/arm64 -Xcc -I/Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Intermediates.noindex/Nordur.build/Debug-iphoneos/NordurWidgets.build/DerivedSources/arm64 -Xcc -I/Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Intermediates.noindex/Nordur.build/Debug-iphoneos/NordurWidgets.build/DerivedSources -Xcc -DDEBUG\=1 -emit-objc-header -emit-objc-header-path /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Intermediates.noindex/Nordur.build/Debug-iphoneos/NordurWidgets.build/Objects-normal/arm64/NordurWidgets-Swift.h -working-directory /Users/runner/work/nordur-ios/nordur-ios -experimental-emit-module-separately -disable-cmo
+
+SwiftDriverJobDiscovery normal arm64 Compiling OpenMeteo.swift, RoadInfo.swift, Roads.swift, RouteWeather.swift, SafeTravel.swift, SkyGlowGrid.swift, Transport.swift, Weather.swift, WeatherGrid.swift, Webcams.swift (in target 'NordurWidgets' from project 'Nordur')
+
+SwiftMergeGeneratedHeaders /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Intermediates.noindex/Nordur.build/Debug-iphoneos/NordurWidgets.build/DerivedSources/NordurWidgets-Swift.h /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Intermediates.noindex/Nordur.build/Debug-iphoneos/NordurWidgets.build/Objects-normal/arm64/NordurWidgets-Swift.h (in target 'NordurWidgets' from project 'Nordur')
+    cd /Users/runner/work/nordur-ios/nordur-ios
+    builtin-swiftHeaderTool -arch arm64 /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Intermediates.noindex/Nordur.build/Debug-iphoneos/NordurWidgets.build/Objects-normal/arm64/NordurWidgets-Swift.h -o /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Intermediates.noindex/Nordur.build/Debug-iphoneos/NordurWidgets.build/DerivedSources/NordurWidgets-Swift.h
+
+Copy /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Products/Debug-iphoneos/NordurWidgets.swiftmodule/arm64-apple-ios.swiftmodule /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Intermediates.noindex/Nordur.build/Debug-iphoneos/NordurWidgets.build/Objects-normal/arm64/NordurWidgets.swiftmodule (in target 'NordurWidgets' from project 'Nordur')
+    cd /Users/runner/work/nordur-ios/nordur-ios
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks -rename /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Intermediates.noindex/Nordur.build/Debug-iphoneos/NordurWidgets.build/Objects-normal/arm64/NordurWidgets.swiftmodule /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Products/Debug-iphoneos/NordurWidgets.swiftmodule/arm64-apple-ios.swiftmodule
+
+Copy /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Products/Debug-iphoneos/NordurWidgets.swiftmodule/arm64-apple-ios.swiftdoc /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Intermediates.noindex/Nordur.build/Debug-iphoneos/NordurWidgets.build/Objects-normal/arm64/NordurWidgets.swiftdoc (in target 'NordurWidgets' from project 'Nordur')
+    cd /Users/runner/work/nordur-ios/nordur-ios
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks -rename /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Intermediates.noindex/Nordur.build/Debug-iphoneos/NordurWidgets.build/Objects-normal/arm64/NordurWidgets.swiftdoc /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Products/Debug-iphoneos/NordurWidgets.swiftmodule/arm64-apple-ios.swiftdoc
+
+Copy /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Products/Debug-iphoneos/NordurWidgets.swiftmodule/arm64-apple-ios.abi.json /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Intermediates.noindex/Nordur.build/Debug-iphoneos/NordurWidgets.build/Objects-normal/arm64/NordurWidgets.abi.json (in target 'NordurWidgets' from project 'Nordur')
+    cd /Users/runner/work/nordur-ios/nordur-ios
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks -rename /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Intermediates.noindex/Nordur.build/Debug-iphoneos/NordurWidgets.build/Objects-normal/arm64/NordurWidgets.abi.json /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Products/Debug-iphoneos/NordurWidgets.swiftmodule/arm64-apple-ios.abi.json
+
+Copy /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Products/Debug-iphoneos/NordurWidgets.swiftmodule/Project/arm64-apple-ios.swiftsourceinfo /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Intermediates.noindex/Nordur.build/Debug-iphoneos/NordurWidgets.build/Objects-normal/arm64/NordurWidgets.swiftsourceinfo (in target 'NordurWidgets' from project 'Nordur')
+    cd /Users/runner/work/nordur-ios/nordur-ios
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks -rename /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Intermediates.noindex/Nordur.build/Debug-iphoneos/NordurWidgets.build/Objects-normal/arm64/NordurWidgets.swiftsourceinfo /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Products/Debug-iphoneos/NordurWidgets.swiftmodule/Project/arm64-apple-ios.swiftsourceinfo
+
+GenerateAssetSymbols /Users/runner/work/nordur-ios/nordur-ios/Nordur/Assets.xcassets (in target 'Nordur' from project 'Nordur')
+    cd /Users/runner/work/nordur-ios/nordur-ios
+    /Applications/Xcode_26.6.app/Contents/Developer/usr/bin/actool /Users/runner/work/nordur-ios/nordur-ios/Nordur/Assets.xcassets --compile /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Products/Debug-iphoneos/Nordur.app --output-format human-readable-text --notices --warnings --export-dependency-info /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Intermediates.noindex/Nordur.build/Debug-iphoneos/Nordur.build/assetcatalog_dependencies --output-partial-info-plist /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Intermediates.noindex/Nordur.build/Debug-iphoneos/Nordur.build/assetcatalog_generated_info.plist --app-icon AppIcon --accent-color AccentColor --compress-pngs --enable-on-demand-resources YES --development-region it --target-device iphone --target-device ipad --minimum-deployment-target 17.0 --platform iphoneos --bundle-identifier it.lorenzosavini.nordur --generate-swift-asset-symbols /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Intermediates.noindex/Nordur.build/Debug-iphoneos/Nordur.build/DerivedSources/GeneratedAssetSymbols.swift --generate-objc-asset-symbols /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Intermediates.noindex/Nordur.build/Debug-iphoneos/Nordur.build/DerivedSources/GeneratedAssetSymbols.h --generate-asset-symbol-index /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Intermediates.noindex/Nordur.build/Debug-iphoneos/Nordur.build/DerivedSources/GeneratedAssetSymbols-Index.plist
+/* com.apple.actool.compilation-results */
+/Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Intermediates.noindex/Nordur.build/Debug-iphoneos/Nordur.build/DerivedSources/GeneratedAssetSymbols-Index.plist
+/Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Intermediates.noindex/Nordur.build/Debug-iphoneos/Nordur.build/DerivedSources/GeneratedAssetSymbols.h
+/Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Intermediates.noindex/Nordur.build/Debug-iphoneos/Nordur.build/DerivedSources/GeneratedAssetSymbols.swift
+
+
+SwiftDriver Nordur normal arm64 com.apple.xcode.tools.swift.compiler (in target 'Nordur' from project 'Nordur')
+    cd /Users/runner/work/nordur-ios/nordur-ios
+    builtin-SwiftDriver -- /Applications/Xcode_26.6.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc -module-name Nordur -Onone @/Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Intermediates.noindex/Nordur.build/Debug-iphoneos/Nordur.build/Objects-normal/arm64/Nordur.SwiftFileList -DDEBUG -enable-bare-slash-regex -enable-experimental-feature DebugDescriptionMacro -sdk /Applications/Xcode_26.6.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS26.5.sdk -target arm64-apple-ios17.0 -g -module-cache-path /Users/runner/Library/Developer/Xcode/DerivedData/ModuleCache.noindex -Xfrontend -serialize-debugging-options -enable-testing -index-store-path /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Index.noindex/DataStore -Xcc -D_LIBCPP_HARDENING_MODE\=_LIBCPP_HARDENING_MODE_DEBUG -swift-version 5 -I /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Products/Debug-iphoneos -F /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Products/Debug-iphoneos -emit-localized-strings -emit-localized-strings-path /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Intermediates.noindex/Nordur.build/Debug-iphoneos/Nordur.build/Objects-normal/arm64 -c -j3 -enable-batch-mode -incremental -output-file-map /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Intermediates.noindex/Nordur.build/Debug-iphoneos/Nordur.build/Objects-normal/arm64/Nordur-OutputFileMap.json -use-frontend-parseable-output -save-temps -no-color-diagnostics -explicit-module-build -module-cache-path /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules -clang-scanner-module-cache-path /Users/runner/Library/Developer/Xcode/DerivedData/ModuleCache.noindex -sdk-module-cache-path /Users/runner/Library/Developer/Xcode/DerivedData/ModuleCache.noindex -serialize-diagnostics -emit-dependencies -emit-module -emit-module-path /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Intermediates.noindex/Nordur.build/Debug-iphoneos/Nordur.build/Objects-normal/arm64/Nordur.swiftmodule -validate-clang-modules-once -clang-build-session-file /Users/runner/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/Session.modulevalidation -Xcc -I/Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Intermediates.noindex/Nordur.build/Debug-iphoneos/Nordur.build/swift-overrides.hmap -emit-const-values -Xfrontend -const-gather-protocols-file -Xfrontend /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Intermediates.noindex/Nordur.build/Debug-iphoneos/Nordur.build/Objects-normal/arm64/Nordur_const_extract_protocols.json -Xcc -iquote -Xcc /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Intermediates.noindex/Nordur.build/Debug-iphoneos/Nordur.build/Nordur-generated-files.hmap -Xcc -I/Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Intermediates.noindex/Nordur.build/Debug-iphoneos/Nordur.build/Nordur-own-target-headers.hmap -Xcc -I/Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Intermediates.noindex/Nordur.build/Debug-iphoneos/Nordur.build/Nordur-all-target-headers.hmap -Xcc -iquote -Xcc /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Intermediates.noindex/Nordur.build/Debug-iphoneos/Nordur.build/Nordur-project-headers.hmap -Xcc -I/Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Products/Debug-iphoneos/include -Xcc -I/Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Intermediates.noindex/Nordur.build/Debug-iphoneos/Nordur.build/DerivedSources-normal/arm64 -Xcc -I/Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Intermediates.noindex/Nordur.build/Debug-iphoneos/Nordur.build/DerivedSources/arm64 -Xcc -I/Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Intermediates.noindex/Nordur.build/Debug-iphoneos/Nordur.build/DerivedSources -Xcc -DDEBUG\=1 -emit-objc-header -emit-objc-header-path /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Intermediates.noindex/Nordur.build/Debug-iphoneos/Nordur.build/Objects-normal/arm64/Nordur-Swift.h -working-directory /Users/runner/work/nordur-ios/nordur-ios -experimental-emit-module-separately -disable-cmo
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/_AvailabilityInternal-95KYGV1NCQSH1YNOOIVWR95VN.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/ptrauth-75TTTZXI0HQQH3KMK4ZQ0P2IQ.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/SwiftShims-7NYPPF57B26TSNMO25JK11UDJ.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/_Builtin_stdbool-C2Y6AWUI4LTSS9SPKR2AVUTAP.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/DeveloperToolsSupport-BLGUL5420KVZ75OE7D3JVQO7O.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/_Builtin_stdarg-8F64NG3F2COTY9WYM3YNUYL6R.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/ptrcheck-B3XFA6NK5FIYKRV8SZ26P3B05.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/_SwiftConcurrencyShims-D2NCZSYB8PH02R5ROCM8A0XX6.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/_DarwinFoundation1-1N2KG8PT4LUQ7V67AG5WVNV2B.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/ActivityKit-35AES9TOQNWEYMEEW214XS46B.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/_Builtin_limits-BWEA1YRS77D3K1C415PEI3G82.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/_Builtin_float-4P1BRLQG9E3698EZGUMJ4UI2C.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/_Builtin_stddef-45VYUW6PROS7V6V68055PUHCG.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/_DarwinFoundation2-CZSTXNM37CNPPUU519M3Y5Z3R.pcm
+
+SwiftDriverJobDiscovery normal arm64 Compiling DriveActivity.swift, Place.swift, Trip.swift, Astro.swift, Aurora.swift, AuroraConfirm.swift, AuroraEngine.swift, AuroraSites.swift, AuroraState.swift, FuelStations.swift, IMO.swift (in target 'NordurWidgets' from project 'Nordur')
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/_Builtin_stdint-CMV2XM4446KUP4ST6LW99LM7S.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/_Builtin_tgmath-11FF4SQ1PXS19914A5FQRGIRI.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/sys_types-2Y57BUR3AZ1IMAKOAJZWV3FTQ.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/_DarwinFoundation3-6PETK0J0WC4T4ODLTE7EH90U7.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/_Builtin_stdatomic-4H0GLQ55Q99NS2YJHGCUJ2LC4.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/_Builtin_intrinsics-9HILY3WG1AOX7X07GIHIGKDB6.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/_Builtin_inttypes-3XOPQQE7CGP99O3648OCTMBB1.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/Darwin-AQABMI0JSDSWDIS1U9TB769SJ.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/simd-6WUMJL2RLR238KH5A1T9MU4XY.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/ObjectiveC-IDFCCM6CGXRG2IH425DJ17TD.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/MachO-EBO4170CQPCT6NXZV41UFD6PD.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/os_object-BLVD3YNGBT6VS1GN5JQB18URZ.pcm
+
+SwiftDriverJobDiscovery normal arm64 Compiling Dates.swift, Format.swift, Geo.swift, HTTP.swift, Risk.swift, Theme.swift, Alerts.swift, ConditionsWidget.swift, DriveLiveActivity.swift, NordurWidgetsBundle.swift, Drive.swift (in target 'NordurWidgets' from project 'Nordur')
+
+SwiftDriver\ Compilation NordurWidgets normal arm64 com.apple.xcode.tools.swift.compiler (in target 'NordurWidgets' from project 'Nordur')
+    cd /Users/runner/work/nordur-ios/nordur-ios
+    builtin-Swift-Compilation -- /Applications/Xcode_26.6.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc -module-name NordurWidgets -Onone @/Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Intermediates.noindex/Nordur.build/Debug-iphoneos/NordurWidgets.build/Objects-normal/arm64/NordurWidgets.SwiftFileList -DDEBUG -enable-bare-slash-regex -enable-experimental-feature DebugDescriptionMacro -sdk /Applications/Xcode_26.6.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS26.5.sdk -target arm64-apple-ios17.0 -g -module-cache-path /Users/runner/Library/Developer/Xcode/DerivedData/ModuleCache.noindex -Xfrontend -serialize-debugging-options -application-extension -enable-testing -index-store-path /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Index.noindex/DataStore -Xcc -D_LIBCPP_HARDENING_MODE\=_LIBCPP_HARDENING_MODE_DEBUG -swift-version 5 -I /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Products/Debug-iphoneos -F /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Products/Debug-iphoneos -emit-localized-strings -emit-localized-strings-path /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Intermediates.noindex/Nordur.build/Debug-iphoneos/NordurWidgets.build/Objects-normal/arm64 -c -j3 -enable-batch-mode -incremental -output-file-map /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Intermediates.noindex/Nordur.build/Debug-iphoneos/NordurWidgets.build/Objects-normal/arm64/NordurWidgets-OutputFileMap.json -use-frontend-parseable-output -save-temps -no-color-diagnostics -explicit-module-build -module-cache-path /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules -clang-scanner-module-cache-path /Users/runner/Library/Developer/Xcode/DerivedData/ModuleCache.noindex -sdk-module-cache-path /Users/runner/Library/Developer/Xcode/DerivedData/ModuleCache.noindex -serialize-diagnostics -emit-dependencies -emit-module -emit-module-path /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Intermediates.noindex/Nordur.build/Debug-iphoneos/NordurWidgets.build/Objects-normal/arm64/NordurWidgets.swiftmodule -validate-clang-modules-once -clang-build-session-file /Users/runner/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/Session.modulevalidation -Xcc -I/Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Intermediates.noindex/Nordur.build/Debug-iphoneos/NordurWidgets.build/swift-overrides.hmap -emit-const-values -Xfrontend -const-gather-protocols-file -Xfrontend /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Intermediates.noindex/Nordur.build/Debug-iphoneos/NordurWidgets.build/Objects-normal/arm64/NordurWidgets_const_extract_protocols.json -Xcc -iquote -Xcc /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Intermediates.noindex/Nordur.build/Debug-iphoneos/NordurWidgets.build/NordurWidgets-generated-files.hmap -Xcc -I/Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Intermediates.noindex/Nordur.build/Debug-iphoneos/NordurWidgets.build/NordurWidgets-own-target-headers.hmap -Xcc -I/Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Intermediates.noindex/Nordur.build/Debug-iphoneos/NordurWidgets.build/NordurWidgets-all-target-headers.hmap -Xcc -iquote -Xcc /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Intermediates.noindex/Nordur.build/Debug-iphoneos/NordurWidgets.build/NordurWidgets-project-headers.hmap -Xcc -I/Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Products/Debug-iphoneos/include -Xcc -I/Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Intermediates.noindex/Nordur.build/Debug-iphoneos/NordurWidgets.build/DerivedSources-normal/arm64 -Xcc -I/Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Intermediates.noindex/Nordur.build/Debug-iphoneos/NordurWidgets.build/DerivedSources/arm64 -Xcc -I/Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Intermediates.noindex/Nordur.build/Debug-iphoneos/NordurWidgets.build/DerivedSources -Xcc -DDEBUG\=1 -emit-objc-header -emit-objc-header-path /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Intermediates.noindex/Nordur.build/Debug-iphoneos/NordurWidgets.build/Objects-normal/arm64/NordurWidgets-Swift.h -working-directory /Users/runner/work/nordur-ios/nordur-ios -experimental-emit-module-separately -disable-cmo
+
+Ld /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Products/Debug-iphoneos/NordurWidgets.appex/NordurWidgets normal (in target 'NordurWidgets' from project 'Nordur')
+    cd /Users/runner/work/nordur-ios/nordur-ios
+    /Applications/Xcode_26.6.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -Xlinker -reproducible -target arm64-apple-ios17.0 -isysroot /Applications/Xcode_26.6.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS26.5.sdk -O0 -L/Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Intermediates.noindex/EagerLinkingTBDs/Debug-iphoneos -L/Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Products/Debug-iphoneos -F/Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Intermediates.noindex/EagerLinkingTBDs/Debug-iphoneos -F/Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Products/Debug-iphoneos -filelist /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Intermediates.noindex/Nordur.build/Debug-iphoneos/NordurWidgets.build/Objects-normal/arm64/NordurWidgets.LinkFileList -Xlinker -rpath -Xlinker /usr/lib/swift -Xlinker -rpath -Xlinker @executable_path/Frameworks -Xlinker -rpath -Xlinker @executable_path/../../Frameworks -Xlinker -dead_strip -Xlinker -object_path_lto -Xlinker /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Intermediates.noindex/Nordur.build/Debug-iphoneos/NordurWidgets.build/Objects-normal/arm64/NordurWidgets_lto.o -rdynamic -Xlinker -no_deduplicate -Xlinker -dependency_info -Xlinker /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Intermediates.noindex/Nordur.build/Debug-iphoneos/NordurWidgets.build/Objects-normal/arm64/NordurWidgets_dependency_info.dat -e _NSExtensionMain -fapplication-extension -fobjc-link-runtime -L/Applications/Xcode_26.6.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos -L/usr/lib/swift -Xlinker -add_ast_path -Xlinker /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Intermediates.noindex/Nordur.build/Debug-iphoneos/NordurWidgets.build/Objects-normal/arm64/NordurWidgets.swiftmodule @/Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Intermediates.noindex/Nordur.build/Debug-iphoneos/NordurWidgets.build/Objects-normal/arm64/NordurWidgets-linker-args.resp -framework AppIntents -o /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Products/Debug-iphoneos/NordurWidgets.appex/NordurWidgets
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/os_workgroup-2V4RR94DZCTSVD4CZL0KRUSYC.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/Dispatch-I3BK4O8QE6E31HEAEY091P4W.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/Spatial-2L617QT3Q1I8S9GBGY0YT2UEP.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/XPC-17XN6SVJQ1LXXGA6GV5IIZKK2.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/CoreFoundation-2YPCO9B1D9L4FQ5W2U4KPZHRZ.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/os-B4QJJTVQ7RJMSAWMWPF3477Q1.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/dnssd-7MIO1HFVBR5ORQ8P9R4IQIKBL.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/CFNetwork-NJ9FXOWF2B2UOEJ22WU6TL26.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/Security-8SLCPSMJT76K7YI6Y0BDCBXMZ.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/CoreGraphics-F2RHBCPM242UI11023M5681UJ.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/CoreAudioTypes-JL4XEF0P1O3TMQ7WCPRHTS0C.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/Foundation-E7EGA9YFB1I7YZIZ8HNRYQGX0.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/CoreAudio-5UTCTQIBLUIG8J6SYNWYVP32D.pcm
+
+ExtractAppIntentsMetadata (in target 'NordurWidgets' from project 'Nordur')
+    cd /Users/runner/work/nordur-ios/nordur-ios
+    /Applications/Xcode_26.6.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/appintentsmetadataprocessor --toolchain-dir /var/run/com.apple.security.cryptexd/mnt/com.apple.MobileAsset.MetalToolchain-v17.6.109.0.LYJloL/Metal.xctoolchain --module-name NordurWidgets --sdk-root /Applications/Xcode_26.6.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS26.5.sdk --xcode-version 17F113 --platform-family iOS --deployment-target 17.0 --bundle-identifier it.lorenzosavini.nordur.widgets --output /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Products/Debug-iphoneos/NordurWidgets.appex --target-triple arm64-apple-ios17.0 --binary-file /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Products/Debug-iphoneos/NordurWidgets.appex/NordurWidgets --dependency-file /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Intermediates.noindex/Nordur.build/Debug-iphoneos/NordurWidgets.build/Objects-normal/arm64/NordurWidgets_dependency_info.dat --stringsdata-file /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Intermediates.noindex/Nordur.build/Debug-iphoneos/NordurWidgets.build/Objects-normal/arm64/ExtractedAppShortcutsMetadata.stringsdata --source-file-list /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Intermediates.noindex/Nordur.build/Debug-iphoneos/NordurWidgets.build/Objects-normal/arm64/NordurWidgets.SwiftFileList --metadata-file-list /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Intermediates.noindex/Nordur.build/Debug-iphoneos/NordurWidgets.build/NordurWidgets.DependencyMetadataFileList --static-metadata-file-list /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Intermediates.noindex/Nordur.build/Debug-iphoneos/NordurWidgets.build/NordurWidgets.DependencyStaticMetadataFileList --swift-const-vals-list /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Intermediates.noindex/Nordur.build/Debug-iphoneos/NordurWidgets.build/Objects-normal/arm64/NordurWidgets.SwiftConstValuesFileList --compile-time-extraction --deployment-aware-processing --validate-assistant-intents --no-app-shortcuts-localization
+2026-10-17 21:31:05.942 appintentsmetadataprocessor[16134:46923] Starting appintentsmetadataprocessor export
+2026-10-17 21:31:05.968 appintentsmetadataprocessor[16134:46923] Writing Metadata.appintents
+2026-10-17 21:31:05.968 appintentsmetadataprocessor[16134:46923] Metadata root: /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Products/Debug-iphoneos/NordurWidgets.appex/Metadata.appintents
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/ImageIO-7EZXFQRW2J16UFG0D5FSPVV7R.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/CoreText-2Z1SZ0SEZQGXEUWFVM28HNH9H.pcm
+
+Touch /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Products/Debug-iphoneos/NordurWidgets.appex (in target 'NordurWidgets' from project 'Nordur')
+    cd /Users/runner/work/nordur-ios/nordur-ios
+    /usr/bin/touch -c /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Products/Debug-iphoneos/NordurWidgets.appex
+
+ProcessInfoPlistFile /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Products/Debug-iphoneos/Nordur.app/Info.plist /Users/runner/work/nordur-ios/nordur-ios/Info.plist (in target 'Nordur' from project 'Nordur')
+    cd /Users/runner/work/nordur-ios/nordur-ios
+    builtin-infoPlistUtility /Users/runner/work/nordur-ios/nordur-ios/Info.plist -producttype com.apple.product-type.application -genpkginfo /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Products/Debug-iphoneos/Nordur.app/PkgInfo -expandbuildsettings -format binary -platform iphoneos -requiredArchitecture arm64 -o /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Products/Debug-iphoneos/Nordur.app/Info.plist
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/FileProvider-8Y5T17GJFQ0ZDIIAJLHW3LD7M.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/Accessibility-7UXZ9W9VGS6Q9XB4SRVXSQBNF.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/CoreMIDI-DS4HCANQS23VHJF78JT8QBPX7.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/BackgroundTasks-94VG4YSZH7FYJIE9SJ4Q923K8.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/DataDetection-8P4WMCKD75DFDMW40N69AOGQ3.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/UIUtilities-A9J9LI4BWCS29VS1H37BXVLSP.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/AudioToolbox-3TRMR6W7DKZTNGIBIECWEI2T6.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/CoreData-T0IXMCT54Z0AH5XI77F7GSFU.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/UserNotifications-A4N4284WA0ZGZQP4Q8CG0DI7D.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/OSLog-8JE138WUIY5I30VXZP40D5US.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/Symbols-C627QB2QPVZHCW3S15BOKXDG3.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/UniformTypeIdentifiers-55VQMG40KLURM81W2ST184RP3.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/IOSurface-3F2N8MA8HHB3LUWSB00QS5KRP.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/CoreTransferable-BL289XPMOVHYUMIODC6CUGSAQ.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/Network-AJ8BNCYCPZBM7AHBJ34NIDQ3L.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/_LocationEssentials-4USWSDCYHIRMN2SNA06ZFVFDN.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/OpenGLES-E8JECY8KAHYTVJP05F2ADN0WP.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/Metal-187GFREUASVA96IN60ZF867QS.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/CoreLocation-8X0QQSJV9YHOC5LLAL2GDO37J.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/AVRouting-BBCS2J2QJN4L9GU9EP17VE0CR.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/CoreVideo-D77DQKPZVTFTXNIIZOW6AXXB3.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/CoreMedia-7GF64YMPH8AGJVUNK1S96ZZNL.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/QuartzCore-7714H02DSPZXCRYXF9NR37CSU.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/CoreImage-C4T498R54D1W6WPC5VZKCL35C.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/SwiftUICore-3OVSBLHABO6ZTE105OMSLQPBT.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/AVFAudio-DHOQN1RGZ11C2V12J6ITJ8QF6.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/MediaToolbox-4FX8HT0LPR9DFZSA3WFPA91RJ.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/UIKit-WM6MP5P4XA4NVZ82YJ52ZQL7.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/AVFoundation-BYY5DL5H08CPH7JPZTO4S6UT0.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/SwiftUI-3PI0RHU0Z69DCXPO2TVATQFJG.pcm
+
+SwiftExplicitDependencyGeneratePcm arm64 /Users/runner/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/MapKit-7Z6NRX7K1JN8TB0E15WX2MNYQ.pcm
+
+SwiftEmitModule normal arm64 Emitting\ module\ for\ Nordur (in target 'Nordur' from project 'Nordur')
+
+EmitSwiftModule normal arm64 (in target 'Nordur' from project 'Nordur')
+    cd /Users/runner/work/nordur-ios/nordur-ios
+    
+
+SwiftCompile normal arm64 Compiling\ InfoView.swift,\ OfflineView.swift,\ PlacePicker.swift,\ QuakesView.swift,\ RoadAheadSection.swift,\ RoadSectionView.swift,\ Dates.swift,\ Format.swift,\ Geo.swift,\ HTTP.swift,\ Risk.swift,\ Theme.swift,\ Alerts.swift,\ Drive.swift,\ DriveActivity.swift,\ Place.swift,\ Trip.swift,\ Astro.swift,\ Aurora.swift,\ AuroraConfirm.swift,\ AuroraEngine.swift,\ AuroraSites.swift,\ AuroraState.swift /Users/runner/work/nordur-ios/nordur-ios/Nordur/Views/InfoView.swift /Users/runner/work/nordur-ios/nordur-ios/Nordur/Views/OfflineView.swift /Users/runner/work/nordur-ios/nordur-ios/Nordur/Views/PlacePicker.swift /Users/runner/work/nordur-ios/nordur-ios/Nordur/Views/QuakesView.swift /Users/runner/work/nordur-ios/nordur-ios/Nordur/Views/RoadAheadSection.swift /Users/runner/work/nordur-ios/nordur-ios/Nordur/Views/RoadSectionView.swift /Users/runner/work/nordur-ios/nordur-ios/Shared/Core/Dates.swift /Users/runner/work/nordur-ios/nordur-ios/Shared/Core/Format.swift /Users/runner/work/nordur-ios/nordur-ios/Shared/Core/Geo.swift /Users/runner/work/nordur-ios/nordur-ios/Shared/Core/HTTP.swift /Users/runner/work/nordur-ios/nordur-ios/Shared/Core/Risk.swift /Users/runner/work/nordur-ios/nordur-ios/Shared/Core/Theme.swift /Users/runner/work/nordur-ios/nordur-ios/Shared/Models/Alerts.swift /Users/runner/work/nordur-ios/nordur-ios/Shared/Models/Drive.swift /Users/runner/work/nordur-ios/nordur-ios/Shared/Models/DriveActivity.swift /Users/runner/work/nordur-ios/nordur-ios/Shared/Models/Place.swift /Users/runner/work/nordur-ios/nordur-ios/Shared/Models/Trip.swift /Users/runner/work/nordur-ios/nordur-ios/Shared/Services/Astro.swift /Users/runner/work/nordur-ios/nordur-ios/Shared/Services/Aurora.swift /Users/runner/work/nordur-ios/nordur-ios/Shared/Services/AuroraConfirm.swift /Users/runner/work/nordur-ios/nordur-ios/Shared/Services/AuroraEngine.swift /Users/runner/work/nordur-ios/nordur-ios/Shared/Services/AuroraSites.swift /Users/runner/work/nordur-ios/nordur-ios/Shared/Services/AuroraState.swift (in target 'Nordur' from project 'Nordur')
+SwiftCompile normal arm64 /Users/runner/work/nordur-ios/nordur-ios/Nordur/Views/InfoView.swift (in target 'Nordur' from project 'Nordur')
+    cd /Users/runner/work/nordur-ios/nordur-ios
+    
+
+SwiftCompile normal arm64 /Users/runner/work/nordur-ios/nordur-ios/Nordur/Views/OfflineView.swift (in target 'Nordur' from project 'Nordur')
+    cd /Users/runner/work/nordur-ios/nordur-ios
+    
+
+SwiftCompile normal arm64 /Users/runner/work/nordur-ios/nordur-ios/Nordur/Views/PlacePicker.swift (in target 'Nordur' from project 'Nordur')
+    cd /Users/runner/work/nordur-ios/nordur-ios
+    
+
+SwiftCompile normal arm64 /Users/runner/work/nordur-ios/nordur-ios/Nordur/Views/QuakesView.swift (in target 'Nordur' from project 'Nordur')
+    cd /Users/runner/work/nordur-ios/nordur-ios
+    
+
+SwiftCompile normal arm64 /Users/runner/work/nordur-ios/nordur-ios/Nordur/Views/RoadAheadSection.swift (in target 'Nordur' from project 'Nordur')
+    cd /Users/runner/work/nordur-ios/nordur-ios
+    
+
+SwiftCompile normal arm64 /Users/runner/work/nordur-ios/nordur-ios/Nordur/Views/RoadSectionView.swift (in target 'Nordur' from project 'Nordur')
+    cd /Users/runner/work/nordur-ios/nordur-ios
+    
+
+SwiftCompile normal arm64 /Users/runner/work/nordur-ios/nordur-ios/Shared/Core/Dates.swift (in target 'Nordur' from project 'Nordur')
+    cd /Users/runner/work/nordur-ios/nordur-ios
+    
+
+SwiftCompile normal arm64 /Users/runner/work/nordur-ios/nordur-ios/Shared/Core/Format.swift (in target 'Nordur' from project 'Nordur')
+    cd /Users/runner/work/nordur-ios/nordur-ios
+    
+
+SwiftCompile normal arm64 /Users/runner/work/nordur-ios/nordur-ios/Shared/Core/Geo.swift (in target 'Nordur' from project 'Nordur')
+    cd /Users/runner/work/nordur-ios/nordur-ios
+    
+
+SwiftCompile normal arm64 /Users/runner/work/nordur-ios/nordur-ios/Shared/Core/HTTP.swift (in target 'Nordur' from project 'Nordur')
+    cd /Users/runner/work/nordur-ios/nordur-ios
+    
+
+SwiftCompile normal arm64 /Users/runner/work/nordur-ios/nordur-ios/Shared/Core/Risk.swift (in target 'Nordur' from project 'Nordur')
+    cd /Users/runner/work/nordur-ios/nordur-ios
+    
+
+SwiftCompile normal arm64 /Users/runner/work/nordur-ios/nordur-ios/Shared/Core/Theme.swift (in target 'Nordur' from project 'Nordur')
+    cd /Users/runner/work/nordur-ios/nordur-ios
+    
+
+SwiftCompile normal arm64 /Users/runner/work/nordur-ios/nordur-ios/Shared/Models/Alerts.swift (in target 'Nordur' from project 'Nordur')
+    cd /Users/runner/work/nordur-ios/nordur-ios
+    
+
+SwiftCompile normal arm64 /Users/runner/work/nordur-ios/nordur-ios/Shared/Models/Drive.swift (in target 'Nordur' from project 'Nordur')
+    cd /Users/runner/work/nordur-ios/nordur-ios
+    
+
+SwiftCompile normal arm64 /Users/runner/work/nordur-ios/nordur-ios/Shared/Models/DriveActivity.swift (in target 'Nordur' from project 'Nordur')
+    cd /Users/runner/work/nordur-ios/nordur-ios
+    
+
+SwiftCompile normal arm64 /Users/runner/work/nordur-ios/nordur-ios/Shared/Models/Place.swift (in target 'Nordur' from project 'Nordur')
+    cd /Users/runner/work/nordur-ios/nordur-ios
+    
+
+SwiftCompile normal arm64 /Users/runner/work/nordur-ios/nordur-ios/Shared/Models/Trip.swift (in target 'Nordur' from project 'Nordur')
+    cd /Users/runner/work/nordur-ios/nordur-ios
+    
+
+SwiftCompile normal arm64 /Users/runner/work/nordur-ios/nordur-ios/Shared/Services/Astro.swift (in target 'Nordur' from project 'Nordur')
+    cd /Users/runner/work/nordur-ios/nordur-ios
+    
+
+SwiftCompile normal arm64 /Users/runner/work/nordur-ios/nordur-ios/Shared/Services/Aurora.swift (in target 'Nordur' from project 'Nordur')
+    cd /Users/runner/work/nordur-ios/nordur-ios
+    
+
+SwiftCompile normal arm64 /Users/runner/work/nordur-ios/nordur-ios/Shared/Services/AuroraConfirm.swift (in target 'Nordur' from project 'Nordur')
+    cd /Users/runner/work/nordur-ios/nordur-ios
+    
+
+SwiftCompile normal arm64 /Users/runner/work/nordur-ios/nordur-ios/Shared/Services/AuroraEngine.swift (in target 'Nordur' from project 'Nordur')
+    cd /Users/runner/work/nordur-ios/nordur-ios
+    
+
+SwiftCompile normal arm64 /Users/runner/work/nordur-ios/nordur-ios/Shared/Services/AuroraSites.swift (in target 'Nordur' from project 'Nordur')
+    cd /Users/runner/work/nordur-ios/nordur-ios
+    
+
+SwiftCompile normal arm64 /Users/runner/work/nordur-ios/nordur-ios/Shared/Services/AuroraState.swift (in target 'Nordur' from project 'Nordur')
+    cd /Users/runner/work/nordur-ios/nordur-ios
+    
+
+SwiftCompile normal arm64 Compiling\ FuelStations.swift,\ IMO.swift,\ OpenMeteo.swift,\ RoadInfo.swift,\ Roads.swift,\ RouteWeather.swift,\ SafeTravel.swift,\ SkyGlowGrid.swift,\ Transport.swift,\ Weather.swift,\ WeatherGrid.swift,\ Webcams.swift,\ RoadsView.swift,\ RouteForecastView.swift,\ SettingsView.swift,\ TabBar.swift,\ TodayView.swift,\ TransportView.swift,\ TripView.swift,\ WarningsView.swift,\ WeatherView.swift,\ WebcamsView.swift,\ GeneratedAssetSymbols.swift /Users/runner/work/nordur-ios/nordur-ios/Shared/Services/FuelStations.swift /Users/runner/work/nordur-ios/nordur-ios/Shared/Services/IMO.swift /Users/runner/work/nordur-ios/nordur-ios/Shared/Services/OpenMeteo.swift /Users/runner/work/nordur-ios/nordur-ios/Shared/Services/RoadInfo.swift /Users/runner/work/nordur-ios/nordur-ios/Shared/Services/Roads.swift /Users/runner/work/nordur-ios/nordur-ios/Shared/Services/RouteWeather.swift /Users/runner/work/nordur-ios/nordur-ios/Shared/Services/SafeTravel.swift /Users/runner/work/nordur-ios/nordur-ios/Shared/Services/SkyGlowGrid.swift /Users/runner/work/nordur-ios/nordur-ios/Shared/Services/Transport.swift /Users/runner/work/nordur-ios/nordur-ios/Shared/Services/Weather.swift /Users/runner/work/nordur-ios/nordur-ios/Shared/Services/WeatherGrid.swift /Users/runner/work/nordur-ios/nordur-ios/Shared/Services/Webcams.swift /Users/runner/work/nordur-ios/nordur-ios/Nordur/Views/RoadsView.swift /Users/runner/work/nordur-ios/nordur-ios/Nordur/Views/RouteForecastView.swift /Users/runner/work/nordur-ios/nordur-ios/Nordur/Views/SettingsView.swift /Users/runner/work/nordur-ios/nordur-ios/Nordur/Views/TabBar.swift /Users/runner/work/nordur-ios/nordur-ios/Nordur/Views/TodayView.swift /Users/runner/work/nordur-ios/nordur-ios/Nordur/Views/TransportView.swift /Users/runner/work/nordur-ios/nordur-ios/Nordur/Views/TripView.swift /Users/runner/work/nordur-ios/nordur-ios/Nordur/Views/WarningsView.swift /Users/runner/work/nordur-ios/nordur-ios/Nordur/Views/WeatherView.swift /Users/runner/work/nordur-ios/nordur-ios/Nordur/Views/WebcamsView.swift /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Intermediates.noindex/Nordur.build/Debug-iphoneos/Nordur.build/DerivedSources/GeneratedAssetSymbols.swift (in target 'Nordur' from project 'Nordur')
+SwiftCompile normal arm64 /Users/runner/work/nordur-ios/nordur-ios/Shared/Services/FuelStations.swift (in target 'Nordur' from project 'Nordur')
+    cd /Users/runner/work/nordur-ios/nordur-ios
+    
+
+SwiftCompile normal arm64 /Users/runner/work/nordur-ios/nordur-ios/Shared/Services/IMO.swift (in target 'Nordur' from project 'Nordur')
+    cd /Users/runner/work/nordur-ios/nordur-ios
+    
+
+SwiftCompile normal arm64 /Users/runner/work/nordur-ios/nordur-ios/Shared/Services/OpenMeteo.swift (in target 'Nordur' from project 'Nordur')
+    cd /Users/runner/work/nordur-ios/nordur-ios
+    
+
+SwiftCompile normal arm64 /Users/runner/work/nordur-ios/nordur-ios/Shared/Services/RoadInfo.swift (in target 'Nordur' from project 'Nordur')
+    cd /Users/runner/work/nordur-ios/nordur-ios
+    
+
+SwiftCompile normal arm64 /Users/runner/work/nordur-ios/nordur-ios/Shared/Services/Roads.swift (in target 'Nordur' from project 'Nordur')
+    cd /Users/runner/work/nordur-ios/nordur-ios
+    
+
+SwiftCompile normal arm64 /Users/runner/work/nordur-ios/nordur-ios/Shared/Services/RouteWeather.swift (in target 'Nordur' from project 'Nordur')
+    cd /Users/runner/work/nordur-ios/nordur-ios
+    
+
+SwiftCompile normal arm64 /Users/runner/work/nordur-ios/nordur-ios/Shared/Services/SafeTravel.swift (in target 'Nordur' from project 'Nordur')
+    cd /Users/runner/work/nordur-ios/nordur-ios
+    
+
+SwiftCompile normal arm64 /Users/runner/work/nordur-ios/nordur-ios/Shared/Services/SkyGlowGrid.swift (in target 'Nordur' from project 'Nordur')
+    cd /Users/runner/work/nordur-ios/nordur-ios
+    
+
+SwiftCompile normal arm64 /Users/runner/work/nordur-ios/nordur-ios/Shared/Services/Transport.swift (in target 'Nordur' from project 'Nordur')
+    cd /Users/runner/work/nordur-ios/nordur-ios
+    
+
+SwiftCompile normal arm64 /Users/runner/work/nordur-ios/nordur-ios/Shared/Services/Weather.swift (in target 'Nordur' from project 'Nordur')
+    cd /Users/runner/work/nordur-ios/nordur-ios
+    
+
+SwiftCompile normal arm64 /Users/runner/work/nordur-ios/nordur-ios/Shared/Services/WeatherGrid.swift (in target 'Nordur' from project 'Nordur')
+    cd /Users/runner/work/nordur-ios/nordur-ios
+    
+
+SwiftCompile normal arm64 /Users/runner/work/nordur-ios/nordur-ios/Shared/Services/Webcams.swift (in target 'Nordur' from project 'Nordur')
+    cd /Users/runner/work/nordur-ios/nordur-ios
+    
+
+SwiftCompile normal arm64 /Users/runner/work/nordur-ios/nordur-ios/Nordur/Views/RoadsView.swift (in target 'Nordur' from project 'Nordur')
+    cd /Users/runner/work/nordur-ios/nordur-ios
+    
+
+SwiftCompile normal arm64 /Users/runner/work/nordur-ios/nordur-ios/Nordur/Views/RouteForecastView.swift (in target 'Nordur' from project 'Nordur')
+    cd /Users/runner/work/nordur-ios/nordur-ios
+    
+
+SwiftCompile normal arm64 /Users/runner/work/nordur-ios/nordur-ios/Nordur/Views/SettingsView.swift (in target 'Nordur' from project 'Nordur')
+    cd /Users/runner/work/nordur-ios/nordur-ios
+    
+
+SwiftCompile normal arm64 /Users/runner/work/nordur-ios/nordur-ios/Nordur/Views/TabBar.swift (in target 'Nordur' from project 'Nordur')
+    cd /Users/runner/work/nordur-ios/nordur-ios
+    
+
+SwiftCompile normal arm64 /Users/runner/work/nordur-ios/nordur-ios/Nordur/Views/TodayView.swift (in target 'Nordur' from project 'Nordur')
+    cd /Users/runner/work/nordur-ios/nordur-ios
+    
+
+SwiftCompile normal arm64 /Users/runner/work/nordur-ios/nordur-ios/Nordur/Views/TransportView.swift (in target 'Nordur' from project 'Nordur')
+    cd /Users/runner/work/nordur-ios/nordur-ios
+    
+
+SwiftCompile normal arm64 /Users/runner/work/nordur-ios/nordur-ios/Nordur/Views/TripView.swift (in target 'Nordur' from project 'Nordur')
+    cd /Users/runner/work/nordur-ios/nordur-ios
+    
+
+SwiftCompile normal arm64 /Users/runner/work/nordur-ios/nordur-ios/Nordur/Views/WarningsView.swift (in target 'Nordur' from project 'Nordur')
+    cd /Users/runner/work/nordur-ios/nordur-ios
+    
+
+SwiftCompile normal arm64 /Users/runner/work/nordur-ios/nordur-ios/Nordur/Views/WeatherView.swift (in target 'Nordur' from project 'Nordur')
+    cd /Users/runner/work/nordur-ios/nordur-ios
+    
+
+SwiftCompile normal arm64 /Users/runner/work/nordur-ios/nordur-ios/Nordur/Views/WebcamsView.swift (in target 'Nordur' from project 'Nordur')
+    cd /Users/runner/work/nordur-ios/nordur-ios
+    
+
+SwiftCompile normal arm64 /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Intermediates.noindex/Nordur.build/Debug-iphoneos/Nordur.build/DerivedSources/GeneratedAssetSymbols.swift (in target 'Nordur' from project 'Nordur')
+    cd /Users/runner/work/nordur-ios/nordur-ios
+    
+
+SwiftCompile normal arm64 Compiling\ NordurApp.swift,\ Account.swift,\ AlertCenter.swift,\ AppModel.swift,\ DriveRecorder.swift,\ DriveStore.swift,\ LocationManager.swift,\ NotificationIcon.swift,\ PlacePhoto.swift,\ RoadWatch.swift,\ RoutePlanner.swift,\ Translator.swift,\ TripStore.swift,\ MapScreen.swift,\ WeatherMapView.swift,\ WindParticles.swift,\ AccountForms.swift,\ AccountView.swift,\ AlertDetailView.swift,\ AlertsView.swift,\ AuroraLiveView.swift,\ AuroraView.swift,\ Components.swift,\ DriveView.swift /Users/runner/work/nordur-ios/nordur-ios/Nordur/App/NordurApp.swift /Users/runner/work/nordur-ios/nordur-ios/Nordur/State/Account.swift /Users/runner/work/nordur-ios/nordur-ios/Nordur/State/AlertCenter.swift /Users/runner/work/nordur-ios/nordur-ios/Nordur/State/AppModel.swift /Users/runner/work/nordur-ios/nordur-ios/Nordur/State/DriveRecorder.swift /Users/runner/work/nordur-ios/nordur-ios/Nordur/State/DriveStore.swift /Users/runner/work/nordur-ios/nordur-ios/Nordur/State/LocationManager.swift /Users/runner/work/nordur-ios/nordur-ios/Nordur/State/NotificationIcon.swift /Users/runner/work/nordur-ios/nordur-ios/Nordur/State/PlacePhoto.swift /Users/runner/work/nordur-ios/nordur-ios/Nordur/State/RoadWatch.swift /Users/runner/work/nordur-ios/nordur-ios/Nordur/State/RoutePlanner.swift /Users/runner/work/nordur-ios/nordur-ios/Nordur/State/Translator.swift /Users/runner/work/nordur-ios/nordur-ios/Nordur/State/TripStore.swift /Users/runner/work/nordur-ios/nordur-ios/Nordur/Views/Map/MapScreen.swift /Users/runner/work/nordur-ios/nordur-ios/Nordur/Views/Map/WeatherMapView.swift /Users/runner/work/nordur-ios/nordur-ios/Nordur/Views/Map/WindParticles.swift /Users/runner/work/nordur-ios/nordur-ios/Nordur/Views/AccountForms.swift /Users/runner/work/nordur-ios/nordur-ios/Nordur/Views/AccountView.swift /Users/runner/work/nordur-ios/nordur-ios/Nordur/Views/AlertDetailView.swift /Users/runner/work/nordur-ios/nordur-ios/Nordur/Views/AlertsView.swift /Users/runner/work/nordur-ios/nordur-ios/Nordur/Views/AuroraLiveView.swift /Users/runner/work/nordur-ios/nordur-ios/Nordur/Views/AuroraView.swift /Users/runner/work/nordur-ios/nordur-ios/Nordur/Views/Components.swift /Users/runner/work/nordur-ios/nordur-ios/Nordur/Views/DriveView.swift (in target 'Nordur' from project 'Nordur')
+SwiftCompile normal arm64 /Users/runner/work/nordur-ios/nordur-ios/Nordur/App/NordurApp.swift (in target 'Nordur' from project 'Nordur')
+    cd /Users/runner/work/nordur-ios/nordur-ios
+    
+
+SwiftCompile normal arm64 /Users/runner/work/nordur-ios/nordur-ios/Nordur/State/Account.swift (in target 'Nordur' from project 'Nordur')
+    cd /Users/runner/work/nordur-ios/nordur-ios
+    
+
+SwiftCompile normal arm64 /Users/runner/work/nordur-ios/nordur-ios/Nordur/State/AlertCenter.swift (in target 'Nordur' from project 'Nordur')
+    cd /Users/runner/work/nordur-ios/nordur-ios
+    
+
+SwiftCompile normal arm64 /Users/runner/work/nordur-ios/nordur-ios/Nordur/State/AppModel.swift (in target 'Nordur' from project 'Nordur')
+    cd /Users/runner/work/nordur-ios/nordur-ios
+    
+
+SwiftCompile normal arm64 /Users/runner/work/nordur-ios/nordur-ios/Nordur/State/DriveRecorder.swift (in target 'Nordur' from project 'Nordur')
+    cd /Users/runner/work/nordur-ios/nordur-ios
+    
+
+SwiftCompile normal arm64 /Users/runner/work/nordur-ios/nordur-ios/Nordur/State/DriveStore.swift (in target 'Nordur' from project 'Nordur')
+    cd /Users/runner/work/nordur-ios/nordur-ios
+    
+
+SwiftCompile normal arm64 /Users/runner/work/nordur-ios/nordur-ios/Nordur/State/LocationManager.swift (in target 'Nordur' from project 'Nordur')
+    cd /Users/runner/work/nordur-ios/nordur-ios
+    
+
+SwiftCompile normal arm64 /Users/runner/work/nordur-ios/nordur-ios/Nordur/State/NotificationIcon.swift (in target 'Nordur' from project 'Nordur')
+    cd /Users/runner/work/nordur-ios/nordur-ios
+    
+
+SwiftCompile normal arm64 /Users/runner/work/nordur-ios/nordur-ios/Nordur/State/PlacePhoto.swift (in target 'Nordur' from project 'Nordur')
+    cd /Users/runner/work/nordur-ios/nordur-ios
+    
+
+SwiftCompile normal arm64 /Users/runner/work/nordur-ios/nordur-ios/Nordur/State/RoadWatch.swift (in target 'Nordur' from project 'Nordur')
+    cd /Users/runner/work/nordur-ios/nordur-ios
+    
+
+SwiftCompile normal arm64 /Users/runner/work/nordur-ios/nordur-ios/Nordur/State/RoutePlanner.swift (in target 'Nordur' from project 'Nordur')
+    cd /Users/runner/work/nordur-ios/nordur-ios
+    
+
+SwiftCompile normal arm64 /Users/runner/work/nordur-ios/nordur-ios/Nordur/State/Translator.swift (in target 'Nordur' from project 'Nordur')
+    cd /Users/runner/work/nordur-ios/nordur-ios
+    
+
+SwiftCompile normal arm64 /Users/runner/work/nordur-ios/nordur-ios/Nordur/State/TripStore.swift (in target 'Nordur' from project 'Nordur')
+    cd /Users/runner/work/nordur-ios/nordur-ios
+    
+
+SwiftCompile normal arm64 /Users/runner/work/nordur-ios/nordur-ios/Nordur/Views/Map/MapScreen.swift (in target 'Nordur' from project 'Nordur')
+    cd /Users/runner/work/nordur-ios/nordur-ios
+    
+
+SwiftCompile normal arm64 /Users/runner/work/nordur-ios/nordur-ios/Nordur/Views/Map/WeatherMapView.swift (in target 'Nordur' from project 'Nordur')
+    cd /Users/runner/work/nordur-ios/nordur-ios
+    
+
+SwiftCompile normal arm64 /Users/runner/work/nordur-ios/nordur-ios/Nordur/Views/Map/WindParticles.swift (in target 'Nordur' from project 'Nordur')
+    cd /Users/runner/work/nordur-ios/nordur-ios
+    
+
+SwiftCompile normal arm64 /Users/runner/work/nordur-ios/nordur-ios/Nordur/Views/AccountForms.swift (in target 'Nordur' from project 'Nordur')
+    cd /Users/runner/work/nordur-ios/nordur-ios
+    
+
+SwiftCompile normal arm64 /Users/runner/work/nordur-ios/nordur-ios/Nordur/Views/AccountView.swift (in target 'Nordur' from project 'Nordur')
+    cd /Users/runner/work/nordur-ios/nordur-ios
+    
+
+SwiftCompile normal arm64 /Users/runner/work/nordur-ios/nordur-ios/Nordur/Views/AlertDetailView.swift (in target 'Nordur' from project 'Nordur')
+    cd /Users/runner/work/nordur-ios/nordur-ios
+    
+
+SwiftCompile normal arm64 /Users/runner/work/nordur-ios/nordur-ios/Nordur/Views/AlertsView.swift (in target 'Nordur' from project 'Nordur')
+    cd /Users/runner/work/nordur-ios/nordur-ios
+    
+
+SwiftCompile normal arm64 /Users/runner/work/nordur-ios/nordur-ios/Nordur/Views/AuroraLiveView.swift (in target 'Nordur' from project 'Nordur')
+    cd /Users/runner/work/nordur-ios/nordur-ios
+    
+
+SwiftCompile normal arm64 /Users/runner/work/nordur-ios/nordur-ios/Nordur/Views/AuroraView.swift (in target 'Nordur' from project 'Nordur')
+    cd /Users/runner/work/nordur-ios/nordur-ios
+    
+
+SwiftCompile normal arm64 /Users/runner/work/nordur-ios/nordur-ios/Nordur/Views/Components.swift (in target 'Nordur' from project 'Nordur')
+    cd /Users/runner/work/nordur-ios/nordur-ios
+    
+
+SwiftCompile normal arm64 /Users/runner/work/nordur-ios/nordur-ios/Nordur/Views/DriveView.swift (in target 'Nordur' from project 'Nordur')
+    cd /Users/runner/work/nordur-ios/nordur-ios
+    
+
+SwiftDriverJobDiscovery normal arm64 Emitting module for Nordur (in target 'Nordur' from project 'Nordur')
+
+SwiftDriver\ Compilation\ Requirements Nordur normal arm64 com.apple.xcode.tools.swift.compiler (in target 'Nordur' from project 'Nordur')
+    cd /Users/runner/work/nordur-ios/nordur-ios
+    builtin-Swift-Compilation-Requirements -- /Applications/Xcode_26.6.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc -module-name Nordur -Onone @/Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Intermediates.noindex/Nordur.build/Debug-iphoneos/Nordur.build/Objects-normal/arm64/Nordur.SwiftFileList -DDEBUG -enable-bare-slash-regex -enable-experimental-feature DebugDescriptionMacro -sdk /Applications/Xcode_26.6.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS26.5.sdk -target arm64-apple-ios17.0 -g -module-cache-path /Users/runner/Library/Developer/Xcode/DerivedData/ModuleCache.noindex -Xfrontend -serialize-debugging-options -enable-testing -index-store-path /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Index.noindex/DataStore -Xcc -D_LIBCPP_HARDENING_MODE\=_LIBCPP_HARDENING_MODE_DEBUG -swift-version 5 -I /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Products/Debug-iphoneos -F /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Products/Debug-iphoneos -emit-localized-strings -emit-localized-strings-path /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Intermediates.noindex/Nordur.build/Debug-iphoneos/Nordur.build/Objects-normal/arm64 -c -j3 -enable-batch-mode -incremental -output-file-map /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Intermediates.noindex/Nordur.build/Debug-iphoneos/Nordur.build/Objects-normal/arm64/Nordur-OutputFileMap.json -use-frontend-parseable-output -save-temps -no-color-diagnostics -explicit-module-build -module-cache-path /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules -clang-scanner-module-cache-path /Users/runner/Library/Developer/Xcode/DerivedData/ModuleCache.noindex -sdk-module-cache-path /Users/runner/Library/Developer/Xcode/DerivedData/ModuleCache.noindex -serialize-diagnostics -emit-dependencies -emit-module -emit-module-path /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Intermediates.noindex/Nordur.build/Debug-iphoneos/Nordur.build/Objects-normal/arm64/Nordur.swiftmodule -validate-clang-modules-once -clang-build-session-file /Users/runner/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/Session.modulevalidation -Xcc -I/Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Intermediates.noindex/Nordur.build/Debug-iphoneos/Nordur.build/swift-overrides.hmap -emit-const-values -Xfrontend -const-gather-protocols-file -Xfrontend /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Intermediates.noindex/Nordur.build/Debug-iphoneos/Nordur.build/Objects-normal/arm64/Nordur_const_extract_protocols.json -Xcc -iquote -Xcc /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Intermediates.noindex/Nordur.build/Debug-iphoneos/Nordur.build/Nordur-generated-files.hmap -Xcc -I/Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Intermediates.noindex/Nordur.build/Debug-iphoneos/Nordur.build/Nordur-own-target-headers.hmap -Xcc -I/Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Intermediates.noindex/Nordur.build/Debug-iphoneos/Nordur.build/Nordur-all-target-headers.hmap -Xcc -iquote -Xcc /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Intermediates.noindex/Nordur.build/Debug-iphoneos/Nordur.build/Nordur-project-headers.hmap -Xcc -I/Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Products/Debug-iphoneos/include -Xcc -I/Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Intermediates.noindex/Nordur.build/Debug-iphoneos/Nordur.build/DerivedSources-normal/arm64 -Xcc -I/Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Intermediates.noindex/Nordur.build/Debug-iphoneos/Nordur.build/DerivedSources/arm64 -Xcc -I/Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Intermediates.noindex/Nordur.build/Debug-iphoneos/Nordur.build/DerivedSources -Xcc -DDEBUG\=1 -emit-objc-header -emit-objc-header-path /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Intermediates.noindex/Nordur.build/Debug-iphoneos/Nordur.build/Objects-normal/arm64/Nordur-Swift.h -working-directory /Users/runner/work/nordur-ios/nordur-ios -experimental-emit-module-separately -disable-cmo
+
+SwiftDriverJobDiscovery normal arm64 Compiling InfoView.swift, OfflineView.swift, PlacePicker.swift, QuakesView.swift, RoadAheadSection.swift, RoadSectionView.swift, Dates.swift, Format.swift, Geo.swift, HTTP.swift, Risk.swift, Theme.swift, Alerts.swift, Drive.swift, DriveActivity.swift, Place.swift, Trip.swift, Astro.swift, Aurora.swift, AuroraConfirm.swift, AuroraEngine.swift, AuroraSites.swift, AuroraState.swift (in target 'Nordur' from project 'Nordur')
+
+SwiftMergeGeneratedHeaders /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Intermediates.noindex/Nordur.build/Debug-iphoneos/Nordur.build/DerivedSources/Nordur-Swift.h /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Intermediates.noindex/Nordur.build/Debug-iphoneos/Nordur.build/Objects-normal/arm64/Nordur-Swift.h (in target 'Nordur' from project 'Nordur')
+    cd /Users/runner/work/nordur-ios/nordur-ios
+    builtin-swiftHeaderTool -arch arm64 /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Intermediates.noindex/Nordur.build/Debug-iphoneos/Nordur.build/Objects-normal/arm64/Nordur-Swift.h -o /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Intermediates.noindex/Nordur.build/Debug-iphoneos/Nordur.build/DerivedSources/Nordur-Swift.h
+
+Copy /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Products/Debug-iphoneos/Nordur.swiftmodule/arm64-apple-ios.swiftmodule /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Intermediates.noindex/Nordur.build/Debug-iphoneos/Nordur.build/Objects-normal/arm64/Nordur.swiftmodule (in target 'Nordur' from project 'Nordur')
+    cd /Users/runner/work/nordur-ios/nordur-ios
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks -rename /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Intermediates.noindex/Nordur.build/Debug-iphoneos/Nordur.build/Objects-normal/arm64/Nordur.swiftmodule /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Products/Debug-iphoneos/Nordur.swiftmodule/arm64-apple-ios.swiftmodule
+
+Copy /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Products/Debug-iphoneos/Nordur.swiftmodule/arm64-apple-ios.swiftdoc /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Intermediates.noindex/Nordur.build/Debug-iphoneos/Nordur.build/Objects-normal/arm64/Nordur.swiftdoc (in target 'Nordur' from project 'Nordur')
+    cd /Users/runner/work/nordur-ios/nordur-ios
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks -rename /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Intermediates.noindex/Nordur.build/Debug-iphoneos/Nordur.build/Objects-normal/arm64/Nordur.swiftdoc /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Products/Debug-iphoneos/Nordur.swiftmodule/arm64-apple-ios.swiftdoc
+
+Copy /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Products/Debug-iphoneos/Nordur.swiftmodule/arm64-apple-ios.abi.json /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Intermediates.noindex/Nordur.build/Debug-iphoneos/Nordur.build/Objects-normal/arm64/Nordur.abi.json (in target 'Nordur' from project 'Nordur')
+    cd /Users/runner/work/nordur-ios/nordur-ios
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks -rename /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Intermediates.noindex/Nordur.build/Debug-iphoneos/Nordur.build/Objects-normal/arm64/Nordur.abi.json /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Products/Debug-iphoneos/Nordur.swiftmodule/arm64-apple-ios.abi.json
+
+Copy /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Products/Debug-iphoneos/Nordur.swiftmodule/Project/arm64-apple-ios.swiftsourceinfo /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Intermediates.noindex/Nordur.build/Debug-iphoneos/Nordur.build/Objects-normal/arm64/Nordur.swiftsourceinfo (in target 'Nordur' from project 'Nordur')
+    cd /Users/runner/work/nordur-ios/nordur-ios
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks -rename /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Intermediates.noindex/Nordur.build/Debug-iphoneos/Nordur.build/Objects-normal/arm64/Nordur.swiftsourceinfo /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Products/Debug-iphoneos/Nordur.swiftmodule/Project/arm64-apple-ios.swiftsourceinfo
+
+SwiftDriverJobDiscovery normal arm64 Compiling FuelStations.swift, IMO.swift, OpenMeteo.swift, RoadInfo.swift, Roads.swift, RouteWeather.swift, SafeTravel.swift, SkyGlowGrid.swift, Transport.swift, Weather.swift, WeatherGrid.swift, Webcams.swift, RoadsView.swift, RouteForecastView.swift, SettingsView.swift, TabBar.swift, TodayView.swift, TransportView.swift, TripView.swift, WarningsView.swift, WeatherView.swift, WebcamsView.swift, GeneratedAssetSymbols.swift (in target 'Nordur' from project 'Nordur')
+
+SwiftDriverJobDiscovery normal arm64 Compiling NordurApp.swift, Account.swift, AlertCenter.swift, AppModel.swift, DriveRecorder.swift, DriveStore.swift, LocationManager.swift, NotificationIcon.swift, PlacePhoto.swift, RoadWatch.swift, RoutePlanner.swift, Translator.swift, TripStore.swift, MapScreen.swift, WeatherMapView.swift, WindParticles.swift, AccountForms.swift, AccountView.swift, AlertDetailView.swift, AlertsView.swift, AuroraLiveView.swift, AuroraView.swift, Components.swift, DriveView.swift (in target 'Nordur' from project 'Nordur')
+
+SwiftDriver\ Compilation Nordur normal arm64 com.apple.xcode.tools.swift.compiler (in target 'Nordur' from project 'Nordur')
+    cd /Users/runner/work/nordur-ios/nordur-ios
+    builtin-Swift-Compilation -- /Applications/Xcode_26.6.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc -module-name Nordur -Onone @/Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Intermediates.noindex/Nordur.build/Debug-iphoneos/Nordur.build/Objects-normal/arm64/Nordur.SwiftFileList -DDEBUG -enable-bare-slash-regex -enable-experimental-feature DebugDescriptionMacro -sdk /Applications/Xcode_26.6.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS26.5.sdk -target arm64-apple-ios17.0 -g -module-cache-path /Users/runner/Library/Developer/Xcode/DerivedData/ModuleCache.noindex -Xfrontend -serialize-debugging-options -enable-testing -index-store-path /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Index.noindex/DataStore -Xcc -D_LIBCPP_HARDENING_MODE\=_LIBCPP_HARDENING_MODE_DEBUG -swift-version 5 -I /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Products/Debug-iphoneos -F /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Products/Debug-iphoneos -emit-localized-strings -emit-localized-strings-path /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Intermediates.noindex/Nordur.build/Debug-iphoneos/Nordur.build/Objects-normal/arm64 -c -j3 -enable-batch-mode -incremental -output-file-map /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Intermediates.noindex/Nordur.build/Debug-iphoneos/Nordur.build/Objects-normal/arm64/Nordur-OutputFileMap.json -use-frontend-parseable-output -save-temps -no-color-diagnostics -explicit-module-build -module-cache-path /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules -clang-scanner-module-cache-path /Users/runner/Library/Developer/Xcode/DerivedData/ModuleCache.noindex -sdk-module-cache-path /Users/runner/Library/Developer/Xcode/DerivedData/ModuleCache.noindex -serialize-diagnostics -emit-dependencies -emit-module -emit-module-path /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Intermediates.noindex/Nordur.build/Debug-iphoneos/Nordur.build/Objects-normal/arm64/Nordur.swiftmodule -validate-clang-modules-once -clang-build-session-file /Users/runner/Library/Developer/Xcode/DerivedData/ModuleCache.noindex/Session.modulevalidation -Xcc -I/Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Intermediates.noindex/Nordur.build/Debug-iphoneos/Nordur.build/swift-overrides.hmap -emit-const-values -Xfrontend -const-gather-protocols-file -Xfrontend /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Intermediates.noindex/Nordur.build/Debug-iphoneos/Nordur.build/Objects-normal/arm64/Nordur_const_extract_protocols.json -Xcc -iquote -Xcc /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Intermediates.noindex/Nordur.build/Debug-iphoneos/Nordur.build/Nordur-generated-files.hmap -Xcc -I/Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Intermediates.noindex/Nordur.build/Debug-iphoneos/Nordur.build/Nordur-own-target-headers.hmap -Xcc -I/Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Intermediates.noindex/Nordur.build/Debug-iphoneos/Nordur.build/Nordur-all-target-headers.hmap -Xcc -iquote -Xcc /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Intermediates.noindex/Nordur.build/Debug-iphoneos/Nordur.build/Nordur-project-headers.hmap -Xcc -I/Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Products/Debug-iphoneos/include -Xcc -I/Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Intermediates.noindex/Nordur.build/Debug-iphoneos/Nordur.build/DerivedSources-normal/arm64 -Xcc -I/Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Intermediates.noindex/Nordur.build/Debug-iphoneos/Nordur.build/DerivedSources/arm64 -Xcc -I/Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Intermediates.noindex/Nordur.build/Debug-iphoneos/Nordur.build/DerivedSources -Xcc -DDEBUG\=1 -emit-objc-header -emit-objc-header-path /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Intermediates.noindex/Nordur.build/Debug-iphoneos/Nordur.build/Objects-normal/arm64/Nordur-Swift.h -working-directory /Users/runner/work/nordur-ios/nordur-ios -experimental-emit-module-separately -disable-cmo
+
+Ld /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Products/Debug-iphoneos/Nordur.app/Nordur normal (in target 'Nordur' from project 'Nordur')
+    cd /Users/runner/work/nordur-ios/nordur-ios
+    /Applications/Xcode_26.6.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -Xlinker -reproducible -target arm64-apple-ios17.0 -isysroot /Applications/Xcode_26.6.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS26.5.sdk -O0 -L/Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Intermediates.noindex/EagerLinkingTBDs/Debug-iphoneos -L/Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Products/Debug-iphoneos -F/Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Intermediates.noindex/EagerLinkingTBDs/Debug-iphoneos -F/Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Products/Debug-iphoneos -filelist /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Intermediates.noindex/Nordur.build/Debug-iphoneos/Nordur.build/Objects-normal/arm64/Nordur.LinkFileList -Xlinker -rpath -Xlinker /usr/lib/swift -Xlinker -rpath -Xlinker @executable_path/Frameworks -Xlinker -dead_strip -Xlinker -object_path_lto -Xlinker /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Intermediates.noindex/Nordur.build/Debug-iphoneos/Nordur.build/Objects-normal/arm64/Nordur_lto.o -rdynamic -Xlinker -no_deduplicate -Xlinker -dependency_info -Xlinker /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Intermediates.noindex/Nordur.build/Debug-iphoneos/Nordur.build/Objects-normal/arm64/Nordur_dependency_info.dat -fobjc-link-runtime -L/Applications/Xcode_26.6.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos -L/usr/lib/swift -Xlinker -add_ast_path -Xlinker /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Intermediates.noindex/Nordur.build/Debug-iphoneos/Nordur.build/Objects-normal/arm64/Nordur.swiftmodule @/Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Intermediates.noindex/Nordur.build/Debug-iphoneos/Nordur.build/Objects-normal/arm64/Nordur-linker-args.resp -o /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Products/Debug-iphoneos/Nordur.app/Nordur
+
+ExtractAppIntentsMetadata (in target 'Nordur' from project 'Nordur')
+    cd /Users/runner/work/nordur-ios/nordur-ios
+    /Applications/Xcode_26.6.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/appintentsmetadataprocessor --toolchain-dir /var/run/com.apple.security.cryptexd/mnt/com.apple.MobileAsset.MetalToolchain-v17.6.109.0.LYJloL/Metal.xctoolchain --module-name Nordur --sdk-root /Applications/Xcode_26.6.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS26.5.sdk --xcode-version 17F113 --platform-family iOS --deployment-target 17.0 --bundle-identifier it.lorenzosavini.nordur --output /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Products/Debug-iphoneos/Nordur.app --target-triple arm64-apple-ios17.0 --binary-file /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Products/Debug-iphoneos/Nordur.app/Nordur --dependency-file /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Intermediates.noindex/Nordur.build/Debug-iphoneos/Nordur.build/Objects-normal/arm64/Nordur_dependency_info.dat --stringsdata-file /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Intermediates.noindex/Nordur.build/Debug-iphoneos/Nordur.build/Objects-normal/arm64/ExtractedAppShortcutsMetadata.stringsdata --source-file-list /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Intermediates.noindex/Nordur.build/Debug-iphoneos/Nordur.build/Objects-normal/arm64/Nordur.SwiftFileList --metadata-file-list /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Intermediates.noindex/Nordur.build/Debug-iphoneos/Nordur.build/Nordur.DependencyMetadataFileList --static-metadata-file-list /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Intermediates.noindex/Nordur.build/Debug-iphoneos/Nordur.build/Nordur.DependencyStaticMetadataFileList --swift-const-vals-list /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Intermediates.noindex/Nordur.build/Debug-iphoneos/Nordur.build/Objects-normal/arm64/Nordur.SwiftConstValuesFileList --compile-time-extraction --deployment-aware-processing --validate-assistant-intents --no-app-shortcuts-localization
+2026-10-17 21:31:35.139 appintentsmetadataprocessor[17151:49171] Starting appintentsmetadataprocessor export
+2026-10-17 21:31:35.143 appintentsmetadataprocessor[17151:49171] warning: Metadata extraction skipped. No AppIntents.framework dependency found.
+
+Touch /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Products/Debug-iphoneos/Nordur.app (in target 'Nordur' from project 'Nordur')
+    cd /Users/runner/work/nordur-ios/nordur-ios
+    /usr/bin/touch -c /Users/runner/Library/Developer/Xcode/DerivedData/Nordur-gtvzaeiyyhhnykbmnuihaycgvktc/Build/Products/Debug-iphoneos/Nordur.app
+
+2026-10-17 21:31:37 Extracting strings from localizable files
+2026-10-17 21:31:37 Copying source language files
+2026-10-17 21:31:37 Exporting Nordur/Assets.xcassets to en.xcloc...
+2026-10-17 21:31:37 Exporting Nordur/InfoPlist.xcstrings to en.xliff...
+2026-10-17 21:31:37 Exporting NordurWidgets/InfoPlist.xcstrings to en.xliff...
+2026-10-17 21:31:37 Exporting NordurWidgets/Localizable.xcstrings to en.xliff...
+2026-10-17 21:31:37 Exporting Nordur/Localizable.xcstrings to en.xliff...
+2026-10-17 21:31:37 Writing
+2026-10-17 21:31:37 An xcloc was created at /Users/runner/work/nordur-ios/nordur-ios/loc/en.xcloc

@@ -1,0 +1,11 @@
+ok   tap wind at (142,130): legend 'Vento,' shown, selected=True
+ok   tap gust at (228,130): legend 'Raffiche,' shown, selected=True
+ok   tap precipitation at (321,130): legend 'Pioggia,' shown, selected=True
+ok   tap snow at (47,162): legend 'Neve,' shown, selected=True
+ok   tap cloud at (124,162): legend 'Nuvole,' shown, selected=True
+ok   tap temperature at (222,162): legend 'Temperatura,' shown, selected=True
+ok   tap aurora at (319,162): legend 'Aurora,' shown, selected=True
+ok   tap radar at (53,195): legend 'Radar RainViewer' shown, selected=True
+ok   tap none at (58,130): legend 'Tocca la mappa' shown, selected=True
+ok   LIVELLI + opens the overlay menu
+ALL TAPS WORK

@@ -1,0 +1,168 @@
+{
+  "source": "/Users/runner/work/nordur-ios/nordur-ios/Shared/Services/IMO.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Avviso",
+        "location": {
+          "startingColumn": 49,
+          "startingLine": 32
+        }
+      },
+      {
+        "comment": "",
+        "key": "Allerta gialla",
+        "location": {
+          "startingColumn": 48,
+          "startingLine": 33
+        }
+      },
+      {
+        "comment": "",
+        "key": "Allerta arancione",
+        "location": {
+          "startingColumn": 48,
+          "startingLine": 34
+        }
+      },
+      {
+        "comment": "",
+        "key": "Allerta rossa",
+        "location": {
+          "startingColumn": 45,
+          "startingLine": 35
+        }
+      },
+      {
+        "comment": "",
+        "key": "Allerta meteo",
+        "location": {
+          "startingColumn": 101,
+          "startingLine": 74
+        }
+      },
+      {
+        "comment": "",
+        "key": "Islanda",
+        "location": {
+          "startingColumn": 68,
+          "startingLine": 84
+        }
+      },
+      {
+        "comment": "",
+        "key": "Bufera di neve",
+        "location": {
+          "startingColumn": 73,
+          "startingLine": 134
+        }
+      },
+      {
+        "comment": "",
+        "key": "Neve",
+        "location": {
+          "startingColumn": 120,
+          "startingLine": 134
+        }
+      },
+      {
+        "comment": "",
+        "key": "Vento",
+        "location": {
+          "startingColumn": 157,
+          "startingLine": 134
+        }
+      },
+      {
+        "comment": "",
+        "key": "Pioggia",
+        "location": {
+          "startingColumn": 195,
+          "startingLine": 134
+        }
+      },
+      {
+        "comment": "",
+        "key": "Temporali",
+        "location": {
+          "startingColumn": 72,
+          "startingLine": 135
+        }
+      },
+      {
+        "comment": "",
+        "key": "Fulmini",
+        "location": {
+          "startingColumn": 119,
+          "startingLine": 135
+        }
+      },
+      {
+        "comment": "",
+        "key": "Ghiaccio",
+        "location": {
+          "startingColumn": 158,
+          "startingLine": 135
+        }
+      },
+      {
+        "comment": "",
+        "key": "Gelo",
+        "location": {
+          "startingColumn": 200,
+          "startingLine": 135
+        }
+      },
+      {
+        "comment": "",
+        "key": "Mareggiata",
+        "location": {
+          "startingColumn": 72,
+          "startingLine": 136
+        }
+      },
+      {
+        "comment": "",
+        "key": "Mareggiata",
+        "location": {
+          "startingColumn": 115,
+          "startingLine": 136
+        }
+      },
+      {
+        "comment": "",
+        "key": "Mare",
+        "location": {
+          "startingColumn": 157,
+          "startingLine": 136
+        }
+      },
+      {
+        "comment": "",
+        "key": "Valanghe",
+        "location": {
+          "startingColumn": 199,
+          "startingLine": 136
+        }
+      },
+      {
+        "comment": "",
+        "key": "Meteo",
+        "location": {
+          "startingColumn": 76,
+          "startingLine": 137
+        }
+      },
+      {
+        "comment": "",
+        "key": "Islanda",
+        "location": {
+          "startingColumn": 59,
+          "startingLine": 215
+        }
+      }
+    ]
+  },
+  "version": 1
+}

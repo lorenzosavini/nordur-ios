@@ -1,0 +1,160 @@
+{
+  "source": "/Users/runner/work/nordur-ios/nordur-ios/Nordur/Views/Components.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "OFFLINE",
+        "location": {
+          "startingColumn": 35,
+          "startingLine": 69
+        }
+      },
+      {
+        "comment": "",
+        "key": "dati di %@",
+        "location": {
+          "startingColumn": 50,
+          "startingLine": 70
+        }
+      },
+      {
+        "comment": "",
+        "key": "agg. %@",
+        "location": {
+          "startingColumn": 103,
+          "startingLine": 70
+        }
+      },
+      {
+        "comment": "",
+        "key": "· %@",
+        "location": {
+          "startingColumn": 38,
+          "startingLine": 71
+        }
+      },
+      {
+        "comment": "",
+        "key": "ERR",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 85
+        }
+      },
+      {
+        "comment": "",
+        "key": "GPS · posizione attuale",
+        "location": {
+          "startingColumn": 71,
+          "startingLine": 186
+        }
+      },
+      {
+        "comment": "",
+        "key": "Località scelta",
+        "location": {
+          "startingColumn": 150,
+          "startingLine": 186
+        }
+      },
+      {
+        "comment": "",
+        "key": "CAMBIA",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 196
+        }
+      },
+      {
+        "comment": "",
+        "key": "↗",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 229
+        }
+      },
+      {
+        "comment": "",
+        "key": "–",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 277
+        }
+      },
+      {
+        "comment": "",
+        "key": "M/S",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 278
+        }
+      },
+      {
+        "comment": "",
+        "key": "%lld",
+        "location": {
+          "startingColumn": 34,
+          "startingLine": 277
+        }
+      },
+      {
+        "comment": "",
+        "key": "–",
+        "location": {
+          "startingColumn": 62,
+          "startingLine": 277
+        }
+      },
+      {
+        "comment": "",
+        "key": "Mappa a schermo intero",
+        "location": {
+          "startingColumn": 55,
+          "startingLine": 513
+        }
+      },
+      {
+        "comment": "",
+        "key": "Chiudi",
+        "location": {
+          "startingColumn": 54,
+          "startingLine": 526
+        }
+      },
+      {
+        "comment": "",
+        "key": "D",
+        "location": {
+          "startingColumn": 14,
+          "startingLine": 592
+        }
+      },
+      {
+        "comment": "",
+        "key": "FUORI COPERTURA",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 818
+        }
+      },
+      {
+        "comment": "",
+        "key": "%@: per ora solo in Islanda. Qui sotto vedi i dati dell'Islanda, non della tua zona.",
+        "location": {
+          "startingColumn": 42,
+          "startingLine": 820
+        }
+      },
+      {
+        "comment": "",
+        "key": "%@: per ora solo in Islanda, per la tua zona non ci sono dati. Meteo, mare, qualità dell'aria e aurora restano attivi.",
+        "location": {
+          "startingColumn": 42,
+          "startingLine": 821
+        }
+      }
+    ]
+  },
+  "version": 1
+}

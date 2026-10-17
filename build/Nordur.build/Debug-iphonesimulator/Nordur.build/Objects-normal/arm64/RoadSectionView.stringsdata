@@ -1,0 +1,216 @@
+{
+  "source": "/Users/runner/work/nordur-ios/nordur-ios/Nordur/Views/RoadSectionView.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "%lld km da %@",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 28
+        }
+      },
+      {
+        "comment": "",
+        "key": "Adesso",
+        "location": {
+          "startingColumn": 48,
+          "startingLine": 38
+        }
+      },
+      {
+        "comment": "",
+        "key": "Prima",
+        "location": {
+          "startingColumn": 52,
+          "startingLine": 40
+        }
+      },
+      {
+        "comment": "",
+        "key": "Le condizioni sono peggiorate rispetto alla rilevazione precedente.",
+        "location": {
+          "startingColumn": 27,
+          "startingLine": 43
+        }
+      },
+      {
+        "comment": "",
+        "key": "Condizioni",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 53
+        }
+      },
+      {
+        "comment": "",
+        "key": "Dal %@",
+        "location": {
+          "startingColumn": 72,
+          "startingLine": 62
+        }
+      },
+      {
+        "comment": "",
+        "key": "al %@",
+        "location": {
+          "startingColumn": 70,
+          "startingLine": 63
+        }
+      },
+      {
+        "comment": "",
+        "key": "Lavori e pericoli",
+        "location": {
+          "startingColumn": 34,
+          "startingLine": 67
+        }
+      },
+      {
+        "comment": "",
+        "key": "Limite di peso",
+        "location": {
+          "startingColumn": 58,
+          "startingLine": 73
+        }
+      },
+      {
+        "comment": "",
+        "key": "Pedaggio",
+        "location": {
+          "startingColumn": 58,
+          "startingLine": 77
+        }
+      },
+      {
+        "comment": "",
+        "key": "Limitazioni",
+        "location": {
+          "startingColumn": 34,
+          "startingLine": 80
+        }
+      },
+      {
+        "comment": "",
+        "key": "Classe di servizio Vegagerðin",
+        "location": {
+          "startingColumn": 54,
+          "startingLine": 91
+        }
+      },
+      {
+        "comment": "",
+        "key": "%@ · %@",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 86
+        }
+      },
+      {
+        "comment": "",
+        "key": "Che strada è",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 93
+        }
+      },
+      {
+        "comment": "",
+        "key": "Nessun servizio",
+        "location": {
+          "startingColumn": 112,
+          "startingLine": 98
+        }
+      },
+      {
+        "comment": "",
+        "key": "Servizio invernale (sgombero neve)",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 101
+        }
+      },
+      {
+        "comment": "",
+        "key": "Fuori da questi orari la strada non viene controllata né pulita: le condizioni possono peggiorare senza aggiornamenti.",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 103
+        }
+      },
+      {
+        "comment": "",
+        "key": "Ultimo aggiornamento",
+        "location": {
+          "startingColumn": 54,
+          "startingLine": 114
+        }
+      },
+      {
+        "comment": "",
+        "key": "Apri su umferdin.is",
+        "location": {
+          "startingColumn": 50,
+          "startingLine": 116
+        }
+      },
+      {
+        "comment": "",
+        "key": "Mappa ufficiale di Vegagerðin",
+        "location": {
+          "startingColumn": 102,
+          "startingLine": 116
+        }
+      },
+      {
+        "comment": "",
+        "key": "Chiama il 1777",
+        "location": {
+          "startingColumn": 50,
+          "startingLine": 117
+        }
+      },
+      {
+        "comment": "",
+        "key": "Informazioni stradali (8–16, inverno anche 6:30–22)",
+        "location": {
+          "startingColumn": 97,
+          "startingLine": 117
+        }
+      },
+      {
+        "comment": "",
+        "key": "Fonte: Vegagerðin (umferdin.is). In caso di dubbio prevalgono le informazioni ufficiali.",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 119
+        }
+      },
+      {
+        "comment": "",
+        "key": "Stazioni meteo stradali vicine",
+        "location": {
+          "startingColumn": 34,
+          "startingLine": 161
+        }
+      },
+      {
+        "comment": "",
+        "key": "%lld km",
+        "location": {
+          "startingColumn": 38,
+          "startingLine": 178
+        }
+      },
+      {
+        "comment": "",
+        "key": "Webcam vicine",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 183
+        }
+      }
+    ]
+  },
+  "version": 1
+}

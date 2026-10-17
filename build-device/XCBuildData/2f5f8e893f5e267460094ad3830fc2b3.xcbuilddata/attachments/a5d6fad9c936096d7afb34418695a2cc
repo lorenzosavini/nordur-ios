@@ -1,0 +1,361 @@
+{
+  "" : {
+    "const-values" : "/Users/runner/work/nordur-ios/nordur-ios/build-device/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/Nordur-primary.swiftconstvalues",
+    "dependencies" : "/Users/runner/work/nordur-ios/nordur-ios/build-device/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/Nordur-primary.d",
+    "diagnostics" : "/Users/runner/work/nordur-ios/nordur-ios/build-device/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/Nordur-primary.dia",
+    "emit-module-dependencies" : "/Users/runner/work/nordur-ios/nordur-ios/build-device/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/Nordur-primary-emit-module.d",
+    "emit-module-diagnostics" : "/Users/runner/work/nordur-ios/nordur-ios/build-device/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/Nordur-primary-emit-module.dia",
+    "pch" : "/Users/runner/work/nordur-ios/nordur-ios/build-device/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/Nordur-primary-Bridging-header.pch",
+    "swift-dependencies" : "/Users/runner/work/nordur-ios/nordur-ios/build-device/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/Nordur-primary.swiftdeps"
+  },
+  "/Users/runner/work/nordur-ios/nordur-ios/Nordur/App/NordurApp.swift" : {
+    "index-unit-output-path" : "/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/NordurApp.o",
+    "llvm-bc" : "/Users/runner/work/nordur-ios/nordur-ios/build-device/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/NordurApp.bc",
+    "object" : "/Users/runner/work/nordur-ios/nordur-ios/build-device/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/NordurApp.o"
+  },
+  "/Users/runner/work/nordur-ios/nordur-ios/Nordur/State/Account.swift" : {
+    "index-unit-output-path" : "/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/Account.o",
+    "llvm-bc" : "/Users/runner/work/nordur-ios/nordur-ios/build-device/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/Account.bc",
+    "object" : "/Users/runner/work/nordur-ios/nordur-ios/build-device/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/Account.o"
+  },
+  "/Users/runner/work/nordur-ios/nordur-ios/Nordur/State/AlertCenter.swift" : {
+    "index-unit-output-path" : "/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/AlertCenter.o",
+    "llvm-bc" : "/Users/runner/work/nordur-ios/nordur-ios/build-device/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/AlertCenter.bc",
+    "object" : "/Users/runner/work/nordur-ios/nordur-ios/build-device/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/AlertCenter.o"
+  },
+  "/Users/runner/work/nordur-ios/nordur-ios/Nordur/State/AppModel.swift" : {
+    "index-unit-output-path" : "/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/AppModel.o",
+    "llvm-bc" : "/Users/runner/work/nordur-ios/nordur-ios/build-device/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/AppModel.bc",
+    "object" : "/Users/runner/work/nordur-ios/nordur-ios/build-device/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/AppModel.o"
+  },
+  "/Users/runner/work/nordur-ios/nordur-ios/Nordur/State/DriveRecorder.swift" : {
+    "index-unit-output-path" : "/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/DriveRecorder.o",
+    "llvm-bc" : "/Users/runner/work/nordur-ios/nordur-ios/build-device/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/DriveRecorder.bc",
+    "object" : "/Users/runner/work/nordur-ios/nordur-ios/build-device/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/DriveRecorder.o"
+  },
+  "/Users/runner/work/nordur-ios/nordur-ios/Nordur/State/DriveStore.swift" : {
+    "index-unit-output-path" : "/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/DriveStore.o",
+    "llvm-bc" : "/Users/runner/work/nordur-ios/nordur-ios/build-device/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/DriveStore.bc",
+    "object" : "/Users/runner/work/nordur-ios/nordur-ios/build-device/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/DriveStore.o"
+  },
+  "/Users/runner/work/nordur-ios/nordur-ios/Nordur/State/LocationManager.swift" : {
+    "index-unit-output-path" : "/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/LocationManager.o",
+    "llvm-bc" : "/Users/runner/work/nordur-ios/nordur-ios/build-device/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/LocationManager.bc",
+    "object" : "/Users/runner/work/nordur-ios/nordur-ios/build-device/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/LocationManager.o"
+  },
+  "/Users/runner/work/nordur-ios/nordur-ios/Nordur/State/NotificationIcon.swift" : {
+    "index-unit-output-path" : "/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/NotificationIcon.o",
+    "llvm-bc" : "/Users/runner/work/nordur-ios/nordur-ios/build-device/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/NotificationIcon.bc",
+    "object" : "/Users/runner/work/nordur-ios/nordur-ios/build-device/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/NotificationIcon.o"
+  },
+  "/Users/runner/work/nordur-ios/nordur-ios/Nordur/State/PlacePhoto.swift" : {
+    "index-unit-output-path" : "/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/PlacePhoto.o",
+    "llvm-bc" : "/Users/runner/work/nordur-ios/nordur-ios/build-device/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/PlacePhoto.bc",
+    "object" : "/Users/runner/work/nordur-ios/nordur-ios/build-device/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/PlacePhoto.o"
+  },
+  "/Users/runner/work/nordur-ios/nordur-ios/Nordur/State/RoadWatch.swift" : {
+    "index-unit-output-path" : "/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/RoadWatch.o",
+    "llvm-bc" : "/Users/runner/work/nordur-ios/nordur-ios/build-device/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/RoadWatch.bc",
+    "object" : "/Users/runner/work/nordur-ios/nordur-ios/build-device/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/RoadWatch.o"
+  },
+  "/Users/runner/work/nordur-ios/nordur-ios/Nordur/State/RoutePlanner.swift" : {
+    "index-unit-output-path" : "/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/RoutePlanner.o",
+    "llvm-bc" : "/Users/runner/work/nordur-ios/nordur-ios/build-device/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/RoutePlanner.bc",
+    "object" : "/Users/runner/work/nordur-ios/nordur-ios/build-device/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/RoutePlanner.o"
+  },
+  "/Users/runner/work/nordur-ios/nordur-ios/Nordur/State/Translator.swift" : {
+    "index-unit-output-path" : "/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/Translator.o",
+    "llvm-bc" : "/Users/runner/work/nordur-ios/nordur-ios/build-device/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/Translator.bc",
+    "object" : "/Users/runner/work/nordur-ios/nordur-ios/build-device/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/Translator.o"
+  },
+  "/Users/runner/work/nordur-ios/nordur-ios/Nordur/State/TripStore.swift" : {
+    "index-unit-output-path" : "/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/TripStore.o",
+    "llvm-bc" : "/Users/runner/work/nordur-ios/nordur-ios/build-device/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/TripStore.bc",
+    "object" : "/Users/runner/work/nordur-ios/nordur-ios/build-device/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/TripStore.o"
+  },
+  "/Users/runner/work/nordur-ios/nordur-ios/Nordur/Views/AccountForms.swift" : {
+    "index-unit-output-path" : "/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/AccountForms.o",
+    "llvm-bc" : "/Users/runner/work/nordur-ios/nordur-ios/build-device/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/AccountForms.bc",
+    "object" : "/Users/runner/work/nordur-ios/nordur-ios/build-device/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/AccountForms.o"
+  },
+  "/Users/runner/work/nordur-ios/nordur-ios/Nordur/Views/AccountView.swift" : {
+    "index-unit-output-path" : "/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/AccountView.o",
+    "llvm-bc" : "/Users/runner/work/nordur-ios/nordur-ios/build-device/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/AccountView.bc",
+    "object" : "/Users/runner/work/nordur-ios/nordur-ios/build-device/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/AccountView.o"
+  },
+  "/Users/runner/work/nordur-ios/nordur-ios/Nordur/Views/AlertDetailView.swift" : {
+    "index-unit-output-path" : "/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/AlertDetailView.o",
+    "llvm-bc" : "/Users/runner/work/nordur-ios/nordur-ios/build-device/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/AlertDetailView.bc",
+    "object" : "/Users/runner/work/nordur-ios/nordur-ios/build-device/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/AlertDetailView.o"
+  },
+  "/Users/runner/work/nordur-ios/nordur-ios/Nordur/Views/AlertsView.swift" : {
+    "index-unit-output-path" : "/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/AlertsView.o",
+    "llvm-bc" : "/Users/runner/work/nordur-ios/nordur-ios/build-device/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/AlertsView.bc",
+    "object" : "/Users/runner/work/nordur-ios/nordur-ios/build-device/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/AlertsView.o"
+  },
+  "/Users/runner/work/nordur-ios/nordur-ios/Nordur/Views/AuroraLiveView.swift" : {
+    "index-unit-output-path" : "/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/AuroraLiveView.o",
+    "llvm-bc" : "/Users/runner/work/nordur-ios/nordur-ios/build-device/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/AuroraLiveView.bc",
+    "object" : "/Users/runner/work/nordur-ios/nordur-ios/build-device/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/AuroraLiveView.o"
+  },
+  "/Users/runner/work/nordur-ios/nordur-ios/Nordur/Views/AuroraView.swift" : {
+    "index-unit-output-path" : "/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/AuroraView.o",
+    "llvm-bc" : "/Users/runner/work/nordur-ios/nordur-ios/build-device/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/AuroraView.bc",
+    "object" : "/Users/runner/work/nordur-ios/nordur-ios/build-device/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/AuroraView.o"
+  },
+  "/Users/runner/work/nordur-ios/nordur-ios/Nordur/Views/Components.swift" : {
+    "index-unit-output-path" : "/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/Components.o",
+    "llvm-bc" : "/Users/runner/work/nordur-ios/nordur-ios/build-device/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/Components.bc",
+    "object" : "/Users/runner/work/nordur-ios/nordur-ios/build-device/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/Components.o"
+  },
+  "/Users/runner/work/nordur-ios/nordur-ios/Nordur/Views/DriveView.swift" : {
+    "index-unit-output-path" : "/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/DriveView.o",
+    "llvm-bc" : "/Users/runner/work/nordur-ios/nordur-ios/build-device/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/DriveView.bc",
+    "object" : "/Users/runner/work/nordur-ios/nordur-ios/build-device/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/DriveView.o"
+  },
+  "/Users/runner/work/nordur-ios/nordur-ios/Nordur/Views/InfoView.swift" : {
+    "index-unit-output-path" : "/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/InfoView.o",
+    "llvm-bc" : "/Users/runner/work/nordur-ios/nordur-ios/build-device/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/InfoView.bc",
+    "object" : "/Users/runner/work/nordur-ios/nordur-ios/build-device/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/InfoView.o"
+  },
+  "/Users/runner/work/nordur-ios/nordur-ios/Nordur/Views/Map/MapScreen.swift" : {
+    "index-unit-output-path" : "/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/MapScreen.o",
+    "llvm-bc" : "/Users/runner/work/nordur-ios/nordur-ios/build-device/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/MapScreen.bc",
+    "object" : "/Users/runner/work/nordur-ios/nordur-ios/build-device/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/MapScreen.o"
+  },
+  "/Users/runner/work/nordur-ios/nordur-ios/Nordur/Views/Map/WeatherMapView.swift" : {
+    "index-unit-output-path" : "/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/WeatherMapView.o",
+    "llvm-bc" : "/Users/runner/work/nordur-ios/nordur-ios/build-device/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/WeatherMapView.bc",
+    "object" : "/Users/runner/work/nordur-ios/nordur-ios/build-device/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/WeatherMapView.o"
+  },
+  "/Users/runner/work/nordur-ios/nordur-ios/Nordur/Views/Map/WindParticles.swift" : {
+    "index-unit-output-path" : "/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/WindParticles.o",
+    "llvm-bc" : "/Users/runner/work/nordur-ios/nordur-ios/build-device/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/WindParticles.bc",
+    "object" : "/Users/runner/work/nordur-ios/nordur-ios/build-device/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/WindParticles.o"
+  },
+  "/Users/runner/work/nordur-ios/nordur-ios/Nordur/Views/OfflineView.swift" : {
+    "index-unit-output-path" : "/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/OfflineView.o",
+    "llvm-bc" : "/Users/runner/work/nordur-ios/nordur-ios/build-device/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/OfflineView.bc",
+    "object" : "/Users/runner/work/nordur-ios/nordur-ios/build-device/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/OfflineView.o"
+  },
+  "/Users/runner/work/nordur-ios/nordur-ios/Nordur/Views/PlacePicker.swift" : {
+    "index-unit-output-path" : "/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/PlacePicker.o",
+    "llvm-bc" : "/Users/runner/work/nordur-ios/nordur-ios/build-device/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/PlacePicker.bc",
+    "object" : "/Users/runner/work/nordur-ios/nordur-ios/build-device/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/PlacePicker.o"
+  },
+  "/Users/runner/work/nordur-ios/nordur-ios/Nordur/Views/QuakesView.swift" : {
+    "index-unit-output-path" : "/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/QuakesView.o",
+    "llvm-bc" : "/Users/runner/work/nordur-ios/nordur-ios/build-device/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/QuakesView.bc",
+    "object" : "/Users/runner/work/nordur-ios/nordur-ios/build-device/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/QuakesView.o"
+  },
+  "/Users/runner/work/nordur-ios/nordur-ios/Nordur/Views/RoadAheadSection.swift" : {
+    "index-unit-output-path" : "/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/RoadAheadSection.o",
+    "llvm-bc" : "/Users/runner/work/nordur-ios/nordur-ios/build-device/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/RoadAheadSection.bc",
+    "object" : "/Users/runner/work/nordur-ios/nordur-ios/build-device/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/RoadAheadSection.o"
+  },
+  "/Users/runner/work/nordur-ios/nordur-ios/Nordur/Views/RoadSectionView.swift" : {
+    "index-unit-output-path" : "/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/RoadSectionView.o",
+    "llvm-bc" : "/Users/runner/work/nordur-ios/nordur-ios/build-device/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/RoadSectionView.bc",
+    "object" : "/Users/runner/work/nordur-ios/nordur-ios/build-device/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/RoadSectionView.o"
+  },
+  "/Users/runner/work/nordur-ios/nordur-ios/Nordur/Views/RoadsView.swift" : {
+    "index-unit-output-path" : "/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/RoadsView.o",
+    "llvm-bc" : "/Users/runner/work/nordur-ios/nordur-ios/build-device/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/RoadsView.bc",
+    "object" : "/Users/runner/work/nordur-ios/nordur-ios/build-device/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/RoadsView.o"
+  },
+  "/Users/runner/work/nordur-ios/nordur-ios/Nordur/Views/RouteForecastView.swift" : {
+    "index-unit-output-path" : "/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/RouteForecastView.o",
+    "llvm-bc" : "/Users/runner/work/nordur-ios/nordur-ios/build-device/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/RouteForecastView.bc",
+    "object" : "/Users/runner/work/nordur-ios/nordur-ios/build-device/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/RouteForecastView.o"
+  },
+  "/Users/runner/work/nordur-ios/nordur-ios/Nordur/Views/SettingsView.swift" : {
+    "index-unit-output-path" : "/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/SettingsView.o",
+    "llvm-bc" : "/Users/runner/work/nordur-ios/nordur-ios/build-device/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/SettingsView.bc",
+    "object" : "/Users/runner/work/nordur-ios/nordur-ios/build-device/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/SettingsView.o"
+  },
+  "/Users/runner/work/nordur-ios/nordur-ios/Nordur/Views/TabBar.swift" : {
+    "index-unit-output-path" : "/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/TabBar.o",
+    "llvm-bc" : "/Users/runner/work/nordur-ios/nordur-ios/build-device/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/TabBar.bc",
+    "object" : "/Users/runner/work/nordur-ios/nordur-ios/build-device/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/TabBar.o"
+  },
+  "/Users/runner/work/nordur-ios/nordur-ios/Nordur/Views/TodayView.swift" : {
+    "index-unit-output-path" : "/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/TodayView.o",
+    "llvm-bc" : "/Users/runner/work/nordur-ios/nordur-ios/build-device/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/TodayView.bc",
+    "object" : "/Users/runner/work/nordur-ios/nordur-ios/build-device/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/TodayView.o"
+  },
+  "/Users/runner/work/nordur-ios/nordur-ios/Nordur/Views/TransportView.swift" : {
+    "index-unit-output-path" : "/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/TransportView.o",
+    "llvm-bc" : "/Users/runner/work/nordur-ios/nordur-ios/build-device/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/TransportView.bc",
+    "object" : "/Users/runner/work/nordur-ios/nordur-ios/build-device/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/TransportView.o"
+  },
+  "/Users/runner/work/nordur-ios/nordur-ios/Nordur/Views/TripView.swift" : {
+    "index-unit-output-path" : "/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/TripView.o",
+    "llvm-bc" : "/Users/runner/work/nordur-ios/nordur-ios/build-device/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/TripView.bc",
+    "object" : "/Users/runner/work/nordur-ios/nordur-ios/build-device/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/TripView.o"
+  },
+  "/Users/runner/work/nordur-ios/nordur-ios/Nordur/Views/WarningsView.swift" : {
+    "index-unit-output-path" : "/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/WarningsView.o",
+    "llvm-bc" : "/Users/runner/work/nordur-ios/nordur-ios/build-device/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/WarningsView.bc",
+    "object" : "/Users/runner/work/nordur-ios/nordur-ios/build-device/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/WarningsView.o"
+  },
+  "/Users/runner/work/nordur-ios/nordur-ios/Nordur/Views/WeatherView.swift" : {
+    "index-unit-output-path" : "/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/WeatherView.o",
+    "llvm-bc" : "/Users/runner/work/nordur-ios/nordur-ios/build-device/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/WeatherView.bc",
+    "object" : "/Users/runner/work/nordur-ios/nordur-ios/build-device/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/WeatherView.o"
+  },
+  "/Users/runner/work/nordur-ios/nordur-ios/Nordur/Views/WebcamsView.swift" : {
+    "index-unit-output-path" : "/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/WebcamsView.o",
+    "llvm-bc" : "/Users/runner/work/nordur-ios/nordur-ios/build-device/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/WebcamsView.bc",
+    "object" : "/Users/runner/work/nordur-ios/nordur-ios/build-device/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/WebcamsView.o"
+  },
+  "/Users/runner/work/nordur-ios/nordur-ios/Shared/Core/Dates.swift" : {
+    "index-unit-output-path" : "/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/Dates.o",
+    "llvm-bc" : "/Users/runner/work/nordur-ios/nordur-ios/build-device/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/Dates.bc",
+    "object" : "/Users/runner/work/nordur-ios/nordur-ios/build-device/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/Dates.o"
+  },
+  "/Users/runner/work/nordur-ios/nordur-ios/Shared/Core/Format.swift" : {
+    "index-unit-output-path" : "/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/Format.o",
+    "llvm-bc" : "/Users/runner/work/nordur-ios/nordur-ios/build-device/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/Format.bc",
+    "object" : "/Users/runner/work/nordur-ios/nordur-ios/build-device/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/Format.o"
+  },
+  "/Users/runner/work/nordur-ios/nordur-ios/Shared/Core/Geo.swift" : {
+    "index-unit-output-path" : "/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/Geo.o",
+    "llvm-bc" : "/Users/runner/work/nordur-ios/nordur-ios/build-device/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/Geo.bc",
+    "object" : "/Users/runner/work/nordur-ios/nordur-ios/build-device/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/Geo.o"
+  },
+  "/Users/runner/work/nordur-ios/nordur-ios/Shared/Core/HTTP.swift" : {
+    "index-unit-output-path" : "/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/HTTP.o",
+    "llvm-bc" : "/Users/runner/work/nordur-ios/nordur-ios/build-device/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/HTTP.bc",
+    "object" : "/Users/runner/work/nordur-ios/nordur-ios/build-device/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/HTTP.o"
+  },
+  "/Users/runner/work/nordur-ios/nordur-ios/Shared/Core/Risk.swift" : {
+    "index-unit-output-path" : "/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/Risk.o",
+    "llvm-bc" : "/Users/runner/work/nordur-ios/nordur-ios/build-device/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/Risk.bc",
+    "object" : "/Users/runner/work/nordur-ios/nordur-ios/build-device/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/Risk.o"
+  },
+  "/Users/runner/work/nordur-ios/nordur-ios/Shared/Core/Theme.swift" : {
+    "index-unit-output-path" : "/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/Theme.o",
+    "llvm-bc" : "/Users/runner/work/nordur-ios/nordur-ios/build-device/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/Theme.bc",
+    "object" : "/Users/runner/work/nordur-ios/nordur-ios/build-device/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/Theme.o"
+  },
+  "/Users/runner/work/nordur-ios/nordur-ios/Shared/Models/Alerts.swift" : {
+    "index-unit-output-path" : "/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/Alerts.o",
+    "llvm-bc" : "/Users/runner/work/nordur-ios/nordur-ios/build-device/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/Alerts.bc",
+    "object" : "/Users/runner/work/nordur-ios/nordur-ios/build-device/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/Alerts.o"
+  },
+  "/Users/runner/work/nordur-ios/nordur-ios/Shared/Models/Drive.swift" : {
+    "index-unit-output-path" : "/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/Drive.o",
+    "llvm-bc" : "/Users/runner/work/nordur-ios/nordur-ios/build-device/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/Drive.bc",
+    "object" : "/Users/runner/work/nordur-ios/nordur-ios/build-device/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/Drive.o"
+  },
+  "/Users/runner/work/nordur-ios/nordur-ios/Shared/Models/DriveActivity.swift" : {
+    "index-unit-output-path" : "/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/DriveActivity.o",
+    "llvm-bc" : "/Users/runner/work/nordur-ios/nordur-ios/build-device/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/DriveActivity.bc",
+    "object" : "/Users/runner/work/nordur-ios/nordur-ios/build-device/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/DriveActivity.o"
+  },
+  "/Users/runner/work/nordur-ios/nordur-ios/Shared/Models/Place.swift" : {
+    "index-unit-output-path" : "/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/Place.o",
+    "llvm-bc" : "/Users/runner/work/nordur-ios/nordur-ios/build-device/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/Place.bc",
+    "object" : "/Users/runner/work/nordur-ios/nordur-ios/build-device/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/Place.o"
+  },
+  "/Users/runner/work/nordur-ios/nordur-ios/Shared/Models/Trip.swift" : {
+    "index-unit-output-path" : "/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/Trip.o",
+    "llvm-bc" : "/Users/runner/work/nordur-ios/nordur-ios/build-device/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/Trip.bc",
+    "object" : "/Users/runner/work/nordur-ios/nordur-ios/build-device/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/Trip.o"
+  },
+  "/Users/runner/work/nordur-ios/nordur-ios/Shared/Services/Astro.swift" : {
+    "index-unit-output-path" : "/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/Astro.o",
+    "llvm-bc" : "/Users/runner/work/nordur-ios/nordur-ios/build-device/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/Astro.bc",
+    "object" : "/Users/runner/work/nordur-ios/nordur-ios/build-device/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/Astro.o"
+  },
+  "/Users/runner/work/nordur-ios/nordur-ios/Shared/Services/Aurora.swift" : {
+    "index-unit-output-path" : "/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/Aurora.o",
+    "llvm-bc" : "/Users/runner/work/nordur-ios/nordur-ios/build-device/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/Aurora.bc",
+    "object" : "/Users/runner/work/nordur-ios/nordur-ios/build-device/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/Aurora.o"
+  },
+  "/Users/runner/work/nordur-ios/nordur-ios/Shared/Services/AuroraConfirm.swift" : {
+    "index-unit-output-path" : "/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/AuroraConfirm.o",
+    "llvm-bc" : "/Users/runner/work/nordur-ios/nordur-ios/build-device/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/AuroraConfirm.bc",
+    "object" : "/Users/runner/work/nordur-ios/nordur-ios/build-device/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/AuroraConfirm.o"
+  },
+  "/Users/runner/work/nordur-ios/nordur-ios/Shared/Services/AuroraEngine.swift" : {
+    "index-unit-output-path" : "/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/AuroraEngine.o",
+    "llvm-bc" : "/Users/runner/work/nordur-ios/nordur-ios/build-device/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/AuroraEngine.bc",
+    "object" : "/Users/runner/work/nordur-ios/nordur-ios/build-device/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/AuroraEngine.o"
+  },
+  "/Users/runner/work/nordur-ios/nordur-ios/Shared/Services/AuroraSites.swift" : {
+    "index-unit-output-path" : "/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/AuroraSites.o",
+    "llvm-bc" : "/Users/runner/work/nordur-ios/nordur-ios/build-device/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/AuroraSites.bc",
+    "object" : "/Users/runner/work/nordur-ios/nordur-ios/build-device/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/AuroraSites.o"
+  },
+  "/Users/runner/work/nordur-ios/nordur-ios/Shared/Services/AuroraState.swift" : {
+    "index-unit-output-path" : "/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/AuroraState.o",
+    "llvm-bc" : "/Users/runner/work/nordur-ios/nordur-ios/build-device/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/AuroraState.bc",
+    "object" : "/Users/runner/work/nordur-ios/nordur-ios/build-device/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/AuroraState.o"
+  },
+  "/Users/runner/work/nordur-ios/nordur-ios/Shared/Services/FuelStations.swift" : {
+    "index-unit-output-path" : "/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/FuelStations.o",
+    "llvm-bc" : "/Users/runner/work/nordur-ios/nordur-ios/build-device/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/FuelStations.bc",
+    "object" : "/Users/runner/work/nordur-ios/nordur-ios/build-device/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/FuelStations.o"
+  },
+  "/Users/runner/work/nordur-ios/nordur-ios/Shared/Services/IMO.swift" : {
+    "index-unit-output-path" : "/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/IMO.o",
+    "llvm-bc" : "/Users/runner/work/nordur-ios/nordur-ios/build-device/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/IMO.bc",
+    "object" : "/Users/runner/work/nordur-ios/nordur-ios/build-device/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/IMO.o"
+  },
+  "/Users/runner/work/nordur-ios/nordur-ios/Shared/Services/OpenMeteo.swift" : {
+    "index-unit-output-path" : "/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/OpenMeteo.o",
+    "llvm-bc" : "/Users/runner/work/nordur-ios/nordur-ios/build-device/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/OpenMeteo.bc",
+    "object" : "/Users/runner/work/nordur-ios/nordur-ios/build-device/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/OpenMeteo.o"
+  },
+  "/Users/runner/work/nordur-ios/nordur-ios/Shared/Services/RoadInfo.swift" : {
+    "index-unit-output-path" : "/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/RoadInfo.o",
+    "llvm-bc" : "/Users/runner/work/nordur-ios/nordur-ios/build-device/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/RoadInfo.bc",
+    "object" : "/Users/runner/work/nordur-ios/nordur-ios/build-device/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/RoadInfo.o"
+  },
+  "/Users/runner/work/nordur-ios/nordur-ios/Shared/Services/Roads.swift" : {
+    "index-unit-output-path" : "/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/Roads.o",
+    "llvm-bc" : "/Users/runner/work/nordur-ios/nordur-ios/build-device/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/Roads.bc",
+    "object" : "/Users/runner/work/nordur-ios/nordur-ios/build-device/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/Roads.o"
+  },
+  "/Users/runner/work/nordur-ios/nordur-ios/Shared/Services/RouteWeather.swift" : {
+    "index-unit-output-path" : "/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/RouteWeather.o",
+    "llvm-bc" : "/Users/runner/work/nordur-ios/nordur-ios/build-device/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/RouteWeather.bc",
+    "object" : "/Users/runner/work/nordur-ios/nordur-ios/build-device/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/RouteWeather.o"
+  },
+  "/Users/runner/work/nordur-ios/nordur-ios/Shared/Services/SafeTravel.swift" : {
+    "index-unit-output-path" : "/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/SafeTravel.o",
+    "llvm-bc" : "/Users/runner/work/nordur-ios/nordur-ios/build-device/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/SafeTravel.bc",
+    "object" : "/Users/runner/work/nordur-ios/nordur-ios/build-device/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/SafeTravel.o"
+  },
+  "/Users/runner/work/nordur-ios/nordur-ios/Shared/Services/SkyGlowGrid.swift" : {
+    "index-unit-output-path" : "/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/SkyGlowGrid.o",
+    "llvm-bc" : "/Users/runner/work/nordur-ios/nordur-ios/build-device/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/SkyGlowGrid.bc",
+    "object" : "/Users/runner/work/nordur-ios/nordur-ios/build-device/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/SkyGlowGrid.o"
+  },
+  "/Users/runner/work/nordur-ios/nordur-ios/Shared/Services/Transport.swift" : {
+    "index-unit-output-path" : "/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/Transport.o",
+    "llvm-bc" : "/Users/runner/work/nordur-ios/nordur-ios/build-device/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/Transport.bc",
+    "object" : "/Users/runner/work/nordur-ios/nordur-ios/build-device/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/Transport.o"
+  },
+  "/Users/runner/work/nordur-ios/nordur-ios/Shared/Services/Weather.swift" : {
+    "index-unit-output-path" : "/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/Weather.o",
+    "llvm-bc" : "/Users/runner/work/nordur-ios/nordur-ios/build-device/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/Weather.bc",
+    "object" : "/Users/runner/work/nordur-ios/nordur-ios/build-device/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/Weather.o"
+  },
+  "/Users/runner/work/nordur-ios/nordur-ios/Shared/Services/WeatherGrid.swift" : {
+    "index-unit-output-path" : "/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/WeatherGrid.o",
+    "llvm-bc" : "/Users/runner/work/nordur-ios/nordur-ios/build-device/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/WeatherGrid.bc",
+    "object" : "/Users/runner/work/nordur-ios/nordur-ios/build-device/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/WeatherGrid.o"
+  },
+  "/Users/runner/work/nordur-ios/nordur-ios/Shared/Services/Webcams.swift" : {
+    "index-unit-output-path" : "/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/Webcams.o",
+    "llvm-bc" : "/Users/runner/work/nordur-ios/nordur-ios/build-device/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/Webcams.bc",
+    "object" : "/Users/runner/work/nordur-ios/nordur-ios/build-device/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/Webcams.o"
+  },
+  "/Users/runner/work/nordur-ios/nordur-ios/build-device/Nordur.build/Release-iphoneos/Nordur.build/DerivedSources/GeneratedAssetSymbols.swift" : {
+    "index-unit-output-path" : "/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/GeneratedAssetSymbols.o",
+    "llvm-bc" : "/Users/runner/work/nordur-ios/nordur-ios/build-device/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/GeneratedAssetSymbols.bc",
+    "object" : "/Users/runner/work/nordur-ios/nordur-ios/build-device/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/GeneratedAssetSymbols.o"
+  }
+}

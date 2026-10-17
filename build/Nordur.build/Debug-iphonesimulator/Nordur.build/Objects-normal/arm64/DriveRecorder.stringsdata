@@ -1,0 +1,40 @@
+{
+  "source": "/Users/runner/work/nordur-ios/nordur-ios/Nordur/State/DriveRecorder.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Viaggio del %@",
+        "location": {
+          "startingColumn": 47,
+          "startingLine": 58
+        }
+      },
+      {
+        "comment": "",
+        "key": "Velocità %lld km/h – limite %lld",
+        "location": {
+          "startingColumn": 46,
+          "startingLine": 203
+        }
+      },
+      {
+        "comment": "",
+        "key": "In Islanda le multe per eccesso di velocità sono molto alte. Su sterrato il limite è 80 km/h, nei centri abitati 50.",
+        "location": {
+          "startingColumn": 45,
+          "startingLine": 204
+        }
+      },
+      {
+        "comment": "",
+        "key": "Tra %lld km: %@, raffiche %@",
+        "location": {
+          "startingColumn": 42,
+          "startingLine": 222
+        }
+      }
+    ]
+  },
+  "version": 1
+}

@@ -1,0 +1,136 @@
+{
+  "source": "/Users/runner/work/nordur-ios/nordur-ios/Nordur/Views/WarningsView.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Allerte meteo",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 37
+        }
+      },
+      {
+        "comment": "",
+        "key": "Le allerte meteo ufficiali (IMO)",
+        "location": {
+          "startingColumn": 67,
+          "startingLine": 10
+        }
+      },
+      {
+        "comment": "",
+        "key": "Veðurstofa Íslands",
+        "location": {
+          "startingColumn": 108,
+          "startingLine": 16
+        }
+      },
+      {
+        "comment": "",
+        "key": "Nessuna allerta meteo attiva",
+        "location": {
+          "startingColumn": 27,
+          "startingLine": 20
+        }
+      },
+      {
+        "comment": "",
+        "key": "Giallo: possibili disagi.\nArancione: impatti significativi, valuta di rimandare.\nRosso: evento estremo, non metterti in viaggio.",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 31
+        }
+      },
+      {
+        "comment": "",
+        "key": "Allerte su vedur.is",
+        "location": {
+          "startingColumn": 50,
+          "startingLine": 33
+        }
+      },
+      {
+        "comment": "",
+        "key": "Cosa significano i colori",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 34
+        }
+      },
+      {
+        "comment": "",
+        "key": "%@ → %@",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 61
+        }
+      },
+      {
+        "comment": "",
+        "key": "LA TUA ZONA",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 56
+        }
+      },
+      {
+        "comment": "",
+        "key": "Descrizione (IMO)",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 95
+        }
+      },
+      {
+        "comment": "",
+        "key": "Evento",
+        "location": {
+          "startingColumn": 32,
+          "startingLine": 97
+        }
+      },
+      {
+        "comment": "",
+        "key": "Gravità",
+        "location": {
+          "startingColumn": 32,
+          "startingLine": 98
+        }
+      },
+      {
+        "comment": "",
+        "key": "Certezza",
+        "location": {
+          "startingColumn": 32,
+          "startingLine": 99
+        }
+      },
+      {
+        "comment": "",
+        "key": "Inizio",
+        "location": {
+          "startingColumn": 32,
+          "startingLine": 100
+        }
+      },
+      {
+        "comment": "",
+        "key": "Fine",
+        "location": {
+          "startingColumn": 32,
+          "startingLine": 101
+        }
+      },
+      {
+        "comment": "",
+        "key": "Dettagli",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 102
+        }
+      }
+    ]
+  },
+  "version": 1
+}

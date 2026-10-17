@@ -1,0 +1,136 @@
+{
+  "source": "/Users/runner/work/nordur-ios/nordur-ios/Shared/Services/Roads.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Tratto %lld",
+        "location": {
+          "startingColumn": 76,
+          "startingLine": 19
+        }
+      },
+      {
+        "comment": "",
+        "key": "Sconosciuto",
+        "location": {
+          "startingColumn": 85,
+          "startingLine": 20
+        }
+      },
+      {
+        "comment": "",
+        "key": "Percorribile",
+        "location": {
+          "startingColumn": 53,
+          "startingLine": 93
+        }
+      },
+      {
+        "comment": "",
+        "key": "Tratti ghiacciati",
+        "location": {
+          "startingColumn": 55,
+          "startingLine": 94
+        }
+      },
+      {
+        "comment": "",
+        "key": "Strada scivolosa",
+        "location": {
+          "startingColumn": 48,
+          "startingLine": 95
+        }
+      },
+      {
+        "comment": "",
+        "key": "Estremamente scivolosa",
+        "location": {
+          "startingColumn": 51,
+          "startingLine": 96
+        }
+      },
+      {
+        "comment": "",
+        "key": "Neve bagnata",
+        "location": {
+          "startingColumn": 47,
+          "startingLine": 97
+        }
+      },
+      {
+        "comment": "",
+        "key": "Neve sulla carreggiata",
+        "location": {
+          "startingColumn": 53,
+          "startingLine": 98
+        }
+      },
+      {
+        "comment": "",
+        "key": "Percorribilità difficile",
+        "location": {
+          "startingColumn": 53,
+          "startingLine": 99
+        }
+      },
+      {
+        "comment": "",
+        "key": "Neve soffiata dal vento",
+        "location": {
+          "startingColumn": 56,
+          "startingLine": 100
+        }
+      },
+      {
+        "comment": "",
+        "key": "Solo veicoli 4x4 da montagna",
+        "location": {
+          "startingColumn": 60,
+          "startingLine": 101
+        }
+      },
+      {
+        "comment": "",
+        "key": "Impraticabile",
+        "location": {
+          "startingColumn": 81,
+          "startingLine": 102
+        }
+      },
+      {
+        "comment": "",
+        "key": "Chiusa",
+        "location": {
+          "startingColumn": 48,
+          "startingLine": 103
+        }
+      },
+      {
+        "comment": "",
+        "key": "Non mantenuta in questo periodo",
+        "location": {
+          "startingColumn": 59,
+          "startingLine": 104
+        }
+      },
+      {
+        "comment": "",
+        "key": "Stato sconosciuto",
+        "location": {
+          "startingColumn": 50,
+          "startingLine": 105
+        }
+      },
+      {
+        "comment": "",
+        "key": "Stazione %lld",
+        "location": {
+          "startingColumn": 50,
+          "startingLine": 47
+        }
+      }
+    ]
+  },
+  "version": 1
+}

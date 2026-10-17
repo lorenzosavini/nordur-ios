@@ -1,0 +1,555 @@
+[
+  {
+    "typeName": "NordurWidgets.PlaceEntity",
+    "mangledTypeName": "13NordurWidgets11PlaceEntityV",
+    "kind": "struct",
+    "file": "/Users/runner/work/nordur-ios/nordur-ios/NordurWidgets/ConditionsWidget.swift",
+    "line": 8,
+    "conformances": [
+      "AppIntents.AppEntity",
+      "AppIntents.AppValue",
+      "AppIntents.DisplayRepresentable",
+      "Swift.Identifiable",
+      "AppIntents.PersistentlyIdentifiable",
+      "AppIntents.TypeDisplayRepresentable",
+      "AppIntents._IntentValue",
+      "Swift.Sendable",
+      "AppIntents.InstanceDisplayRepresentable",
+      "Swift.SendableMetatype",
+      "Foundation.CustomLocalizedStringResourceConvertible"
+    ],
+    "allConformances": [
+      {
+        "protocolName": "AppIntents.AppEntity",
+        "conformanceDefiningModule": "NordurWidgets"
+      },
+      {
+        "protocolName": "AppIntents.AppValue",
+        "conformanceDefiningModule": "NordurWidgets"
+      },
+      {
+        "protocolName": "AppIntents.DisplayRepresentable",
+        "conformanceDefiningModule": "NordurWidgets"
+      },
+      {
+        "protocolName": "Swift.Identifiable",
+        "conformanceDefiningModule": "NordurWidgets"
+      },
+      {
+        "protocolName": "AppIntents.PersistentlyIdentifiable",
+        "conformanceDefiningModule": "NordurWidgets"
+      },
+      {
+        "protocolName": "AppIntents.TypeDisplayRepresentable",
+        "conformanceDefiningModule": "NordurWidgets"
+      },
+      {
+        "protocolName": "AppIntents._IntentValue",
+        "conformanceDefiningModule": "NordurWidgets"
+      },
+      {
+        "protocolName": "Swift.Sendable",
+        "conformanceDefiningModule": "NordurWidgets"
+      },
+      {
+        "protocolName": "AppIntents.InstanceDisplayRepresentable",
+        "conformanceDefiningModule": "NordurWidgets"
+      },
+      {
+        "protocolName": "Swift.SendableMetatype",
+        "conformanceDefiningModule": "NordurWidgets"
+      },
+      {
+        "protocolName": "Foundation.CustomLocalizedStringResourceConvertible",
+        "conformanceDefiningModule": "NordurWidgets"
+      }
+    ],
+    "associatedTypeAliases": [
+      {
+        "typeAliasName": "DefaultQuery",
+        "substitutedTypeName": "NordurWidgets.PlaceEntityQuery",
+        "substitutedMangledTypeName": "13NordurWidgets16PlaceEntityQueryV"
+      },
+      {
+        "typeAliasName": "ID",
+        "substitutedTypeName": "Swift.String",
+        "substitutedMangledTypeName": "SS"
+      },
+      {
+        "typeAliasName": "ValueType",
+        "substitutedTypeName": "NordurWidgets.PlaceEntity",
+        "substitutedMangledTypeName": "13NordurWidgets11PlaceEntityV"
+      },
+      {
+        "typeAliasName": "UnwrappedType",
+        "substitutedTypeName": "NordurWidgets.PlaceEntity",
+        "substitutedMangledTypeName": "13NordurWidgets11PlaceEntityV"
+      },
+      {
+        "typeAliasName": "Specification",
+        "substitutedTypeName": "AppIntents.EmptyResolverSpecification<NordurWidgets.PlaceEntity>",
+        "substitutedMangledTypeName": "10AppIntents26EmptyResolverSpecificationVy13NordurWidgets11PlaceEntityVG"
+      }
+    ],
+    "properties": [
+      {
+        "label": "id",
+        "type": "Swift.String",
+        "mangledTypeName": "n/a - deprecated",
+        "isStatic": "false",
+        "isComputed": "false",
+        "file": "/Users/runner/work/nordur-ios/nordur-ios/NordurWidgets/ConditionsWidget.swift",
+        "line": 11,
+        "valueKind": "Runtime"
+      },
+      {
+        "label": "name",
+        "type": "Swift.String",
+        "mangledTypeName": "n/a - deprecated",
+        "isStatic": "false",
+        "isComputed": "false",
+        "file": "/Users/runner/work/nordur-ios/nordur-ios/NordurWidgets/ConditionsWidget.swift",
+        "line": 12,
+        "valueKind": "Runtime"
+      },
+      {
+        "label": "coordinate",
+        "type": "Swift.Optional<NordurWidgets.Coordinate>",
+        "mangledTypeName": "n/a - deprecated",
+        "isStatic": "false",
+        "isComputed": "false",
+        "file": "/Users/runner/work/nordur-ios/nordur-ios/NordurWidgets/ConditionsWidget.swift",
+        "line": 13,
+        "valueKind": "Runtime"
+      },
+      {
+        "label": "currentID",
+        "type": "Swift.String",
+        "mangledTypeName": "n/a - deprecated",
+        "isStatic": "true",
+        "isComputed": "false",
+        "file": "/Users/runner/work/nordur-ios/nordur-ios/NordurWidgets/ConditionsWidget.swift",
+        "line": 9,
+        "valueKind": "RawLiteral",
+        "value": "current"
+      },
+      {
+        "label": "typeDisplayRepresentation",
+        "type": "AppIntents.TypeDisplayRepresentation",
+        "mangledTypeName": "n/a - deprecated",
+        "isStatic": "true",
+        "isComputed": "false",
+        "file": "/Users/runner/work/nordur-ios/nordur-ios/NordurWidgets/ConditionsWidget.swift",
+        "line": 15,
+        "valueKind": "RawLiteral",
+        "value": "Luogo"
+      },
+      {
+        "label": "displayRepresentation",
+        "type": "AppIntents.DisplayRepresentation",
+        "mangledTypeName": "n/a - deprecated",
+        "isStatic": "false",
+        "isComputed": "true",
+        "file": "/Users/runner/work/nordur-ios/nordur-ios/NordurWidgets/ConditionsWidget.swift",
+        "line": 16,
+        "valueKind": "InitCall",
+        "value": {
+          "type": "AppIntents.DisplayRepresentation",
+          "arguments": [
+            {
+              "label": "title",
+              "type": "Foundation.LocalizedStringResource",
+              "valueKind": "InterpolatedStringLiteral",
+              "value": {
+                "segments": [
+                  {
+                    "valueKind": "RawLiteral",
+                    "value": ""
+                  },
+                  {
+                    "valueKind": "Runtime"
+                  },
+                  {
+                    "valueKind": "RawLiteral",
+                    "value": ""
+                  }
+                ]
+              }
+            },
+            {
+              "label": "subtitle",
+              "type": "Swift.Optional<Foundation.LocalizedStringResource>",
+              "valueKind": "NilLiteral"
+            },
+            {
+              "label": "image",
+              "type": "Swift.Optional<AppIntents.DisplayRepresentation.Image>",
+              "valueKind": "NilLiteral"
+            }
+          ]
+        }
+      },
+      {
+        "label": "defaultQuery",
+        "type": "NordurWidgets.PlaceEntityQuery",
+        "mangledTypeName": "n/a - deprecated",
+        "isStatic": "true",
+        "isComputed": "false",
+        "file": "/Users/runner/work/nordur-ios/nordur-ios/NordurWidgets/ConditionsWidget.swift",
+        "line": 17,
+        "valueKind": "InitCall",
+        "value": {
+          "type": "NordurWidgets.PlaceEntityQuery",
+          "arguments": []
+        }
+      },
+      {
+        "label": "current",
+        "type": "NordurWidgets.PlaceEntity",
+        "mangledTypeName": "n/a - deprecated",
+        "isStatic": "true",
+        "isComputed": "false",
+        "file": "/Users/runner/work/nordur-ios/nordur-ios/NordurWidgets/ConditionsWidget.swift",
+        "line": 19,
+        "valueKind": "InitCall",
+        "value": {
+          "type": "NordurWidgets.PlaceEntity",
+          "arguments": [
+            {
+              "label": "id",
+              "type": "Swift.String",
+              "valueKind": "MemberReference",
+              "value": {
+                "baseType": "NordurWidgets.PlaceEntity",
+                "memberLabel": "currentID"
+              }
+            },
+            {
+              "label": "name",
+              "type": "Swift.String",
+              "valueKind": "InitCall",
+              "value": {
+                "type": "Swift.String",
+                "arguments": [
+                  {
+                    "label": "localized",
+                    "type": "Swift.String.LocalizationValue",
+                    "valueKind": "RawLiteral",
+                    "value": "Posizione attuale"
+                  },
+                  {
+                    "label": "table",
+                    "type": "Swift.Optional<Swift.String>",
+                    "valueKind": "NilLiteral"
+                  },
+                  {
+                    "label": "bundle",
+                    "type": "Swift.Optional<Foundation.Bundle>",
+                    "valueKind": "NilLiteral"
+                  },
+                  {
+                    "label": "locale",
+                    "type": "Foundation.Locale",
+                    "valueKind": "Runtime"
+                  },
+                  {
+                    "label": "comment",
+                    "type": "Swift.Optional<Swift.StaticString>",
+                    "valueKind": "NilLiteral"
+                  }
+                ]
+              }
+            },
+            {
+              "label": "coordinate",
+              "type": "Swift.Optional<NordurWidgets.Coordinate>",
+              "valueKind": "NilLiteral"
+            }
+          ]
+        }
+      },
+      {
+        "label": "all",
+        "type": "Swift.Array<NordurWidgets.PlaceEntity>",
+        "mangledTypeName": "n/a - deprecated",
+        "isStatic": "true",
+        "isComputed": "true",
+        "file": "/Users/runner/work/nordur-ios/nordur-ios/NordurWidgets/ConditionsWidget.swift",
+        "line": 20,
+        "valueKind": "Runtime"
+      }
+    ]
+  },
+  {
+    "typeName": "NordurWidgets.PlaceEntityQuery",
+    "mangledTypeName": "13NordurWidgets16PlaceEntityQueryV",
+    "kind": "struct",
+    "file": "/Users/runner/work/nordur-ios/nordur-ios/NordurWidgets/ConditionsWidget.swift",
+    "line": 25,
+    "conformances": [
+      "AppIntents.EntityQuery",
+      "AppIntents.DynamicOptionsProvider",
+      "AppIntents.PersistentlyIdentifiable",
+      "Swift.Sendable",
+      "AppIntents._SupportsAppDependencies",
+      "Swift.SendableMetatype",
+      "Swift.BitwiseCopyable"
+    ],
+    "allConformances": [
+      {
+        "protocolName": "AppIntents.EntityQuery",
+        "conformanceDefiningModule": "NordurWidgets"
+      },
+      {
+        "protocolName": "AppIntents.DynamicOptionsProvider",
+        "conformanceDefiningModule": "NordurWidgets"
+      },
+      {
+        "protocolName": "AppIntents.PersistentlyIdentifiable",
+        "conformanceDefiningModule": "NordurWidgets"
+      },
+      {
+        "protocolName": "Swift.Sendable",
+        "conformanceDefiningModule": "NordurWidgets"
+      },
+      {
+        "protocolName": "AppIntents._SupportsAppDependencies",
+        "conformanceDefiningModule": "NordurWidgets"
+      },
+      {
+        "protocolName": "Swift.SendableMetatype",
+        "conformanceDefiningModule": "NordurWidgets"
+      },
+      {
+        "protocolName": "Swift.BitwiseCopyable",
+        "conformanceDefiningModule": "NordurWidgets"
+      }
+    ],
+    "associatedTypeAliases": [
+      {
+        "typeAliasName": "Entity",
+        "substitutedTypeName": "NordurWidgets.PlaceEntity",
+        "substitutedMangledTypeName": "13NordurWidgets11PlaceEntityV"
+      },
+      {
+        "typeAliasName": "Result",
+        "substitutedTypeName": "Swift.Array<NordurWidgets.PlaceEntity>",
+        "substitutedMangledTypeName": "Say13NordurWidgets11PlaceEntityVG"
+      },
+      {
+        "typeAliasName": "Result",
+        "substitutedTypeName": "Swift.Array<NordurWidgets.PlaceEntity>",
+        "substitutedMangledTypeName": "Say13NordurWidgets11PlaceEntityVG"
+      },
+      {
+        "typeAliasName": "DefaultValue",
+        "substitutedTypeName": "NordurWidgets.PlaceEntity",
+        "substitutedMangledTypeName": "13NordurWidgets11PlaceEntityV"
+      }
+    ],
+    "properties": []
+  },
+  {
+    "typeName": "NordurWidgets.SelectPlaceIntent",
+    "mangledTypeName": "13NordurWidgets17SelectPlaceIntentV",
+    "kind": "struct",
+    "file": "/Users/runner/work/nordur-ios/nordur-ios/NordurWidgets/ConditionsWidget.swift",
+    "line": 35,
+    "conformances": [
+      "AppIntents.WidgetConfigurationIntent",
+      "AppIntents.AppIntent",
+      "AppIntents.PersistentlyIdentifiable",
+      "AppIntents._SupportsAppDependencies",
+      "Swift.Sendable",
+      "Swift.SendableMetatype"
+    ],
+    "allConformances": [
+      {
+        "protocolName": "AppIntents.WidgetConfigurationIntent",
+        "conformanceDefiningModule": "NordurWidgets"
+      },
+      {
+        "protocolName": "AppIntents.AppIntent",
+        "conformanceDefiningModule": "NordurWidgets"
+      },
+      {
+        "protocolName": "AppIntents.PersistentlyIdentifiable",
+        "conformanceDefiningModule": "NordurWidgets"
+      },
+      {
+        "protocolName": "AppIntents._SupportsAppDependencies",
+        "conformanceDefiningModule": "NordurWidgets"
+      },
+      {
+        "protocolName": "Swift.Sendable",
+        "conformanceDefiningModule": "NordurWidgets"
+      },
+      {
+        "protocolName": "Swift.SendableMetatype",
+        "conformanceDefiningModule": "NordurWidgets"
+      }
+    ],
+    "associatedTypeAliases": [
+      {
+        "typeAliasName": "NeverResult",
+        "substitutedTypeName": "Swift.Never",
+        "substitutedMangledTypeName": "s5NeverO"
+      },
+      {
+        "typeAliasName": "PerformResult",
+        "substitutedTypeName": "Swift.Never",
+        "substitutedMangledTypeName": "s5NeverO"
+      },
+      {
+        "typeAliasName": "SummaryContent",
+        "substitutedTypeName": "some AppIntents.ParameterSummary",
+        "substitutedMangledTypeName": "10AppIntents0A6IntentPAAE16parameterSummaryQrvpZQOy13NordurWidgets011SelectPlaceC0V_Qo_",
+        "opaqueTypeProtocolRequirements": [
+          "AppIntents.ParameterSummary"
+        ],
+        "opaqueTypeSameTypeRequirements": []
+      }
+    ],
+    "properties": [
+      {
+        "label": "_place",
+        "type": "AppIntents.IntentParameter<Swift.Optional<NordurWidgets.PlaceEntity>>",
+        "mangledTypeName": "n/a - deprecated",
+        "isStatic": "false",
+        "isComputed": "false",
+        "file": "/Users/runner/work/nordur-ios/nordur-ios/NordurWidgets/ConditionsWidget.swift",
+        "line": 40,
+        "valueKind": "InitCall",
+        "value": {
+          "type": "AppIntents.IntentParameter<Swift.Optional<NordurWidgets.PlaceEntity>>",
+          "arguments": [
+            {
+              "label": "title",
+              "type": "Foundation.LocalizedStringResource",
+              "valueKind": "RawLiteral",
+              "value": "Luogo"
+            },
+            {
+              "label": "description",
+              "type": "Swift.Optional<Foundation.LocalizedStringResource>",
+              "valueKind": "NilLiteral"
+            },
+            {
+              "label": "default",
+              "type": "Swift.Optional<NordurWidgets.PlaceEntity>",
+              "valueKind": "NilLiteral"
+            },
+            {
+              "label": "requestValueDialog",
+              "type": "Swift.Optional<AppIntents.IntentDialog>",
+              "valueKind": "NilLiteral"
+            },
+            {
+              "label": "requestDisambiguationDialog",
+              "type": "Swift.Optional<AppIntents.IntentDialog>",
+              "valueKind": "NilLiteral"
+            },
+            {
+              "label": "inputConnectionBehavior",
+              "type": "AppIntents.InputConnectionBehavior",
+              "valueKind": "Runtime"
+            }
+          ]
+        }
+      },
+      {
+        "label": "title",
+        "type": "Foundation.LocalizedStringResource",
+        "mangledTypeName": "n/a - deprecated",
+        "isStatic": "true",
+        "isComputed": "false",
+        "file": "/Users/runner/work/nordur-ios/nordur-ios/NordurWidgets/ConditionsWidget.swift",
+        "line": 36,
+        "valueKind": "RawLiteral",
+        "value": "Luogo"
+      },
+      {
+        "label": "description",
+        "type": "AppIntents.IntentDescription",
+        "mangledTypeName": "n/a - deprecated",
+        "isStatic": "true",
+        "isComputed": "false",
+        "file": "/Users/runner/work/nordur-ios/nordur-ios/NordurWidgets/ConditionsWidget.swift",
+        "line": 37,
+        "valueKind": "RawLiteral",
+        "value": "Scegli il luogo da mostrare nel widget."
+      },
+      {
+        "label": "place",
+        "type": "Swift.Optional<NordurWidgets.PlaceEntity>",
+        "mangledTypeName": "n/a - deprecated",
+        "isStatic": "false",
+        "isComputed": "true",
+        "file": "/Users/runner/work/nordur-ios/nordur-ios/NordurWidgets/ConditionsWidget.swift",
+        "line": 40,
+        "valueKind": "InitCall",
+        "value": {
+          "type": "AppIntents.IntentParameter<Swift.Optional<NordurWidgets.PlaceEntity>>",
+          "arguments": [
+            {
+              "label": "title",
+              "type": "Foundation.LocalizedStringResource",
+              "valueKind": "RawLiteral",
+              "value": "Luogo"
+            },
+            {
+              "label": "description",
+              "type": "Swift.Optional<Foundation.LocalizedStringResource>",
+              "valueKind": "NilLiteral"
+            },
+            {
+              "label": "default",
+              "type": "Swift.Optional<NordurWidgets.PlaceEntity>",
+              "valueKind": "NilLiteral"
+            },
+            {
+              "label": "requestValueDialog",
+              "type": "Swift.Optional<AppIntents.IntentDialog>",
+              "valueKind": "NilLiteral"
+            },
+            {
+              "label": "requestDisambiguationDialog",
+              "type": "Swift.Optional<AppIntents.IntentDialog>",
+              "valueKind": "NilLiteral"
+            },
+            {
+              "label": "inputConnectionBehavior",
+              "type": "AppIntents.InputConnectionBehavior",
+              "valueKind": "Runtime"
+            }
+          ]
+        },
+        "propertyWrappers": [
+          {
+            "type": "AppIntents.IntentParameter",
+            "file": "/Users/runner/work/nordur-ios/nordur-ios/NordurWidgets/ConditionsWidget.swift",
+            "line": 39,
+            "arguments": [
+              {
+                "label": "title",
+                "type": "Foundation.LocalizedStringResource",
+                "valueKind": "RawLiteral",
+                "value": "Luogo"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "label": "$place",
+        "type": "AppIntents.IntentParameter<Swift.Optional<NordurWidgets.PlaceEntity>>",
+        "mangledTypeName": "n/a - deprecated",
+        "isStatic": "false",
+        "isComputed": "true",
+        "file": "/Users/runner/work/nordur-ios/nordur-ios/NordurWidgets/ConditionsWidget.swift",
+        "line": 40,
+        "valueKind": "Runtime"
+      }
+    ]
+  }
+]

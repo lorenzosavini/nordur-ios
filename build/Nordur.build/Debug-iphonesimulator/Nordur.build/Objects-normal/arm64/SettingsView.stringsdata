@@ -1,0 +1,136 @@
+{
+  "source": "/Users/runner/work/nordur-ios/nordur-ios/Nordur/Views/SettingsView.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Impostazioni",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 53
+        }
+      },
+      {
+        "comment": "",
+        "key": "Vento",
+        "location": {
+          "startingColumn": 31,
+          "startingLine": 19
+        }
+      },
+      {
+        "comment": "",
+        "key": "°C · mm · km",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 23
+        }
+      },
+      {
+        "comment": "",
+        "key": "Temperatura, pioggia, distanze",
+        "location": {
+          "startingColumn": 31,
+          "startingLine": 25
+        }
+      },
+      {
+        "comment": "",
+        "key": "Unità di misura",
+        "location": {
+          "startingColumn": 34,
+          "startingLine": 27
+        }
+      },
+      {
+        "comment": "",
+        "key": "Esempio: 15 m/s = %lld km/h = %lld nodi. Le soglie degli avvisi restano le stesse, cambia solo come vengono mostrate.",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 28
+        }
+      },
+      {
+        "comment": "",
+        "key": "Aspetto",
+        "location": {
+          "startingColumn": 31,
+          "startingLine": 35
+        }
+      },
+      {
+        "comment": "",
+        "key": "Schermo",
+        "location": {
+          "startingColumn": 34,
+          "startingLine": 38
+        }
+      },
+      {
+        "comment": "",
+        "key": "Allerte e notifiche",
+        "location": {
+          "startingColumn": 75,
+          "startingLine": 41
+        }
+      },
+      {
+        "comment": "",
+        "key": "Pacchetto offline",
+        "location": {
+          "startingColumn": 69,
+          "startingLine": 42
+        }
+      },
+      {
+        "comment": "",
+        "key": "Account e backup",
+        "location": {
+          "startingColumn": 70,
+          "startingLine": 44
+        }
+      },
+      {
+        "comment": "",
+        "key": "Accedi o crea un account",
+        "location": {
+          "startingColumn": 110,
+          "startingLine": 44
+        }
+      },
+      {
+        "comment": "",
+        "key": "App",
+        "location": {
+          "startingColumn": 34,
+          "startingLine": 46
+        }
+      },
+      {
+        "comment": "",
+        "key": "Info, SOS, fonti e crediti",
+        "location": {
+          "startingColumn": 80,
+          "startingLine": 49
+        }
+      },
+      {
+        "comment": "",
+        "key": "Informazioni",
+        "location": {
+          "startingColumn": 34,
+          "startingLine": 50
+        }
+      },
+      {
+        "comment": "",
+        "key": "Fine",
+        "location": {
+          "startingColumn": 77,
+          "startingLine": 55
+        }
+      }
+    ]
+  },
+  "version": 1
+}

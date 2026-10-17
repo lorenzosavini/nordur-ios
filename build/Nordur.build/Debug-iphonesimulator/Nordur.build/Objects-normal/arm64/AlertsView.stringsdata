@@ -1,0 +1,376 @@
+{
+  "source": "/Users/runner/work/nordur-ios/nordur-ios/Nordur/Views/AlertsView.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Oggi",
+        "location": {
+          "startingColumn": 67,
+          "startingLine": 30
+        }
+      },
+      {
+        "comment": "",
+        "key": "Ieri",
+        "location": {
+          "startingColumn": 71,
+          "startingLine": 31
+        }
+      },
+      {
+        "comment": "",
+        "key": "Cerca nelle allerte",
+        "location": {
+          "startingColumn": 48,
+          "startingLine": 107
+        }
+      },
+      {
+        "comment": "",
+        "key": "Allerte",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 113
+        }
+      },
+      {
+        "comment": "",
+        "key": "Qui compaiono le allerte inviate.",
+        "location": {
+          "startingColumn": 62,
+          "startingLine": 81
+        }
+      },
+      {
+        "comment": "",
+        "key": "Nessuna allerta",
+        "location": {
+          "startingColumn": 44,
+          "startingLine": 80
+        }
+      },
+      {
+        "comment": "",
+        "key": "Attiva le notifiche",
+        "location": {
+          "startingColumn": 28,
+          "startingLine": 56
+        }
+      },
+      {
+        "comment": "",
+        "key": "Controlla ora",
+        "location": {
+          "startingColumn": 32,
+          "startingLine": 51
+        }
+      },
+      {
+        "comment": "",
+        "key": "Notifiche attive",
+        "location": {
+          "startingColumn": 78,
+          "startingLine": 42
+        }
+      },
+      {
+        "comment": "",
+        "key": "Notifiche disattivate",
+        "location": {
+          "startingColumn": 118,
+          "startingLine": 42
+        }
+      },
+      {
+        "comment": "",
+        "key": "Ultimo controllo %@",
+        "location": {
+          "startingColumn": 34,
+          "startingLine": 44
+        }
+      },
+      {
+        "comment": "",
+        "key": "Impostazioni allerte",
+        "location": {
+          "startingColumn": 27,
+          "startingLine": 61
+        }
+      },
+      {
+        "comment": "",
+        "key": "Solo da leggere (%lld)",
+        "location": {
+          "startingColumn": 51,
+          "startingLine": 66
+        }
+      },
+      {
+        "comment": "",
+        "key": "Tutte",
+        "location": {
+          "startingColumn": 49,
+          "startingLine": 69
+        }
+      },
+      {
+        "comment": "",
+        "key": "Elimina",
+        "location": {
+          "startingColumn": 96,
+          "startingLine": 94
+        }
+      },
+      {
+        "comment": "",
+        "key": "Letta",
+        "location": {
+          "startingColumn": 82,
+          "startingLine": 98
+        }
+      },
+      {
+        "comment": "",
+        "key": "%@ · %lld",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 103
+        }
+      },
+      {
+        "comment": "",
+        "key": "Chiudi",
+        "location": {
+          "startingColumn": 24,
+          "startingLine": 116
+        }
+      },
+      {
+        "comment": "",
+        "key": "Segna tutte come lette",
+        "location": {
+          "startingColumn": 28,
+          "startingLine": 120
+        }
+      },
+      {
+        "comment": "",
+        "key": "Svuota",
+        "location": {
+          "startingColumn": 28,
+          "startingLine": 121
+        }
+      },
+      {
+        "comment": "",
+        "key": "%@ %lld",
+        "location": {
+          "startingColumn": 19,
+          "startingLine": 141
+        }
+      },
+      {
+        "comment": "",
+        "key": "· scaduta",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 175
+        }
+      },
+      {
+        "comment": "",
+        "key": "Impostazioni allerte",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 262
+        }
+      },
+      {
+        "comment": "",
+        "key": "Cosa monitorare",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 201
+        }
+      },
+      {
+        "comment": "",
+        "key": "Le allerte IMO e i terremoti vengono controllati per la tua posizione e per le tappe del viaggio dei prossimi 3 giorni.",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 203
+        }
+      },
+      {
+        "comment": "",
+        "key": "Includi allerte gialle",
+        "location": {
+          "startingColumn": 24,
+          "startingLine": 207
+        }
+      },
+      {
+        "comment": "",
+        "key": "Raffiche da %@",
+        "location": {
+          "startingColumn": 25,
+          "startingLine": 208
+        }
+      },
+      {
+        "comment": "",
+        "key": "…entro %lld km",
+        "location": {
+          "startingColumn": 25,
+          "startingLine": 209
+        }
+      },
+      {
+        "comment": "",
+        "key": "Strade chiuse entro %lld km",
+        "location": {
+          "startingColumn": 25,
+          "startingLine": 210
+        }
+      },
+      {
+        "comment": "",
+        "key": "Terremoti da M%@",
+        "location": {
+          "startingColumn": 25,
+          "startingLine": 211
+        }
+      },
+      {
+        "comment": "",
+        "key": "…entro %lld km",
+        "location": {
+          "startingColumn": 25,
+          "startingLine": 212
+        }
+      },
+      {
+        "comment": "",
+        "key": "Aurora: avvisa da",
+        "location": {
+          "startingColumn": 24,
+          "startingLine": 213
+        }
+      },
+      {
+        "comment": "",
+        "key": "Avvisi NOAA e CME NASA da Kp %@",
+        "location": {
+          "startingColumn": 25,
+          "startingLine": 216
+        }
+      },
+      {
+        "comment": "",
+        "key": "Soglie",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 217
+        }
+      },
+      {
+        "comment": "",
+        "key": "Avvisi vocali durante la guida",
+        "location": {
+          "startingColumn": 24,
+          "startingLine": 220
+        }
+      },
+      {
+        "comment": "",
+        "key": "Allerte in base a dove ti trovi, anche ad app chiusa",
+        "location": {
+          "startingColumn": 24,
+          "startingLine": 221
+        }
+      },
+      {
+        "comment": "",
+        "key": "Serve l'accesso alla posizione «Sempre»: Impostazioni › Norður › Posizione.",
+        "location": {
+          "startingColumn": 27,
+          "startingLine": 223
+        }
+      },
+      {
+        "comment": "",
+        "key": "Apri Impostazioni",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 226
+        }
+      },
+      {
+        "comment": "",
+        "key": "In viaggio",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 230
+        }
+      },
+      {
+        "comment": "",
+        "key": "Ogni volta che ti sposti di circa 2 km l'app controlla allerte, strade, vento e terremoti intorno a te, anche se non stai registrando un percorso. Serve l'accesso alla posizione «Sempre».",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 232
+        }
+      },
+      {
+        "comment": "",
+        "key": "Es. FI204",
+        "location": {
+          "startingColumn": 31,
+          "startingLine": 241
+        }
+      },
+      {
+        "comment": "",
+        "key": "Aggiungi",
+        "location": {
+          "startingColumn": 28,
+          "startingLine": 244
+        }
+      },
+      {
+        "comment": "",
+        "key": "Voli seguiti",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 251
+        }
+      },
+      {
+        "comment": "",
+        "key": "Invia una notifica di prova",
+        "location": {
+          "startingColumn": 24,
+          "startingLine": 254
+        }
+      },
+      {
+        "comment": "",
+        "key": "Notifica di prova",
+        "location": {
+          "startingColumn": 104,
+          "startingLine": 256
+        }
+      },
+      {
+        "comment": "",
+        "key": "Le notifiche funzionano.",
+        "location": {
+          "startingColumn": 70,
+          "startingLine": 257
+        }
+      }
+    ]
+  },
+  "version": 1
+}

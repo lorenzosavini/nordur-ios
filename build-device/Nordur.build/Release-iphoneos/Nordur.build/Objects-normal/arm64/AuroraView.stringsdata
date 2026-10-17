@@ -1,0 +1,1530 @@
+{
+  "source": "/Users/runner/work/nordur-ios/nordur-ios/Nordur/Views/AuroraView.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "NOAA · GFZ · NASA · MET Norway",
+        "location": {
+          "startingColumn": 74,
+          "startingLine": 28
+        }
+      },
+      {
+        "comment": "",
+        "key": "Aurora",
+        "location": {
+          "startingColumn": 137,
+          "startingLine": 28
+        }
+      },
+      {
+        "comment": "",
+        "key": "Attività, cielo qui e conferme della community",
+        "location": {
+          "startingColumn": 60,
+          "startingLine": 29
+        }
+      },
+      {
+        "comment": "",
+        "key": "ATTIVITÀ",
+        "location": {
+          "startingColumn": 42,
+          "startingLine": 65
+        }
+      },
+      {
+        "comment": "",
+        "key": "OSSERVABILITÀ QUI",
+        "location": {
+          "startingColumn": 42,
+          "startingLine": 67
+        }
+      },
+      {
+        "comment": "",
+        "key": "AFFIDABILITÀ",
+        "location": {
+          "startingColumn": 42,
+          "startingLine": 70
+        }
+      },
+      {
+        "comment": "",
+        "key": "Assente qui",
+        "location": {
+          "startingColumn": 91,
+          "startingLine": 124
+        }
+      },
+      {
+        "comment": "",
+        "key": "OVATION %lld · %@",
+        "location": {
+          "startingColumn": 100,
+          "startingLine": 130
+        }
+      },
+      {
+        "comment": "",
+        "key": "COMMUNITY",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 79
+        }
+      },
+      {
+        "comment": "",
+        "key": "—",
+        "location": {
+          "startingColumn": 34,
+          "startingLine": 91
+        }
+      },
+      {
+        "comment": "",
+        "key": "FINESTRA MIGLIORE 24 H",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 102
+        }
+      },
+      {
+        "comment": "",
+        "key": "%@ · %@",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 104
+        }
+      },
+      {
+        "comment": "",
+        "key": "Ovale adesso",
+        "location": {
+          "startingColumn": 64,
+          "startingLine": 155
+        }
+      },
+      {
+        "comment": "",
+        "key": "OVATION Prime (NOAA) stima l'aurora per l'orario indicato a partire dal vento solare misurato a L1. Il valore è una grandezza del modello (NOAA la descrive come probabilità di aurora visibile), non la probabilità che tu la veda: nuvole, buio e Luna sono valutati a parte. La direzione considera aurore a ~110 km di quota e la curvatura terrestre.",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 169
+        }
+      },
+      {
+        "comment": "",
+        "key": "OVATION non disponibile o fuori validità: l'attività è stimata dal Kp.",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 172
+        }
+      },
+      {
+        "comment": "",
+        "key": "VALIDO %@",
+        "location": {
+          "startingColumn": 34,
+          "startingLine": 248
+        }
+      },
+      {
+        "comment": "",
+        "key": "0",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 158
+        }
+      },
+      {
+        "comment": "",
+        "key": "%lld",
+        "location": {
+          "startingColumn": 49,
+          "startingLine": 158
+        }
+      },
+      {
+        "comment": "",
+        "key": "0",
+        "location": {
+          "startingColumn": 67,
+          "startingLine": 158
+        }
+      },
+      {
+        "comment": "",
+        "key": "VALORE OVATION NEL TUO CIELO",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 161
+        }
+      },
+      {
+        "comment": "",
+        "key": "GUARDA VERSO %@ (%lld°)%@",
+        "location": {
+          "startingColumn": 34,
+          "startingLine": 164
+        }
+      },
+      {
+        "comment": "",
+        "key": " · ~%lld° SULL'ORIZZONTE",
+        "location": {
+          "startingColumn": 134,
+          "startingLine": 164
+        }
+      },
+      {
+        "comment": "",
+        "key": "MAPPA DELL'OVALE",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 176
+        }
+      },
+      {
+        "comment": "",
+        "key": "→",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 178
+        }
+      },
+      {
+        "comment": "",
+        "key": "Prossimi 60 minuti",
+        "location": {
+          "startingColumn": 64,
+          "startingLine": 195
+        }
+      },
+      {
+        "comment": "",
+        "key": "Previsione a breve termine non disponibile: serve il vento solare aggiornato.",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 198
+        }
+      },
+      {
+        "comment": "",
+        "key": "Il vento solare che raggiungerà la Terra nei prossimi minuti è già stato misurato dal satellite in L1, a 1,5 milioni di km: ogni misura è spostata del suo tempo di viaggio. Kp atteso = Kp attuale corretto con la variazione dell'accoppiamento di Newell del vento in arrivo; finché è valido, la geometria usa OVATION. L'aurora risponde con un ritardo che va da alcuni minuti a 20–30 minuti. Oltre l'ultimo dato misurato (–) resta il Kp attuale.",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 238
+        }
+      },
+      {
+        "comment": "",
+        "key": "MISURATO FINO A +%lld MIN",
+        "location": {
+          "startingColumn": 86,
+          "startingLine": 196
+        }
+      },
+      {
+        "comment": "",
+        "key": "ORA",
+        "location": {
+          "startingColumn": 52,
+          "startingLine": 207
+        }
+      },
+      {
+        "comment": "",
+        "key": "OSSERVABILITÀ",
+        "location": {
+          "startingColumn": 52,
+          "startingLine": 211
+        }
+      },
+      {
+        "comment": "",
+        "key": "now.short",
+        "location": {
+          "startingColumn": 73,
+          "startingLine": 218
+        },
+        "value": "ORA"
+      },
+      {
+        "comment": "",
+        "key": "VALIDO %@",
+        "location": {
+          "startingColumn": 78,
+          "startingLine": 246
+        }
+      },
+      {
+        "comment": "",
+        "key": "Vento solare a L1",
+        "location": {
+          "startingColumn": 64,
+          "startingLine": 253
+        }
+      },
+      {
+        "comment": "",
+        "key": "Vento solare non disponibile.",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 300
+        }
+      },
+      {
+        "comment": "",
+        "key": "Bz sud continuo",
+        "location": {
+          "startingColumn": 54,
+          "startingLine": 269
+        }
+      },
+      {
+        "comment": "",
+        "key": "Pressione vs 1 h fa",
+        "location": {
+          "startingColumn": 54,
+          "startingLine": 272
+        }
+      },
+      {
+        "comment": "",
+        "key": "Arrivo a terra",
+        "location": {
+          "startingColumn": 54,
+          "startingLine": 274
+        }
+      },
+      {
+        "comment": "",
+        "key": "Kp da vento (Newell)",
+        "location": {
+          "startingColumn": 54,
+          "startingLine": 276
+        }
+      },
+      {
+        "comment": "",
+        "key": "Bz min / max 60'",
+        "location": {
+          "startingColumn": 54,
+          "startingLine": 277
+        }
+      },
+      {
+        "comment": "",
+        "key": "Il vento misurato ora da %@ a %@ mila km arriva alla Terra tra circa %lld ± %lld minuti (ritardo piatto X/Vx). La risposta di magnetosfera e ionosfera richiede poi da alcuni minuti a decine di minuti: non è l'orario di comparsa dell'aurora.",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 296
+        }
+      },
+      {
+        "comment": "",
+        "key": "%@ · %lld MIN FA",
+        "location": {
+          "startingColumn": 37,
+          "startingLine": 307
+        }
+      },
+      {
+        "comment": "",
+        "key": "NON AGGIORNATO · %@",
+        "location": {
+          "startingColumn": 63,
+          "startingLine": 308
+        }
+      },
+      {
+        "comment": "",
+        "key": "P nPa",
+        "location": {
+          "startingColumn": 45,
+          "startingLine": 266
+        }
+      },
+      {
+        "comment": "",
+        "key": "now.short",
+        "location": {
+          "startingColumn": 52,
+          "startingLine": 258
+        },
+        "value": "ORA"
+      },
+      {
+        "comment": "",
+        "key": "±%lld min",
+        "location": {
+          "startingColumn": 74,
+          "startingLine": 275
+        }
+      },
+      {
+        "comment": "",
+        "key": "POSSIBILE SHOCK INTERPLANETARIO · %@",
+        "location": {
+          "startingColumn": 38,
+          "startingLine": 286
+        }
+      },
+      {
+        "comment": "",
+        "key": "Salto di velocità +%lld km/s, densità ×%@, campo ×%@. Rilevamento automatico, non confermato.",
+        "location": {
+          "startingColumn": 38,
+          "startingLine": 287
+        }
+      },
+      {
+        "comment": "",
+        "key": "BZ GSM, ULTIME 3 ORE · LINEA VERDE −5 NT",
+        "location": {
+          "startingColumn": 18,
+          "startingLine": 358
+        }
+      },
+      {
+        "comment": "",
+        "key": "0",
+        "location": {
+          "startingColumn": 36,
+          "startingLine": 342
+        }
+      },
+      {
+        "comment": "",
+        "key": "-5",
+        "location": {
+          "startingColumn": 36,
+          "startingLine": 343
+        }
+      },
+      {
+        "comment": "",
+        "key": "Ora",
+        "location": {
+          "startingColumn": 58,
+          "startingLine": 339
+        }
+      },
+      {
+        "comment": "",
+        "key": "Bz",
+        "location": {
+          "startingColumn": 93,
+          "startingLine": 339
+        }
+      },
+      {
+        "comment": "",
+        "key": "%lld",
+        "location": {
+          "startingColumn": 78,
+          "startingLine": 354
+        }
+      },
+      {
+        "comment": "",
+        "key": "Indice Kp",
+        "location": {
+          "startingColumn": 64,
+          "startingLine": 364
+        }
+      },
+      {
+        "comment": "",
+        "key": "MISURATO ≠ PREVISTO",
+        "location": {
+          "startingColumn": 106,
+          "startingLine": 364
+        }
+      },
+      {
+        "comment": "",
+        "key": "Stima NOAA (1 min)",
+        "location": {
+          "startingColumn": 41,
+          "startingLine": 366
+        }
+      },
+      {
+        "comment": "",
+        "key": "provvisoria, magnetometri a terra",
+        "location": {
+          "startingColumn": 82,
+          "startingLine": 366
+        }
+      },
+      {
+        "comment": "",
+        "key": "Kp GFZ Potsdam",
+        "location": {
+          "startingColumn": 41,
+          "startingLine": 367
+        }
+      },
+      {
+        "comment": "",
+        "key": "produttore ufficiale · %@",
+        "location": {
+          "startingColumn": 78,
+          "startingLine": 367
+        }
+      },
+      {
+        "comment": "",
+        "key": "Previsione NOAA, blocco attuale",
+        "location": {
+          "startingColumn": 41,
+          "startingLine": 368
+        }
+      },
+      {
+        "comment": "",
+        "key": "3 ore",
+        "location": {
+          "startingColumn": 95,
+          "startingLine": 368
+        }
+      },
+      {
+        "comment": "",
+        "key": "Combinato, blocco attuale",
+        "location": {
+          "startingColumn": 41,
+          "startingLine": 369
+        }
+      },
+      {
+        "comment": "",
+        "key": "POTENZA EMISFERICA (OVATION)",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 374
+        }
+      },
+      {
+        "comment": "",
+        "key": "%lld GW",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 376
+        }
+      },
+      {
+        "comment": "",
+        "key": "Avvisi NOAA",
+        "location": {
+          "startingColumn": 64,
+          "startingLine": 401
+        }
+      },
+      {
+        "comment": "",
+        "key": "NESSUNO ATTIVO",
+        "location": {
+          "startingColumn": 125,
+          "startingLine": 401
+        }
+      },
+      {
+        "comment": "",
+        "key": "%lld ATTIVI",
+        "location": {
+          "startingColumn": 163,
+          "startingLine": 401
+        }
+      },
+      {
+        "comment": "",
+        "key": "SCADUTO",
+        "location": {
+          "startingColumn": 85,
+          "startingLine": 407
+        }
+      },
+      {
+        "comment": "",
+        "key": "%@ · %@",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 407
+        }
+      },
+      {
+        "comment": "",
+        "key": "Conferme dalla community",
+        "location": {
+          "startingColumn": 64,
+          "startingLine": 420
+        }
+      },
+      {
+        "comment": "",
+        "key": "ULTIMI %lld MIN",
+        "location": {
+          "startingColumn": 54,
+          "startingLine": 421
+        }
+      },
+      {
+        "comment": "",
+        "key": "Segnalazioni anonime degli utenti Norður (ultime 3 ore, posizione arrotondata). Pesano di più quelle vicine, recenti e a occhio nudo; «non la vedo» conta solo con cielo sereno. Restano separate dal modello: se non coincidono, lo vedi scritto.",
+        "location": {
+          "startingColumn": 18,
+          "startingLine": 450
+        }
+      },
+      {
+        "comment": "",
+        "key": "LA VEDO",
+        "location": {
+          "startingColumn": 69,
+          "startingLine": 444
+        }
+      },
+      {
+        "comment": "",
+        "key": "ACCEDI PER SEGNALARE",
+        "location": {
+          "startingColumn": 100,
+          "startingLine": 444
+        }
+      },
+      {
+        "comment": "",
+        "key": "NON LA VEDO",
+        "location": {
+          "startingColumn": 52,
+          "startingLine": 446
+        }
+      },
+      {
+        "comment": "",
+        "key": "%lld km",
+        "location": {
+          "startingColumn": 18,
+          "startingLine": 458
+        }
+      },
+      {
+        "comment": "",
+        "key": "A occhio nudo",
+        "location": {
+          "startingColumn": 61,
+          "startingLine": 474
+        }
+      },
+      {
+        "comment": "",
+        "key": "Solo in foto",
+        "location": {
+          "startingColumn": 98,
+          "startingLine": 474
+        }
+      },
+      {
+        "comment": "",
+        "key": "debole",
+        "location": {
+          "startingColumn": 55,
+          "startingLine": 476
+        }
+      },
+      {
+        "comment": "",
+        "key": "moderata",
+        "location": {
+          "startingColumn": 57,
+          "startingLine": 477
+        }
+      },
+      {
+        "comment": "",
+        "key": "forte",
+        "location": {
+          "startingColumn": 54,
+          "startingLine": 478
+        }
+      },
+      {
+        "comment": "",
+        "key": "Niente aurora · cielo sereno",
+        "location": {
+          "startingColumn": 53,
+          "startingLine": 469
+        }
+      },
+      {
+        "comment": "",
+        "key": "Niente aurora · cielo in parte nuvoloso",
+        "location": {
+          "startingColumn": 55,
+          "startingLine": 470
+        }
+      },
+      {
+        "comment": "",
+        "key": "Niente aurora · cielo coperto",
+        "location": {
+          "startingColumn": 47,
+          "startingLine": 471
+        }
+      },
+      {
+        "comment": "",
+        "key": "Ora per ora",
+        "location": {
+          "startingColumn": 64,
+          "startingLine": 510
+        }
+      },
+      {
+        "comment": "",
+        "key": "ORA LOCALE",
+        "location": {
+          "startingColumn": 108,
+          "startingLine": 510
+        }
+      },
+      {
+        "comment": "",
+        "key": "Nuvole: copertura efficace dagli strati bassi, medi e alti (le alte contano la metà). Buio: N = notte astronomica, A/NA = crepuscolo astronomico/nautico, C = civile, G = giorno. Dopo i ~90 minuti di validità di OVATION l'attività deriva dal Kp previsto e dalla posizione dell'ovale.",
+        "location": {
+          "startingColumn": 18,
+          "startingLine": 538
+        }
+      },
+      {
+        "comment": "",
+        "key": "ORA",
+        "location": {
+          "startingColumn": 48,
+          "startingLine": 513
+        }
+      },
+      {
+        "comment": "",
+        "key": "ATTIVITÀ",
+        "location": {
+          "startingColumn": 98,
+          "startingLine": 513
+        }
+      },
+      {
+        "comment": "",
+        "key": "NUVOLE",
+        "location": {
+          "startingColumn": 154,
+          "startingLine": 513
+        }
+      },
+      {
+        "comment": "",
+        "key": "BUIO",
+        "location": {
+          "startingColumn": 197,
+          "startingLine": 513
+        }
+      },
+      {
+        "comment": "",
+        "key": "LUNA",
+        "location": {
+          "startingColumn": 238,
+          "startingLine": 513
+        }
+      },
+      {
+        "comment": "",
+        "key": "OSSERVABILITÀ",
+        "location": {
+          "startingColumn": 48,
+          "startingLine": 514
+        }
+      },
+      {
+        "comment": "",
+        "key": "–",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 523
+        }
+      },
+      {
+        "comment": "",
+        "key": "OV %lld",
+        "location": {
+          "startingColumn": 62,
+          "startingLine": 521
+        }
+      },
+      {
+        "comment": "",
+        "key": "Kp %@",
+        "location": {
+          "startingColumn": 97,
+          "startingLine": 521
+        }
+      },
+      {
+        "comment": "",
+        "key": "%lld%%",
+        "location": {
+          "startingColumn": 51,
+          "startingLine": 526
+        }
+      },
+      {
+        "comment": "",
+        "key": "—",
+        "location": {
+          "startingColumn": 97,
+          "startingLine": 526
+        }
+      },
+      {
+        "comment": "",
+        "key": "%lld%%",
+        "location": {
+          "startingColumn": 44,
+          "startingLine": 523
+        }
+      },
+      {
+        "comment": "",
+        "key": "–",
+        "location": {
+          "startingColumn": 87,
+          "startingLine": 523
+        }
+      },
+      {
+        "comment": "",
+        "key": "Località migliori · 12 h",
+        "location": {
+          "startingColumn": 64,
+          "startingLine": 558
+        }
+      },
+      {
+        "comment": "",
+        "key": "METEO MET NORWAY",
+        "location": {
+          "startingColumn": 123,
+          "startingLine": 558
+        }
+      },
+      {
+        "comment": "",
+        "key": "Classifica per indice di osservabilità (euristico): attività prevista × cielo sereno × buio × Luna × luci artificiali (NASA Black Marble) × orizzonte del terreno. Non considera sicurezza e percorribilità delle strade: controlla sempre lo stato delle strade prima di muoverti di notte.",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 584
+        }
+      },
+      {
+        "comment": "",
+        "key": "Classifica in caricamento",
+        "location": {
+          "startingColumn": 78,
+          "startingLine": 560
+        }
+      },
+      {
+        "comment": "",
+        "key": "%lld",
+        "location": {
+          "startingColumn": 34,
+          "startingLine": 566
+        }
+      },
+      {
+        "comment": "",
+        "key": "nuvole ora %lld%%",
+        "location": {
+          "startingColumn": 86,
+          "startingLine": 569
+        }
+      },
+      {
+        "comment": "",
+        "key": "verso le %@",
+        "location": {
+          "startingColumn": 69,
+          "startingLine": 576
+        }
+      },
+      {
+        "comment": "",
+        "key": "Kp a blocchi di 3 ore",
+        "location": {
+          "startingColumn": 64,
+          "startingLine": 594
+        }
+      },
+      {
+        "comment": "",
+        "key": "OSSERVATO · STIMATO · PREVISTO",
+        "location": {
+          "startingColumn": 118,
+          "startingLine": 594
+        }
+      },
+      {
+        "comment": "",
+        "key": "Backend non raggiungibile: Kp dalla previsione NOAA diretta.",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 611
+        }
+      },
+      {
+        "comment": "",
+        "key": "CME",
+        "location": {
+          "startingColumn": 60,
+          "startingLine": 604
+        }
+      },
+      {
+        "comment": "",
+        "key": "Adesso",
+        "location": {
+          "startingColumn": 50,
+          "startingLine": 634
+        }
+      },
+      {
+        "comment": "",
+        "key": "Ora",
+        "location": {
+          "startingColumn": 53,
+          "startingLine": 628
+        }
+      },
+      {
+        "comment": "",
+        "key": "Ora",
+        "location": {
+          "startingColumn": 59,
+          "startingLine": 631
+        }
+      },
+      {
+        "comment": "",
+        "key": "NOAA",
+        "location": {
+          "startingColumn": 117,
+          "startingLine": 631
+        }
+      },
+      {
+        "comment": "",
+        "key": "Kp",
+        "location": {
+          "startingColumn": 93,
+          "startingLine": 628
+        }
+      },
+      {
+        "comment": "",
+        "key": "%lld",
+        "location": {
+          "startingColumn": 71,
+          "startingLine": 646
+        }
+      },
+      {
+        "comment": "",
+        "key": "Notti",
+        "location": {
+          "startingColumn": 64,
+          "startingLine": 657
+        }
+      },
+      {
+        "comment": "",
+        "key": "ORA MIGLIORE PER NOTTE",
+        "location": {
+          "startingColumn": 102,
+          "startingLine": 657
+        }
+      },
+      {
+        "comment": "",
+        "key": "Nessuna ora di buio nei prossimi 3 giorni.",
+        "location": {
+          "startingColumn": 38,
+          "startingLine": 670
+        }
+      },
+      {
+        "comment": "",
+        "key": "Vento solare previsto · WSA-ENLIL NOAA",
+        "location": {
+          "startingColumn": 68,
+          "startingLine": 687
+        }
+      },
+      {
+        "comment": "",
+        "key": "Il modello non prevede l'arrivo di materiale di CME sulla Terra fino al %@. ENLIL prevede velocità e densità, non il Bz: da solo non può dire quanto sarà forte una tempesta.",
+        "location": {
+          "startingColumn": 42,
+          "startingLine": 707
+        }
+      },
+      {
+        "comment": "",
+        "key": "Arrivo di materiale di CME previsto sulla Terra: %@ (barre arancioni). L'intensità dipenderà dal Bz all'arrivo, misurabile solo ~1 ora prima a L1.",
+        "location": {
+          "startingColumn": 42,
+          "startingLine": 708
+        }
+      },
+      {
+        "comment": "",
+        "key": "Adesso",
+        "location": {
+          "startingColumn": 58,
+          "startingLine": 696
+        }
+      },
+      {
+        "comment": "",
+        "key": "Ora",
+        "location": {
+          "startingColumn": 62,
+          "startingLine": 691
+        }
+      },
+      {
+        "comment": "",
+        "key": "Ora",
+        "location": {
+          "startingColumn": 65,
+          "startingLine": 693
+        }
+      },
+      {
+        "comment": "",
+        "key": "km/s",
+        "location": {
+          "startingColumn": 89,
+          "startingLine": 691
+        }
+      },
+      {
+        "comment": "",
+        "key": "a",
+        "location": {
+          "startingColumn": 97,
+          "startingLine": 693
+        }
+      },
+      {
+        "comment": "",
+        "key": "b",
+        "location": {
+          "startingColumn": 121,
+          "startingLine": 693
+        }
+      },
+      {
+        "comment": "",
+        "key": "termine del modello",
+        "location": {
+          "startingColumn": 213,
+          "startingLine": 707
+        }
+      },
+      {
+        "comment": "",
+        "key": "NASA DONKI",
+        "location": {
+          "startingColumn": 64,
+          "startingLine": 716
+        }
+      },
+      {
+        "comment": "",
+        "key": "NASA DONKI (Goddard CCMC) non risponde: CME e tempeste NASA non sono incluse finché il servizio non torna disponibile. Restano attivi ENLIL di NOAA e gli avvisi NOAA.",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 738
+        }
+      },
+      {
+        "comment": "",
+        "key": "Nessuna CME diretta verso la Terra nelle simulazioni NASA degli ultimi 10 giorni.",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 719
+        }
+      },
+      {
+        "comment": "",
+        "key": "BRILLAMENTI M/X 3 GIORNI: %@",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 734
+        }
+      },
+      {
+        "comment": "",
+        "key": "Una CME non garantisce un'aurora: l'effetto dipende dall'orientamento del suo campo magnetico, noto solo all'arrivo.",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 736
+        }
+      },
+      {
+        "comment": "",
+        "key": "AGGIORNATO",
+        "location": {
+          "startingColumn": 46,
+          "startingLine": 746
+        }
+      },
+      {
+        "comment": "",
+        "key": "ULTIMA COPIA SALVATA",
+        "location": {
+          "startingColumn": 49,
+          "startingLine": 747
+        }
+      },
+      {
+        "comment": "",
+        "key": "NON DISPONIBILE",
+        "location": {
+          "startingColumn": 44,
+          "startingLine": 748
+        }
+      },
+      {
+        "comment": "",
+        "key": "CME DI STRISCIO",
+        "location": {
+          "startingColumn": 70,
+          "startingLine": 725
+        }
+      },
+      {
+        "comment": "",
+        "key": "CME DIRETTA",
+        "location": {
+          "startingColumn": 109,
+          "startingLine": 725
+        }
+      },
+      {
+        "comment": "",
+        "key": "%@ · ARRIVO %@ ±%lld H",
+        "location": {
+          "startingColumn": 34,
+          "startingLine": 725
+        }
+      },
+      {
+        "comment": "",
+        "key": "Kp atteso da NASA %@–%@",
+        "location": {
+          "startingColumn": 103,
+          "startingLine": 727
+        }
+      },
+      {
+        "comment": "",
+        "key": "Tendenza 27 giorni",
+        "location": {
+          "startingColumn": 64,
+          "startingLine": 757
+        }
+      },
+      {
+        "comment": "",
+        "key": "INDICAZIONE PRELIMINARE",
+        "location": {
+          "startingColumn": 115,
+          "startingLine": 757
+        }
+      },
+      {
+        "comment": "",
+        "key": "NOAA pubblica ogni settimana il Kp massimo atteso per giorno, basato sulla rotazione solare di 27 giorni (ricorrenza dei buchi coronali). Non esiste una previsione affidabile di aurora o nuvole a queste distanze: qui trovi attività attesa, ore di buio e Luna. Il dettaglio aumenta avvicinandosi alla data.",
+        "location": {
+          "startingColumn": 18,
+          "startingLine": 758
+        }
+      },
+      {
+        "comment": "",
+        "key": "Tendenza a 27 giorni non disponibile",
+        "location": {
+          "startingColumn": 54,
+          "startingLine": 761
+        }
+      },
+      {
+        "comment": "",
+        "key": "BUIO: ore con il Sole sotto −12° (crepuscolo nautico o più scuro). LUNA: illuminazione a mezzanotte locale.",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 782
+        }
+      },
+      {
+        "comment": "",
+        "key": "GIORNO",
+        "location": {
+          "startingColumn": 52,
+          "startingLine": 765
+        }
+      },
+      {
+        "comment": "",
+        "key": "KP MAX",
+        "location": {
+          "startingColumn": 105,
+          "startingLine": 765
+        }
+      },
+      {
+        "comment": "",
+        "key": "BUIO",
+        "location": {
+          "startingColumn": 168,
+          "startingLine": 765
+        }
+      },
+      {
+        "comment": "",
+        "key": "LUNA",
+        "location": {
+          "startingColumn": 209,
+          "startingLine": 765
+        }
+      },
+      {
+        "comment": "",
+        "key": "Fonti e stato",
+        "location": {
+          "startingColumn": 51,
+          "startingLine": 803
+        }
+      },
+      {
+        "comment": "",
+        "key": "VERIFICA DELLE PREVISIONI KP",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 820
+        }
+      },
+      {
+        "comment": "",
+        "key": "AGG. %@",
+        "location": {
+          "startingColumn": 150,
+          "startingLine": 803
+        }
+      },
+      {
+        "comment": "",
+        "key": "Kp previsto NOAA",
+        "location": {
+          "startingColumn": 45,
+          "startingLine": 837
+        }
+      },
+      {
+        "comment": "",
+        "key": "Kp stimato NOAA (1 min)",
+        "location": {
+          "startingColumn": 99,
+          "startingLine": 837
+        }
+      },
+      {
+        "comment": "",
+        "key": "Kp GFZ Potsdam",
+        "location": {
+          "startingColumn": 154,
+          "startingLine": 837
+        }
+      },
+      {
+        "comment": "",
+        "key": "Vento solare RTSW",
+        "location": {
+          "startingColumn": 44,
+          "startingLine": 838
+        }
+      },
+      {
+        "comment": "",
+        "key": "OVATION Prime",
+        "location": {
+          "startingColumn": 95,
+          "startingLine": 838
+        }
+      },
+      {
+        "comment": "",
+        "key": "WSA-ENLIL NOAA",
+        "location": {
+          "startingColumn": 140,
+          "startingLine": 838
+        }
+      },
+      {
+        "comment": "",
+        "key": "Scale NOAA",
+        "location": {
+          "startingColumn": 187,
+          "startingLine": 838
+        }
+      },
+      {
+        "comment": "",
+        "key": "Avvisi NOAA",
+        "location": {
+          "startingColumn": 41,
+          "startingLine": 839
+        }
+      },
+      {
+        "comment": "",
+        "key": "Potenza emisferica",
+        "location": {
+          "startingColumn": 95,
+          "startingLine": 839
+        }
+      },
+      {
+        "comment": "",
+        "key": "Tendenza 27 giorni",
+        "location": {
+          "startingColumn": 149,
+          "startingLine": 839
+        }
+      },
+      {
+        "comment": "",
+        "key": "Previsione 45 giorni",
+        "location": {
+          "startingColumn": 45,
+          "startingLine": 840
+        }
+      },
+      {
+        "comment": "",
+        "key": "NASA DONKI",
+        "location": {
+          "startingColumn": 97,
+          "startingLine": 840
+        }
+      },
+      {
+        "comment": "",
+        "key": "%lld min",
+        "location": {
+          "startingColumn": 80,
+          "startingLine": 811
+        }
+      },
+      {
+        "comment": "",
+        "key": "Stato delle fonti non disponibile",
+        "location": {
+          "startingColumn": 79,
+          "startingLine": 816
+        }
+      },
+      {
+        "comment": "",
+        "key": "%@: errore medio NOAA %@, combinato %@ (n = %lld)",
+        "location": {
+          "startingColumn": 34,
+          "startingLine": 824
+        }
+      },
+      {
+        "comment": "",
+        "key": "Dati insufficienti",
+        "location": {
+          "startingColumn": 55,
+          "startingLine": 829
+        }
+      },
+      {
+        "comment": "",
+        "key": "Metodo",
+        "location": {
+          "startingColumn": 51,
+          "startingLine": 846
+        }
+      },
+      {
+        "comment": "",
+        "key": "L'indice di osservabilità è una stima euristica trasparente, non una probabilità: moltiplica attività prevista (OVATION entro la sua validità, poi Kp e posizione dell'ovale su latitudine geomagnetica), cielo sereno per strati, buio (altezza del Sole), Luna (fase e altezza) e le luci artificiali misurate dal satellite VIIRS (NASA Black Marble, media annuale) pesate con la distanza, e l'orizzonte del terreno. Le percentuali di probabilità richiedono un modello calibrato su osservazioni reali: le segnalazioni degli utenti servono a costruirlo.",
+        "location": {
+          "startingColumn": 18,
+          "startingLine": 847
+        }
+      },
+      {
+        "comment": "",
+        "key": "Avvistamento",
+        "location": {
+          "startingColumn": 71,
+          "startingLine": 908
+        }
+      },
+      {
+        "comment": "",
+        "key": "Nessuna aurora",
+        "location": {
+          "startingColumn": 107,
+          "startingLine": 908
+        }
+      },
+      {
+        "comment": "",
+        "key": "Stai guardando il cielo a nord e non vedi l'aurora? Dicci com'è il cielo: con cielo sereno la tua segnalazione aiuta gli altri a non uscire per niente.",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 918
+        }
+      },
+      {
+        "comment": "",
+        "key": "Posizione arrotondata a ~1 km. Una segnalazione ogni 20 minuti. Le segnalazioni sono anonime per gli altri utenti.",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 949
+        }
+      },
+      {
+        "comment": "",
+        "key": "Visibile a occhio nudo",
+        "location": {
+          "startingColumn": 28,
+          "startingLine": 911
+        }
+      },
+      {
+        "comment": "",
+        "key": "Visibile in foto",
+        "location": {
+          "startingColumn": 28,
+          "startingLine": 912
+        }
+      },
+      {
+        "comment": "",
+        "key": "Intensità",
+        "location": {
+          "startingColumn": 28,
+          "startingLine": 913
+        }
+      },
+      {
+        "comment": "",
+        "key": "Cielo",
+        "location": {
+          "startingColumn": 28,
+          "startingLine": 920
+        }
+      },
+      {
+        "comment": "",
+        "key": "Debole",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 914
+        }
+      },
+      {
+        "comment": "",
+        "key": "Moderata",
+        "location": {
+          "startingColumn": 60,
+          "startingLine": 914
+        }
+      },
+      {
+        "comment": "",
+        "key": "Forte",
+        "location": {
+          "startingColumn": 94,
+          "startingLine": 914
+        }
+      },
+      {
+        "comment": "",
+        "key": "Sereno",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 921
+        }
+      },
+      {
+        "comment": "",
+        "key": "In parte nuvoloso",
+        "location": {
+          "startingColumn": 60,
+          "startingLine": 921
+        }
+      },
+      {
+        "comment": "",
+        "key": "Coperto",
+        "location": {
+          "startingColumn": 103,
+          "startingLine": 921
+        }
+      },
+      {
+        "comment": "",
+        "key": "Segnalazione registrata. Grazie.",
+        "location": {
+          "startingColumn": 57,
+          "startingLine": 934
+        }
+      },
+      {
+        "comment": "",
+        "key": "INVIA",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 940
+        }
+      },
+      {
+        "comment": "",
+        "key": "→",
+        "location": {
+          "startingColumn": 88,
+          "startingLine": 942
+        }
+      },
+      {
+        "comment": "",
+        "key": "Fine",
+        "location": {
+          "startingColumn": 77,
+          "startingLine": 957
+        }
+      }
+    ]
+  },
+  "version": 1
+}

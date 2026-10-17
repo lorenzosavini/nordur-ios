@@ -1,0 +1,184 @@
+{
+  "source": "/Users/runner/work/nordur-ios/nordur-ios/Nordur/Views/AuroraLiveView.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Aurora live",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 94
+        }
+      },
+      {
+        "comment": "",
+        "key": "Ovale aurorale sulla mappa",
+        "location": {
+          "startingColumn": 47,
+          "startingLine": 30
+        }
+      },
+      {
+        "comment": "",
+        "key": "Vista polare NOAA, ultime 3 ore",
+        "location": {
+          "startingColumn": 47,
+          "startingLine": 65
+        }
+      },
+      {
+        "comment": "",
+        "key": "Ovale aurorale sulla mappa",
+        "location": {
+          "startingColumn": 73,
+          "startingLine": 43
+        }
+      },
+      {
+        "comment": "",
+        "key": "Di giorno l'ovale si trova sul lato notturno della Terra.",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 55
+        }
+      },
+      {
+        "comment": "",
+        "key": "Previsione OVATION valida per le %@ (circa 30–90 minuti dopo la misura del vento solare a L1): non vale per le ore e i giorni successivi. La scala mostra il valore del modello OVATION, non nuvolosità né probabilità di osservazione. Kp previsto per il blocco attuale %@.",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 58
+        }
+      },
+      {
+        "comment": "",
+        "key": "NOAA SWPC",
+        "location": {
+          "startingColumn": 112,
+          "startingLine": 60
+        }
+      },
+      {
+        "comment": "",
+        "key": "Tappa del viaggio",
+        "location": {
+          "startingColumn": 79,
+          "startingLine": 127
+        }
+      },
+      {
+        "comment": "",
+        "key": "Aurora vista",
+        "location": {
+          "startingColumn": 67,
+          "startingLine": 133
+        }
+      },
+      {
+        "comment": "",
+        "key": "Nessuna aurora",
+        "location": {
+          "startingColumn": 103,
+          "startingLine": 133
+        }
+      },
+      {
+        "comment": "",
+        "key": "PUNTI: LOCALITÀ DI RIFERIMENTO, COLORATE PER OSSERVABILITÀ MIGLIORE NELLE PROSSIME 12 H (STIMA EURISTICA, NON PROBABILITÀ). GRIGI PICCOLI: TAPPE DEL VIAGGIO.",
+        "location": {
+          "startingColumn": 18,
+          "startingLine": 154
+        }
+      },
+      {
+        "comment": "",
+        "key": "4 = MOLTO FAVOREVOLE",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 163
+        }
+      },
+      {
+        "comment": "",
+        "key": "%lld",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 160
+        }
+      },
+      {
+        "comment": "",
+        "key": "SEGNALAZIONI ULTIME 3 H",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 168
+        }
+      },
+      {
+        "comment": "",
+        "key": "AURORA VISTA",
+        "location": {
+          "startingColumn": 23,
+          "startingLine": 166
+        }
+      },
+      {
+        "comment": "",
+        "key": "NON VISTA",
+        "location": {
+          "startingColumn": 23,
+          "startingLine": 167
+        }
+      },
+      {
+        "comment": "",
+        "key": "0%",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 178
+        }
+      },
+      {
+        "comment": "",
+        "key": "100%",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 182
+        }
+      },
+      {
+        "comment": "",
+        "key": "COPERTURA NUVOLOSA TOTALE, ORA %@ · OPEN-METEO",
+        "location": {
+          "startingColumn": 60,
+          "startingLine": 184
+        }
+      },
+      {
+        "comment": "",
+        "key": "NUVOLOSITÀ IN CARICAMENTO",
+        "location": {
+          "startingColumn": 200,
+          "startingLine": 184
+        }
+      },
+      {
+        "comment": "",
+        "key": "0",
+        "location": {
+          "startingColumn": 18,
+          "startingLine": 207
+        }
+      },
+      {
+        "comment": "",
+        "key": "85+ · VALORE OVATION",
+        "location": {
+          "startingColumn": 18,
+          "startingLine": 212
+        }
+      }
+    ]
+  },
+  "version": 1
+}

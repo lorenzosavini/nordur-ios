@@ -1,0 +1,16 @@
+{
+  "source": "/Users/runner/work/nordur-ios/nordur-ios/Nordur/State/AlertCenter.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "la tua posizione",
+        "location": {
+          "startingColumn": 72,
+          "startingLine": 205
+        }
+      }
+    ]
+  },
+  "version": 1
+}

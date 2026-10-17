@@ -1,0 +1,24 @@
+{
+  "source": "/Users/runner/work/nordur-ios/nordur-ios/Shared/Core/HTTP.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Il server ha risposto con errore %lld",
+        "location": {
+          "startingColumn": 58,
+          "startingLine": 49
+        }
+      },
+      {
+        "comment": "",
+        "key": "Indirizzo non valido",
+        "location": {
+          "startingColumn": 52,
+          "startingLine": 50
+        }
+      }
+    ]
+  },
+  "version": 1
+}

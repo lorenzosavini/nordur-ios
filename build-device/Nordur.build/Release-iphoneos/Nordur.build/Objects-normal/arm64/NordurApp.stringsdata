@@ -1,0 +1,48 @@
+{
+  "source": "/Users/runner/work/nordur-ios/nordur-ios/Nordur/App/NordurApp.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Oggi",
+        "location": {
+          "startingColumn": 56,
+          "startingLine": 175
+        }
+      },
+      {
+        "comment": "",
+        "key": "Meteo",
+        "location": {
+          "startingColumn": 61,
+          "startingLine": 175
+        }
+      },
+      {
+        "comment": "",
+        "key": "Mappa",
+        "location": {
+          "startingColumn": 46,
+          "startingLine": 175
+        }
+      },
+      {
+        "comment": "",
+        "key": "Guida",
+        "location": {
+          "startingColumn": 48,
+          "startingLine": 175
+        }
+      },
+      {
+        "comment": "",
+        "key": "Viaggio",
+        "location": {
+          "startingColumn": 60,
+          "startingLine": 175
+        }
+      }
+    ]
+  },
+  "version": 1
+}

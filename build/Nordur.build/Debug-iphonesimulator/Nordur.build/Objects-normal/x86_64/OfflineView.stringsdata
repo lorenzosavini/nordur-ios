@@ -1,0 +1,160 @@
+{
+  "source": "/Users/runner/work/nordur-ios/nordur-ios/Nordur/Views/OfflineView.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Pacchetto offline",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 53
+        }
+      },
+      {
+        "comment": "",
+        "key": "Scarica i dati prima di entrare in zone senza copertura (Highlands, fiordi occidentali, parte dell'Est).",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 13
+        }
+      },
+      {
+        "comment": "",
+        "key": "Allerte, strade, terremoti, aurora, SafeTravel…",
+        "location": {
+          "startingColumn": 38,
+          "startingLine": 60
+        }
+      },
+      {
+        "comment": "",
+        "key": "Webcam e distributori…",
+        "location": {
+          "startingColumn": 38,
+          "startingLine": 62
+        }
+      },
+      {
+        "comment": "",
+        "key": "Previsioni per la posizione…",
+        "location": {
+          "startingColumn": 38,
+          "startingLine": 64
+        }
+      },
+      {
+        "comment": "",
+        "key": "Previsioni per %lld tappe del viaggio…",
+        "location": {
+          "startingColumn": 38,
+          "startingLine": 66
+        }
+      },
+      {
+        "comment": "",
+        "key": "Voli e traghetti…",
+        "location": {
+          "startingColumn": 38,
+          "startingLine": 68
+        }
+      },
+      {
+        "comment": "",
+        "key": "Completato",
+        "location": {
+          "startingColumn": 55,
+          "startingLine": 71
+        }
+      },
+      {
+        "comment": "",
+        "key": "Non riuscito: %@",
+        "location": {
+          "startingColumn": 89,
+          "startingLine": 71
+        }
+      },
+      {
+        "comment": "",
+        "key": "Scarica tutto per l'uso offline",
+        "location": {
+          "startingColumn": 31,
+          "startingLine": 19
+        }
+      },
+      {
+        "comment": "",
+        "key": "Dati dell'app",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 28
+        }
+      },
+      {
+        "comment": "",
+        "key": "Apple Mappe: foto profilo › Mappe offline › Scarica nuova mappa › Islanda.",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 32
+        }
+      },
+      {
+        "comment": "",
+        "key": "Apri Apple Mappe",
+        "location": {
+          "startingColumn": 52,
+          "startingLine": 35
+        }
+      },
+      {
+        "comment": "",
+        "key": "Mappa di base",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 38
+        }
+      },
+      {
+        "comment": "",
+        "key": "OpenStreetMap",
+        "location": {
+          "startingColumn": 102,
+          "startingLine": 46
+        }
+      },
+      {
+        "comment": "",
+        "key": "Carburante",
+        "location": {
+          "startingColumn": 36,
+          "startingLine": 44
+        }
+      },
+      {
+        "comment": "",
+        "key": "Colonnine di ricarica",
+        "location": {
+          "startingColumn": 36,
+          "startingLine": 45
+        }
+      },
+      {
+        "comment": "",
+        "key": "Non ancora scaricati",
+        "location": {
+          "startingColumn": 81,
+          "startingLine": 48
+        }
+      },
+      {
+        "comment": "",
+        "key": "Distributori salvati sul telefono",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 50
+        }
+      }
+    ]
+  },
+  "version": 1
+}

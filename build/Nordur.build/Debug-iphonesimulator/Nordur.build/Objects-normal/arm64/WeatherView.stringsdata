@@ -1,0 +1,504 @@
+{
+  "source": "/Users/runner/work/nordur-ios/nordur-ios/Nordur/Views/WeatherView.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Veðurstofa Íslands · MET Norway · Open-Meteo",
+        "location": {
+          "startingColumn": 93,
+          "startingLine": 15
+        }
+      },
+      {
+        "comment": "",
+        "key": "MET Norway · Open-Meteo",
+        "location": {
+          "startingColumn": 165,
+          "startingLine": 15
+        }
+      },
+      {
+        "comment": "",
+        "key": "Meteo",
+        "location": {
+          "startingColumn": 63,
+          "startingLine": 12
+        }
+      },
+      {
+        "comment": "",
+        "key": "Previsioni · 10 giorni",
+        "location": {
+          "startingColumn": 101,
+          "startingLine": 12
+        }
+      },
+      {
+        "comment": "",
+        "key": "Previsioni",
+        "location": {
+          "startingColumn": 164,
+          "startingLine": 16
+        }
+      },
+      {
+        "comment": "",
+        "key": "%@ · vento %@, raffiche %@",
+        "location": {
+          "startingColumn": 96,
+          "startingLine": 17
+        }
+      },
+      {
+        "comment": "",
+        "key": "Open-Meteo",
+        "location": {
+          "startingColumn": 67,
+          "startingLine": 47
+        }
+      },
+      {
+        "comment": "",
+        "key": "FONTE",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 50
+        }
+      },
+      {
+        "comment": "",
+        "key": "MET Norway · MEPS 2,5 km",
+        "location": {
+          "startingColumn": 144,
+          "startingLine": 51
+        }
+      },
+      {
+        "comment": "",
+        "key": "MET Norway · ECMWF",
+        "location": {
+          "startingColumn": 193,
+          "startingLine": 51
+        }
+      },
+      {
+        "comment": "",
+        "key": "",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 56
+        }
+      },
+      {
+        "comment": "",
+        "key": "Modello nordico gestito con Veðurstofa Íslands, lo stesso di yr.no. Dopo %@ e per le raffiche: ECMWF/ICON via Open-Meteo.",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 57
+        }
+      },
+      {
+        "comment": "",
+        "key": "60 ore",
+        "location": {
+          "startingColumn": 194,
+          "startingLine": 57
+        }
+      },
+      {
+        "comment": "",
+        "key": "",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 62
+        }
+      },
+      {
+        "comment": "",
+        "key": "%lld%@",
+        "location": {
+          "startingColumn": 57,
+          "startingLine": 90
+        }
+      },
+      {
+        "comment": "",
+        "key": "Meteogramma · 48 h",
+        "location": {
+          "startingColumn": 64,
+          "startingLine": 101
+        }
+      },
+      {
+        "comment": "",
+        "key": "TEMPERATURA",
+        "location": {
+          "startingColumn": 43,
+          "startingLine": 103
+        }
+      },
+      {
+        "comment": "",
+        "key": "PRECIPITAZIONI",
+        "location": {
+          "startingColumn": 43,
+          "startingLine": 123
+        }
+      },
+      {
+        "comment": "",
+        "key": "VENTO · RAFFICHE",
+        "location": {
+          "startingColumn": 43,
+          "startingLine": 134
+        }
+      },
+      {
+        "comment": "",
+        "key": "MAX %@",
+        "location": {
+          "startingColumn": 83,
+          "startingLine": 134
+        }
+      },
+      {
+        "comment": "",
+        "key": "Adesso",
+        "location": {
+          "startingColumn": 54,
+          "startingLine": 116
+        }
+      },
+      {
+        "comment": "",
+        "key": "0",
+        "location": {
+          "startingColumn": 40,
+          "startingLine": 114
+        }
+      },
+      {
+        "comment": "",
+        "key": "Ora",
+        "location": {
+          "startingColumn": 62,
+          "startingLine": 107
+        }
+      },
+      {
+        "comment": "",
+        "key": "°C",
+        "location": {
+          "startingColumn": 105,
+          "startingLine": 107
+        }
+      },
+      {
+        "comment": "",
+        "key": "Ora",
+        "location": {
+          "startingColumn": 57,
+          "startingLine": 126
+        }
+      },
+      {
+        "comment": "",
+        "key": "mm",
+        "location": {
+          "startingColumn": 100,
+          "startingLine": 126
+        }
+      },
+      {
+        "comment": "",
+        "key": "25",
+        "location": {
+          "startingColumn": 36,
+          "startingLine": 150
+        }
+      },
+      {
+        "comment": "",
+        "key": "Ora",
+        "location": {
+          "startingColumn": 62,
+          "startingLine": 138
+        }
+      },
+      {
+        "comment": "",
+        "key": "Ora",
+        "location": {
+          "startingColumn": 62,
+          "startingLine": 144
+        }
+      },
+      {
+        "comment": "",
+        "key": "wind",
+        "location": {
+          "startingColumn": 105,
+          "startingLine": 138
+        }
+      },
+      {
+        "comment": "",
+        "key": "s",
+        "location": {
+          "startingColumn": 161,
+          "startingLine": 138
+        }
+      },
+      {
+        "comment": "",
+        "key": "wind",
+        "location": {
+          "startingColumn": 105,
+          "startingLine": 144
+        }
+      },
+      {
+        "comment": "",
+        "key": "s",
+        "location": {
+          "startingColumn": 161,
+          "startingLine": 144
+        }
+      },
+      {
+        "comment": "",
+        "key": "%@ · PERICOLO",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 154
+        }
+      },
+      {
+        "comment": "",
+        "key": "vento medio",
+        "location": {
+          "startingColumn": 69,
+          "startingLine": 174
+        }
+      },
+      {
+        "comment": "",
+        "key": "Confronto ufficiale IMO",
+        "location": {
+          "startingColumn": 68,
+          "startingLine": 210
+        }
+      },
+      {
+        "comment": "",
+        "key": "Quando i due modelli differiscono di %@ o più il valore MET è evidenziato: in quel caso considera lo scenario peggiore.",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 245
+        }
+      },
+      {
+        "comment": "",
+        "key": "Previsione per stazione di Veðurstofa Íslands%@",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 213
+        }
+      },
+      {
+        "comment": "",
+        "key": " · emessa %@",
+        "location": {
+          "startingColumn": 115,
+          "startingLine": 213
+        }
+      },
+      {
+        "comment": "",
+        "key": "ORA",
+        "location": {
+          "startingColumn": 48,
+          "startingLine": 218
+        }
+      },
+      {
+        "comment": "",
+        "key": "IMO °C",
+        "location": {
+          "startingColumn": 48,
+          "startingLine": 219
+        }
+      },
+      {
+        "comment": "",
+        "key": "MET °C",
+        "location": {
+          "startingColumn": 48,
+          "startingLine": 220
+        }
+      },
+      {
+        "comment": "",
+        "key": "CIELO (IMO)",
+        "location": {
+          "startingColumn": 48,
+          "startingLine": 223
+        }
+      },
+      {
+        "comment": "",
+        "key": "%@ · %@",
+        "location": {
+          "startingColumn": 34,
+          "startingLine": 237
+        }
+      },
+      {
+        "comment": "",
+        "key": "10 giorni",
+        "location": {
+          "startingColumn": 64,
+          "startingLine": 268
+        }
+      },
+      {
+        "comment": "",
+        "key": "MIN · MAX · RAFF · MM",
+        "location": {
+          "startingColumn": 106,
+          "startingLine": 268
+        }
+      },
+      {
+        "comment": "",
+        "key": "Oltre 7 giorni la previsione è indicativa.",
+        "location": {
+          "startingColumn": 18,
+          "startingLine": 295
+        }
+      },
+      {
+        "comment": "",
+        "key": "OGGI",
+        "location": {
+          "startingColumn": 65,
+          "startingLine": 274
+        }
+      },
+      {
+        "comment": "",
+        "key": "Mare",
+        "location": {
+          "startingColumn": 68,
+          "startingLine": 330
+        }
+      },
+      {
+        "comment": "",
+        "key": "Onde",
+        "location": {
+          "startingColumn": 54,
+          "startingLine": 332
+        }
+      },
+      {
+        "comment": "",
+        "key": "Periodo",
+        "location": {
+          "startingColumn": 54,
+          "startingLine": 333
+        }
+      },
+      {
+        "comment": "",
+        "key": "Swell",
+        "location": {
+          "startingColumn": 54,
+          "startingLine": 335
+        }
+      },
+      {
+        "comment": "",
+        "key": "Max 48 h",
+        "location": {
+          "startingColumn": 54,
+          "startingLine": 336
+        }
+      },
+      {
+        "comment": "",
+        "key": "Acqua",
+        "location": {
+          "startingColumn": 54,
+          "startingLine": 337
+        }
+      },
+      {
+        "comment": "",
+        "key": "Reynisfjara e spiagge del sud: onde anomale senza preavviso. Resta lontano dalla battigia.",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 345
+        }
+      },
+      {
+        "comment": "",
+        "key": "Open-Meteo Marine",
+        "location": {
+          "startingColumn": 104,
+          "startingLine": 347
+        }
+      },
+      {
+        "comment": "",
+        "key": "Spiagge: %@",
+        "location": {
+          "startingColumn": 79,
+          "startingLine": 342
+        }
+      },
+      {
+        "comment": "",
+        "key": "Barca: %@",
+        "location": {
+          "startingColumn": 77,
+          "startingLine": 343
+        }
+      },
+      {
+        "comment": "",
+        "key": "Aria e gas vulcanici",
+        "location": {
+          "startingColumn": 68,
+          "startingLine": 355
+        }
+      },
+      {
+        "comment": "",
+        "key": "Indice EU",
+        "location": {
+          "startingColumn": 54,
+          "startingLine": 357
+        }
+      },
+      {
+        "comment": "",
+        "key": "Dispersione del gas vulcanico: vedur.is.",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 365
+        }
+      },
+      {
+        "comment": "",
+        "key": "CAMS via Open-Meteo",
+        "location": {
+          "startingColumn": 104,
+          "startingLine": 366
+        }
+      }
+    ]
+  },
+  "version": 1
+}
