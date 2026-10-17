@@ -93,7 +93,9 @@ jobs:
       - name: Tap test on the map (real taps on every layer button)
         continue-on-error: true
         run: |
-          brew tap facebook/fb >/dev/null && brew install -q idb-companion >/dev/null
+          brew tap facebook/fb >/dev/null
+          brew trust facebook/fb 2>/dev/null || true
+          brew install -q facebook/fb/idb-companion >/dev/null
           python3 -m pip install -q --break-system-packages fb-idb || pipx install fb-idb
           UDID=$(xcrun simctl list devices available -j | python3 -c "import json,sys; d=json.load(sys.stdin)['devices']; print(next(x['udid'] for k,v in sorted(d.items(), reverse=True) if 'iOS' in k for x in v if x['name'].startswith('iPhone')))")
           xcrun simctl boot "$UDID"; xcrun simctl bootstatus "$UDID" -b

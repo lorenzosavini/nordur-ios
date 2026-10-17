@@ -12,7 +12,7 @@ struct MapScreen: View {
 
     @AppStorage("map.layer") private var layerRaw = WeatherLayer.wind.rawValue
     @AppStorage("map.warnings") private var showWarnings = true
-    @AppStorage("map.roads") private var showRoads = true
+    @AppStorage("map.roads.v2") private var showRoads = false
     @AppStorage("map.roadInfo") private var showRoadInfo = true
     @AppStorage("map.webcams") private var showWebcams = false
     @AppStorage("map.quakes") private var showQuakes = false
@@ -460,8 +460,10 @@ struct MapScreen: View {
             }
         }
         if showRoadInfo, let info = model.roadInfo, let geometry = model.roadGeometry {
-            let key = "roads\(info.date.timeIntervalSince1970)-\(geometry.date.timeIntervalSince1970)"
-            lines = Self.roadLines.lines(key: key, info: info.value, geometry: geometry.value) + lines
+            // Over a weather layer the roads step back (thinner, translucent) so the colours read.
+            let dimmed = layer != .none
+            let key = "roads\(info.date.timeIntervalSince1970)-\(geometry.date.timeIntervalSince1970)-\(dimmed)"
+            lines = Self.roadLines.lines(key: key, info: info.value, geometry: geometry.value, dimmed: dimmed) + lines
             linesKey = key + linesKey
         }
         c.polylines = lines
@@ -549,7 +551,7 @@ final class RoadLines {
     private var key = ""
     private var cached: [TitledPolyline] = []
 
-    func lines(key: String, info: RoadInfo, geometry: RoadGeometry) -> [TitledPolyline] {
+    func lines(key: String, info: RoadInfo, geometry: RoadGeometry, dimmed: Bool) -> [TitledPolyline] {
         if key == self.key { return cached }
         var out: [TitledPolyline] = []
         // Worst on top: grey, green, then rising risk, closures last.
@@ -560,8 +562,10 @@ final class RoadLines {
             for part in parts where part.count >= 2 {
                 let coords = part.map(\.clCoordinate)
                 let line = TitledPolyline(coordinates: coords, count: coords.count)
-                line.strokeColor = style.color
-                line.width = style.width
+                // Dimmed: good roads almost vanish, problems stay visible.
+                let problem = section.isClosed || (section.risk ?? .ok) >= .caution
+                line.strokeColor = dimmed ? style.color.withAlphaComponent(problem ? 0.85 : 0.35) : style.color
+                line.width = dimmed ? (problem ? style.width * 0.8 : 1.2) : style.width
                 line.dashed = section.isClosed
                 line.sectionID = section.id
                 out.append(line)
