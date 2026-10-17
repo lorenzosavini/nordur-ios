@@ -12,6 +12,7 @@ struct QuakesView: View {
     var body: some View {
         List {
             Section {
+                ExpandableMap(height: 260, title: String(localized: "Terremoti")) {
                 Map(initialPosition: .region(MKCoordinateRegion(
                     center: CLLocationCoordinate2D(latitude: 64.9, longitude: -18.6),
                     span: MKCoordinateSpan(latitudeDelta: 5.5, longitudeDelta: 14)))) {
@@ -23,7 +24,7 @@ struct QuakesView: View {
                         }
                     }
                 }
-                .frame(height: 260)
+                }
                 .listRowInsets(EdgeInsets())
 
                 Picker("Magnitudo minima", selection: $minimumMagnitude) {

@@ -36,6 +36,5 @@ None of this data is stored in the repository. The app and the backend request i
 | OpenStreetMap contributors, via Overpass API | Fuel and charging stations | Open Database License (ODbL) — "© OpenStreetMap contributors" |
 | OpenTopoData — EU-DEM v1.1 | Terrain elevation for the horizon profile | EU-DEM: Copernicus Land Monitoring Service, European Union |
 | RainViewer | Precipitation radar tiles | RainViewer API terms |
-| Windy.com | Embedded map | Windy.com embed terms |
 
 The names and logos of the services above are trademarks of their owners. Norður is not affiliated with or endorsed by any of them.

@@ -96,6 +96,7 @@ struct RouteForecastView: View {
 
     @ViewBuilder private func content(_ plan: RoutePlan) -> some View {
         Section {
+            ExpandableMap(height: 260, title: String(localized: "Percorso")) {
             Map(initialPosition: .automatic) {
                 MapPolyline(coordinates: plan.polyline.map(\.clCoordinate))
                     .stroke(.blue, lineWidth: 4)
@@ -112,7 +113,7 @@ struct RouteForecastView: View {
                     }
                 }
             }
-            .frame(height: 260)
+            }
             .listRowInsets(EdgeInsets())
 
             HStack {

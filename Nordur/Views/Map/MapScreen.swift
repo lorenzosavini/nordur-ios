@@ -28,7 +28,6 @@ struct MapScreen: View {
     @State private var probe: Coordinate?
     @State private var selectedStation: RoadStation?
     @State private var selectedWebcam: WebcamSite?
-    @State private var showWindy = false
 
     private var layer: WeatherLayer { WeatherLayer(rawValue: layerRaw) ?? .wind }
     private var grid: WeatherGrid? { model.weatherGrid?.value }
@@ -79,9 +78,6 @@ struct MapScreen: View {
                 }
                 .presentationDetents([.fraction(0.35), .medium])
             }
-            .sheet(isPresented: $showWindy) {
-                WindyView(layer: layer, center: probe ?? model.activePlace.coordinate)
-            }
         }
     }
 
@@ -121,12 +117,6 @@ struct MapScreen: View {
                     Toggle("Animazione particelle vento", systemImage: "wind", isOn: $showParticles)
                 } label: {
                     Text("LIVELLI +")
-                        .font(.mono(10.5, .semibold)).foregroundStyle(Theme.text)
-                        .padding(.horizontal, 10).padding(.vertical, 7)
-                        .background(Theme.bg.opacity(0.94)).overlay(Rectangle().strokeBorder(Theme.hairline))
-                }
-                Button { showWindy = true } label: {
-                    Text("WINDY ↗")
                         .font(.mono(10.5, .semibold)).foregroundStyle(Theme.text)
                         .padding(.horizontal, 10).padding(.vertical, 7)
                         .background(Theme.bg.opacity(0.94)).overlay(Rectangle().strokeBorder(Theme.hairline))

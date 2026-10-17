@@ -40,10 +40,16 @@ struct AuroraLiveView: View {
                         }
                     }
                     .overlay(Rectangle().strokeBorder(Theme.rule, lineWidth: 1))
-                    WeatherMapView(content: mapContent, initialRegion: layer == .clouds ? Self.iceland : Self.region, onTap: { _ in }, onSelect: { _ in })
-                        .id(layer)
-                        .frame(height: 380)
-                        .clipShape(Rectangle())
+                    ExpandableMap(height: 380, title: String(localized: "Ovale aurorale sulla mappa")) {
+                        WeatherMapView(content: mapContent, initialRegion: layer == .clouds ? Self.iceland : Self.region, onTap: { _ in }, onSelect: { _ in })
+                            .id(layer)
+                    } legend: {
+                        VStack(alignment: .leading, spacing: 8) {
+                            if layer == .oval { legend } else { cloudLegend }
+                            siteLegend
+                        }
+                        .padding()
+                    }
                     if layer == .oval { legend } else { cloudLegend }
                     siteLegend
                     Text("Di giorno l'ovale si trova sul lato notturno della Terra.")

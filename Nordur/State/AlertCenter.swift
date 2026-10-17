@@ -278,7 +278,7 @@ final class AlertCenter: NSObject {
         try? session.setCategory(.playback, mode: .voicePrompt, options: [.duckOthers, .interruptSpokenAudioAndMixWithOthers])
         try? session.setActive(true)
         let utterance = AVSpeechUtterance(string: text)
-        utterance.voice = AVSpeechSynthesisVoice(language: "it-IT")
+        utterance.voice = AVSpeechSynthesisVoice(language: Bundle.main.preferredLocalizations.first == "en" ? "en-GB" : "it-IT")
         utterance.rate = AVSpeechUtteranceDefaultSpeechRate
         speech.speak(utterance)
     }

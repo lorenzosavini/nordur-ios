@@ -127,6 +127,12 @@ struct RootView: View {
                 await alerts.requestNotificationPermission()
             }
             await model.refreshGlobal(force: true)
+            // CI only: include yellow warnings so the inbox screenshot exercises the whole pipeline on live data.
+            if UserDefaults.standard.bool(forKey: "ciAlertsYellow"), !alerts.settings.includeYellow {
+                var settings = alerts.settings
+                settings.includeYellow = true
+                alerts.update(settings)
+            }
             await alerts.check()
         }
         .task(id: model.placeKey) {

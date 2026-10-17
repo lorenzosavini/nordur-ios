@@ -4772,6 +4772,16 @@
         }
       }
     },
+    "Mappa a schermo intero" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Full-screen map"
+          }
+        }
+      }
+    },
     "Mappa di N1 / Orkan / Olís" : {
       "localizations" : {
         "en" : {

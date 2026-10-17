@@ -476,3 +476,63 @@ struct DaylightBar: View {
         return calendar.startOfDay(for: date)
     }
 }
+
+// MARK: - Maps
+
+/// An embedded map with a button that opens the same map full screen
+/// (pan, zoom, rotate), with an optional legend below it.
+struct ExpandableMap<MapBody: View, Legend: View>: View {
+    var height: CGFloat
+    var title: String
+    var map: () -> MapBody
+    var legend: () -> Legend
+    @State private var fullScreen = false
+
+    init(height: CGFloat, title: String, @ViewBuilder map: @escaping () -> MapBody, @ViewBuilder legend: @escaping () -> Legend) {
+        self.height = height
+        self.title = title
+        self.map = map
+        self.legend = legend
+    }
+
+    var body: some View {
+        map()
+            .frame(height: height)
+            .clipShape(Rectangle())
+            .overlay(alignment: .topTrailing) {
+                Button { fullScreen = true } label: {
+                    Image(systemName: "arrow.up.left.and.arrow.down.right")
+                        .font(.system(size: 13, weight: .semibold))
+                        .foregroundStyle(Theme.text)
+                        .frame(width: 36, height: 36)
+                        .background(Theme.bg.opacity(0.92))
+                        .overlay(Rectangle().strokeBorder(Theme.hairline))
+                }
+                .buttonStyle(.plain)
+                .padding(8)
+                .accessibilityLabel(String(localized: "Mappa a schermo intero"))
+            }
+            .fullScreenCover(isPresented: $fullScreen) {
+                NavigationStack {
+                    VStack(spacing: 0) {
+                        map().ignoresSafeArea(edges: .bottom)
+                        legend()
+                    }
+                    .background(Theme.bg)
+                    .navigationTitle(title.loc)
+                    .navigationBarTitleDisplayMode(.inline)
+                    .toolbar {
+                        ToolbarItem(placement: .topBarTrailing) {
+                            Button(String(localized: "Chiudi")) { fullScreen = false }
+                        }
+                    }
+                }
+            }
+    }
+}
+
+extension ExpandableMap where Legend == EmptyView {
+    init(height: CGFloat, title: String, @ViewBuilder map: @escaping () -> MapBody) {
+        self.init(height: height, title: title, map: map, legend: { EmptyView() })
+    }
+}

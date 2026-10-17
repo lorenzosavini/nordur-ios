@@ -78,7 +78,7 @@ jobs:
             base="${spec%%@*}"; mode="dark"; [ "$base" != "$spec" ] && mode="${spec#*@}"
             tab="${base%%:*}"; layer="${base#*:}"; [ "$layer" = "$base" ] && layer="wind"
             screen=""; [ "${tab#s.}" != "$tab" ] && screen="${tab#s.}" && tab="today"
-            xcrun simctl launch "$UDID" it.lorenzosavini.nordur -initialTab "$tab" -ciScreen "$screen" -map.layer "$layer" -auroraMode "$layer" -appearance "$mode" \
+            xcrun simctl launch "$UDID" it.lorenzosavini.nordur -initialTab "$tab" -ciScreen "$screen" -ciAlertsYellow YES -map.layer "$layer" -auroraMode "$layer" -appearance "$mode" \
               -AppleLanguages "($lang)" -AppleLocale "$([ "$lang" = en ] && echo en_GB || echo it_IT)"
             sleep 25
             xcrun simctl io "$UDID" screenshot "shots/$(echo "$shot" | tr ':@+' '---').png"

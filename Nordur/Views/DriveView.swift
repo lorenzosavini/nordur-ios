@@ -250,9 +250,9 @@ struct LiveDrivePanel: View {
                         }
                     }
                     .controlSize(.large)
-                    LiveTrackMap(points: recorder.recentPoints)
-                        .frame(height: 220)
-                        .clipShape(Rectangle())
+                    ExpandableMap(height: 220, title: String(localized: "Registrazione")) {
+                        LiveTrackMap(points: recorder.recentPoints)
+                    }
                 }
             }
         }
@@ -300,9 +300,10 @@ struct DriveDetailView: View {
     var body: some View {
         List {
             Section {
-                DriveTrackMap(points: DriveMath.downsample(session.points))
-                    .frame(height: 280)
-                    .listRowInsets(EdgeInsets())
+                ExpandableMap(height: 280, title: session.name) {
+                    DriveTrackMap(points: DriveMath.downsample(session.points))
+                }
+                .listRowInsets(EdgeInsets())
                 HStack(spacing: 8) {
                     ForEach(0..<5, id: \.self) { bucket in
                         HStack(spacing: 3) {

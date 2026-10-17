@@ -71,6 +71,7 @@ struct WarningDetail: View {
             }
             if !warning.polygons.isEmpty {
                 Section {
+                    ExpandableMap(height: 240, title: warning.color.label) {
                     Map(initialPosition: .automatic) {
                         ForEach(Array(warning.polygons.enumerated()), id: \.offset) { item in
                             MapPolygon(coordinates: item.element.map(\.clCoordinate))
@@ -78,7 +79,7 @@ struct WarningDetail: View {
                                 .stroke(warning.color.color, lineWidth: 2)
                         }
                     }
-                    .frame(height: 240)
+                    }
                     .listRowInsets(EdgeInsets())
                 }
             }
