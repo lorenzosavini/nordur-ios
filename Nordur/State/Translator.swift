@@ -139,8 +139,8 @@ extension Translator {
             var s = s
             s.hazards = s.hazards.map { var h = $0; h.text = t(h.text); h.title = t(h.title); return h }
             s.notes = s.notes.map { var n = $0; n.text = t(n.text); return n }
-            s.weight?.text = t(s.weight?.text)
-            s.toll?.text = t(s.toll?.text)
+            if var weight = s.weight { weight.text = t(weight.text); s.weight = weight }
+            if var toll = s.toll { toll.text = t(toll.text); s.toll = toll }
             return s
         }
         return out
