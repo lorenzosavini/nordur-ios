@@ -57,6 +57,16 @@ struct NordurApp: App {
     }
 }
 
+private extension View {
+    /// Background strip behind the status bar: scrolled content no longer runs
+    /// under the clock (these screens hide the navigation bar).
+    func statusBarScrim() -> some View {
+        overlay(alignment: .top) {
+            Theme.bg.opacity(0.96).frame(height: 0).ignoresSafeArea(edges: .top)
+        }
+    }
+}
+
 struct RootView: View {
     @Environment(AppModel.self) private var model
     @Environment(AlertCenter.self) private var alerts
@@ -84,11 +94,11 @@ struct RootView: View {
         // nothing on any screen can end up underneath it.
         VStack(spacing: 0) {
             TabView(selection: $tab) {
-                TodayView().tag(Tab.today).toolbar(.hidden, for: .tabBar)
-                WeatherView().tag(Tab.weather).toolbar(.hidden, for: .tabBar)
+                TodayView().tag(Tab.today).toolbar(.hidden, for: .tabBar).statusBarScrim()
+                WeatherView().tag(Tab.weather).toolbar(.hidden, for: .tabBar).statusBarScrim()
                 MapScreen().tag(Tab.map).toolbar(.hidden, for: .tabBar)
-                DriveView().tag(Tab.drive).toolbar(.hidden, for: .tabBar)
-                TripView().tag(Tab.trip).toolbar(.hidden, for: .tabBar)
+                DriveView().tag(Tab.drive).toolbar(.hidden, for: .tabBar).statusBarScrim()
+                TripView().tag(Tab.trip).toolbar(.hidden, for: .tabBar).statusBarScrim()
             }
             .id(windUnit)  // every screen redraws with the new wind unit
             NordurTabBar(selection: $tab, badge: alerts.unreadCount, recording: recorder.isRecording)
