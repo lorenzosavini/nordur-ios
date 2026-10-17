@@ -79,7 +79,7 @@ final class ArrowAnnotation: NSObject, MKAnnotation {
 
 /// Any point of interest drawn on the map.
 final class PoiAnnotation: NSObject, MKAnnotation {
-    enum Kind: String { case station, webcam, quake, fuel, charger, stop }
+    enum Kind: String { case station, webcam, quake, fuel, charger, stop, roadSection, roadHazard }
     let kind: Kind
     let key: String
     let coordinate: CLLocationCoordinate2D
@@ -349,6 +349,8 @@ struct WeatherMapView: UIViewRepresentable {
             case .stop: return "flag.fill"
             case .station: return "road.lanes"
             case .quake: return "waveform.path.ecg"
+            case .roadSection: return "exclamationmark.triangle.fill"
+            case .roadHazard: return "cone.fill"
             }
         }
 

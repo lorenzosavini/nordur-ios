@@ -202,6 +202,7 @@ final class AlertCenter: NSObject {
             await model.refreshGlobal()
             input.warnings = model.warnings?.value ?? []
             input.roads = model.roads?.value
+            input.roadInfo = model.roadInfo?.value
             input.quakes = model.quakes?.value ?? []
             input.news = model.news?.value ?? []
         } else {
@@ -211,6 +212,7 @@ final class AlertCenter: NSObject {
             async let n = attempt { try await SafeTravel.news().value }
             input.warnings = (try? await w.get()) ?? []
             input.roads = try? await r.get()
+            input.roadInfo = try? await RoadInfoService.load().value
             input.quakes = (try? await q.get()) ?? []
             input.news = (try? await n.get()) ?? []
         }

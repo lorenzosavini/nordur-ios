@@ -18,7 +18,7 @@ export class SourceError extends Error {
   }
 }
 
-export async function fetchWithRetry(url, { timeout = 12000, retries = 2, accept = "application/json" } = {}) {
+export async function fetchWithRetry(url, { timeout = 12000, retries = 2, accept = "application/json", method = "GET", headers = {}, body } = {}) {
   const host = new URL(url).host;
   const b = breaker(host);
   if (b.openUntil > Date.now()) throw new SourceError(`${host}: circuito aperto dopo errori ripetuti`, { host });
@@ -26,7 +26,7 @@ export async function fetchWithRetry(url, { timeout = 12000, retries = 2, accept
   let delay = 600;
   for (let attempt = 0; ; attempt++) {
     try {
-      const response = await fetch(url, { headers: { "User-Agent": UA, Accept: accept }, signal: AbortSignal.timeout(timeout) });
+      const response = await fetch(url, { method, body, headers: { "User-Agent": UA, Accept: accept, ...headers }, signal: AbortSignal.timeout(timeout) });
       if (response.ok) {
         b.failures = 0;
         return response;

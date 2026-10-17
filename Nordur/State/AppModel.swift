@@ -12,6 +12,7 @@ final class AppModel {
         case warnings = "Allerte IMO"
         case quakes = "Terremoti"
         case roads = "Strade"
+        case roadInfo = "Notizie strade (umferdin.is)"
         case kp = "Indice Kp"
         case ovation = "Ovale aurorale"
         case solarWind = "Vento solare"
@@ -39,6 +40,7 @@ final class AppModel {
     var warnings: Fetched<[WeatherWarning]>?
     var quakes: Fetched<[Quake]>?
     var roads: Fetched<RoadNetwork>?
+    var roadInfo: Fetched<RoadInfo>?
     var kp: Fetched<[KpPoint]>?
     var ovation: Fetched<OvationGrid>?
     var solarWind: Fetched<SolarWind>?
@@ -156,6 +158,7 @@ final class AppModel {
         async let w = attempt { try await IMO.warnings() }
         async let q = attempt { try await IMO.quakes() }
         async let r = attempt { try await Roads.network() }
+        async let ri = attempt { try await RoadInfoService.load() }
         async let k = attempt { try await SpaceWeather.kpForecast() }
         async let o = attempt { try await SpaceWeather.ovation() }
         async let s = attempt { try await SpaceWeather.solarWind() }
@@ -164,6 +167,7 @@ final class AppModel {
         apply(rw, .warnings) { self.warnings = $0 }
         apply(rq, .quakes) { self.quakes = $0 }
         apply(rr, .roads) { self.roads = $0 }
+        apply(await ri, .roadInfo) { self.roadInfo = $0 }
         apply(rk, .kp) { self.kp = $0 }
         apply(ro, .ovation) { self.ovation = $0 }
         apply(rs, .solarWind) { self.solarWind = $0 }

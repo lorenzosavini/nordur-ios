@@ -105,6 +105,8 @@ struct AlertInput {
     var watched: [Watched] = []
     var warnings: [WeatherWarning] = []
     var roads: RoadNetwork?
+    /// umferdin.is: road sections with positions, hazards and roadworks.
+    var roadInfo: RoadInfo?
     var quakes: [Quake] = []
     var news: [NewsItem] = []
     /// Aurora engine output at the current position, and the space-weather state behind it.
@@ -154,7 +156,8 @@ enum AlertEngine {
                         coordinate: station.coordinate))
                 }
             }
-            if settings.isOn(.road) {
+            if settings.isOn(.road), input.roadInfo == nil {
+                // Fallback when umferdin.is is unavailable: segments found through nearby road stations.
                 var seen = Set<Int>()
                 for station in roads.stations {
                     guard let c = station.coordinate, Geo.distanceKm(c, current.coordinate) <= settings.roadRadiusKm else { continue }
@@ -167,6 +170,10 @@ enum AlertEngine {
                     }
                 }
             }
+        }
+
+        if settings.isOn(.road), let info = input.roadInfo {
+            events += roadEvents(info, input: input, settings: settings)
         }
 
         if settings.isOn(.quake) {
@@ -299,6 +306,60 @@ extension AlertEngine {
                 title: String(localized: "Possibile arrivo di una CME verso \(Fmt.dayTime(t, in: zone))"),
                 body: String(localized: "Il modello WSA-ENLIL di NOAA prevede materiale di CME alla Terra (picco ~\(Int(arrival.peakSpeed)) km/s). Intensità non prevedibile prima dell'arrivo."),
                 expires: t.addingTimeInterval(24 * 3600)))
+        }
+        return events
+    }
+}
+
+// MARK: - Roads (umferdin.is)
+
+extension AlertEngine {
+    /// Road alerts from umferdin.is: closures and dangerous surfaces near where you
+    /// are, closures near the trip stops, and roadworks or hazards within 10 km of
+    /// your position (each fires once; hazards expire with their end date).
+    static func roadEvents(_ info: RoadInfo, input: AlertInput, settings: AlertSettings) -> [AlertEvent] {
+        let now = input.now
+        var events: [AlertEvent] = []
+        var seen = Set<String>()
+        for place in input.watched {
+            for section in info.sections {
+                guard let risk = section.risk, risk >= .warning || section.isClosed,
+                      let km = section.distanceKm(to: place.coordinate) else { continue }
+                if !place.isCurrent && !section.isClosed { continue }
+                // Closures and dangerous surfaces within the road radius; slippery or snowy ones close by.
+                let radius = section.isClosed || risk == .danger ? settings.roadRadiusKm : min(settings.roadRadiusKm, 15)
+                guard km <= (place.isCurrent ? radius : min(radius, 25)), seen.insert(section.id).inserted else { continue }
+                let road = section.numbers.isEmpty ? section.name : "\(section.name) (\(section.numbers))"
+                let whereText = place.isCurrent
+                    ? String(localized: "a \(Int(km.rounded())) km da te")
+                    : String(localized: "vicino alla tappa \(place.name)")
+                events.append(AlertEvent(
+                    id: "ri:\(section.id):\(section.condition?.category ?? "")", date: now, category: .road,
+                    severity: (section.isClosed ? Risk.danger : risk).rawValue,
+                    title: "\(section.label): \(road)",
+                    body: String(localized: "Tratto \(whereText). Aggiornato \(Fmt.time(section.condition?.updated, in: .iceland)). Fonte: Vegagerðin (umferdin.is), informazioni 1777."),
+                    coordinate: section.center?.coordinate))
+            }
+        }
+        if let here = input.watched.first(where: \.isCurrent)?.coordinate {
+            for section in info.sections {
+                for hazard in section.hazards {
+                    guard let at = hazard.at?.coordinate, hazard.start.map({ $0 <= now }) ?? true else { continue }
+                    let km = Geo.distanceKm(at, here)
+                    guard km <= 10 else { continue }
+                    let kind = RoadCode.hazard(hazard.code)
+                    let end = hazard.end.map { String(localized: "Fino al \(Fmt.dayTime($0, in: .iceland)).") }
+                    let parts = [hazard.text, end].compactMap { text -> String? in
+                        guard let text, !text.isEmpty else { return nil }
+                        return text
+                    }
+                    events.append(AlertEvent(
+                        id: "rh:\(hazard.id)", date: now, category: .road, severity: Risk.caution.rawValue,
+                        title: String(localized: "\(kind.label) a \(Int(km.rounded())) km: \(section.name)"),
+                        body: parts.isEmpty ? section.numbers : parts.joined(separator: " "),
+                        coordinate: at, expires: hazard.end))
+                }
+            }
         }
         return events
     }

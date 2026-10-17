@@ -123,6 +123,16 @@
         }
       }
     },
+    "%@ a %lld km: %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ %2$lld km away: %3$@"
+          }
+        }
+      }
+    },
     "%@ · %@" : {
       "shouldTranslate" : false
     },
@@ -326,6 +336,17 @@
         }
       }
     },
+    "%lld km da %@" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$lld km from %2$@"
+          }
+        }
+      }
+    },
     "%lld km · %lld immagini" : {
       "localizations" : {
         "en" : {
@@ -409,6 +430,17 @@
         }
       }
     },
+    "%lld tratti · ordinati per distanza da %@" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$lld sections · sorted by distance from %2$@"
+          }
+        }
+      }
+    },
     "%lld%%" : {
       "shouldTranslate" : false
     },
@@ -459,6 +491,9 @@
           }
         }
       }
+    },
+    "24 h" : {
+      "shouldTranslate" : false
     },
     "25" : {
       "shouldTranslate" : false
@@ -1058,6 +1093,16 @@
         }
       }
     },
+    "Animali sulla strada" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Animals on the road"
+          }
+        }
+      }
+    },
     "Animazione particelle vento" : {
       "localizations" : {
         "en" : {
@@ -1104,6 +1149,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Open Settings"
+          }
+        }
+      }
+    },
+    "Apri su umferdin.is" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Open on umferdin.is"
           }
         }
       }
@@ -1648,12 +1703,32 @@
         }
       }
     },
+    "Bitume affiorante: scivoloso" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bitumen bleeding: slippery"
+          }
+        }
+      }
+    },
     "Blika.is" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Blika.is"
+          }
+        }
+      }
+    },
+    "Buche sulla strada" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Potholes"
           }
         }
       }
@@ -1948,6 +2023,16 @@
         }
       }
     },
+    "Caduta massi" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Falling rocks"
+          }
+        }
+      }
+    },
     "Calcolato %@ · dati strade %@" : {
       "localizations" : {
         "en" : {
@@ -2048,6 +2133,16 @@
         }
       }
     },
+    "Cerca strada, numero o località" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Search road, number or place"
+          }
+        }
+      }
+    },
     "Cerca un luogo nel mondo" : {
       "localizations" : {
         "en" : {
@@ -2088,6 +2183,17 @@
         }
       }
     },
+    "Che strada è" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "What road this is"
+          }
+        }
+      }
+    },
     "Chiama il 1777" : {
       "localizations" : {
         "en" : {
@@ -2124,6 +2230,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Closed"
+          }
+        }
+      }
+    },
+    "Chiusa al traffico" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Closed to traffic"
           }
         }
       }
@@ -2184,6 +2300,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Aurora observability class tonight: expected activity, clouds, darkness and Moon."
+          }
+        }
+      }
+    },
+    "Classe di servizio Vegagerðin" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vegagerðin service class"
           }
         }
       }
@@ -2309,6 +2435,17 @@
         }
       }
     },
+    "Condizioni" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Conditions"
+          }
+        }
+      }
+    },
     "Condizioni %@ per l'aurora, adesso" : {
       "localizations" : {
         "en" : {
@@ -2335,6 +2472,26 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Road conditions"
+          }
+        }
+      }
+    },
+    "Condizioni sconosciute fuori orario di servizio" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Conditions unknown outside service hours"
+          }
+        }
+      }
+    },
+    "Condizioni stradali difficili" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Difficult road conditions"
           }
         }
       }
@@ -2539,6 +2696,17 @@
         }
       }
     },
+    "Critici" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Problems"
+          }
+        }
+      }
+    },
     "DA %@" : {
       "localizations" : {
         "en" : {
@@ -2565,6 +2733,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "DIR"
+          }
+        }
+      }
+    },
+    "Dal %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "From %@"
           }
         }
       }
@@ -2805,6 +2983,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Fuel stations on the route (%lld)"
+          }
+        }
+      }
+    },
+    "Divieto di transito" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No entry for motor vehicles"
           }
         }
       }
@@ -3202,6 +3390,27 @@
         }
       }
     },
+    "Fino al %@" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Until %@"
+          }
+        }
+      }
+    },
+    "Fino al %@." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Until %@."
+          }
+        }
+      }
+    },
     "Fiordi occidentali" : {
       "localizations" : {
         "en" : {
@@ -3232,6 +3441,17 @@
         }
       }
     },
+    "Fonte: Vegagerðin (umferdin.is). In caso di dubbio prevalgono le informazioni ufficiali." : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Source: Vegagerðin (umferdin.is). When in doubt, official information prevails."
+          }
+        }
+      }
+    },
     "Fonti e stato" : {
       "localizations" : {
         "en" : {
@@ -3258,6 +3478,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Lightning"
+          }
+        }
+      }
+    },
+    "Fuori da questi orari la strada non viene controllata né pulita: le condizioni possono peggiorare senza aggiornamenti." : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Outside these hours the road is not monitored or cleared: conditions may get worse without updates."
           }
         }
       }
@@ -3392,6 +3623,16 @@
         }
       }
     },
+    "Ghiaia che vola" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Flying gravel"
+          }
+        }
+      }
+    },
     "Giallo: possibili disagi.\nArancione: impatti significativi, valuta di rimandare.\nRosso: evento estremo, non metterti in viaggio." : {
       "localizations" : {
         "en" : {
@@ -3478,6 +3719,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Drive"
+          }
+        }
+      }
+    },
+    "Guida difficile" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Difficult driving"
           }
         }
       }
@@ -3578,6 +3829,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Highlands – F-roads only"
+          }
+        }
+      }
+    },
+    "Hringvegur (Ring Road): strada nazionale principale" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hringvegur (Ring Road): the main national road"
           }
         }
       }
@@ -3839,6 +4100,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Impassable"
+          }
+        }
+      }
+    },
+    "Impraticabile / chiusa" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Impassable / closed"
           }
         }
       }
@@ -4394,12 +4665,55 @@
         }
       }
     },
+    "Lavori e pericoli" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Roadworks and hazards"
+          }
+        }
+      }
+    },
+    "Lavori e pericoli (%lld)" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Roadworks and hazards (%lld)"
+          }
+        }
+      }
+    },
+    "Lavori stradali" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Roadworks"
+          }
+        }
+      }
+    },
     "Le allerte IMO e i terremoti vengono controllati per la tua posizione e per le tappe del viaggio dei prossimi 3 giorni." : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "IMO warnings and earthquakes are checked for your position and for the trip stops of the next 3 days."
+          }
+        }
+      }
+    },
+    "Le condizioni sono peggiorate rispetto alla rilevazione precedente." : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Conditions have worsened since the previous report."
           }
         }
       }
@@ -4444,12 +4758,33 @@
         }
       }
     },
+    "Limitazioni" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Restrictions"
+          }
+        }
+      }
+    },
     "Limite di carico: %@" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Axle load limit: %@"
+          }
+        }
+      }
+    },
+    "Limite di peso" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Weight limit"
           }
         }
       }
@@ -4470,6 +4805,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Speed limit %lld km/h"
+          }
+        }
+      }
+    },
+    "Limiti di peso" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Weight limits"
           }
         }
       }
@@ -4808,6 +5153,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Weather map"
+          }
+        }
+      }
+    },
+    "Mappa ufficiale di Vegagerðin" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vegagerðin's official map"
           }
         }
       }
@@ -5405,6 +5760,26 @@
         }
       }
     },
+    "Nessun servizio" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No service"
+          }
+        }
+      }
+    },
+    "Nessun servizio invernale" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No winter service"
+          }
+        }
+      }
+    },
     "Nessuna CME diretta verso la Terra nelle simulazioni NASA degli ultimi 10 giorni." : {
       "localizations" : {
         "en" : {
@@ -5461,6 +5836,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "No destination"
+          }
+        }
+      }
+    },
+    "Nessuna notizia sulle strade" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No road news"
           }
         }
       }
@@ -5581,6 +5967,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Snow on the road"
+          }
+        }
+      }
+    },
+    "Nevicata" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Snowfall"
           }
         }
       }
@@ -5761,6 +6157,39 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Notifications off"
+          }
+        }
+      }
+    },
+    "Notizie" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "News"
+          }
+        }
+      }
+    },
+    "Notizie in tempo reale" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Live news"
+          }
+        }
+      }
+    },
+    "Notizie strade (umferdin.is)" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Road news (umferdin.is)"
           }
         }
       }
@@ -6325,6 +6754,17 @@
         }
       }
     },
+    "PEGGIORATA" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "WORSE"
+          }
+        }
+      }
+    },
     "PERCEPITA" : {
       "localizations" : {
         "en" : {
@@ -6511,6 +6951,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Pause"
+          }
+        }
+      }
+    },
+    "Pedaggio" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Toll"
           }
         }
       }
@@ -7036,6 +7486,16 @@
         }
       }
     },
+    "Prima" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Before"
+          }
+        }
+      }
+    },
     "Primo quarto" : {
       "localizations" : {
         "en" : {
@@ -7302,6 +7762,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Strong gusts near you"
+          }
+        }
+      }
+    },
+    "Raffiche improvvise" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sudden gusts"
           }
         }
       }
@@ -7609,6 +8079,16 @@
         }
       }
     },
+    "Sabbia sollevata dal vento" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Blowing sand"
+          }
+        }
+      }
+    },
     "SafeTravel" : {
       "localizations" : {
         "en" : {
@@ -7899,6 +8379,17 @@
         }
       }
     },
+    "Servizio invernale (sgombero neve)" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Winter service (snow clearing)"
+          }
+        }
+      }
+    },
     "Sessione non valida, accedi di nuovo" : {
       "localizations" : {
         "en" : {
@@ -7935,6 +8426,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Unfavourable"
+          }
+        }
+      }
+    },
+    "Sgombero neve in corso" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Snow clearing in progress"
           }
         }
       }
@@ -8119,12 +8620,34 @@
         }
       }
     },
+    "Stazioni" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Stations"
+          }
+        }
+      }
+    },
     "Stazioni meteo stradali" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Road weather stations"
+          }
+        }
+      }
+    },
+    "Stazioni meteo stradali vicine" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nearby road weather stations"
           }
         }
       }
@@ -8199,12 +8722,62 @@
         }
       }
     },
+    "Strada F di montagna: solo 4x4, guadi senza ponti, aperta in genere da giugno a settembre" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mountain F-road: 4x4 only, unbridged river crossings, usually open June to September"
+          }
+        }
+      }
+    },
     "Strada davanti: %@" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Road ahead: %@"
+          }
+        }
+      }
+    },
+    "Strada dissestata" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Uneven road"
+          }
+        }
+      }
+    },
+    "Strada locale" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Local road"
+          }
+        }
+      }
+    },
+    "Strada principale (stofnvegur)" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Primary road (stofnvegur)"
+          }
+        }
+      }
+    },
+    "Strada regionale o di collegamento (tengivegur)" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Regional or connecting road (tengivegur)"
           }
         }
       }
@@ -8255,6 +8828,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Closed or impassable roads"
+          }
+        }
+      }
+    },
+    "Strade: chiusure, lavori e pericoli" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Roads: closures, roadworks and hazards"
           }
         }
       }
@@ -8335,6 +8919,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Over Iceland the highest value right now is %lld: too low to be coloured (scale starts at 4). Colour appears when the oval expands southwards."
+          }
+        }
+      }
+    },
+    "Sulla strada davanti: %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "On the road ahead: %@"
           }
         }
       }
@@ -8445,6 +9039,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Temperature, wind, gusts and IMO warnings for a place."
+          }
+        }
+      }
+    },
+    "Tempesta" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Storm"
           }
         }
       }
@@ -8589,6 +9193,17 @@
         }
       }
     },
+    "Testi originali di Vegagerðin (in inglese), aggiornati ogni 5 minuti." : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Original texts from Vegagerðin, updated every 5 minutes."
+          }
+        }
+      }
+    },
     "Tocca la mappa per i valori in un punto" : {
       "localizations" : {
         "en" : {
@@ -8709,6 +9324,16 @@
         }
       }
     },
+    "Tratto %@. Aggiornato %@. Fonte: Vegagerðin (umferdin.is), informazioni 1777." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Section %1$@. Updated %2$@. Source: Vegagerðin (umferdin.is), road information 1777."
+          }
+        }
+      }
+    },
     "Tratto %lld" : {
       "localizations" : {
         "en" : {
@@ -8775,6 +9400,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Official"
+          }
+        }
+      }
+    },
+    "Ultimo aggiornamento" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Last update"
           }
         }
       }
@@ -9025,6 +9660,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Vegagerðin"
+          }
+        }
+      }
+    },
+    "Vegagerðin · umferdin.is" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vegagerðin · umferdin.is"
           }
         }
       }
@@ -9582,6 +10227,16 @@
     "a" : {
       "shouldTranslate" : false
     },
+    "a %lld km da te" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld km from you"
+          }
+        }
+      }
+    },
     "adesso" : {
       "localizations" : {
         "en" : {
@@ -9598,6 +10253,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "upd. %@"
+          }
+        }
+      }
+    },
+    "al %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "to %@"
           }
         }
       }
@@ -9909,6 +10574,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "around %@"
+          }
+        }
+      }
+    },
+    "vicino alla tappa %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "near the stop %@"
           }
         }
       }

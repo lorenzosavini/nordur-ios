@@ -13,6 +13,7 @@ struct MapScreen: View {
     @AppStorage("map.layer") private var layerRaw = WeatherLayer.wind.rawValue
     @AppStorage("map.warnings") private var showWarnings = true
     @AppStorage("map.roads") private var showRoads = true
+    @AppStorage("map.roadInfo") private var showRoadInfo = true
     @AppStorage("map.webcams") private var showWebcams = false
     @AppStorage("map.quakes") private var showQuakes = false
     @AppStorage("map.fuel") private var showFuel = false
@@ -28,6 +29,7 @@ struct MapScreen: View {
     @State private var probe: Coordinate?
     @State private var selectedStation: RoadStation?
     @State private var selectedWebcam: WebcamSite?
+    @State private var selectedSection: RoadInfo.Section?
 
     private var layer: WeatherLayer { WeatherLayer(rawValue: layerRaw) ?? .wind }
     private var grid: WeatherGrid? { model.weatherGrid?.value }
@@ -62,6 +64,9 @@ struct MapScreen: View {
             .task(id: rasterRequestKey) { await rebuildRaster() }
             .task(id: playing) { await animate() }
             .task(id: layerRaw) { await liveRefresh() }
+            .sheet(item: $selectedSection) { section in
+                NavigationStack { RoadSectionView(section: section) }.presentationDetents([.medium, .large])
+            }
             .sheet(item: $selectedWebcam) { site in
                 NavigationStack { WebcamSiteView(site: site) }.presentationDetents([.medium, .large])
             }
@@ -108,6 +113,7 @@ struct MapScreen: View {
             HStack {
                 Menu {
                     Toggle("Allerte meteo IMO", systemImage: "exclamationmark.triangle", isOn: $showWarnings)
+                    Toggle("Strade: chiusure, lavori e pericoli", systemImage: "exclamationmark.triangle", isOn: $showRoadInfo)
                     Toggle("Stazioni stradali (raffiche)", systemImage: "road.lanes", isOn: $showRoads)
                     Toggle("Webcam", systemImage: "video", isOn: $showWebcams)
                     Toggle("Terremoti 48 h", systemImage: "waveform.path.ecg", isOn: $showQuakes)
@@ -339,6 +345,20 @@ struct MapScreen: View {
             }
             poisKey += "roads\(model.roads?.date.timeIntervalSince1970 ?? 0)"
         }
+        if showRoadInfo, let info = model.roadInfo?.value {
+            for section in info.sections {
+                if let risk = section.risk, risk >= .warning, let center = section.center {
+                    pois.append(PoiAnnotation(kind: .roadSection, key: "rs\(section.id)", coordinate: center.coordinate.clCoordinate,
+                                              title: "\(section.label): \(section.name)", color: UIColor(risk.color)))
+                }
+                for hazard in section.hazards {
+                    guard let at = hazard.at else { continue }
+                    pois.append(PoiAnnotation(kind: .roadHazard, key: "rh\(section.id)|\(hazard.id)", coordinate: at.coordinate.clCoordinate,
+                                              title: RoadCode.hazard(hazard.code).label, color: .systemOrange))
+                }
+            }
+            poisKey += "roadinfo\(model.roadInfo?.date.timeIntervalSince1970 ?? 0)"
+        }
         if showWebcams {
             for site in model.webcams?.value ?? [] {
                 pois.append(PoiAnnotation(kind: .webcam, key: "wc\(site.id)", coordinate: site.coordinate.clCoordinate,
@@ -420,6 +440,9 @@ struct MapScreen: View {
         case .webcam:
             let id = Int(poi.key.dropFirst(2)) ?? -1
             selectedWebcam = model.webcams?.value.first { $0.id == id }
+        case .roadSection, .roadHazard:
+            let id = String(poi.key.dropFirst(2).split(separator: "|").first ?? "")
+            selectedSection = model.roadInfo?.value.sections.first { $0.id == id }
         default:
             probe = Coordinate(poi.coordinate)
         }

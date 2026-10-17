@@ -3,6 +3,15 @@ import Observation
 import MapKit
 
 /// One road weather station on the road ahead.
+/// A road section (umferdin.is) on the road ahead: closure, difficult surface, or a hazard on it.
+struct RoadAheadEntry: Identifiable {
+    let section: RoadInfo.Section
+    let hazard: RoadInfo.Hazard?
+    let kmAhead: Double
+    let etaMinutes: Int
+    var id: String { "\(section.id)-\(hazard?.id ?? "s")" }
+}
+
 struct AheadItem: Identifiable {
     let station: RoadStation
     let kmAhead: Double
@@ -30,6 +39,7 @@ final class RoadWatch {
     private(set) var remainingKm: Double?
     private(set) var ahead: [AheadItem] = []
     private(set) var warningsAhead: [WeatherWarning] = []
+    private(set) var roadsAhead: [RoadAheadEntry] = []
     private(set) var lastUpdate: Date?
     private(set) var lastRoadsFetch: Date?
     private(set) var isPlanning = false
@@ -41,6 +51,7 @@ final class RoadWatch {
     @ObservationIgnored private var previousSegmentRisk: [Int: Risk] = [:]
     @ObservationIgnored private var stationRouteKm: [Int: Double] = [:]
     @ObservationIgnored private var lastCompute = Date.distantPast
+    @ObservationIgnored private var lastRoadInfoFetch = Date.distantPast
 
     static let lookaheadKm = 150.0
 
@@ -127,7 +138,7 @@ final class RoadWatch {
                 guard km <= 60 else { continue }
                 if let course, speedKmh > 15 {
                     // In front of us: within ±40° of the heading (or right here).
-                    let diff = abs(angleDifference(bearing(position, c), course))
+                    let diff = abs(Self.angleDifference(Self.bearing(position, c), course))
                     guard km < 1.5 || diff <= 40 else { continue }
                 }
                 items.append(item(station, kmAhead: km, speed: speed, network: network, webcams: webcams))
@@ -136,12 +147,21 @@ final class RoadWatch {
         }
         items.sort { $0.kmAhead < $1.kmAhead }
         ahead = Array(items.prefix(12))
+
+        // umferdin.is sections and hazards on the road ahead (refreshed every 5 minutes while driving).
+        if force || now.timeIntervalSince(lastRoadInfoFetch) >= 5 * 60, let fresh = try? await RoadInfoService.load() {
+            lastRoadInfoFetch = now
+            model?.roadInfo = fresh
+        }
+        roadsAhead = Self.roadsAhead(model?.roadInfo?.value, position: position, course: course, speedKmh: speedKmh,
+                                     along: route.count >= 2 ? (route, routeKm, progressKm(at: position)) : nil)
         lastUpdate = now
         detectChanges()
     }
 
     func clear() {
         ahead = []
+        roadsAhead = []
         warningsAhead = []
         remainingKm = nil
         previousSegmentRisk = [:]
@@ -183,7 +203,63 @@ final class RoadWatch {
                     notify: true, speak: settings.spoken)
             }
         }
+        for entry in roadsAhead where entry.kmAhead <= 40 {
+            let road = entry.section.numbers.isEmpty ? entry.section.name : "\(entry.section.numbers) \(entry.section.name)"
+            if let hazard = entry.hazard {
+                let label = RoadCode.hazard(hazard.code).label
+                let note = String(localized: "Tra \(Int(entry.kmAhead)) km (\(entry.etaMinutes) min): \(label) – \(road)")
+                if !changes.contains(where: { $0.hasSuffix(note) }) { changes.insert("\(Fmt.time(Date())) \(note)", at: 0) }
+                AlertCenter.shared.record(AlertEvent(
+                    id: "rwh:\(hazard.id)", date: Date(), category: .road, severity: Risk.caution.rawValue,
+                    title: String(localized: "Sulla strada davanti: \(label)"), body: note, coordinate: hazard.at?.coordinate, expires: hazard.end),
+                    notify: true, speak: false)
+            } else if let risk = entry.section.risk, risk >= .warning {
+                let note = String(localized: "Tra \(Int(entry.kmAhead)) km (\(entry.etaMinutes) min): \(road) – \(entry.section.label)")
+                if !changes.contains(where: { $0.hasSuffix(note) }) { changes.insert("\(Fmt.time(Date())) \(note)", at: 0) }
+                AlertCenter.shared.record(AlertEvent(
+                    id: "rwi:\(entry.section.id):\(entry.section.condition?.category ?? "")", date: Date(), category: .road, severity: risk.rawValue,
+                    title: String(localized: "Strada davanti: \(entry.section.label)"), body: note, coordinate: entry.section.center?.coordinate),
+                    notify: true, speak: settings.spoken)
+            }
+        }
         if changes.count > 30 { changes = Array(changes.prefix(30)) }
+    }
+
+    /// Sections with problems and hazards ahead: along the planned route when there
+    /// is one (within 3 km of it), otherwise within 60 km in the direction of travel.
+    static func roadsAhead(_ info: RoadInfo?, position: Coordinate, course: Double?, speedKmh: Double,
+                           along: (route: [Coordinate], routeKm: [Double], currentKm: Double)?) -> [RoadAheadEntry] {
+        guard let info else { return [] }
+        let speed = max(speedKmh, 50)
+        func ahead(_ c: Coordinate) -> Double? {
+            if let along {
+                var best = Double.infinity, index = 0
+                for i in along.route.indices where i % 3 == 0 || i == along.route.count - 1 {
+                    let d = Geo.distanceKm(along.route[i], c)
+                    if d < best { best = d; index = i }
+                }
+                let delta = along.routeKm[index] - along.currentKm
+                return best <= 3 && delta > -0.5 && delta <= lookaheadKm ? max(0, delta) : nil
+            }
+            let km = Geo.distanceKm(position, c)
+            guard km <= 60 else { return nil }
+            if let course, speedKmh > 15, km >= 1.5 {
+                let diff = abs(Self.angleDifference(Self.bearing(position, c), course))
+                guard diff <= 40 else { return nil }
+            }
+            return km
+        }
+        var entries: [RoadAheadEntry] = []
+        for section in info.sections {
+            if let risk = section.risk, risk >= .caution, let center = section.center, let km = ahead(center.coordinate) {
+                entries.append(RoadAheadEntry(section: section, hazard: nil, kmAhead: km, etaMinutes: Int((km / speed * 60).rounded())))
+            }
+            for hazard in section.hazards {
+                guard let at = hazard.at, hazard.start.map({ $0 <= Date() }) ?? true, let km = ahead(at.coordinate) else { continue }
+                entries.append(RoadAheadEntry(section: section, hazard: hazard, kmAhead: km, etaMinutes: Int((km / speed * 60).rounded())))
+            }
+        }
+        return Array(entries.sorted { $0.kmAhead < $1.kmAhead }.prefix(15))
     }
 
     // MARK: Geometry
@@ -221,7 +297,7 @@ final class RoadWatch {
         return result
     }
 
-    private func bearing(_ a: Coordinate, _ b: Coordinate) -> Double {
+    private static func bearing(_ a: Coordinate, _ b: Coordinate) -> Double {
         let lat1 = a.lat * .pi / 180, lat2 = b.lat * .pi / 180
         let dLon = (b.lon - a.lon) * .pi / 180
         let y = sin(dLon) * cos(lat2)
@@ -229,7 +305,7 @@ final class RoadWatch {
         return (atan2(y, x) * 180 / .pi + 360).truncatingRemainder(dividingBy: 360)
     }
 
-    private func angleDifference(_ a: Double, _ b: Double) -> Double {
+    private static func angleDifference(_ a: Double, _ b: Double) -> Double {
         var d = (a - b).truncatingRemainder(dividingBy: 360)
         if d > 180 { d -= 360 }
         if d < -180 { d += 360 }

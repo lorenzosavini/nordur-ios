@@ -52,6 +52,16 @@ struct RoadAheadSection: View {
                 HStack { WarningBadge(color: warning.color); Text(warning.headline).font(.app(.caption)) }
             }
 
+            ForEach(watch.roadsAhead) { entry in
+                NavigationLink { RoadSectionView(section: entry.section) } label: {
+                    if let hazard = entry.hazard {
+                        HazardRow(hazard: hazard, section: entry.section, km: entry.kmAhead)
+                    } else {
+                        RoadSectionRow(section: entry.section, km: entry.kmAhead)
+                    }
+                }
+            }
+
             if watch.ahead.isEmpty {
                 Text(recorder.isRecording ? String(localized: "Nessuna stazione stradale davanti a te nel raggio controllato.") :
                         String(localized: "Disponibile durante la registrazione di un percorso."))

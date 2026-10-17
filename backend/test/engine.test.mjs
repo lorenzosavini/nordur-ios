@@ -145,3 +145,35 @@ test("DONKI digest follows the documented WSA-ENLIL schema", () => {
   assert.equal(d.storms[0].maxKp, 6.33);
   assert.deepEqual(d.flares.map((f) => f.classType), ["X1.0"]);
 });
+
+import { compact as compactRoads } from "../api/roads.js";
+
+test("roads: umferdin.is GraphQL is reduced to sections, hazards, news and codes", () => {
+  const now = Date.parse("2026-10-17T07:00:00Z");
+  const sections = { RoadCondition: { lastUpdate: "2026-10-17T06:56:00Z", results: [{
+    id: 91209, name: "Hringvegur um Skeiðarársand", serviceCategory: 2, winterService: "7X",
+    condition: { code: "14", category: "J", description: "Impassable", date: "2026-10-17T05:51:00Z" },
+    conditionPrev: { code: "14", category: "A", description: "Easily passable", date: "2026-10-16T10:02:00Z" },
+    conditionsOtherMarkers: [
+      { id: 1, coordinates: { lon: -17.38, lat: 63.94 }, title: "Road repairs", description: "<p>Lane closed</p>", code: "VEGAVINNA", dateFrom: "2026-10-01T00:00:00Z", dateTo: "2026-11-01T00:00:00Z" },
+      { id: 2, coordinates: { lon: -17.39, lat: 63.95 }, title: "Old", description: "", code: "ANNAD", dateFrom: "2026-01-01T00:00:00Z", dateTo: "2026-02-01T00:00:00Z" },
+    ],
+    conditionMarkers: [{ description: "Storm", code: "1", lastUpdate: "2026-10-17T05:00:00Z" }],
+    weightRestriction: null, toll: null, roads: [{ name: "Hringvegur", nr: "1" }],
+    serviceByDay: [{ day: 1, type: 1, from: "06:30", to: "22:00" }],
+    bbox: [-17.4, 63.94, -17.37, 63.95], geometryCenter: { lat: 63.943, lon: -17.383 }, lastUpdate: "2026-10-17T05:51:00Z",
+  }] } };
+  const news = { RoadNotifications: { results: [{ id: "7", category: "South", key: "south", subCategory: "Vík", text: " Road closed.  ", tags: [], date: "2026-10-17T06:00:00Z" }] } };
+  const info = { RoadConditionInfo: [{ title: "Impassable/Closed", description: "<p>Closed.</p>", code: "J", type: "ROAD" }] };
+  const out = compactRoads(sections, news, info, now);
+  const s = out.sections[0];
+  assert.equal(s.id, "91209");
+  assert.equal(s.condition.category, "J");
+  assert.equal(s.previous.category, "A");
+  assert.equal(s.hazards.length, 1, "expired hazards are dropped");
+  assert.equal(s.hazards[0].text, "Lane closed");
+  assert.deepEqual(s.center, { lat: 63.943, lon: -17.383 });
+  assert.equal(s.roads[0].nr, "1");
+  assert.equal(out.news[0].text, "Road closed.");
+  assert.equal(out.codes[0].text, "Closed.");
+});
