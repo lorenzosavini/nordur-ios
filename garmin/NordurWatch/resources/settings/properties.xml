@@ -1,4 +1,6 @@
 <properties>
     <!-- 0 = km/h (as in the iPhone app), 1 = m/s, 2 = knots -->
     <property id="units" type="number">0</property>
+    <!-- Shows the aurora animation even without aurora (to see it in daytime). -->
+    <property id="demoAurora" type="boolean">false</property>
 </properties>

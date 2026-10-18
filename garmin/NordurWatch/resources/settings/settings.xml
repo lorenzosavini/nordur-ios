@@ -6,4 +6,7 @@
             <listEntry value="2">@Strings.UnitKnots</listEntry>
         </settingConfig>
     </setting>
+    <setting propertyKey="@Properties.demoAurora" title="@Strings.DemoTitle">
+        <settingConfig type="boolean" />
+    </setting>
 </settings>

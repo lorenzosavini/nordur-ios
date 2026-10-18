@@ -1,13 +1,25 @@
 import Toybox.Lang;
 import Toybox.WatchUi;
 
-// START (or a tap on touch watches) refreshes; BACK closes the app.
+// UP/DOWN or swipe: change page. START (or a tap): refresh. BACK: close.
 class NordurDelegate extends WatchUi.BehaviorDelegate {
     var model;
+    var view;
 
-    function initialize(m) {
+    function initialize(m, v) {
         BehaviorDelegate.initialize();
         model = m;
+        view = v;
+    }
+
+    function onNextPage() {
+        view.turn(1);
+        return true;
+    }
+
+    function onPreviousPage() {
+        view.turn(-1);
+        return true;
     }
 
     function onSelect() {

@@ -16,7 +16,8 @@ class NordurApp extends Application.AppBase {
 
     function getInitialView() {
         var model = new NordurModel();
-        return [new NordurView(model), new NordurDelegate(model)];
+        var view = new NordurView(model);
+        return [view, new NordurDelegate(model, view)];
     }
 
     (:glance)

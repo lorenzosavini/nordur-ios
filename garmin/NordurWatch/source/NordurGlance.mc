@@ -3,7 +3,8 @@ import Toybox.Graphics;
 import Toybox.Lang;
 import Toybox.WatchUi;
 
-// The line in the glance list: place, gusts and Kp, without opening the app.
+// The line in the glance list, without opening the app: the aurora first
+// (level where you are and Kp), then the gusts.
 (:glance)
 class NordurGlance extends WatchUi.GlanceView {
     function initialize() {
@@ -12,23 +13,36 @@ class NordurGlance extends WatchUi.GlanceView {
 
     function onUpdate(dc) {
         var data = Application.Storage.getValue("last");
+        var w = dc.getWidth();
         var h = dc.getHeight();
-        dc.setColor(0x2EC4A6, Graphics.COLOR_TRANSPARENT);
         var title = "NORDUR";
-        if (data instanceof Dictionary && data["place"] != null) {
-            title = title + " · " + (data["place"] as String).toUpper();
-        }
-        dc.drawText(0, h * 0.25, Graphics.FONT_XTINY, title, Graphics.TEXT_JUSTIFY_LEFT | Graphics.TEXT_JUSTIFY_VCENTER);
-        var line = "--";
+        var aurora = "--";
+        var auroraColor = Graphics.COLOR_WHITE;
+        var gust = "";
         if (data instanceof Dictionary) {
-            dc.setColor(NordurApi.gustColor(data["gust"]), Graphics.COLOR_TRANSPARENT);
-            line = NordurApi.speed(data["gust"]) + " " + NordurApi.unitLabel();
-            if (data["kp"] != null) {
-                line = line + "  ·  Kp " + data["kp"].format("%.1f");
+            if (data["place"] != null) {
+                title = title + " · " + (data["place"] as String).toUpper();
             }
-        } else {
-            dc.setColor(Graphics.COLOR_WHITE, Graphics.COLOR_TRANSPARENT);
+            var a = data["aurora"];
+            var level = a instanceof Dictionary && a["level"] != null ? a["level"] : 0;
+            var names = ["-", "debole", "possibile", "probabile", "FORTE"];
+            aurora = "Aurora " + names[level > 4 ? 4 : level];
+            if (a instanceof Dictionary && a["visible"] == true) {
+                aurora = aurora + " ORA";
+            }
+            if (data["kp"] != null) {
+                aurora = aurora + " · Kp " + data["kp"].format("%.1f");
+            }
+            auroraColor = level >= 4 ? 0xA06BFF : (level >= 2 ? 0x34E89E : 0x2EC4A6);
+            gust = NordurApi.speed(data["gust"]) + " " + NordurApi.unitLabel();
         }
-        dc.drawText(0, h * 0.72, Graphics.FONT_SMALL, line, Graphics.TEXT_JUSTIFY_LEFT | Graphics.TEXT_JUSTIFY_VCENTER);
+        dc.setColor(0x8A8A8A, Graphics.COLOR_TRANSPARENT);
+        dc.drawText(0, h * 0.2, Graphics.FONT_XTINY, title, Graphics.TEXT_JUSTIFY_LEFT | Graphics.TEXT_JUSTIFY_VCENTER);
+        dc.setColor(auroraColor, Graphics.COLOR_TRANSPARENT);
+        dc.drawText(0, h * 0.52, Graphics.FONT_TINY, aurora, Graphics.TEXT_JUSTIFY_LEFT | Graphics.TEXT_JUSTIFY_VCENTER);
+        if (!gust.equals("")) {
+            dc.setColor(NordurApi.gustColor(data["gust"]), Graphics.COLOR_TRANSPARENT);
+            dc.drawText(0, h * 0.84, Graphics.FONT_XTINY, gust, Graphics.TEXT_JUSTIFY_LEFT | Graphics.TEXT_JUSTIFY_VCENTER);
+        }
     }
 }
