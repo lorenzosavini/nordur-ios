@@ -198,14 +198,14 @@ final class AppModel {
     func refreshGlobal(force: Bool = false) async {
         if !force, let last = lastGlobalRefresh, Date().timeIntervalSince(last) < 110 { return }
         lastGlobalRefresh = Date()
-        async let w: Void = load(.warnings, \.warnings) { try await IMO.warnings() }
-        async let q: Void = load(.quakes, \.quakes) { try await IMO.quakes() }
-        async let r: Void = load(.roads, \.roads) { try await Roads.network() }
-        async let ri: Void = load(.roadInfo, \.roadInfo) { try await RoadInfoService.load() }
-        async let k: Void = load(.kp, \.kp) { try await SpaceWeather.kpForecast() }
-        async let o: Void = load(.ovation, \.ovation) { try await SpaceWeather.ovation() }
-        async let s: Void = load(.solarWind, \.solarWind) { try await SpaceWeather.solarWind() }
-        async let n: Void = load(.news, \.news) { try await SafeTravel.news() }
+        async let w: Void = load(.warnings, { try await IMO.warnings() }) { self.warnings = $0 }
+        async let q: Void = load(.quakes, { try await IMO.quakes() }) { self.quakes = $0 }
+        async let r: Void = load(.roads, { try await Roads.network() }) { self.roads = $0 }
+        async let ri: Void = load(.roadInfo, { try await RoadInfoService.load() }) { self.roadInfo = $0 }
+        async let k: Void = load(.kp, { try await SpaceWeather.kpForecast() }) { self.kp = $0 }
+        async let o: Void = load(.ovation, { try await SpaceWeather.ovation() }) { self.ovation = $0 }
+        async let s: Void = load(.solarWind, { try await SpaceWeather.solarWind() }) { self.solarWind = $0 }
+        async let n: Void = load(.news, { try await SafeTravel.news() }) { self.news = $0 }
         async let a: Void = refreshAurora()
         _ = await (w, q, r, ri, k, o, s, n, a)
         recomputeAurora()
@@ -214,9 +214,9 @@ final class AppModel {
     }
 
     /// Fetches one source and shows it right away.
-    private func load<T>(_ source: Source, _ property: ReferenceWritableKeyPath<AppModel, Fetched<T>?>,
-                         _ fetch: @escaping () async throws -> Fetched<T>) async {
-        apply(await attempt(fetch), source) { self[keyPath: property] = $0 }
+    private func load<T>(_ source: Source, _ fetch: @escaping () async throws -> T,
+                         into assign: @MainActor (T) -> Void) async {
+        apply(await attempt(fetch), source, assign)
     }
 
     /// Sources already loaded from the network in this session (a cached copy never replaces them).
@@ -230,16 +230,16 @@ final class AppModel {
         warmed = true
         await HTTP.$cacheOnly.withValue(true) {
             let c = activePlace.coordinate
-            async let w: Void = load(.warnings, \.warnings) { try await IMO.warnings() }
-            async let q: Void = load(.quakes, \.quakes) { try await IMO.quakes() }
-            async let r: Void = load(.roads, \.roads) { try await Roads.network() }
-            async let ri: Void = load(.roadInfo, \.roadInfo) { try await RoadInfoService.load() }
-            async let k: Void = load(.kp, \.kp) { try await SpaceWeather.kpForecast() }
-            async let n: Void = load(.news, \.news) { try await SafeTravel.news() }
-            async let f: Void = load(.forecast, \.forecast) { try await WeatherService.forecast(c) }
-            async let m: Void = load(.marine, \.marine) { try await OpenMeteo.marine(c) }
-            async let ai: Void = load(.air, \.air) { try await OpenMeteo.airQuality(c) }
-            async let wc: Void = load(.webcams, \.webcams) { try await Webcams.sites() }
+            async let w: Void = load(.warnings, { try await IMO.warnings() }) { self.warnings = $0 }
+            async let q: Void = load(.quakes, { try await IMO.quakes() }) { self.quakes = $0 }
+            async let r: Void = load(.roads, { try await Roads.network() }) { self.roads = $0 }
+            async let ri: Void = load(.roadInfo, { try await RoadInfoService.load() }) { self.roadInfo = $0 }
+            async let k: Void = load(.kp, { try await SpaceWeather.kpForecast() }) { self.kp = $0 }
+            async let n: Void = load(.news, { try await SafeTravel.news() }) { self.news = $0 }
+            async let f: Void = load(.forecast, { try await WeatherService.forecast(c) }) { self.forecast = $0 }
+            async let m: Void = load(.marine, { try await OpenMeteo.marine(c) }) { self.marine = $0 }
+            async let ai: Void = load(.air, { try await OpenMeteo.airQuality(c) }) { self.air = $0 }
+            async let wc: Void = load(.webcams, { try await Webcams.sites() }) { self.webcams = $0 }
             _ = await (w, q, r, ri, k, n, f, m, ai, wc)
         }
         recomputeAurora()

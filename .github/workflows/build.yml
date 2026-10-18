@@ -169,7 +169,7 @@ jobs:
       - name: Simulator build for Appetize or Xcode (zip)
         if: always()
         run: |
-          [ -d build/Debug-iphonesimulator/Nordur.app ] || exit 0
+          [ -f build/Debug-iphonesimulator/Nordur.app/Nordur ] || exit 0
           (cd build/Debug-iphonesimulator && ditto -c -k --keepParent Nordur.app ../../Nordur-simulator.zip)
           unzip -l Nordur-simulator.zip | head -5
           lipo -info build/Debug-iphonesimulator/Nordur.app/Nordur
@@ -202,6 +202,11 @@ jobs:
           # Single zip with Nordur.app at the root, for Appetize (workflow artifacts are zipped twice).
           cp Nordur-simulator.zip shots/ || true
           cp Nordur.ipa shots/ 2>/dev/null || true
+          # A failed build keeps the last working downloads instead of removing them.
+          if [ ! -f shots/Nordur.ipa ] && git fetch -q origin ci-screenshots; then
+            git show FETCH_HEAD:Nordur.ipa > shots/Nordur.ipa 2>/dev/null || rm -f shots/Nordur.ipa
+            [ -f shots/Nordur-simulator.zip ] || git show FETCH_HEAD:Nordur-simulator.zip > shots/Nordur-simulator.zip 2>/dev/null || rm -f shots/Nordur-simulator.zip
+          fi
           mv shots /tmp/shots
           git config user.name "nordur-ci"
           git config user.email "ci@users.noreply.github.com"

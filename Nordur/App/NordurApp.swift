@@ -172,7 +172,7 @@ struct RootView: View {
             var tick = 0
             while !Task.isCancelled {
                 try? await Task.sleep(nanoseconds: 2 * 60 * 1_000_000_000)
-                guard scenePhase == .active else { continue }
+                guard UIApplication.shared.applicationState == .active else { continue }
                 tick += 1
                 await model.refreshGlobal()
                 await model.refreshPlaceIfOld()
