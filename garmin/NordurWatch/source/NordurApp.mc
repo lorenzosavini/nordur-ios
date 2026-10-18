@@ -1,27 +1,38 @@
 import Toybox.Application;
+import Toybox.Background;
 import Toybox.Lang;
+import Toybox.System;
 import Toybox.WatchUi;
 
-// Norður on the wrist: gusts, wind, temperature and aurora (Kp) where you are.
-// Data: Open-Meteo for the weather at the watch's GPS position, nordur-api for
-// the aurora. The watch goes online through the phone (Garmin Connect).
+// Norður on the wrist: gusts, wind, temperature, sky and aurora (Kp) where you
+// are, computed by nordur-api exactly as the iPhone app does (MET Norway +
+// Open-Meteo), with the place name. A background service refreshes the data
+// every 15 minutes for the glance; the watch goes online through the phone.
+(:background, :glance)
 class NordurApp extends Application.AppBase {
-    var model;
-
     function initialize() {
         AppBase.initialize();
-        model = new NordurModel();
-    }
-
-    function onStart(state) {
-        model.start();
-    }
-
-    function onStop(state) {
-        model.stop();
     }
 
     function getInitialView() {
+        var model = new NordurModel();
         return [new NordurView(model), new NordurDelegate(model)];
+    }
+
+    (:glance)
+    function getGlanceView() {
+        return [new NordurGlance()];
+    }
+
+    function getServiceDelegate() {
+        return [new NordurService()];
+    }
+
+    // Data fetched by the background service.
+    function onBackgroundData(data) {
+        if (data instanceof Dictionary) {
+            Application.Storage.setValue("last", data);
+            WatchUi.requestUpdate();
+        }
     }
 }

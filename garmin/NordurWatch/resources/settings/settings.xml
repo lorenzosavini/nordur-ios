@@ -1,0 +1,9 @@
+<settings>
+    <setting propertyKey="@Properties.units" title="@Strings.UnitsTitle">
+        <settingConfig type="list">
+            <listEntry value="0">@Strings.UnitKmh</listEntry>
+            <listEntry value="1">@Strings.UnitMs</listEntry>
+            <listEntry value="2">@Strings.UnitKnots</listEntry>
+        </settingConfig>
+    </setting>
+</settings>

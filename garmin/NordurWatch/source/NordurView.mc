@@ -1,3 +1,4 @@
+import Toybox.Application;
 import Toybox.Graphics;
 import Toybox.Lang;
 import Toybox.Math;
@@ -5,105 +6,142 @@ import Toybox.Time;
 import Toybox.Time.Gregorian;
 import Toybox.WatchUi;
 
+// One screen: the place on top, the gusts in the middle inside a gauge ring
+// (0–30 m/s, coloured like the app's thresholds), then wind, sky, temperature
+// and aurora, and at the bottom the time and source of the data.
 class NordurView extends WatchUi.View {
     var model;
     const ACCENT = 0x2EC4A6;
+    const DIM = 0x8A8A8A;
+    const TRACK = 0x2A2A2A;
 
     function initialize(m) {
         View.initialize();
         model = m;
     }
 
+    function onShow() {
+        model.start();
+    }
+
+    function onHide() {
+        model.stop();
+    }
+
     function onUpdate(dc) {
         var w = dc.getWidth();
         var h = dc.getHeight();
         var cx = w / 2;
+        var cy = h / 2;
         dc.setColor(Graphics.COLOR_BLACK, Graphics.COLOR_BLACK);
         dc.clear();
 
-        dc.setColor(ACCENT, Graphics.COLOR_TRANSPARENT);
-        dc.drawText(cx, h * 0.10, Graphics.FONT_XTINY, "NORDUR", Graphics.TEXT_JUSTIFY_CENTER);
+        var data = model.data;
+        var hasData = data instanceof Dictionary;
+        var gust = hasData ? data["gust"] : null;
 
-        if (model.gust == null) {
-            dc.setColor(Graphics.COLOR_WHITE, Graphics.COLOR_TRANSPARENT);
-            // Wrapped to the round screen.
-            var text = Graphics.fitTextToArea(message(), Graphics.FONT_SMALL, w * 0.78, h * 0.5, true);
-            dc.drawText(cx, h / 2, Graphics.FONT_SMALL, text, Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
+        // Gauge ring, open at the bottom (270°), filled up to the gusts.
+        var radius = (w < h ? w : h) / 2 - 6;
+        var pen = w / 28;
+        if (dc has :setAntiAlias) {
+            dc.setAntiAlias(true);
+        }
+        dc.setPenWidth(pen);
+        dc.setColor(TRACK, Graphics.COLOR_TRANSPARENT);
+        dc.drawArc(cx, cy, radius, Graphics.ARC_CLOCKWISE, 225, 315);
+        if (gust != null && gust > 0) {
+            var fraction = gust / 30.0;
+            if (fraction > 1) {
+                fraction = 1;
+            }
+            var end = 225 - 270 * fraction;
+            if (end < 0) {
+                end += 360;
+            }
+            dc.setColor(NordurApi.gustColor(gust), Graphics.COLOR_TRANSPARENT);
+            dc.drawArc(cx, cy, radius, Graphics.ARC_CLOCKWISE, 225, end.toNumber());
+        }
+        dc.setPenWidth(1);
+
+        // Place.
+        dc.setColor(Graphics.COLOR_WHITE, Graphics.COLOR_TRANSPARENT);
+        var place = hasData && data["place"] != null ? (data["place"] as String).toUpper() : "NORDUR";
+        dc.drawText(cx, h * 0.14, Graphics.FONT_XTINY, place, Graphics.TEXT_JUSTIFY_CENTER);
+
+        if (!hasData) {
+            var text = Graphics.fitTextToArea(message(), Graphics.FONT_SMALL, w * 0.7, h * 0.4, true);
+            dc.drawText(cx, cy, Graphics.FONT_SMALL, text, Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
             return;
         }
 
-        // Gusts: the number that decides whether to drive, open a car door, walk on a ridge.
-        dc.setColor(gustColor(model.gust), Graphics.COLOR_TRANSPARENT);
-        dc.drawText(cx, h * 0.20, Graphics.FONT_XTINY, WatchUi.loadResource(Rez.Strings.Gusts), Graphics.TEXT_JUSTIFY_CENTER);
-        dc.drawText(cx, h * 0.27, Graphics.FONT_NUMBER_HOT, model.gust.format("%.0f"), Graphics.TEXT_JUSTIFY_CENTER);
-        dc.drawText(cx, h * 0.52, Graphics.FONT_XTINY, "m/s  " + gustLabel(model.gust), Graphics.TEXT_JUSTIFY_CENTER);
+        // Gusts.
+        dc.setColor(DIM, Graphics.COLOR_TRANSPARENT);
+        dc.drawText(cx, h * 0.25, Graphics.FONT_XTINY, WatchUi.loadResource(Rez.Strings.Gusts), Graphics.TEXT_JUSTIFY_CENTER);
+        dc.setColor(NordurApi.gustColor(gust), Graphics.COLOR_TRANSPARENT);
+        dc.drawText(cx, h * 0.43, Graphics.FONT_NUMBER_HOT, NordurApi.speed(gust), Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
+        dc.drawText(cx, h * 0.555, Graphics.FONT_XTINY, NordurApi.unitLabel() + " · " + gustLabel(gust), Graphics.TEXT_JUSTIFY_CENTER);
 
+        // Wind and direction (where it blows from).
         dc.setColor(Graphics.COLOR_WHITE, Graphics.COLOR_TRANSPARENT);
-        if (model.wind != null) {
-            var windText = WatchUi.loadResource(Rez.Strings.Wind) + " " + model.wind.format("%.0f") + " m/s " + compass(model.dir);
-            dc.drawText(cx, h * 0.62, Graphics.FONT_TINY, windText, Graphics.TEXT_JUSTIFY_CENTER);
+        var wind = WatchUi.loadResource(Rez.Strings.Wind) + " " + NordurApi.speed(data["wind"]) + " " + NordurApi.unitLabel();
+        if (data["dir"] != null) {
+            wind = wind + " " + WatchUi.loadResource(Rez.Strings.From) + " " + compass(data["dir"]);
+        }
+        dc.drawText(cx, h * 0.645, Graphics.FONT_TINY, wind, Graphics.TEXT_JUSTIFY_CENTER);
+
+        // Temperature, sky, aurora.
+        var line = "";
+        if (data["temp"] != null) {
+            line = data["temp"].format("%.0f") + "°";
+        }
+        var sky = skyLabel(data["sky"]);
+        if (sky != null) {
+            line = line + " " + sky;
+        }
+        dc.drawText(cx, h * 0.73, Graphics.FONT_TINY, line, Graphics.TEXT_JUSTIFY_CENTER);
+        if (data["kp"] != null) {
+            dc.setColor(ACCENT, Graphics.COLOR_TRANSPARENT);
+            var kp = "Kp " + data["kp"].format("%.1f");
+            if (data["kpMax"] != null) {
+                kp = kp + " · max " + data["kpMax"].format("%.0f");
+            }
+            dc.drawText(cx, h * 0.81, Graphics.FONT_XTINY, kp, Graphics.TEXT_JUSTIFY_CENTER);
         }
 
-        var bottom = "";
-        if (model.temp != null) {
-            bottom = model.temp.format("%.0f") + "°C";
-        }
-        if (model.kp != null) {
-            bottom = bottom + "   Kp " + model.kp.format("%.1f");
-            if (model.kpMax != null) {
-                bottom = bottom + " / " + model.kpMax.format("%.0f");
+        // Time of the data (and why they are old, when they are).
+        dc.setColor(DIM, Graphics.COLOR_TRANSPARENT);
+        var footer = "...";
+        if (model.status != :loading && data["t"] != null) {
+            var clock = Gregorian.info(new Time.Moment(data["t"] as Number), Time.FORMAT_SHORT);
+            footer = clock.hour.format("%02d") + ":" + clock.min.format("%02d");
+            if (model.status != :ok) {
+                footer = WatchUi.loadResource(Rez.Strings.DataFrom) + " " + footer;
             }
         }
-        dc.setColor(ACCENT, Graphics.COLOR_TRANSPARENT);
-        dc.drawText(cx, h * 0.74, Graphics.FONT_TINY, bottom, Graphics.TEXT_JUSTIFY_CENTER);
-
-        // Bottom: where the data are for and where they come from, then their time.
-        dc.setColor(Graphics.COLOR_LT_GRAY, Graphics.COLOR_TRANSPARENT);
-        if (model.lat != null && model.lon != null) {
-            var place = model.lat.abs().format("%.2f") + (model.lat >= 0 ? "N " : "S ")
-                + model.lon.abs().format("%.2f") + (model.lon >= 0 ? "E" : "W") + " · Open-Meteo";
-            dc.drawText(cx, h * 0.83, Graphics.FONT_XTINY, place, Graphics.TEXT_JUSTIFY_CENTER);
-        }
-        var age = "...";
-        if (model.status != :loading && model.updated != null) {
-            var clock = Gregorian.info(new Time.Moment(model.updated), Time.FORMAT_SHORT);
-            age = (model.status == :ok ? "" : WatchUi.loadResource(Rez.Strings.DataFrom) + " ")
-                + clock.hour.format("%02d") + ":" + clock.min.format("%02d");
-        }
-        dc.drawText(cx, h * 0.89, Graphics.FONT_XTINY, age, Graphics.TEXT_JUSTIFY_CENTER);
+        dc.drawText(cx, h * 0.885, Graphics.FONT_XTINY, footer, Graphics.TEXT_JUSTIFY_CENTER);
     }
 
     function message() {
+        var text = WatchUi.loadResource(Rez.Strings.Loading);
         if (model.status == :noGps) {
-            return WatchUi.loadResource(Rez.Strings.NoGps);
-        } else if (model.status == :timeout || model.status == :noPhone) {
-            var text = WatchUi.loadResource(model.status == :timeout ? Rez.Strings.Unlock : Rez.Strings.NoPhone);
-            if (model.errorCode != null) {
-                text = text + " (" + model.errorCode + ")";
-            }
-            return text;
+            text = WatchUi.loadResource(Rez.Strings.NoGps);
+        } else if (model.status == :noPhone) {
+            text = WatchUi.loadResource(Rez.Strings.NoPhone);
+        } else if (model.status == :timeout) {
+            text = WatchUi.loadResource(Rez.Strings.Unlock);
         } else if (model.status == :error) {
-            var text = WatchUi.loadResource(Rez.Strings.Error);
-            if (model.errorCode != null) {
-                text = text + " (" + model.errorCode + ")";
-            }
-            return text;
+            text = WatchUi.loadResource(Rez.Strings.Error);
         }
-        return WatchUi.loadResource(Rez.Strings.Loading);
-    }
-
-    // Same thresholds as the iPhone app: 15 m/s strong, 20 m/s dangerous for cars.
-    function gustColor(g) {
-        if (g >= 20) {
-            return Graphics.COLOR_RED;
-        } else if (g >= 15) {
-            return Graphics.COLOR_ORANGE;
+        if (model.errorCode != null) {
+            text = text + " (" + model.errorCode + ")";
         }
-        return Graphics.COLOR_WHITE;
+        return text;
     }
 
     function gustLabel(g) {
-        if (g >= 20) {
+        if (g == null) {
+            return "";
+        } else if (g >= 20) {
             return WatchUi.loadResource(Rez.Strings.Storm);
         } else if (g >= 15) {
             return WatchUi.loadResource(Rez.Strings.Strong);
@@ -111,10 +149,19 @@ class NordurView extends WatchUi.View {
         return WatchUi.loadResource(Rez.Strings.Calm);
     }
 
-    function compass(degrees) {
-        if (degrees == null) {
-            return "";
+    function skyLabel(sky) {
+        if (sky == null) {
+            return null;
         }
+        var ids = {
+            "clear" => Rez.Strings.SkyClear, "partly" => Rez.Strings.SkyPartly, "cloudy" => Rez.Strings.SkyCloudy,
+            "rain" => Rez.Strings.SkyRain, "snow" => Rez.Strings.SkySnow, "fog" => Rez.Strings.SkyFog, "storm" => Rez.Strings.SkyStorm
+        };
+        var id = ids[sky];
+        return id == null ? null : WatchUi.loadResource(id);
+    }
+
+    function compass(degrees) {
         var names = ["N", "NE", "E", "SE", "S", "SW", "W", "NW"];
         var index = ((degrees.toFloat() + 22.5) / 45).toNumber() % 8;
         return names[index];

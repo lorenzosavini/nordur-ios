@@ -8,8 +8,20 @@
     <string id="Error">Dati non disponibili</string>
     <string id="Refresh">Premi START per aggiornare</string>
     <string id="Calm">normale</string>
-    <string id="Strong">Vento forte</string>
-    <string id="Storm">Tempesta: attenzione</string>
+    <string id="Strong">vento forte</string>
+    <string id="Storm">pericolo</string>
     <string id="Unlock">Sblocca l'iPhone e apri Garmin Connect</string>
     <string id="DataFrom">dati delle</string>
+    <string id="From">da</string>
+    <string id="SkyClear">sereno</string>
+    <string id="SkyPartly">poco nuvoloso</string>
+    <string id="SkyCloudy">nuvoloso</string>
+    <string id="SkyRain">pioggia</string>
+    <string id="SkySnow">neve</string>
+    <string id="SkyFog">nebbia</string>
+    <string id="SkyStorm">temporale</string>
+    <string id="UnitsTitle">Unità del vento</string>
+    <string id="UnitKmh">km/h</string>
+    <string id="UnitMs">m/s</string>
+    <string id="UnitKnots">nodi</string>
 </strings>

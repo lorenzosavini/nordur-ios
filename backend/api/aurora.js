@@ -12,6 +12,7 @@ import { loadDonki } from "../lib/donki.js";
 import { blend } from "../lib/kp.js";
 import { send } from "../lib/core.js";
 import { archiveSnapshot } from "../lib/archive.js";
+import { watchConditions } from "../lib/watch.js";
 
 // Maximum age before a "live" source is flagged stale (minutes).
 const LIVE_LIMITS = { solarWind: 15, kpEstimated: 20, ovation: 25, hemisphericPower: 25 };
@@ -117,6 +118,22 @@ export function compactState(state, now = Date.now()) {
 }
 
 export default async function handler(req, res) {
+  // /api/watch?lat=&lon=&lang= (rewritten here): conditions for the Garmin watch app.
+  const query = new URL(req.url, "http://x").searchParams;
+  if (query.get("watch") === "1") {
+    const lat = Number(query.get("lat")), lon = Number(query.get("lon"));
+    if (!Number.isFinite(lat) || !Number.isFinite(lon) || Math.abs(lat) > 90 || Math.abs(lon) > 180) {
+      return send(res, 400, { error: "lat/lon" });
+    }
+    try {
+      const body = await watchConditions(lat, lon, query.get("lang") === "en" ? "en" : "it");
+      res.setHeader("Cache-Control", "public, s-maxage=300, stale-while-revalidate=600");
+      return send(res, 200, body);
+    } catch (e) {
+      console.error("watch", e.message);
+      return send(res, 502, { error: "weather" });
+    }
+  }
   const state = await buildState();
   // Archive once per Kp block. Awaited (a serverless function may freeze once the
   // response is sent) but capped at 4 s; failures never affect the response.
@@ -126,6 +143,6 @@ export default async function handler(req, res) {
   ]);
   const essential = state.sources.kpForecast.status !== "error" || state.sources.solarWind.status !== "error";
   res.setHeader("Cache-Control", essential ? "public, s-maxage=60, stale-while-revalidate=120" : "no-store");
-  const compact = new URL(req.url, "http://x").searchParams.get("compact") === "1";
+  const compact = query.get("compact") === "1";
   return send(res, essential ? 200 : 502, compact ? compactState(state) : state);
 }

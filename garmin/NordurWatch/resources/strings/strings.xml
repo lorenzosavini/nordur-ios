@@ -8,8 +8,20 @@
     <string id="Error">Data not available</string>
     <string id="Refresh">Press START to refresh</string>
     <string id="Calm">normal</string>
-    <string id="Strong">Strong wind</string>
-    <string id="Storm">Storm: take care</string>
+    <string id="Strong">strong</string>
+    <string id="Storm">danger</string>
     <string id="Unlock">Unlock the iPhone and open Garmin Connect</string>
     <string id="DataFrom">data from</string>
+    <string id="From">from</string>
+    <string id="SkyClear">clear</string>
+    <string id="SkyPartly">partly cloudy</string>
+    <string id="SkyCloudy">cloudy</string>
+    <string id="SkyRain">rain</string>
+    <string id="SkySnow">snow</string>
+    <string id="SkyFog">fog</string>
+    <string id="SkyStorm">thunderstorm</string>
+    <string id="UnitsTitle">Wind unit</string>
+    <string id="UnitKmh">km/h</string>
+    <string id="UnitMs">m/s</string>
+    <string id="UnitKnots">knots</string>
 </strings>
