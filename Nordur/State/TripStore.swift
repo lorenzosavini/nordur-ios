@@ -10,6 +10,23 @@ final class TripStore {
 
     init() {
         stops = Self.loadFromDisk()
+        // Demo video only (`-ciDemoTrip YES`): a ring-road itinerary to show the Trip tab filled in.
+        if stops.isEmpty, UserDefaults.standard.bool(forKey: "ciDemoTrip") {
+            stops = Self.demoTrip()
+        }
+    }
+
+    private static func demoTrip() -> [TripStop] {
+        let start = Calendar.current.date(byAdding: .day, value: 1, to: Calendar.current.startOfDay(for: Date()))!.addingTimeInterval(10 * 3600)
+        let plan: [(String, Int)] = [("Reykjavík", 2), ("Vík í Mýrdal", 1), ("Höfn", 1), ("Akureyri", 2)]
+        var date = start
+        var result: [TripStop] = []
+        for (name, nights) in plan {
+            guard let place = ([Place.reykjavik] + Place.presets).first(where: { $0.name.hasPrefix(name) }) else { continue }
+            result.append(TripStop(place: place, date: date, nights: nights))
+            date = Calendar.current.date(byAdding: .day, value: nights, to: date) ?? date
+        }
+        return result
     }
 
     func reload() { stops = Self.loadFromDisk() }

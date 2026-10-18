@@ -17,6 +17,8 @@ struct TripView: View {
                             if !trip.stops.isEmpty { EditButton().font(.mono(11, .semibold)) }
                             HeaderButton(systemImage: "person", label: String(localized: "ACCOUNT")) { showAccount = true }
                             HeaderButton(systemImage: "plus") { creating = true }
+                                .accessibilityLabel("Aggiungi tappa")
+                                .accessibilityIdentifier("trip.add")
                         }
                     }
                 }
@@ -56,6 +58,7 @@ struct TripView: View {
                         StopSummary(stop: stop)
                             .contentShape(Rectangle())
                             .onTapGesture { editing = stop }
+                            .accessibilityIdentifier("trip.stop")
                         if let next = trip.next(after: stop) {
                             LegSummary(from: stop, to: next)
                         }
@@ -340,7 +343,13 @@ struct StopEditor: View {
     }
 
     private var placeCard: some View {
-        Button { pickingPlace = true } label: {
+        Button { pickingPlace = true } label: { placeCardLabel }
+            .buttonStyle(.plain)
+            .accessibilityIdentifier("stop.place")
+    }
+
+    private var placeCardLabel: some View {
+        Group {
             HStack(spacing: 14) {
                 Image(systemName: place == nil ? "magnifyingglass" : "mappin.and.ellipse")
                     .font(.system(size: 20, weight: .semibold))
@@ -368,7 +377,6 @@ struct StopEditor: View {
             .overlay(Rectangle().strokeBorder(place == nil ? Theme.accent : Theme.hairline, lineWidth: 1))
             .contentShape(Rectangle())
         }
-        .buttonStyle(.plain)
     }
 
     private var whenCard: some View {
@@ -447,6 +455,10 @@ struct StopEditor: View {
     }
 
     private var saveButton: some View {
+        saveButtonBody.accessibilityIdentifier("stop.save")
+    }
+
+    private var saveButtonBody: some View {
         Button { save() } label: {
             HStack {
                 Text(original == nil ? String(localized: "AGGIUNGI TAPPA") : String(localized: "SALVA MODIFICHE"))

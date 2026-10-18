@@ -110,6 +110,7 @@ struct RoadsView: View {
                 if critical.isEmpty { Label("Nessun problema segnalato", systemImage: "checkmark.circle").foregroundStyle(.green) }
                 ForEach(critical) { item in
                     NavigationLink { RoadSectionView(section: item.section) } label: { RoadSectionRow(section: item.section, km: item.km) }
+                        .accessibilityIdentifier("road.row")
                 }
             } header: { Text("\(critical.count) tratti con problemi").pinnedHeader() }
             let hazards = info.sections.filter { matches($0) }
@@ -139,6 +140,7 @@ struct RoadsView: View {
             Section {
                 ForEach(Array(list.prefix(query.isEmpty ? 150 : 400))) { item in
                     NavigationLink { RoadSectionView(section: item.section) } label: { RoadSectionRow(section: item.section, km: item.km) }
+                        .accessibilityIdentifier("road.row")
                 }
             } header: { Text("\(list.count) tratti · ordinati per distanza da \(model.activePlace.name)").pinnedHeader() }
         } else if model.errors[.roadInfo] == nil {

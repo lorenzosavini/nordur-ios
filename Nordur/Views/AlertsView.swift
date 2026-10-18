@@ -90,6 +90,7 @@ struct AlertsView: View {
                         NavigationLink(value: event) {
                             AlertRow(event: event)
                         }
+                        .accessibilityIdentifier("alert.row")
                         .swipeActions {
                             Button(role: .destructive) { alerts.delete(event) } label: { Label("Elimina", systemImage: "trash") }
                         }

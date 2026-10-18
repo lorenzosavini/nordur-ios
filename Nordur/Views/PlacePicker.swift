@@ -76,6 +76,7 @@ struct PlacePicker: View {
                 }
             }
         }
+        .accessibilityIdentifier("place.\(place.name)")
     }
 
     private func search() async {

@@ -42,6 +42,7 @@ struct WebcamsView: View {
                         }
                     }
                 }
+                .accessibilityIdentifier("webcam.row")
             }
         }
         .themedList()

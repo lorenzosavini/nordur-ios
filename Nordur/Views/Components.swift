@@ -678,6 +678,10 @@ struct HeroTile: View {
     var statusColor: Color = .white
 
     var body: some View {
+        tile.accessibilityElement(children: .combine).accessibilityIdentifier("tile.\(title)")
+    }
+
+    private var tile: some View {
         ZStack(alignment: .bottomLeading) {
             HeroPhoto(hero: hero)
             LinearGradient(colors: [.black.opacity(0.05), .black.opacity(0.75)], startPoint: .top, endPoint: .bottom)

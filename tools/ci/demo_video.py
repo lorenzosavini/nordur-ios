@@ -1,7 +1,9 @@
 #!/usr/bin/env python3
-"""Records a demo video of Norður in the simulator: every tab, scrolling,
-the aurora screen, the map layers (wind particles, gusts, temperature,
-aurora oval, radar), a tap on the map, Drive and Trip.
+"""Records a demo video of Norður in the simulator, through every section:
+Today (aurora now), the Aurora screen, Roads (critical sections and one
+section), Webcams, Volcanoes and earthquakes, the alert inbox and one alert,
+Weather, every Map layer and a tap on the map, Drive, Trip (an itinerary,
+one stop, and adding a stop with the place picker).
 
 Needs idb (idb-companion + fb-idb). Usage: demo_video.py <udid> <out.mp4>
 """
@@ -16,7 +18,7 @@ def elements():
     try:
         r = idb("ui", "describe-all", "--json")
         data = json.loads(r.stdout)
-    except (json.JSONDecodeError, subprocess.TimeoutExpired):
+    except Exception:
         try:
             data = [json.loads(line) for line in r.stdout.splitlines() if line.strip().startswith("{")]
         except Exception:
@@ -32,23 +34,6 @@ def find(ident=None, label=None, exact=False):
             return e
     return None
 
-def tap_at(x, y, pause=1.5):
-    idb("ui", "tap", str(round(x)), str(round(y)))
-    time.sleep(pause)
-
-def tap(ident=None, label=None, exact=False, pause=2.0):
-    for _ in range(4):
-        e = find(ident=ident, label=label, exact=exact)
-        if e:
-            f = e["frame"]
-            tap_at(f["x"] + f["width"] / 2, f["y"] + f["height"] / 2, pause)
-            return True
-        time.sleep(1.5)
-    print(f"not found: {ident or label}")
-    return False
-
-# Screen size in points, from the application element (the accessibility
-# tree can take a while to answer after launch); iPhone Pro size otherwise.
 W, H = 402, 874
 for _ in range(20):
     found = elements()
@@ -58,54 +43,116 @@ for _ in range(20):
     time.sleep(3)
 print("screen", W, H)
 
-def scroll(times=1, distance=0.45, pause=1.6):
+def tap_at(x, y, pause=1.2):
+    idb("ui", "tap", str(round(x)), str(round(y)))
+    time.sleep(pause)
+
+def swipe(x1, y1, x2, y2, duration=0.5, pause=0.9):
+    idb("ui", "swipe", str(round(x1)), str(round(y1)), str(round(x2)), str(round(y2)), "--duration", str(duration))
+    time.sleep(pause)
+
+def scroll(times=1, distance=0.45, pause=1.1):
     for _ in range(times):
-        idb("ui", "swipe", str(round(W / 2)), str(round(H * 0.72)), str(round(W / 2)), str(round(H * (0.72 - distance))), "--duration", "0.7")
-        time.sleep(pause)
+        swipe(W / 2, H * 0.74, W / 2, H * (0.74 - distance), 0.45, pause)
 
 def scroll_top():
-    for _ in range(3):
-        idb("ui", "swipe", str(round(W / 2)), str(round(H * 0.3)), str(round(W / 2)), str(round(H * 0.85)), "--duration", "0.3")
-        time.sleep(0.4)
+    for _ in range(4):
+        swipe(W / 2, H * 0.25, W / 2, H * 0.85, 0.2, 0.3)
+    time.sleep(0.8)
 
 def back():
-    # The navigation back button sits top left.
-    tap_at(28, 70, 1.8)
+    swipe(3, H * 0.5, W * 0.85, H * 0.5, 0.3, 1.4)
+
+def dismiss_sheet():
+    swipe(W / 2, H * 0.12, W / 2, H * 0.95, 0.35, 1.6)
+
+def tap(ident=None, label=None, exact=False, pause=1.8, scrolls=0):
+    """Taps an element, scrolling down to find it (up to `scrolls` times)."""
+    for attempt in range(scrolls + 3):
+        e = find(ident=ident, label=label, exact=exact)
+        if e and e["frame"]["y"] + e["frame"]["height"] / 2 < H * 0.88:
+            f = e["frame"]
+            tap_at(f["x"] + f["width"] / 2, f["y"] + f["height"] / 2, pause)
+            return True
+        if attempt < scrolls:
+            scroll(1, 0.35, 0.8)
+        else:
+            time.sleep(1)
+    print(f"not found: {ident or label}")
+    return False
+
+def tab(name):
+    tap(label=name, exact=True, pause=2.2)
 
 rec = subprocess.Popen(["xcrun", "simctl", "io", udid, "recordVideo", "--codec=h264", "--force", out])
-time.sleep(3)
+time.sleep(2.5)
 
-# Today: header, aurora now, explore tiles, next hours, details.
-time.sleep(4)
-scroll(1, 0.3, 2.5)
-scroll(3)
-scroll_top()
-time.sleep(1)
-
-# Aurora screen from the Today panel.
-if tap(label="AURORA ADESSO", pause=3.5) or tap(label="Aurora", pause=3.5):
-    scroll(4, 0.45, 2.0)
+# 1 · Today and the aurora now.
+time.sleep(2)
+scroll(1, 0.3, 2.2)
+if tap(ident="today.aurora", pause=3, scrolls=2):
+    scroll(5, 0.5, 1.2)       # Aurora: hour by hour, solar wind, Kp, Hp30, magnetometer
     back()
+
+# 2 · Roads: critical sections, then one section.
 scroll_top()
+if tap(ident="tile.Strade", pause=2.5, scrolls=3):
+    tap(label="Critici", exact=True, pause=2)
+    if tap(ident="road.row", pause=2.5):
+        scroll(1, 0.4, 1.4)
+        back()
+    back()
 
-# Weather.
-tap(label="Meteo", exact=True, pause=3)
-scroll(4)
+# 3 · Volcanoes and earthquakes.
+if tap(ident="tile.Vulcani e terremoti", pause=2.5, scrolls=3):
+    scroll(1, 0.4, 1.4)
+    back()
 
-# Map: layers, then a tap on the map for the values there.
-tap(label="Mappa", exact=True, pause=4)
-for layer, wait in [("wind", 6), ("gust", 3.5), ("temperature", 3.5), ("precipitation", 3), ("aurora", 4), ("radar", 4), ("wind", 2)]:
+# 4 · Webcams (Today › details).
+if tap(label="WEBCAM", exact=True, pause=2.5, scrolls=4):
+    scroll(1, 0.3, 1.5)
+
+# 5 · The alert inbox and one alert.
+scroll_top()
+if tap(ident="today.alerts", pause=2.2):
+    if tap(ident="alert.row", pause=2.5):
+        scroll(1, 0.4, 1.4)
+        back()
+    dismiss_sheet()
+
+# 6 · Weather.
+tab("Meteo")
+scroll(4, 0.5, 1.1)
+
+# 7 · Map: every layer, then a tap for the values at a point.
+tab("Mappa")
+time.sleep(1.5)
+for layer, wait in [("wind", 4), ("gust", 2.2), ("temperature", 2.2), ("precipitation", 2), ("snow", 1.8), ("cloud", 1.8), ("aurora", 3), ("radar", 3), ("wind", 1.5)]:
     tap(ident=f"layer.{layer}", pause=wait)
-tap_at(W * 0.45, H * 0.42, 4)
+tap_at(W * 0.45, H * 0.4, 3)
 
-# Drive and Trip.
-tap(label="Guida", exact=True, pause=3)
-scroll(3)
-tap(label="Viaggio", exact=True, pause=3)
-scroll(2)
+# 8 · Drive.
+tab("Guida")
+scroll(3, 0.5, 1.1)
 
-# Back to Today.
-tap(label="Oggi", exact=True, pause=3)
+# 9 · Trip: the itinerary, one stop, then adding a stop.
+tab("Viaggio")
+scroll(2, 0.45, 1.4)
+if tap(ident="trip.stop", pause=2.5):
+    scroll(1, 0.4, 1.2)
+    dismiss_sheet()
+scroll_top()
+if tap(ident="trip.add", pause=2.2):
+    if tap(ident="stop.place", pause=2):
+        if not tap(ident="place.Jökulsárlón", pause=1.8, scrolls=6):
+            dismiss_sheet()
+    scroll(1, 0.4, 1.2)
+    if not tap(ident="stop.save", pause=2.5, scrolls=3):
+        dismiss_sheet()
+scroll(2, 0.45, 1.2)
+
+# 10 · Back to Today.
+tab("Oggi")
 time.sleep(2)
 
 rec.send_signal(signal.SIGINT)

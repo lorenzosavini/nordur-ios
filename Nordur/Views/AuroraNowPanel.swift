@@ -77,6 +77,7 @@ struct AuroraNowPanel: View {
         }
         .buttonStyle(.plain)
         .accessibilityElement(children: .combine)
+        .accessibilityIdentifier("today.aurora")
     }
 
     private func signal(_ label: String, _ value: String, highlight: Bool) -> some View {

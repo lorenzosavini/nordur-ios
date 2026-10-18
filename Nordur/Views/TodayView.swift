@@ -197,6 +197,8 @@ struct TodayView: View {
             HeaderButton(systemImage: "bell", tint: Theme.text, dot: alerts.unreadCount > 0) {
                 alerts.openInbox = true
             }
+            .accessibilityLabel("Allerte")
+            .accessibilityIdentifier("today.alerts")
         }
         .padding(.top, 6)
     }
