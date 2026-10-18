@@ -117,7 +117,12 @@ struct HealthImportSheet: View {
         do {
             workouts = try await health.recentWorkouts()
         } catch {
-            self.error = String(localized: "Non è stato possibile leggere Salute: \(error.localizedDescription). Controlla in Impostazioni › Salute › Accesso ai dati e dispositivi › Norður.")
+            if error.localizedDescription.localizedCaseInsensitiveContains("entitlement") {
+                // Signed without the HealthKit permission (Sideloadly/AltStore with a free Apple ID).
+                self.error = String(localized: "Questa installazione di Norður non ha il permesso di Salute: Sideloadly lo toglie quando firma con un Apple ID gratuito. Installa l'app con Xcode per usare Salute, oppure importa le attività da file GPX (per Garmin: connect.garmin.com › attività › ingranaggio › Esporta in GPX).")
+            } else {
+                self.error = String(localized: "Non è stato possibile leggere Salute: \(error.localizedDescription). Controlla in Impostazioni › Salute › Accesso ai dati e dispositivi › Norður.")
+            }
         }
         loading = false
     }

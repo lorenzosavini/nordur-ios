@@ -13037,6 +13037,16 @@
           }
         }
       }
+    },
+    "Questa installazione di Norður non ha il permesso di Salute: Sideloadly lo toglie quando firma con un Apple ID gratuito. Installa l'app con Xcode per usare Salute, oppure importa le attività da file GPX (per Garmin: connect.garmin.com › attività › ingranaggio › Esporta in GPX)." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "This installation of Norður has no Health permission: Sideloadly removes it when signing with a free Apple ID. Install the app with Xcode to use Health, or import activities from GPX files (for Garmin: connect.garmin.com › activity › gear › Export to GPX)."
+          }
+        }
+      }
     }
   },
   "version" : "1.0"
