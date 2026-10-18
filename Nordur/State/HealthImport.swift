@@ -18,7 +18,7 @@ final class HealthImport {
         var activity: String { HealthImport.activityName(workout.workoutActivityType) }
         var symbol: String { HealthImport.activitySymbol(workout.workoutActivityType) }
         var source: String { HealthImport.sourceName(workout.sourceRevision.source) }
-        var km: Double? { workout.totalDistance?.doubleValue(for: .meter()).map { $0 / 1000 } }
+        var km: Double? { workout.totalDistance.map { $0.doubleValue(for: .meter()) / 1000 } }
     }
 
     private var readTypes: Set<HKObjectType> {
