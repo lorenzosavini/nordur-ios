@@ -13167,6 +13167,76 @@
           }
         }
       }
+    },
+    "AURORA ADESSO · QUI" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "AURORA NOW · HERE"
+          }
+        }
+      }
+    },
+    "VISIBILE ORA" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "VISIBLE NOW"
+          }
+        }
+      }
+    },
+    "KP" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "KP"
+          }
+        }
+      }
+    },
+    "BZ" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "BZ"
+          }
+        }
+      }
+    },
+    "HP30" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "HP30"
+          }
+        }
+      }
+    },
+    "CAMPO" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "FIELD"
+          }
+        }
+      }
+    },
+    "PREVISIONE ORA PER ORA, VENTO SOLARE, MAPPA →" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "HOUR BY HOUR, SOLAR WIND, MAP →"
+          }
+        }
+      }
     }
   },
   "version" : "1.0"

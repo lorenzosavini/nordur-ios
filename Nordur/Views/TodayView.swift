@@ -32,6 +32,7 @@ struct TodayView: View {
                             .padding(.top, -120)  // reaches under the status bar
                     }
                     warningsSection
+                    AuroraNowPanel()
                     exploreSection
                     nextHours
                     outlookSection
