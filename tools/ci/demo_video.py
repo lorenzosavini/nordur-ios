@@ -13,11 +13,14 @@ def idb(*args):
     return subprocess.run(["idb", *args, "--udid", udid], capture_output=True, text=True, timeout=60)
 
 def elements():
-    r = idb("ui", "describe-all", "--json")
     try:
+        r = idb("ui", "describe-all", "--json")
         data = json.loads(r.stdout)
-    except json.JSONDecodeError:
-        data = [json.loads(line) for line in r.stdout.splitlines() if line.strip().startswith("{")]
+    except (json.JSONDecodeError, subprocess.TimeoutExpired):
+        try:
+            data = [json.loads(line) for line in r.stdout.splitlines() if line.strip().startswith("{")]
+        except Exception:
+            data = []
     return data if isinstance(data, list) else [data]
 
 def find(ident=None, label=None, exact=False):
@@ -44,9 +47,16 @@ def tap(ident=None, label=None, exact=False, pause=2.0):
     print(f"not found: {ident or label}")
     return False
 
-# Screen size in points, from the application element.
-root = elements()[0]["frame"]
-W, H = root["width"], root["height"]
+# Screen size in points, from the application element (the accessibility
+# tree can take a while to answer after launch); iPhone Pro size otherwise.
+W, H = 402, 874
+for _ in range(20):
+    found = elements()
+    if found and "frame" in found[0]:
+        W, H = found[0]["frame"]["width"], found[0]["frame"]["height"]
+        break
+    time.sleep(3)
+print("screen", W, H)
 
 def scroll(times=1, distance=0.45, pause=1.6):
     for _ in range(times):

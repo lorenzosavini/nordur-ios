@@ -37,9 +37,11 @@ jobs:
           idb_companion --udid "$UDID" > /tmp/idb.log 2>&1 &
           sleep 5
           idb connect localhost 10882 || idb connect "$UDID" || true
+          idb list-targets || true
           # -initialTab skips the notification permission sheet; -ciAuroraDemo shows the aurora animation.
           xcrun simctl launch "$UDID" it.lorenzosavini.nordur -initialTab today -ciAuroraDemo YES -appearance dark -AppleLanguages "(it)" -AppleLocale it_IT
-          sleep 25
+          sleep 30
+          idb ui describe-all --udid "$UDID" --json | head -c 300 || true
           python3 tools/ci/demo_video.py "$UDID" raw.mp4
           # Facebook-friendly: 1080 px wide, 30 fps, H.264, under ~50 MB.
           ffmpeg -y -loglevel error -i raw.mp4 -vf "scale=1080:-2,fps=30" -c:v libx264 -preset slow -crf 23 -pix_fmt yuv420p -movflags +faststart Nordur-demo.mp4
