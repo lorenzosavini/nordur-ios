@@ -1,5 +1,6 @@
 import Toybox.Communications;
 import Toybox.Lang;
+import Toybox.PersistedContent;
 import Toybox.Position;
 import Toybox.System;
 import Toybox.Time;
@@ -36,11 +37,11 @@ class NordurModel {
         Position.enableLocationEvents(Position.LOCATION_DISABLE, method(:onPosition));
     }
 
-    function onPosition(info) {
-        if (info == null || info.position == null) {
+    function onPosition(info as Position.Info) as Void {
+        if (info.position == null) {
             return;
         }
-        var degrees = info.position.toDegrees();
+        var degrees = (info.position as Position.Location).toDegrees() as Array<Double>;
         lat = degrees[0];
         lon = degrees[1];
         refresh();
@@ -73,9 +74,9 @@ class NordurModel {
         Communications.makeWebRequest("https://nordur-api.vercel.app/api/aurora", { "compact" => "1" }, options, method(:onAurora));
     }
 
-    function onWeather(code, data) {
+    function onWeather(code as Number, data as Null or Dictionary or String or PersistedContent.Iterator) as Void {
         if (code == 200 && data instanceof Dictionary && data["current"] != null) {
-            var current = data["current"];
+            var current = data["current"] as Dictionary;
             temp = current["temperature_2m"];
             wind = current["wind_speed_10m"];
             gust = current["wind_gusts_10m"];
@@ -88,7 +89,7 @@ class NordurModel {
         WatchUi.requestUpdate();
     }
 
-    function onAurora(code, data) {
+    function onAurora(code as Number, data as Null or Dictionary or String or PersistedContent.Iterator) as Void {
         if (code == 200 && data instanceof Dictionary) {
             kp = data["kp"];
             kpMax = data["kpMax24"];
