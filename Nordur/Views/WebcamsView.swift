@@ -23,6 +23,12 @@ struct WebcamsView: View {
                 FreshnessLabel(date: fetched.date, isStale: fetched.isStale, source: String(localized: "Vegagerðin"))
             }
             ErrorNote(message: model.errors[.webcams])
+            if model.webcams == nil && model.errors[.webcams] == nil {
+                SkeletonRows()
+            } else if sites.isEmpty {
+                EmptyState(symbol: "video.slash", title: String(localized: "Nessuna webcam trovata"),
+                           message: query.isEmpty ? nil : String(localized: "Prova con il nome di una strada o di un passo."))
+            }
             ForEach(sites) { site in
                 NavigationLink {
                     WebcamSiteView(site: site)

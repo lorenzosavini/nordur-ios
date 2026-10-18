@@ -50,6 +50,12 @@ struct QuakesView: View {
             }
 
             Section {
+                if model.quakes == nil && model.errors[.quakes] == nil {
+                    SkeletonRows()
+                } else if filtered.isEmpty {
+                    EmptyState(symbol: "checkmark.seal", title: String(localized: "Nessuna scossa con questo filtro"),
+                               message: String(localized: "Nelle ultime 48 ore non ci sono terremoti di questa magnitudo. Prova «Tutte»."))
+                }
                 ForEach(filtered) { quake in
                     HStack {
                         Text("M\(Fmt.number(quake.magnitude, decimals: 1))")

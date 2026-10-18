@@ -932,7 +932,8 @@ struct SightingSheet: View {
                                 try await account.reportSighting(at: coordinate, seen: false, nakedEye: false, camera: false, strength: nil, sky: sky)
                             }
                             message = String(localized: "Segnalazione registrata. Grazie.")
-                        } catch { message = error.localizedDescription }
+                            Haptics.result(true)
+                        } catch { message = error.localizedDescription; Haptics.result(false) }
                         sending = false
                     }
                 } label: {

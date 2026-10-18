@@ -206,7 +206,7 @@ struct AccountView: View {
         working = true
         message = nil
         Task {
-            do { message = try await operation() } catch { message = error.localizedDescription }
+            do { message = try await operation(); Haptics.result(true) } catch { message = error.localizedDescription; Haptics.result(false) }
             working = false
         }
     }

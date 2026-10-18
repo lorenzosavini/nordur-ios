@@ -831,3 +831,112 @@ struct CoverageNote: View {
         .overlay(Rectangle().strokeBorder(Theme.hairline))
     }
 }
+
+// MARK: - Loading placeholders, empty states, haptics
+
+/// Grey blocks in the shape of the content while it loads (instead of a spinner
+/// on an empty page), with a slow shimmer; static when Reduce Motion is on.
+struct SkeletonBlock: View {
+    var lines = 3
+    var height: CGFloat = 12
+    var showsFigure = true
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @State private var phase = false
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 10) {
+            if showsFigure {
+                HStack(spacing: 10) {
+                    ForEach(0..<3, id: \.self) { _ in bar(height: 38) }
+                }
+            }
+            ForEach(0..<lines, id: \.self) { i in
+                bar(height: height).frame(maxWidth: i == lines - 1 ? 180 : .infinity, alignment: .leading)
+            }
+        }
+        .opacity(reduceMotion ? 0.7 : (phase ? 0.45 : 0.9))
+        .animation(reduceMotion ? nil : .easeInOut(duration: 0.9).repeatForever(autoreverses: true), value: phase)
+        .onAppear { phase = true }
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel(Text("Caricamento"))
+    }
+
+    private func bar(height: CGFloat) -> some View {
+        Rectangle().fill(Theme.hairline).frame(maxWidth: .infinity).frame(height: height)
+    }
+}
+
+/// Placeholder rows for lists while they load.
+struct SkeletonRows: View {
+    var count = 5
+
+    var body: some View {
+        ForEach(0..<count, id: \.self) { _ in
+            SkeletonBlock(lines: 2, height: 10, showsFigure: false).padding(.vertical, 4)
+        }
+    }
+}
+
+/// A list or section with nothing to show: says why, and what to do.
+struct EmptyState: View {
+    let symbol: String
+    let title: String
+    var message: String?
+
+    var body: some View {
+        VStack(spacing: 10) {
+            Image(systemName: symbol)
+                .font(.system(size: 30, weight: .semibold))
+                .foregroundStyle(Theme.accent)
+            Text(title.loc).font(.app(.headline)).foregroundStyle(Theme.text).multilineTextAlignment(.center)
+            if let message {
+                Text(message.loc).font(.app(.caption)).foregroundStyle(Theme.dim).multilineTextAlignment(.center)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
+        }
+        .frame(maxWidth: .infinity)
+        .padding(.vertical, 22)
+        .accessibilityElement(children: .combine)
+    }
+}
+
+/// Short vibrations for actions (taps on switches, success or failure).
+@MainActor
+enum Haptics {
+    static func tap() { UIImpactFeedbackGenerator(style: .light).impactOccurred() }
+    static func select() { UISelectionFeedbackGenerator().selectionChanged() }
+    static func result(_ success: Bool) {
+        UINotificationFeedbackGenerator().notificationOccurred(success ? .success : .error)
+    }
+    static func warning() { UINotificationFeedbackGenerator().notificationOccurred(.warning) }
+}
+
+// MARK: - Offline strip
+
+/// One strip at the top when the phone has no connection: what is shown comes
+/// from the copies saved on the phone, and from when.
+struct OfflineBanner: View {
+    @Environment(AppModel.self) private var model
+    private var connectivity: Connectivity { .shared }
+
+    var body: some View {
+        if !connectivity.isOnline {
+            HStack(spacing: 8) {
+                Image(systemName: "wifi.slash").font(.system(size: 11, weight: .bold))
+                Text(label).font(.mono(10, .semibold)).tracking(0.5).lineLimit(1).minimumScaleFactor(0.8)
+            }
+            .foregroundStyle(Theme.onAccent)
+            .padding(.horizontal, 12).padding(.vertical, 6)
+            .background(Theme.warning, in: Capsule())
+            .padding(.top, 2)
+            .transition(.move(edge: .top).combined(with: .opacity))
+            .accessibilityElement(children: .combine)
+        }
+    }
+
+    private var label: String {
+        let dates = [model.forecast?.date, model.warnings?.date, model.roads?.date].compactMap { $0 }
+        guard let oldest = dates.min() else { return String(localized: "OFFLINE · NESSUN DATO SALVATO") }
+        return String(localized: "OFFLINE · DATI DELLE \(Fmt.time(oldest))")
+    }
+}

@@ -45,6 +45,7 @@ struct TodayView: View {
             .refreshable {
                 await model.refreshAll()
                 await alerts.check()
+                Haptics.result(model.errors[.forecast] == nil)
             }
             .sheet(isPresented: $showInfo) { InfoView() }
             .sheet(isPresented: $showAccount) { AccountView() }
@@ -85,6 +86,7 @@ struct TodayView: View {
             FlowLayout(spacing: 6, lineSpacing: 6) {
                 ForEach(Detail.allCases) { item in
                     Button {
+                        if detailRaw != item.rawValue { Haptics.select() }
                         withAnimation(.snappy(duration: 0.2)) { detailRaw = item.rawValue }
                     } label: {
                         Label(item.title.uppercased(), systemImage: item.symbol)
@@ -270,7 +272,7 @@ struct TodayView: View {
         } else if let error = model.errors[.forecast] {
             ErrorNote(message: error)
         } else {
-            ProgressView().tint(Theme.dim).frame(maxWidth: .infinity, minHeight: 200)
+            SkeletonBlock(lines: 3)
         }
     }
 
@@ -464,7 +466,7 @@ struct TodayView: View {
                     MiniBars(values: model.auroraSlots.prefix(24).map(\.index), maxValue: 0.6, color: Theme.aurora, height: 20)
                     Text("PREVISIONE COMPLETA →").font(.mono(9.5, .semibold)).foregroundStyle(Theme.accent)
                 } else {
-                    ProgressView().tint(Theme.dim)
+                    SkeletonBlock(lines: 2, height: 10, showsFigure: false)
                 }
             }
             .frame(maxWidth: .infinity, alignment: .leading)
@@ -530,7 +532,7 @@ struct TodayView: View {
                 } else if let error = model.errors[.roads] {
                     ErrorNote(message: error)
                 } else {
-                    ProgressView().tint(Theme.dim)
+                    SkeletonBlock(lines: 2, height: 10, showsFigure: false)
                 }
             }
         }

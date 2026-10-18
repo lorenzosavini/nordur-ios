@@ -27,7 +27,7 @@ struct WeatherView: View {
                     } else if let error = model.errors[.forecast] {
                         ErrorNote(message: error)
                     } else {
-                        ProgressView().tint(Theme.dim).frame(maxWidth: .infinity, minHeight: 200)
+                        SkeletonBlock(lines: 6)
                     }
                     seaSection
                     airSection

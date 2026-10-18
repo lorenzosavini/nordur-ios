@@ -12587,6 +12587,456 @@
           }
         }
       }
+    },
+    "Caricamento" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Loading"
+          }
+        }
+      }
+    },
+    "Energia attiva" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Active energy"
+          }
+        }
+      }
+    },
+    "Frequenza cardiaca" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Heart rate"
+          }
+        }
+      }
+    },
+    "Importazione non riuscita" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Import failed"
+          }
+        }
+      }
+    },
+    "Origine" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Source"
+          }
+        }
+      }
+    },
+    "Rifai il percorso con Apple Mappe" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Drive it again with Apple Maps"
+          }
+        }
+      }
+    },
+    "Rifai il percorso con Google Maps" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Drive it again with Google Maps"
+          }
+        }
+      }
+    },
+    "Arrampicata" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Climbing"
+          }
+        }
+      }
+    },
+    "Attività" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Activity"
+          }
+        }
+      }
+    },
+    "Bici" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cycling"
+          }
+        }
+      }
+    },
+    "Camminata" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Walk"
+          }
+        }
+      }
+    },
+    "Corsa" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Run"
+          }
+        }
+      }
+    },
+    "Equitazione" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Horse riding"
+          }
+        }
+      }
+    },
+    "Escursione" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hike"
+          }
+        }
+      }
+    },
+    "Kayak e canoa" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kayak and canoe"
+          }
+        }
+      }
+    },
+    "Nuoto" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Swim"
+          }
+        }
+      }
+    },
+    "Sci" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Skiing"
+          }
+        }
+      }
+    },
+    "Sci di fondo" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cross-country skiing"
+          }
+        }
+      }
+    },
+    "Snowboard" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Snowboard"
+          }
+        }
+      }
+    },
+    "Da Salute: Garmin, Apple Watch, Strava…" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "From Health: Garmin, Apple Watch, Strava…"
+          }
+        }
+      }
+    },
+    "Da un file GPX" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "From a GPX file"
+          }
+        }
+      }
+    },
+    "Da Salute" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "From Health"
+          }
+        }
+      }
+    },
+    "Garmin: in Garmin Connect › Altro › Impostazioni › App collegate › Salute di Apple attiva la condivisione. Garmin passa a Salute tempo, distanza, calorie e frequenza cardiaca ma non il tracciato GPS: per il percorso, su connect.garmin.com apri l'attività › ingranaggio › Esporta in GPX e apri il file con Norður. Funziona anche da File, Mail o dal menu Condividi di Strava, Komoot e altre app." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Garmin: in Garmin Connect › More › Settings › Connected Apps › Apple Health, turn sharing on. Garmin sends time, distance, calories and heart rate to Health but not the GPS track: for the route, open the activity on connect.garmin.com › gear › Export to GPX and open the file with Norður. It also works from Files, Mail or the share menu of Strava, Komoot and other apps."
+          }
+        }
+      }
+    },
+    "Il file non contiene una traccia GPX leggibile" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The file does not contain a readable GPX track"
+          }
+        }
+      }
+    },
+    "Importa" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Import"
+          }
+        }
+      }
+    },
+    "Importa attività" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Import activities"
+          }
+        }
+      }
+    },
+    "Nessuna attività negli ultimi 4 mesi" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No activities in the last 4 months"
+          }
+        }
+      }
+    },
+    "Non è stato possibile leggere Salute: %@. Controlla in Impostazioni › Salute › Accesso ai dati e dispositivi › Norður." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Health could not be read: %@. Check Settings › Health › Data Access & Devices › Norður."
+          }
+        }
+      }
+    },
+    "Norður legge da Salute solo le attività che importi; non scrive nulla." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Norður reads from Health only the activities you import; it writes nothing."
+          }
+        }
+      }
+    },
+    "Questa traccia è già nello storico" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "This track is already in the history"
+          }
+        }
+      }
+    },
+    "Salute non disponibile" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Health not available"
+          }
+        }
+      }
+    },
+    "Se usi Garmin, attiva in Garmin Connect la condivisione con Salute e sincronizza l'orologio. Poi torna qui." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "If you use Garmin, turn on sharing with Health in Garmin Connect and sync the watch. Then come back here."
+          }
+        }
+      }
+    },
+    "Su questo dispositivo Salute non è disponibile." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Health is not available on this device."
+          }
+        }
+      }
+    },
+    "Traccia GPX" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "GPX track"
+          }
+        }
+      }
+    },
+    "%lld tracce importate." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld tracks imported."
+          }
+        }
+      }
+    },
+    "%lld attività in Salute" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld activities in Health"
+          }
+        }
+      }
+    },
+    "media %lld · max %lld bpm" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "average %lld · max %lld bpm"
+          }
+        }
+      }
+    },
+    "OFFLINE · DATI DELLE %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "OFFLINE · DATA FROM %@"
+          }
+        }
+      }
+    },
+    "OFFLINE · NESSUN DATO SALVATO" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "OFFLINE · NO SAVED DATA"
+          }
+        }
+      }
+    },
+    "Nessun percorso ancora" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No routes yet"
+          }
+        }
+      }
+    },
+    "Avvia la registrazione quando parti, o importa un'attività da Salute o da un file GPX." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Start recording when you set off, or import an activity from Health or a GPX file."
+          }
+        }
+      }
+    },
+    "Nessuna scossa con questo filtro" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No earthquakes with this filter"
+          }
+        }
+      }
+    },
+    "Nelle ultime 48 ore non ci sono terremoti di questa magnitudo. Prova «Tutte»." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No earthquakes of this magnitude in the last 48 hours. Try “All”."
+          }
+        }
+      }
+    },
+    "Nessuna webcam trovata" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No webcams found"
+          }
+        }
+      }
+    },
+    "Prova con il nome di una strada o di un passo." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Try the name of a road or a pass."
+          }
+        }
+      }
     }
   },
   "version" : "1.0"

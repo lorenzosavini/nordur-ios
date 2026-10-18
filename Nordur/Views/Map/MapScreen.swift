@@ -97,6 +97,7 @@ struct MapScreen: View {
             FlowLayout(spacing: 6, lineSpacing: 6) {
                 ForEach(WeatherLayer.allCases) { item in
                     Button {
+                        if layerRaw != item.rawValue { Haptics.select() }
                         layerRaw = item.rawValue
                         playing = false
                     } label: {

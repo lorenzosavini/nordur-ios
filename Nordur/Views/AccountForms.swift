@@ -155,6 +155,7 @@ struct AccountActionSheet: View {
             Task {
                 do {
                     message = try await action()
+                    Haptics.result(true)
                     if !closes {
                         // The form continues (e.g. the code was sent).
                     } else if message != nil && self.action != .recovery {
@@ -165,6 +166,7 @@ struct AccountActionSheet: View {
                     }
                 } catch {
                     message = error.localizedDescription
+                    Haptics.result(false)
                 }
                 working = false
             }

@@ -190,6 +190,33 @@ do {
     check(lone.status == .likely && lone.disagreesWithModel, "a report the model does not explain is shown as a disagreement")
 }
 
+// MARK: GPX import (Garmin Connect export)
+
+do {
+    let gpx = """
+    <?xml version="1.0" encoding="UTF-8"?>
+    <gpx creator="Garmin Connect" version="1.1" xmlns="http://www.topografix.com/GPX/1/1" xmlns:ns3="http://www.garmin.com/xmlschemas/TrackPointExtension/v1">
+      <metadata><name>Ignored</name><time>2026-07-01T10:00:00.000Z</time></metadata>
+      <trk><name>Reykjavík Corsa</name><type>running</type><trkseg>
+        <trkpt lat="64.14660" lon="-21.94260"><ele>10.2</ele><time>2026-07-01T10:00:00.000Z</time><extensions><ns3:TrackPointExtension><ns3:hr>120</ns3:hr></ns3:TrackPointExtension></extensions></trkpt>
+        <trkpt lat="64.14750" lon="-21.94260"><ele>14.4</ele><time>2026-07-01T10:00:30.000Z</time></trkpt>
+        <trkpt lat="64.14840" lon="-21.94260"><ele>18.6</ele><time>2026-07-01T10:01:00.000Z</time></trkpt>
+        <trkpt lat="64.14930" lon="-21.94260"><ele>22.8</ele><time>2026-07-01T10:01:30Z</time></trkpt>
+      </trkseg></trk>
+    </gpx>
+    """
+    let read = GPXReader.read(Data(gpx.utf8))
+    check(read?.points.count == 4, "gpx points", "\(read?.points.count ?? -1)")
+    check(read?.name == "Reykjavík Corsa", "gpx track name wins", read?.name ?? "nil")
+    let session = DriveMath.imported(name: read?.name ?? "", points: read?.points ?? [])
+    check(abs(session.stats.km - 0.30) < 0.02, "gpx distance", "\(session.stats.km)")
+    check(abs(session.durationSeconds() - 90) < 1, "gpx duration", "\(session.durationSeconds())")
+    check(session.stats.elevationGain > 10, "gpx climb", "\(session.stats.elevationGain)")
+    check(GPXReader.read(Data("<gpx></gpx>".utf8)) == nil, "empty gpx is refused")
+    let route = GPXReader.read(Data("<gpx><rte><name>Piano</name><rtept lat=\"64\" lon=\"-21\"/><rtept lat=\"64.01\" lon=\"-21\"/></rte></gpx>".utf8))
+    check(route?.points.count == 2 && route?.name == "Piano", "gpx route without times", "\(route?.points.count ?? -1)")
+}
+
 print(failures == 0 ? "ALL ENGINE TESTS PASSED" : "\(failures) FAILURES")
 exit(failures == 0 ? 0 : 1)
 

@@ -77,6 +77,17 @@ struct DriveSession: Codable, Identifiable, Hashable {
     var stats = DriveStats()
     /// Seconds spent paused, excluded from the duration.
     var pausedSeconds: Double = 0
+    /// Imported activities: where from ("Garmin Connect", "Apple Watch", "GPX"), the kind
+    /// of activity ("Corsa", "Bici"…), heart rate and energy, and the source's id (no duplicates).
+    var source: String?
+    var activity: String?
+    var heartRateAvg: Double?
+    var heartRateMax: Double?
+    var energyKcal: Double?
+    var importID: String?
+
+    /// Recorded by Norður in a car (not an imported run, ride or hike).
+    var isDrive: Bool { activity == nil }
 
     static func == (lhs: DriveSession, rhs: DriveSession) -> Bool { lhs.id == rhs.id && lhs.points.count == rhs.points.count && lhs.end == rhs.end && lhs.name == rhs.name }
     func hash(into hasher: inout Hasher) { hasher.combine(id) }
@@ -213,6 +224,19 @@ enum DriveMath {
             totals[day, default: 0] += s.stats.km
         }
         return totals.map { DayTotal(day: $0.key, km: $0.value) }.sorted { $0.day < $1.day }
+    }
+
+    /// A session built from points recorded elsewhere (Apple Health, a GPX file),
+    /// with the same noise filter and statistics as a drive recorded here.
+    static func imported(name: String, points: [TrackPoint], start: Date? = nil, end: Date? = nil,
+                         settings: DriveSettings = DriveSettings()) -> DriveSession {
+        let sorted = points.sorted { $0.t < $1.t }
+        var session = DriveSession(name: name, start: start ?? sorted.first?.t ?? Date())
+        var noLimit = settings
+        noLimit.speedLimit = 1000
+        for point in sorted { append(point, to: &session, settings: noLimit) }
+        session.end = end ?? sorted.last?.t ?? session.start
+        return session
     }
 
     static func gpx(_ session: DriveSession) -> String {

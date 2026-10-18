@@ -26,6 +26,16 @@
           }
         }
       }
+    },
+    "NSHealthShareUsageDescription" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Norður reads from Health the activities you choose to import (for example from Garmin Connect or Apple Watch): GPS route, distance, duration, altitude and heart rate. It writes nothing to Health."
+          }
+        }
+      }
     }
   },
   "version" : "1.0"

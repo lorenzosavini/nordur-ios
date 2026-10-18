@@ -44,7 +44,7 @@ struct RoadsView: View {
             case .problems: problems
             case .all: allRoads
             case .stations:
-                if let network = model.roads?.value { stations(network) } else { ProgressView() }
+                if let network = model.roads?.value { stations(network) } else { SkeletonRows() }
             }
 
             Section {
@@ -94,7 +94,7 @@ struct RoadsView: View {
                 Text("Testi originali di Vegagerðin (in inglese), aggiornati ogni 5 minuti.")
             }
         } else if model.errors[.roadInfo] == nil {
-            ProgressView()
+            SkeletonRows()
         }
     }
 
@@ -125,7 +125,7 @@ struct RoadsView: View {
         } else if let network = model.roads?.value {
             legacyProblems(network)
         } else if model.errors[.roadInfo] == nil {
-            ProgressView()
+            SkeletonRows()
         }
     }
 
@@ -142,7 +142,7 @@ struct RoadsView: View {
                 }
             } header: { Text("\(list.count) tratti · ordinati per distanza da \(model.activePlace.name)").pinnedHeader() }
         } else if model.errors[.roadInfo] == nil {
-            ProgressView()
+            SkeletonRows()
         }
     }
 

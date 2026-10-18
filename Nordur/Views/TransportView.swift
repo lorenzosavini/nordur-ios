@@ -68,7 +68,7 @@ struct TransportView: View {
                     FreshnessLabel(date: fetched.date, isStale: fetched.isStale, source: "kefairport.com")
                 }
                 ErrorNote(message: model.errors[.flights])
-                if model.flights == nil && model.errors[.flights] == nil { ProgressView() }
+                if model.flights == nil && model.errors[.flights] == nil { SkeletonRows(count: 4) }
                 ForEach(flights) { flight in
                     FlightRow(flight: flight, following: alerts.isFollowing(flight.flightNumber)) {
                         alerts.toggleFollow(flight.flightNumber)

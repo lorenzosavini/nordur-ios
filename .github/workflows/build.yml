@@ -27,7 +27,7 @@ jobs:
         run: |
           set -o pipefail
           swiftc -O -o engine-tests Shared/Core/Geo.swift Shared/Core/Format.swift Shared/Core/Dates.swift \
-            Shared/Services/Astro.swift Shared/Services/AuroraEngine.swift Shared/Services/SkyGlowGrid.swift Shared/Services/AuroraConfirm.swift Tests/EngineTests/main.swift 2>&1 | tee engine-tests.log
+            Shared/Services/Astro.swift Shared/Services/AuroraEngine.swift Shared/Services/SkyGlowGrid.swift Shared/Services/AuroraConfirm.swift Shared/Models/Drive.swift Shared/Models/GPX.swift Tests/EngineTests/main.swift 2>&1 | tee engine-tests.log
           ./engine-tests | tee -a engine-tests.log
 
       - name: Backend unit tests (Node)
@@ -68,8 +68,15 @@ jobs:
             build 2>&1 | tee build-device.log | grep -E "error:|BUILD (SUCCEEDED|FAILED)" | head -100
           mkdir -p Payload
           cp -R build-device/Release-iphoneos/Nordur.app Payload/
-          zip -qry Nordur.ipa Payload
-          ls -l Nordur.ipa
+          # Without Apple Health (no entitlements at all): fallback if the Apple ID cannot sign HealthKit.
+          zip -qry Nordur-senza-Salute.ipa Payload
+          # Ad-hoc signature carrying the app's entitlements (HealthKit), so Sideloadly/AltStore
+          # ask for them when they re-sign with the user's Apple ID. Nested code is signed first.
+          find Payload/Nordur.app -depth \( -name "*.appex" -o -name "*.framework" -o -name "*.dylib" \) -print0 | xargs -0 -I{} codesign --force --sign - --timestamp=none "{}"
+          codesign --force --sign - --timestamp=none --entitlements Nordur.entitlements Payload/Nordur.app
+          codesign -d --entitlements - Payload/Nordur.app 2>&1 | grep -i healthkit
+          rm -f Nordur.ipa && zip -qry Nordur.ipa Payload
+          ls -l Nordur.ipa Nordur-senza-Salute.ipa
 
       - name: Publish the builds right away (ci-screenshots)
         # The .ipa and the Appetize zip are usable before the screenshots finish;
@@ -78,7 +85,7 @@ jobs:
           TOKEN: ${{ github.token }}
         run: |
           (cd build/Debug-iphonesimulator && ditto -c -k --keepParent Nordur.app ../../Nordur-simulator.zip)
-          rm -rf /tmp/early && mkdir -p /tmp/early && cp Nordur.ipa Nordur-simulator.zip /tmp/early/
+          rm -rf /tmp/early && mkdir -p /tmp/early && cp Nordur.ipa Nordur-senza-Salute.ipa Nordur-simulator.zip /tmp/early/
           cd /tmp/early
           git init -q -b ci-screenshots
           git -c user.name=nordur-ci -c user.email=ci@users.noreply.github.com add -A
@@ -150,6 +157,16 @@ jobs:
             xcrun simctl terminate "$UDID" it.lorenzosavini.nordur || true
             sleep 2
           done
+          # Largest accessibility text size: nothing may be cut off or overlap.
+          xcrun simctl ui "$UDID" content_size accessibility-large || true
+          for tab in today drive; do
+            xcrun simctl launch "$UDID" it.lorenzosavini.nordur -initialTab "$tab" -appearance light -AppleLanguages "(it)" -AppleLocale it_IT
+            sleep 20
+            xcrun simctl io "$UDID" screenshot "shots/$tab-largetext.png"
+            xcrun simctl terminate "$UDID" it.lorenzosavini.nordur || true
+            sleep 2
+          done
+          xcrun simctl ui "$UDID" content_size large || true
           # Simulated drive on Route 1: Reykjavík → Hellisheiði → Hveragerði at ~90 km/h.
           xcrun simctl location "$UDID" start --speed=25 64.1300,-21.8000 64.0900,-21.6500 64.0400,-21.4500 64.0180,-21.3400 64.0100,-21.2000 64.0000,-21.1900 || true
           xcrun simctl launch "$UDID" it.lorenzosavini.nordur -initialTab drive -ciAutoDrive YES -AppleLanguages "(it)" -AppleLocale it_IT
@@ -202,6 +219,7 @@ jobs:
           # Single zip with Nordur.app at the root, for Appetize (workflow artifacts are zipped twice).
           cp Nordur-simulator.zip shots/ || true
           cp Nordur.ipa shots/ 2>/dev/null || true
+          cp Nordur-senza-Salute.ipa shots/ 2>/dev/null || true
           # A failed build keeps the last working downloads instead of removing them.
           if [ ! -f shots/Nordur.ipa ] && git fetch -q origin ci-screenshots; then
             git show FETCH_HEAD:Nordur.ipa > shots/Nordur.ipa 2>/dev/null || rm -f shots/Nordur.ipa

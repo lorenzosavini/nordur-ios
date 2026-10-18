@@ -20,6 +20,49 @@
 	<string>Norður usa la tua posizione per meteo, allerte, strade e aurora dove ti trovi, e per registrare i percorsi in auto.</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
 	<string>Con l'accesso «Sempre» Norður controlla allerte meteo, raffiche e strade chiuse vicino a te anche quando l'app è chiusa, e continua a registrare il percorso a schermo bloccato.</string>
+	<key>NSHealthShareUsageDescription</key>
+	<string>Norður legge da Salute le attività che scegli di importare (ad esempio da Garmin Connect o Apple Watch): percorso GPS, distanza, durata, quota e frequenza cardiaca. Non scrive nulla in Salute.</string>
+	<key>CFBundleDocumentTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleTypeName</key>
+			<string>GPX</string>
+			<key>CFBundleTypeRole</key>
+			<string>Viewer</string>
+			<key>LSHandlerRank</key>
+			<string>Alternate</string>
+			<key>LSItemContentTypes</key>
+			<array>
+				<string>com.topografix.gpx</string>
+			</array>
+		</dict>
+	</array>
+	<key>UTImportedTypeDeclarations</key>
+	<array>
+		<dict>
+			<key>UTTypeIdentifier</key>
+			<string>com.topografix.gpx</string>
+			<key>UTTypeDescription</key>
+			<string>GPX</string>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.xml</string>
+			</array>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.filename-extension</key>
+				<array>
+					<string>gpx</string>
+				</array>
+				<key>public.mime-type</key>
+				<array>
+					<string>application/gpx+xml</string>
+				</array>
+			</dict>
+		</dict>
+	</array>
+	<key>LSSupportsOpeningDocumentsInPlace</key>
+	<false/>
 	<key>NSSupportsLiveActivities</key>
 	<true/>
 	<key>UIBackgroundModes</key>

@@ -64,7 +64,7 @@ struct AuroraLiveView: View {
 
                 Card(title: String(localized: "Vista polare NOAA, ultime 3 ore"), systemImage: "globe.europe.africa.fill", tint: .green) {
                     if frames.isEmpty {
-                        if let error { ErrorNote(message: error) } else { ProgressView().frame(maxWidth: .infinity, minHeight: 200) }
+                        if let error { ErrorNote(message: error) } else { SkeletonBlock(lines: 4).frame(minHeight: 200) }
                     } else {
                         let frame = frames[min(index, frames.count - 1)]
                         ZStack {

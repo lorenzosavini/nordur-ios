@@ -84,6 +84,9 @@ struct RootView: View {
     @State private var showAuroraIntel = UserDefaults.standard.string(forKey: "initialTab") == "kp"
     // CI only: `-ciScreen quakes` opens a secondary screen over the tabs for the screenshots.
     @State private var ciScreen = UserDefaults.standard.string(forKey: "ciScreen").flatMap(CIScreen.init(rawValue:))
+    /// A GPX file opened with Norður (Files, Mail, the share menu of Garmin Connect, Strava…).
+    @State private var openedTrack: DriveSession?
+    @State private var importError: String?
 
     enum CIScreen: String, Identifiable {
         case alerts, alertSettings, info, quakes, roads, transport, webcams, warnings, offline, stop, settings
@@ -106,7 +109,34 @@ struct RootView: View {
             .id(windUnit)  // every screen redraws with the new wind unit
             NordurTabBar(selection: $tab, badge: alerts.unreadCount, recording: recorder.isRecording)
         }
+        .overlay(alignment: .top) { OfflineBanner() }
+        .animation(.snappy, value: Connectivity.shared.isOnline)
+        .onChange(of: Connectivity.shared.reconnections) {
+            // Back online: everything is reloaded at once, without waiting for the next poll.
+            Task {
+                async let global: Void = model.refreshGlobal(force: true)
+                async let place: Void = model.refreshPlace()
+                _ = await (global, place)
+                await alerts.check()
+            }
+        }
+        .sensoryFeedback(.selection, trigger: tab)
         .ignoresSafeArea(.keyboard, edges: .bottom)
+        .onOpenURL { url in
+            guard url.isFileURL, url.pathExtension.lowercased() == "gpx" else { return }
+            do {
+                openedTrack = try DriveStore.shared.importGPX(url)
+                tab = .drive
+                Haptics.result(true)
+            } catch {
+                importError = error.localizedDescription
+                Haptics.result(false)
+            }
+        }
+        .sheet(item: $openedTrack) { track in NavigationStack { DriveDetailView(drive: track) } }
+        .alert("Importazione non riuscita", isPresented: Binding(get: { importError != nil }, set: { if !$0 { importError = nil } })) {
+            Button("OK", role: .cancel) {}
+        } message: { Text(importError ?? "") }
         .onChange(of: model.requestedTab) {
             if let raw = model.requestedTab, let target = Tab(rawValue: raw) { tab = target }
             model.requestedTab = nil

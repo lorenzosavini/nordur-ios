@@ -110,12 +110,13 @@ struct DriveView: View {
                 }
                 .onChange(of: recorder.settings) { _, _ in recorder.saveSettings() }
 
+                ImportSection()
                 historySection
             }
             .themedList()
             .toolbar(.hidden, for: .navigationBar)
             .confirmationDialog("Terminare la registrazione?", isPresented: $confirmStop, titleVisibility: .visible) {
-                Button("Termina e salva") { lastFinished = recorder.stop() }
+                Button("Termina e salva") { lastFinished = recorder.stop(); Haptics.result(true) }
                 Button("Scarta percorso", role: .destructive) { recorder.discard() }
                 Button("Continua", role: .cancel) {}
             }
@@ -135,6 +136,7 @@ struct DriveView: View {
                 .font(.app(.caption)).foregroundStyle(.secondary)
             Button {
                 recorder.start()
+                Haptics.tap()
             } label: {
                 HStack(spacing: 10) {
                     Circle().fill(.white).frame(width: 10, height: 10)
@@ -159,7 +161,8 @@ struct DriveView: View {
     @ViewBuilder private var historySection: some View {
         Section {
             if store.drives.isEmpty {
-                Text("Nessun percorso registrato.").foregroundStyle(.secondary)
+                EmptyState(symbol: "road.lanes", title: String(localized: "Nessun percorso ancora"),
+                           message: String(localized: "Avvia la registrazione quando parti, o importa un'attività da Salute o da un file GPX."))
             } else {
                 HStack {
                     Metric(title: String(localized: "Totale"), value: Fmt.number(store.totalKm, decimals: 1, unit: "km"), systemImage: "road.lanes")
@@ -179,10 +182,15 @@ struct DriveView: View {
                 NavigationLink {
                     DriveDetailView(drive: drive)
                 } label: {
-                    VStack(alignment: .leading, spacing: 2) {
-                        Text(drive.name).font(.app(.subheadline, .semibold))
-                        Text("\(Fmt.dayTime(drive.start)) · \(Fmt.number(drive.stats.km, decimals: 1, unit: "km")) · \(Fmt.duration(drive.durationSeconds()))")
-                            .font(.app(.caption)).foregroundStyle(.secondary)
+                    HStack(spacing: 10) {
+                        Image(systemName: drive.isDrive ? "car.fill" : (drive.source == "GPX" ? "point.topleft.down.to.point.bottomright.curvepath" : "figure.run"))
+                            .foregroundStyle(Theme.accent).frame(width: 24)
+                        VStack(alignment: .leading, spacing: 2) {
+                            Text(drive.name).font(.app(.subheadline, .semibold))
+                            Text(([Fmt.dayTime(drive.start), Fmt.number(drive.stats.km, decimals: 1, unit: "km"), Fmt.duration(drive.durationSeconds())] + [drive.source].compactMap { $0 })
+                                    .joined(separator: " · "))
+                                .font(.app(.caption)).foregroundStyle(.secondary)
+                        }
                     }
                 }
             }
@@ -343,14 +351,19 @@ struct DriveDetailView: View {
                 if let minA = s.minAltitude, let maxA = s.maxAltitude {
                     LabeledContent("Quota", value: "\(Int(minA))–\(Int(maxA)) m")
                 }
-                LabeledContent("Soste (>2 min)", value: "\(s.stops)")
-                if s.speedingSeconds > 0 {
+                if let hr = session.heartRateAvg {
+                    LabeledContent("Frequenza cardiaca", value: String(localized: "media \(Int(hr.rounded())) · max \(Int((session.heartRateMax ?? hr).rounded())) bpm"))
+                }
+                if let kcal = session.energyKcal { LabeledContent("Energia attiva", value: Fmt.number(kcal, unit: "kcal")) }
+                if let source = session.source { LabeledContent("Origine", value: [session.activity, source].compactMap { $0 }.joined(separator: " · ")) }
+                if session.isDrive { LabeledContent("Soste (>2 min)", value: "\(s.stops)") }
+                if session.isDrive, s.speedingSeconds > 0 {
                     LabeledContent("Oltre il limite", value: String(localized: "\(Fmt.clock(s.speedingSeconds)) · max \(Int(s.speedingMaxKmh)) km/h"))
                 }
                 if let start = session.odometerStart, let end = session.odometerEnd {
                     LabeledContent("Contachilometri", value: "\(Fmt.number(start, unit: "")) → \(Fmt.number(end, unit: "km"))")
                 }
-                LabeledContent("Carburante stimato", value: "\(Fmt.number(s.fuelLitres(recorder.settings), decimals: 1, unit: "l")) · \(Fmt.number(s.fuelCost(recorder.settings), unit: "ISK"))")
+                if session.isDrive { LabeledContent("Carburante stimato", value: "\(Fmt.number(s.fuelLitres(recorder.settings), decimals: 1, unit: "l")) · \(Fmt.number(s.fuelCost(recorder.settings), unit: "ISK"))") }
                 LabeledContent("Inizio", value: Fmt.dayTime(session.start))
                 if let end = session.end { LabeledContent("Fine", value: Fmt.dayTime(end)) }
             } header: { Text("Riepilogo").pinnedHeader() }
@@ -377,6 +390,10 @@ struct DriveDetailView: View {
                 if let gpxURL {
                     ShareLink(item: gpxURL) { Label("Esporta GPX", systemImage: "square.and.arrow.up") }
                 }
+                if let first = session.points.first, let last = session.points.last, session.points.count > 1 {
+                    Link(destination: Self.appleMaps(first, last)) { Label("Rifai il percorso con Apple Mappe", systemImage: "map") }
+                    Link(destination: Self.googleMaps(session.points)) { Label("Rifai il percorso con Google Maps", systemImage: "map.fill") }
+                }
                 Button("Elimina percorso", role: .destructive) {
                     store.delete(session)
                     dismiss()
@@ -392,6 +409,28 @@ struct DriveDetailView: View {
             notes = session.notes
             gpxURL = store.exportGPX(session)
         }
+    }
+}
+
+extension DriveDetailView {
+    /// Directions from the start to the end of the track.
+    static func appleMaps(_ from: TrackPoint, _ to: TrackPoint) -> URL {
+        URL(string: "http://maps.apple.com/?saddr=\(from.lat),\(from.lon)&daddr=\(to.lat),\(to.lon)&dirflg=d")!
+    }
+
+    /// Directions along the track: start, end and up to 8 points in between.
+    static func googleMaps(_ points: [TrackPoint]) -> URL {
+        let f = { (p: TrackPoint) in String(format: "%.5f,%.5f", p.lat, p.lon) }
+        let inner = points.count > 2 ? (1...8).map { points[min(points.count - 2, $0 * points.count / 9)] } : []
+        var components = URLComponents(string: "https://www.google.com/maps/dir/")!
+        components.queryItems = [
+            URLQueryItem(name: "api", value: "1"),
+            URLQueryItem(name: "origin", value: f(points[0])),
+            URLQueryItem(name: "destination", value: f(points[points.count - 1])),
+            URLQueryItem(name: "waypoints", value: inner.map(f).joined(separator: "|")),
+            URLQueryItem(name: "travelmode", value: "driving"),
+        ]
+        return components.url!
     }
 }
 

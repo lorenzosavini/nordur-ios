@@ -69,8 +69,47 @@ final class DriveStore {
         saveIndex()
     }
 
-    var totalKm: Double { drives.reduce(0) { $0 + $1.stats.km } }
-    var totalSeconds: Double { drives.reduce(0) { $0 + $1.durationSeconds() } }
+    /// Totals of the drives (imported runs, rides and hikes are not driving).
+    var totalKm: Double { drives.filter(\.isDrive).reduce(0) { $0 + $1.stats.km } }
+    var totalSeconds: Double { drives.filter(\.isDrive).reduce(0) { $0 + $1.durationSeconds() } }
+
+    // MARK: Imports (Apple Health, GPX files)
+
+    func hasImported(_ importID: String) -> Bool { drives.contains { $0.importID == importID } }
+
+    /// Saves an imported activity unless it is already in the history.
+    @discardableResult
+    func saveImported(_ session: DriveSession) -> Bool {
+        if let id = session.importID, hasImported(id) { return false }
+        save(session)
+        return true
+    }
+
+    enum ImportError: LocalizedError {
+        case unreadable, duplicate
+        var errorDescription: String? {
+            switch self {
+            case .unreadable: return String(localized: "Il file non contiene una traccia GPX leggibile")
+            case .duplicate: return String(localized: "Questa traccia è già nello storico")
+            }
+        }
+    }
+
+    /// Imports a GPX file (Files, Garmin Connect, Strava, Komoot… via "Apri con Norður").
+    func importGPX(_ url: URL) throws -> DriveSession {
+        let scoped = url.startAccessingSecurityScopedResource()
+        defer { if scoped { url.stopAccessingSecurityScopedResource() } }
+        guard let data = try? Data(contentsOf: url), let read = GPXReader.read(data) else { throw ImportError.unreadable }
+        let fallback = url.deletingPathExtension().lastPathComponent
+        var session = DriveMath.imported(name: read.name ?? fallback, points: read.points)
+        session.source = "GPX"
+        session.activity = String(localized: "Traccia GPX")
+        if let first = read.points.first, let last = read.points.last {
+            session.importID = "gpx:\(stableHash("\(first.t.timeIntervalSince1970)|\(first.lat)|\(first.lon)|\(last.lat)|\(last.lon)|\(read.points.count)"))"
+        }
+        guard saveImported(session) else { throw ImportError.duplicate }
+        return session
+    }
 
     // MARK: In-progress drive (crash/kill safe)
 

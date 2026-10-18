@@ -24,6 +24,7 @@ targets:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: it.lorenzosavini.nordur
         INFOPLIST_FILE: Info.plist
+        CODE_SIGN_ENTITLEMENTS: Nordur.entitlements
         GENERATE_INFOPLIST_FILE: YES
         INFOPLIST_KEY_CFBundleDisplayName: Norður
         INFOPLIST_KEY_UILaunchScreen_Generation: YES
