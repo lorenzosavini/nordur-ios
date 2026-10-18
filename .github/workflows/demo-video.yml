@@ -1,0 +1,63 @@
+name: Demo video
+
+# Run by hand: records Norður in the iPhone simulator while it is used
+# (tabs, scrolling, aurora, map layers, drive, trip) and publishes the video
+# to the branch demo-video (Nordur-demo.mp4).
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  video:
+    runs-on: macos-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build the app (simulator)
+        run: |
+          set -o pipefail
+          xcodebuild -project Nordur.xcodeproj -target Nordur -sdk iphonesimulator -configuration Debug \
+            ARCHS="arm64 x86_64" ONLY_ACTIVE_ARCH=NO CODE_SIGNING_ALLOWED=NO build 2>&1 | grep -E "error:|BUILD (SUCCEEDED|FAILED)"
+
+      - name: Record
+        run: |
+          brew tap facebook/fb >/dev/null
+          brew trust facebook/fb 2>/dev/null || true
+          brew install -q facebook/fb/idb-companion ffmpeg >/dev/null
+          python3 -m pip install -q --break-system-packages fb-idb || pipx install fb-idb
+          UDID=$(xcrun simctl list devices available -j | python3 -c "import json,sys; d=json.load(sys.stdin)['devices']; print(next(x['udid'] for k,v in sorted(d.items(), reverse=True) if 'iOS' in k for x in v if x['name'].startswith('iPhone') and 'Pro' in x['name'] and 'Max' not in x['name']))")
+          xcrun simctl boot "$UDID"; xcrun simctl bootstatus "$UDID" -b
+          xcrun simctl status_bar "$UDID" override --time 21:30 --batteryLevel 100 --wifiBars 3 --cellularBars 4 || true
+          xcrun simctl install "$UDID" build/Debug-iphonesimulator/Nordur.app
+          xcrun simctl privacy "$UDID" grant location-always it.lorenzosavini.nordur || true
+          xcrun simctl location "$UDID" set 63.4186,-19.0060 || true
+          idb_companion --udid "$UDID" > /tmp/idb.log 2>&1 &
+          sleep 5
+          idb connect localhost 10882 || idb connect "$UDID" || true
+          # -initialTab skips the notification permission sheet; -ciAuroraDemo shows the aurora animation.
+          xcrun simctl launch "$UDID" it.lorenzosavini.nordur -initialTab today -ciAuroraDemo YES -appearance dark -AppleLanguages "(it)" -AppleLocale it_IT
+          sleep 25
+          python3 tools/ci/demo_video.py "$UDID" raw.mp4
+          # Facebook-friendly: 1080 px wide, 30 fps, H.264, under ~50 MB.
+          ffmpeg -y -loglevel error -i raw.mp4 -vf "scale=1080:-2,fps=30" -c:v libx264 -preset slow -crf 23 -pix_fmt yuv420p -movflags +faststart Nordur-demo.mp4
+          ls -lh raw.mp4 Nordur-demo.mp4
+
+      - name: Publish to branch demo-video
+        env:
+          TOKEN: ${{ github.token }}
+        run: |
+          rm -rf /tmp/v && mkdir -p /tmp/v && cp Nordur-demo.mp4 /tmp/v/
+          cd /tmp/v
+          git init -q -b demo-video
+          git -c user.name=nordur-ci -c user.email=ci@users.noreply.github.com add -A
+          git -c user.name=nordur-ci -c user.email=ci@users.noreply.github.com commit -qm "Demo video for ${GITHUB_SHA}"
+          git push -qf "https://x-access-token:${TOKEN}@github.com/${GITHUB_REPOSITORY}.git" HEAD:demo-video
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: Nordur-demo
+          path: Nordur-demo.mp4
+          retention-days: 30

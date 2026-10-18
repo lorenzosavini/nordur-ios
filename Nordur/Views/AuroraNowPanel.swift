@@ -14,7 +14,9 @@ struct AuroraNowPanel: View {
         let state = model.aurora?.value
         let confirmation = model.auroraConfirmation
         let cls = slot?.observability ?? .veryPoor
-        let visible = cls >= .moderate || confirmation.status >= .likely
+        // CI demo video only: `-ciAuroraDemo YES` shows the panel as with the aurora visible.
+        let demo = UserDefaults.standard.bool(forKey: "ciAuroraDemo")
+        let visible = demo || cls >= .moderate || confirmation.status >= .likely
         let active = (slot?.activityFactor ?? 0) >= 0.3 || (state?.magnetometer?.level ?? 0) >= 2
         let kp = state?.currentBlock?.value
 
