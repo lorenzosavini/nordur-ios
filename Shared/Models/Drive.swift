@@ -112,6 +112,12 @@ enum DriveMath {
     static func append(_ point: TrackPoint, to session: inout DriveSession, settings: DriveSettings) -> Bool {
         guard point.accuracy >= 0, point.accuracy <= maxAccuracy else { return false }
         guard let last = session.points.last else {
+            // The first fix anchors the altitude: the climb from the start counts too.
+            if let alt = point.alt {
+                session.stats.altitudeAnchor = alt
+                session.stats.minAltitude = alt
+                session.stats.maxAltitude = alt
+            }
             session.points.append(point)
             return true
         }
