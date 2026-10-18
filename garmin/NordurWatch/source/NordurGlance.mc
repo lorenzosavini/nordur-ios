@@ -19,6 +19,7 @@ class NordurGlance extends WatchUi.GlanceView {
         var aurora = "--";
         var auroraColor = Graphics.COLOR_WHITE;
         var gust = "";
+        var gustColor = Graphics.COLOR_WHITE;
         if (data instanceof Dictionary) {
             if (data["place"] != null) {
                 title = title + " · " + (data["place"] as String).toUpper();
@@ -35,13 +36,14 @@ class NordurGlance extends WatchUi.GlanceView {
             }
             auroraColor = level >= 4 ? 0xA06BFF : (level >= 2 ? 0x34E89E : 0x2EC4A6);
             gust = NordurApi.speed(data["gust"]) + " " + NordurApi.unitLabel();
+            gustColor = NordurApi.gustColor(data["gust"]);
         }
         dc.setColor(0x8A8A8A, Graphics.COLOR_TRANSPARENT);
         dc.drawText(0, h * 0.2, Graphics.FONT_XTINY, title, Graphics.TEXT_JUSTIFY_LEFT | Graphics.TEXT_JUSTIFY_VCENTER);
         dc.setColor(auroraColor, Graphics.COLOR_TRANSPARENT);
         dc.drawText(0, h * 0.52, Graphics.FONT_TINY, aurora, Graphics.TEXT_JUSTIFY_LEFT | Graphics.TEXT_JUSTIFY_VCENTER);
         if (!gust.equals("")) {
-            dc.setColor(NordurApi.gustColor(data["gust"]), Graphics.COLOR_TRANSPARENT);
+            dc.setColor(gustColor, Graphics.COLOR_TRANSPARENT);
             dc.drawText(0, h * 0.84, Graphics.FONT_XTINY, gust, Graphics.TEXT_JUSTIFY_LEFT | Graphics.TEXT_JUSTIFY_VCENTER);
         }
     }
