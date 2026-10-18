@@ -4,10 +4,12 @@
     <string id="Wind">Vento</string>
     <string id="Loading">Caricamento...</string>
     <string id="NoGps">In attesa del GPS</string>
-    <string id="NoPhone">Collega il telefono (Garmin Connect)</string>
+    <string id="NoPhone">Telefono non collegato</string>
     <string id="Error">Dati non disponibili</string>
     <string id="Refresh">Premi START per aggiornare</string>
     <string id="Calm">normale</string>
     <string id="Strong">Vento forte</string>
     <string id="Storm">Tempesta: attenzione</string>
+    <string id="Unlock">Sblocca l'iPhone e apri Garmin Connect</string>
+    <string id="DataFrom">dati delle</string>
 </strings>

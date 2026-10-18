@@ -1,6 +1,8 @@
 import Toybox.Graphics;
 import Toybox.Lang;
 import Toybox.Math;
+import Toybox.Time;
+import Toybox.Time.Gregorian;
 import Toybox.WatchUi;
 
 class NordurView extends WatchUi.View {
@@ -24,7 +26,9 @@ class NordurView extends WatchUi.View {
 
         if (model.gust == null) {
             dc.setColor(Graphics.COLOR_WHITE, Graphics.COLOR_TRANSPARENT);
-            dc.drawText(cx, h / 2, Graphics.FONT_SMALL, message(), Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
+            // Wrapped to the round screen.
+            var text = Graphics.fitTextToArea(message(), Graphics.FONT_SMALL, w * 0.78, h * 0.5, true);
+            dc.drawText(cx, h / 2, Graphics.FONT_SMALL, text, Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
             return;
         }
 
@@ -53,9 +57,14 @@ class NordurView extends WatchUi.View {
         dc.setColor(ACCENT, Graphics.COLOR_TRANSPARENT);
         dc.drawText(cx, h * 0.74, Graphics.FONT_TINY, bottom, Graphics.TEXT_JUSTIFY_CENTER);
 
+        // Bottom line: loading, or the time of the data when they are not fresh.
+        dc.setColor(Graphics.COLOR_LT_GRAY, Graphics.COLOR_TRANSPARENT);
         if (model.status == :loading) {
-            dc.setColor(Graphics.COLOR_LT_GRAY, Graphics.COLOR_TRANSPARENT);
             dc.drawText(cx, h * 0.86, Graphics.FONT_XTINY, "...", Graphics.TEXT_JUSTIFY_CENTER);
+        } else if (model.status != :ok && model.updated != null) {
+            var clock = Gregorian.info(new Time.Moment(model.updated), Time.FORMAT_SHORT);
+            var age = WatchUi.loadResource(Rez.Strings.DataFrom) + " " + clock.hour.format("%02d") + ":" + clock.min.format("%02d");
+            dc.drawText(cx, h * 0.86, Graphics.FONT_XTINY, age, Graphics.TEXT_JUSTIFY_CENTER);
         }
     }
 
@@ -64,8 +73,14 @@ class NordurView extends WatchUi.View {
             return WatchUi.loadResource(Rez.Strings.NoGps);
         } else if (model.status == :noPhone) {
             return WatchUi.loadResource(Rez.Strings.NoPhone);
+        } else if (model.status == :timeout) {
+            return WatchUi.loadResource(Rez.Strings.Unlock);
         } else if (model.status == :error) {
-            return WatchUi.loadResource(Rez.Strings.Error);
+            var text = WatchUi.loadResource(Rez.Strings.Error);
+            if (model.errorCode != null) {
+                text = text + " (" + model.errorCode + ")";
+            }
+            return text;
         }
         return WatchUi.loadResource(Rez.Strings.Loading);
     }
