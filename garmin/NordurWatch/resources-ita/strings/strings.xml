@@ -1,0 +1,13 @@
+<strings>
+    <string id="AppName">Nordur</string>
+    <string id="Gusts">RAFFICHE</string>
+    <string id="Wind">Vento</string>
+    <string id="Loading">Caricamento...</string>
+    <string id="NoGps">In attesa del GPS</string>
+    <string id="NoPhone">Collega il telefono (Garmin Connect)</string>
+    <string id="Error">Dati non disponibili</string>
+    <string id="Refresh">Premi START per aggiornare</string>
+    <string id="Calm">normale</string>
+    <string id="Strong">Vento forte</string>
+    <string id="Storm">Tempesta: attenzione</string>
+</strings>

@@ -100,6 +100,22 @@ export async function buildState(now = Date.now()) {
   };
 }
 
+/** A few numbers for small screens (the Garmin watch app): Kp now and in the next 24 h, Bz, hemispheric power, G scale. */
+export function compactState(state, now = Date.now()) {
+  const blocks = state.kp?.blocks || [];
+  const current = blocks.filter((b) => Date.parse(b.t) <= now).at(-1);
+  const next24 = blocks.filter((b) => Date.parse(b.t) > now - 3 * 3600e3 && Date.parse(b.t) <= now + 24 * 3600e3);
+  const round = (v) => (typeof v === "number" ? Math.round(v * 10) / 10 : null);
+  return {
+    generated: state.generated,
+    kp: round(current?.value),
+    kpMax24: round(next24.reduce((m, b) => (typeof b.value === "number" && b.value > m ? b.value : m), -1)),
+    bz: round(state.solarWind?.latest?.bz),
+    hp: state.hemisphericPower?.latest?.north ?? null,
+    g: (state.scales || []).filter((x) => x.index > 0).reduce((m, x) => Math.max(m, x.g || 0), 0),
+  };
+}
+
 export default async function handler(req, res) {
   const state = await buildState();
   // Archive once per Kp block. Awaited (a serverless function may freeze once the
@@ -110,5 +126,6 @@ export default async function handler(req, res) {
   ]);
   const essential = state.sources.kpForecast.status !== "error" || state.sources.solarWind.status !== "error";
   res.setHeader("Cache-Control", essential ? "public, s-maxage=60, stale-while-revalidate=120" : "no-store");
-  return send(res, essential ? 200 : 502, state);
+  const compact = new URL(req.url, "http://x").searchParams.get("compact") === "1";
+  return send(res, essential ? 200 : 502, compact ? compactState(state) : state);
 }
