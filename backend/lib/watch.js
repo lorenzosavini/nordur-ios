@@ -73,6 +73,9 @@ export async function watchConditions(lat, lon, lang = "it", now = Date.now()) {
     day: o.is_day ?? null,
     kp: aurora?.kp ?? null,
     kpMax: aurora?.kpMax24 ?? null,
+    hp30: aurora?.hp30 ?? null,
+    bz: aurora?.bz ?? null,
+    mag: aurora?.mag ?? null,
     g: aurora?.g ?? null,
     src: [step ? "MET Norway" : null, om ? "Open-Meteo" : null].filter(Boolean).join(" + "),
   };

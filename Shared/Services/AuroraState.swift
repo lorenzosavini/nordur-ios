@@ -142,6 +142,29 @@ struct AuroraState: Decodable {
         let series: [Point]
     }
 
+    /// GFZ Hp30: the Kp scale over 30 minutes.
+    struct Hp30Point: Decodable { let t: String; let hp30: Double; var date: Date? { DateParse.iso(t) } }
+
+    /// Ground magnetometer nearest to Iceland in real time (Narsarsuaq, Greenland):
+    /// range of the horizontal field in the last hour and its level 0…3.
+    struct Magnetometer: Decodable {
+        struct Point: Decodable { let t: String; let h: Double; var date: Date? { DateParse.iso(t) } }
+        let station: String
+        let observed: String?
+        let rangeNt: Double
+        let level: Int
+        let series: [Point]?
+        var observedDate: Date? { observed.flatMap(DateParse.iso) }
+        var levelLabel: String {
+            switch level {
+            case 3: return String(localized: "Tempesta magnetica")
+            case 2: return String(localized: "Campo disturbato: aurora probabile")
+            case 1: return String(localized: "Campo attivo")
+            default: return String(localized: "Campo calmo")
+            }
+        }
+    }
+
     struct LongTerm: Decodable {
         struct Day: Decodable { let date: String; let f107: Double?; let ap: Double?; let kpMax: Double? }
         struct Day45: Decodable { let date: String; let ap: Double?; let f107: Double? }
@@ -158,6 +181,8 @@ struct AuroraState: Decodable {
     let scales: [Scale]?
     var alerts: [Alert]?
     let hemisphericPower: HemisphericPower?
+    let hp30: [Hp30Point]?
+    let magnetometer: Magnetometer?
     let donki: DonkiDigest?
     let longTerm: LongTerm?
 
@@ -165,7 +190,7 @@ struct AuroraState: Decodable {
     var isFallback = false
 
     enum CodingKeys: String, CodingKey {
-        case generated, sources, kp, solarWind, ovation, enlil, scales, alerts, hemisphericPower, donki, longTerm
+        case generated, sources, kp, solarWind, ovation, enlil, scales, alerts, hemisphericPower, hp30, magnetometer, donki, longTerm
     }
 
     func source(_ name: String) -> SourceStatus? { sources[name] }

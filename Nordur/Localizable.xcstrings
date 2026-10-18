@@ -13047,6 +13047,126 @@
           }
         }
       }
+    },
+    "Tempesta magnetica" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Magnetic storm"
+          }
+        }
+      }
+    },
+    "Campo disturbato: aurora probabile" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Disturbed field: aurora likely"
+          }
+        }
+      }
+    },
+    "Campo attivo" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Active field"
+          }
+        }
+      }
+    },
+    "Campo calmo" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Quiet field"
+          }
+        }
+      }
+    },
+    "TEMPO REALE · DIVERSO DAL KP" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "REAL TIME · NOT KP"
+          }
+        }
+      }
+    },
+    "Hp30 GFZ Potsdam" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hp30 GFZ Potsdam"
+          }
+        }
+      }
+    },
+    "scala Kp su 30 minuti" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kp scale over 30 minutes"
+          }
+        }
+      }
+    },
+    "Magnetometro %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Magnetometer %@"
+          }
+        }
+      }
+    },
+    "Groenlandia, il più vicino all'Islanda in tempo reale" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Greenland, the nearest to Iceland in real time"
+          }
+        }
+      }
+    },
+    "Variazione del campo orizzontale nell'ultima ora: sotto 50 nT calmo, da 150 nT aurora probabile sopra l'Islanda, oltre 400 nT tempesta." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Change of the horizontal field in the last hour: below 50 nT quiet, from 150 nT aurora likely over Iceland, above 400 nT storm."
+          }
+        }
+      }
+    },
+    "Hp30 GFZ" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hp30 GFZ"
+          }
+        }
+      }
+    },
+    "Magnetometro Narsarsuaq" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Narsarsuaq magnetometer"
+          }
+        }
+      }
     }
   },
   "version" : "1.0"

@@ -99,13 +99,25 @@ class NordurView extends WatchUi.View {
             line = line + " " + sky;
         }
         dc.drawText(cx, h * 0.73, Graphics.FONT_TINY, line, Graphics.TEXT_JUSTIFY_CENTER);
+        // Aurora, the three signals kept apart: Kp (3 h), Hp30 (30 min), Bz now
+        // (south = negative: aurora likely in 30–60 minutes, shown in green).
+        var aurora = "";
         if (data["kp"] != null) {
-            dc.setColor(ACCENT, Graphics.COLOR_TRANSPARENT);
-            var kp = "Kp " + data["kp"].format("%.1f");
-            if (data["kpMax"] != null) {
-                kp = kp + " · max " + data["kpMax"].format("%.0f");
-            }
-            dc.drawText(cx, h * 0.81, Graphics.FONT_XTINY, kp, Graphics.TEXT_JUSTIFY_CENTER);
+            aurora = "Kp " + data["kp"].format("%.1f");
+        }
+        if (data["hp30"] != null) {
+            aurora = aurora + "  Hp30 " + data["hp30"].format("%.1f");
+        }
+        if (data["bz"] != null) {
+            aurora = aurora + "  Bz " + (data["bz"] > 0 ? "+" : "") + data["bz"].format("%.0f");
+        }
+        if (!aurora.equals("")) {
+            var bz = data["bz"];
+            var magLevel = data["mag"];
+            var likely = (bz != null && bz <= -5) || (magLevel != null && magLevel >= 2);
+            dc.setColor(likely ? 0x34C759 : ACCENT, Graphics.COLOR_TRANSPARENT);
+            var fitted = Graphics.fitTextToArea(aurora, Graphics.FONT_XTINY, w * 0.8, h * 0.08, true);
+            dc.drawText(cx, h * 0.81, Graphics.FONT_XTINY, fitted, Graphics.TEXT_JUSTIFY_CENTER);
         }
 
         // Time of the data (and why they are old, when they are).

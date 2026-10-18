@@ -15,7 +15,7 @@ import { archiveSnapshot } from "../lib/archive.js";
 import { watchConditions } from "../lib/watch.js";
 
 // Maximum age before a "live" source is flagged stale (minutes).
-const LIVE_LIMITS = { solarWind: 15, kpEstimated: 20, ovation: 25, hemisphericPower: 25 };
+const LIVE_LIMITS = { solarWind: 15, kpEstimated: 20, ovation: 25, hemisphericPower: 25, magnetometer: 45, hp30: 120 };
 
 async function settle(name, loader) {
   try {
@@ -43,6 +43,8 @@ export async function buildState(now = Date.now()) {
     settle("scales", S.scales),
     settle("alerts", S.alerts),
     settle("hemisphericPower", S.hemisphericPower),
+    settle("hp30", S.hp30),
+    settle("magnetometer", () => S.magnetometer(now)),
     settle("outlook27", S.outlook27),
     settle("forecast45", S.forecast45),
     settle("donki", async () => {
@@ -59,6 +61,8 @@ export async function buildState(now = Date.now()) {
     kpEstimated: src.kpEstimated.meta?.observedAt,
     ovation: src.ovation.meta?.observedAt,
     hemisphericPower: src.hemisphericPower.meta?.observedAt,
+    magnetometer: src.magnetometer.meta?.observedAt,
+    hp30: src.hp30.meta?.observedAt,
   };
   for (const [name, limit] of Object.entries(LIVE_LIMITS)) {
     const age = ageMinutes(observedAt[name], now);
@@ -96,6 +100,9 @@ export async function buildState(now = Date.now()) {
     scales: src.scales.data,
     alerts: src.alerts.data,
     hemisphericPower: src.hemisphericPower.data,
+    // Kept apart from Kp: Hp30 (GFZ, every 30 min) and the ground magnetometer (Narsarsuaq, every minute).
+    hp30: (src.hp30.data || []).slice(-16).map((r) => ({ t: new Date(r.t).toISOString(), hp30: r.hp30 })),
+    magnetometer: usable("magnetometer"),
     donki: src.donki.data,
     longTerm: { outlook27: src.outlook27.data, forecast45: src.forecast45.data },
   };
@@ -113,6 +120,9 @@ export function compactState(state, now = Date.now()) {
     kpMax24: round(next24.reduce((m, b) => (typeof b.value === "number" && b.value > m ? b.value : m), -1)),
     bz: round(state.solarWind?.latest?.bz),
     hp: state.hemisphericPower?.latest?.north ?? null,
+    hp30: round(state.hp30?.at(-1)?.hp30),
+    mag: state.magnetometer?.level ?? null,
+    magNt: state.magnetometer?.rangeNt ?? null,
     g: (state.scales || []).filter((x) => x.index > 0).reduce((m, x) => Math.max(m, x.g || 0), 0),
   };
 }

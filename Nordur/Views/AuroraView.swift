@@ -376,6 +376,48 @@ struct AuroraView: View {
                     Text("\(Int(hp)) GW").font(.metric(20, .semibold)).foregroundStyle(hp >= 50 ? Theme.aurora : Theme.text)
                 }
             }
+            realtimeSection
+        }
+    }
+
+    /// Faster than Kp and kept apart from it: Hp30 (every 30 min) and the ground magnetometer (every minute).
+    @ViewBuilder private var realtimeSection: some View {
+        let hp30 = state?.hp30?.last
+        let mag = state?.magnetometer
+        if hp30 != nil || mag != nil {
+            VStack(alignment: .leading, spacing: 0) {
+                Text("TEMPO REALE · DIVERSO DAL KP").font(.mono(9.5, .semibold)).foregroundStyle(Theme.faint).padding(.top, 10).padding(.bottom, 4)
+                if let hp30 {
+                    kpRow(String(localized: "Hp30 GFZ Potsdam"), String(localized: "scala Kp su 30 minuti"), hp30.hp30, hp30.date)
+                }
+                if let mag {
+                    VStack(alignment: .leading, spacing: 6) {
+                        HStack(alignment: .firstTextBaseline) {
+                            VStack(alignment: .leading, spacing: 1) {
+                                Text("Magnetometro \(mag.station)").font(.app(.subheadline, .medium)).foregroundStyle(Theme.text)
+                                Text(String(localized: "Groenlandia, il più vicino all'Islanda in tempo reale") + (mag.observedDate.map { " · \(Fmt.dayTime($0, in: zone))" } ?? ""))
+                                    .font(.mono(9)).foregroundStyle(Theme.faint)
+                            }
+                            Spacer()
+                            Text("\(Int(mag.rangeNt)) nT").font(.metric(26, .semibold)).foregroundStyle(mag.level >= 2 ? Theme.aurora : Theme.text)
+                        }
+                        Text(mag.levelLabel.uppercased()).font(.mono(10, .semibold)).foregroundStyle(mag.level >= 2 ? Theme.aurora : Theme.dim)
+                        if let series = mag.series, series.count > 2 {
+                            Chart(series.filter { $0.date != nil }, id: \.t) { p in
+                                LineMark(x: .value("t", p.date ?? Date()), y: .value("nT", p.h)).foregroundStyle(Theme.aurora)
+                            }
+                            .chartYScale(domain: .automatic(includesZero: false))
+                            .chartXAxis(.hidden)
+                            .chartYAxis(.hidden)
+                            .frame(height: 60)
+                        }
+                        Text("Variazione del campo orizzontale nell'ultima ora: sotto 50 nT calmo, da 150 nT aurora probabile sopra l'Islanda, oltre 400 nT tempesta.")
+                            .font(.app(.caption2)).foregroundStyle(Theme.dim)
+                            .fixedSize(horizontal: false, vertical: true)
+                    }
+                    .padding(.vertical, 8)
+                }
+            }
         }
     }
 
@@ -836,7 +878,7 @@ struct AuroraView: View {
         [
             "kpForecast": String(localized: "Kp previsto NOAA"), "kpEstimated": String(localized: "Kp stimato NOAA (1 min)"), "kpGFZ": String(localized: "Kp GFZ Potsdam"),
             "solarWind": String(localized: "Vento solare RTSW"), "ovation": String(localized: "OVATION Prime"), "enlil": String(localized: "WSA-ENLIL NOAA"), "scales": String(localized: "Scale NOAA"),
-            "alerts": String(localized: "Avvisi NOAA"), "hemisphericPower": String(localized: "Potenza emisferica"), "outlook27": String(localized: "Tendenza 27 giorni"),
+            "alerts": String(localized: "Avvisi NOAA"), "hemisphericPower": String(localized: "Potenza emisferica"), "hp30": String(localized: "Hp30 GFZ"), "magnetometer": String(localized: "Magnetometro Narsarsuaq"), "outlook27": String(localized: "Tendenza 27 giorni"),
             "forecast45": String(localized: "Previsione 45 giorni"), "donki": String(localized: "NASA DONKI"),
         ][key] ?? key
     }

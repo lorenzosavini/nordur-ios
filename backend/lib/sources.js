@@ -43,6 +43,49 @@ export async function kpGFZ() {
   return { data, meta: meta("GFZ Potsdam", "https://kp.gfz.de/app/json/", { license: json.meta?.license || "CC BY 4.0", observedAt: iso(data.at(-1)?.t) }) };
 }
 
+/** GFZ Hp30: the Kp scale over 30 minutes instead of 3 hours (CC BY 4.0). */
+export async function hp30() {
+  const start = new Date(Date.now() - 864e5).toISOString().slice(0, 19) + "Z";
+  const end = new Date(Date.now() + 3600e3).toISOString().slice(0, 19) + "Z";
+  const endpoint = `https://kp.gfz.de/app/json/?start=${start}&end=${end}&index=Hp30`;
+  const json = await fetchJSON(endpoint);
+  const data = (json.datetime || []).map((t, i) => ({ t: utc(t), hp30: num(json.Hp30?.[i]) })).filter((r) => r.t && r.hp30 != null);
+  if (!data.length) throw new Error("Hp30 vuoto");
+  return { data, meta: meta("GFZ Potsdam", "https://kp.gfz.de/app/json/", { license: json.meta?.license || "CC BY 4.0", observedAt: iso(data.at(-1).t) }) };
+}
+
+/**
+ * Ground magnetometer nearest to Iceland with minute data in near real time:
+ * Narsarsuaq, south Greenland (DTU Space, INTERMAGNET via BGS GIN). Leirvogur
+ * (Iceland) is not published in real time. The range of the horizontal field
+ * over the last hour says how disturbed the field is under the auroral oval.
+ */
+export async function magnetometer(now = Date.now()) {
+  const code = "NAQ";
+  const day = (t) => new Date(t).toISOString().slice(0, 10);
+  const url = (d) => `https://imag-data.bgs.ac.uk/GIN_V1/GINServices?Request=GetData&format=json&testObsys=0&observatoryIagaCode=${code}&samplesPerDay=minute&publicationState=best-avail&dataStartDate=${d}&dataDuration=1&orientation=native`;
+  const days = [...new Set([day(now - 3 * 3600e3), day(now)])];
+  const parts = await Promise.all(days.map((d) => fetchJSON(url(d), { timeout: 15000 })));
+  const rows = [];
+  for (const json of parts) {
+    (json.datetime || []).forEach((t, i) => {
+      const x = num(json.X?.[i]), y = num(json.Y?.[i]);
+      if (x != null && y != null && x < 90000) rows.push({ t: utc(t), h: Math.hypot(x, y) });
+    });
+  }
+  const recent = rows.filter((r) => r.t <= now && r.t > now - 3 * 3600e3).sort((a, b) => a.t - b.t);
+  if (!recent.length) throw new Error("magnetometro senza dati recenti");
+  const last = recent.at(-1);
+  const hour = recent.filter((r) => r.t > last.t - 3600e3).map((r) => r.h);
+  const range = Math.round(Math.max(...hour) - Math.min(...hour));
+  const level = range >= 400 ? 3 : range >= 150 ? 2 : range >= 50 ? 1 : 0;
+  const series = recent.filter((_, i) => i % 10 === 0).map((r) => ({ t: iso(r.t), h: Math.round(r.h) }));
+  return {
+    data: { station: "Narsarsuaq (NAQ)", lat: 61.16, lon: -45.44, observed: iso(last.t), rangeNt: range, level, series },
+    meta: meta("DTU Space · INTERMAGNET (BGS GIN)", "https://imag-data.bgs.ac.uk/GIN_V1/", { observedAt: iso(last.t) }),
+  };
+}
+
 // ---------- Solar wind ----------
 
 export async function solarWind() {
