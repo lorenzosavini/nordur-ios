@@ -57,15 +57,20 @@ class NordurView extends WatchUi.View {
         dc.setColor(ACCENT, Graphics.COLOR_TRANSPARENT);
         dc.drawText(cx, h * 0.74, Graphics.FONT_TINY, bottom, Graphics.TEXT_JUSTIFY_CENTER);
 
-        // Bottom line: loading, or the time of the data when they are not fresh.
+        // Bottom: where the data are for and where they come from, then their time.
         dc.setColor(Graphics.COLOR_LT_GRAY, Graphics.COLOR_TRANSPARENT);
-        if (model.status == :loading) {
-            dc.drawText(cx, h * 0.86, Graphics.FONT_XTINY, "...", Graphics.TEXT_JUSTIFY_CENTER);
-        } else if (model.status != :ok && model.updated != null) {
-            var clock = Gregorian.info(new Time.Moment(model.updated), Time.FORMAT_SHORT);
-            var age = WatchUi.loadResource(Rez.Strings.DataFrom) + " " + clock.hour.format("%02d") + ":" + clock.min.format("%02d");
-            dc.drawText(cx, h * 0.86, Graphics.FONT_XTINY, age, Graphics.TEXT_JUSTIFY_CENTER);
+        if (model.lat != null && model.lon != null) {
+            var place = model.lat.abs().format("%.2f") + (model.lat >= 0 ? "N " : "S ")
+                + model.lon.abs().format("%.2f") + (model.lon >= 0 ? "E" : "W") + " · Open-Meteo";
+            dc.drawText(cx, h * 0.83, Graphics.FONT_XTINY, place, Graphics.TEXT_JUSTIFY_CENTER);
         }
+        var age = "...";
+        if (model.status != :loading && model.updated != null) {
+            var clock = Gregorian.info(new Time.Moment(model.updated), Time.FORMAT_SHORT);
+            age = (model.status == :ok ? "" : WatchUi.loadResource(Rez.Strings.DataFrom) + " ")
+                + clock.hour.format("%02d") + ":" + clock.min.format("%02d");
+        }
+        dc.drawText(cx, h * 0.89, Graphics.FONT_XTINY, age, Graphics.TEXT_JUSTIFY_CENTER);
     }
 
     function message() {
