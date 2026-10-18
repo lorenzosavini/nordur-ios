@@ -32,6 +32,7 @@ La CI produce a ogni commit un `.ipa` per iPhone non firmato: lo firma Sideloadl
 2. Installa **Sideloadly** da <https://sideloadly.io> (su Windows serve anche iTunes e iCloud nella versione dal sito Apple, non dal Microsoft Store).
 3. Collega l'iPhone con il cavo, sblocca e tocca «Autorizza» su «Vuoi autorizzare questo computer?».
 4. In Sideloadly trascina `Nordur.ipa`, scegli l'iPhone, scrivi il tuo Apple ID e premi **Start**. Inserisci la password dell'Apple ID quando la chiede (va solo ad Apple).
+   Se Sideloadly segnala un errore sulle «entitlements» o su HealthKit, usa **Nordur-senza-Salute.ipa** (<https://github.com/lorenzosavini/nordur-ios/raw/ci-screenshots/Nordur-senza-Salute.ipa>): è identica, ma senza l'importazione da Salute.
    - Se dà errore sul bundle ID, in *Advanced options* attiva **Change bundle ID** (es. `it.tuonome.nordur`).
 5. Sull'iPhone:
    - Impostazioni › Generali › **VPN e gestione dispositivi** › il tuo Apple ID › **Autorizza**;
