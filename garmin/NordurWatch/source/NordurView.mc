@@ -71,10 +71,12 @@ class NordurView extends WatchUi.View {
     function message() {
         if (model.status == :noGps) {
             return WatchUi.loadResource(Rez.Strings.NoGps);
-        } else if (model.status == :noPhone) {
-            return WatchUi.loadResource(Rez.Strings.NoPhone);
-        } else if (model.status == :timeout) {
-            return WatchUi.loadResource(Rez.Strings.Unlock);
+        } else if (model.status == :timeout || model.status == :noPhone) {
+            var text = WatchUi.loadResource(model.status == :timeout ? Rez.Strings.Unlock : Rez.Strings.NoPhone);
+            if (model.errorCode != null) {
+                text = text + " (" + model.errorCode + ")";
+            }
+            return text;
         } else if (model.status == :error) {
             var text = WatchUi.loadResource(Rez.Strings.Error);
             if (model.errorCode != null) {
