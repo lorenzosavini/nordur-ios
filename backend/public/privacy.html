@@ -22,7 +22,7 @@
 </head>
 <body>
 <main>
-  <div class="kicker">Norður · versione del 17 ottobre 2026</div>
+  <div class="kicker">Norður · versione del 18 ottobre 2026</div>
   <h1>Privacy</h1>
   <p>Norður è un'app di viaggio per l'Islanda (meteo, strade, allerte, aurora, percorsi in auto). Questa pagina spiega quali dati usa, dove finiscono e come cancellarli.</p>
 
@@ -43,12 +43,13 @@
   <h2><span>03</span>Account e backup</h2>
   <table>
     <tr><th>Dato</th><th>Perché</th><th>Come è conservato</th></tr>
-    <tr><td>Email</td><td>Identificare l'account</td><td>Il percorso di archiviazione è un'impronta HMAC dell'email</td></tr>
+    <tr><td>Email</td><td>Identificare l'account e inviarti le email dell'account (creazione, nuovo accesso, password, codice di recupero, eliminazione)</td><td>Cifrata con AES-256-GCM; il percorso di archiviazione è un'impronta HMAC dell'email</td></tr>
     <tr><td>Password</td><td>Accesso</td><td>Solo hash scrypt con sale: la password non viene mai salvata</td></tr>
     <tr><td>Codice di recupero</td><td>Reimpostare la password senza email</td><td>Solo hash scrypt, sostituito a ogni uso</td></tr>
+    <tr><td>Codice via email (6 cifre)</td><td>Reimpostare la password</td><td>Solo hash scrypt, cancellato dopo l'uso o dopo 15 minuti</td></tr>
     <tr><td>Viaggio, percorsi, storico delle allerte, impostazioni</td><td>Ripristino dopo una reinstallazione o su un altro iPhone</td><td>Cifrati con AES-256-GCM prima del salvataggio</td></tr>
   </table>
-  <p class="dim">L'archiviazione è su Vercel Blob (Vercel Inc.), area di Francoforte. Il token di sessione resta nel Portachiavi dell'iPhone.</p>
+  <p class="dim">L'archiviazione è su Redis (Upstash/Redis tramite Vercel Marketplace), con Vercel Blob (Vercel Inc.) come alternativa. Le email dell'account sono inviate tramite il servizio di posta configurato (Resend o un server SMTP), che riceve solo l'indirizzo e il testo del messaggio. Il token di sessione resta nel Portachiavi dell'iPhone.</p>
 
   <h2><span>04</span>Avvistamenti dell'aurora</h2>
   <p>Se segnali un avvistamento (serve l'account), vengono salvati:</p>

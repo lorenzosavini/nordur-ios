@@ -12307,6 +12307,286 @@
           }
         }
       }
+    },
+    "Posizione impostata" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Selected place"
+          }
+        }
+      }
+    },
+    "Apple Mappe" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Apple Maps"
+          }
+        }
+      }
+    },
+    "Google Maps" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Google Maps"
+          }
+        }
+      }
+    },
+    "Google Maps: foto profilo › Mappe offline › Seleziona la tua mappa, adatta il riquadro e tocca Scarica. Un riquadro copre circa un terzo dell'Islanda: apri le zone qui sotto una alla volta e scaricale." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Google Maps: profile picture › Offline maps › Select your own map, fit the frame and tap Download. One frame covers about a third of Iceland: open the areas below one at a time and download them."
+          }
+        }
+      }
+    },
+    "Sud e Ovest (Reykjavík, Golden Circle, Vík)" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "South and West (Reykjavík, Golden Circle, Vík)"
+          }
+        }
+      }
+    },
+    "Nord (Akureyri, Mývatn, Húsavík)" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "North (Akureyri, Mývatn, Húsavík)"
+          }
+        }
+      }
+    },
+    "Est e Sud-Est (Egilsstaðir, Höfn, Jökulsárlón)" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "East and South-East (Egilsstaðir, Höfn, Jökulsárlón)"
+          }
+        }
+      }
+    },
+    "Fiordi occidentali e Snæfellsnes" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Westfjords and Snæfellsnes"
+          }
+        }
+      }
+    },
+    "Tappa: %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Stop: %@"
+          }
+        }
+      }
+    },
+    "Google non permette ad altre app di scaricare le sue mappe: Norður apre Google Maps sulla zona giusta e il download lo avvii tu. Le mappe offline di Google scadono dopo un anno se non le aggiorni." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Google does not let other apps download its maps: Norður opens Google Maps on the right area and you start the download. Google offline maps expire after a year unless updated."
+          }
+        }
+      }
+    },
+    "Nessuna copia salvata sul telefono" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No copy saved on the phone"
+          }
+        }
+      }
+    },
+    "Password dimenticata" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Forgot password"
+          }
+        }
+      }
+    },
+    "PASSWORD DIMENTICATA?" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "FORGOT PASSWORD?"
+          }
+        }
+      }
+    },
+    "Ti mandiamo per email un codice di 6 cifre, valido 15 minuti." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "We'll e-mail you a 6-digit code, valid for 15 minutes."
+          }
+        }
+      }
+    },
+    "INVIA IL CODICE" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SEND THE CODE"
+          }
+        }
+      }
+    },
+    "Se esiste un account con questa email, il codice è in arrivo. Controlla anche la posta indesiderata." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "If an account exists for this e-mail, the code is on its way. Check your spam folder too."
+          }
+        }
+      }
+    },
+    "CODICE DALL'EMAIL" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "CODE FROM THE E-MAIL"
+          }
+        }
+      }
+    },
+    "INVIA UN NUOVO CODICE" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SEND A NEW CODE"
+          }
+        }
+      }
+    },
+    "Nuovo codice inviato." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "New code sent."
+          }
+        }
+      }
+    },
+    "USA IL CODICE VIA EMAIL" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "USE A CODE BY E-MAIL"
+          }
+        }
+      }
+    },
+    "HO IL CODICE DI RECUPERO" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "I HAVE THE RECOVERY CODE"
+          }
+        }
+      }
+    },
+    "Conservalo in un posto sicuro (ad esempio in un gestore di password). Serve a reimpostare la password se l'email con il codice non ti arriva; Norður non può recuperarlo." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Keep it somewhere safe (for example in a password manager). It resets your password if the e-mail with the code does not arrive; Norður cannot recover it."
+          }
+        }
+      }
+    },
+    "Ti scriviamo per email a ogni evento dell'account: creazione, nuovo accesso, cambio o reimpostazione della password, nuovo codice di recupero, eliminazione." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "We e-mail you on every account event: creation, new sign-in, password change or reset, new recovery code, deletion."
+          }
+        }
+      }
+    },
+    "Invio email non attivo: usa il codice di recupero" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "E-mail sending is not active: use the recovery code"
+          }
+        }
+      }
+    },
+    "Attendi un minuto prima di chiedere un nuovo codice" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wait a minute before asking for a new code"
+          }
+        }
+      }
+    },
+    "Invio dell'email non riuscito: riprova o usa il codice di recupero" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The e-mail could not be sent: try again or use the recovery code"
+          }
+        }
+      }
+    },
+    "Codice scaduto o non valido: chiedine uno nuovo" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Code expired or invalid: ask for a new one"
+          }
+        }
+      }
+    },
+    "Codice errato" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wrong code"
+          }
+        }
+      }
     }
   },
   "version" : "1.0"

@@ -43,11 +43,13 @@ enum DiskCache {
 enum HTTPError: LocalizedError {
     case status(Int)
     case invalidURL
+    case notCached
 
     var errorDescription: String? {
         switch self {
         case .status(let code): return String(localized: "Il server ha risposto con errore \(code)")
         case .invalidURL: return String(localized: "Indirizzo non valido")
+        case .notCached: return String(localized: "Nessuna copia salvata sul telefono")
         }
     }
 }
@@ -67,8 +69,16 @@ enum HTTP {
         return url
     }
 
+    /// Set for a warm start: requests answer from the copy saved on the phone only, with no network.
+    @TaskLocal static var cacheOnly = false
+
     /// Downloads `url`; on failure falls back to the last cached copy.
     static func get(_ url: URL, cacheKey: String) async throws -> Fetched<Data> {
+        if cacheOnly {
+            guard let cached = DiskCache.read(cacheKey) else { throw HTTPError.notCached }
+            // Recent copies are shown as current; older ones carry the offline label until the refresh lands.
+            return Fetched(value: cached.data, date: cached.date, isStale: Date().timeIntervalSince(cached.date) > 1800)
+        }
         do {
             let data = try await download(url, retries: 2)
             DiskCache.write(data, key: cacheKey)

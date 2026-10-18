@@ -79,7 +79,7 @@ final class ArrowAnnotation: NSObject, MKAnnotation {
 
 /// Any point of interest drawn on the map.
 final class PoiAnnotation: NSObject, MKAnnotation {
-    enum Kind: String { case station, webcam, quake, fuel, charger, stop, roadSection, roadHazard, sighting, noSighting }
+    enum Kind: String { case place, station, webcam, quake, fuel, charger, stop, roadSection, roadHazard, sighting, noSighting }
     let kind: Kind
     let key: String
     let coordinate: CLLocationCoordinate2D
@@ -354,11 +354,13 @@ struct WeatherMapView: UIViewRepresentable {
                 let view = mapView.dequeueReusableAnnotationView(withIdentifier: "marker", for: poi) as! MKMarkerAnnotationView
                 view.markerTintColor = poi.color
                 view.glyphImage = UIImage(systemName: Self.glyph(poi.kind))
-                view.titleVisibility = poi.kind == .stop ? .visible : .hidden
-                view.subtitleVisibility = .hidden
+                let pinned = poi.kind == .stop || poi.kind == .place
+                view.titleVisibility = pinned ? .visible : .hidden
+                view.subtitleVisibility = poi.kind == .place ? .visible : .hidden
                 view.canShowCallout = false
-                view.displayPriority = poi.kind == .stop ? .required : .defaultLow
-                view.clusteringIdentifier = poi.kind == .stop ? nil : poi.kind.rawValue
+                view.displayPriority = pinned ? .required : .defaultLow
+                view.zPriority = poi.kind == .place ? .max : .defaultUnselected
+                view.clusteringIdentifier = pinned ? nil : poi.kind.rawValue
                 return view
             }
         }
@@ -373,6 +375,7 @@ struct WeatherMapView: UIViewRepresentable {
 
         private static func glyph(_ kind: PoiAnnotation.Kind) -> String {
             switch kind {
+            case .place: return "mappin"
             case .webcam: return "video.fill"
             case .fuel: return "fuelpump.fill"
             case .charger: return "bolt.car.fill"

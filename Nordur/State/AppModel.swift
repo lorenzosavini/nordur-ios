@@ -158,13 +158,23 @@ final class AppModel {
             stationForecast = nil
             marine = nil
             air = nil
+            // A place seen before shows its saved forecast at once, while the new one loads.
+            live.subtract([.forecast, .marine, .air])
+            await HTTP.$cacheOnly.withValue(true) { await refreshPlace() }
         }
+        await warmStart()
         isRefreshing = true
         await refreshPlace()
         guard key == placeKey else { return }
         loadedPlaceKey = key
         await refreshAurora()
         isRefreshing = false
+    }
+
+    /// The place forecast, if the one shown is older than 15 minutes.
+    func refreshPlaceIfOld() async {
+        if let f = forecast, !f.isStale, Date().timeIntervalSince(f.date) < 15 * 60 { return }
+        await refreshPlace()
     }
 
     func refreshPlace() async {
@@ -183,56 +193,97 @@ final class AppModel {
         recomputeAurora()
     }
 
-    /// Country-wide feeds; skipped if refreshed less than 5 minutes ago unless forced.
+    /// Country-wide feeds; skipped if refreshed less than 2 minutes ago unless forced.
+    /// Each feed is shown as soon as it arrives: the slowest no longer holds back the others.
     func refreshGlobal(force: Bool = false) async {
-        if !force, let last = lastGlobalRefresh, Date().timeIntervalSince(last) < 300 { return }
+        if !force, let last = lastGlobalRefresh, Date().timeIntervalSince(last) < 110 { return }
         lastGlobalRefresh = Date()
-        async let w = attempt { try await IMO.warnings() }
-        async let q = attempt { try await IMO.quakes() }
-        async let r = attempt { try await Roads.network() }
-        async let ri = attempt { try await RoadInfoService.load() }
-        async let k = attempt { try await SpaceWeather.kpForecast() }
-        async let o = attempt { try await SpaceWeather.ovation() }
-        async let s = attempt { try await SpaceWeather.solarWind() }
-        async let n = attempt { try await SafeTravel.news() }
-        let (rw, rq, rr, rk, ro, rs, rn) = await (w, q, r, k, o, s, n)
-        apply(rw, .warnings) { self.warnings = $0 }
-        apply(rq, .quakes) { self.quakes = $0 }
-        apply(rr, .roads) { self.roads = $0 }
-        apply(await ri, .roadInfo) { self.roadInfo = $0 }
-        apply(rk, .kp) { self.kp = $0 }
-        apply(ro, .ovation) { self.ovation = $0 }
-        apply(rs, .solarWind) { self.solarWind = $0 }
-        apply(rn, .news) { self.news = $0 }
+        async let w: Void = load(.warnings, \.warnings) { try await IMO.warnings() }
+        async let q: Void = load(.quakes, \.quakes) { try await IMO.quakes() }
+        async let r: Void = load(.roads, \.roads) { try await Roads.network() }
+        async let ri: Void = load(.roadInfo, \.roadInfo) { try await RoadInfoService.load() }
+        async let k: Void = load(.kp, \.kp) { try await SpaceWeather.kpForecast() }
+        async let o: Void = load(.ovation, \.ovation) { try await SpaceWeather.ovation() }
+        async let s: Void = load(.solarWind, \.solarWind) { try await SpaceWeather.solarWind() }
+        async let n: Void = load(.news, \.news) { try await SafeTravel.news() }
+        async let a: Void = refreshAurora()
+        _ = await (w, q, r, ri, k, o, s, n, a)
+        recomputeAurora()
         await localizeWebText()
-        await refreshAurora()
         await refreshStatic()
+    }
+
+    /// Fetches one source and shows it right away.
+    private func load<T>(_ source: Source, _ property: ReferenceWritableKeyPath<AppModel, Fetched<T>?>,
+                         _ fetch: @escaping () async throws -> Fetched<T>) async {
+        apply(await attempt(fetch), source) { self[keyPath: property] = $0 }
+    }
+
+    /// Sources already loaded from the network in this session (a cached copy never replaces them).
+    private var live = Set<Source>()
+    private var warmed = false
+
+    /// At launch, the last copies saved on the phone are shown at once, while the
+    /// network refresh runs: the screens are never empty waiting for the slowest source.
+    func warmStart() async {
+        guard !warmed else { return }
+        warmed = true
+        await HTTP.$cacheOnly.withValue(true) {
+            let c = activePlace.coordinate
+            async let w: Void = load(.warnings, \.warnings) { try await IMO.warnings() }
+            async let q: Void = load(.quakes, \.quakes) { try await IMO.quakes() }
+            async let r: Void = load(.roads, \.roads) { try await Roads.network() }
+            async let ri: Void = load(.roadInfo, \.roadInfo) { try await RoadInfoService.load() }
+            async let k: Void = load(.kp, \.kp) { try await SpaceWeather.kpForecast() }
+            async let n: Void = load(.news, \.news) { try await SafeTravel.news() }
+            async let f: Void = load(.forecast, \.forecast) { try await WeatherService.forecast(c) }
+            async let m: Void = load(.marine, \.marine) { try await OpenMeteo.marine(c) }
+            async let ai: Void = load(.air, \.air) { try await OpenMeteo.airQuality(c) }
+            async let wc: Void = load(.webcams, \.webcams) { try await Webcams.sites() }
+            _ = await (w, q, r, ri, k, n, f, m, ai, wc)
+        }
+        recomputeAurora()
     }
 
     /// Web text (IMO, SafeTravel, Vegagerðin, Herjólfur, NOAA) in the app language.
     /// The originals are shown first; the translations replace them when ready.
     func localizeWebText() async {
-        let translator = Translator.shared
-        if let w = warnings {
-            let localized = await translator.localize(w.value)
-            if warnings?.date == w.date { warnings = Fetched(value: localized, date: w.date, isStale: w.isStale) }
-        }
-        if let n = news {
-            let localized = await translator.localize(n.value)
-            if news?.date == n.date { news = Fetched(value: localized, date: n.date, isStale: n.isStale) }
-        }
-        if let r = roadInfo {
-            let localized = await translator.localize(r.value)
-            if roadInfo?.date == r.date { roadInfo = Fetched(value: localized, date: r.date, isStale: r.isStale) }
-        }
-        if let f = ferry, let notice = f.value {
-            let localized = await translator.localize(notice)
-            if ferry?.date == f.date { ferry = Fetched(value: localized, date: f.date, isStale: f.isStale) }
-        }
-        if let a = aurora {
-            let localized = await translator.localize(a.value)
-            if aurora?.date == a.date { aurora = Fetched(value: localized, date: a.date, isStale: a.isStale) }
-        }
+        async let w: Void = localizeWarnings()
+        async let n: Void = localizeNews()
+        async let r: Void = localizeRoadInfo()
+        async let f: Void = localizeFerry()
+        async let a: Void = localizeAurora()
+        _ = await (w, n, r, f, a)
+    }
+
+    private func localizeWarnings() async {
+        guard let w = warnings else { return }
+        let localized = await Translator.shared.localize(w.value)
+        if warnings?.date == w.date { warnings = Fetched(value: localized, date: w.date, isStale: w.isStale) }
+    }
+
+    private func localizeNews() async {
+        guard let n = news else { return }
+        let localized = await Translator.shared.localize(n.value)
+        if news?.date == n.date { news = Fetched(value: localized, date: n.date, isStale: n.isStale) }
+    }
+
+    private func localizeRoadInfo() async {
+        guard let r = roadInfo else { return }
+        let localized = await Translator.shared.localize(r.value)
+        if roadInfo?.date == r.date { roadInfo = Fetched(value: localized, date: r.date, isStale: r.isStale) }
+    }
+
+    private func localizeFerry() async {
+        guard let f = ferry, let notice = f.value else { return }
+        let localized = await Translator.shared.localize(notice)
+        if ferry?.date == f.date { ferry = Fetched(value: localized, date: f.date, isStale: f.isStale) }
+    }
+
+    private func localizeAurora() async {
+        guard let a = aurora else { return }
+        let localized = await Translator.shared.localize(a.value)
+        if aurora?.date == a.date { aurora = Fetched(value: localized, date: a.date, isStale: a.isStale) }
     }
 
     /// Slow-changing data: webcam list (every 6 h) and fuel stations (30-day on-device copy).
@@ -286,6 +337,12 @@ final class AppModel {
     }
 
     private func apply<T>(_ result: Result<T, Error>, _ source: Source, _ assign: (T) -> Void) {
+        if HTTP.cacheOnly {
+            // Warm start: a saved copy fills an empty screen, never replaces fresher data, never reports errors.
+            if case .success(let value) = result, !live.contains(source) { assign(value) }
+            return
+        }
+        live.insert(source)
         switch result {
         case .success(let value):
             assign(value)

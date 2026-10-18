@@ -16,8 +16,13 @@ struct TodayView: View {
             ScrollView {
                 VStack(alignment: .leading, spacing: 30) {
                     VStack(alignment: .leading, spacing: 18) {
-                        topBar
-                        PlaceHeader(size: 44)
+                        Group {
+                            topBar
+                            PlaceHeader(size: 44)
+                        }
+                        // A halo of the background colour keeps the text legible over the photo.
+                        .shadow(color: Theme.bg.opacity(0.9), radius: 6)
+                        .shadow(color: Theme.bg.opacity(0.6), radius: 14)
                         statusBanner
                         now
                     }

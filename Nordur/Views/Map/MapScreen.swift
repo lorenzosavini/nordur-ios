@@ -469,6 +469,13 @@ struct MapScreen: View {
             }
             poisKey += "trip\(trip.stops.map(\.id.uuidString).joined())"
         }
+        // The place set in the app (the GPS position already has its blue dot).
+        if !model.useCurrentLocation || model.location.coordinate == nil {
+            let place = model.activePlace
+            pois.append(PoiAnnotation(kind: .place, key: "place", coordinate: place.coordinate.clCoordinate,
+                                      title: place.name, subtitle: String(localized: "Posizione impostata"), color: .systemRed))
+            poisKey += "place\(place.name)\(model.placeKey)"
+        }
         c.pois = pois
         c.poisKey = poisKey
 

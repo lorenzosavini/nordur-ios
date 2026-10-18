@@ -759,9 +759,10 @@ struct RemoteImage: View {
 
 // MARK: - Place backdrop
 
-/// Blurred photograph of the active place behind Today's header: soft enough
-/// that the text on top stays fully readable (heavy blur plus a wash of the
-/// background colour that grows to opaque at the bottom), with a small credit.
+/// Photograph of the active place behind Today's header: lightly softened so
+/// the place stays recognisable, with a wash of the background colour that is
+/// light at the top and grows to opaque at the bottom (where the text sits),
+/// and a small credit.
 struct PlaceBackdrop: View {
     @Environment(AppModel.self) private var model
     var height: CGFloat = 330
@@ -774,11 +775,12 @@ struct PlaceBackdrop: View {
                     .frame(height: height)
                     .frame(maxWidth: .infinity)
                     .clipped()
-                    .blur(radius: 6, opaque: true)
+                    .blur(radius: 1.5, opaque: true)
                     .overlay {
                         LinearGradient(stops: [
-                            .init(color: Theme.bg.opacity(0.55), location: 0),
-                            .init(color: Theme.bg.opacity(0.62), location: 0.55),
+                            .init(color: Theme.bg.opacity(0.18), location: 0),
+                            .init(color: Theme.bg.opacity(0.38), location: 0.45),
+                            .init(color: Theme.bg.opacity(0.78), location: 0.78),
                             .init(color: Theme.bg, location: 1),
                         ], startPoint: .top, endPoint: .bottom)
                     }

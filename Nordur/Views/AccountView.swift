@@ -89,7 +89,7 @@ struct AccountView: View {
 
             if let message { Text(message.loc).font(.app(.footnote)).foregroundStyle(Theme.text) }
             Button { sheet = .reset } label: {
-                Text("PASSWORD DIMENTICATA? USA IL CODICE DI RECUPERO").font(.mono(10, .semibold)).foregroundStyle(Theme.accent)
+                Text("PASSWORD DIMENTICATA?").font(.mono(10, .semibold)).foregroundStyle(Theme.accent)
             }
             .buttonStyle(.plain)
         }
@@ -181,6 +181,8 @@ struct AccountView: View {
                 item(String(localized: "Allerte"), String(localized: "storico delle notifiche ricevute"))
                 item(String(localized: "Impostazioni"), String(localized: "soglie di allerta, guida, aspetto, località scelta, livelli mappa"))
             }
+            Text("Ti scriviamo per email a ogni evento dell'account: creazione, nuovo accesso, cambio o reimpostazione della password, nuovo codice di recupero, eliminazione.")
+                .font(.app(.caption)).foregroundStyle(Theme.dim)
             Text("I dati sono cifrati (AES-256) prima di essere salvati. Dopo aver reinstallato l'app basta accedere con la stessa email: tutto torna com'era. Il backup parte da solo quando chiudi l'app e ogni 5 minuti mentre la usi.")
                 .font(.app(.caption)).foregroundStyle(Theme.dim)
             LinkRow(title: String(localized: "Informativa sulla privacy"), subtitle: String(localized: "Quali dati usa Norður e come"), url: "https://nordur-api.vercel.app/privacy.html")

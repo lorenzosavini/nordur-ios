@@ -42,8 +42,11 @@ struct NordurApp: App {
                 AlertCenter.scheduleBackgroundRefresh()
                 Task { await Account.shared.sync() }
             case .active:
+                // Back in the app: what changed meanwhile is fetched at once.
                 Task {
-                    await model.refreshGlobal()
+                    async let global: Void = model.refreshGlobal()
+                    async let place: Void = model.refreshPlaceIfOld()
+                    _ = await (global, place)
                     await AlertCenter.shared.check()
                 }
             default:
@@ -141,6 +144,7 @@ struct RootView: View {
             }
         }
         .task {
+            await model.warmStart()
             model.location.request()
             await alerts.refreshPermissionState()
             await Account.shared.restoreAfterReinstall()
@@ -163,11 +167,17 @@ struct RootView: View {
             await alerts.check()
         }
         .task {
-            // Foreground polling: every 5 minutes while the app is open.
+            // Foreground polling while the app is open: country-wide feeds (warnings,
+            // quakes, roads, aurora) every 2 minutes, the place forecast every 15.
+            var tick = 0
             while !Task.isCancelled {
-                try? await Task.sleep(nanoseconds: 5 * 60 * 1_000_000_000)
+                try? await Task.sleep(nanoseconds: 2 * 60 * 1_000_000_000)
+                guard scenePhase == .active else { continue }
+                tick += 1
+                await model.refreshGlobal()
+                await model.refreshPlaceIfOld()
                 await alerts.check()
-                await Account.shared.sync()
+                if tick % 3 == 0 { await Account.shared.sync() }
             }
         }
     }

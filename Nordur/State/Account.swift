@@ -39,13 +39,28 @@ final class Account {
 
     /// Signs in or creates the account, then restores what is stored online.
     func authenticate(email: String, password: String, register: Bool) async throws -> Int {
-        let body = try JSONSerialization.data(withJSONObject: ["mode": register ? "register" : "login", "email": email, "password": password])
+        let body = try JSONSerialization.data(withJSONObject: ["mode": register ? "register" : "login", "email": email, "password": password, "lang": lang])
         return try await signIn(with: try await request("auth", method: "POST", body: body, authorized: false))
     }
 
-    /// Sets a new password with the recovery code (no e-mail involved), then signs in.
+    /// Language of the account e-mails: the app's.
+    private var lang: String { Bundle.main.preferredLocalizations.first == "en" ? "en" : "it" }
+
+    /// E-mails a 6-digit code (valid 15 minutes) to reset the password.
+    func requestResetCode(email: String) async throws {
+        let body = try JSONSerialization.data(withJSONObject: ["mode": "forgot", "email": email, "lang": lang])
+        _ = try await request("auth", method: "POST", body: body, authorized: false)
+    }
+
+    /// Sets a new password with the code received by e-mail, then signs in.
+    func resetPassword(email: String, emailCode: String, newPassword: String) async throws -> Int {
+        let body = try JSONSerialization.data(withJSONObject: ["mode": "reset", "email": email, "emailCode": emailCode, "password": newPassword, "lang": lang])
+        return try await signIn(with: try await request("auth", method: "POST", body: body, authorized: false))
+    }
+
+    /// Sets a new password with the recovery code shown at sign-up, then signs in.
     func resetPassword(email: String, recoveryCode: String, newPassword: String) async throws -> Int {
-        let body = try JSONSerialization.data(withJSONObject: ["mode": "reset", "email": email, "recoveryCode": recoveryCode, "password": newPassword])
+        let body = try JSONSerialization.data(withJSONObject: ["mode": "reset", "email": email, "recoveryCode": recoveryCode, "password": newPassword, "lang": lang])
         return try await signIn(with: try await request("auth", method: "POST", body: body, authorized: false))
     }
 
@@ -63,21 +78,21 @@ final class Account {
 
     func changePassword(current: String, new: String) async throws {
         guard let email else { throw AccountError.message(String(localized: "Accedi al tuo account")) }
-        let body = try JSONSerialization.data(withJSONObject: ["mode": "change", "email": email, "password": current, "newPassword": new])
+        let body = try JSONSerialization.data(withJSONObject: ["mode": "change", "email": email, "password": current, "newPassword": new, "lang": lang])
         _ = try await request("auth", method: "POST", body: body)
     }
 
     /// Replaces the recovery code (the old one stops working).
     func regenerateRecoveryCode(password: String) async throws {
         guard let email else { throw AccountError.message(String(localized: "Accedi al tuo account")) }
-        let body = try JSONSerialization.data(withJSONObject: ["mode": "recovery", "email": email, "password": password])
+        let body = try JSONSerialization.data(withJSONObject: ["mode": "recovery", "email": email, "password": password, "lang": lang])
         pendingRecoveryCode = try JSONDecoder().decode(RecoveryResponse.self, from: try await request("auth", method: "POST", body: body)).recoveryCode
     }
 
     /// Permanently deletes the account, its backup and its sightings. Local data stays on the phone.
     func deleteAccount(password: String) async throws {
         guard let email else { throw AccountError.message(String(localized: "Accedi al tuo account")) }
-        let body = try JSONSerialization.data(withJSONObject: ["email": email, "password": password])
+        let body = try JSONSerialization.data(withJSONObject: ["email": email, "password": password, "lang": lang])
         _ = try await request("auth", method: "DELETE", body: body)
         signOut()
     }
