@@ -66,11 +66,12 @@ def back():
 def dismiss_sheet():
     swipe(W / 2, H * 0.12, W / 2, H * 0.95, 0.35, 1.6)
 
-def tap(ident=None, label=None, exact=False, pause=1.8, scrolls=0):
-    """Taps an element, scrolling down to find it (up to `scrolls` times)."""
+def tap(ident=None, label=None, exact=False, pause=1.8, scrolls=0, anywhere=False, fallback=None):
+    """Taps an element, scrolling down to find it (up to `scrolls` times);
+    `fallback` (x, y as fractions of the screen) when it is not in the tree."""
     for attempt in range(scrolls + 3):
         e = find(ident=ident, label=label, exact=exact)
-        if e and e["frame"]["y"] + e["frame"]["height"] / 2 < H * 0.88:
+        if e and (anywhere or e["frame"]["y"] + e["frame"]["height"] / 2 < H * 0.88):
             f = e["frame"]
             tap_at(f["x"] + f["width"] / 2, f["y"] + f["height"] / 2, pause)
             return True
@@ -78,11 +79,22 @@ def tap(ident=None, label=None, exact=False, pause=1.8, scrolls=0):
             scroll(1, 0.35, 0.8)
         else:
             time.sleep(1)
+    if fallback:
+        print(f"fallback tap: {ident or label}")
+        tap_at(W * fallback[0], H * fallback[1], pause)
+        return True
     print(f"not found: {ident or label}")
     return False
 
+# Tab bar: five equal buttons under the pages.
+TABS = ["Oggi", "Meteo", "Mappa", "Guida", "Viaggio"]
+
 def tab(name):
-    tap(label=name, exact=True, pause=2.2)
+    i = TABS.index(name)
+    tap(label=name, exact=True, pause=2.2, anywhere=True, fallback=((i + 0.5) / 5, 0.955))
+
+def ids(where):
+    print(where, sorted({e.get("AXUniqueId") for e in elements() if e.get("AXUniqueId")}))
 
 rec = subprocess.Popen(["xcrun", "simctl", "io", udid, "recordVideo", "--codec=h264", "--force", out])
 time.sleep(2.5)
@@ -90,14 +102,16 @@ time.sleep(2.5)
 # 1 · Today and the aurora now.
 time.sleep(2)
 scroll(1, 0.3, 2.2)
-if tap(ident="today.aurora", pause=3, scrolls=2):
+ids("today")
+if tap(ident="tile.Aurora", pause=3, scrolls=3) or tap(ident="today.aurora", pause=3):
     scroll(5, 0.5, 1.2)       # Aurora: hour by hour, solar wind, Kp, Hp30, magnetometer
     back()
 
 # 2 · Roads: critical sections, then one section.
 scroll_top()
 if tap(ident="tile.Strade", pause=2.5, scrolls=3):
-    tap(label="Critici", exact=True, pause=2)
+    ids("roads")
+    tap(label="Critici", exact=True, pause=2, fallback=(0.36, 0.426))
     if tap(ident="road.row", pause=2.5):
         scroll(1, 0.4, 1.4)
         back()
@@ -114,7 +128,8 @@ if tap(label="WEBCAM", exact=True, pause=2.5, scrolls=4):
 
 # 5 · The alert inbox and one alert.
 scroll_top()
-if tap(ident="today.alerts", pause=2.2):
+if tap(ident="today.alerts", pause=2.2) or tap(label="Allerte", exact=True, pause=2.2, fallback=(1 - 27 / 402, 64 / 874)):
+    ids("alerts")
     if tap(ident="alert.row", pause=2.5):
         scroll(1, 0.4, 1.4)
         back()
