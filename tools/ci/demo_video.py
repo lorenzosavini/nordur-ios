@@ -144,7 +144,10 @@ tab("Mappa")
 time.sleep(1.5)
 for layer, wait in [("wind", 4), ("gust", 2.2), ("temperature", 2.2), ("precipitation", 2), ("snow", 1.8), ("cloud", 1.8), ("aurora", 3), ("radar", 3), ("wind", 1.5)]:
     tap(ident=f"layer.{layer}", pause=wait)
-tap_at(W * 0.45, H * 0.4, 3)
+tap_at(W * 0.45, H * 0.4, 3.5)
+# The tap may open a road section or the values card: close it so the tab bar is free.
+dismiss_sheet()
+tap_at(W * 0.5, H * 0.08, 0.8)
 
 # 8 · Drive.
 tab("Guida")

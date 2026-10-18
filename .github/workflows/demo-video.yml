@@ -43,8 +43,8 @@ jobs:
           sleep 30
           idb ui describe-all --udid "$UDID" --json | head -c 300 || true
           python3 tools/ci/demo_video.py "$UDID" raw.mp4
-          # Facebook-friendly: 1.4× speed, 1080 px wide, 30 fps, H.264.
-          ffmpeg -y -loglevel error -i raw.mp4 -vf "setpts=0.7*PTS,scale=1080:-2,fps=30" -c:v libx264 -preset slow -crf 23 -pix_fmt yuv420p -movflags +faststart Nordur-demo.mp4
+          # Facebook-friendly: still moments (waits for the next tap) cut, 1080 px wide, 30 fps, H.264.
+          ffmpeg -y -loglevel error -i raw.mp4 -vf "mpdecimate=hi=64*12:lo=64*5:frac=0.33,setpts=N/(30*TB),scale=1080:-2" -r 30 -c:v libx264 -preset slow -crf 23 -pix_fmt yuv420p -movflags +faststart Nordur-demo.mp4
           ls -lh raw.mp4 Nordur-demo.mp4
 
       - name: Publish to branch demo-video
