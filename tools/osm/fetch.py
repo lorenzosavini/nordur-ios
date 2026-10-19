@@ -24,11 +24,13 @@ LAYERS = {
     },
     "sights": {
         "filters": [
-            'nwr["tourism"~"^(attraction|viewpoint|museum)$"]["name"]',
-            'nwr["natural"~"^(waterfall|hot_spring|geyser|cave_entrance|arch|volcano|glacier|beach)$"]["name"]',
-            'nwr["waterway"="waterfall"]["name"]',
-            'nwr["amenity"="public_bath"]["name"]',
-            'nwr["leisure"="swimming_pool"]["name"~"laug|lagoon",i]["access"!="private"]',
+            # Nodes and ways only: the big glacier relations make the queries time out.
+            'nw["tourism"~"^(attraction|viewpoint|museum)$"]["name"]',
+            'nw["natural"~"^(waterfall|hot_spring|geyser|cave_entrance|arch|volcano)$"]["name"]',
+            'nw["natural"~"^(glacier|beach)$"]["name"]',
+            'nw["waterway"="waterfall"]["name"]',
+            'nw["amenity"="public_bath"]["name"]',
+            'nw["leisure"="swimming_pool"]["name"~"laug|lagoon",i]["access"!="private"]',
         ],
         "keep": ["tourism", "natural", "waterway", "amenity", "leisure", "name", "name:en", "wikipedia", "wikidata",
                  "description", "description:en", "fee", "opening_hours", "ele"],
@@ -38,11 +40,11 @@ LAYERS = {
 UA = "nordur-osm-data (github.com/lorenzosavini/nordur-ios)"
 
 
-def query(layer, bbox):
-    body = "[out:json][timeout:170];(" + "".join(f"{f}({bbox});" for f in layer["filters"]) + ");out center tags;"
+def query(filt, bbox):
+    body = f"[out:json][timeout:170];{filt}({bbox});out center tags;"
     data = urllib.parse.urlencode({"data": body}).encode()
     last = None
-    for attempt in range(6):
+    for attempt in range(4):
         endpoint = MIRRORS[attempt % len(MIRRORS)]
         try:
             req = urllib.request.Request(endpoint, data=data, headers={"User-Agent": UA, "Accept": "application/json"})
@@ -73,17 +75,26 @@ def compact(elements, keep):
 
 def main(out_dir):
     for name, layer in LAYERS.items():
-        seen, elements = set(), []
+        seen, elements, done = set(), [], 0
         for bbox in AREAS:
-            for e in compact(query(layer, bbox), layer["keep"]):
-                if e["id"] not in seen:
-                    seen.add(e["id"])
-                    elements.append(e)
+            # One small query per kind of place: a busy server answers these, and a
+            # failing one costs only that area, not the whole layer.
+            ok = True
+            for filt in layer["filters"]:
+                try:
+                    for e in compact(query(filt, bbox), layer["keep"]):
+                        if e["id"] not in seen:
+                            seen.add(e["id"])
+                            elements.append(e)
+                except RuntimeError as err:
+                    ok = False
+                    print(f"{name} {bbox} skipped: {err}", file=sys.stderr)
+                time.sleep(3)
+            done += ok
             print(f"{name} {bbox}: {len(elements)} so far")
-            time.sleep(5)
         if len(elements) < layer["min"]:
             raise SystemExit(f"{name}: only {len(elements)} elements")
-        doc = {"updated": datetime.now(timezone.utc).isoformat(timespec="seconds"), "areas": f"{len(AREAS)}/{len(AREAS)}", "elements": elements}
+        doc = {"updated": datetime.now(timezone.utc).isoformat(timespec="seconds"), "areas": f"{done}/{len(AREAS)}", "elements": elements}
         with open(f"{out_dir}/{name}.json", "w") as f:
             json.dump(doc, f, ensure_ascii=False, separators=(",", ":"))
         print(f"{name}: {len(elements)} elements")
