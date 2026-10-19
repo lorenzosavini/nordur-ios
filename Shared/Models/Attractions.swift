@@ -46,8 +46,14 @@ struct Attraction: Identifiable, Hashable {
     let minutes: Int
     var region: String
     var caution: String? = nil
+    /// Places from OpenStreetMap; nil for the sights of the app's own list.
+    var osmID: Int? = nil
+    /// On Wikipedia (or in the app's own list): the better-known places come first.
+    var notable = true
+    var detail: String? = nil
 
-    var id: String { name }
+    var id: String { osmID.map { "osm\($0)" } ?? name }
+    var isTop: Bool { osmID == nil }
     var coordinate: Coordinate { Coordinate(lat: lat, lon: lon) }
     var place: Place { Place(name: name, coordinate: coordinate, subtitle: region) }
 }

@@ -20,6 +20,7 @@ final class AppModel {
         case webcams = "Webcam"
         case fuel = "Distributori"
         case shops = "Supermercati e negozi"
+        case sights = "Attrazioni (OpenStreetMap)"
         case flights = "Voli KEF"
         case ferry = "Herjólfur"
         case grid = "Mappa meteo"
@@ -32,6 +33,8 @@ final class AppModel {
     let location = LocationManager()
     /// A screen asks the root view to switch tab ("map", "weather", "trip"…).
     var requestedTab: String?
+    /// A GPX/KML trip opened from another app, waiting for the Trip tab to show it.
+    var pendingTripImport: TripImportFile?
     var showSettings = false
 
     private(set) var useCurrentLocation: Bool
@@ -68,6 +71,10 @@ final class AppModel {
     var fuel: Fetched<[FuelStation]>?
     var shops: Fetched<[Shop]>?
     @ObservationIgnored private var shopsTask: Task<Void, Never>?
+    /// Places to visit: the app's own list, plus OpenStreetMap once downloaded.
+    private(set) var spots: [Attraction] = Attraction.catalog
+    var sights: Fetched<[Attraction]>?
+    @ObservationIgnored private var sightsTask: Task<Void, Never>?
     var flights: Fetched<[Flight]>?
     var ferry: Fetched<FerryNotice?>?
     var weatherGrid: Fetched<WeatherGrid>?
@@ -303,6 +310,24 @@ final class AppModel {
             apply(result, .fuel) { self.fuel = $0 }
         }
         await loadShops(force: force)
+        await loadSights(force: force)
+    }
+
+    /// Places to visit from OpenStreetMap (30-day on-device copy), merged with the app's list.
+    func loadSights(force: Bool = false) async {
+        guard sights == nil || force else { return }
+        if let sightsTask, !force { return await sightsTask.value }
+        let task = Task { @MainActor in
+            let result = await attempt { () async throws -> (Fetched<[Attraction]>, [Attraction]) in
+                let fetched = try await Sights.all(maxAge: force ? 0 : 30 * 24 * 3600)
+                let merged = await Task.detached(priority: .utility) { Sights.merged(fetched.value) }.value
+                return (fetched, merged)
+            }
+            apply(result, .sights) { self.sights = $0.0; self.spots = $0.1 }
+            sightsTask = nil
+        }
+        sightsTask = task
+        await task.value
     }
 
     /// Supermarkets and shops (30-day on-device copy, like the fuel stations).

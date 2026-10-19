@@ -599,6 +599,8 @@ struct TodayView: View {
                 }
                 .fixedSize(horizontal: false, vertical: true)
                 Rule()
+                sightsCell
+                Rule()
                 shopsCell
             }
             .overlay(alignment: .top) { Rule() }
@@ -678,6 +680,44 @@ struct TodayView: View {
                 Text(model.errors[.fuel] == nil ? String(localized: "Download in corso") : String(localized: "Non disponibile")).font(.app(.caption)).foregroundStyle(Theme.faint)
             }
         }
+    }
+
+    /// What there is to see around the place, the best-known first.
+    private var sightsCell: some View {
+        NavigationLink { SightsView() } label: {
+            let c = model.activePlace.coordinate
+            let near = model.spots.map { (sight: $0, km: Geo.distanceKm(c, $0.coordinate)) }.filter { $0.km <= 60 }
+            let best = near.filter { $0.sight.isTop }.min { $0.km < $1.km } ?? near.filter { $0.sight.notable }.min { $0.km < $1.km }
+            VStack(alignment: .leading, spacing: 6) {
+                HStack {
+                    Text("DA VEDERE · ENTRO 60 KM").font(.mono(9.5)).foregroundStyle(Theme.faint)
+                    Spacer()
+                    Image(systemName: "chevron.right").font(.system(size: 11, weight: .semibold)).foregroundStyle(Theme.faint)
+                }
+                HStack(alignment: .firstTextBaseline, spacing: 6) {
+                    Text("\(near.count)").font(.metric(30, .semibold)).foregroundStyle(Theme.text)
+                    Text("LUOGHI").font(.mono(9.5)).foregroundStyle(Theme.dim)
+                    Spacer()
+                    HStack(spacing: -4) {
+                        ForEach(Array(Set(near.map { $0.sight.kind })).sorted { $0.rawValue < $1.rawValue }.prefix(6), id: \.self) { kind in
+                            Image(systemName: kind.symbol).font(.system(size: 10, weight: .bold)).foregroundStyle(.white)
+                                .frame(width: 22, height: 22).background(Circle().fill(kind.tint))
+                                .overlay(Circle().strokeBorder(Theme.bg, lineWidth: 1.5))
+                        }
+                    }
+                }
+                if let best {
+                    Text(String(localized: "Da non perdere: \(best.sight.name), \(Fmt.number(best.km, decimals: best.km < 10 ? 1 : 0)) km"))
+                        .font(.app(.caption, .semibold)).foregroundStyle(Theme.dim).lineLimit(1)
+                }
+            }
+            .padding(12)
+            .frame(maxWidth: .infinity, alignment: .topLeading)
+            .contentShape(Rectangle())
+        }
+        .buttonStyle(.plain)
+        .accessibilityIdentifier("today.sights")
+        .task { await model.loadSights() }
     }
 
     /// The nearest supermarket and whether it is open: outside the towns shops close early.

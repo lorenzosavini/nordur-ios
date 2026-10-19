@@ -1,5 +1,5 @@
 {
   "functions": { "api/*.js": { "maxDuration": 60 } },
   "rewrites": [{ "source": "/api/watch", "destination": "/api/aurora?watch=1" }],
-  "crons": [{ "path": "/api/aurora", "schedule": "7 21 * * *" }, { "path": "/api/roads?shops=1&refresh=1", "schedule": "23 4 * * 1" }]
+  "crons": [{ "path": "/api/aurora", "schedule": "7 21 * * *" }, { "path": "/api/roads?osm=all&refresh=1", "schedule": "23 4 * * 1" }]
 }

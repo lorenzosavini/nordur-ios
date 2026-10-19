@@ -14177,6 +14177,776 @@
           }
         }
       }
+    },
+    "Museo" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Museum"
+          }
+        }
+      }
+    },
+    "Da vedere" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Things to see"
+          }
+        }
+      }
+    },
+    "Sorgente calda" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hot spring"
+          }
+        }
+      }
+    },
+    "Piscina e bagni termali" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pool and hot baths"
+          }
+        }
+      }
+    },
+    "Arco di roccia" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rock arch"
+          }
+        }
+      }
+    },
+    "Geyser" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Geyser"
+          }
+        }
+      }
+    },
+    "Belvedere" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Viewpoint"
+          }
+        }
+      }
+    },
+    "Vulcano" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Volcano"
+          }
+        }
+      }
+    },
+    "Ghiacciaio" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Glacier"
+          }
+        }
+      }
+    },
+    "Grotta" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cave"
+          }
+        }
+      }
+    },
+    "Tutto" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "All"
+          }
+        }
+      }
+    },
+    "Da vedere vicino a %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Things to see near %@"
+          }
+        }
+      }
+    },
+    "Solo i più famosi" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Best-known only"
+          }
+        }
+      }
+    },
+    "Aggiungi una tappa al viaggio per mettere questo luogo nel programma." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Add a stop to the trip to put this place in the plan."
+          }
+        }
+      }
+    },
+    "%lld km in linea d'aria da %@ · visita ~%@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$lld km as the crow flies from %2$@ · visit ~%3$@"
+          }
+        }
+      }
+    },
+    "Prova a togliere i filtri." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Try removing the filters."
+          }
+        }
+      }
+    },
+    "Aggiunto a %@: trovi giorno e ora nella tappa" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Added to %@: day and time are in the stop"
+          }
+        }
+      }
+    },
+    "OpenStreetMap non ancora scaricato: %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "OpenStreetMap not downloaded yet: %@"
+          }
+        }
+      }
+    },
+    "Niente da mostrare" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nothing to show"
+          }
+        }
+      }
+    },
+    "TOP" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "TOP"
+          }
+        }
+      }
+    },
+    "%lld luoghi entro %lld km" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$lld places within %2$lld km"
+          }
+        }
+      }
+    },
+    "TOP: i luoghi principali scelti dall'app, con tempi di visita e avvertenze. Gli altri vengono da OpenStreetMap (cascate, belvedere, sorgenti calde, grotte, musei, piscine…)." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "TOP: the main sights chosen by the app, with visit times and warnings. The others come from OpenStreetMap (waterfalls, viewpoints, hot springs, caves, museums, pools…)."
+          }
+        }
+      }
+    },
+    "Aggiungi alla tappa più vicina: %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Add to the nearest stop: %@"
+          }
+        }
+      }
+    },
+    "%@ · ~%@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ · ~%2$@"
+          }
+        }
+      }
+    },
+    "%@ · %@ · %lld km" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ · %2$@ · %3$lld km"
+          }
+        }
+      }
+    },
+    "Cascata, grotta, nome…" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Waterfall, cave, name…"
+          }
+        }
+      }
+    },
+    "LUOGHI" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "PLACES"
+          }
+        }
+      }
+    },
+    "DA VEDERE · ENTRO 60 KM" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "THINGS TO SEE · WITHIN 60 KM"
+          }
+        }
+      }
+    },
+    "Da non perdere: %@, %@ km" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Don't miss: %1$@, %2$@ km"
+          }
+        }
+      }
+    },
+    "Importa viaggio" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Import trip"
+          }
+        }
+      }
+    },
+    "Sostituiscilo" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Replace it"
+          }
+        }
+      }
+    },
+    "%lld luoghi: %lld tappe e %lld attrazioni." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$lld places: %2$lld stops and %3$lld attractions."
+          }
+        }
+      }
+    },
+    "Le tappe sono i posti dove dormi; ogni attrazione va sotto la tappa del suo giorno o la più vicina. Puoi cambiare tutto anche dopo." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Stops are where you sleep; each attraction goes under the stop of its day, or the nearest one. You can change everything later."
+          }
+        }
+      }
+    },
+    "Viaggio attuale" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Current trip"
+          }
+        }
+      }
+    },
+    "Primo giorno" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "First day"
+          }
+        }
+      }
+    },
+    "Aggiungi in coda" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Add at the end"
+          }
+        }
+      }
+    },
+    "Luoghi nel file" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Places in the file"
+          }
+        }
+      }
+    },
+    "Nel file non ci sono punti (waypoint o segnaposti). Se è un KMZ di Google My Maps, esportalo come KML." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The file has no points (waypoints or placemarks). If it is a KMZ from Google My Maps, export it as KML."
+          }
+        }
+      }
+    },
+    "TAPPE" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "STOPS"
+          }
+        }
+      }
+    },
+    "NOTTI" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "NIGHTS"
+          }
+        }
+      }
+    },
+    "ATTRAZIONI" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ATTRACTIONS"
+          }
+        }
+      }
+    },
+    "SULLA STRADA" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ON THE WAY"
+          }
+        }
+      }
+    },
+    "Vicino a %@ e lungo la strada da %@. Il + li aggiunge al programma dopo l'ultima attrazione." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Near %1$@ and along the road from %2$@. The + adds them to the plan after the last attraction."
+          }
+        }
+      }
+    },
+    "Vicino a %@. Il + li aggiunge al programma dopo l'ultima attrazione." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Near %@. The + adds them to the plan after the last attraction."
+          }
+        }
+      }
+    },
+    "%lld allerte IMO" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld IMO warnings"
+          }
+        }
+      }
+    },
+    "%@ · di passaggio" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ · passing through"
+          }
+        }
+      }
+    },
+    "Aggiungi %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Add %@"
+          }
+        }
+      }
+    },
+    "Arrivo: %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Arrival: %@"
+          }
+        }
+      }
+    },
+    "Consigliati per questa tappa" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Suggested for this stop"
+          }
+        }
+      }
+    },
+    "Aggiungi un'attrazione a questo giorno" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Add an attraction to this day"
+          }
+        }
+      }
+    },
+    "Giorno della partenza: nessuna attrazione" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Departure day: no attractions"
+          }
+        }
+      }
+    },
+    "%@ → %@ · %lld notti" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ → %2$@ · %3$lld nights"
+          }
+        }
+      }
+    },
+    "~%lld km in linea d'aria" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "~%lld km as the crow flies"
+          }
+        }
+      }
+    },
+    "Giornata libera" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Free day"
+          }
+        }
+      }
+    },
+    "Nessun suggerimento qui vicino." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No suggestions nearby."
+          }
+        }
+      }
+    },
+    "Meteo e allerte" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Weather and warnings"
+          }
+        }
+      }
+    },
+    "strade" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "roads"
+          }
+        }
+      }
+    },
+    "Verso la tappa %lld: %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "To stop %1$lld: %2$@"
+          }
+        }
+      }
+    },
+    "~%lld km · ~%@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "~%1$lld km · ~%2$@"
+          }
+        }
+      }
+    },
+    "1 NOTTE" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "1 NIGHT"
+          }
+        }
+      }
+    },
+    "%lld NOTTI" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld NIGHTS"
+          }
+        }
+      }
+    },
+    "Tieni premuta un'attrazione per spostarla a un altro giorno o a un'altra tappa." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Press and hold an attraction to move it to another day or stop."
+          }
+        }
+      }
+    },
+    "TAPPA %lld DI %lld" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "STOP %1$lld OF %2$lld"
+          }
+        }
+      }
+    },
+    "Tutto quello che c'è da vedere, sulla mappa" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Everything to see, on the map"
+          }
+        }
+      }
+    },
+    "Giorno %lld · %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Day %1$lld · %2$@"
+          }
+        }
+      }
+    },
+    "DI PASSAGGIO" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "PASSING THROUGH"
+          }
+        }
+      }
+    },
+    "Nessuna attrazione: apri la tappa per i consigli" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No attractions: open the stop for suggestions"
+          }
+        }
+      }
+    },
+    "TAPPA" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "STOP"
+          }
+        }
+      }
+    },
+    "ESPORTA" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "EXPORT"
+          }
+        }
+      }
+    },
+    "IMPORTA" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "IMPORT"
+          }
+        }
+      }
+    },
+    "Crea tappe e attrazioni con Google My Maps, gpx.studio, Komoot o un altro programma ed esportale in GPX o KML." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Plan stops and attractions in Google My Maps, gpx.studio, Komoot or another app and export them as GPX or KML."
+          }
+        }
+      }
+    },
+    "Importa un viaggio da file GPX o KML" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Import a trip from a GPX or KML file"
+          }
+        }
+      }
+    },
+    "Entro 60 km da %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Within 60 km of %@"
+          }
+        }
+      }
+    },
+    "LUCE DEL GIORNO" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "DAYLIGHT"
+          }
+        }
+      }
+    },
+    "TEMPI DEL GIORNO" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "THE DAY'S TIMES"
+          }
+        }
+      }
+    },
+    "Attrazioni e luoghi da vedere" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Attractions and places to see"
+          }
+        }
+      }
+    },
+    "Attrazioni (OpenStreetMap)" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Attractions (OpenStreetMap)"
+          }
+        }
+      }
     }
   },
   "version" : "1.0"

@@ -243,7 +243,7 @@ enum SyncFiles {
 
     static let preferenceKeys = ["alertSettings", "driveSettings", "appearance", "chosenPlace", "useCurrentLocation",
                                  "map.layer", "map.warnings", "map.roads", "map.roadInfo", "map.webcams", "map.quakes", "map.fuel",
-                                 "map.chargers", "map.shops", "map.trip", "map.particles"]
+                                 "map.chargers", "map.shops", "map.sights", "map.trip", "map.particles"]
 
     private static var documents: URL { FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0] }
 

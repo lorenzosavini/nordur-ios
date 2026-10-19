@@ -79,7 +79,7 @@ final class ArrowAnnotation: NSObject, MKAnnotation {
 
 /// Any point of interest drawn on the map.
 final class PoiAnnotation: NSObject, MKAnnotation {
-    enum Kind: String { case place, station, webcam, quake, fuel, charger, shop, stop, visit, roadSection, roadHazard, sighting, noSighting }
+    enum Kind: String { case place, station, webcam, quake, fuel, charger, shop, sight, topSight, stop, visit, roadSection, roadHazard, sighting, noSighting }
     let kind: Kind
     let key: String
     let coordinate: CLLocationCoordinate2D
@@ -88,11 +88,13 @@ final class PoiAnnotation: NSObject, MKAnnotation {
     let color: UIColor
     let text: String?
     let size: CGFloat
+    /// SF Symbol for the marker, when it depends on more than the kind.
+    let glyph: String?
 
     init(kind: Kind, key: String, coordinate: CLLocationCoordinate2D, title: String?, subtitle: String? = nil,
-         color: UIColor, text: String? = nil, size: CGFloat = 22) {
+         color: UIColor, text: String? = nil, size: CGFloat = 22, glyph: String? = nil) {
         self.kind = kind; self.key = key; self.coordinate = coordinate; self.title = title
-        self.subtitle = subtitle; self.color = color; self.text = text; self.size = size
+        self.subtitle = subtitle; self.color = color; self.text = text; self.size = size; self.glyph = glyph
     }
 }
 
@@ -353,8 +355,8 @@ struct WeatherMapView: UIViewRepresentable {
             default:
                 let view = mapView.dequeueReusableAnnotationView(withIdentifier: "marker", for: poi) as! MKMarkerAnnotationView
                 view.markerTintColor = poi.color
-                view.glyphImage = UIImage(systemName: Self.glyph(poi.kind))
-                let pinned = poi.kind == .stop || poi.kind == .place || poi.kind == .visit
+                view.glyphImage = UIImage(systemName: poi.glyph ?? Self.glyph(poi.kind))
+                let pinned = poi.kind == .stop || poi.kind == .place || poi.kind == .visit || poi.kind == .topSight
                 view.titleVisibility = pinned ? .visible : .hidden
                 view.subtitleVisibility = poi.kind == .place ? .visible : .hidden
                 view.canShowCallout = false
@@ -380,6 +382,7 @@ struct WeatherMapView: UIViewRepresentable {
             case .fuel: return "fuelpump.fill"
             case .charger: return "bolt.car.fill"
             case .shop: return "cart.fill"
+            case .sight, .topSight: return "binoculars.fill"
             case .stop: return "flag.fill"
             case .visit: return "binoculars.fill"
             case .station: return "road.lanes"

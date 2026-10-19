@@ -244,6 +244,42 @@ do {
     check(OpeningHours("Mo-Su 07:30-24:00")?.nextChange(after: at("2026-10-19T20:00:00Z")) == at("2026-10-20T00:00:00Z"), "closes at midnight")
 }
 
+// MARK: Trip files (GPX waypoints, KML from Google My Maps)
+
+do {
+    let gpx = """
+    <?xml version="1.0"?><gpx version="1.1" xmlns="http://www.topografix.com/GPX/1/1">
+      <wpt lat="64.1466" lon="-21.9426"><name>Reykjavík</name><time>2026-11-06T15:00:00Z</time><type>Tappa</type><desc>2 notti</desc></wpt>
+      <wpt lat="64.3271" lon="-20.1199"><name>Gullfoss</name><type>Attrazione</type></wpt>
+      <wpt lat="63.4186" lon="-19.0060"><name>Vík</name><time>2026-11-08T17:00:00Z</time><sym>Lodging</sym></wpt>
+      <rte><rtept lat="64.1466" lon="-21.9426"><name>Reykjavík</name></rtept><rtept lat="63.4186" lon="-19.0060"/></rte>
+    </gpx>
+    """
+    let items = TripFileReader.read(Data(gpx.utf8)) ?? []
+    check(items.count == 3, "trip gpx places", "\(items.count)")
+    check(items.map(\.isStop) == [true, false, true], "trip gpx stops and attractions", "\(items.map(\.isStop))")
+    check(items.first?.nights == 2, "trip gpx nights from description", "\(String(describing: items.first?.nights))")
+    check(items.first?.date != nil, "trip gpx dates")
+
+    let kml = """
+    <?xml version="1.0" encoding="UTF-8"?><kml xmlns="http://www.opengis.net/kml/2.2"><Document><name>Islanda</name>
+      <Folder><name>Hotel</name>
+        <Placemark><name>Höfn Guesthouse</name><Point><coordinates>-15.2069,64.2539,0</coordinates></Point></Placemark>
+      </Folder>
+      <Folder><name>Da vedere</name>
+        <Placemark><name>Jökulsárlón</name><description><![CDATA[Laguna<br>al tramonto]]></description><Point><coordinates>-16.1792,64.0784,0</coordinates></Point></Placemark>
+        <Placemark><name>Stokksnes</name><Point><coordinates>-14.9670,64.2470,0</coordinates></Point></Placemark>
+      </Folder>
+    </Document></kml>
+    """
+    let k = TripFileReader.read(Data(kml.utf8)) ?? []
+    check(k.count == 3 && k[0].isStop && !k[1].isStop && !k[2].isStop, "kml folders", "\(k.map { "\($0.name) \($0.isStop)" })")
+    check(abs((k.first?.lat ?? 0) - 64.2539) < 1e-6 && abs((k.first?.lon ?? 0) + 15.2069) < 1e-6, "kml lon,lat order")
+    check(k[1].notes == "Laguna al tramonto", "kml description", k[1].notes ?? "nil")
+    let plain = TripFileReader.read(Data("<kml><Placemark><name>A</name><Point><coordinates>-21,64</coordinates></Point></Placemark><Placemark><name>B</name><Point><coordinates>-19,63.4</coordinates></Point></Placemark></kml>".utf8)) ?? []
+    check(plain.count == 2 && plain.allSatisfy(\.isStop), "short unmarked list = stops")
+}
+
 print(failures == 0 ? "ALL ENGINE TESTS PASSED" : "\(failures) FAILURES")
 exit(failures == 0 ? 0 : 1)
 

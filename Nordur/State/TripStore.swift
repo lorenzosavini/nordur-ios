@@ -173,3 +173,87 @@ final class TripStore {
         }
     }
 }
+
+// MARK: Import and export (GPX / KML)
+
+extension TripStore {
+    /// Builds stops and attractions from a file: stops in the file's order (or by
+    /// date), each attraction under the stop whose days cover its date, or the
+    /// nearest one, after what is already planned.
+    func importItems(_ items: [TripFileItem], start: Date, replacing: Bool) {
+        let calendar = Calendar.iceland
+        var stopItems = items.filter(\.isStop)
+        if stopItems.allSatisfy({ $0.date != nil }) { stopItems.sort { $0.date! < $1.date! } }
+        var result: [TripStop] = replacing ? [] : stops
+        var date = calendar.date(bySettingHour: 12, minute: 0, second: 0, of: start) ?? start
+        if !replacing, let last = stops.last { date = max(date, last.endDate) }
+        var added: [TripStop] = []
+        for (i, item) in stopItems.enumerated() {
+            let arrival = item.date ?? date
+            // Nights: given, else until the next dated stop, else one.
+            var nights = item.nights ?? 1
+            if item.nights == nil, let next = stopItems.dropFirst(i + 1).first?.date, let d = item.date {
+                nights = max(0, Self.dayShift(from: d, to: next))
+            }
+            if i == stopItems.count - 1, item.nights == nil, item.date == nil { nights = max(nights, 1) }
+            let place = Place(name: item.name, lat: item.lat, lon: item.lon, subtitle: nil)
+            added.append(TripStop(place: place, date: arrival, nights: nights, notes: item.notes ?? ""))
+            date = calendar.date(byAdding: .day, value: nights, to: arrival) ?? arrival
+        }
+        for item in items where !item.isStop {
+            let c = Coordinate(lat: item.lat, lon: item.lon)
+            let targets = added.isEmpty ? result : added
+            guard !targets.isEmpty else { continue }
+            let byDate = item.date.flatMap { d in targets.firstIndex { $0.includes(day: d) } }
+            let index = byDate ?? targets.indices.min { Geo.distanceKm(targets[$0].place.coordinate, c) < Geo.distanceKm(targets[$1].place.coordinate, c) }!
+            let known = Attraction.named(item.name)
+            var visit = TripVisit.next(at: Place(name: item.name, lat: item.lat, lon: item.lon, subtitle: nil), kind: known?.kind,
+                                       minutes: known?.minutes ?? 60, in: targets[index])
+            if let d = item.date, targets[index].includes(day: d) { visit.date = d }
+            visit.notes = item.notes ?? ""
+            if added.isEmpty {
+                if let r = result.firstIndex(where: { $0.id == targets[index].id }) { result[r].visits.append(visit) }
+            } else {
+                added[index].visits.append(visit)
+            }
+        }
+        stops = result + added
+        save()
+    }
+
+    /// The trip as GPX: stops and attractions as waypoints (with their times),
+    /// and the stops again as a route, so other apps show the itinerary.
+    func exportGPX() -> URL? {
+        guard !stops.isEmpty else { return nil }
+        let iso = ISO8601DateFormatter()
+        func esc(_ s: String) -> String {
+            s.replacingOccurrences(of: "&", with: "&amp;").replacingOccurrences(of: "<", with: "&lt;").replacingOccurrences(of: ">", with: "&gt;")
+        }
+        var xml = """
+        <?xml version="1.0" encoding="UTF-8"?>
+        <gpx version="1.1" creator="Nordur" xmlns="http://www.topografix.com/GPX/1/1" xmlns:nordur="https://nordur-api.vercel.app/gpx">
+          <metadata><name>Nordur – viaggio</name></metadata>
+
+        """
+        for stop in stops {
+            xml += "  <wpt lat=\"\(stop.place.coordinate.lat)\" lon=\"\(stop.place.coordinate.lon)\"><name>\(esc(stop.place.name))</name>"
+            xml += "<time>\(iso.string(from: stop.date))</time><desc>\(stop.nights) notti\(stop.notes.isEmpty ? "" : " · " + esc(stop.notes))</desc>"
+            xml += "<sym>Lodging</sym><type>Tappa</type><extensions><nordur:nights>\(stop.nights)</nordur:nights></extensions></wpt>\n"
+            for visit in stop.sortedVisits {
+                xml += "  <wpt lat=\"\(visit.place.coordinate.lat)\" lon=\"\(visit.place.coordinate.lon)\"><name>\(esc(visit.place.name))</name>"
+                xml += "<time>\(iso.string(from: visit.date))</time>\(visit.notes.isEmpty ? "" : "<desc>\(esc(visit.notes))</desc>")"
+                xml += "<sym>Scenic Area</sym><type>Attrazione</type></wpt>\n"
+            }
+        }
+        xml += "  <rte><name>Itinerario</name>\n"
+        for stop in stops {
+            xml += "    <rtept lat=\"\(stop.place.coordinate.lat)\" lon=\"\(stop.place.coordinate.lon)\"><name>\(esc(stop.place.name))</name><type>Tappa</type></rtept>\n"
+        }
+        xml += "  </rte>\n</gpx>\n"
+        let url = FileManager.default.temporaryDirectory.appendingPathComponent("Nordur-viaggio.gpx")
+        do {
+            try Data(xml.utf8).write(to: url, options: .atomic)
+            return url
+        } catch { return nil }
+    }
+}

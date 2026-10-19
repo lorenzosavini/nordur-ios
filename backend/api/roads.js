@@ -73,77 +73,114 @@ export function compact(sections, notifications, info, now = Date.now()) {
   };
 }
 
-// GET /api/roads?shops=1 -> supermarkets, mini-markets, malls and Vínbúðin from
-// OpenStreetMap (Overpass), in Overpass' own JSON shape. Public Overpass servers
-// are often slow or busy for the whole country: fetched here once a week, with
-// the mirrors raced, and the last good copy served to everyone.
-const SHOPS_CACHE = "public/shops.bin";
-const SHOPS_REFRESH = 86400e3; // a refresh asked within a day of the last one is skipped
+// OpenStreetMap layers, in Overpass' own JSON shape (trimmed to the tags the app reads):
+//   GET /api/roads?shops=1       -> supermarkets, mini-markets, malls and Vínbúðin
+//   GET /api/roads?osm=sights    -> places to visit: waterfalls, viewpoints, hot springs,
+//                                   geysers, caves, arches, volcanoes, glaciers, beaches,
+//                                   museums, attractions and geothermal pools (named only)
+// Public Overpass servers are often slow or busy for the whole country: fetched here
+// with the mirrors raced over four smaller areas, refreshed by a weekly cron
+// (&refresh=1), and the last good copy served to everyone straight away.
+const OSM_REFRESH = 86400e3; // a refresh asked within a day of the last one is skipped
 const OVERPASS = [
   "https://overpass-api.de/api/interpreter",
   "https://overpass.kumi.systems/api/interpreter",
   "https://maps.mail.ru/osm/tools/overpass/api/interpreter",
 ];
-// Four smaller areas answer much faster than the whole country at once.
-const SHOP_AREAS = ["63.2,-24.6,64.6,-19.0", "64.6,-24.6,66.6,-19.0", "63.2,-19.0,64.9,-13.4", "64.9,-19.0,66.6,-13.4"];
-const shopsQuery = (bbox) => `[out:json][timeout:45];
-nwr["shop"~"^(supermarket|convenience|mall|alcohol|department_store)$"](${bbox});
-out center tags;`;
-const KEEP = ["shop", "name", "brand", "operator", "opening_hours", "addr:city", "addr:place"];
-let shopsMemory = null; // { at, elements }
+const AREAS = ["63.2,-24.6,64.6,-19.0", "64.6,-24.6,66.6,-19.0", "63.2,-19.0,64.9,-13.4", "64.9,-19.0,66.6,-13.4"];
+const OSM_LAYERS = {
+  shops: {
+    cache: "public/shops.bin", min: 50,
+    filters: ['nwr["shop"~"^(supermarket|convenience|mall|alcohol|department_store)$"]'],
+    keep: ["shop", "name", "brand", "operator", "opening_hours", "addr:city", "addr:place"],
+  },
+  sights: {
+    cache: "public/sights.bin", min: 200,
+    filters: [
+      'nwr["tourism"~"^(attraction|viewpoint|museum)$"]["name"]',
+      'nwr["natural"~"^(waterfall|hot_spring|geyser|cave_entrance|arch|volcano|glacier|beach)$"]["name"]',
+      'nwr["waterway"="waterfall"]["name"]',
+      'nwr["amenity"="public_bath"]["name"]',
+      'nwr["leisure"="swimming_pool"]["name"~"laug|lagoon",i]["access"!="private"]',
+    ],
+    keep: ["tourism", "natural", "waterway", "amenity", "leisure", "name", "name:en", "wikipedia", "wikidata",
+      "description", "description:en", "fee", "opening_hours", "ele"],
+  },
+};
+const osmMemory = {}; // layer -> { at, elements }
 
-export function compactShops(json) {
+const osmQuery = (layer, bbox) => `[out:json][timeout:45];
+(${layer.filters.map((f) => `${f}(${bbox});`).join("")});
+out center tags;`;
+
+export function compactOsm(json, keep = OSM_LAYERS.shops.keep) {
   return (json?.elements || []).map((e) => {
     const lat = e.lat ?? e.center?.lat;
     const lon = e.lon ?? e.center?.lon;
     if (lat == null || lon == null || !e.tags) return null;
-    const tags = Object.fromEntries(KEEP.filter((k) => e.tags[k]).map((k) => [k, e.tags[k]]));
+    const tags = Object.fromEntries(keep.filter((k) => e.tags[k]).map((k) => [k, String(e.tags[k]).slice(0, 300)]));
     return { id: e.id, lat: Math.round(lat * 1e5) / 1e5, lon: Math.round(lon * 1e5) / 1e5, tags };
   }).filter(Boolean);
 }
+export const compactShops = (json) => compactOsm(json, OSM_LAYERS.shops.keep);
 
-async function overpassArea(bbox) {
+async function overpassArea(layer, bbox) {
   return Promise.any(OVERPASS.map(async (endpoint) => {
     const res = await fetch(endpoint, {
-      method: "POST", body: new URLSearchParams({ data: shopsQuery(bbox) }),
+      method: "POST", body: new URLSearchParams({ data: osmQuery(layer, bbox) }),
       headers: { "User-Agent": "nordur-api (github.com/lorenzosavini/nordur-ios)", Accept: "application/json" },
       signal: AbortSignal.timeout(50000),
     });
     if (!res.ok) throw new Error(`${endpoint} ${res.status}`);
     const json = await res.json();
     if (json.remark && !json.elements?.length) throw new Error(`${endpoint}: ${json.remark}`);
-    return compactShops(json);
+    return compactOsm(json, layer.keep);
   }));
 }
 
-async function overpassShops() {
-  const areas = await Promise.all(SHOP_AREAS.map(overpassArea));
+async function overpassLayer(layer) {
+  const areas = await Promise.all(AREAS.map((bbox) => overpassArea(layer, bbox)));
   const seen = new Set();
   const elements = areas.flat().filter((e) => !seen.has(e.id) && seen.add(e.id));
-  if (elements.length < 50) throw new Error(`solo ${elements.length} negozi`);
+  if (elements.length < layer.min) throw new Error(`solo ${elements.length} elementi`);
   return elements;
 }
 
-// A request answers from the stored copy straight away (even an old one); the
-// weekly cron (?shops=1&refresh=1) or an empty store downloads a new copy.
-async function shops(res, refresh) {
-  if (!shopsMemory) shopsMemory = await readObject(SHOPS_CACHE).catch(() => null);
-  if (!shopsMemory || (refresh && Date.now() - shopsMemory.at > SHOPS_REFRESH)) {
+/** The stored copy of a layer, downloaded when there is none or on a refresh. */
+async function osmLayer(name, refresh) {
+  const layer = OSM_LAYERS[name];
+  if (!osmMemory[name]) osmMemory[name] = await readObject(layer.cache).catch(() => null);
+  if (!osmMemory[name] || (refresh && Date.now() - osmMemory[name].at > OSM_REFRESH)) {
     try {
-      shopsMemory = { at: Date.now(), elements: await overpassShops() };
-      await writeObject(SHOPS_CACHE, shopsMemory, { ttl: 60 * 86400 }).catch((e) => console.error("shops cache", e.message));
+      osmMemory[name] = { at: Date.now(), elements: await overpassLayer(layer) };
+      await writeObject(layer.cache, osmMemory[name], { ttl: 60 * 86400 }).catch((e) => console.error(name, "cache", e.message));
     } catch (e) {
-      console.error("shops", e.errors?.map((x) => x.message).join("; ") || e.message);
-      if (!shopsMemory) return send(res, 502, { error: "OpenStreetMap non raggiungibile" });
+      console.error(name, e.errors?.map((x) => x.message).join("; ") || e.message);
     }
   }
+  return osmMemory[name];
+}
+
+async function osm(res, name, refresh) {
+  if (!OSM_LAYERS[name]) return send(res, 400, { error: "osm" });
+  const stored = await osmLayer(name, refresh);
+  if (!stored) return send(res, 502, { error: "OpenStreetMap non raggiungibile" });
   res.setHeader("Cache-Control", "public, s-maxage=86400, stale-while-revalidate=604800");
-  return send(res, 200, { updated: new Date(shopsMemory.at).toISOString(), elements: shopsMemory.elements });
+  return send(res, 200, { updated: new Date(stored.at).toISOString(), elements: stored.elements });
 }
 
 export default async function handler(req, res) {
   const params = new URL(req.url, "http://x").searchParams;
-  if (params.get("shops")) return shops(res, params.get("refresh") === "1");
+  const refresh = params.get("refresh") === "1";
+  if (params.get("shops")) return osm(res, "shops", refresh);
+  if (params.get("osm")) {
+    // The weekly cron refreshes every layer.
+    if (params.get("osm") === "all") {
+      const done = await Promise.all(Object.keys(OSM_LAYERS).map(async (name) => [name, (await osmLayer(name, refresh))?.elements.length ?? 0]));
+      return send(res, 200, Object.fromEntries(done));
+    }
+    return osm(res, params.get("osm"), refresh);
+  }
   if (!memory || Date.now() - memory.at > TTL) {
     try {
       const [sections, notifications, info] = await Promise.all([

@@ -123,7 +123,17 @@ struct RootView: View {
         .sensoryFeedback(.selection, trigger: tab)
         .ignoresSafeArea(.keyboard, edges: .bottom)
         .onOpenURL { url in
-            guard url.isFileURL, url.pathExtension.lowercased() == "gpx" else { return }
+            guard url.isFileURL, ["gpx", "kml"].contains(url.pathExtension.lowercased()) else { return }
+            // Waypoints or placemarks: a trip planned elsewhere; a recorded track: a drive.
+            if TripImportFile.isTrip(url) {
+                do {
+                    model.pendingTripImport = try TripImportFile.read(url)
+                    tab = .trip
+                } catch {
+                    importError = error.localizedDescription
+                }
+                return
+            }
             do {
                 openedTrack = try DriveStore.shared.importGPX(url)
                 tab = .drive

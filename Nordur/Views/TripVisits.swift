@@ -1,68 +1,14 @@
 import SwiftUI
 
-/// What to see during a stop: the day plan (driving and visiting time against
-/// the hours of daylight) and one row per attraction, with the weather at the
-/// time you arrive, darkness, roads nearby and the warnings of the place.
-struct StopVisits: View {
-    @Environment(AppModel.self) private var model
+/// Hold an attraction: edit it, move it to another day or stop, or take it off.
+struct VisitMenu: View {
     @Environment(TripStore.self) private var trip
     let stop: TripStop
-    let onAdd: () -> Void
-    let onEdit: (TripVisit) -> Void
-    @State private var showingShops = false
+    let visit: TripVisit
+    let onEdit: () -> Void
 
     var body: some View {
-        let visits = stop.sortedVisits
-        VStack(alignment: .leading, spacing: 10) {
-            ForEach(days(of: visits), id: \.self) { day in
-                let dayVisits = visits.filter { Calendar.iceland.isDate($0.date, inSameDayAs: day) }
-                DayPlanLine(stop: stop, day: day, visits: dayVisits)
-                ForEach(dayVisits) { visit in
-                    VisitRow(visit: visit)
-                        .contentShape(Rectangle())
-                        .onTapGesture { onEdit(visit) }
-                        .contextMenu { moveMenu(visit) }
-                        .accessibilityIdentifier("trip.visit")
-                }
-            }
-            shopsLine
-            Button(action: onAdd) {
-                Label(visits.isEmpty ? String(localized: "Aggiungi attrazioni da vedere") : String(localized: "Aggiungi un'altra attrazione"),
-                      systemImage: "plus.circle.fill")
-                    .font(.app(.subheadline, .semibold))
-                    .foregroundStyle(Theme.accent)
-            }
-            .buttonStyle(.plain)
-            .accessibilityIdentifier("trip.addVisit")
-        }
-        .padding(.vertical, 4)
-        .sheet(isPresented: $showingShops) { ShopsView(center: stop.place, inSheet: true) }
-    }
-
-    /// The nearest supermarket to where you sleep, and the way to all the shops around.
-    private var shopsLine: some View {
-        Button { showingShops = true } label: {
-            HStack(spacing: 8) {
-                Image(systemName: "cart.fill").foregroundStyle(Theme.accent).frame(width: 30)
-                if let market = Shops.nearest(model.shops?.value ?? [], to: stop.place.coordinate, kinds: [.supermarket], within: 80, limit: 1).first {
-                    Text(String(localized: "Spesa: \(market.shop.name), \(Fmt.number(market.km, decimals: market.km < 10 ? 1 : 0)) km"))
-                        .font(.app(.caption, .semibold)).foregroundStyle(Theme.text).lineLimit(1)
-                } else {
-                    Text(model.shops == nil ? String(localized: "Supermercati vicino alla tappa") : String(localized: "Nessun supermercato entro 80 km: fai scorta prima"))
-                        .font(.app(.caption, .semibold)).foregroundStyle(model.shops == nil ? Theme.text : Theme.caution).lineLimit(2)
-                }
-                Spacer()
-                Image(systemName: "chevron.right").font(.system(size: 10, weight: .semibold)).foregroundStyle(Theme.faint)
-            }
-        }
-        .buttonStyle(.plain)
-        .accessibilityIdentifier("trip.shops")
-        .task { await model.loadShops() }
-    }
-
-    /// Hold an attraction: move it to another day or stop, or take it off.
-    @ViewBuilder private func moveMenu(_ visit: TripVisit) -> some View {
-        Button { onEdit(visit) } label: { Label("Modifica", systemImage: "pencil") }
+        Button(action: onEdit) { Label("Modifica", systemImage: "pencil") }
         let otherDays = stop.days.filter { !Calendar.iceland.isDate($0, inSameDayAs: visit.date) }
         if !otherDays.isEmpty {
             Menu {
@@ -91,14 +37,37 @@ struct StopVisits: View {
             Label("Togli dal viaggio", systemImage: "trash")
         }
     }
+}
 
-    private func days(of visits: [TripVisit]) -> [Date] {
-        var seen: [Date] = []
-        for v in visits {
-            let d = Calendar.iceland.startOfDay(for: v.date)
-            if !seen.contains(d) { seen.append(d) }
+/// The nearest supermarket to where you sleep, and the way to all the shops around.
+struct ShopsLine: View {
+    @Environment(AppModel.self) private var model
+    let stop: TripStop
+    let onOpen: () -> Void
+
+    var body: some View {
+        Button(action: onOpen) {
+            HStack(spacing: 10) {
+                Image(systemName: "cart.fill").foregroundStyle(Theme.accent).frame(width: 30)
+                if let market = Shops.nearest(model.shops?.value ?? [], to: stop.place.coordinate, kinds: [.supermarket], within: 80, limit: 1).first {
+                    VStack(alignment: .leading, spacing: 2) {
+                        Text(String(localized: "Spesa: \(market.shop.name), \(Fmt.number(market.km, decimals: market.km < 10 ? 1 : 0)) km"))
+                            .font(.app(.subheadline, .semibold)).foregroundStyle(Theme.text).lineLimit(1)
+                        let status = market.shop.status()
+                        Text(status.text).font(.app(.caption))
+                            .foregroundStyle(status.open == true ? Theme.aurora : status.open == false ? Theme.danger : Theme.faint)
+                    }
+                } else {
+                    Text(model.shops == nil ? String(localized: "Supermercati vicino alla tappa") : String(localized: "Nessun supermercato entro 80 km: fai scorta prima"))
+                        .font(.app(.subheadline, .semibold)).foregroundStyle(model.shops == nil ? Theme.text : Theme.caution).lineLimit(2)
+                }
+                Spacer()
+                Image(systemName: "chevron.right").font(.system(size: 10, weight: .semibold)).foregroundStyle(Theme.faint)
+            }
         }
-        return seen
+        .buttonStyle(.plain)
+        .accessibilityIdentifier("trip.shops")
+        .task { await model.loadShops() }
     }
 }
 
@@ -109,13 +78,18 @@ struct DayPlanLine: View {
     let stop: TripStop
     let day: Date
     let visits: [TripVisit]
+    var showsDate = true
 
     var body: some View {
         let plan = DayPlan(stop: stop, previous: trip.previous(before: stop), day: day, visits: visits)
         let sun = daylight
         VStack(alignment: .leading, spacing: 3) {
             HStack {
-                Text(Fmt.day(day, in: .iceland).uppercased()).font(.mono(10, .semibold)).foregroundStyle(Theme.accent)
+                if showsDate {
+                    Text(Fmt.day(day, in: .iceland).uppercased()).font(.mono(10, .semibold)).foregroundStyle(Theme.accent)
+                } else {
+                    Text(visits.isEmpty ? String(localized: "LUCE DEL GIORNO") : String(localized: "TEMPI DEL GIORNO")).font(.mono(10, .semibold)).foregroundStyle(Theme.accent)
+                }
                 Spacer()
                 let others = stop.days.filter { !Calendar.iceland.isDate($0, inSameDayAs: day) }
                 if !others.isEmpty {
@@ -140,8 +114,10 @@ struct DayPlanLine: View {
                     .accessibilityIdentifier("trip.moveDay")
                 }
             }
-            Text(String(localized: "\(visits.count) attrazioni · ~\(Int(plan.km.rounded())) km · ~\(Fmt.duration(plan.driveMinutes * 60)) di guida + \(Fmt.duration(plan.visitMinutes * 60)) di visita"))
-                .font(.app(.caption)).foregroundStyle(Theme.text)
+            if !visits.isEmpty {
+                Text(String(localized: "\(visits.count) attrazioni · ~\(Int(plan.km.rounded())) km · ~\(Fmt.duration(plan.driveMinutes * 60)) di guida + \(Fmt.duration(plan.visitMinutes * 60)) di visita"))
+                    .font(.app(.caption)).foregroundStyle(Theme.text)
+            }
             if let sun {
                 let late = visits.last.map { $0.end > sun.set } ?? false
                 Label(late ? String(localized: "Luce \(Fmt.time(sun.rise, in: .iceland))–\(Fmt.time(sun.set, in: .iceland)): l'ultima visita finisce al buio")
@@ -250,12 +226,20 @@ struct AttractionPicker: View {
     @State private var searchingOther = false
 
     var body: some View {
-        let all = Attraction.near(stop.place.coordinate, within: 2000)
-        let filtered = query.isEmpty ? all : all.filter {
-            $0.name.localizedCaseInsensitiveContains(query) || $0.region.localizedCaseInsensitiveContains(query) || $0.kind.label.localizedCaseInsensitiveContains(query)
+        // Near the stop: everything (the app's list and OpenStreetMap), the best-known first;
+        // farther away: the main sights only, unless searching.
+        let c = stop.place.coordinate
+        let matches: (Attraction) -> Bool = { a in
+            query.isEmpty || a.name.localizedCaseInsensitiveContains(query) || a.region.localizedCaseInsensitiveContains(query) || a.kind.label.localizedCaseInsensitiveContains(query)
         }
-        let near = filtered.filter { Geo.distanceKm(stop.place.coordinate, $0.coordinate) <= 150 }
-        let far = filtered.filter { Geo.distanceKm(stop.place.coordinate, $0.coordinate) > 150 }
+        let rank: (Attraction) -> Int = { $0.isTop ? 0 : $0.notable ? 1 : 2 }
+        let near = model.spots.filter { Geo.distanceKm(c, $0.coordinate) <= 60 && matches($0) }
+            .sorted { rank($0) != rank($1) ? rank($0) < rank($1) : Geo.distanceKm(c, $0.coordinate) < Geo.distanceKm(c, $1.coordinate) }
+            .prefix(query.isEmpty ? 120 : 300)
+        let far = (query.isEmpty ? Attraction.catalog : model.spots)
+            .filter { Geo.distanceKm(c, $0.coordinate) > 60 && matches($0) }
+            .sorted { Geo.distanceKm(c, $0.coordinate) < Geo.distanceKm(c, $1.coordinate) }
+            .prefix(150)
         NavigationStack {
             List {
                 Section {
@@ -279,17 +263,18 @@ struct AttractionPicker: View {
                 }
                 if !near.isEmpty {
                     Section {
-                        ForEach(near) { row($0) }
-                    } header: { Text(String(localized: "Vicino a \(stop.place.name)")).pinnedHeader() }
+                        ForEach(Array(near)) { row($0) }
+                    } header: { Text(String(localized: "Entro 60 km da \(stop.place.name)")).pinnedHeader() }
                 }
                 if !far.isEmpty {
                     Section {
-                        ForEach(far) { row($0) }
+                        ForEach(Array(far)) { row($0) }
                     } header: { Text("Resto dell'Islanda").pinnedHeader() }
                 }
             }
             .themedList()
             .task { await model.loadShops() }
+            .task { await model.loadSights() }
             .navigationTitle("Aggiungi attrazione")
             .navigationBarTitleDisplayMode(.inline)
             .searchable(text: $query, prompt: String(localized: "Cascata, spiaggia, ghiacciaio…"))
@@ -310,21 +295,9 @@ struct AttractionPicker: View {
             onPick(a.place, a.kind, a.minutes)
             dismiss()
         } label: {
-            HStack(spacing: 12) {
-                Image(systemName: a.kind.symbol)
-                    .font(.system(size: 14, weight: .semibold))
-                    .foregroundStyle(Theme.accent)
-                    .frame(width: 26)
-                VStack(alignment: .leading, spacing: 2) {
-                    Text(a.name).font(.app(.subheadline, .semibold)).foregroundStyle(Theme.text)
-                    Text("\(a.region) · \(a.kind.label) · \(Fmt.duration(Double(a.minutes) * 60))")
-                        .font(.app(.caption)).foregroundStyle(Theme.dim)
-                }
-                Spacer()
-                Text("\(Int(Geo.distanceKm(stop.place.coordinate, a.coordinate).rounded())) km")
-                    .font(.mono(10.5)).foregroundStyle(Theme.faint)
-            }
+            SightRow(sight: a, km: Geo.distanceKm(stop.place.coordinate, a.coordinate))
         }
+        .buttonStyle(.plain)
         .accessibilityIdentifier("attraction.\(a.name)")
     }
 }
@@ -445,15 +418,17 @@ struct VisitEditor: View {
 
 extension TripVisit {
     /// A new visit after the last one of the stop (or at 10:00 on the day you arrive).
-    static func next(at place: Place, kind: AttractionKind?, minutes: Int, in stop: TripStop) -> TripVisit {
-        var calendar = Calendar.current
-        calendar.timeZone = .iceland
+    /// With `day`, after the last visit of that day (or at 10:00 that day).
+    static func next(at place: Place, kind: AttractionKind?, minutes: Int, in stop: TripStop, on day: Date? = nil) -> TripVisit {
+        let calendar = Calendar.iceland
         let date: Date
-        if let last = stop.sortedVisits.last {
+        let visits = day.map { d in stop.sortedVisits.filter { calendar.isDate($0.date, inSameDayAs: d) } } ?? stop.sortedVisits
+        if let last = visits.last {
             let travel = Geo.distanceKm(last.place.coordinate, place.coordinate) * 1.3 / 70 * 3600
             date = last.end.addingTimeInterval(max(15 * 60, (travel / 900).rounded() * 900))
         } else {
-            date = calendar.date(bySettingHour: 10, minute: 0, second: 0, of: stop.date) ?? stop.date
+            let base = day ?? stop.date
+            date = calendar.date(bySettingHour: 10, minute: 0, second: 0, of: base) ?? base
         }
         return TripVisit(place: place, date: date, minutes: minutes, kind: kind)
     }

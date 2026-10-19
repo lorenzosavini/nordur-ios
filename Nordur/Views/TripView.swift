@@ -4,13 +4,13 @@ import MapKit
 struct TripView: View {
     @Environment(AppModel.self) private var model
     @Environment(TripStore.self) private var trip
-    @State private var editing: TripStop?
     @State private var creating = false
-    /// Attractions: the stop being given one, the visit being edited.
-    @State private var pickingFor: TripStop?
-    @State private var pendingVisit: VisitDraft?
-    @State private var visitDraft: VisitDraft?
     @State private var showAccount = false
+    /// Import from a GPX/KML file, and the GPX export of the trip.
+    @State private var importing = false
+    @State private var importFile: TripImportFile?
+    @State private var importError: String?
+    @State private var exportURL: URL?
 
     var body: some View {
         NavigationStack {
@@ -57,23 +57,48 @@ struct TripView: View {
                     .padding(.vertical, 12)
                     .listRowSeparator(.hidden)
                 }
-                ForEach(trip.stops) { stop in
+                if !trip.stops.isEmpty {
                     Section {
-                        StopSummary(stop: stop)
-                            .contentShape(Rectangle())
-                            .onTapGesture { editing = stop }
-                            .accessibilityIdentifier("trip.stop")
-                        StopVisits(stop: stop, onAdd: { pickingFor = stop }, onEdit: { visit in
-                            visitDraft = VisitDraft(stop: stop, visit: visit, isNew: false)
-                        })
+                        TripOverview()
+                        HStack(spacing: 8) {
+                            actionButton(String(localized: "TAPPA"), "plus") { creating = true }
+                            actionButton(String(localized: "IMPORTA"), "square.and.arrow.down") { importing = true }
+                            if let exportURL { ShareLink(item: exportURL) { actionLabel(String(localized: "ESPORTA"), "square.and.arrow.up") } }
+                        }
+                        .buttonStyle(.plain)
+                    }
+                }
+                ForEach(Array(trip.stops.enumerated()), id: \.element.id) { index, stop in
+                    Section {
+                        NavigationLink {
+                            StopDetailView(stopID: stop.id, fallback: stop)
+                        } label: {
+                            StopCard(stop: stop, index: index)
+                        }
+                        .accessibilityIdentifier("trip.stop")
                         if let next = trip.next(after: stop) {
-                            LegSummary(from: stop, to: next)
+                            if next.transport == .car || next.transport == .bus {
+                                NavigationLink {
+                                    RouteForecastView(from: stop.place, to: next.place, departure: max(next.date, Date()))
+                                } label: { LegLine(from: stop, to: next) }
+                            } else {
+                                LegLine(from: stop, to: next)
+                            }
                         }
                     }
                 }
                 .onDelete { offsets in
                     // Each stop is its own section, so the offset is the stop index.
                     trip.delete(at: offsets)
+                }
+                if trip.stops.isEmpty {
+                    Section {
+                        Button { importing = true } label: {
+                            Label("Importa un viaggio da file GPX o KML", systemImage: "square.and.arrow.down")
+                        }
+                    } footer: {
+                        Text("Crea tappe e attrazioni con Google My Maps, gpx.studio, Komoot o un altro programma ed esportale in GPX o KML.")
+                    }
                 }
             }
             .themedList()
@@ -89,24 +114,43 @@ struct TripView: View {
             .sheet(isPresented: $creating) {
                 StopEditor(stop: nil)
             }
-            .sheet(item: $editing) { stop in
-                StopEditor(stop: stop)
-            }
-            // Choosing an attraction, then its day and time (one sheet after the other).
-            .sheet(item: $pickingFor, onDismiss: {
-                if let pending = pendingVisit {
-                    pendingVisit = nil
-                    visitDraft = pending
-                }
-            }) { stop in
-                AttractionPicker(stop: stop) { place, kind, minutes in
-                    pendingVisit = VisitDraft(stop: stop, visit: .next(at: place, kind: kind, minutes: minutes, in: stop), isNew: true)
+            .fileImporter(isPresented: $importing, allowedContentTypes: TripImportFile.types) { result in
+                do {
+                    importFile = try TripImportFile.read(try result.get())
+                } catch {
+                    importError = error.localizedDescription
                 }
             }
-            .sheet(item: $visitDraft) { draft in
-                VisitEditor(draft: draft)
+            .sheet(item: $importFile) { file in TripImportSheet(file: file) }
+            .onChange(of: model.pendingTripImport?.id) {
+                if let file = model.pendingTripImport {
+                    importFile = file
+                    model.pendingTripImport = nil
+                }
             }
+            .onAppear {
+                if let file = model.pendingTripImport {
+                    importFile = file
+                    model.pendingTripImport = nil
+                }
+            }
+            .task(id: trip.stops) { exportURL = trip.exportGPX() }
+            .alert("Importazione non riuscita", isPresented: Binding(get: { importError != nil }, set: { if !$0 { importError = nil } })) {
+                Button("OK", role: .cancel) {}
+            } message: { Text(importError ?? "") }
         }
+    }
+
+    private func actionButton(_ title: String, _ symbol: String, action: @escaping () -> Void) -> some View {
+        Button(action: action) { actionLabel(title, symbol) }
+    }
+
+    private func actionLabel(_ title: String, _ symbol: String) -> some View {
+        Label(title, systemImage: symbol)
+            .font(.mono(10.5, .semibold))
+            .foregroundStyle(Theme.text)
+            .frame(maxWidth: .infinity).frame(height: 36)
+            .overlay(Rectangle().strokeBorder(Theme.hairline))
     }
 }
 
@@ -114,6 +158,7 @@ struct StopSummary: View {
     @Environment(AppModel.self) private var model
     @Environment(TripStore.self) private var trip
     let stop: TripStop
+    var showsHeader = true
 
     var body: some View {
         let forecast = trip.forecast(for: stop)
@@ -122,15 +167,17 @@ struct StopSummary: View {
         let warnings = model.warnings(at: stop.place.coordinate, from: stop.date.addingTimeInterval(-12 * 3600), to: stop.endDate)
 
         VStack(alignment: .leading, spacing: 8) {
-            HStack {
-                Image(systemName: stop.transport.symbol).foregroundStyle(.indigo).frame(width: 26)
-                VStack(alignment: .leading) {
-                    Text(stop.place.name).font(.app(.headline))
-                    Text("\(Fmt.day(stop.date, in: zone)) · \(stop.nights) \(stop.nights == 1 ? "notte" : "notti")")
-                        .font(.app(.caption)).foregroundStyle(.secondary)
+            if showsHeader {
+                HStack {
+                    Image(systemName: stop.transport.symbol).foregroundStyle(.indigo).frame(width: 26)
+                    VStack(alignment: .leading) {
+                        Text(stop.place.name).font(.app(.headline))
+                        Text("\(Fmt.day(stop.date, in: zone)) · \(stop.nights) \(stop.nights == 1 ? "notte" : "notti")")
+                            .font(.app(.caption)).foregroundStyle(.secondary)
+                    }
+                    Spacer()
+                    if let day { RiskBadge(risk: day.overallRisk) }
                 }
-                Spacer()
-                if let day { RiskBadge(risk: day.overallRisk) }
             }
 
             if let day {
