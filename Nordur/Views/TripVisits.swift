@@ -409,9 +409,7 @@ struct VisitEditor: View {
                             Label("Togli dal viaggio", systemImage: "trash")
                         }
                     }
-                    if let url = URL(string: "http://maps.apple.com/?daddr=\(visit.place.coordinate.lat),\(visit.place.coordinate.lon)&q=\(visit.place.name.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? "")") {
-                        Link(destination: url) { Label("Indicazioni in Mappe", systemImage: "arrow.triangle.turn.up.right.diamond") }
-                    }
+                    DirectionsRows(to: visit.place.coordinate)
                 }
             }
             .themedList()

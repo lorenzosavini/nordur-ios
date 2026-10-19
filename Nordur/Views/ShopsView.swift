@@ -159,7 +159,6 @@ struct ShopDetail: View {
 
     var body: some View {
         let c = shop.coordinate
-        let name = shop.name.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
         NavigationStack {
             List {
                 Section {
@@ -171,12 +170,7 @@ struct ShopDetail: View {
                     } header: { Text("Orari (OpenStreetMap)").pinnedHeader() }
                 }
                 Section {
-                    if let url = URL(string: "http://maps.apple.com/?daddr=\(c.lat),\(c.lon)&q=\(name)") {
-                        Link(destination: url) { Label("Indicazioni in Mappe", systemImage: "arrow.triangle.turn.up.right.diamond") }
-                    }
-                    if let url = URL(string: "https://www.google.com/maps/dir/?api=1&destination=\(c.lat),\(c.lon)") {
-                        Link(destination: url) { Label("Indicazioni in Google Maps", systemImage: "map") }
-                    }
+                    DirectionsRows(to: c)
                 }
             }
             .themedList()

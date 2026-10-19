@@ -14137,6 +14137,46 @@
           }
         }
       }
+    },
+    "Indicazioni con Apple Mappe" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Directions with Apple Maps"
+          }
+        }
+      }
+    },
+    "Indicazioni con Google Maps" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Directions with Google Maps"
+          }
+        }
+      }
+    },
+    "Avvia navigazione in Apple Mappe" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Start navigation in Apple Maps"
+          }
+        }
+      }
+    },
+    "Avvia navigazione in Google Maps" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Start navigation in Google Maps"
+          }
+        }
+      }
     }
   },
   "version" : "1.0"

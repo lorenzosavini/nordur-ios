@@ -129,7 +129,10 @@ struct RouteForecastView: View {
             Button {
                 RoutePlanner.openInMaps(from: plan.from, to: plan.to)
             } label: {
-                Label("Avvia navigazione in Mappe", systemImage: "arrow.triangle.turn.up.right.diamond.fill")
+                Label("Avvia navigazione in Apple Mappe", systemImage: "arrow.triangle.turn.up.right.diamond.fill")
+            }
+            Link(destination: Directions.google(from: plan.from.coordinate, to: plan.to.coordinate)) {
+                Label("Avvia navigazione in Google Maps", systemImage: "arrow.triangle.turn.up.right.circle.fill")
             }
             ForEach(plan.notices, id: \.self) { notice in
                 Label(notice, systemImage: "info.circle").font(.app(.caption))

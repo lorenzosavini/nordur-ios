@@ -196,7 +196,7 @@ struct LegSummary: View {
                     .font(.app(.caption, .semibold))
                 Spacer()
                 if to.transport == .car {
-                    Button("Indicazioni") { openDirections() }
+                    DirectionsMenu(to: to.place.coordinate, from: from.place.coordinate) { Text("Indicazioni") }
                         .font(.app(.caption))
                         .buttonStyle(.bordered)
                 }
@@ -243,14 +243,6 @@ struct LegSummary: View {
     private func uniqueSegments(_ segments: [RoadSegment]) -> [RoadSegment] {
         var seen = Set<Int>()
         return segments.filter { seen.insert($0.id).inserted }
-    }
-
-    private func openDirections() {
-        let origin = MKMapItem(placemark: MKPlacemark(coordinate: from.place.coordinate.clCoordinate))
-        origin.name = from.place.name
-        let destination = MKMapItem(placemark: MKPlacemark(coordinate: to.place.coordinate.clCoordinate))
-        destination.name = to.place.name
-        MKMapItem.openMaps(with: [origin, destination], launchOptions: [MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeDriving])
     }
 }
 

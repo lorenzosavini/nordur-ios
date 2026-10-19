@@ -50,9 +50,7 @@ struct AlertDetailView: View {
                         LabeledContent(String(localized: "Distanza da te ora"), value: "\(Int(Geo.distanceKm(here, c).rounded())) km")
                     }
                     LabeledContent(String(localized: "Coordinate"), value: Fmt.coordinate(c))
-                    if let url = URL(string: "http://maps.apple.com/?daddr=\(c.lat),\(c.lon)") {
-                        Link(destination: url) { Label("Indicazioni in Mappe", systemImage: "arrow.triangle.turn.up.right.diamond") }
-                    }
+                    DirectionsRows(to: c)
                 } header: { Text("Dove").pinnedHeader() }
             }
 

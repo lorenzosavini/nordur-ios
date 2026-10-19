@@ -944,3 +944,48 @@ struct OfflineBanner: View {
         return String(localized: "OFFLINE · DATI DELLE \(Fmt.time(oldest))")
     }
 }
+
+// MARK: - Directions
+
+/// Driving directions in Apple Maps or Google Maps (the Google link opens the
+/// app when it is installed, the website otherwise).
+enum Directions {
+    static func apple(from: Coordinate? = nil, to: Coordinate) -> URL {
+        let start = from.map { "saddr=\($0.lat),\($0.lon)&" } ?? ""
+        return URL(string: "http://maps.apple.com/?\(start)daddr=\(to.lat),\(to.lon)&dirflg=d")!
+    }
+
+    static func google(from: Coordinate? = nil, to: Coordinate) -> URL {
+        let start = from.map { "&origin=\($0.lat),\($0.lon)" } ?? ""
+        return URL(string: "https://www.google.com/maps/dir/?api=1\(start)&destination=\(to.lat),\(to.lon)&travelmode=driving")!
+    }
+}
+
+/// One row per app, for lists.
+struct DirectionsRows: View {
+    let to: Coordinate
+    var from: Coordinate?
+
+    var body: some View {
+        Link(destination: Directions.apple(from: from, to: to)) {
+            Label("Indicazioni con Apple Mappe", systemImage: "arrow.triangle.turn.up.right.diamond")
+        }
+        Link(destination: Directions.google(from: from, to: to)) {
+            Label("Indicazioni con Google Maps", systemImage: "arrow.triangle.turn.up.right.circle")
+        }
+    }
+}
+
+/// A single button that asks which app to use.
+struct DirectionsMenu<LabelView: View>: View {
+    let to: Coordinate
+    var from: Coordinate?
+    @ViewBuilder let label: () -> LabelView
+
+    var body: some View {
+        Menu {
+            Link(destination: Directions.apple(from: from, to: to)) { Label("Apple Mappe", systemImage: "map") }
+            Link(destination: Directions.google(from: from, to: to)) { Label("Google Maps", systemImage: "globe") }
+        } label: { label() }
+    }
+}
