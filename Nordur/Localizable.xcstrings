@@ -13237,6 +13237,486 @@
           }
         }
       }
+    },
+    "Cascata" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Waterfall"
+          }
+        }
+      }
+    },
+    "Spiaggia" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Beach"
+          }
+        }
+      }
+    },
+    "Ghiacciaio e laguna" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Glacier and lagoon"
+          }
+        }
+      }
+    },
+    "Area geotermica" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Geothermal area"
+          }
+        }
+      }
+    },
+    "Canyon" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Canyon"
+          }
+        }
+      }
+    },
+    "Paesaggio e belvedere" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Landscape and viewpoint"
+          }
+        }
+      }
+    },
+    "Bagni termali" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hot springs"
+          }
+        }
+      }
+    },
+    "Città e monumenti" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Towns and landmarks"
+          }
+        }
+      }
+    },
+    "Natura e animali" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nature and wildlife"
+          }
+        }
+      }
+    },
+    "Ponte tra i continenti" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bridge between continents"
+          }
+        }
+      }
+    },
+    "Geysir e Strokkur" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Geysir and Strokkur"
+          }
+        }
+      }
+    },
+    "Skaftafell e Svartifoss" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Skaftafell and Svartifoss"
+          }
+        }
+      }
+    },
+    "Stokksnes e Vestrahorn" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Stokksnes and Vestrahorn"
+          }
+        }
+      }
+    },
+    "Hraunfossar e Barnafoss" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hraunfossar and Barnafoss"
+          }
+        }
+      }
+    },
+    "Il sentiero dietro la cascata è chiuso e ghiacciato in inverno." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The path behind the waterfall is closed and icy in winter."
+          }
+        }
+      }
+    },
+    "Sul ghiacciaio solo con una guida." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "On the glacier only with a guide."
+          }
+        }
+      }
+    },
+    "Strada chiusa con vento forte e in primavera per la nidificazione." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Road closed in strong wind and in spring for nesting."
+          }
+        }
+      }
+    },
+    "Onde anomale: stai lontano dall'acqua, mai di spalle al mare." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sneaker waves: keep away from the water, never turn your back to the sea."
+          }
+        }
+      }
+    },
+    "Onde forti: non salire sui blocchi di ghiaccio vicino all'acqua." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Strong waves: do not climb on the ice blocks near the water."
+          }
+        }
+      }
+    },
+    "Il passo Fjarðarheiði chiude spesso con la neve." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The Fjarðarheiði pass often closes with snow."
+          }
+        }
+      }
+    },
+    "La strada 862 d'inverno può essere chiusa." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Road 862 may be closed in winter."
+          }
+        }
+      }
+    },
+    "Le uscite per le balene dipendono dal mare." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Whale-watching trips depend on the sea."
+          }
+        }
+      }
+    },
+    "Onde forti: stai lontano dalla riva." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Strong waves: keep away from the shore."
+          }
+        }
+      }
+    },
+    "D'inverno le strade dei fiordi occidentali chiudono spesso." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "In winter the Westfjords roads often close."
+          }
+        }
+      }
+    },
+    "Solo d'estate, con un 4×4 su strade F con guadi." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Summer only, with a 4×4 on F-roads with river crossings."
+          }
+        }
+      }
+    },
+    "Aggiungi attrazioni da vedere" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Add sights to see"
+          }
+        }
+      }
+    },
+    "Aggiungi un'altra attrazione" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Add another sight"
+          }
+        }
+      }
+    },
+    "%lld attrazioni · ~%lld km · ~%@ di guida + %@ di visita" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld sights · ~%lld km · ~%@ driving + %@ visiting"
+          }
+        }
+      }
+    },
+    "Luce %@–%@: l'ultima visita finisce al buio" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Daylight %@–%@: the last visit ends in the dark"
+          }
+        }
+      }
+    },
+    "Luce %@–%@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Daylight %@–%@"
+          }
+        }
+      }
+    },
+    "Meteo disponibile circa 10 giorni prima" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Weather available about 10 days before"
+          }
+        }
+      }
+    },
+    "buio" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "dark"
+          }
+        }
+      }
+    },
+    "Vento forte sulla spiaggia: onde pericolose, valuta di saltarla" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Strong wind on the beach: dangerous waves, consider skipping it"
+          }
+        }
+      }
+    },
+    "Strada vicina: %@ · %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Road nearby: %@ · %@"
+          }
+        }
+      }
+    },
+    "difficile" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "difficult"
+          }
+        }
+      }
+    },
+    "Cerca un altro luogo" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Search another place"
+          }
+        }
+      }
+    },
+    "Resto dell'Islanda" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rest of Iceland"
+          }
+        }
+      }
+    },
+    "Aggiungi attrazione" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Add sight"
+          }
+        }
+      }
+    },
+    "Cascata, spiaggia, ghiacciaio…" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Waterfall, beach, glacier…"
+          }
+        }
+      }
+    },
+    "Visita: %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Visit: %@"
+          }
+        }
+      }
+    },
+    "Note (biglietti, parcheggio, orari…)" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Notes (tickets, parking, opening hours…)"
+          }
+        }
+      }
+    },
+    "Il meteo e la luce vengono calcolati per l'ora di arrivo." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Weather and daylight are computed for the arrival time."
+          }
+        }
+      }
+    },
+    "Aggiungi al viaggio" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Add to the trip"
+          }
+        }
+      }
+    },
+    "Togli dal viaggio" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Remove from the trip"
+          }
+        }
+      }
+    },
+    "Nuova attrazione" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "New sight"
+          }
+        }
+      }
+    },
+    "Attrazione" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sight"
+          }
+        }
+      }
+    },
+    "Togliere questa attrazione dal viaggio?" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Remove this sight from the trip?"
+          }
+        }
+      }
+    },
+    "Togli" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Remove"
+          }
+        }
+      }
     }
   },
   "version" : "1.0"

@@ -3,7 +3,7 @@
 Today (aurora now), the Aurora screen, Roads (critical sections and one
 section), Webcams, Volcanoes and earthquakes, the alert inbox and one alert,
 Weather, every Map layer and a tap on the map, Drive, Trip (an itinerary,
-one stop, and adding a stop with the place picker).
+one stop, adding a stop with the place picker, adding an attraction).
 
 Needs idb (idb-companion + fb-idb). Usage: demo_video.py <udid> <out.mp4>
 """
@@ -166,6 +166,16 @@ if tap(ident="trip.add", pause=2.2):
             dismiss_sheet()
     scroll(1, 0.4, 1.2)
     if not tap(ident="stop.save", pause=2.5, scrolls=3):
+        dismiss_sheet()
+scroll(1, 0.45, 1.2)
+# Adding an attraction to a stop: catalog, then day and time.
+if tap(ident="trip.addVisit", pause=2.2, scrolls=3):
+    scroll(1, 0.3, 1.2)
+    if tap(ident="attraction.Kirkjufell", pause=2.2, scrolls=6) or tap(label="Gullfoss", pause=2.2, scrolls=3):
+        scroll(1, 0.3, 1.2)
+        if not tap(ident="visit.save", pause=2.5, scrolls=2):
+            dismiss_sheet()
+    else:
         dismiss_sheet()
 scroll(2, 0.45, 1.2)
 

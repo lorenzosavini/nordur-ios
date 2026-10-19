@@ -32,6 +32,7 @@ enum Transport: String, Codable, CaseIterable, Identifiable {
 }
 
 /// One stop of the itinerary: the transport is how you *arrive* there.
+/// The attractions to see on the way there and during the stay are its visits.
 struct TripStop: Codable, Identifiable, Hashable {
     var id: UUID = UUID()
     var place: Place
@@ -39,8 +40,39 @@ struct TripStop: Codable, Identifiable, Hashable {
     var nights: Int = 1
     var transport: Transport = .car
     var notes: String = ""
+    var visits: [TripVisit] = []
 
     var endDate: Date {
         Calendar.current.date(byAdding: .day, value: max(nights, 0), to: date) ?? date
     }
+
+    /// Visits in time order.
+    var sortedVisits: [TripVisit] { visits.sorted { $0.date < $1.date } }
+}
+
+extension TripStop {
+    // Trips saved before visits existed have no "visits" key.
+    init(from decoder: Decoder) throws {
+        let c = try decoder.container(keyedBy: CodingKeys.self)
+        id = try c.decodeIfPresent(UUID.self, forKey: .id) ?? UUID()
+        place = try c.decode(Place.self, forKey: .place)
+        date = try c.decode(Date.self, forKey: .date)
+        nights = try c.decodeIfPresent(Int.self, forKey: .nights) ?? 1
+        transport = try c.decodeIfPresent(Transport.self, forKey: .transport) ?? .car
+        notes = try c.decodeIfPresent(String.self, forKey: .notes) ?? ""
+        visits = try c.decodeIfPresent([TripVisit].self, forKey: .visits) ?? []
+    }
+}
+
+/// An attraction to see (a waterfall, a beach, a glacier lagoon…), with the day
+/// and time of arrival and how long you stay.
+struct TripVisit: Codable, Identifiable, Hashable {
+    var id: UUID = UUID()
+    var place: Place
+    var date: Date
+    var minutes: Int = 60
+    var kind: AttractionKind?
+    var notes: String = ""
+
+    var end: Date { date.addingTimeInterval(Double(minutes) * 60) }
 }

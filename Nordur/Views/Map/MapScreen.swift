@@ -467,8 +467,12 @@ struct MapScreen: View {
             for (i, stop) in trip.stops.enumerated() {
                 pois.append(PoiAnnotation(kind: .stop, key: "s\(stop.id)", coordinate: stop.place.coordinate.clCoordinate,
                                           title: "\(i + 1). \(stop.place.name)", color: .systemIndigo))
+                for visit in stop.sortedVisits {
+                    pois.append(PoiAnnotation(kind: .visit, key: "v\(visit.id)", coordinate: visit.place.coordinate.clCoordinate,
+                                              title: visit.place.name, color: .systemTeal))
+                }
             }
-            poisKey += "trip\(trip.stops.map(\.id.uuidString).joined())"
+            poisKey += "trip\(trip.stops.map { $0.id.uuidString + $0.visits.map(\.id.uuidString).joined() }.joined())"
         }
         // The place set in the app (the GPS position already has its blue dot).
         if !model.useCurrentLocation || model.location.coordinate == nil {

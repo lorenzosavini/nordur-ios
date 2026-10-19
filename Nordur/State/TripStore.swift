@@ -23,7 +23,19 @@ final class TripStore {
         var result: [TripStop] = []
         for (name, nights) in plan {
             guard let place = ([Place.reykjavik] + Place.presets).first(where: { $0.name.hasPrefix(name) }) else { continue }
-            result.append(TripStop(place: place, date: date, nights: nights))
+            var stop = TripStop(place: place, date: date, nights: nights)
+            // Sights along the way on the arrival day.
+            let sights: [String: [String]] = [
+                "Vík í Mýrdal": ["Seljalandsfoss", "Skógafoss", "Reynisfjara"],
+                "Höfn": ["Fjaðrárgljúfur", "Jökulsárlón", "Diamond Beach"],
+                "Akureyri": ["Dettifoss", "Hverir", "Goðafoss"],
+            ]
+            for name in sights.first(where: { name.hasPrefix($0.key) || $0.key.hasPrefix(name) })?.value ?? [] {
+                if let a = Attraction.named(name) {
+                    stop.visits.append(.next(at: a.place, kind: a.kind, minutes: a.minutes, in: stop))
+                }
+            }
+            result.append(stop)
             date = Calendar.current.date(byAdding: .day, value: nights, to: date) ?? date
         }
         return result
@@ -78,11 +90,32 @@ final class TripStore {
         return stops[index - 1]
     }
 
+    // MARK: Visits (attractions)
+
+    func upsert(_ visit: TripVisit, in stopID: UUID) {
+        guard let index = stops.firstIndex(where: { $0.id == stopID }) else { return }
+        if let v = stops[index].visits.firstIndex(where: { $0.id == visit.id }) {
+            stops[index].visits[v] = visit
+        } else {
+            stops[index].visits.append(visit)
+        }
+        save()
+    }
+
+    func delete(_ visit: TripVisit, in stopID: UUID) {
+        guard let index = stops.firstIndex(where: { $0.id == stopID }) else { return }
+        stops[index].visits.removeAll { $0.id == visit.id }
+        save()
+    }
+
+    func forecast(at c: Coordinate) -> Forecast? { forecasts[c.key] }
+
     func forecast(for stop: TripStop) -> Forecast? { forecasts[stop.place.coordinate.key] }
     func marine(for stop: TripStop) -> Marine? { marines[stop.place.coordinate.key] }
 
     func loadForecasts() async {
-        let coordinates = Array(Set(stops.map(\.place.coordinate)))
+        // Stops and the attractions to see: the weather at the time of each visit.
+        let coordinates = Array(Set(stops.map(\.place.coordinate) + stops.flatMap { $0.visits.map(\.place.coordinate) }))
         await withTaskGroup(of: (String, Forecast?, Marine?).self) { group in
             for c in coordinates {
                 group.addTask {

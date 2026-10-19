@@ -6,6 +6,10 @@ struct TripView: View {
     @Environment(TripStore.self) private var trip
     @State private var editing: TripStop?
     @State private var creating = false
+    /// Attractions: the stop being given one, the visit being edited.
+    @State private var pickingFor: TripStop?
+    @State private var pendingVisit: VisitDraft?
+    @State private var visitDraft: VisitDraft?
     @State private var showAccount = false
 
     var body: some View {
@@ -59,6 +63,9 @@ struct TripView: View {
                             .contentShape(Rectangle())
                             .onTapGesture { editing = stop }
                             .accessibilityIdentifier("trip.stop")
+                        StopVisits(stop: stop, onAdd: { pickingFor = stop }, onEdit: { visit in
+                            visitDraft = VisitDraft(stop: stop, visit: visit, isNew: false)
+                        })
                         if let next = trip.next(after: stop) {
                             LegSummary(from: stop, to: next)
                         }
@@ -75,7 +82,7 @@ struct TripView: View {
                 await model.refreshGlobal(force: true)
                 await trip.loadForecasts()
             }
-            .task(id: trip.stops.map(\.place.coordinate.key).joined()) {
+            .task(id: trip.stops.map { ([$0.place] + $0.visits.map(\.place)).map(\.coordinate.key).joined() }.joined()) {
                 await trip.loadForecasts()
             }
             .sheet(isPresented: $showAccount) { AccountView() }
@@ -84,6 +91,20 @@ struct TripView: View {
             }
             .sheet(item: $editing) { stop in
                 StopEditor(stop: stop)
+            }
+            // Choosing an attraction, then its day and time (one sheet after the other).
+            .sheet(item: $pickingFor, onDismiss: {
+                if let pending = pendingVisit {
+                    pendingVisit = nil
+                    visitDraft = pending
+                }
+            }) { stop in
+                AttractionPicker(stop: stop) { place, kind, minutes in
+                    pendingVisit = VisitDraft(stop: stop, visit: .next(at: place, kind: kind, minutes: minutes, in: stop), isNew: true)
+                }
+            }
+            .sheet(item: $visitDraft) { draft in
+                VisitEditor(draft: draft)
             }
         }
     }

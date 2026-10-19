@@ -79,7 +79,7 @@ final class ArrowAnnotation: NSObject, MKAnnotation {
 
 /// Any point of interest drawn on the map.
 final class PoiAnnotation: NSObject, MKAnnotation {
-    enum Kind: String { case place, station, webcam, quake, fuel, charger, stop, roadSection, roadHazard, sighting, noSighting }
+    enum Kind: String { case place, station, webcam, quake, fuel, charger, stop, visit, roadSection, roadHazard, sighting, noSighting }
     let kind: Kind
     let key: String
     let coordinate: CLLocationCoordinate2D
@@ -354,7 +354,7 @@ struct WeatherMapView: UIViewRepresentable {
                 let view = mapView.dequeueReusableAnnotationView(withIdentifier: "marker", for: poi) as! MKMarkerAnnotationView
                 view.markerTintColor = poi.color
                 view.glyphImage = UIImage(systemName: Self.glyph(poi.kind))
-                let pinned = poi.kind == .stop || poi.kind == .place
+                let pinned = poi.kind == .stop || poi.kind == .place || poi.kind == .visit
                 view.titleVisibility = pinned ? .visible : .hidden
                 view.subtitleVisibility = poi.kind == .place ? .visible : .hidden
                 view.canShowCallout = false
@@ -380,6 +380,7 @@ struct WeatherMapView: UIViewRepresentable {
             case .fuel: return "fuelpump.fill"
             case .charger: return "bolt.car.fill"
             case .stop: return "flag.fill"
+            case .visit: return "binoculars.fill"
             case .station: return "road.lanes"
             case .quake: return "waveform.path.ecg"
             case .roadSection: return "exclamationmark.triangle.fill"
