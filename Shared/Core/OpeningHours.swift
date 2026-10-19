@@ -12,6 +12,8 @@ struct OpeningHours {
     private static let dayNames = ["Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"]
 
     init?(_ text: String) {
+        // "Mo-Fr 09:00-21:00, Sa-Su 11:00-21:00": a comma between a time and a day starts a new rule.
+        let text = text.replacingOccurrences(of: #"(?<=\d),\s*(?=(Mo|Tu|We|Th|Fr|Sa|Su)\b)"#, with: ";", options: .regularExpression)
         let rules = text.split(separator: ";").map { $0.trimmingCharacters(in: .whitespaces) }.filter { !$0.isEmpty }
         guard !rules.isEmpty else { return nil }
         var parsedAny = false
@@ -28,7 +30,8 @@ struct OpeningHours {
                 if named.isEmpty { continue }
                 days = named
                 parts.removeFirst()
-            } else if let first = parts.first, first.hasPrefix("PH") || first.hasPrefix("SH") {
+            } else if let first = parts.first, !(first.first?.isNumber ?? false) && first != "off" && first != "closed" {
+                // Holidays and dates ("PH off", "May 01 12:00-17:00", "easter +49 days off"): not a normal week.
                 continue
             }
             guard let times = parts.first.map({ $0.trimmingCharacters(in: .whitespaces) }), let spans = Self.spans(times) else { return nil }

@@ -235,6 +235,13 @@ do {
     check(OpeningHours("24/7")?.nextChange(after: at("2026-10-21T03:00:00Z")) == nil, "24/7 never closes")
     check(OpeningHours("Mo-Fr 09:00-18:00; PH off")?.isOpen(at: at("2026-10-20T10:00:00Z")) == true, "PH rule ignored")
     check(OpeningHours("by appointment") == nil, "unreadable hours")
+    // Forms found in the Icelandic OpenStreetMap data.
+    let comma = OpeningHours("Mo-Fr 09:00-21:00, Sa-Su 11:00-21:00")
+    check(comma?.isOpen(at: at("2026-10-24T10:00:00Z")) == false && comma?.isOpen(at: at("2026-10-24T12:00:00Z")) == true, "comma before days")
+    check(OpeningHours("Mo-Fr 08:00-22:00; Sa,Su 10:00-22:00")?.isOpen(at: at("2026-10-25T11:00:00Z")) == true, "day list with comma")
+    let dated = OpeningHours("Mo-Fr 10:00-19:00; Sa 10:00-18:00; Su 12:00-17:00; May 01,easter +39 days 12:00-17:00; easter +49 days off")
+    check(dated?.isOpen(at: at("2026-10-25T13:00:00Z")) == true, "dated rules skipped")
+    check(OpeningHours("Mo-Su 07:30-24:00")?.nextChange(after: at("2026-10-19T20:00:00Z")) == at("2026-10-20T00:00:00Z"), "closes at midnight")
 }
 
 print(failures == 0 ? "ALL ENGINE TESTS PASSED" : "\(failures) FAILURES")

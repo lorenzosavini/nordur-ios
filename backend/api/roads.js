@@ -78,7 +78,7 @@ export function compact(sections, notifications, info, now = Date.now()) {
 // are often slow or busy for the whole country: fetched here once a week, with
 // the mirrors raced, and the last good copy served to everyone.
 const SHOPS_CACHE = "public/shops.bin";
-const SHOPS_TTL = 7 * 86400e3;
+const SHOPS_REFRESH = 86400e3; // a refresh asked within a day of the last one is skipped
 const OVERPASS = [
   "https://overpass-api.de/api/interpreter",
   "https://overpass.kumi.systems/api/interpreter",
@@ -124,9 +124,11 @@ async function overpassShops() {
   return elements;
 }
 
-async function shops(res) {
+// A request answers from the stored copy straight away (even an old one); the
+// weekly cron (?shops=1&refresh=1) or an empty store downloads a new copy.
+async function shops(res, refresh) {
   if (!shopsMemory) shopsMemory = await readObject(SHOPS_CACHE).catch(() => null);
-  if (!shopsMemory || Date.now() - shopsMemory.at > SHOPS_TTL) {
+  if (!shopsMemory || (refresh && Date.now() - shopsMemory.at > SHOPS_REFRESH)) {
     try {
       shopsMemory = { at: Date.now(), elements: await overpassShops() };
       await writeObject(SHOPS_CACHE, shopsMemory, { ttl: 60 * 86400 }).catch((e) => console.error("shops cache", e.message));
@@ -140,7 +142,8 @@ async function shops(res) {
 }
 
 export default async function handler(req, res) {
-  if (new URL(req.url, "http://x").searchParams.get("shops")) return shops(res);
+  const params = new URL(req.url, "http://x").searchParams;
+  if (params.get("shops")) return shops(res, params.get("refresh") === "1");
   if (!memory || Date.now() - memory.at > TTL) {
     try {
       const [sections, notifications, info] = await Promise.all([
