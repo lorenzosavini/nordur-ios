@@ -217,6 +217,26 @@ do {
     check(route?.points.count == 2 && route?.name == "Piano", "gpx route without times", "\(route?.points.count ?? -1)")
 }
 
+// MARK: Shop opening hours (OpenStreetMap)
+
+do {
+    let utc = ISO8601DateFormatter()
+    func at(_ s: String) -> Date { utc.date(from: s)! }
+    // 2026-10-19 is a Monday; Iceland is UTC all year.
+    let h = OpeningHours("Mo-Fr 10:00-19:00; Sa 11:00-18:00; Su off")
+    check(h != nil, "hours parse")
+    check(h?.isOpen(at: at("2026-10-19T12:00:00Z")) == true, "open monday noon")
+    check(h?.isOpen(at: at("2026-10-19T19:30:00Z")) == false, "closed monday evening")
+    check(h?.nextChange(after: at("2026-10-19T12:00:00Z")) == at("2026-10-19T19:00:00Z"), "closes at 19")
+    check(h?.nextChange(after: at("2026-10-25T09:00:00Z")) == at("2026-10-26T10:00:00Z"), "sunday closed, opens monday 10")
+    let late = OpeningHours("Mo-Su 18:00-02:00")
+    check(late?.isOpen(at: at("2026-10-20T01:00:00Z")) == true, "open after midnight")
+    check(OpeningHours("24/7")?.isOpen(at: at("2026-10-21T03:00:00Z")) == true, "24/7")
+    check(OpeningHours("24/7")?.nextChange(after: at("2026-10-21T03:00:00Z")) == nil, "24/7 never closes")
+    check(OpeningHours("Mo-Fr 09:00-18:00; PH off")?.isOpen(at: at("2026-10-20T10:00:00Z")) == true, "PH rule ignored")
+    check(OpeningHours("by appointment") == nil, "unreadable hours")
+}
+
 print(failures == 0 ? "ALL ENGINE TESTS PASSED" : "\(failures) FAILURES")
 exit(failures == 0 ? 0 : 1)
 

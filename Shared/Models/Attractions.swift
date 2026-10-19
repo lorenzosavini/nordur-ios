@@ -1,7 +1,7 @@
 import Foundation
 
 enum AttractionKind: String, Codable, CaseIterable, Identifiable {
-    case waterfall, beach, glacier, geothermal, canyon, landscape, bath, town, wildlife
+    case waterfall, beach, glacier, geothermal, canyon, landscape, bath, town, wildlife, shop
 
     var id: String { rawValue }
 
@@ -16,6 +16,7 @@ enum AttractionKind: String, Codable, CaseIterable, Identifiable {
         case .bath: return String(localized: "Bagni termali")
         case .town: return String(localized: "Città e monumenti")
         case .wildlife: return String(localized: "Natura e animali")
+        case .shop: return String(localized: "Spesa")
         }
     }
 
@@ -30,6 +31,7 @@ enum AttractionKind: String, Codable, CaseIterable, Identifiable {
         case .bath: return "figure.pool.swim"
         case .town: return "building.columns.fill"
         case .wildlife: return "bird.fill"
+        case .shop: return "cart.fill"
         }
     }
 }

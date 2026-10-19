@@ -9,6 +9,7 @@ struct StopVisits: View {
     let stop: TripStop
     let onAdd: () -> Void
     let onEdit: (TripVisit) -> Void
+    @State private var showingShops = false
 
     var body: some View {
         let visits = stop.sortedVisits
@@ -24,6 +25,7 @@ struct StopVisits: View {
                         .accessibilityIdentifier("trip.visit")
                 }
             }
+            shopsLine
             Button(action: onAdd) {
                 Label(visits.isEmpty ? String(localized: "Aggiungi attrazioni da vedere") : String(localized: "Aggiungi un'altra attrazione"),
                       systemImage: "plus.circle.fill")
@@ -34,6 +36,28 @@ struct StopVisits: View {
             .accessibilityIdentifier("trip.addVisit")
         }
         .padding(.vertical, 4)
+        .sheet(isPresented: $showingShops) { ShopsView(center: stop.place, inSheet: true) }
+    }
+
+    /// The nearest supermarket to where you sleep, and the way to all the shops around.
+    private var shopsLine: some View {
+        Button { showingShops = true } label: {
+            HStack(spacing: 8) {
+                Image(systemName: "cart.fill").foregroundStyle(Theme.accent).frame(width: 30)
+                if let market = Shops.nearest(model.shops?.value ?? [], to: stop.place.coordinate, kinds: [.supermarket], within: 80, limit: 1).first {
+                    Text(String(localized: "Spesa: \(market.shop.name), \(Fmt.number(market.km, decimals: market.km < 10 ? 1 : 0)) km"))
+                        .font(.app(.caption, .semibold)).foregroundStyle(Theme.text).lineLimit(1)
+                } else {
+                    Text(model.shops == nil ? String(localized: "Supermercati vicino alla tappa") : String(localized: "Nessun supermercato entro 80 km: fai scorta prima"))
+                        .font(.app(.caption, .semibold)).foregroundStyle(model.shops == nil ? Theme.text : Theme.caution).lineLimit(2)
+                }
+                Spacer()
+                Image(systemName: "chevron.right").font(.system(size: 10, weight: .semibold)).foregroundStyle(Theme.faint)
+            }
+        }
+        .buttonStyle(.plain)
+        .accessibilityIdentifier("trip.shops")
+        .task { await model.loadShops() }
     }
 
     /// Hold an attraction: move it to another day or stop, or take it off.
@@ -218,6 +242,7 @@ struct VisitRow: View {
 /// The attractions of Iceland, nearest to the stop first, with search; any
 /// other place can be searched like a stop.
 struct AttractionPicker: View {
+    @Environment(AppModel.self) private var model
     let stop: TripStop
     let onPick: (Place, AttractionKind?, Int) -> Void
     @Environment(\.dismiss) private var dismiss
@@ -238,6 +263,20 @@ struct AttractionPicker: View {
                         Label("Cerca un altro luogo", systemImage: "magnifyingglass")
                     }
                 }
+                let shops = Shops.nearest(model.shops?.value ?? [], to: stop.place.coordinate, kinds: [.supermarket, .convenience, .mall, .alcohol], within: 40)
+                    .filter { query.isEmpty || $0.shop.name.localizedCaseInsensitiveContains(query) || "spesa supermercato".localizedCaseInsensitiveContains(query) }
+                    .prefix(query.isEmpty ? 5 : 20)
+                if !shops.isEmpty {
+                    Section {
+                        ForEach(Array(shops)) { item in
+                            Button {
+                                onPick(item.shop.place, .shop, 30)
+                                dismiss()
+                            } label: { ShopRow(shop: item.shop, km: item.km) }
+                            .buttonStyle(.plain)
+                        }
+                    } header: { Text("Fare la spesa").pinnedHeader() }
+                }
                 if !near.isEmpty {
                     Section {
                         ForEach(near) { row($0) }
@@ -250,6 +289,7 @@ struct AttractionPicker: View {
                 }
             }
             .themedList()
+            .task { await model.loadShops() }
             .navigationTitle("Aggiungi attrazione")
             .navigationBarTitleDisplayMode(.inline)
             .searchable(text: $query, prompt: String(localized: "Cascata, spiaggia, ghiacciaio…"))
@@ -346,7 +386,7 @@ struct VisitEditor: View {
                     Stepper(String(localized: "Visita: \(Fmt.duration(Double(minutes) * 60))"), value: $minutes, in: 15...600, step: 15)
                     TextField("Note (biglietti, parcheggio, orari…)", text: $notes, axis: .vertical)
                 } header: { Text("Quando").pinnedHeader() } footer: {
-                    Text("Il meteo e la luce vengono calcolati per l'ora di arrivo.")
+                    Text("Giorni e orari sono in ora islandese (un'ora indietro rispetto all'Italia in inverno). Il meteo e la luce vengono calcolati per l'ora di arrivo.")
                 }
                 Section {
                     Button {

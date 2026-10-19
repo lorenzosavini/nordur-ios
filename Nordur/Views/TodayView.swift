@@ -598,6 +598,8 @@ struct TodayView: View {
                     transportCell
                 }
                 .fixedSize(horizontal: false, vertical: true)
+                Rule()
+                shopsCell
             }
             .overlay(alignment: .top) { Rule() }
             .overlay(alignment: .bottom) { Rule() }
@@ -676,6 +678,46 @@ struct TodayView: View {
                 Text(model.errors[.fuel] == nil ? String(localized: "Download in corso") : String(localized: "Non disponibile")).font(.app(.caption)).foregroundStyle(Theme.faint)
             }
         }
+    }
+
+    /// The nearest supermarket and whether it is open: outside the towns shops close early.
+    private var shopsCell: some View {
+        NavigationLink { ShopsView() } label: {
+            let now = Date()
+            let shops = model.shops?.value ?? []
+            let market = Shops.nearest(shops, to: model.activePlace.coordinate, kinds: [.supermarket], limit: 1).first
+            let open = Shops.nearest(shops, to: model.activePlace.coordinate, kinds: [.supermarket, .convenience], within: 60)
+                .first { $0.shop.status(at: now).open == true }
+            VStack(alignment: .leading, spacing: 6) {
+                HStack {
+                    Text("SPESA · SUPERMERCATI").font(.mono(9.5)).foregroundStyle(Theme.faint)
+                    Spacer()
+                    Image(systemName: "chevron.right").font(.system(size: 11, weight: .semibold)).foregroundStyle(Theme.faint)
+                }
+                if let market {
+                    HStack(alignment: .firstTextBaseline, spacing: 8) {
+                        Image(systemName: "cart.fill").foregroundStyle(Theme.accent)
+                        Text(market.shop.name).font(.app(.headline)).foregroundStyle(Theme.text).lineLimit(1)
+                        Text("\(Fmt.number(market.km, decimals: market.km < 10 ? 1 : 0)) KM").font(.mono(10.5, .semibold)).foregroundStyle(Theme.dim)
+                    }
+                    let status = market.shop.status(at: now)
+                    Text(status.text).font(.app(.caption, .semibold))
+                        .foregroundStyle(status.open == true ? Theme.aurora : status.open == false ? Theme.danger : Theme.faint)
+                    if status.open != true, let open, open.shop.id != market.shop.id {
+                        Text(String(localized: "Aperto adesso: \(open.shop.name), \(Fmt.number(open.km, decimals: open.km < 10 ? 1 : 0)) km"))
+                            .font(.app(.caption)).foregroundStyle(Theme.dim).lineLimit(1)
+                    }
+                } else {
+                    Text(model.errors[.shops] == nil ? String(localized: "Download in corso") : String(localized: "Non disponibile"))
+                        .font(.app(.caption)).foregroundStyle(Theme.faint)
+                }
+            }
+            .padding(12)
+            .frame(maxWidth: .infinity, alignment: .topLeading)
+            .contentShape(Rectangle())
+        }
+        .buttonStyle(.plain)
+        .accessibilityIdentifier("today.shops")
     }
 
     private var transportCell: some View {

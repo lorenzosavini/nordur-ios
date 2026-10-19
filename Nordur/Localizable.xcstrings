@@ -13817,6 +13817,326 @@
           }
         }
       }
+    },
+    "Supermercato" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Supermarket"
+          }
+        }
+      }
+    },
+    "Minimarket" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Convenience store"
+          }
+        }
+      }
+    },
+    "Centro commerciale" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Shopping centre"
+          }
+        }
+      }
+    },
+    "Vínbúðin (alcolici)" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vínbúðin (liquor store)"
+          }
+        }
+      }
+    },
+    "Orari non indicati" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Opening hours not listed"
+          }
+        }
+      }
+    },
+    "Aperto 24 ore" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Open 24 hours"
+          }
+        }
+      }
+    },
+    "Aperto · chiude alle %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Open · closes at %@"
+          }
+        }
+      }
+    },
+    "Chiuso" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Closed"
+          }
+        }
+      }
+    },
+    "Chiuso · apre alle %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Closed · opens at %@"
+          }
+        }
+      }
+    },
+    "Chiuso · apre %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Closed · opens %@"
+          }
+        }
+      }
+    },
+    "Tutti" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "All"
+          }
+        }
+      }
+    },
+    "Solo aperti adesso" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Open now only"
+          }
+        }
+      }
+    },
+    "Nessun negozio trovato" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No shops found"
+          }
+        }
+      }
+    },
+    "Prova a togliere \"Solo aperti adesso\"." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Try turning off \"Open now only\"."
+          }
+        }
+      }
+    },
+    "Bónus, Krónan e Nettó sono i supermercati più economici; i minimarket e i negozi dei distributori (N1, Olís, Orkan) costano di più ma sono spesso aperti fino a tardi." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bónus, Krónan and Nettó are the cheapest supermarkets; convenience stores and fuel-station shops (N1, Olís, Orkan) cost more but often stay open late."
+          }
+        }
+      }
+    },
+    "Vino, birra forte e superalcolici si comprano solo da Vínbúðin, con orari ridotti (spesso chiusa la domenica). Nei supermercati c'è solo birra leggera." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wine, strong beer and spirits are sold only at Vínbúðin, with short hours (often closed on Sundays). Supermarkets only sell light beer."
+          }
+        }
+      }
+    },
+    "Fuori dalle città i negozi sono pochi e chiudono presto: fai scorta prima delle tappe lunghe. Orari da OpenStreetMap, verifica nei giorni festivi." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Outside the towns shops are few and close early: stock up before long legs. Hours from OpenStreetMap; check on public holidays."
+          }
+        }
+      }
+    },
+    "Spesa e negozi" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Groceries and shops"
+          }
+        }
+      }
+    },
+    "Bónus, Krónan, città…" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bónus, Krónan, town…"
+          }
+        }
+      }
+    },
+    "ECONOMICO" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "BUDGET"
+          }
+        }
+      }
+    },
+    "Orari (OpenStreetMap)" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Opening hours (OpenStreetMap)"
+          }
+        }
+      }
+    },
+    "Indicazioni in Google Maps" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Directions in Google Maps"
+          }
+        }
+      }
+    },
+    "SPESA · SUPERMERCATI" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "GROCERIES · SUPERMARKETS"
+          }
+        }
+      }
+    },
+    "Aperto adesso: %@, %@ km" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Open now: %1$@, %2$@ km"
+          }
+        }
+      }
+    },
+    "Supermercati e negozi" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Supermarkets and shops"
+          }
+        }
+      }
+    },
+    "Spesa" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Groceries"
+          }
+        }
+      }
+    },
+    "Spesa: %@, %@ km" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Groceries: %1$@, %2$@ km"
+          }
+        }
+      }
+    },
+    "Supermercati vicino alla tappa" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Supermarkets near the stop"
+          }
+        }
+      }
+    },
+    "Nessun supermercato entro 80 km: fai scorta prima" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No supermarket within 80 km: stock up before"
+          }
+        }
+      }
+    },
+    "Fare la spesa" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Grocery shopping"
+          }
+        }
+      }
+    },
+    "%@ km" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ km"
+          }
+        }
+      }
+    },
+    "Giorni e orari sono in ora islandese (un'ora indietro rispetto all'Italia in inverno). Il meteo e la luce vengono calcolati per l'ora di arrivo." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Days and times are Iceland time (UTC). Weather and daylight are worked out for the arrival time."
+          }
+        }
+      }
     }
   },
   "version" : "1.0"

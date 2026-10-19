@@ -18,6 +18,8 @@ struct MapScreen: View {
     @AppStorage("map.quakes") private var showQuakes = false
     @AppStorage("map.fuel") private var showFuel = false
     @AppStorage("map.chargers") private var showChargers = false
+    @AppStorage("map.shops") private var showShops = false
+    @State private var selectedShop: Shop?
     @AppStorage("map.trip") private var showTrip = true
     @AppStorage("map.particles") private var showParticles = true
 
@@ -71,6 +73,10 @@ struct MapScreen: View {
             .sheet(item: $selectedSection) { section in
                 NavigationStack { RoadSectionView(section: section) }.presentationDetents([.medium, .large])
             }
+            .sheet(item: $selectedShop) { shop in
+                ShopDetail(shop: shop, from: model.activePlace).presentationDetents([.medium, .large])
+            }
+            .task(id: showShops) { if showShops { await model.loadShops() } }
             .sheet(item: $selectedWebcam) { site in
                 NavigationStack { WebcamSiteView(site: site) }.presentationDetents([.medium, .large])
             }
@@ -126,6 +132,7 @@ struct MapScreen: View {
                     Toggle("Terremoti 48 h", systemImage: "waveform.path.ecg", isOn: $showQuakes)
                     Toggle("Distributori", systemImage: "fuelpump", isOn: $showFuel)
                     Toggle("Ricarica EV", systemImage: "bolt.car", isOn: $showChargers)
+                    Toggle("Supermercati e negozi", systemImage: "cart", isOn: $showShops)
                     Toggle("Viaggio e percorso", systemImage: "point.topleft.down.to.point.bottomright.curvepath", isOn: $showTrip)
                     Toggle("Animazione particelle vento", systemImage: "wind", isOn: $showParticles)
                 } label: {
@@ -463,6 +470,13 @@ struct MapScreen: View {
             }
             poisKey += "fuel\(showFuel)\(showChargers)\(model.fuel?.value.count ?? 0)"
         }
+        if showShops {
+            for shop in model.shops?.value ?? [] {
+                pois.append(PoiAnnotation(kind: .shop, key: "m\(shop.id)", coordinate: shop.coordinate.clCoordinate, title: shop.name,
+                                          color: shop.kind == .alcohol ? .systemPurple : shop.isBudget ? .systemYellow : .systemBlue))
+            }
+            poisKey += "shops\(model.shops?.value.count ?? 0)"
+        }
         if showTrip {
             for (i, stop) in trip.stops.enumerated() {
                 pois.append(PoiAnnotation(kind: .stop, key: "s\(stop.id)", coordinate: stop.place.coordinate.clCoordinate,
@@ -539,6 +553,9 @@ struct MapScreen: View {
         case .webcam:
             let id = Int(poi.key.dropFirst(2)) ?? -1
             selectedWebcam = model.webcams?.value.first { $0.id == id }
+        case .shop:
+            let id = Int(poi.key.dropFirst()) ?? -1
+            selectedShop = model.shops?.value.first { $0.id == id }
         case .roadSection, .roadHazard:
             let id = String(poi.key.dropFirst(2).split(separator: "|").first ?? "")
             selectedSection = model.roadInfo?.value.sections.first { $0.id == id }

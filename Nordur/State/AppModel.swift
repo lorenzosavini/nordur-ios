@@ -19,6 +19,7 @@ final class AppModel {
         case news = "SafeTravel"
         case webcams = "Webcam"
         case fuel = "Distributori"
+        case shops = "Supermercati e negozi"
         case flights = "Voli KEF"
         case ferry = "Herjólfur"
         case grid = "Mappa meteo"
@@ -65,6 +66,7 @@ final class AppModel {
     var news: Fetched<[NewsItem]>?
     var webcams: Fetched<[WebcamSite]>?
     var fuel: Fetched<[FuelStation]>?
+    var shops: Fetched<[Shop]>?
     var flights: Fetched<[Flight]>?
     var ferry: Fetched<FerryNotice?>?
     var weatherGrid: Fetched<WeatherGrid>?
@@ -299,6 +301,14 @@ final class AppModel {
             let result = await attempt { try await FuelStations.all(maxAge: maxAge) }
             apply(result, .fuel) { self.fuel = $0 }
         }
+        await loadShops(force: force)
+    }
+
+    /// Supermarkets and shops (30-day on-device copy, like the fuel stations).
+    func loadShops(force: Bool = false) async {
+        guard shops == nil || force else { return }
+        let result = await attempt { try await Shops.all(maxAge: force ? 0 : 30 * 24 * 3600) }
+        apply(result, .shops) { self.shops = $0 }
     }
 
     /// Lines of the road sections for the map (static, kept a week on the phone).

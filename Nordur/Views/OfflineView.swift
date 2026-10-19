@@ -63,6 +63,9 @@ struct OfflineView: View {
                     let stations = fuel.value
                     LabeledContent("Carburante", value: "\(stations.filter { $0.kind == .fuel }.count)")
                     LabeledContent("Colonnine di ricarica", value: "\(stations.filter { $0.kind == .charger }.count)")
+                    if let shops = model.shops {
+                        LabeledContent("Supermercati e negozi", value: "\(shops.value.count)")
+                    }
                     FreshnessLabel(date: fuel.date, isStale: fuel.isStale, source: String(localized: "OpenStreetMap"))
                 } else {
                     ErrorNote(message: model.errors[.fuel] ?? String(localized: "Non ancora scaricati"))
