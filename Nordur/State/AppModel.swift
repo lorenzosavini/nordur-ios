@@ -67,6 +67,7 @@ final class AppModel {
     var webcams: Fetched<[WebcamSite]>?
     var fuel: Fetched<[FuelStation]>?
     var shops: Fetched<[Shop]>?
+    @ObservationIgnored private var shopsTask: Task<Void, Never>?
     var flights: Fetched<[Flight]>?
     var ferry: Fetched<FerryNotice?>?
     var weatherGrid: Fetched<WeatherGrid>?
@@ -305,10 +306,17 @@ final class AppModel {
     }
 
     /// Supermarkets and shops (30-day on-device copy, like the fuel stations).
+    /// The download runs on its own, so leaving the screen that asked for it does not cancel it.
     func loadShops(force: Bool = false) async {
         guard shops == nil || force else { return }
-        let result = await attempt { try await Shops.all(maxAge: force ? 0 : 30 * 24 * 3600) }
-        apply(result, .shops) { self.shops = $0 }
+        if let shopsTask, !force { return await shopsTask.value }
+        let task = Task { @MainActor in
+            let result = await attempt { try await Shops.all(maxAge: force ? 0 : 30 * 24 * 3600) }
+            apply(result, .shops) { self.shops = $0 }
+            shopsTask = nil
+        }
+        shopsTask = task
+        await task.value
     }
 
     /// Lines of the road sections for the map (static, kept a week on the phone).
@@ -358,6 +366,8 @@ final class AppModel {
             assign(value)
             errors[source] = nil
         case .failure(let error):
+            // A request stopped because its screen went away is not a failure of the source.
+            if error is CancellationError || (error as? URLError)?.code == .cancelled { return }
             errors[source] = error.localizedDescription
         }
     }

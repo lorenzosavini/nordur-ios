@@ -73,7 +73,64 @@ export function compact(sections, notifications, info, now = Date.now()) {
   };
 }
 
+// GET /api/roads?shops=1 -> supermarkets, mini-markets, malls and Vínbúðin from
+// OpenStreetMap (Overpass), in Overpass' own JSON shape. Public Overpass servers
+// are often slow or busy for the whole country: fetched here once a week, with
+// the mirrors raced, and the last good copy served to everyone.
+const SHOPS_CACHE = "public/shops.bin";
+const SHOPS_TTL = 7 * 86400e3;
+const OVERPASS = [
+  "https://overpass-api.de/api/interpreter",
+  "https://overpass.kumi.systems/api/interpreter",
+  "https://maps.mail.ru/osm/tools/overpass/api/interpreter",
+];
+const SHOPS_QUERY = `[out:json][timeout:25];
+(nwr["shop"~"^(supermarket|convenience|mall|alcohol|department_store)$"](63.2,-24.6,66.6,-13.4););
+out center tags;`;
+const KEEP = ["shop", "name", "brand", "operator", "opening_hours", "addr:city", "addr:place"];
+let shopsMemory = null; // { at, elements }
+
+export function compactShops(json) {
+  return (json?.elements || []).map((e) => {
+    const lat = e.lat ?? e.center?.lat;
+    const lon = e.lon ?? e.center?.lon;
+    if (lat == null || lon == null || !e.tags) return null;
+    const tags = Object.fromEntries(KEEP.filter((k) => e.tags[k]).map((k) => [k, e.tags[k]]));
+    return { id: e.id, lat: Math.round(lat * 1e5) / 1e5, lon: Math.round(lon * 1e5) / 1e5, tags };
+  }).filter(Boolean);
+}
+
+async function overpassShops() {
+  return Promise.any(OVERPASS.map(async (endpoint) => {
+    const res = await fetch(endpoint, {
+      method: "POST", body: new URLSearchParams({ data: SHOPS_QUERY }),
+      headers: { "User-Agent": "nordur-api (github.com/lorenzosavini/nordur-ios)", Accept: "application/json" },
+      signal: AbortSignal.timeout(26000),
+    });
+    if (!res.ok) throw new Error(`${endpoint} ${res.status}`);
+    const elements = compactShops(await res.json());
+    if (elements.length < 50) throw new Error(`${endpoint}: ${elements.length} negozi`);
+    return elements;
+  }));
+}
+
+async function shops(res) {
+  if (!shopsMemory) shopsMemory = await readObject(SHOPS_CACHE).catch(() => null);
+  if (!shopsMemory || Date.now() - shopsMemory.at > SHOPS_TTL) {
+    try {
+      shopsMemory = { at: Date.now(), elements: await overpassShops() };
+      await writeObject(SHOPS_CACHE, shopsMemory, { ttl: 60 * 86400 }).catch((e) => console.error("shops cache", e.message));
+    } catch (e) {
+      console.error("shops", e.errors?.map((x) => x.message).join("; ") || e.message);
+      if (!shopsMemory) return send(res, 502, { error: "OpenStreetMap non raggiungibile" });
+    }
+  }
+  res.setHeader("Cache-Control", "public, s-maxage=86400, stale-while-revalidate=604800");
+  return send(res, 200, { updated: new Date(shopsMemory.at).toISOString(), elements: shopsMemory.elements });
+}
+
 export default async function handler(req, res) {
+  if (new URL(req.url, "http://x").searchParams.get("shops")) return shops(res);
   if (!memory || Date.now() - memory.at > TTL) {
     try {
       const [sections, notifications, info] = await Promise.all([

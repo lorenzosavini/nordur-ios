@@ -59,6 +59,8 @@ struct NearShop: Identifiable {
 enum Shops {
     private static let cacheKey = "osm_shops_iceland"
     private static let endpoints = [
+        // nordur-api keeps a weekly copy: fast, and works when the public servers are busy.
+        "https://nordur-api.vercel.app/api/roads?shops=1",
         "https://overpass-api.de/api/interpreter",
         "https://overpass.kumi.systems/api/interpreter",
         "https://maps.mail.ru/osm/tools/overpass/api/interpreter",
@@ -82,7 +84,7 @@ enum Shops {
         var lastError: Error = HTTPError.status(0)
         for endpoint in endpoints {
             do {
-                let url = try HTTP.url(endpoint, ["data": query])
+                let url = endpoint.contains("nordur-api") ? URL(string: endpoint)! : try HTTP.url(endpoint, ["data": query])
                 let fetched = try await HTTP.get(url, cacheKey: cacheKey)
                 let shops = try parse(fetched.value)
                 if !shops.isEmpty { return Fetched(value: shops, date: fetched.date, isStale: fetched.isStale) }
