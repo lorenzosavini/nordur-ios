@@ -60,8 +60,22 @@ final class TripStore {
         }
     }
 
-    func upsert(_ stop: TripStop) {
+    /// Saves a stop. When its arrival day changes, its attractions move with it
+    /// (same times), and with `shiftingLater` the stops after it slide by the same days.
+    func upsert(_ stop: TripStop, shiftingLater: Bool = false) {
         if let index = stops.firstIndex(where: { $0.id == stop.id }) {
+            let old = stops[index]
+            let shift = Self.dayShift(from: old.date, to: stop.date)
+            var stop = stop
+            if shift != 0 {
+                stop.visits = stop.visits.map { $0.shifted(days: shift) }
+                if shiftingLater {
+                    for i in stops.indices where stops[i].id != stop.id && stops[i].date > old.date {
+                        stops[i].date = Calendar.iceland.date(byAdding: .day, value: shift, to: stops[i].date) ?? stops[i].date
+                        stops[i].visits = stops[i].visits.map { $0.shifted(days: shift) }
+                    }
+                }
+            }
             stops[index] = stop
         } else {
             stops.append(stop)
@@ -98,6 +112,34 @@ final class TripStore {
             stops[index].visits[v] = visit
         } else {
             stops[index].visits.append(visit)
+        }
+        save()
+    }
+
+    /// Whole days between two dates, as days in Iceland.
+    static func dayShift(from old: Date, to new: Date) -> Int {
+        let calendar = Calendar.iceland
+        return calendar.dateComponents([.day], from: calendar.startOfDay(for: old), to: calendar.startOfDay(for: new)).day ?? 0
+    }
+
+    /// Moves an attraction to another day, of the same stop or of another one, keeping its time.
+    func move(_ visit: TripVisit, from stopID: UUID, to targetID: UUID, day: Date) {
+        guard let source = stops.firstIndex(where: { $0.id == stopID }),
+              let target = stops.firstIndex(where: { $0.id == targetID }) else { return }
+        stops[source].visits.removeAll { $0.id == visit.id }
+        stops[target].visits.append(visit.moved(to: day))
+        save()
+    }
+
+    /// Swaps two days of a stop: the attractions of one go to the other and back
+    /// (with an empty day this simply moves the day).
+    func swapDays(_ a: Date, _ b: Date, in stopID: UUID) {
+        guard let index = stops.firstIndex(where: { $0.id == stopID }) else { return }
+        let calendar = Calendar.iceland
+        stops[index].visits = stops[index].visits.map { visit in
+            if calendar.isDate(visit.date, inSameDayAs: a) { return visit.moved(to: b) }
+            if calendar.isDate(visit.date, inSameDayAs: b) { return visit.moved(to: a) }
+            return visit
         }
         save()
     }

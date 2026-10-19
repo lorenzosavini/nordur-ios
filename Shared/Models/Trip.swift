@@ -48,6 +48,17 @@ struct TripStop: Codable, Identifiable, Hashable {
 
     /// Visits in time order.
     var sortedVisits: [TripVisit] { visits.sorted { $0.date < $1.date } }
+
+    /// Each day of the stop, from the day you arrive to the day you leave (Iceland time).
+    var days: [Date] {
+        let calendar = Calendar.iceland
+        let start = calendar.startOfDay(for: date)
+        return (0...max(nights, 0)).compactMap { calendar.date(byAdding: .day, value: $0, to: start) }
+    }
+
+    func includes(day: Date) -> Bool {
+        days.contains { Calendar.iceland.isDate($0, inSameDayAs: day) }
+    }
 }
 
 extension TripStop {
@@ -75,4 +86,19 @@ struct TripVisit: Codable, Identifiable, Hashable {
     var notes: String = ""
 
     var end: Date { date.addingTimeInterval(Double(minutes) * 60) }
+
+    /// The same visit at the same time of day on another day.
+    func moved(to day: Date) -> TripVisit {
+        let calendar = Calendar.iceland
+        let time = calendar.dateComponents([.hour, .minute], from: date)
+        var visit = self
+        visit.date = calendar.date(bySettingHour: time.hour ?? 10, minute: time.minute ?? 0, second: 0, of: day) ?? day
+        return visit
+    }
+
+    func shifted(days: Int) -> TripVisit {
+        var visit = self
+        visit.date = Calendar.iceland.date(byAdding: .day, value: days, to: date) ?? date
+        return visit
+    }
 }

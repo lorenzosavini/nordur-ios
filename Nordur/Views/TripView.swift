@@ -267,6 +267,7 @@ struct StopEditor: View {
     @State private var pickingPlace = false
     @State private var photo: PlacePhoto?
     @State private var confirmDelete = false
+    @State private var shiftLater = true
 
     init(stop: TripStop?) {
         original = stop
@@ -430,8 +431,38 @@ struct StopEditor: View {
                 }
             }
             .padding(.horizontal, 12).padding(.vertical, 10)
+            if let original, dayShift != 0 {
+                Rule()
+                VStack(alignment: .leading, spacing: 8) {
+                    if !original.visits.isEmpty {
+                        let shift = (dayShift > 0 ? "+" : "") + String(dayShift)
+                        Label(String(localized: "Le attrazioni della tappa si spostano con lei (\(shift) g)"),
+                              systemImage: "calendar.badge.clock")
+                            .font(.app(.caption)).foregroundStyle(Theme.dim)
+                    }
+                    if laterStops > 0 {
+                        Toggle(isOn: $shiftLater) {
+                            Text(String(localized: "Sposta anche le \(laterStops) tappe successive"))
+                                .font(.app(.subheadline, .medium)).foregroundStyle(Theme.text)
+                        }
+                        .tint(Theme.accent)
+                    }
+                }
+                .padding(12)
+            }
         }
         .overlay(Rectangle().strokeBorder(Theme.hairline))
+    }
+
+    /// Days the arrival moves by, when editing a stop.
+    private var dayShift: Int {
+        guard let original else { return 0 }
+        return TripStore.dayShift(from: original.date, to: date)
+    }
+
+    private var laterStops: Int {
+        guard let original else { return 0 }
+        return trip.stops.filter { $0.id != original.id && $0.date > original.date }.count
     }
 
     private func squareButton(_ symbol: String, action: @escaping () -> Void) -> some View {
@@ -497,13 +528,14 @@ struct StopEditor: View {
 
     private func save() {
         guard let place else { return }
-        var stop = original ?? TripStop(place: place, date: date)
+        // The stored version: its attractions may have changed since the editor opened.
+        var stop = original.flatMap { o in trip.stops.first { $0.id == o.id } } ?? original ?? TripStop(place: place, date: date)
         stop.place = place
         stop.date = date
         stop.nights = nights
         stop.transport = transport
         stop.notes = notes
-        trip.upsert(stop)
+        trip.upsert(stop, shiftingLater: shiftLater && laterStops > 0)
         dismiss()
     }
 }

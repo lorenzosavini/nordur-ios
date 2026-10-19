@@ -4,6 +4,15 @@ extension TimeZone {
     static let iceland = TimeZone(identifier: "Atlantic/Reykjavik") ?? TimeZone(secondsFromGMT: 0)!
 }
 
+extension Calendar {
+    /// Days as they are in Iceland, whatever the phone's time zone.
+    static var iceland: Calendar {
+        var calendar = Calendar(identifier: .gregorian)
+        calendar.timeZone = .iceland
+        return calendar
+    }
+}
+
 enum DateParse {
     private static let internet: ISO8601DateFormatter = {
         let formatter = ISO8601DateFormatter()

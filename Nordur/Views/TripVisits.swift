@@ -14,12 +14,13 @@ struct StopVisits: View {
         let visits = stop.sortedVisits
         VStack(alignment: .leading, spacing: 10) {
             ForEach(days(of: visits), id: \.self) { day in
-                let dayVisits = visits.filter { Calendar.current.isDate($0.date, inSameDayAs: day) }
+                let dayVisits = visits.filter { Calendar.iceland.isDate($0.date, inSameDayAs: day) }
                 DayPlanLine(stop: stop, day: day, visits: dayVisits)
                 ForEach(dayVisits) { visit in
                     VisitRow(visit: visit)
                         .contentShape(Rectangle())
                         .onTapGesture { onEdit(visit) }
+                        .contextMenu { moveMenu(visit) }
                         .accessibilityIdentifier("trip.visit")
                 }
             }
@@ -35,10 +36,42 @@ struct StopVisits: View {
         .padding(.vertical, 4)
     }
 
+    /// Hold an attraction: move it to another day or stop, or take it off.
+    @ViewBuilder private func moveMenu(_ visit: TripVisit) -> some View {
+        Button { onEdit(visit) } label: { Label("Modifica", systemImage: "pencil") }
+        let otherDays = stop.days.filter { !Calendar.iceland.isDate($0, inSameDayAs: visit.date) }
+        if !otherDays.isEmpty {
+            Menu {
+                ForEach(otherDays, id: \.self) { day in
+                    Button(Fmt.day(day, in: .iceland)) {
+                        trip.move(visit, from: stop.id, to: stop.id, day: day)
+                        Haptics.result(true)
+                    }
+                }
+            } label: { Label("Sposta a un altro giorno", systemImage: "calendar") }
+        }
+        let otherStops = trip.stops.filter { $0.id != stop.id }
+        if !otherStops.isEmpty {
+            Menu {
+                ForEach(otherStops) { other in
+                    Button("\(other.place.name) · \(Fmt.day(other.date, in: .iceland))") {
+                        // Same day if the other stop covers it, otherwise the day you arrive there.
+                        let day = other.includes(day: visit.date) ? visit.date : other.date
+                        trip.move(visit, from: stop.id, to: other.id, day: day)
+                        Haptics.result(true)
+                    }
+                }
+            } label: { Label("Sposta in un'altra tappa", systemImage: "arrow.left.arrow.right") }
+        }
+        Button(role: .destructive) { trip.delete(visit, in: stop.id) } label: {
+            Label("Togli dal viaggio", systemImage: "trash")
+        }
+    }
+
     private func days(of visits: [TripVisit]) -> [Date] {
         var seen: [Date] = []
         for v in visits {
-            let d = Calendar.current.startOfDay(for: v.date)
+            let d = Calendar.iceland.startOfDay(for: v.date)
             if !seen.contains(d) { seen.append(d) }
         }
         return seen
@@ -57,7 +90,32 @@ struct DayPlanLine: View {
         let plan = DayPlan(stop: stop, previous: trip.previous(before: stop), day: day, visits: visits)
         let sun = daylight
         VStack(alignment: .leading, spacing: 3) {
-            Text(Fmt.day(day, in: .iceland).uppercased()).font(.mono(10, .semibold)).foregroundStyle(Theme.accent)
+            HStack {
+                Text(Fmt.day(day, in: .iceland).uppercased()).font(.mono(10, .semibold)).foregroundStyle(Theme.accent)
+                Spacer()
+                let others = stop.days.filter { !Calendar.iceland.isDate($0, inSameDayAs: day) }
+                if !others.isEmpty {
+                    Menu {
+                        Section("Sposta la giornata") {
+                            ForEach(others, id: \.self) { other in
+                                let busy = stop.visits.contains { Calendar.iceland.isDate($0.date, inSameDayAs: other) }
+                                Button(busy ? String(localized: "Scambia con \(Fmt.day(other, in: .iceland))")
+                                            : String(localized: "Sposta a \(Fmt.day(other, in: .iceland))")) {
+                                    trip.swapDays(day, other, in: stop.id)
+                                    Haptics.result(true)
+                                }
+                            }
+                        }
+                    } label: {
+                        Label("Sposta", systemImage: "arrow.up.arrow.down")
+                            .font(.mono(10, .semibold)).foregroundStyle(Theme.accent)
+                            .padding(.horizontal, 8).frame(height: 24)
+                            .overlay(Rectangle().strokeBorder(Theme.hairline))
+                    }
+                    .buttonStyle(.plain)
+                    .accessibilityIdentifier("trip.moveDay")
+                }
+            }
             Text(String(localized: "\(visits.count) attrazioni · ~\(Int(plan.km.rounded())) km · ~\(Fmt.duration(plan.driveMinutes * 60)) di guida + \(Fmt.duration(plan.visitMinutes * 60)) di visita"))
                 .font(.app(.caption)).foregroundStyle(Theme.text)
             if let sun {
@@ -74,7 +132,7 @@ struct DayPlanLine: View {
     private var daylight: (rise: Date, set: Date)? {
         let c = visits.first?.place.coordinate ?? stop.place.coordinate
         if let d = trip.forecast(at: c)?.day(for: day), let rise = d.sunrise, let set = d.sunset { return (rise, set) }
-        let start = Calendar.current.startOfDay(for: day)
+        let start = Calendar.iceland.startOfDay(for: day)
         let crossing = Astro.crossings(of: -0.833, from: start, at: c)
         guard let up = crossing.up, let down = crossing.down, up < down else { return nil }
         return (up, down)
@@ -89,7 +147,7 @@ struct DayPlan {
 
     init(stop: TripStop, previous: TripStop?, day: Date, visits: [TripVisit]) {
         // On the arrival day you leave from the previous stop; on the other days from this one.
-        let start = Calendar.current.isDate(day, inSameDayAs: stop.date) && stop.transport == .car ? (previous?.place ?? stop.place) : stop.place
+        let start = Calendar.iceland.isDate(day, inSameDayAs: stop.date) && stop.transport == .car ? (previous?.place ?? stop.place) : stop.place
         let points = [start.coordinate] + visits.map(\.place.coordinate) + [stop.place.coordinate]
         let straight = zip(points, points.dropFirst()).reduce(0) { $0 + Geo.distanceKm($1.0, $1.1) }
         km = straight * 1.3
@@ -244,6 +302,8 @@ struct VisitEditor: View {
     @Environment(TripStore.self) private var trip
     @Environment(\.dismiss) private var dismiss
     let draft: VisitDraft
+    @State private var stopID = UUID()
+    @State private var day = Date()
     @State private var date = Date()
     @State private var minutes = 60
     @State private var notes = ""
@@ -259,7 +319,7 @@ struct VisitEditor: View {
                         Text(((visit.kind ?? attraction?.kind)?.label ?? String(localized: "Luogo")).uppercased())
                             .font(.mono(10, .semibold)).foregroundStyle(Theme.accent)
                         Text(visit.place.name).font(.display(28, .bold)).foregroundStyle(Theme.text)
-                        Text(String(localized: "\(Int(Geo.distanceKm(draft.stop.place.coordinate, visit.place.coordinate).rounded())) km in linea d'aria da \(draft.stop.place.name)"))
+                        Text(String(localized: "\(Int(Geo.distanceKm(target.place.coordinate, visit.place.coordinate).rounded())) km in linea d'aria da \(target.place.name)"))
                             .font(.mono(10)).foregroundStyle(Theme.dim)
                         if let caution = attraction?.caution {
                             Label(caution, systemImage: "exclamationmark.triangle").font(.app(.caption)).foregroundStyle(Theme.caution)
@@ -269,7 +329,20 @@ struct VisitEditor: View {
                     .padding(.vertical, 4)
                 }
                 Section {
-                    DatePicker("Arrivo", selection: $date, in: range, displayedComponents: [.date, .hourAndMinute])
+                    if trip.stops.count > 1 {
+                        Picker("Tappa", selection: $stopID) {
+                            ForEach(trip.stops) { s in
+                                Text("\(s.place.name) · \(Fmt.day(s.date, in: .iceland))").tag(s.id)
+                            }
+                        }
+                    }
+                    Picker("Giorno", selection: $day) {
+                        ForEach(target.days, id: \.self) { d in
+                            Text(Fmt.day(d, in: .iceland)).tag(d)
+                        }
+                    }
+                    DatePicker("Ora di arrivo", selection: $date, displayedComponents: [.hourAndMinute])
+                        .environment(\.timeZone, .iceland)
                     Stepper(String(localized: "Visita: \(Fmt.duration(Double(minutes) * 60))"), value: $minutes, in: 15...600, step: 15)
                     TextField("Note (biglietti, parcheggio, orari…)", text: $notes, axis: .vertical)
                 } header: { Text("Quando").pinnedHeader() } footer: {
@@ -281,7 +354,9 @@ struct VisitEditor: View {
                         v.date = date
                         v.minutes = minutes
                         v.notes = notes
-                        trip.upsert(v, in: draft.stop.id)
+                        v = v.moved(to: day)
+                        if stopID != draft.stop.id, !draft.isNew { trip.delete(draft.visit, in: draft.stop.id) }
+                        trip.upsert(v, in: stopID)
                         Haptics.result(true)
                         dismiss()
                     } label: {
@@ -310,18 +385,23 @@ struct VisitEditor: View {
                 }
             }
         }
+        .onChange(of: stopID) {
+            // Another stop: keep the day if it covers it, otherwise its first day.
+            if !target.includes(day: day) { day = target.days.first ?? target.date }
+        }
         .onAppear {
+            stopID = draft.stop.id
+            day = Calendar.iceland.startOfDay(for: draft.visit.date)
+            if !draft.stop.includes(day: day) { day = draft.stop.days.first ?? day }
             date = draft.visit.date
             minutes = draft.visit.minutes
             notes = draft.visit.notes
         }
     }
 
-    /// From the day you arrive at the stop to the day you leave.
-    private var range: ClosedRange<Date> {
-        let start = Calendar.current.startOfDay(for: draft.stop.date)
-        let end = Calendar.current.date(byAdding: .day, value: max(draft.stop.nights, 0) + 1, to: start)!.addingTimeInterval(-60)
-        return start...end
+    /// The stop the visit belongs to once saved (it can be moved to another).
+    private var target: TripStop {
+        trip.stops.first { $0.id == stopID } ?? draft.stop
     }
 }
 
