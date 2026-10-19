@@ -68,7 +68,7 @@ enum Shops {
 
     /// Uses the on-device copy when younger than `maxAge`, otherwise downloads.
     static func all(maxAge: TimeInterval = 30 * 24 * 3600) async throws -> Fetched<[Shop]> {
-        if let cached = DiskCache.read(cacheKey), Date().timeIntervalSince(cached.date) < maxAge,
+        if let cached = DiskCache.read(cacheKey), Date().timeIntervalSince(cached.date) < OSMCopy.maxAge(cached.data, maxAge),
            let shops = try? parse(cached.data), !shops.isEmpty {
             return Fetched(value: shops, date: cached.date, isStale: false)
         }

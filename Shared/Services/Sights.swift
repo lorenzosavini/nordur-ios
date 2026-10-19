@@ -13,12 +13,23 @@ struct Suggestion: Identifiable {
     var id: String { sight.id }
 }
 
+/// nordur-api fills its OpenStreetMap copies one area at a time ("areas": "5/8"):
+/// a partial copy is kept on the phone for half an hour only.
+enum OSMCopy {
+    static func maxAge(_ data: Data, _ full: TimeInterval) -> TimeInterval {
+        struct Header: Decodable { let areas: String? }
+        guard let areas = (try? JSONDecoder().decode(Header.self, from: data))?.areas else { return full }
+        let parts = areas.split(separator: "/")
+        return parts.count == 2 && parts[0] == parts[1] ? full : 1800
+    }
+}
+
 enum Sights {
     private static let cacheKey = "osm_sights_iceland"
     private static let endpoint = URL(string: "https://nordur-api.vercel.app/api/roads?osm=sights")!
 
     static func all(maxAge: TimeInterval = 30 * 24 * 3600) async throws -> Fetched<[Attraction]> {
-        if let cached = DiskCache.read(cacheKey), Date().timeIntervalSince(cached.date) < maxAge,
+        if let cached = DiskCache.read(cacheKey), Date().timeIntervalSince(cached.date) < OSMCopy.maxAge(cached.data, maxAge),
            let sights = try? parse(cached.data), !sights.isEmpty {
             return Fetched(value: sights, date: cached.date, isStale: false)
         }

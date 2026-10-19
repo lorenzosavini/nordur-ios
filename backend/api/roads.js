@@ -87,7 +87,12 @@ const OVERPASS = [
   "https://overpass.kumi.systems/api/interpreter",
   "https://maps.mail.ru/osm/tools/overpass/api/interpreter",
 ];
-const AREAS = ["63.2,-24.6,64.6,-19.0", "64.6,-24.6,66.6,-19.0", "63.2,-19.0,64.9,-13.4", "64.9,-19.0,66.6,-13.4"];
+// Eight areas, one downloaded per request: each fits well inside the time limit,
+// and the copy fills up (then renews, the oldest first) over successive calls.
+const AREAS = [
+  "63.2,-24.6,64.3,-21.0", "64.3,-24.6,66.6,-21.0", "63.2,-21.0,64.2,-18.5", "64.2,-21.0,66.6,-18.5",
+  "63.2,-18.5,64.6,-16.0", "64.6,-18.5,66.6,-16.0", "63.2,-16.0,65.0,-13.4", "65.0,-16.0,66.6,-13.4",
+];
 const OSM_LAYERS = {
   shops: {
     cache: "public/shops.bin", min: 50,
@@ -138,27 +143,45 @@ async function overpassArea(layer, bbox) {
   }));
 }
 
-async function overpassLayer(layer) {
-  const areas = await Promise.all(AREAS.map((bbox) => overpassArea(layer, bbox)));
+function merge(areas) {
   const seen = new Set();
-  const elements = areas.flat().filter((e) => !seen.has(e.id) && seen.add(e.id));
-  if (elements.length < layer.min) throw new Error(`solo ${elements.length} elementi`);
-  return elements;
+  return Object.values(areas).flatMap((a) => a.elements).filter((e) => !seen.has(e.id) && seen.add(e.id));
 }
 
-/** The stored copy of a layer, downloaded when there is none or on a refresh. */
+/**
+ * The stored copy of a layer ({ at, areas: { bbox: { at, elements } }, elements }).
+ * One area is downloaded per call: a missing one first, else on a refresh the oldest
+ * (when older than a day).
+ */
 async function osmLayer(name, refresh) {
   const layer = OSM_LAYERS[name];
-  if (!osmMemory[name]) osmMemory[name] = await readObject(layer.cache).catch(() => null);
-  if (!osmMemory[name] || (refresh && Date.now() - osmMemory[name].at > OSM_REFRESH)) {
+  if (!osmMemory[name]) {
+    const read = await readObject(layer.cache).catch(() => null);
+    // Only the areas are stored; the merged list is rebuilt here.
+    if (read?.areas) read.elements = merge(read.legacy ? { ...read.areas, legacy: { elements: read.legacy } } : read.areas);
+    osmMemory[name] = read;
+  }
+  let stored = osmMemory[name];
+  // A copy from before areas were kept apart keeps being served until the areas are all in.
+  const legacy = stored && !stored.areas ? stored.elements : stored?.legacy;
+  const areas = stored?.areas || {};
+  const missing = AREAS.find((bbox) => !areas[bbox]);
+  const oldest = AREAS.slice().sort((a, b) => (areas[a]?.at || 0) - (areas[b]?.at || 0))[0];
+  const target = missing || (refresh && Date.now() - (areas[oldest]?.at || 0) > OSM_REFRESH ? oldest : null);
+  if (target) {
     try {
-      osmMemory[name] = { at: Date.now(), elements: await overpassLayer(layer) };
-      await writeObject(layer.cache, osmMemory[name], { ttl: 60 * 86400 }).catch((e) => console.error(name, "cache", e.message));
+      areas[target] = { at: Date.now(), elements: await overpassArea(layer, target) };
+      const complete = AREAS.every((a) => areas[a]);
+      const elements = merge(complete || !legacy ? areas : { ...areas, legacy: { elements: legacy } });
+      stored = { at: Date.now(), areas, elements, ...(complete || !legacy ? {} : { legacy }) };
+      osmMemory[name] = stored;
+      const { elements: _merged, ...toStore } = stored;
+      await writeObject(layer.cache, toStore, { ttl: 90 * 86400 }).catch((e) => console.error(name, "cache", e.message));
     } catch (e) {
-      console.error(name, e.errors?.map((x) => x.message).join("; ") || e.message);
+      console.error(name, target, e.errors?.map((x) => x.message).join("; ") || e.message);
     }
   }
-  return osmMemory[name];
+  return stored?.elements?.length ? stored : null;
 }
 
 async function osm(res, name, refresh) {
@@ -166,7 +189,10 @@ async function osm(res, name, refresh) {
   const stored = await osmLayer(name, refresh);
   if (!stored) return send(res, 502, { error: "OpenStreetMap non raggiungibile" });
   res.setHeader("Cache-Control", "public, s-maxage=86400, stale-while-revalidate=604800");
-  return send(res, 200, { updated: new Date(stored.at).toISOString(), elements: stored.elements });
+  const complete = stored.areas ? AREAS.filter((a) => stored.areas[a]).length : 0;
+  // Until every area is in, the copy is short-lived so the next calls complete it.
+  if (complete < AREAS.length) res.setHeader("Cache-Control", "public, s-maxage=30");
+  return send(res, 200, { updated: new Date(stored.at).toISOString(), areas: `${complete}/${AREAS.length}`, elements: stored.elements });
 }
 
 export default async function handler(req, res) {
