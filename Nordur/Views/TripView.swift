@@ -11,9 +11,16 @@ struct TripView: View {
     @State private var importFile: TripImportFile?
     @State private var importError: String?
     @State private var exportURL: URL?
+    /// Days (everything on one page), stops (cards to open), or the route on a map.
+    @AppStorage("trip.view") private var mode = "days"
+    @State private var dayVisit: VisitDraft?
+    @State private var dayAdd: DayAdd?
+    @State private var pendingVisit: VisitDraft?
+    @State private var mapStop: TripStop?
 
     var body: some View {
         NavigationStack {
+            ScrollViewReader { proxy in
             List {
                 Section {
                     ScreenHeader(title: String(localized: "Viaggio"), subtitle: trip.stops.isEmpty ? String(localized: "Itinerario") : String(localized: "\(trip.stops.count) tappe"), index: "05") {
@@ -29,12 +36,15 @@ struct TripView: View {
                 .listRowBackground(Color.clear)
                 .listRowInsets(EdgeInsets(top: 0, leading: 4, bottom: 0, trailing: 4))
 
-                Section {
-                    HeroHeader(hero: .trip, eyebrow: String(localized: "Kirkjufell · Snæfellsnes"), title: String(localized: "Il tuo viaggio"),
-                               subtitle: String(localized: "Per ogni tappa: meteo, allerte, strade e aurora"), height: 150)
-                        .heroRow()
+                // The picture only for an empty trip: once planned, the days come first.
+                if trip.stops.isEmpty {
+                    Section {
+                        HeroHeader(hero: .trip, eyebrow: String(localized: "Kirkjufell · Snæfellsnes"), title: String(localized: "Il tuo viaggio"),
+                                   subtitle: String(localized: "Per ogni tappa: meteo, allerte, strade e aurora"), height: 150)
+                            .heroRow()
+                    }
+                    .listSectionSeparator(.hidden)
                 }
-                .listSectionSeparator(.hidden)
 
                 if trip.stops.isEmpty {
                     VStack(alignment: .leading, spacing: 12) {
@@ -66,8 +76,28 @@ struct TripView: View {
                             if let exportURL { ShareLink(item: exportURL) { actionLabel(String(localized: "ESPORTA"), "square.and.arrow.up") } }
                         }
                         .buttonStyle(.plain)
+                        Picker("Vista", selection: $mode) {
+                            Text("Giorni").tag("days")
+                            Text("Tappe").tag("stops")
+                            Text("Mappa").tag("map")
+                        }
+                        .pickerStyle(.segmented)
+                        .accessibilityIdentifier("trip.mode")
                     }
                 }
+                if mode == "days" {
+                    TripDaysSections(onEdit: { item in
+                        dayVisit = VisitDraft(stop: item.stop, visit: item.visit, isNew: false)
+                    }, onAdd: { dayAdd = $0 })
+                } else if mode == "map", !trip.stops.isEmpty {
+                    Section {
+                        TripMap { mapStop = $0 }
+                            .frame(height: 480)
+                            .listRowInsets(EdgeInsets())
+                    } footer: {
+                        Text("Tocca un numero per aprire la tappa.")
+                    }
+                } else {
                 ForEach(Array(trip.stops.enumerated()), id: \.element.id) { index, stop in
                     Section {
                         NavigationLink {
@@ -91,6 +121,7 @@ struct TripView: View {
                     // Each stop is its own section, so the offset is the stop index.
                     trip.delete(at: offsets)
                 }
+                }
                 if trip.stops.isEmpty {
                     Section {
                         Button { importing = true } label: {
@@ -102,6 +133,26 @@ struct TripView: View {
                 }
             }
             .themedList()
+            .onAppear {
+                // During the trip the day view opens on today.
+                let today = Calendar.iceland.startOfDay(for: Date())
+                if mode == "days", trip.days.contains(where: { $0.date == today }) {
+                    DispatchQueue.main.async { proxy.scrollTo(today, anchor: .top) }
+                }
+            }
+            }
+            .navigationDestination(item: $mapStop) { stop in StopDetailView(stopID: stop.id, fallback: stop) }
+            .sheet(item: $dayVisit) { draft in VisitEditor(draft: draft) }
+            .sheet(item: $dayAdd, onDismiss: {
+                if let pending = pendingVisit {
+                    pendingVisit = nil
+                    dayVisit = pending
+                }
+            }) { add in
+                AttractionPicker(stop: add.stop) { place, kind, minutes in
+                    pendingVisit = VisitDraft(stop: add.stop, visit: .next(at: place, kind: kind, minutes: minutes, in: add.stop, on: add.day), isNew: true)
+                }
+            }
             .toolbar(.hidden, for: .navigationBar)
             .refreshable {
                 await model.refreshGlobal(force: true)
