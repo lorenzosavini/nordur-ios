@@ -204,7 +204,10 @@ extension TripStore {
             let c = Coordinate(lat: item.lat, lon: item.lon)
             let targets = added.isEmpty ? result : added
             guard !targets.isEmpty else { continue }
-            let byDate = item.date.flatMap { d in targets.firstIndex { $0.includes(day: d) } }
+            // The day you move on belongs to the stop you arrive at (the sights on the way there).
+            let byDate = item.date.flatMap { d in
+                targets.firstIndex { calendar.isDate($0.date, inSameDayAs: d) } ?? targets.firstIndex { $0.includes(day: d) }
+            }
             let index = byDate ?? targets.indices.min { Geo.distanceKm(targets[$0].place.coordinate, c) < Geo.distanceKm(targets[$1].place.coordinate, c) }!
             let known = Attraction.named(item.name)
             var visit = TripVisit.next(at: Place(name: item.name, lat: item.lat, lon: item.lon, subtitle: nil), kind: known?.kind,
