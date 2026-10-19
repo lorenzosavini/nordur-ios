@@ -84,8 +84,10 @@ const OVERPASS = [
   "https://overpass.kumi.systems/api/interpreter",
   "https://maps.mail.ru/osm/tools/overpass/api/interpreter",
 ];
-const SHOPS_QUERY = `[out:json][timeout:25];
-(nwr["shop"~"^(supermarket|convenience|mall|alcohol|department_store)$"](63.2,-24.6,66.6,-13.4););
+// Four smaller areas answer much faster than the whole country at once.
+const SHOP_AREAS = ["63.2,-24.6,64.6,-19.0", "64.6,-24.6,66.6,-19.0", "63.2,-19.0,64.9,-13.4", "64.9,-19.0,66.6,-13.4"];
+const shopsQuery = (bbox) => `[out:json][timeout:45];
+nwr["shop"~"^(supermarket|convenience|mall|alcohol|department_store)$"](${bbox});
 out center tags;`;
 const KEEP = ["shop", "name", "brand", "operator", "opening_hours", "addr:city", "addr:place"];
 let shopsMemory = null; // { at, elements }
@@ -100,18 +102,26 @@ export function compactShops(json) {
   }).filter(Boolean);
 }
 
-async function overpassShops() {
+async function overpassArea(bbox) {
   return Promise.any(OVERPASS.map(async (endpoint) => {
     const res = await fetch(endpoint, {
-      method: "POST", body: new URLSearchParams({ data: SHOPS_QUERY }),
+      method: "POST", body: new URLSearchParams({ data: shopsQuery(bbox) }),
       headers: { "User-Agent": "nordur-api (github.com/lorenzosavini/nordur-ios)", Accept: "application/json" },
-      signal: AbortSignal.timeout(26000),
+      signal: AbortSignal.timeout(50000),
     });
     if (!res.ok) throw new Error(`${endpoint} ${res.status}`);
-    const elements = compactShops(await res.json());
-    if (elements.length < 50) throw new Error(`${endpoint}: ${elements.length} negozi`);
-    return elements;
+    const json = await res.json();
+    if (json.remark && !json.elements?.length) throw new Error(`${endpoint}: ${json.remark}`);
+    return compactShops(json);
   }));
+}
+
+async function overpassShops() {
+  const areas = await Promise.all(SHOP_AREAS.map(overpassArea));
+  const seen = new Set();
+  const elements = areas.flat().filter((e) => !seen.has(e.id) && seen.add(e.id));
+  if (elements.length < 50) throw new Error(`solo ${elements.length} negozi`);
+  return elements;
 }
 
 async function shops(res) {
