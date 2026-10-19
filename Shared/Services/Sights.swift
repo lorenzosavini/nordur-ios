@@ -26,15 +26,28 @@ enum OSMCopy {
 
 enum Sights {
     private static let cacheKey = "osm_sights_iceland"
-    private static let endpoint = URL(string: "https://nordur-api.vercel.app/api/roads?osm=sights")!
+    private static let endpoints = [
+        URL(string: "https://nordur-api.vercel.app/api/roads?osm=sights")!,
+        // The copy the GitHub Action publishes, when nordur-api is not reachable.
+        URL(string: "https://raw.githubusercontent.com/lorenzosavini/nordur-ios/osm-data/sights.json")!,
+    ]
 
     static func all(maxAge: TimeInterval = 30 * 24 * 3600) async throws -> Fetched<[Attraction]> {
         if let cached = DiskCache.read(cacheKey), Date().timeIntervalSince(cached.date) < OSMCopy.maxAge(cached.data, maxAge),
            let sights = try? parse(cached.data), !sights.isEmpty {
             return Fetched(value: sights, date: cached.date, isStale: false)
         }
-        let fetched = try await HTTP.get(endpoint, cacheKey: cacheKey)
-        return Fetched(value: try parse(fetched.value), date: fetched.date, isStale: fetched.isStale)
+        var lastError: Error = HTTPError.status(0)
+        for url in endpoints {
+            do {
+                let fetched = try await HTTP.get(url, cacheKey: cacheKey)
+                let sights = try parse(fetched.value)
+                if !sights.isEmpty { return Fetched(value: sights, date: fetched.date, isStale: fetched.isStale) }
+            } catch {
+                lastError = error
+            }
+        }
+        throw lastError
     }
 
     static func parse(_ data: Data) throws -> [Attraction] {

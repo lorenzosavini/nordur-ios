@@ -1,0 +1,41 @@
+name: OSM data
+
+# Shops and places to see from OpenStreetMap, downloaded without the time limit
+# of a serverless function and published on the osm-data branch, where
+# nordur-api and the app read them.
+on:
+  schedule:
+    - cron: "41 3 * * 1"
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: ["tools/osm/**", ".github/workflows/osm-data.yml"]
+
+permissions:
+  contents: write
+
+concurrency:
+  group: osm-data
+  cancel-in-progress: false
+
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+      - name: Download from Overpass
+        run: |
+          mkdir -p out
+          python3 tools/osm/fetch.py out
+          ls -l out
+      - name: Publish to osm-data
+        run: |
+          cd out
+          git init -q
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git checkout -q -b osm-data
+          git add shops.json sights.json
+          git commit -q -m "OSM data $(date -u +%Y-%m-%dT%H:%MZ)"
+          git push -q -f "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" osm-data

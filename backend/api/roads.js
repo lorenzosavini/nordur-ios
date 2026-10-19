@@ -143,6 +143,18 @@ async function overpassArea(layer, bbox) {
   }));
 }
 
+// A GitHub Action (.github/workflows/osm-data.yml) downloads the layers without a
+// time limit and publishes them here: the first source, Overpass the fallback.
+const GITHUB_OSM = "https://raw.githubusercontent.com/lorenzosavini/nordur-ios/osm-data";
+
+async function fromGitHub(name) {
+  const res = await fetch(`${GITHUB_OSM}/${name}.json`, { signal: AbortSignal.timeout(20000) });
+  if (!res.ok) throw new Error(`GitHub ${res.status}`);
+  const json = await res.json();
+  if ((json.elements?.length || 0) < OSM_LAYERS[name].min) throw new Error(`GitHub: ${json.elements?.length || 0} elementi`);
+  return { at: Date.parse(json.updated) || Date.now(), complete: true, elements: json.elements };
+}
+
 function merge(areas) {
   const seen = new Set();
   return Object.values(areas).flatMap((a) => a.elements).filter((e) => !seen.has(e.id) && seen.add(e.id));
@@ -162,6 +174,21 @@ async function osmLayer(name, refresh) {
     osmMemory[name] = read;
   }
   let stored = osmMemory[name];
+  const isComplete = (c) => c?.complete || (c?.areas && AREAS.every((a) => c.areas[a]));
+  if (!isComplete(stored) || (refresh && Date.now() - (stored.checked || 0) > OSM_REFRESH)) {
+    try {
+      const copy = await fromGitHub(name);
+      if (!isComplete(stored) || copy.at > (stored.at || 0)) {
+        osmMemory[name] = { ...copy, checked: Date.now() };
+        await writeObject(layer.cache, osmMemory[name], { ttl: 90 * 86400 }).catch((e) => console.error(name, "cache", e.message));
+        return osmMemory[name];
+      }
+      stored.checked = Date.now();
+    } catch (e) {
+      console.error(name, "github", e.message);
+    }
+  }
+  if (stored?.complete) return stored;
   // A copy from before areas were kept apart keeps being served until the areas are all in.
   const legacy = stored && !stored.areas ? stored.elements : stored?.legacy;
   const areas = stored?.areas || {};
@@ -189,7 +216,7 @@ async function osm(res, name, refresh) {
   const stored = await osmLayer(name, refresh);
   if (!stored) return send(res, 502, { error: "OpenStreetMap non raggiungibile" });
   res.setHeader("Cache-Control", "public, s-maxage=86400, stale-while-revalidate=604800");
-  const complete = stored.areas ? AREAS.filter((a) => stored.areas[a]).length : 0;
+  const complete = stored.complete ? AREAS.length : stored.areas ? AREAS.filter((a) => stored.areas[a]).length : 0;
   // Until every area is in, the copy is short-lived so the next calls complete it.
   if (complete < AREAS.length) res.setHeader("Cache-Control", "public, s-maxage=30");
   return send(res, 200, { updated: new Date(stored.at).toISOString(), areas: `${complete}/${AREAS.length}`, elements: stored.elements });
