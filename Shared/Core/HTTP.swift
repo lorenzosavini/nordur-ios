@@ -117,7 +117,15 @@ enum HTTP {
 
     static func json<T: Decodable>(_ type: T.Type, from url: URL, cacheKey: String) async throws -> Fetched<T> {
         let fetched = try await get(url, cacheKey: cacheKey)
-        return try fetched.map { try JSONDecoder().decode(T.self, from: $0) }
+        return try fetched.map { data in
+            // Some feeds answer "204 No Content" (an empty body) when there is nothing,
+            // e.g. the IMO warnings with no warning in force: that is an empty list.
+            if data.allSatisfy({ $0 == 0x20 || $0 == 0x0A || $0 == 0x0D || $0 == 0x09 }),
+               let empty = try? JSONDecoder().decode(T.self, from: Data("[]".utf8)) {
+                return empty
+            }
+            return try JSONDecoder().decode(T.self, from: data)
+        }
     }
 }
 
