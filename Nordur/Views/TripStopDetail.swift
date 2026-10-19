@@ -72,7 +72,7 @@ struct StopCard: View {
                 }
                 if !warnings.isEmpty {
                     Label(String(localized: "\(warnings.count) allerte IMO"), systemImage: "exclamationmark.triangle.fill")
-                        .font(.app(.caption, .semibold)).foregroundStyle(warnings.first?.color ?? Theme.warning)
+                        .font(.app(.caption, .semibold)).foregroundStyle(warnings.map(\.color).max()?.color ?? Theme.warning)
                 }
                 if !visits.isEmpty {
                     Text(visits.prefix(3).map(\.place.name).joined(separator: " · ") + (visits.count > 3 ? " +\(visits.count - 3)" : ""))
