@@ -1,5 +1,6 @@
 import Foundation
 import UIKit
+import Vision
 
 /// A photograph of the active place, for the blurred backdrop on Today.
 ///
@@ -27,8 +28,8 @@ final class PlacePhotoService {
     private static let agent = "Nordur/1.0 (iOS; https://github.com/lorenzosavini/nordur-ios)"
 
     private func key(_ place: Place) -> String {
-        // v2: the wider search; places not found before are looked up again.
-        "place_photo2_\(stableHash(place.name))_\(Int(place.coordinate.lat * 20))_\(Int(place.coordinate.lon * 20))"
+        // v3: photos showing people's faces are left out; everything is looked up again.
+        "place_photo3_\(stableHash(place.name))_\(Int(place.coordinate.lat * 20))_\(Int(place.coordinate.lon * 20))"
     }
 
     /// Wikidata / Wikipedia links of the places to see (from OpenStreetMap), by place.
@@ -131,12 +132,12 @@ final class PlacePhotoService {
 
     private func article(_ lang: String, _ title: String) async -> PlacePhoto? {
         guard let page = await pages(lang, ["titles": title, "redirects": "1"]).first else { return nil }
-        return await make(page, lang: lang)
+        return await placeOnly(await make(page, lang: lang))
     }
 
     private func searched(_ lang: String, _ query: String) async -> PlacePhoto? {
         for page in await pages(lang, ["generator": "search", "gsrsearch": query, "gsrlimit": "3"]) {
-            if let photo = await make(page, lang: lang) { return photo }
+            if let photo = await placeOnly(await make(page, lang: lang)) { return photo }
         }
         return nil
     }
@@ -144,10 +145,41 @@ final class PlacePhotoService {
     private func nearestArticle(_ lang: String, _ coord: String) async -> PlacePhoto? {
         let near = await pages(lang, ["generator": "geosearch", "ggscoord": coord, "ggsradius": "10000", "ggslimit": "12"])
             .sorted { ($0.index ?? 99) < ($1.index ?? 99) }
-        for page in near {
-            if let photo = await make(page, lang: lang) { return photo }
+        for page in near.prefix(6) {
+            if let photo = await placeOnly(await make(page, lang: lang)) { return photo }
         }
         return nil
+    }
+
+    // MARK: No people
+
+    /// The photo, unless it shows people's faces: a place is shown, not who was
+    /// there. Checked on the phone with Vision; file names of portraits are left
+    /// out without downloading. Small figures far away are fine.
+    private func placeOnly(_ photo: PlacePhoto?) async -> PlacePhoto? {
+        guard let photo else { return nil }
+        if Self.aboutPeople(photo.title) { return nil }
+        var request = URLRequest(url: photo.imageURL, timeoutInterval: 15)
+        request.setValue(Self.agent, forHTTPHeaderField: "User-Agent")
+        guard let (data, _) = try? await HTTP.session.data(for: request), let image = UIImage(data: data), let cg = image.cgImage else {
+            return photo
+        }
+        let faces = await Task.detached(priority: .utility) { () -> Bool in
+            let detect = VNDetectFaceRectanglesRequest()
+            try? VNImageRequestHandler(cgImage: cg, options: [:]).perform([detect])
+            // A face bigger than ~0.15 % of the picture (about 40 × 40 px on 1200 × 800).
+            return (detect.results ?? []).contains { $0.boundingBox.width * $0.boundingBox.height > 0.0015 }
+        }.value
+        if faces { return nil }
+        // Already downloaded: the views show it without fetching it again.
+        RemoteImageCache.shared.store(image, photo.imageURL)
+        return photo
+    }
+
+    private static func aboutPeople(_ title: String) -> Bool {
+        let lower = title.lowercased()
+        return ["portrait", "selfie", "people", "tourist", "turist", "family", "famiglia", "wedding", "couple", "man ", "woman", "girl", "boy ",
+                "children", "kids", "crowd", "visitors", "persone", "ritratto", "fólk", "mynd af"].contains(where: lower.contains)
     }
 
     /// "Hotel Boli Keflavík" → "Hotel Boli Keflavík"; "Svartifoss (Skaftafell)" → "Svartifoss".
@@ -165,7 +197,7 @@ final class PlacePhotoService {
         guard let url = try? HTTP.url("https://www.wikidata.org/w/api.php", ["action": "wbgetclaims", "entity": q, "property": "P18", "format": "json"]),
               let data = await get(url),
               let file = (try? JSONDecoder().decode(Claims.self, from: data))?.claims?["P18"]?.first?.mainsnak.datavalue?.value else { return nil }
-        return await commonsFile("File:" + file)
+        return await placeOnly(await commonsFile("File:" + file))
     }
 
     private struct CommonsFiles: Decodable {
@@ -187,8 +219,12 @@ final class PlacePhotoService {
 
     /// Photos taken around a point (Commons geotags), nearest first.
     private func commonsNear(_ c: Coordinate, radius: Int) async -> PlacePhoto? {
-        await commons(["generator": "geosearch", "ggscoord": "\(c.lat)|\(c.lon)", "ggsradius": "\(radius)",
-                       "ggsnamespace": "6", "ggslimit": "15"]).first
+        let found = await commons(["generator": "geosearch", "ggscoord": "\(c.lat)|\(c.lon)", "ggsradius": "\(radius)",
+                                   "ggsnamespace": "6", "ggslimit": "15"])
+        for photo in found.prefix(6) {
+            if let clean = await placeOnly(photo) { return clean }
+        }
+        return nil
     }
 
     private func commons(_ params: [String: String]) async -> [PlacePhoto] {

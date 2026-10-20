@@ -103,7 +103,7 @@ struct TripShareSheet: View {
 /// The plan day by day, as text and as HTML for the e-mail.
 enum TripSummary {
     static func lines(_ days: [TripDay]) -> [(day: String, title: String, items: [String])] {
-        days.map { day in
+        days.map { day -> (day: String, title: String, items: [String]) in
             let title: String
             if let a = day.arriving, let f = day.from { title = "\(f.place.name) → \(a.place.name)" }
             else if let n = day.night { title = n.place.name }
@@ -115,17 +115,26 @@ enum TripSummary {
     }
 
     static func text(_ days: [TripDay], title: String) -> String {
-        ([title, ""] + lines(days).flatMap { [$0.day + " — " + $0.title] + $0.items.map { "  • " + $0 } + [""] }
-            + [String(localized: "Allegato: il viaggio in GPX, da aprire con Norður.")]).joined(separator: "\n")
+        var out: [String] = [title, ""]
+        for line in lines(days) {
+            out.append(line.day + " — " + line.title)
+            for item in line.items { out.append("  • " + item) }
+            out.append("")
+        }
+        out.append(String(localized: "Allegato: il viaggio in GPX, da aprire con Norður."))
+        return out.joined(separator: "\n")
     }
 
     static func html(_ days: [TripDay], title: String) -> String {
         func esc(_ s: String) -> String { s.replacingOccurrences(of: "&", with: "&amp;").replacingOccurrences(of: "<", with: "&lt;") }
         var out = "<div style=\"font-family:-apple-system,Helvetica,Arial,sans-serif;font-size:16px;line-height:1.45\"><h2>\(esc(title))</h2>"
         for l in lines(days) {
-            out += "<p><b>\(esc(l.day))</b><br>\(esc(l.title))</p><ul>" + l.items.map { "<li>\(esc($0))</li>" }.joined() + "</ul>"
+            out += "<p><b>\(esc(l.day))</b><br>\(esc(l.title))</p><ul>"
+            for item in l.items { out += "<li>\(esc(item))</li>" }
+            out += "</ul>"
         }
-        out += "<p style=\"color:#666\">" + esc(String(localized: "In allegato il viaggio in GPX: aprilo con Norður per importarlo, o con Google Maps / un'app GPS.")) + "</p></div>"
+        let note = esc(String(localized: "In allegato il viaggio in GPX: aprilo con Norður per importarlo, o con Google Maps / un'app GPS."))
+        out += "<p style=\"color:#666\">\(note)</p></div>"
         return out
     }
 }
