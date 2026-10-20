@@ -324,18 +324,18 @@ struct VisitEditor: View {
         NavigationStack {
             List {
                 Section {
-                    VStack(alignment: .leading, spacing: 4) {
-                        Text(((visit.kind ?? attraction?.kind)?.label ?? String(localized: "Luogo")).uppercased())
-                            .font(.mono(10, .semibold)).foregroundStyle(Theme.accent)
-                        Text(visit.place.name).font(.display(28, .bold)).foregroundStyle(Theme.text)
-                        Text(String(localized: "\(Int(Geo.distanceKm(target.place.coordinate, visit.place.coordinate).rounded())) km in linea d'aria da \(target.place.name)"))
-                            .font(.mono(10)).foregroundStyle(Theme.dim)
+                    VStack(alignment: .leading, spacing: 10) {
+                        PlaceHero(place: visit.place, kind: visit.kind ?? attraction?.kind, title: visit.place.name,
+                                  eyebrow: (visit.kind ?? attraction?.kind)?.label ?? String(localized: "Luogo"))
+                        Label(String(localized: "\(Int(Geo.distanceKm(target.place.coordinate, visit.place.coordinate).rounded())) km in linea d'aria da \(target.place.name)"),
+                              systemImage: "location")
+                            .font(.app(.subheadline)).foregroundStyle(Theme.dim)
                         if let caution = attraction?.caution {
-                            Label(caution, systemImage: "exclamationmark.triangle").font(.app(.caption)).foregroundStyle(Theme.caution)
-                                .padding(.top, 4)
+                            Label(caution, systemImage: "exclamationmark.triangle.fill").font(.app(.subheadline, .semibold)).foregroundStyle(Theme.caution)
                         }
                     }
                     .padding(.vertical, 4)
+                    .listRowInsets(EdgeInsets(top: 8, leading: 12, bottom: 8, trailing: 12))
                 }
                 Section {
                     if trip.stops.count > 1 {

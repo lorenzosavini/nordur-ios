@@ -206,7 +206,15 @@ struct RouteForecastView: View {
         if !plan.fuel.isEmpty {
             Section {
                 ForEach(plan.fuel.prefix(10)) { station in
-                    Label("\(station.name)\(station.openingHours.map { " · \($0)" } ?? "")", systemImage: "fuelpump.fill").font(.app(.caption))
+                    let status = station.status()
+                    HStack(spacing: 12) {
+                        KindIcon(name: station.imageName, size: 40)
+                        VStack(alignment: .leading, spacing: 2) {
+                            Text(station.name).font(.app(.subheadline, .semibold))
+                            Text(status.text).font(.app(.caption))
+                                .foregroundStyle(status.open == true ? Theme.aurora : status.open == false ? Theme.danger : Theme.dim)
+                        }
+                    }
                 }
             } header: { Text("Distributori sul percorso (\(plan.fuel.count))").pinnedHeader() }
         }

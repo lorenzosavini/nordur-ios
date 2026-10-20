@@ -105,9 +105,9 @@ extension Font {
 
     /// Labels, codes, tables.
     /// Labels, codes, tables. Small sizes are raised: the mono labels were hard
-    /// to read on a phone held at arm's length (10 → 12, 11 → 12.7, 14 → 15).
+    /// to read on a phone held at arm's length (10 → 12.6, 11 → 13.7, 14 → 15.5).
     static func mono(_ size: CGFloat, _ weight: Font.Weight = .medium, relativeTo style: Font.TextStyle = .caption) -> Font {
-        .custom(AppFontName.mono(weight), size: size < 14 ? size * 1.08 + 1.2 : size + 1, relativeTo: style)
+        .custom(AppFontName.mono(weight), size: size < 14 ? size * 1.1 + 1.6 : size + 1.5, relativeTo: style)
     }
 
     /// Headlines: condensed, set in capitals by the caller when needed.
@@ -129,10 +129,10 @@ extension Font {
         case .title3: return .sans(20.5, weight ?? .semibold, relativeTo: style)
         case .headline: return .sans(18, weight ?? .semibold, relativeTo: style)
         case .callout: return .sans(17, weight ?? .regular, relativeTo: style)
-        case .subheadline: return .sans(16, weight ?? .regular, relativeTo: style)
-        case .footnote: return .sans(15, weight ?? .regular, relativeTo: style)
-        case .caption: return .sans(14, weight ?? .regular, relativeTo: style)
-        case .caption2: return .sans(13, weight ?? .regular, relativeTo: style)
+        case .subheadline: return .sans(16.5, weight ?? .regular, relativeTo: style)
+        case .footnote: return .sans(15.5, weight ?? .regular, relativeTo: style)
+        case .caption: return .sans(14.5, weight ?? .regular, relativeTo: style)
+        case .caption2: return .sans(13.5, weight ?? .regular, relativeTo: style)
         default: return .sans(17, weight ?? .regular, relativeTo: style)
         }
     }

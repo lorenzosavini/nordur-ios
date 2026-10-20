@@ -158,6 +158,14 @@ struct ShopDetail: View {
         NavigationStack {
             List {
                 Section {
+                    HStack(spacing: 14) {
+                        KindIcon(name: shop.kind.imageName, size: 72)
+                        VStack(alignment: .leading, spacing: 4) {
+                            Text(shop.kind.label.uppercased()).font(.mono(11, .semibold)).foregroundStyle(Theme.accent)
+                            Text(shop.name).font(.display(28, .bold)).foregroundStyle(Theme.text).lineLimit(2).minimumScaleFactor(0.7)
+                        }
+                    }
+                    .padding(.vertical, 6)
                     ShopRow(shop: shop, km: Geo.distanceKm(from.coordinate, c))
                 }
                 if let raw = shop.openingHours {
@@ -171,6 +179,75 @@ struct ShopDetail: View {
             }
             .themedList()
             .navigationTitle(shop.kind.label)
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar { ToolbarItem(placement: .cancellationAction) { Button("Chiudi") { dismiss() } } }
+        }
+    }
+}
+
+extension FuelStation {
+    var imageName: String { kind == .charger ? "kind-charger" : "kind-fuel" }
+    var hours: OpeningHours? { openingHours.flatMap(OpeningHours.init) }
+
+    /// Open now / closes at… from the OSM hours, like the shops.
+    func status(at now: Date = Date()) -> (text: String, open: Bool?) {
+        guard let hours else { return (openingHours ?? String(localized: "Orari non indicati (spesso self-service 24 h con carta)"), nil) }
+        let open = hours.isOpen(at: now)
+        let next = hours.nextChange(after: now)
+        if open {
+            guard let next else { return (String(localized: "Aperto 24 ore"), true) }
+            return (String(localized: "Aperto · chiude alle \(Fmt.time(next, in: .iceland))"), true)
+        }
+        guard let next else { return (String(localized: "Chiuso"), false) }
+        return (Calendar.iceland.isDate(next, inSameDayAs: now) ? String(localized: "Chiuso · apre alle \(Fmt.time(next, in: .iceland))")
+                                                                : String(localized: "Chiuso · apre \(Fmt.dayTime(next, in: .iceland))"), false)
+    }
+}
+
+/// A fuel station or charger: brand, open now, the hours, directions.
+struct FuelDetail: View {
+    let station: FuelStation
+    let from: Place
+    @Environment(\.dismiss) private var dismiss
+
+    var body: some View {
+        let status = station.status()
+        let km = Geo.distanceKm(from.coordinate, station.coordinate)
+        NavigationStack {
+            List {
+                Section {
+                    HStack(spacing: 14) {
+                        KindIcon(name: station.imageName, size: 72)
+                        VStack(alignment: .leading, spacing: 4) {
+                            Text((station.kind == .charger ? String(localized: "Ricarica auto elettriche") : String(localized: "Distributore")).uppercased())
+                                .font(.mono(11, .semibold)).foregroundStyle(Theme.accent)
+                            Text(station.name).font(.display(28, .bold)).foregroundStyle(Theme.text).lineLimit(2).minimumScaleFactor(0.7)
+                            if let brand = station.brand, brand != station.name {
+                                Text(brand).font(.app(.subheadline)).foregroundStyle(Theme.dim)
+                            }
+                        }
+                    }
+                    .padding(.vertical, 6)
+                    Label(String(localized: "\(Fmt.number(km, decimals: km < 10 ? 1 : 0)) km da \(from.name)"), systemImage: "location")
+                        .font(.app(.subheadline)).foregroundStyle(Theme.dim)
+                    Text(status.text).font(.app(.headline))
+                        .foregroundStyle(status.open == true ? Theme.aurora : status.open == false ? Theme.danger : Theme.dim)
+                }
+                if let raw = station.openingHours {
+                    Section {
+                        Text(raw.replacingOccurrences(of: "; ", with: "\n")).font(.mono(13)).foregroundStyle(Theme.text)
+                    } header: { Text("Orari (OpenStreetMap)").pinnedHeader() }
+                }
+                Section {
+                    Text(station.kind == .charger
+                         ? String(localized: "In Islanda le colonnine veloci sono soprattutto di ON, Ísorka e N1: serve spesso l'app o la tessera dell'operatore.")
+                         : String(localized: "Fuori città molti distributori sono solo self-service: si paga alla colonnina con carta e PIN (o carta prepagata N1/Olís). Fai il pieno prima delle tratte lunghe."))
+                        .font(.app(.subheadline)).foregroundStyle(Theme.dim)
+                }
+                Section { DirectionsRows(to: station.coordinate) }
+            }
+            .themedList()
+            .navigationTitle(station.kind == .charger ? String(localized: "Ricarica") : String(localized: "Carburante"))
             .navigationBarTitleDisplayMode(.inline)
             .toolbar { ToolbarItem(placement: .cancellationAction) { Button("Chiudi") { dismiss() } } }
         }

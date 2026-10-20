@@ -217,10 +217,12 @@ final class AppModel {
         async let s: Void = load(.solarWind, { try await SpaceWeather.solarWind() }) { self.solarWind = $0 }
         async let n: Void = load(.news, { try await SafeTravel.news() }) { self.news = $0 }
         async let a: Void = refreshAurora()
+        // The slow-changing data (webcams, fuel, shops, places to see) no longer waits for the rest.
+        async let st: Void = refreshStatic()
         _ = await (w, q, r, ri, k, o, s, n, a)
         recomputeAurora()
         await localizeWebText()
-        await refreshStatic()
+        _ = await st
     }
 
     /// Fetches one source and shows it right away.
@@ -324,6 +326,8 @@ final class AppModel {
                 return (fetched, merged)
             }
             apply(result, .sights) { self.sights = $0.0; self.spots = $0.1 }
+            // Their Wikidata and Wikipedia links make the photo search exact.
+            PlacePhotoService.shared.addHints(spots)
             sightsTask = nil
         }
         sightsTask = task
@@ -416,6 +420,7 @@ final class AppModel {
         let sitesOld = auroraSites.map { Date().timeIntervalSince($0.date) > 1800 || $0.isStale } ?? true
         async let state = attempt { try await AuroraStateService.load() }
         async let sites = attempt { sitesOld ? try await AuroraSitesService.load() : nil }
+        async let sightings: Void = refreshSightings()
         let (rs, rt) = await (state, sites)
         apply(rs, .aurora) { self.aurora = $0 }
         apply(rt, .sites) { if let fresh = $0 { self.auroraSites = fresh } }
@@ -425,13 +430,25 @@ final class AppModel {
             if !state.isStale { errors[.ovation] = nil }
         }
         recomputeAurora()
+        _ = await sightings
+        // The skylines come one per second from a rate-limited service: in the background,
+        // without holding back the refresh that asked for them.
+        if horizonTask == nil {
+            horizonTask = Task { [weak self] in
+                await self?.loadHorizons()
+                self?.horizonTask = nil
+            }
+        }
         if let a = aurora {
             let localized = await Translator.shared.localize(a.value)
             if aurora?.date == a.date { aurora = Fetched(value: localized, date: a.date, isStale: a.isStale) }
         }
-        await refreshSightings()
-        await loadHorizons()
     }
+
+    @ObservationIgnored private var horizonTask: Task<Void, Never>?
+    /// Skylines that could not be had, not asked again for an hour.
+    @ObservationIgnored private var horizonFailed: [String: Date] = [:]
+    @ObservationIgnored private var recomputeTask: Task<Void, Never>?
 
     func refreshSightings() async {
         apply(await attempt { try await SightingsFeed.loadFetched() }, .sightings) { self.sightings = $0 }
@@ -455,17 +472,36 @@ final class AppModel {
         let wanted = [activePlace.coordinate] + (auroraSites?.value.sites.map(\.coordinate) ?? [])
         var changed = false
         for c in wanted where horizons[TerrainService.key(c)] == nil {
-            if let h = await TerrainService.horizon(c) { horizons[TerrainService.key(c)] = h; changed = true }
+            let key = TerrainService.key(c)
+            if let failed = horizonFailed[key], Date().timeIntervalSince(failed) < 3600 { continue }
+            if let h = await TerrainService.horizon(c) {
+                horizons[key] = h
+                changed = true
+            } else {
+                horizonFailed[key] = Date()
+            }
         }
         if changed { recomputeAurora() }
     }
 
+    /// The aurora hour by hour and the ranking of the sites. Off the main thread, and
+    /// once per burst: at launch each arriving feed asks for it, and computing it
+    /// every time on the main thread made the screens stutter.
     func recomputeAurora() {
-        let place = activePlace.coordinate
-        let inputs = auroraInputs(for: place, forecast: forecast?.value)
-        auroraSlots = AuroraEngine.forecast(inputs)
-        if let sites = auroraSites?.value {
-            siteRanking = AuroraSitesService.rank(sites, base: inputs, from: useCurrentLocation ? location.coordinate : nil, horizons: horizons)
+        recomputeTask?.cancel()
+        let inputs = auroraInputs(for: activePlace.coordinate, forecast: forecast?.value)
+        let sites = auroraSites?.value
+        let from = useCurrentLocation ? location.coordinate : nil
+        let horizons = self.horizons
+        recomputeTask = Task { [weak self] in
+            try? await Task.sleep(nanoseconds: 60_000_000)
+            guard !Task.isCancelled else { return }
+            let (slots, ranking) = await Task.detached(priority: .userInitiated) {
+                (AuroraEngine.forecast(inputs), sites.map { AuroraSitesService.rank($0, base: inputs, from: from, horizons: horizons) })
+            }.value
+            guard !Task.isCancelled, let self else { return }
+            self.auroraSlots = slots
+            if let ranking { self.siteRanking = ranking }
         }
     }
 
@@ -492,5 +528,36 @@ final class AppModel {
         let minTemp = hours.compactMap(\.temperature).min()
         let snow = hours.compactMap(\.snowfall).reduce(0, +)
         return (risk, gust, minTemp, snow)
+    }
+}
+
+extension AppModel {
+    /// When each feed was last had, and whether it is an old copy (for the sources page).
+    func freshness(_ source: Source) -> (date: Date, stale: Bool)? {
+        func f<T>(_ x: Fetched<T>?) -> (Date, Bool)? { x.map { ($0.date, $0.isStale) } }
+        switch source {
+        case .forecast: return f(forecast)
+        case .marine: return f(marine)
+        case .air: return f(air)
+        case .warnings: return f(warnings)
+        case .quakes: return f(quakes)
+        case .roads: return f(roads)
+        case .roadInfo: return f(roadInfo)
+        case .kp: return f(kp)
+        case .ovation: return f(ovation)
+        case .solarWind: return f(solarWind)
+        case .news: return f(news)
+        case .webcams: return f(webcams)
+        case .fuel: return f(fuel)
+        case .shops: return f(shops)
+        case .sights: return f(sights)
+        case .flights: return f(flights)
+        case .ferry: return f(ferry)
+        case .grid: return f(weatherGrid)
+        case .radar: return radarFrames.isEmpty ? nil : (Date(), false)
+        case .aurora: return f(aurora)
+        case .sites: return f(auroraSites)
+        case .sightings: return f(sightings)
+        }
     }
 }

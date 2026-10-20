@@ -15087,6 +15087,286 @@
           }
         }
       }
+    },
+    "Come si calcola" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "How it is worked out"
+          }
+        }
+      }
+    },
+    "Come funziona" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "How it works"
+          }
+        }
+      }
+    },
+    "Fonti, stato dei dati e metodo" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sources, data status and method"
+          }
+        }
+      }
+    },
+    "Fonti e stato dei dati" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sources and data status"
+          }
+        }
+      }
+    },
+    "copia del %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "copy from %@"
+          }
+        }
+      }
+    },
+    "errore" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "error"
+          }
+        }
+      }
+    },
+    "non ancora caricato" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "not loaded yet"
+          }
+        }
+      }
+    },
+    "Verde: aggiornato. Giallo: copia salvata sul telefono (senza rete o fonte lenta). Rosso: ultimo tentativo fallito." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Green: up to date. Yellow: copy saved on the phone (no connection or slow source). Red: last attempt failed."
+          }
+        }
+      }
+    },
+    "Aurora: fonti scientifiche" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aurora: scientific sources"
+          }
+        }
+      }
+    },
+    "Verifica delle previsioni Kp" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kp forecast verification"
+          }
+        }
+      }
+    },
+    "Ogni previsione Kp viene confrontata con il Kp misurato poi da GFZ Potsdam: l'errore medio dice quanto ci si può fidare a ogni orizzonte." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Each Kp forecast is compared with the Kp later measured by GFZ Potsdam: the mean error tells how far it can be trusted at each horizon."
+          }
+        }
+      }
+    },
+    "Metodo dell'aurora" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aurora method"
+          }
+        }
+      }
+    },
+    "Attività, osservabilità, affidabilità" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Activity, observability, reliability"
+          }
+        }
+      }
+    },
+    "Attività: quanta aurora c'è sopra di te secondo i modelli (OVATION nella prima ora, poi Kp e posizione dell'ovale). Osservabilità: se qui la puoi vedere, combinando l'attività con nuvole, buio, Luna, luci artificiali e orizzonte. Affidabilità: quanto sono recenti e concordi i dati. È una stima, non una probabilità." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Activity: how much aurora there is above you according to the models (OVATION in the first hour, then Kp and the position of the oval). Observability: whether you can see it here, combining activity with clouds, darkness, Moon, artificial light and horizon. Reliability: how recent and consistent the data are. It is an estimate, not a probability."
+          }
+        }
+      }
+    },
+    "Ovale OVATION" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "OVATION oval"
+          }
+        }
+      }
+    },
+    "OVATION Prime (NOAA) calcola dalle misure del vento solare dove cade l'aurora nei prossimi 30-90 minuti, in percentuale su una griglia. Oltre quell'orizzonte l'app passa al Kp previsto e alla latitudine geomagnetica." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "OVATION Prime (NOAA) works out from solar-wind measurements where the aurora falls in the next 30-90 minutes, as a percentage on a grid. Beyond that horizon the app moves on to the forecast Kp and the geomagnetic latitude."
+          }
+        }
+      }
+    },
+    "Vento solare e Bz" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Solar wind and Bz"
+          }
+        }
+      }
+    },
+    "Il satellite a L1, 1,5 milioni di km verso il Sole, misura il vento solare circa 30-60 minuti prima che arrivi alla Terra. Conta soprattutto il Bz: quando è negativo (verso sud) per decine di minuti, l'aurora si accende. La velocità alta la rende più forte." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The satellite at L1, 1.5 million km towards the Sun, measures the solar wind about 30-60 minutes before it reaches Earth. Bz matters most: when it stays negative (southward) for tens of minutes, the aurora lights up. High speed makes it stronger."
+          }
+        }
+      }
+    },
+    "Il Kp misura da 0 a 9 il disturbo del campo magnetico terrestre su blocchi di 3 ore. Quello misurato (GFZ Potsdam, NOAA) arriva dopo la fine del blocco; quello previsto viene da NOAA. In Islanda l'aurora è spesso visibile già con Kp 2-3 se il cielo è buio e sereno." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kp measures from 0 to 9 the disturbance of Earth's magnetic field over 3-hour blocks. The measured one (GFZ Potsdam, NOAA) comes after the block ends; the forecast one comes from NOAA. In Iceland the aurora is often visible from Kp 2-3 with a dark, clear sky."
+          }
+        }
+      }
+    },
+    "Leggi su Wikipedia" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Read on Wikipedia"
+          }
+        }
+      }
+    },
+    "Da Wikipedia: %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "From Wikipedia: %@"
+          }
+        }
+      }
+    },
+    "Orari non indicati (spesso self-service 24 h con carta)" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hours not listed (often 24 h self-service by card)"
+          }
+        }
+      }
+    },
+    "Ricarica auto elettriche" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "EV charging"
+          }
+        }
+      }
+    },
+    "Distributore" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fuel station"
+          }
+        }
+      }
+    },
+    "%@ km da %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ km from %2$@"
+          }
+        }
+      }
+    },
+    "In Islanda le colonnine veloci sono soprattutto di ON, Ísorka e N1: serve spesso l'app o la tessera dell'operatore." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "In Iceland fast chargers are mostly ON, Ísorka and N1: you often need the operator's app or card."
+          }
+        }
+      }
+    },
+    "Fuori città molti distributori sono solo self-service: si paga alla colonnina con carta e PIN (o carta prepagata N1/Olís). Fai il pieno prima delle tratte lunghe." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Outside towns many stations are self-service only: you pay at the pump with card and PIN (or an N1/Olís prepaid card). Fill up before long legs."
+          }
+        }
+      }
+    },
+    "Ricarica" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Charging"
+          }
+        }
+      }
     }
   },
   "version" : "1.0"

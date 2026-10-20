@@ -205,19 +205,21 @@ struct SightDetail: View {
         NavigationStack {
             List {
                 Section {
-                    VStack(alignment: .leading, spacing: 4) {
-                        Text((sight.isTop ? sight.kind.label : sight.region).uppercased()).font(.mono(10, .semibold)).foregroundStyle(Theme.accent)
-                        Text(sight.name).font(.display(28, .bold)).foregroundStyle(Theme.text)
-                        Text(String(localized: "\(Int(Geo.distanceKm(from.coordinate, c).rounded())) km in linea d'aria da \(from.name) · visita ~\(Fmt.duration(Double(sight.minutes) * 60))"))
-                            .font(.mono(10)).foregroundStyle(Theme.dim)
+                    VStack(alignment: .leading, spacing: 10) {
+                        PlaceHero(place: sight.place, kind: sight.kind, title: sight.name,
+                                  eyebrow: sight.isTop ? sight.kind.label : sight.region)
+                        Label(String(localized: "\(Int(Geo.distanceKm(from.coordinate, c).rounded())) km in linea d'aria da \(from.name) · visita ~\(Fmt.duration(Double(sight.minutes) * 60))"),
+                              systemImage: "location")
+                            .font(.app(.subheadline)).foregroundStyle(Theme.dim)
                         if let detail = sight.detail {
-                            Text(detail).font(.app(.caption)).foregroundStyle(Theme.dim).padding(.top, 4)
+                            Text(detail).font(.app(.subheadline)).foregroundStyle(Theme.dim)
                         }
                         if let caution = sight.caution {
-                            Label(caution, systemImage: "exclamationmark.triangle").font(.app(.caption)).foregroundStyle(Theme.caution).padding(.top, 4)
+                            Label(caution, systemImage: "exclamationmark.triangle.fill").font(.app(.subheadline, .semibold)).foregroundStyle(Theme.caution)
                         }
                     }
                     .padding(.vertical, 4)
+                    .listRowInsets(EdgeInsets(top: 8, leading: 12, bottom: 8, trailing: 12))
                 }
                 Section {
                     if trip.stops.isEmpty {

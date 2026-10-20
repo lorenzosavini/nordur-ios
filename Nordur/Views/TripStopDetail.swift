@@ -149,8 +149,8 @@ struct StopDetailView: View {
         List {
             Section {
                 VStack(alignment: .leading, spacing: 6) {
-                    Text(String(localized: "TAPPA \(index) DI \(trip.stops.count)")).font(.mono(10, .semibold)).foregroundStyle(Theme.accent)
-                    Text(stop.place.name).font(.display(30, .bold)).foregroundStyle(Theme.text)
+                    PlaceHero(place: stop.place, kind: .town, title: stop.place.name,
+                              eyebrow: String(localized: "TAPPA \(index) DI \(trip.stops.count)"), describe: false)
                     Label(stop.nights == 0 ? String(localized: "\(Fmt.day(stop.date, in: .iceland)) · di passaggio")
                                            : String(localized: "\(Fmt.day(stop.date, in: .iceland)) → \(Fmt.day(stop.endDate, in: .iceland)) · \(stop.nights) notti"),
                           systemImage: "calendar")

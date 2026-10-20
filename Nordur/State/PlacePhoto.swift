@@ -27,22 +27,47 @@ final class PlacePhotoService {
     private static let agent = "Nordur/1.0 (iOS; https://github.com/lorenzosavini/nordur-ios)"
 
     private func key(_ place: Place) -> String {
-        "place_photo_\(stableHash(place.name))_\(Int(place.coordinate.lat * 20))_\(Int(place.coordinate.lon * 20))"
+        // v2: the wider search; places not found before are looked up again.
+        "place_photo2_\(stableHash(place.name))_\(Int(place.coordinate.lat * 20))_\(Int(place.coordinate.lon * 20))"
+    }
+
+    /// Wikidata / Wikipedia links of the places to see (from OpenStreetMap), by place.
+    private var hints: [String: (wikidata: String?, wikipedia: String?)] = [:]
+
+    func addHints(_ sights: [Attraction]) {
+        for s in sights where s.wikidata != nil || s.wikipedia != nil {
+            hints[key(s.place)] = (s.wikidata, s.wikipedia)
+        }
     }
 
     func photo(for place: Place) async -> PlacePhoto? {
         let key = key(place)
         if let cached = memory[key] { return cached }
-        if let stored = DiskCache.read(key), Date().timeIntervalSince(stored.date) < 30 * 24 * 3600,
-           let photo = try? JSONDecoder().decode(PlacePhoto?.self, from: stored.data) {
+        if let stored = DiskCache.read(key), let photo = try? JSONDecoder().decode(PlacePhoto?.self, from: stored.data),
+           // Found: kept 30 days. Not found: asked again after 3 days.
+           Date().timeIntervalSince(stored.date) < (photo == nil ? 3 : 30) * 24 * 3600 {
             memory[key] = photo
             return photo
         }
-        let found = await lookup(place)
+        // Two lookups at a time: Wikimedia answers "too many requests" to bursts
+        // (a list of attractions asks for many photos at once).
+        while running >= 2 { await withCheckedContinuation { waiting.append($0) } }
+        if let cached = memory[key] { return cached }
+        running += 1
+        let failuresBefore = failures
+        let found = await lookup(place, hint: hints[key])
+        running -= 1
+        if !waiting.isEmpty { waiting.removeFirst().resume() }
         memory[key] = found
-        if let data = try? JSONEncoder().encode(found) { DiskCache.write(data, key: key) }
+        // "No photo" is saved only when every request was answered; after a refusal or
+        // a network error the place is looked up again next time.
+        if found != nil || failures == failuresBefore, let data = try? JSONEncoder().encode(found) { DiskCache.write(data, key: key) }
         return found
     }
+
+    private var running = 0
+    private var waiting: [CheckedContinuation<Void, Never>] = []
+    private var failures = 0
 
     // MARK: Wikipedia
 
@@ -59,22 +84,106 @@ final class PlacePhotoService {
         let query: Query?
     }
 
-    private func lookup(_ place: Place) async -> PlacePhoto? {
-        let languages = Bundle.main.preferredLocalizations.first == "en" ? ["en", "it"] : ["it", "en"]
-        // 1. The article with the place's own name.
-        for lang in languages {
-            if let page = await pages(lang, ["titles": place.name, "redirects": "1"]).first, let photo = await make(page) { return photo }
+    /// The best free photo of a place, trying in turn: the Wikidata image (P18),
+    /// the linked Wikipedia article, the article with its name (it, en, is, de,
+    /// then a search), photos taken on the spot (Commons, within 1 km), the
+    /// nearest article with a photo, and Commons photos within 5 km.
+    private func lookup(_ place: Place, hint: (wikidata: String?, wikipedia: String?)?) async -> PlacePhoto? {
+        if let q = hint?.wikidata, let photo = await wikidataImage(q) { return photo }
+        if let link = hint?.wikipedia, let colon = link.firstIndex(of: ":") {
+            let lang = String(link[..<colon]), title = String(link[link.index(after: colon)...])
+            if let page = await pages(lang, ["titles": title, "redirects": "1"]).first, let photo = await make(page, lang: lang) { return photo }
         }
-        // 2. The nearest geotagged article with a free image.
+        let preferred = Bundle.main.preferredLocalizations.first == "en" ? ["en", "it"] : ["it", "en"]
+        let name = Self.searchName(place.name)
+        for lang in preferred + ["is", "de"] {
+            if let page = await pages(lang, ["titles": name, "redirects": "1"]).first, let photo = await make(page, lang: lang) { return photo }
+        }
+        // A search, kept only when the article is near the place.
+        for lang in ["en", "is"] {
+            let found = await pages(lang, ["generator": "search", "gsrsearch": "\(name) Iceland", "gsrlimit": "5", "prop": "pageimages|info|coordinates"])
+            for page in found {
+                if let photo = await make(page, lang: lang) { return photo }
+            }
+        }
+        if let photo = await commonsNear(place.coordinate, radius: 1000) { return photo }
         let coord = "\(place.coordinate.lat)|\(place.coordinate.lon)"
         for lang in ["en", "is"] {
             let near = await pages(lang, ["generator": "geosearch", "ggscoord": coord, "ggsradius": "10000", "ggslimit": "12"])
                 .sorted { ($0.index ?? 99) < ($1.index ?? 99) }
             for page in near {
-                if let photo = await make(page) { return photo }
+                if let photo = await make(page, lang: lang) { return photo }
             }
         }
-        return nil
+        return await commonsNear(place.coordinate, radius: 5000)
+    }
+
+    /// "Hotel Boli Keflavík" → "Hotel Boli Keflavík"; "Svartifoss (Skaftafell)" → "Svartifoss".
+    private static func searchName(_ name: String) -> String {
+        name.replacingOccurrences(of: #"\s*\(.*\)"#, with: "", options: .regularExpression).trimmingCharacters(in: .whitespaces)
+    }
+
+    // MARK: Wikidata and Commons
+
+    private func wikidataImage(_ q: String) async -> PlacePhoto? {
+        struct Claims: Decodable {
+            struct Claim: Decodable { struct Snak: Decodable { struct Value: Decodable { let value: String? }; let datavalue: Value? }; let mainsnak: Snak }
+            let claims: [String: [Claim]]?
+        }
+        guard let url = try? HTTP.url("https://www.wikidata.org/w/api.php", ["action": "wbgetclaims", "entity": q, "property": "P18", "format": "json"]),
+              let data = await get(url),
+              let file = (try? JSONDecoder().decode(Claims.self, from: data))?.claims?["P18"]?.first?.mainsnak.datavalue?.value else { return nil }
+        return await commonsFile("File:" + file)
+    }
+
+    private struct CommonsFiles: Decodable {
+        struct Query: Decodable { let pages: [String: Page]? }
+        struct Page: Decodable { let title: String; let index: Int?; let imageinfo: [Info]? }
+        struct Info: Decodable {
+            let thumburl: String?
+            let descriptionurl: String?
+            let mime: String?
+            let extmetadata: [String: Meta]?
+        }
+        struct Meta: Decodable { let value: String? }
+        let query: Query?
+    }
+
+    private func commonsFile(_ title: String) async -> PlacePhoto? {
+        await commons(["titles": title]).first
+    }
+
+    /// Photos taken around a point (Commons geotags), nearest first.
+    private func commonsNear(_ c: Coordinate, radius: Int) async -> PlacePhoto? {
+        await commons(["generator": "geosearch", "ggscoord": "\(c.lat)|\(c.lon)", "ggsradius": "\(radius)",
+                       "ggsnamespace": "6", "ggslimit": "15"]).first
+    }
+
+    private func commons(_ params: [String: String]) async -> [PlacePhoto] {
+        var query = params
+        query["action"] = "query"
+        query["format"] = "json"
+        query["prop"] = "imageinfo"
+        query["iiprop"] = "url|mime|extmetadata"
+        query["iiurlwidth"] = "1200"
+        guard let url = try? HTTP.url("https://commons.wikimedia.org/w/api.php", query), let data = await get(url),
+              let pages = (try? JSONDecoder().decode(CommonsFiles.self, from: data))?.query?.pages?.values else { return [] }
+        return pages.sorted { ($0.index ?? 99) < ($1.index ?? 99) }.compactMap { page in
+            guard let info = page.imageinfo?.first, info.mime == "image/jpeg", let thumb = info.thumburl.flatMap(URL.init(string:)),
+                  !Self.notAView(page.title) else { return nil }
+            let license = info.extmetadata?["LicenseShortName"]?.value
+            // Free licences only.
+            guard let l = license?.lowercased(), l.contains("cc") || l.contains("public domain") || l.contains("pd") else { return nil }
+            let author = info.extmetadata?["Artist"]?.value.map(Self.plain).flatMap { $0.isEmpty ? nil : String($0.prefix(40)) }
+            return PlacePhoto(imageURL: thumb, title: page.title, author: author, license: license,
+                              page: info.descriptionurl.flatMap(URL.init(string:)))
+        }
+    }
+
+    /// Maps, flags, coats of arms, logos and diagrams are not a view of the place.
+    private static func notAView(_ file: String) -> Bool {
+        let lower = file.lowercased()
+        return [".svg", "map", "kort", "flag", "coat_of_arms", "coat of arms", "skjaldarmerki", "location", "logo", "diagram"].contains(where: lower.contains)
     }
 
     private func pages(_ lang: String, _ params: [String: String]) async -> [PagesResponse.Page] {
@@ -100,7 +209,7 @@ final class PlacePhotoService {
         let query: Query?
     }
 
-    private func make(_ page: PagesResponse.Page) async -> PlacePhoto? {
+    private func make(_ page: PagesResponse.Page, lang: String = "en") async -> PlacePhoto? {
         guard let thumb = page.thumbnail?.source, let imageURL = URL(string: thumb), let file = page.pageimage else { return nil }
         // Skip maps, flags, coats of arms and diagrams (not a view of the place).
         let lower = file.lowercased()
@@ -121,11 +230,43 @@ final class PlacePhotoService {
             .trimmingCharacters(in: .whitespacesAndNewlines)
     }
 
+    // MARK: Description
+
+    private var summaries: [String: String?] = [:]
+
+    /// The opening lines of the place's Wikipedia article (the one its photo comes
+    /// from), in the article's language. Kept on the phone 30 days.
+    func summary(for place: Place) async -> String? {
+        let key = "place_summary_" + self.key(place)
+        if let cached = summaries[key] { return cached }
+        if let stored = DiskCache.read(key), Date().timeIntervalSince(stored.date) < 30 * 24 * 3600 {
+            let text = String(data: stored.data, encoding: .utf8).flatMap { $0.isEmpty ? nil : $0 }
+            summaries[key] = text
+            return text
+        }
+        // Only articles have a text (a Commons photo has none).
+        guard let photo = await photo(for: place), let host = photo.page?.host, host.hasSuffix("wikipedia.org") else { return nil }
+        struct Summary: Decodable { let extract: String? }
+        let title = photo.title.replacingOccurrences(of: " ", with: "_")
+        var text: String?
+        if let encoded = title.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed),
+           let url = URL(string: "https://\(host)/api/rest_v1/page/summary/\(encoded)"),
+           let data = await get(url), let extract = (try? JSONDecoder().decode(Summary.self, from: data))?.extract, !extract.isEmpty {
+            // At most four sentences.
+            let sentences = extract.components(separatedBy: ". ")
+            text = sentences.prefix(4).joined(separator: ". ") + (sentences.count > 4 && !sentences[3].hasSuffix(".") ? "." : "")
+        }
+        summaries[key] = text
+        DiskCache.write(Data((text ?? "").utf8), key: key)
+        return text
+    }
+
     private func get(_ url: URL) async -> Data? {
         var request = URLRequest(url: url, timeoutInterval: 20)
         request.setValue(Self.agent, forHTTPHeaderField: "User-Agent")
-        guard let (data, response) = try? await HTTP.session.data(for: request),
-              (response as? HTTPURLResponse)?.statusCode == 200 else { return nil }
-        return data
+        guard let (data, response) = try? await HTTP.session.data(for: request) else { failures += 1; return nil }
+        let status = (response as? HTTPURLResponse)?.statusCode ?? 0
+        if status == 429 || status >= 500 { failures += 1 }
+        return status == 200 ? data : nil
     }
 }

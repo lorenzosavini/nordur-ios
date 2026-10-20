@@ -9,7 +9,6 @@ struct AuroraView: View {
     @Environment(Account.self) private var account
     // `-auroraMode day|three|long` as launch argument opens a mode (CI screenshots).
     @State private var mode: Mode = ["day": .day, "three": .three, "long": .long][UserDefaults.standard.string(forKey: "auroraMode") ?? ""] ?? .live
-    @State private var backtest: BacktestResponse?
     @State private var reporting: SightingSheet.Kind?
 
     enum Mode: String, CaseIterable, Identifiable {
@@ -38,8 +37,18 @@ struct AuroraView: View {
                 case .three: threeDayMode
                 case .long: longMode
                 }
-                sourcesSection
-                methodSection
+                // Sources, data status and the method live in Settings: only a link here.
+                NavigationLink { DataSourcesView() } label: {
+                    HStack {
+                        Label("Fonti, stato dei dati e metodo", systemImage: "doc.text.magnifyingglass")
+                            .font(.app(.subheadline, .semibold)).foregroundStyle(Theme.text)
+                        Spacer()
+                        Image(systemName: "chevron.right").font(.system(size: 12, weight: .semibold)).foregroundStyle(Theme.faint)
+                    }
+                    .padding(.vertical, 12)
+                    .overlay(alignment: .top) { Rule() }
+                }
+                .buttonStyle(.plain)
             }
             .padding(.horizontal, 18)
             .padding(.bottom, 28)
@@ -48,7 +57,6 @@ struct AuroraView: View {
         .navigationBarTitleDisplayMode(.inline)
         .refreshable { await model.refreshAurora() }
         .task { await model.refreshAurora() }
-        .task { backtest = try? await BacktestResponse.load() }
         .sheet(item: $reporting, onDismiss: { Task { await model.refreshSightings() } }) { kind in
             SightingSheet(coordinate: model.location.coordinate ?? place, kind: kind)
         }
@@ -72,6 +80,11 @@ struct AuroraView: View {
             }
             .fixedSize(horizontal: false, vertical: true)
             .padding(.vertical, 12)
+            HStack {
+                InfoTip(title: String(localized: "Attività, osservabilità, affidabilità"), text: String(localized: "Attività: quanta aurora c'è sopra di te secondo i modelli (OVATION nella prima ora, poi Kp e posizione dell'ovale). Osservabilità: se qui la puoi vedere, combinando l'attività con nuvole, buio, Luna, luci artificiali e orizzonte. Affidabilità: quanto sono recenti e concordi i dati. È una stima, non una probabilità."))
+                Spacer()
+            }
+            .padding(.bottom, 10)
             Rule()
             let confirmation = model.auroraConfirmation
             if confirmation.status != .noReports {
@@ -153,6 +166,7 @@ struct AuroraView: View {
         nextHourSection
         VStack(alignment: .leading, spacing: 12) {
             SectionLabel(index: "02", title: String(localized: "Ovale adesso"), trailing: ovationValidity)
+            InfoTip(title: String(localized: "Ovale OVATION"), text: String(localized: "OVATION Prime (NOAA) calcola dalle misure del vento solare dove cade l'aurora nei prossimi 30-90 minuti, in percentuale su una griglia. Oltre quell'orizzonte l'app passa al Kp previsto e alla latitudine geomagnetica."))
             if let now = model.auroraNow, now.activitySource == "OVATION" {
                 HStack(alignment: .firstTextBaseline, spacing: 12) {
                     Text(now.ovationValue.map { "\(Int($0))" } ?? "0").font(.metric(72, .bold))
@@ -251,6 +265,7 @@ struct AuroraView: View {
     @ViewBuilder private var solarWindSection: some View {
         VStack(alignment: .leading, spacing: 12) {
             SectionLabel(index: "03", title: String(localized: "Vento solare a L1"), trailing: swTrailing.text, trailingColor: swTrailing.color)
+            InfoTip(title: String(localized: "Vento solare e Bz"), text: String(localized: "Il satellite a L1, 1,5 milioni di km verso il Sole, misura il vento solare circa 30-60 minuti prima che arrivi alla Terra. Conta soprattutto il Bz: quando è negativo (verso sud) per decine di minuti, l'aurora si accende. La velocità alta la rende più forte."))
             if let sw = state?.solarWind {
                 VStack(spacing: 0) {
                     HStack(spacing: 0) {
@@ -362,6 +377,7 @@ struct AuroraView: View {
     @ViewBuilder private var kpNowSection: some View {
         VStack(alignment: .leading, spacing: 10) {
             SectionLabel(index: "04", title: String(localized: "Indice Kp"), trailing: String(localized: "MISURATO ≠ PREVISTO"))
+            InfoTip(title: String(localized: "Indice Kp"), text: String(localized: "Il Kp misura da 0 a 9 il disturbo del campo magnetico terrestre su blocchi di 3 ore. Quello misurato (GFZ Potsdam, NOAA) arriva dopo la fine del blocco; quello previsto viene da NOAA. In Islanda l'aurora è spesso visibile già con Kp 2-3 se il cielo è buio e sereno."))
             VStack(spacing: 0) {
                 kpRow(String(localized: "Stima NOAA (1 min)"), String(localized: "provvisoria, magnetometri a terra"), state?.kp.estimated?.kp, state?.kp.estimated?.date)
                 kpRow(String(localized: "Kp GFZ Potsdam"), String(localized: "produttore ufficiale · \(state?.kp.gfz.last?.status ?? "–")"), state?.kp.gfz.last?.kp, state?.kp.gfz.last?.date)
@@ -489,8 +505,7 @@ struct AuroraView: View {
                 }
             }
             .disabled(!account.isSignedIn)
-            Text("Segnalazioni anonime degli utenti Norður (ultime 3 ore, posizione arrotondata). Pesano di più quelle vicine, recenti e a occhio nudo; «non la vedo» conta solo con cielo sereno. Restano separate dal modello: se non coincidono, lo vedi scritto.")
-                .font(.app(.caption)).foregroundStyle(Theme.dim)
+            InfoTip(title: String(localized: "Conferme dalla community"), text: String(localized: "Segnalazioni anonime degli utenti Norður (ultime 3 ore, posizione arrotondata). Pesano di più quelle vicine, recenti e a occhio nudo; «non la vedo» conta solo con cielo sereno. Restano separate dal modello: se non coincidono, lo vedi scritto."), label: String(localized: "Come funziona"))
         }
     }
 
@@ -839,57 +854,6 @@ struct AuroraView: View {
     }
 
     // MARK: Sources & method
-
-    @ViewBuilder private var sourcesSection: some View {
-        VStack(alignment: .leading, spacing: 8) {
-            SectionLabel(title: String(localized: "Fonti e stato"), trailing: state?.generated.flatMap { DateParse.iso($0) }.map { String(localized: "AGG. \(Fmt.time($0, in: zone))") } ?? "")
-            if let sources = state?.sources {
-                ForEach(sources.keys.sorted(), id: \.self) { key in
-                    let s = sources[key]!
-                    HStack(alignment: .firstTextBaseline, spacing: 8) {
-                        Rectangle().fill(s.status == "ok" ? Theme.rule : s.status == "stale" ? Theme.caution : Theme.danger).frame(width: 6, height: 6)
-                        Text(sourceName(key)).font(.app(.caption, .medium)).foregroundStyle(Theme.text)
-                        Spacer()
-                        Text([s.provider, s.ageMinutes.map { String(localized: "\(Int($0)) min") }, s.status == "ok" ? nil : s.status.uppercased()].compactMap { $0 }.joined(separator: " · "))
-                            .font(.mono(9)).foregroundStyle(s.status == "ok" ? Theme.faint : Theme.warning).lineLimit(1)
-                    }
-                }
-            } else {
-                ErrorNote(message: model.errors[.aurora] ?? String(localized: "Stato delle fonti non disponibile"))
-            }
-            if let bt = backtest {
-                Rule().padding(.vertical, 4)
-                Text("VERIFICA DELLE PREVISIONI KP").font(.mono(9.5, .semibold)).foregroundStyle(Theme.text)
-                if bt.sufficient {
-                    ForEach(bt.buckets.keys.sorted(), id: \.self) { key in
-                        if let b = bt.buckets[key], let n = b.blend.n, n > 0 {
-                            Text("\(key): errore medio NOAA \(Fmt.number(b.noaa.mae, decimals: 2)), combinato \(Fmt.number(b.blend.mae, decimals: 2)) (n = \(n))")
-                                .font(.mono(9.5)).foregroundStyle(Theme.dim)
-                        }
-                    }
-                } else {
-                    Text(bt.note ?? String(localized: "Dati insufficienti")).font(.app(.caption)).foregroundStyle(Theme.dim)
-                }
-            }
-        }
-    }
-
-    private func sourceName(_ key: String) -> String {
-        [
-            "kpForecast": String(localized: "Kp previsto NOAA"), "kpEstimated": String(localized: "Kp stimato NOAA (1 min)"), "kpGFZ": String(localized: "Kp GFZ Potsdam"),
-            "solarWind": String(localized: "Vento solare RTSW"), "ovation": String(localized: "OVATION Prime"), "enlil": String(localized: "WSA-ENLIL NOAA"), "scales": String(localized: "Scale NOAA"),
-            "alerts": String(localized: "Avvisi NOAA"), "hemisphericPower": String(localized: "Potenza emisferica"), "hp30": String(localized: "Hp30 GFZ"), "magnetometer": String(localized: "Magnetometro Narsarsuaq"), "outlook27": String(localized: "Tendenza 27 giorni"),
-            "forecast45": String(localized: "Previsione 45 giorni"), "donki": String(localized: "NASA DONKI"),
-        ][key] ?? key
-    }
-
-    private var methodSection: some View {
-        VStack(alignment: .leading, spacing: 6) {
-            SectionLabel(title: String(localized: "Metodo"))
-            Text("L'indice di osservabilità è una stima euristica trasparente, non una probabilità: moltiplica attività prevista (OVATION entro la sua validità, poi Kp e posizione dell'ovale su latitudine geomagnetica), cielo sereno per strati, buio (altezza del Sole), Luna (fase e altezza) e le luci artificiali misurate dal satellite VIIRS (NASA Black Marble, media annuale) pesate con la distanza, e l'orizzonte del terreno. Le percentuali di probabilità richiedono un modello calibrato su osservazioni reali: le segnalazioni degli utenti servono a costruirlo.")
-                .font(.app(.caption)).foregroundStyle(Theme.dim)
-        }
-    }
 
     // MARK: Colours
 

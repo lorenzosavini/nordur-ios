@@ -59,7 +59,7 @@ enum Sights {
             let detail = [english, e.tags["description:en"] ?? e.tags["description"]].compactMap { $0 }.joined(separator: " · ")
             return Attraction(name: name, lat: e.lat, lon: e.lon, kind: type.kind, minutes: type.minutes, region: label(e.tags),
                               osmID: e.id, notable: e.tags["wikipedia"] != nil || e.tags["wikidata"] != nil,
-                              detail: detail.isEmpty ? nil : detail)
+                              detail: detail.isEmpty ? nil : detail, wikidata: e.tags["wikidata"], wikipedia: e.tags["wikipedia"])
         }
     }
 

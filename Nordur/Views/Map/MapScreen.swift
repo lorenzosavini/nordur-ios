@@ -22,6 +22,7 @@ struct MapScreen: View {
     @State private var selectedShop: Shop?
     @AppStorage("map.sights") private var showSights = true
     @State private var selectedSight: Attraction?
+    @State private var selectedFuel: FuelStation?
     @AppStorage("map.trip") private var showTrip = true
     @AppStorage("map.particles") private var showParticles = true
 
@@ -80,6 +81,9 @@ struct MapScreen: View {
             }
             .task(id: showShops) { if showShops { await model.loadShops() } }
             .task(id: showSights) { if showSights { await model.loadSights() } }
+            .sheet(item: $selectedFuel) { station in
+                FuelDetail(station: station, from: model.activePlace).presentationDetents([.medium, .large])
+            }
             .sheet(item: $selectedSight) { sight in
                 SightDetail(sight: sight, from: model.activePlace).presentationDetents([.medium, .large])
             }
@@ -567,6 +571,9 @@ struct MapScreen: View {
         case .webcam:
             let id = Int(poi.key.dropFirst(2)) ?? -1
             selectedWebcam = model.webcams?.value.first { $0.id == id }
+        case .fuel, .charger:
+            let id = Int(poi.key.dropFirst()) ?? -1
+            selectedFuel = model.fuel?.value.first { $0.id == id }
         case .sight, .topSight:
             let id = String(poi.key.dropFirst())
             selectedSight = model.spots.first { $0.id == id }

@@ -1080,3 +1080,69 @@ struct PlaceBanner<Overlay: View>: View {
         }
     }
 }
+
+/// The head of a place's page: a large photo (with its credit) and the opening
+/// lines of its Wikipedia article; the illustration of its kind when there is none.
+struct PlaceHero: View {
+    let place: Place
+    var kind: AttractionKind?
+    var kindImage: String?
+    var title: String
+    var eyebrow: String
+    var describe = true
+    @State private var picture: PlacePhoto?
+    @State private var summary: String?
+    @State private var loaded = false
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 10) {
+            ZStack(alignment: .bottomLeading) {
+                if let picture {
+                    RemoteImage(url: picture.imageURL)
+                        .frame(height: 230).frame(maxWidth: .infinity).clipped()
+                        .transition(.opacity)
+                } else {
+                    ZStack {
+                        Rectangle().fill(LinearGradient(colors: [Theme.raised, Theme.surface], startPoint: .top, endPoint: .bottom))
+                        KindIcon(name: kindImage ?? (kind ?? .landscape).imageName, size: 110)
+                            .opacity(loaded ? 1 : 0.5)
+                    }
+                    .frame(height: 230)
+                }
+                LinearGradient(colors: [.black.opacity(0), .black.opacity(0.7)], startPoint: .center, endPoint: .bottom)
+                VStack(alignment: .leading, spacing: 4) {
+                    Text(eyebrow.uppercased()).font(.mono(11.5, .semibold)).foregroundStyle(.white.opacity(0.9))
+                    Text(title).font(.display(32, .bold)).foregroundStyle(.white).lineLimit(2).minimumScaleFactor(0.7)
+                }
+                .shadow(color: .black.opacity(0.5), radius: 4)
+                .padding(14)
+            }
+            .frame(height: 230)
+            .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
+            if let picture {
+                Text(picture.credit).font(.mono(9)).foregroundStyle(Theme.faint).lineLimit(1)
+            }
+            if let summary {
+                if let picture, picture.title.localizedCaseInsensitiveCompare(place.name) != .orderedSame {
+                    // The nearest article when the place has none of its own: say which.
+                    Text(String(localized: "Da Wikipedia: \(picture.title)")).font(.mono(10.5, .semibold)).foregroundStyle(Theme.dim)
+                }
+                Text(summary).font(.app(.subheadline)).foregroundStyle(Theme.text)
+                    .fixedSize(horizontal: false, vertical: true)
+                if let page = picture?.page {
+                    Link(destination: page) {
+                        Label("Leggi su Wikipedia", systemImage: "book").font(.app(.caption, .semibold))
+                    }
+                }
+            }
+        }
+        .task(id: place.coordinate.key + place.name) {
+            let found = await PlacePhotoService.shared.photo(for: place)
+            withAnimation(.easeOut(duration: 0.25)) { picture = found; loaded = true }
+            if describe, found != nil {
+                let text = await PlacePhotoService.shared.summary(for: place)
+                withAnimation(.easeOut(duration: 0.2)) { summary = text }
+            }
+        }
+    }
+}

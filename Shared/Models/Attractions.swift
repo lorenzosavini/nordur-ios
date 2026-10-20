@@ -51,6 +51,9 @@ struct Attraction: Identifiable, Hashable {
     /// On Wikipedia (or in the app's own list): the better-known places come first.
     var notable = true
     var detail: String? = nil
+    /// OpenStreetMap's links: Wikidata item ("Q…") and Wikipedia article ("en:Title"), for photos and descriptions.
+    var wikidata: String? = nil
+    var wikipedia: String? = nil
 
     var id: String { osmID.map { "osm\($0)" } ?? name }
     var isTop: Bool { osmID == nil }

@@ -40,6 +40,7 @@ struct SettingsView: View {
                 Section {
                     NavigationLink { AlertSettingsView() } label: { Label("Allerte e notifiche", systemImage: "bell.badge") }
                     NavigationLink { OfflineView() } label: { Label("Pacchetto offline", systemImage: "arrow.down.circle") }
+                    NavigationLink { DataSourcesView() } label: { Label("Fonti e stato dei dati", systemImage: "doc.text.magnifyingglass") }
                     Button { showAccount = true } label: {
                         Label(account.isSignedIn ? String(localized: "Account e backup") : String(localized: "Accedi o crea un account"), systemImage: "person.crop.circle")
                     }

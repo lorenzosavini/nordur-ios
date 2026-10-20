@@ -6,6 +6,7 @@ struct TodayView: View {
     @Environment(DriveRecorder.self) private var recorder
     @State private var showInfo = false
     @State private var showAccount = false
+    @State private var selectedFuel: FuelStation?
     @AppStorage("today.detail") private var detailRaw = Detail.wind.rawValue
     @Environment(Account.self) private var account
 
@@ -46,6 +47,9 @@ struct TodayView: View {
             }
             .background(Theme.bg.ignoresSafeArea())
             .toolbar(.hidden, for: .navigationBar)
+            .sheet(item: $selectedFuel) { station in
+                FuelDetail(station: station, from: model.activePlace).presentationDetents([.medium, .large])
+            }
             .refreshable {
                 await model.refreshAll()
                 await alerts.check()
@@ -665,11 +669,15 @@ struct TodayView: View {
     private var fuelCell: some View {
         cell(String(localized: "CARBURANTE")) {
             if let stations = model.fuel?.value, let first = FuelStations.nearest(stations, to: model.activePlace.coordinate, kind: .fuel, limit: 1).first {
-                HStack(alignment: .firstTextBaseline, spacing: 3) {
+                HStack(alignment: .center, spacing: 8) {
+                    KindIcon(name: first.station.imageName, size: 34)
                     Text(Fmt.number(first.km, decimals: first.km < 10 ? 1 : 0)).font(.metric(34, .semibold)).foregroundStyle(Theme.text)
                     Text("KM").font(.mono(9.5)).foregroundStyle(Theme.dim)
                 }
+                .contentShape(Rectangle())
+                .onTapGesture { selectedFuel = first.station }
                 Text(first.station.name).font(.app(.caption)).foregroundStyle(Theme.dim).lineLimit(1)
+                    .onTapGesture { selectedFuel = first.station }
                 if let charger = FuelStations.nearest(stations, to: model.activePlace.coordinate, kind: .charger, limit: 1).first {
                     Text("RICARICA EV \(Fmt.number(charger.km, decimals: 0)) KM").font(.mono(9)).foregroundStyle(Theme.faint)
                 }
