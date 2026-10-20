@@ -8,6 +8,8 @@ struct SettingsView: View {
     @AppStorage(WindUnit.key) private var windUnit = WindUnit.ms.rawValue
     @AppStorage(Appearance.key) private var appearance = Appearance.system.rawValue
     @State private var showAccount = false
+    @AppStorage(NightVision.key) private var nightVision = false
+    @AppStorage(NightVision.autoKey) private var nightAuto = false
 
     var body: some View {
         NavigationStack {
@@ -35,7 +37,14 @@ struct SettingsView: View {
                         Label("Aspetto", systemImage: "circle.lefthalf.filled")
                     }
                     .pickerStyle(.menu)
-                } header: { Text("Schermo").pinnedHeader() }
+                    Toggle(isOn: $nightVision) {
+                        Label("Visione notturna (rosso)", systemImage: "moon.fill")
+                    }
+                    Toggle(isOn: $nightAuto) {
+                        Label("Da sola di notte nella scheda Aurora", systemImage: "moon.stars")
+                    }
+                } header: { Text("Schermo").pinnedHeader() } footer: {
+                    Text("Lo schermo diventa rosso scuro su nero: la luce bianca e blu fa perdere l'adattamento degli occhi al buio (servono 20-30 minuti per recuperarlo), il rosso no. Abbassa anche la luminosità del telefono.")
 
                 BackupSettingsSection()
 

@@ -155,6 +155,7 @@ struct MapScreen: View {
                 }
                 .accessibilityIdentifier("layers.menu")
                 Spacer()
+                NightVisionButton()
             }
             .padding(.horizontal)
             if !model.inIceland {

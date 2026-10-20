@@ -32,6 +32,8 @@ struct TodayView: View {
                             .padding(.horizontal, -18)
                             .padding(.top, -120)  // reaches under the status bar
                     }
+                    TodayTripCard()
+                    TodayBrief()
                     warningsSection
                     VStack(spacing: 10) {
                         AuroraNowPanel()

@@ -90,6 +90,11 @@ struct RootView: View {
     @State private var ciScreen = UserDefaults.standard.string(forKey: "ciScreen").flatMap(CIScreen.init(rawValue:))
     /// A GPX file opened with Norður (Files, Mail, the share menu of Garmin Connect, Strava…).
     @State private var openedTrack: DriveSession?
+    @AppStorage(NightVision.key) private var nightVision = false
+    @AppStorage(NightVision.autoKey) private var nightAuto = false
+    /// The opening animation (not in the CI runs, which open a given screen).
+    @State private var launching = UserDefaults.standard.string(forKey: "initialTab") == nil
+        && UserDefaults.standard.string(forKey: "ciScreen") == nil && !UserDefaults.standard.bool(forKey: "ciDemoTrip")
     @State private var importError: String?
 
     enum CIScreen: String, Identifiable {
@@ -117,6 +122,14 @@ struct RootView: View {
             }
         }
         .overlay(alignment: .top) { OfflineBanner() }
+        .nightVision(nightVision || (nightAuto && tab == .aurora && NightVision.auto(at: model.activePlace.coordinate)))
+        .overlay {
+            if launching {
+                LaunchAnimation { withAnimation(.easeOut(duration: 0.45)) { launching = false } }
+                    .transition(.opacity)
+                    .zIndex(10)
+            }
+        }
         .animation(.snappy, value: Connectivity.shared.isOnline)
         .onChange(of: Connectivity.shared.reconnections) {
             // Back online: everything is reloaded at once, without waiting for the next poll.

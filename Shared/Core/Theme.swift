@@ -187,23 +187,25 @@ struct SectionLabel: View {
     var trailing: String?
     var trailingColor: Color = Theme.dim
 
-    /// Section title: a condensed headline with its number, a rule below; the
-    /// trailing note (status, count, "all →") sits on the right.
+    /// Section title in plain words (no capitals, no numbering: easier to read),
+    /// with the trailing note (status, count, "all →") on the right. `index` is
+    /// kept for the callers but no longer shown.
     var body: some View {
-        VStack(alignment: .leading, spacing: 6) {
-            HStack(alignment: .lastTextBaseline, spacing: 8) {
-                if let index {
-                    Text(index).font(.mono(11, .semibold)).foregroundStyle(Theme.accent)
-                }
-                Text(title.loc.uppercased()).font(.display(23, .bold)).foregroundStyle(Theme.text)
-                    .lineLimit(1).minimumScaleFactor(0.7)
-                Spacer(minLength: 8)
-                if let trailing {
-                    Text(trailing.loc).font(.mono(10.5, .semibold)).foregroundStyle(trailingColor)
-                        .lineLimit(1).minimumScaleFactor(0.8)
-                }
+        HStack(alignment: .lastTextBaseline, spacing: 8) {
+            Text(title.loc).font(.app(.title3, .semibold)).foregroundStyle(Theme.text)
+                .lineLimit(1).minimumScaleFactor(0.7)
+            Spacer(minLength: 8)
+            if let trailing {
+                Text(Self.sentence(trailing.loc)).font(.app(.caption, .semibold)).foregroundStyle(trailingColor)
+                    .lineLimit(1).minimumScaleFactor(0.8)
             }
-            Rectangle().fill(Theme.rule).frame(height: 1.5)
         }
+        .padding(.top, 4)
+    }
+
+    /// "TUTTE →" → "Tutte →": capitals only at the start.
+    static func sentence(_ text: String) -> String {
+        guard text == text.uppercased(), let first = text.first else { return text }
+        return String(first) + text.dropFirst().lowercased()
     }
 }

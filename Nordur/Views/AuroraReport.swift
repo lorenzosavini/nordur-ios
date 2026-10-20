@@ -47,6 +47,7 @@ struct AuroraTab: View {
         NavigationStack {
             AuroraView()
                 .toolbar(.hidden, for: .navigationBar)
+                .overlay(alignment: .topTrailing) { NightVisionButton().padding(.top, 8).padding(.trailing, 14) }
                 .safeAreaInset(edge: .bottom) {
                     AuroraReportBar()
                         .padding(.horizontal, 16).padding(.vertical, 8)
