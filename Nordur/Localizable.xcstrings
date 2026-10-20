@@ -15997,6 +15997,86 @@
           }
         }
       }
+    },
+    "RICEVUTI" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "RECEIVED"
+          }
+        }
+      }
+    },
+    "Accedi per vedere i viaggi condivisi con te" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sign in to see the trips shared with you"
+          }
+        }
+      }
+    },
+    "I viaggi arrivano all'indirizzo email del tuo account Norður: accedi con quello a cui te li hanno mandati." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Trips arrive at your Norður account's e-mail address: sign in with the one they were sent to."
+          }
+        }
+      }
+    },
+    "Nessun invito. Quando qualcuno ti invita a modificare insieme un viaggio, compare qui." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No invitations. When someone invites you to plan a trip together, it shows up here."
+          }
+        }
+      }
+    },
+    "Inviti a modificare insieme" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Invitations to plan together"
+          }
+        }
+      }
+    },
+    "Nessuna copia ricevuta." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No copies received."
+          }
+        }
+      }
+    },
+    "Copie ricevute" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Received copies"
+          }
+        }
+      }
+    },
+    "Viaggi ricevuti" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Received trips"
+          }
+        }
+      }
     }
   },
   "version" : "1.0"

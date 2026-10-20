@@ -11,6 +11,7 @@ struct TripView: View {
     @State private var importFile: TripImportFile?
     @State private var importError: String?
     @State private var sharing = false
+    @State private var showInbox = false
     /// Days (everything on one page), stops (cards to open), or the route on a map.
     @AppStorage("trip.view") private var mode = "days"
     @State private var dayVisit: VisitDraft?
@@ -30,7 +31,10 @@ struct TripView: View {
                         HStack(spacing: 8) {
                             HeaderButton(systemImage: "car", dot: recorder.isRecording, label: String(localized: "GUIDA")) { showDrive = true }
                                 .accessibilityIdentifier("trip.drive")
-                            HeaderButton(systemImage: "person", label: String(localized: "ACCOUNT")) { showAccount = true }
+                            HeaderButton(systemImage: "tray.and.arrow.down", dot: trip.inboxCount > 0, label: String(localized: "RICEVUTI")) { showInbox = true }
+                                .accessibilityIdentifier("trip.inbox")
+                            HeaderButton(systemImage: "person") { showAccount = true }
+                                .accessibilityLabel(String(localized: "Account"))
                             HeaderButton(systemImage: "plus") { creating = true }
                                 .accessibilityLabel("Aggiungi tappa")
                                 .accessibilityIdentifier("trip.add")
@@ -165,15 +169,20 @@ struct TripView: View {
             .toolbar(.hidden, for: .navigationBar)
             .refreshable {
                 await trip.syncShared()
+                await trip.refreshInbox()
                 await model.refreshGlobal(force: true)
                 await trip.loadForecasts()
             }
-            .task { await trip.syncShared() }
+            .task {
+                await trip.syncShared()
+                await trip.refreshInbox()
+            }
             .task(id: trip.stops.map { ([$0.place] + $0.visits.map(\.place)).map(\.coordinate.key).joined() }.joined()) {
                 await trip.loadForecasts()
             }
             .sheet(isPresented: $showAccount) { AccountView() }
             .sheet(isPresented: $sharing) { TripShareSheet() }
+            .sheet(isPresented: $showInbox) { ReceivedTripsView() }
             .fullScreenCover(isPresented: $showDrive) { DriveView(onClose: { showDrive = false }) }
             .sheet(isPresented: $creating) {
                 StopEditor(stop: nil)

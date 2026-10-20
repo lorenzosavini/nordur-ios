@@ -223,12 +223,16 @@ struct RootView: View {
         }
         .task {
             // The backup at the frequency chosen in Settings (checked every 30 s).
+            var inboxTick = 0
             while !Task.isCancelled {
                 try? await Task.sleep(nanoseconds: 30 * 1_000_000_000)
                 guard UIApplication.shared.applicationState == .active else { continue }
                 await Account.shared.syncIfDue()
                 // A trip edited together: the others' changes arrive within half a minute.
                 await trip.syncShared()
+                // Invitations and copies sent to this account, every 2 minutes.
+                inboxTick += 1
+                if inboxTick % 4 == 0 { await trip.refreshInbox() }
             }
         }
     }

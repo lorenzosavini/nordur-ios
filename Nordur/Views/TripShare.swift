@@ -172,21 +172,34 @@ struct MailComposer: UIViewControllerRepresentable {
     }
 }
 
-/// Trips other users sent to this account, at the top of Trip.
+/// Trips other users sent to this account: invitations to plan together, and
+/// copies. Inline at the top of Trip when there is something, and as its own page.
 struct ReceivedTripsSection: View {
     @Environment(Account.self) private var account
     @Environment(TripStore.self) private var trip
-    @State private var items: [Account.ReceivedTrip] = []
+    /// The page shows its sections even when empty, with what to do.
+    var page = false
     @State private var choosing: Account.ReceivedTrip?
-    @State private var invitations: [Account.SharedTripSummary] = []
     @State private var joining: Account.SharedTripSummary?
     @State private var joinError: String?
+    @State private var signingIn = false
 
     var body: some View {
         Group {
-            if !invitations.isEmpty {
+            if page && !account.isSignedIn {
                 Section {
-                    ForEach(invitations) { invite in
+                    Button { signingIn = true } label: { Label("Accedi per vedere i viaggi condivisi con te", systemImage: "person.crop.circle") }
+                } footer: {
+                    Text("I viaggi arrivano all'indirizzo email del tuo account Norður: accedi con quello a cui te li hanno mandati.")
+                }
+            }
+            if !trip.invitations.isEmpty || (page && account.isSignedIn) {
+                Section {
+                    if trip.invitations.isEmpty {
+                        Text("Nessun invito. Quando qualcuno ti invita a modificare insieme un viaggio, compare qui.")
+                            .font(.app(.subheadline)).foregroundStyle(Theme.dim)
+                    }
+                    ForEach(trip.invitations) { invite in
                         Button { joining = invite } label: {
                             HStack(spacing: 12) {
                                 Image(systemName: "person.2.fill").font(.system(size: 20)).foregroundStyle(Theme.aurora).frame(width: 32)
@@ -202,11 +215,14 @@ struct ReceivedTripsSection: View {
                         .buttonStyle(.plain)
                     }
                     if let joinError { Text(joinError).font(.app(.caption)).foregroundStyle(Theme.danger) }
-                } header: { Text("Inviti").pinnedHeader() }
+                } header: { Text("Inviti a modificare insieme").pinnedHeader() }
             }
-            if !items.isEmpty {
+            if !trip.received.isEmpty || (page && account.isSignedIn) {
                 Section {
-                    ForEach(items) { item in
+                    if trip.received.isEmpty {
+                        Text("Nessuna copia ricevuta.").font(.app(.subheadline)).foregroundStyle(Theme.dim)
+                    }
+                    ForEach(trip.received) { item in
                         Button { choosing = item } label: {
                             HStack(spacing: 12) {
                                 Image(systemName: "tray.and.arrow.down.fill").font(.system(size: 20)).foregroundStyle(Theme.accent).frame(width: 32)
@@ -221,17 +237,18 @@ struct ReceivedTripsSection: View {
                         }
                         .buttonStyle(.plain)
                     }
-                } header: { Text("Ricevuti").pinnedHeader() }
+                } header: { Text("Copie ricevute").pinnedHeader() }
             }
         }
-        .task(id: account.isSignedIn) { await load() }
+        .task(id: account.isSignedIn) { await trip.refreshInbox() }
+        .sheet(isPresented: $signingIn) { AccountView() }
         .confirmationDialog(joining?.title ?? "", isPresented: Binding(get: { joining != nil }, set: { if !$0 { joining = nil } }), titleVisibility: .visible) {
             if let invite = joining {
                 Button(trip.stops.isEmpty ? String(localized: "Partecipa") : String(localized: "Partecipa (sostituisce il viaggio sul telefono)")) {
                     Task {
                         do {
                             try await trip.join(invite.id)
-                            invitations.removeAll { $0.id == invite.id }
+                            await trip.refreshInbox()
                             joinError = nil
                             Haptics.result(true)
                         } catch {
@@ -254,18 +271,28 @@ struct ReceivedTripsSection: View {
         } message: { Text(String(localized: "Condiviso da \(choosing?.from ?? "")")) }
     }
 
-    private func load() async {
-        guard account.isSignedIn else { items = []; invitations = []; return }
-        async let received = try? account.receivedTrips()
-        async let shared = try? account.sharedTrips()
-        items = await received ?? []
-        invitations = (await shared ?? []).filter { $0.id != trip.shared?.id }
-    }
-
     private func remove(_ item: Account.ReceivedTrip) {
-        items.removeAll { $0.id == item.id }
         Haptics.result(true)
-        Task { try? await account.deleteReceived(item.id) }
+        Task { await trip.removeReceived(item.id) }
+    }
+}
+
+/// Trip › RICEVUTI: everything shared with this account, always reachable.
+struct ReceivedTripsView: View {
+    @Environment(TripStore.self) private var trip
+    @Environment(\.dismiss) private var dismiss
+
+    var body: some View {
+        NavigationStack {
+            List {
+                ReceivedTripsSection(page: true)
+            }
+            .themedList()
+            .navigationTitle("Viaggi ricevuti")
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar { ToolbarItem(placement: .cancellationAction) { Button("Chiudi") { dismiss() } } }
+            .refreshable { await trip.refreshInbox() }
+        }
     }
 }
 

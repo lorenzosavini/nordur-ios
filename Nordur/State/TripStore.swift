@@ -328,6 +328,25 @@ final class TripStore {
         return (stops, tomb)
     }
 
+    // MARK: Received (invitations and copies sent to this account)
+
+    private(set) var received: [Account.ReceivedTrip] = []
+    private(set) var invitations: [Account.SharedTripSummary] = []
+    var inboxCount: Int { received.count + invitations.count }
+
+    func refreshInbox() async {
+        guard Account.shared.isSignedIn else { received = []; invitations = []; return }
+        async let copies = try? Account.shared.receivedTrips()
+        async let trips = try? Account.shared.sharedTrips()
+        if let copies = await copies { received = copies }
+        if let trips = await trips { invitations = trips.filter { $0.id != shared?.id } }
+    }
+
+    func removeReceived(_ id: String) async {
+        received.removeAll { $0.id == id }
+        try? await Account.shared.deleteReceived(id)
+    }
+
     // MARK: Meta (shared trip, tombstones)
 
     private struct Meta: Codable {
