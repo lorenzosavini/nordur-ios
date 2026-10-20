@@ -104,10 +104,10 @@ extension Font {
     }
 
     /// Labels, codes, tables.
-    /// Labels, codes, tables. Very small sizes are raised by one point: below
-    /// ~10.5 pt the mono labels were hard to read on a phone held at arm's length.
+    /// Labels, codes, tables. Small sizes are raised: the mono labels were hard
+    /// to read on a phone held at arm's length (10 → 12, 11 → 12.7, 14 → 15).
     static func mono(_ size: CGFloat, _ weight: Font.Weight = .medium, relativeTo style: Font.TextStyle = .caption) -> Font {
-        .custom(AppFontName.mono(weight), size: size < 10.5 ? size + 1 : size, relativeTo: style)
+        .custom(AppFontName.mono(weight), size: size < 14 ? size * 1.08 + 1.2 : size + 1, relativeTo: style)
     }
 
     /// Headlines: condensed, set in capitals by the caller when needed.
@@ -125,18 +125,19 @@ extension Font {
         case .largeTitle: return .display(40, weight ?? .bold)
         case .title: return .display(32, weight ?? .bold)
         case .title2: return .display(26, weight ?? .semibold)
-        case .title3: return .sans(19, weight ?? .semibold, relativeTo: style)
-        case .headline: return .sans(16, weight ?? .semibold, relativeTo: style)
-        case .callout: return .sans(15.5, weight ?? .regular, relativeTo: style)
-        case .subheadline: return .sans(14.5, weight ?? .regular, relativeTo: style)
-        case .footnote: return .sans(13, weight ?? .regular, relativeTo: style)
-        case .caption: return .sans(12, weight ?? .regular, relativeTo: style)
-        case .caption2: return .sans(11, weight ?? .regular, relativeTo: style)
-        default: return .sans(15.5, weight ?? .regular, relativeTo: style)
+        // One step larger than before throughout: the small text was hard to read.
+        case .title3: return .sans(20.5, weight ?? .semibold, relativeTo: style)
+        case .headline: return .sans(18, weight ?? .semibold, relativeTo: style)
+        case .callout: return .sans(17, weight ?? .regular, relativeTo: style)
+        case .subheadline: return .sans(16, weight ?? .regular, relativeTo: style)
+        case .footnote: return .sans(15, weight ?? .regular, relativeTo: style)
+        case .caption: return .sans(14, weight ?? .regular, relativeTo: style)
+        case .caption2: return .sans(13, weight ?? .regular, relativeTo: style)
+        default: return .sans(17, weight ?? .regular, relativeTo: style)
         }
     }
 
-    static let eyebrow = Font.mono(10.5, .medium, relativeTo: .caption2)
+    static let eyebrow = Font.mono(11, .medium, relativeTo: .caption2)
 }
 
 extension View {

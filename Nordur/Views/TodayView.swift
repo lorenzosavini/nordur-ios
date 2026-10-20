@@ -32,10 +32,13 @@ struct TodayView: View {
                             .padding(.top, -120)  // reaches under the status bar
                     }
                     warningsSection
-                    AuroraNowPanel()
-                    exploreSection
+                    VStack(spacing: 10) {
+                        AuroraNowPanel()
+                        AuroraReportBar(compact: true)
+                    }
                     nextHours
                     outlookSection
+                    exploreSection
                     detailsSection
                 }
                 .padding(.horizontal, 18)
@@ -126,28 +129,22 @@ struct TodayView: View {
     /// Photo tiles to the main sections, each with one live line.
     private var exploreSection: some View {
         VStack(alignment: .leading, spacing: 10) {
+            // What has no tab of its own (Aurora, Weather, Map and Trip are in the bar below).
             SectionLabel(title: String(localized: "Esplora"))
             LazyVGrid(columns: [GridItem(.flexible(), spacing: 6), GridItem(.flexible(), spacing: 6)], spacing: 6) {
-                NavigationLink { AuroraView() } label: {
-                    HeroTile(hero: .aurora, title: String(localized: "Aurora"), status: auroraStatus,
-                             statusColor: (model.auroraBestTonight?.observability ?? .veryPoor) >= .good ? Color(red: 0.55, green: 1, blue: 0.8) : .white)
+                NavigationLink { SightsView() } label: {
+                    HeroTile(hero: .trip, title: String(localized: "Da vedere"),
+                             status: String(localized: "Cascate, belvedere, sorgenti calde vicino a te"))
                 }
                 NavigationLink { RoadsView() } label: {
                     HeroTile(hero: .roads, title: String(localized: "Strade"), status: roadsStatus)
-                }
-                Button { model.requestedTab = "map" } label: {
-                    HeroTile(hero: .map, title: String(localized: "Mappa"),
-                             status: model.inIceland ? String(localized: "Vento, pioggia, neve, radar, strade") : String(localized: "Mappa meteo dell'Islanda"))
-                }
-                Button { model.requestedTab = "weather" } label: {
-                    HeroTile(hero: .weather, title: String(localized: "Meteo"), status: weatherStatus)
                 }
                 NavigationLink { QuakesView() } label: {
                     HeroTile(hero: .volcano, title: String(localized: "Vulcani e terremoti"),
                              status: model.inIceland ? String(localized: "\(model.recentQuakes24h.count) scosse nelle ultime 24 h") : String(localized: "Solo in Islanda, per ora"))
                 }
-                Button { model.requestedTab = "trip" } label: {
-                    HeroTile(hero: .trip, title: String(localized: "Viaggio"), status: String(localized: "Tappe, meteo e strade lungo il percorso"))
+                NavigationLink { WebcamsView() } label: {
+                    HeroTile(hero: .drive, title: String(localized: "Webcam"), status: String(localized: "Le strade come sono adesso"))
                 }
             }
             .buttonStyle(.plain)
@@ -698,11 +695,10 @@ struct TodayView: View {
                     Text("\(near.count)").font(.metric(30, .semibold)).foregroundStyle(Theme.text)
                     Text("LUOGHI").font(.mono(9.5)).foregroundStyle(Theme.dim)
                     Spacer()
-                    HStack(spacing: -4) {
+                    HStack(spacing: -6) {
                         ForEach(Array(Set(near.map { $0.sight.kind })).sorted { $0.rawValue < $1.rawValue }.prefix(6), id: \.self) { kind in
-                            Image(systemName: kind.symbol).font(.system(size: 10, weight: .bold)).foregroundStyle(.white)
-                                .frame(width: 22, height: 22).background(Circle().fill(kind.tint))
-                                .overlay(Circle().strokeBorder(Theme.bg, lineWidth: 1.5))
+                            KindIcon(name: kind.imageName, size: 32)
+                                .overlay(RoundedRectangle(cornerRadius: 7, style: .continuous).strokeBorder(Theme.bg, lineWidth: 2))
                         }
                     }
                 }
@@ -736,7 +732,7 @@ struct TodayView: View {
                 }
                 if let market {
                     HStack(alignment: .firstTextBaseline, spacing: 8) {
-                        Image(systemName: "cart.fill").foregroundStyle(Theme.accent)
+                        KindIcon(name: Shop.Kind.supermarket.imageName, size: 34)
                         Text(market.shop.name).font(.app(.headline)).foregroundStyle(Theme.text).lineLimit(1)
                         Text("\(Fmt.number(market.km, decimals: market.km < 10 ? 1 : 0)) KM").font(.mono(10.5, .semibold)).foregroundStyle(Theme.dim)
                     }

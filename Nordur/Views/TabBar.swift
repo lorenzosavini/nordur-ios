@@ -80,8 +80,8 @@ struct NordurTabBar: View {
     private let items: [(tab: RootView.Tab, symbol: String, title: String)] = [
         (.today, "sun.horizon.fill", String(localized: "Oggi")),
         (.weather, "cloud.sun.rain.fill", String(localized: "Meteo")),
+        (.aurora, "sparkles", String(localized: "Aurora")),
         (.map, "map.fill", String(localized: "Mappa")),
-        (.drive, "car.fill", String(localized: "Guida")),
         (.trip, "suitcase.rolling.fill", String(localized: "Viaggio")),
     ]
 
@@ -109,7 +109,7 @@ struct NordurTabBar: View {
                                     .foregroundStyle(selected ? Theme.accent : Theme.dim)
                                     .frame(height: 22)
                                     .overlay(alignment: .topTrailing) {
-                                        if (item.tab == .today && badge > 0) || (item.tab == .drive && recording) {
+                                        if (item.tab == .today && badge > 0) || (item.tab == .trip && recording) {
                                             Circle().fill(Theme.danger).frame(width: 8, height: 8)
                                                 .overlay(Circle().strokeBorder(Theme.bg, lineWidth: 1.5))
                                                 .offset(x: 6, y: -3)

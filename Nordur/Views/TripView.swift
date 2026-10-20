@@ -17,6 +17,9 @@ struct TripView: View {
     @State private var dayAdd: DayAdd?
     @State private var pendingVisit: VisitDraft?
     @State private var mapStop: TripStop?
+    /// Drives (recording, imports from Apple Health and GPX), opened from here.
+    @State private var showDrive = UserDefaults.standard.string(forKey: "initialTab") == "drive"
+    @Environment(DriveRecorder.self) private var recorder
 
     var body: some View {
         NavigationStack {
@@ -25,7 +28,8 @@ struct TripView: View {
                 Section {
                     ScreenHeader(title: String(localized: "Viaggio"), subtitle: trip.stops.isEmpty ? String(localized: "Itinerario") : String(localized: "\(trip.stops.count) tappe"), index: "05") {
                         HStack(spacing: 8) {
-                            if !trip.stops.isEmpty { EditButton().font(.mono(11, .semibold)) }
+                            HeaderButton(systemImage: "car", dot: recorder.isRecording, label: String(localized: "GUIDA")) { showDrive = true }
+                                .accessibilityIdentifier("trip.drive")
                             HeaderButton(systemImage: "person", label: String(localized: "ACCOUNT")) { showAccount = true }
                             HeaderButton(systemImage: "plus") { creating = true }
                                 .accessibilityLabel("Aggiungi tappa")
@@ -162,6 +166,7 @@ struct TripView: View {
                 await trip.loadForecasts()
             }
             .sheet(isPresented: $showAccount) { AccountView() }
+            .fullScreenCover(isPresented: $showDrive) { DriveView(onClose: { showDrive = false }) }
             .sheet(isPresented: $creating) {
                 StopEditor(stop: nil)
             }

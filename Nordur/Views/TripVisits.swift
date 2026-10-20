@@ -48,7 +48,7 @@ struct ShopsLine: View {
     var body: some View {
         Button(action: onOpen) {
             HStack(spacing: 10) {
-                Image(systemName: "cart.fill").foregroundStyle(Theme.accent).frame(width: 30)
+                KindIcon(name: Shop.Kind.supermarket.imageName, size: 44)
                 if let market = Shops.nearest(model.shops?.value ?? [], to: stop.place.coordinate, kinds: [.supermarket], within: 80, limit: 1).first {
                     VStack(alignment: .leading, spacing: 2) {
                         Text(String(localized: "Spesa: \(market.shop.name), \(Fmt.number(market.km, decimals: market.km < 10 ? 1 : 0)) km"))
@@ -170,11 +170,7 @@ struct VisitRow: View {
             .filter { ($0.risk ?? .ok) >= .warning && ($0.distanceKm(to: visit.place.coordinate) ?? .infinity) < 15 }
 
         HStack(alignment: .top, spacing: 12) {
-            Image(systemName: (visit.kind ?? attraction?.kind)?.symbol ?? "mappin.circle.fill")
-                .font(.system(size: 15, weight: .semibold))
-                .foregroundStyle(Theme.onAccent)
-                .frame(width: 30, height: 30)
-                .background(Theme.accent)
+            PlaceThumb(place: visit.place, kind: visit.kind ?? attraction?.kind ?? .landscape, size: 60)
             VStack(alignment: .leading, spacing: 3) {
                 HStack(alignment: .firstTextBaseline) {
                     Text(visit.place.name).font(.app(.subheadline, .semibold)).foregroundStyle(Theme.text)

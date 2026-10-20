@@ -21,7 +21,7 @@ struct NordurApp: App {
             RootView()
                 .preferredColorScheme(Appearance(rawValue: appearance)?.colorScheme)
                 .tint(Theme.accent)
-                .font(.sans(16))
+                .font(.sans(17))
                 .environment(model)
                 .environment(trip)
                 .environment(AlertCenter.shared)
@@ -77,7 +77,8 @@ struct RootView: View {
     // `-initialTab drive` as launch argument opens a given tab (used by the CI screenshots).
     @State private var tab = Tab(rawValue: UserDefaults.standard.string(forKey: "initialTab") ?? "") ?? .today
 
-    enum Tab: String, Hashable { case today, weather, map, drive, trip }
+    /// Drives (recording, imports) live inside Trip; the aurora has its own tab.
+    enum Tab: String, Hashable { case today, weather, aurora, map, trip }
     @AppStorage(WindUnit.key) private var windUnit = WindUnit.ms.rawValue
     @State private var showAuroraLive = UserDefaults.standard.string(forKey: "initialTab") == "aurora"
     @State private var showAccount = UserDefaults.standard.string(forKey: "initialTab") == "account"
@@ -102,8 +103,8 @@ struct RootView: View {
             TabView(selection: $tab) {
                 TodayView().tag(Tab.today).toolbar(.hidden, for: .tabBar).statusBarScrim()
                 WeatherView().tag(Tab.weather).toolbar(.hidden, for: .tabBar).statusBarScrim()
+                AuroraTab().tag(Tab.aurora).toolbar(.hidden, for: .tabBar).statusBarScrim()
                 MapScreen().tag(Tab.map).toolbar(.hidden, for: .tabBar)
-                DriveView().tag(Tab.drive).toolbar(.hidden, for: .tabBar).statusBarScrim()
                 TripView().tag(Tab.trip).toolbar(.hidden, for: .tabBar).statusBarScrim()
             }
             .id(windUnit)  // every screen redraws with the new wind unit
@@ -136,7 +137,7 @@ struct RootView: View {
             }
             do {
                 openedTrack = try DriveStore.shared.importGPX(url)
-                tab = .drive
+                tab = .trip
                 Haptics.result(true)
             } catch {
                 importError = error.localizedDescription

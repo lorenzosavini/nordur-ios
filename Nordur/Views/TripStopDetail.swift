@@ -52,9 +52,15 @@ struct StopCard: View {
         let warnings = model.warnings(at: stop.place.coordinate, from: stop.date.addingTimeInterval(-12 * 3600), to: stop.endDate)
         let visits = stop.sortedVisits
         HStack(alignment: .top, spacing: 14) {
-            Text(String(format: "%02d", index + 1))
-                .font(.metric(22, .bold)).foregroundStyle(Theme.onAccent)
-                .frame(width: 44, height: 44).background(Theme.accent)
+            // A photo of the place, numbered.
+            PlaceThumb(place: stop.place, kind: .town, size: 72)
+                .overlay(alignment: .topLeading) {
+                    Text(String(format: "%02d", index + 1))
+                        .font(.metric(17, .bold)).foregroundStyle(Theme.onAccent)
+                        .padding(.horizontal, 6).frame(height: 24).background(Theme.accent)
+                        .clipShape(RoundedRectangle(cornerRadius: 6, style: .continuous))
+                        .offset(x: -6, y: -6)
+                }
             VStack(alignment: .leading, spacing: 5) {
                 HStack(alignment: .firstTextBaseline) {
                     Text(stop.place.name).font(.app(.headline)).foregroundStyle(Theme.text).lineLimit(1)

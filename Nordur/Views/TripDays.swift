@@ -67,11 +67,20 @@ struct TripDayHeader: View {
         let place = day.night ?? day.arriving ?? trip.stops.last
         let weather = place.flatMap { trip.forecast(for: $0)?.day(for: day.date) }
         let warnings = place.map { model.warnings(at: $0.place.coordinate, from: day.date, to: day.date.addingTimeInterval(86400)) } ?? []
-        VStack(alignment: .leading, spacing: 5) {
-            Text(title).font(.app(.headline)).foregroundStyle(Theme.text)
-            Label(day.night.map { String(localized: "Notte: \($0.place.name)") } ?? String(localized: "Nessun pernottamento: rientro"),
-                  systemImage: day.night == nil ? "airplane.departure" : "bed.double.fill")
-                .font(.app(.caption)).foregroundStyle(Theme.dim)
+        // The picture of the day: its best-known sight, else where you sleep.
+        let highlight = day.visits.first { Attraction.named($0.visit.place.name) != nil }?.visit.place ?? day.visits.first?.visit.place
+        VStack(alignment: .leading, spacing: 8) {
+            if let banner = highlight ?? place?.place {
+                PlaceBanner(place: banner, height: 150) {
+                    VStack(alignment: .leading, spacing: 3) {
+                        Text(title).font(.display(26, .bold)).foregroundStyle(.white).lineLimit(2).minimumScaleFactor(0.7)
+                        Label(day.night.map { String(localized: "Notte: \($0.place.name)") } ?? String(localized: "Nessun pernottamento: rientro"),
+                              systemImage: day.night == nil ? "airplane.departure" : "bed.double.fill")
+                            .font(.app(.subheadline, .semibold)).foregroundStyle(.white.opacity(0.92)).lineLimit(1)
+                    }
+                    .shadow(color: .black.opacity(0.5), radius: 4)
+                }
+            }
             if let weather {
                 let info = WeatherCode.describe(weather.code)
                 HStack(spacing: 10) {

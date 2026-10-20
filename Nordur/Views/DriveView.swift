@@ -11,6 +11,8 @@ struct DriveView: View {
     @State private var confirmStop = false
     @State private var lastFinished: DriveSession?
     @State private var planning = false
+    /// Shown from Trip as a sheet: a button to close it.
+    var onClose: (() -> Void)?
 
     var body: some View {
         @Bindable var recorder = recorder
@@ -25,6 +27,8 @@ struct DriveView: View {
                                     .background(Theme.danger, in: Rectangle())
                             }
                             .buttonStyle(.plain)
+                        } else if let onClose {
+                            HeaderButton(systemImage: "xmark", label: String(localized: "CHIUDI")) { onClose() }
                         } else {
                             AppearanceButton()
                         }

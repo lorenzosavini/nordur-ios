@@ -160,11 +160,8 @@ struct SightRow: View {
 
     var body: some View {
         HStack(alignment: .top, spacing: 12) {
-            Image(systemName: sight.kind.symbol)
-                .font(.system(size: 14, weight: .semibold))
-                .foregroundStyle(.white)
-                .frame(width: 30, height: 30)
-                .background(sight.kind.tint)
+            // Photos for the best-known places; the others show the illustration of their kind.
+            PlaceThumb(place: sight.place, kind: sight.kind, size: 56, photo: sight.isTop || sight.notable)
             VStack(alignment: .leading, spacing: 3) {
                 HStack(alignment: .firstTextBaseline, spacing: 6) {
                     Text(sight.name).font(.app(.subheadline, .semibold)).foregroundStyle(Theme.text).lineLimit(1)

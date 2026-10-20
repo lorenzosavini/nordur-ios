@@ -15047,6 +15047,46 @@
           }
         }
       }
+    },
+    "VEDO L'AURORA" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "I SEE THE AURORA"
+          }
+        }
+      }
+    },
+    "GUIDA" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "DRIVE"
+          }
+        }
+      }
+    },
+    "CHIUDI" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "CLOSE"
+          }
+        }
+      }
+    },
+    "Cascate, belvedere, sorgenti calde vicino a te" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Waterfalls, viewpoints, hot springs near you"
+          }
+        }
+      }
     }
   },
   "version" : "1.0"

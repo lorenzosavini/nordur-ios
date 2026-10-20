@@ -989,3 +989,94 @@ struct DirectionsMenu<LabelView: View>: View {
         } label: { label() }
     }
 }
+
+// MARK: - Place pictures
+
+extension AttractionKind {
+    /// Illustration in the asset catalog (Kinds/kind-<name>).
+    var imageName: String { "kind-\(rawValue)" }
+}
+
+extension Shop.Kind {
+    var imageName: String { "kind-\(rawValue)" }
+}
+
+/// The illustration of a kind of place, as a rounded tile.
+struct KindIcon: View {
+    let name: String
+    var size: CGFloat = 44
+
+    var body: some View {
+        Image(name)
+            .resizable()
+            .scaledToFit()
+            .frame(width: size, height: size)
+            .clipShape(RoundedRectangle(cornerRadius: size * 0.23, style: .continuous))
+            .accessibilityHidden(true)
+    }
+}
+
+/// A photo of the place (the lead image of its Wikipedia article) when there is
+/// one, otherwise the illustration of its kind.
+struct PlaceThumb: View {
+    let place: Place
+    var kind: AttractionKind?
+    var size: CGFloat = 56
+    /// Look the photo up (for stops and the best-known sights only, to keep the lookups few).
+    var photo = true
+    @State private var picture: PlacePhoto?
+
+    var body: some View {
+        ZStack {
+            KindIcon(name: (kind ?? .landscape).imageName, size: size)
+            if let picture {
+                RemoteImage(url: picture.imageURL)
+                    .frame(width: size, height: size)
+                    .clipShape(RoundedRectangle(cornerRadius: size * 0.23, style: .continuous))
+                    .transition(.opacity)
+            }
+        }
+        .frame(width: size, height: size)
+        .overlay(alignment: .bottomTrailing) {
+            if picture != nil, let kind {
+                // The kind stays readable on the photo.
+                KindIcon(name: kind.imageName, size: size * 0.36)
+                    .overlay(RoundedRectangle(cornerRadius: size * 0.08, style: .continuous).strokeBorder(.white, lineWidth: 1.5))
+                    .offset(x: 3, y: 3)
+            }
+        }
+        .task(id: place.coordinate.key + place.name) {
+            guard photo else { return }
+            let found = await PlacePhotoService.shared.photo(for: place)
+            withAnimation(.easeOut(duration: 0.2)) { picture = found }
+        }
+    }
+}
+
+/// A wide photo of a place with its name on it, for the head of a day or stop.
+struct PlaceBanner<Overlay: View>: View {
+    let place: Place
+    var height: CGFloat = 130
+    @ViewBuilder var overlay: () -> Overlay
+    @State private var picture: PlacePhoto?
+
+    var body: some View {
+        ZStack(alignment: .bottomLeading) {
+            Rectangle().fill(LinearGradient(colors: [Theme.raised, Theme.surface], startPoint: .top, endPoint: .bottom))
+            if let picture {
+                RemoteImage(url: picture.imageURL)
+                    .frame(height: height).frame(maxWidth: .infinity).clipped()
+                    .transition(.opacity)
+            }
+            LinearGradient(colors: [.black.opacity(0), .black.opacity(0.65)], startPoint: .center, endPoint: .bottom)
+            overlay().padding(12)
+        }
+        .frame(height: height)
+        .frame(maxWidth: .infinity)
+        .clipShape(RoundedRectangle(cornerRadius: 14, style: .continuous))
+        .task(id: place.coordinate.key + place.name) {
+            let found = await PlacePhotoService.shared.photo(for: place)
+            withAnimation(.easeOut(duration: 0.25)) { picture = found }
+        }
+    }
+}

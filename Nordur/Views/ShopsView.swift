@@ -123,11 +123,7 @@ struct ShopRow: View {
     var body: some View {
         let status = shop.status(at: now)
         HStack(alignment: .top, spacing: 12) {
-            Image(systemName: shop.kind.symbol)
-                .font(.system(size: 14, weight: .semibold))
-                .foregroundStyle(Theme.onAccent)
-                .frame(width: 30, height: 30)
-                .background(shop.kind == .alcohol ? Theme.dim : Theme.accent)
+            KindIcon(name: shop.kind.imageName, size: 48)
             VStack(alignment: .leading, spacing: 3) {
                 HStack(alignment: .firstTextBaseline) {
                     Text(shop.name).font(.app(.subheadline, .semibold)).foregroundStyle(Theme.text).lineLimit(1)
