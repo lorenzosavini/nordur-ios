@@ -4,3 +4,4 @@ DerivedData/
 build/
 ipa/
 demo/
+__pycache__/
