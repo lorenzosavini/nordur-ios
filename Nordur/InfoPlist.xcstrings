@@ -36,6 +36,26 @@
           }
         }
       }
+    },
+    "NSCameraUsageDescription" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The camera is used for the \"Find the aurora\" viewfinder, which shows you where to look in the sky. Images are never saved or sent."
+          }
+        }
+      }
+    },
+    "NSMotionUsageDescription" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Motion data tells where the phone is pointing, to guide you towards the aurora."
+          }
+        }
+      }
     }
   },
   "version" : "1.0"

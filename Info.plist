@@ -16,6 +16,10 @@
 		<string>BarlowCondensed-SemiBold.ttf</string>
 		<string>BarlowCondensed-Bold.ttf</string>
 	</array>
+	<key>NSCameraUsageDescription</key>
+	<string>La fotocamera serve per il mirino "Trova l'aurora": ti mostra dove guardare nel cielo. Le immagini non vengono salvate né inviate.</string>
+	<key>NSMotionUsageDescription</key>
+	<string>Il sensore di movimento serve per sapere dove punta il telefono e indicarti la direzione dell'aurora.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Norður usa la tua posizione per meteo, allerte, strade e aurora dove ti trovi, e per registrare i percorsi in auto.</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>

@@ -16497,6 +16497,136 @@
           }
         }
       }
+    },
+    "Consenti la fotocamera in Impostazioni › Norður per usare il mirino." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Allow the camera in Settings › Norður to use the viewfinder."
+          }
+        }
+      }
+    },
+    "Muovi il telefono in un otto per tarare la bussola…" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Move the phone in a figure eight to calibrate the compass…"
+          }
+        }
+      }
+    },
+    "Guarda qui: sopra di te" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Look here: right above you"
+          }
+        }
+      }
+    },
+    "Guarda qui!" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Look here!"
+          }
+        }
+      }
+    },
+    "Gira a destra di %lld°" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Turn right by %lld°"
+          }
+        }
+      }
+    },
+    "Gira a sinistra di %lld°" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Turn left by %lld°"
+          }
+        }
+      }
+    },
+    "Alza il telefono di %lld°" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Raise the phone by %lld°"
+          }
+        }
+      }
+    },
+    "Abbassa il telefono di %lld°" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lower the phone by %lld°"
+          }
+        }
+      }
+    },
+    "Aurora sopra di te: guarda in alto" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aurora above you: look up"
+          }
+        }
+      }
+    },
+    "Direzione %@ %@° · altezza %lld°" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Direction %1$@ %2$@° · height %3$lld°"
+          }
+        }
+      }
+    },
+    "Adesso qui: %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Here now: %@"
+          }
+        }
+      }
+    },
+    "La fotocamera vede l'aurora debole meglio dell'occhio: se non vedi niente, prova una foto in modalità Notte verso il mirino." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The camera sees faint aurora better than the eye: if you see nothing, take a Night mode photo towards the marker."
+          }
+        }
+      }
+    },
+    "Trova l'aurora con la fotocamera" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Find the aurora with the camera"
+          }
+        }
+      }
     }
   },
   "version" : "1.0"

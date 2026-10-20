@@ -38,6 +38,7 @@ struct TodayView: View {
                     VStack(spacing: 10) {
                         AuroraNowPanel()
                         AuroraReportBar(compact: true)
+                        AuroraFinderButton()
                     }
                     nextHours
                     outlookSection
