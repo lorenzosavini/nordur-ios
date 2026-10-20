@@ -3,39 +3,62 @@
 bottom with the chapter and a line saying what is on screen) and makes the
 final file: 1080 px wide, 30 fps, H.264, for Facebook / Instagram / WhatsApp.
 
+The captions are drawn with Pillow as transparent pictures and laid over the
+video, because the ffmpeg from Homebrew has no drawtext.
+
 Usage: caption_video.py <raw.mp4> <chapters.json> <out.mp4>
 """
 import json, os, subprocess, sys, tempfile, textwrap
+from PIL import Image, ImageDraw, ImageFont
 
 raw, chapters_path, out = sys.argv[1:4]
 doc = json.load(open(chapters_path))
 chapters = doc["chapters"]
 duration = doc.get("duration", 9999)
 
-bold = next((f for f in ["/System/Library/Fonts/Supplemental/Arial Bold.ttf", "/Library/Fonts/Arial Bold.ttf",
-                         "/System/Library/Fonts/Helvetica.ttc"] if os.path.exists(f)), None)
-regular = next((f for f in ["/System/Library/Fonts/Supplemental/Arial.ttf", "/Library/Fonts/Arial.ttf",
-                            "/System/Library/Fonts/Helvetica.ttc"] if os.path.exists(f)), bold)
+probe = subprocess.run(["ffprobe", "-v", "error", "-select_streams", "v:0", "-show_entries", "stream=width,height",
+                        "-of", "csv=p=0", raw], capture_output=True, text=True, check=True).stdout.strip().split(",")
+W = 1080
+H = int(round(int(probe[1]) * W / int(probe[0]) / 2)) * 2
+
+def font(paths, size):
+    for p in paths:
+        if os.path.exists(p):
+            return ImageFont.truetype(p, size)
+    return ImageFont.load_default(size)
+
+bold = font(["/System/Library/Fonts/Supplemental/Arial Bold.ttf", "/Library/Fonts/Arial Bold.ttf",
+             "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf"], int(H * 0.03))
+regular = font(["/System/Library/Fonts/Supplemental/Arial.ttf", "/Library/Fonts/Arial.ttf",
+                "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf"], int(H * 0.019))
+
 tmp = tempfile.mkdtemp()
-filters = ["scale=1080:-2"]
+inputs, overlays = [], []
 for i, c in enumerate(chapters):
     start = c["t"]
     end = min(chapters[i + 1]["t"] if i + 1 < len(chapters) else duration, start + 5.5)
     if end - start < 1.2:
         continue
-    tp = os.path.join(tmp, f"t{i}.txt")
-    open(tp, "w").write(c["title"])
     lines = textwrap.wrap(c["subtitle"], 38)[:3]
-    on = f"enable='between(t,{start:.2f},{end:.2f})'"
     band = 0.075 + 0.026 * len(lines)
-    filters.append(f"drawbox=x=0:y=ih*0.76:w=iw:h=ih*{band:.3f}:color=black@0.62:t=fill:{on}")
-    filters.append(f"drawbox=x=0:y=ih*0.76:w=iw*0.012:h=ih*{band:.3f}:color=0xF04A00@1:t=fill:{on}")
-    filters.append(f"drawtext=fontfile='{bold}':textfile='{tp}':fontcolor=white:fontsize=h*0.03:x=w*0.05:y=h*0.775:{on}")
+    img = Image.new("RGBA", (W, H), (0, 0, 0, 0))
+    d = ImageDraw.Draw(img)
+    top = int(H * 0.76)
+    d.rectangle([0, top, W, top + int(H * band)], fill=(0, 0, 0, 158))
+    d.rectangle([0, top, int(W * 0.012), top + int(H * band)], fill=(0xF0, 0x4A, 0x00, 255))
+    d.text((int(W * 0.05), int(H * 0.775)), c["title"], font=bold, fill=(255, 255, 255, 255))
     for k, line in enumerate(lines):
-        lp = os.path.join(tmp, f"s{i}_{k}.txt")
-        open(lp, "w").write(line)
-        filters.append(f"drawtext=fontfile='{regular}':textfile='{lp}':fontcolor=white@0.92:fontsize=h*0.019:x=w*0.05:y=h*{0.82 + 0.026 * k:.3f}:{on}")
-cmd = ["ffmpeg", "-y", "-loglevel", "error", "-i", raw, "-vf", ",".join(filters), "-r", "30",
-       "-c:v", "libx264", "-preset", "slow", "-crf", "22", "-pix_fmt", "yuv420p", "-movflags", "+faststart", out]
+        d.text((int(W * 0.05), int(H * (0.82 + 0.026 * k))), line, font=regular, fill=(255, 255, 255, 235))
+    path = os.path.join(tmp, f"c{i}.png")
+    img.save(path)
+    inputs += ["-i", path]
+    overlays.append((start, end))
+
+graph = [f"[0:v]scale={W}:{H}[v0]"]
+for n, (start, end) in enumerate(overlays):
+    graph.append(f"[v{n}][{n + 1}:v]overlay=0:0:enable='between(t,{start:.2f},{end:.2f})'[v{n + 1}]")
+cmd = ["ffmpeg", "-y", "-loglevel", "error", "-i", raw, *inputs, "-filter_complex", ";".join(graph),
+       "-map", f"[v{len(overlays)}]", "-r", "30", "-c:v", "libx264", "-preset", "slow", "-crf", "22",
+       "-pix_fmt", "yuv420p", "-movflags", "+faststart", out]
 subprocess.run(cmd, check=True)
-print("captions", len(chapters), "->", out)
+print("captions", len(overlays), "->", out)
