@@ -57,7 +57,9 @@ enum HTTPError: LocalizedError {
 enum HTTP {
     static let session: URLSession = {
         let config = URLSessionConfiguration.default
-        config.timeoutIntervalForRequest = 25
+        // A source that hangs gives way to the saved copy quickly.
+        config.timeoutIntervalForRequest = 15
+        config.httpMaximumConnectionsPerHost = 8
         config.requestCachePolicy = .reloadIgnoringLocalCacheData
         return URLSession(configuration: config)
     }()

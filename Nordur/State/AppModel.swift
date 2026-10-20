@@ -210,19 +210,33 @@ final class AppModel {
         lastGlobalRefresh = Date()
         async let w: Void = load(.warnings, { try await IMO.warnings() }) { self.warnings = $0 }
         async let q: Void = load(.quakes, { try await IMO.quakes() }) { self.quakes = $0 }
-        async let r: Void = load(.roads, { try await Roads.network() }) { self.roads = $0 }
-        async let ri: Void = load(.roadInfo, { try await RoadInfoService.load() }) { self.roadInfo = $0 }
+        // The road feeds are the heaviest (Vegagerðin sends 360 KB uncompressed): every 5 minutes.
+        let roadsDue = force || lastRoadsRefresh.map { Date().timeIntervalSince($0) > 290 } ?? true
+        if roadsDue { lastRoadsRefresh = Date() }
+        async let r: Void = loadRoads(roadsDue)
         async let k: Void = load(.kp, { try await SpaceWeather.kpForecast() }) { self.kp = $0 }
-        async let o: Void = load(.ovation, { try await SpaceWeather.ovation() }) { self.ovation = $0 }
         async let s: Void = load(.solarWind, { try await SpaceWeather.solarWind() }) { self.solarWind = $0 }
         async let n: Void = load(.news, { try await SafeTravel.news() }) { self.news = $0 }
+        // The aurora state from nordur-api carries the OVATION grid too: NOAA's own
+        // file is downloaded only when the backend could not be reached.
         async let a: Void = refreshAurora()
-        // The slow-changing data (webcams, fuel, shops, places to see) no longer waits for the rest.
-        async let st: Void = refreshStatic()
-        _ = await (w, q, r, ri, k, o, s, n, a)
+        _ = await (w, q, r, k, s, n, a)
+        if ovation == nil || ovation?.isStale == true {
+            await load(.ovation, { try await SpaceWeather.ovation() }) { self.ovation = $0 }
+        }
         recomputeAurora()
+        // The slow-changing data after the live feeds, so they don't compete for the network.
+        await refreshStatic()
         await localizeWebText()
-        _ = await st
+    }
+
+    @ObservationIgnored private var lastRoadsRefresh: Date?
+
+    private func loadRoads(_ due: Bool) async {
+        guard due else { return }
+        async let r: Void = load(.roads, { try await Roads.network() }) { self.roads = $0 }
+        async let ri: Void = load(.roadInfo, { try await RoadInfoService.load() }) { self.roadInfo = $0 }
+        _ = await (r, ri)
     }
 
     /// Fetches one source and shows it right away.
@@ -367,10 +381,6 @@ final class AppModel {
         }
         let radar = await attempt { try await RainViewer.frames() }
         apply(radar, .radar) { self.radarFrames = $0 }
-        if ovation == nil || force {
-            let result = await attempt { try await SpaceWeather.ovation() }
-            apply(result, .ovation) { self.ovation = $0 }
-        }
     }
 
     /// Flight board and ferry notices; loaded on demand (the flight page is ~1.5 MB).
@@ -425,7 +435,9 @@ final class AppModel {
         apply(rs, .aurora) { self.aurora = $0 }
         apply(rt, .sites) { if let fresh = $0 { self.auroraSites = fresh } }
         // NOAA unreachable from this network (or only a cached copy): use the backend's OVATION run.
-        if let state = aurora, let backendOvation = state.value.ovation, ovation == nil || ovation?.isStale == true {
+        if let state = aurora, !state.isStale || ovation == nil, let backendOvation = state.value.ovation,
+           ovation == nil || ovation?.isStale == true
+            || (DateParse.iso(backendOvation.forecastTime) ?? .distantPast) > (ovation?.value.forecastTime ?? .distantPast) {
             ovation = Fetched(value: OvationGrid(backend: backendOvation), date: state.date, isStale: state.isStale)
             if !state.isStale { errors[.ovation] = nil }
         }

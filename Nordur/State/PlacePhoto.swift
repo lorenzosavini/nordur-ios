@@ -49,9 +49,9 @@ final class PlacePhotoService {
             memory[key] = photo
             return photo
         }
-        // Two lookups at a time: Wikimedia answers "too many requests" to bursts
+        // Three places at a time: Wikimedia answers "too many requests" to bursts
         // (a list of attractions asks for many photos at once).
-        while running >= 2 { await withCheckedContinuation { waiting.append($0) } }
+        while running >= 3 { await withCheckedContinuation { waiting.append($0) } }
         if let cached = memory[key] { return cached }
         running += 1
         let failuresBefore = failures
@@ -84,38 +84,70 @@ final class PlacePhotoService {
         let query: Query?
     }
 
-    /// The best free photo of a place, trying in turn: the Wikidata image (P18),
-    /// the linked Wikipedia article, the article with its name (it, en, is, de,
-    /// then a search), photos taken on the spot (Commons, within 1 km), the
-    /// nearest article with a photo, and Commons photos within 5 km.
+    /// The best free photo of a place. First round, all at once (the first in this
+    /// order that has one wins): the Wikidata image (P18), the OSM-linked article,
+    /// the article with the place's name (it/en/is), photos taken on the spot
+    /// (Commons, 1 km). Then: a search, the nearest article with a photo, Commons 5 km.
     private func lookup(_ place: Place, hint: (wikidata: String?, wikipedia: String?)?) async -> PlacePhoto? {
-        if let q = hint?.wikidata, let photo = await wikidataImage(q) { return photo }
+        let name = Self.searchName(place.name)
+        let preferred = Bundle.main.preferredLocalizations.first == "en" ? ["en", "it"] : ["it", "en"]
+        var first: [@MainActor () async -> PlacePhoto?] = []
+        if let q = hint?.wikidata { first.append { await self.wikidataImage(q) } }
         if let link = hint?.wikipedia, let colon = link.firstIndex(of: ":") {
             let lang = String(link[..<colon]), title = String(link[link.index(after: colon)...])
-            if let page = await pages(lang, ["titles": title, "redirects": "1"]).first, let photo = await make(page, lang: lang) { return photo }
+            first.append { await self.article(lang, title) }
         }
-        let preferred = Bundle.main.preferredLocalizations.first == "en" ? ["en", "it"] : ["it", "en"]
-        let name = Self.searchName(place.name)
-        for lang in preferred + ["is", "de"] {
-            if let page = await pages(lang, ["titles": name, "redirects": "1"]).first, let photo = await make(page, lang: lang) { return photo }
-        }
-        // A search, kept only when the article is near the place.
-        for lang in ["en", "is"] {
-            let found = await pages(lang, ["generator": "search", "gsrsearch": "\(name) Iceland", "gsrlimit": "5", "prop": "pageimages|info|coordinates"])
-            for page in found {
-                if let photo = await make(page, lang: lang) { return photo }
+        for lang in preferred + ["is"] { first.append { await self.article(lang, name) } }
+        let c = place.coordinate
+        first.append { await self.commonsNear(c, radius: 1000) }
+        if let photo = await firstInOrder(first) { return photo }
+
+        let coord = "\(c.lat)|\(c.lon)"
+        let second: [@MainActor () async -> PlacePhoto?] = [
+            { await self.searched("en", "\(name) Iceland") },
+            { await self.nearestArticle("en", coord) },
+            { await self.nearestArticle("is", coord) },
+            { await self.commonsNear(c, radius: 5000) },
+        ]
+        return await firstInOrder(second)
+    }
+
+    /// Runs every lookup at once and returns the first result in list order.
+    private func firstInOrder(_ lookups: [@MainActor () async -> PlacePhoto?]) async -> PlacePhoto? {
+        await withTaskGroup(of: (Int, PlacePhoto?).self) { group in
+            for (i, lookup) in lookups.enumerated() { group.addTask { (i, await lookup()) } }
+            var results: [Int: PlacePhoto?] = [:]
+            var next = 0
+            for await (i, photo) in group {
+                results[i] = photo
+                while let result = results[next] {
+                    if let result { group.cancelAll(); return result }
+                    next += 1
+                }
             }
+            return nil
         }
-        if let photo = await commonsNear(place.coordinate, radius: 1000) { return photo }
-        let coord = "\(place.coordinate.lat)|\(place.coordinate.lon)"
-        for lang in ["en", "is"] {
-            let near = await pages(lang, ["generator": "geosearch", "ggscoord": coord, "ggsradius": "10000", "ggslimit": "12"])
-                .sorted { ($0.index ?? 99) < ($1.index ?? 99) }
-            for page in near {
-                if let photo = await make(page, lang: lang) { return photo }
-            }
+    }
+
+    private func article(_ lang: String, _ title: String) async -> PlacePhoto? {
+        guard let page = await pages(lang, ["titles": title, "redirects": "1"]).first else { return nil }
+        return await make(page, lang: lang)
+    }
+
+    private func searched(_ lang: String, _ query: String) async -> PlacePhoto? {
+        for page in await pages(lang, ["generator": "search", "gsrsearch": query, "gsrlimit": "3"]) {
+            if let photo = await make(page, lang: lang) { return photo }
         }
-        return await commonsNear(place.coordinate, radius: 5000)
+        return nil
+    }
+
+    private func nearestArticle(_ lang: String, _ coord: String) async -> PlacePhoto? {
+        let near = await pages(lang, ["generator": "geosearch", "ggscoord": coord, "ggsradius": "10000", "ggslimit": "12"])
+            .sorted { ($0.index ?? 99) < ($1.index ?? 99) }
+        for page in near {
+            if let photo = await make(page, lang: lang) { return photo }
+        }
+        return nil
     }
 
     /// "Hotel Boli Keflavík" → "Hotel Boli Keflavík"; "Svartifoss (Skaftafell)" → "Svartifoss".

@@ -17,8 +17,11 @@ enum WeatherService {
 
         switch (metResult, omResult) {
         case (.success(let m), .success(let o)):
+            // MET Norway carries the forecast here; Open-Meteo only fills the hours and
+            // fields MET lacks. An Open-Meteo refusal (frequent on mobile networks, many
+            // phones behind one address) no longer marks a fresh MET forecast as an old copy.
             return Fetched(value: merge(met: m.value, base: o.value, at: c),
-                           date: min(m.date, o.date), isStale: m.isStale || o.isStale)
+                           date: m.date, isStale: m.isStale)
         case (.success(let m), .failure):
             return Fetched(value: metOnly(m.value, at: c), date: m.date, isStale: m.isStale)
         case (.failure, .success(let o)):
