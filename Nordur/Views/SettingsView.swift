@@ -45,6 +45,7 @@ struct SettingsView: View {
                     }
                 } header: { Text("Schermo").pinnedHeader() } footer: {
                     Text("Lo schermo diventa rosso scuro su nero: la luce bianca e blu fa perdere l'adattamento degli occhi al buio (servono 20-30 minuti per recuperarlo), il rosso no. Abbassa anche la luminosità del telefono.")
+                }
 
                 BackupSettingsSection()
 
