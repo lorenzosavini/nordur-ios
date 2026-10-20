@@ -10,6 +10,10 @@ final class TripStore {
 
     init() {
         stops = Self.loadFromDisk()
+        let meta = Self.loadMeta()
+        tombstones = meta.tombstones
+        shared = meta.shared
+        lastSaved = Self.index(stops)
         // Demo video only (`-ciDemoTrip YES`): a ring-road itinerary to show the Trip tab filled in.
         if stops.isEmpty, UserDefaults.standard.bool(forKey: "ciDemoTrip") {
             stops = Self.demoTrip()
@@ -41,7 +45,13 @@ final class TripStore {
         return result
     }
 
-    func reload() { stops = Self.loadFromDisk() }
+    func reload() {
+        stops = Self.loadFromDisk()
+        lastSaved = Self.index(stops)
+        let meta = Self.loadMeta()
+        tombstones = meta.tombstones
+        shared = meta.shared
+    }
 
     nonisolated static var fileURL: URL {
         FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent("trip.json")
@@ -53,11 +63,56 @@ final class TripStore {
         return stops.sorted { $0.date < $1.date }
     }
 
-    private func save() {
+    /// Writes the trip. Every stop and visit that changed gets the time of the
+    /// change, and what was removed is remembered (tombstones): that is what lets
+    /// two phones editing the same trip merge their changes.
+    private func save(stamping: Bool = true) {
+        if stamping { stampChanges() }
         stops.sort { $0.date < $1.date }
         if let data = try? JSONEncoder().encode(stops) {
             try? data.write(to: Self.fileURL, options: .atomic)
         }
+        lastSaved = Self.index(stops)
+        saveMeta()
+        if stamping, shared != nil { schedulePush() }
+    }
+
+    // MARK: Change times (for trips edited together)
+
+    /// The stops as last saved, by id.
+    @ObservationIgnored private var lastSaved: [UUID: TripStop] = [:]
+    /// Removed stops and visits (id → when), kept 120 days.
+    private(set) var tombstones: [String: Date] = [:]
+
+    private static func index(_ stops: [TripStop]) -> [UUID: TripStop] {
+        Dictionary(stops.map { ($0.id, $0) }, uniquingKeysWith: { a, _ in a })
+    }
+
+    private func stampChanges() {
+        let now = Date()
+        let oldVisits = Dictionary(lastSaved.values.flatMap(\.visits).map { ($0.id, $0) }, uniquingKeysWith: { a, _ in a })
+        var present = Set<UUID>()
+        for i in stops.indices {
+            present.insert(stops[i].id)
+            if let old = lastSaved[stops[i].id], old.sameFields(as: stops[i]) {
+                stops[i].modified = old.modified ?? stops[i].modified
+            } else {
+                stops[i].modified = now
+            }
+            for j in stops[i].visits.indices {
+                let v = stops[i].visits[j]
+                present.insert(v.id)
+                if let old = oldVisits[v.id], old.sameContent(as: v) {
+                    stops[i].visits[j].modified = old.modified ?? v.modified
+                } else {
+                    stops[i].visits[j].modified = now
+                }
+            }
+        }
+        for id in lastSaved.keys where !present.contains(id) { tombstones[id.uuidString] = now }
+        for id in oldVisits.keys where !present.contains(id) { tombstones[id.uuidString] = now }
+        let cutoff = now.addingTimeInterval(-120 * 86400)
+        tombstones = tombstones.filter { $0.value > cutoff }
     }
 
     /// Saves a stop. When its arrival day changes, its attractions move with it
@@ -127,7 +182,11 @@ final class TripStore {
         guard let source = stops.firstIndex(where: { $0.id == stopID }),
               let target = stops.firstIndex(where: { $0.id == targetID }) else { return }
         stops[source].visits.removeAll { $0.id == visit.id }
-        stops[target].visits.append(visit.moved(to: day))
+        var moved = visit.moved(to: day)
+        // Into another stop: a new identity, so a phone that still has it in the old
+        // stop drops it there (the old id becomes a tombstone) instead of keeping both.
+        if source != target { moved.id = UUID() }
+        stops[target].visits.append(moved)
         save()
     }
 
@@ -148,6 +207,147 @@ final class TripStore {
         guard let index = stops.firstIndex(where: { $0.id == stopID }) else { return }
         stops[index].visits.removeAll { $0.id == visit.id }
         save()
+    }
+
+    // MARK: Trip edited together
+
+    struct SharedInfo: Codable, Equatable {
+        var id: String
+        var title: String
+        var owner: String
+        var members: [String]
+        var version: Int
+        var lastSynced: Date?
+        var editedBy: String?
+    }
+
+    /// The shared trip this one is kept in step with (nil: a trip of this phone only).
+    private(set) var shared: SharedInfo?
+    private(set) var isSyncingShared = false
+    private(set) var sharedError: String?
+    @ObservationIgnored private var pushTask: Task<Void, Never>?
+
+    private func schedulePush() {
+        pushTask?.cancel()
+        pushTask = Task { [weak self] in
+            try? await Task.sleep(nanoseconds: 1_500_000_000)
+            guard !Task.isCancelled else { return }
+            await self?.syncShared()
+        }
+    }
+
+    /// Sends this phone's copy, gets back the merged one (the server applies the
+    /// same rule as `merge`) and takes it.
+    func syncShared() async {
+        guard let info = shared, !isSyncingShared, Account.shared.isSignedIn else { return }
+        isSyncingShared = true
+        defer { isSyncingShared = false }
+        do {
+            let remote = try await Account.shared.putSharedTrip(info.id, title: info.title, stops: stops, tombstones: tombstones)
+            take(remote)
+            sharedError = nil
+        } catch {
+            sharedError = error.localizedDescription
+        }
+    }
+
+    /// Makes this trip a shared one (with the current stops) and invites `email`.
+    func shareTogether(title: String, with email: String) async throws -> Bool {
+        if shared == nil {
+            let created = try await Account.shared.createSharedTrip(title: title, stops: stops, tombstones: tombstones)
+            take(created)
+        }
+        guard let id = shared?.id else { return false }
+        let (trip, notified) = try await Account.shared.inviteToSharedTrip(id, email: email)
+        take(trip)
+        return notified
+    }
+
+    /// Joins a trip someone shared: it replaces the trip on this phone.
+    func join(_ id: String) async throws {
+        let remote = try await Account.shared.sharedTrip(id)
+        stops = remote.stops.sorted { $0.date < $1.date }
+        tombstones = remote.tombstones
+        shared = nil
+        take(remote)
+        save(stamping: false)
+    }
+
+    /// Stops editing together: the trip stays on this phone as it is now.
+    func leaveShared() async {
+        guard let id = shared?.id else { return }
+        try? await Account.shared.leaveSharedTrip(id)
+        shared = nil
+        saveMeta()
+    }
+
+    private func take(_ remote: Account.SharedTrip) {
+        let (merged, tomb) = Self.merge(stops, tombstones, remote.stops, remote.tombstones)
+        tombstones = tomb
+        if merged != stops {
+            stops = merged
+            save(stamping: false)
+        }
+        shared = SharedInfo(id: remote.id, title: remote.title, owner: remote.owner, members: remote.members,
+                            version: remote.version, lastSynced: Date(), editedBy: remote.editedBy)
+        saveMeta()
+    }
+
+    /// Item by item: the newer version of each stop and visit wins, a deletion wins
+    /// over older versions. The same rule as `mergeTrip` in backend/api/data.js.
+    nonisolated static func merge(_ a: [TripStop], _ ta: [String: Date], _ b: [TripStop], _ tb: [String: Date]) -> ([TripStop], [String: Date]) {
+        var tomb = ta
+        for (k, t) in tb { tomb[k] = max(tomb[k] ?? .distantPast, t) }
+        func stamp(_ d: Date?) -> Date { d ?? .distantPast }
+        func alive(_ id: UUID, _ modified: Date?) -> Bool {
+            guard let t = tomb[id.uuidString] else { return true }
+            return t < stamp(modified)
+        }
+        var order: [UUID] = []
+        var byID: [UUID: TripStop] = [:]
+        for s in a + b {
+            guard let prev = byID[s.id] else { byID[s.id] = s; order.append(s.id); continue }
+            var newer = stamp(s.modified) > stamp(prev.modified) ? s : prev
+            var visits: [UUID: TripVisit] = [:]
+            var visitOrder: [UUID] = []
+            for v in prev.visits + s.visits {
+                if let pv = visits[v.id] {
+                    if stamp(v.modified) > stamp(pv.modified) { visits[v.id] = v }
+                } else {
+                    visits[v.id] = v
+                    visitOrder.append(v.id)
+                }
+            }
+            newer.visits = visitOrder.compactMap { visits[$0] }
+            byID[s.id] = newer
+        }
+        let stops = order.compactMap { byID[$0] }
+            .filter { alive($0.id, $0.modified) }
+            .map { s -> TripStop in var s = s; s.visits = s.visits.filter { alive($0.id, $0.modified) }; return s }
+            .sorted { $0.date < $1.date }
+        return (stops, tomb)
+    }
+
+    // MARK: Meta (shared trip, tombstones)
+
+    private struct Meta: Codable {
+        var tombstones: [String: Date] = [:]
+        var shared: SharedInfo?
+    }
+
+    nonisolated static var metaURL: URL {
+        FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent("trip-share.json")
+    }
+
+    private static func loadMeta() -> Meta {
+        guard let data = try? Data(contentsOf: metaURL), let meta = try? JSONDecoder().decode(Meta.self, from: data) else { return Meta() }
+        return meta
+    }
+
+    private func saveMeta() {
+        if let data = try? JSONEncoder().encode(Meta(tombstones: tombstones, shared: shared)) {
+            try? data.write(to: Self.metaURL, options: .atomic)
+        }
     }
 
     func forecast(at c: Coordinate) -> Forecast? { forecasts[c.key] }

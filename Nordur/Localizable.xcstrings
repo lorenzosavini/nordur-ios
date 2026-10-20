@@ -15617,6 +15617,386 @@
           }
         }
       }
+    },
+    "A ogni modifica" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "At every change"
+          }
+        }
+      }
+    },
+    "Ogni 15 minuti" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Every 15 minutes"
+          }
+        }
+      }
+    },
+    "Ogni ora" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Every hour"
+          }
+        }
+      }
+    },
+    "Una volta al giorno" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Once a day"
+          }
+        }
+      }
+    },
+    "Solo a mano" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Manual only"
+          }
+        }
+      }
+    },
+    "Backup automatico" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Automatic backup"
+          }
+        }
+      }
+    },
+    "in corso…" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "in progress…"
+          }
+        }
+      }
+    },
+    "mai" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "never"
+          }
+        }
+      }
+    },
+    "Accedi per attivare il backup" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sign in to turn on backup"
+          }
+        }
+      }
+    },
+    "Backup" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Backup"
+          }
+        }
+      }
+    },
+    "Viaggio, percorsi registrati, allerte e impostazioni vanno sul tuo account, cifrati. Con «a ogni modifica» il backup parte entro mezzo minuto da ogni cambiamento e invia solo ciò che è cambiato; uscendo dall'app viene sempre salvato l'ultimo stato (tranne con «una volta al giorno» e «solo a mano»)." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Trip, recorded drives, alerts and settings go to your account, encrypted. With “at every change” the backup runs within half a minute of each change and sends only what changed; leaving the app always saves the latest state (except with “once a day” and “manual only”)."
+          }
+        }
+      }
+    },
+    "Automatico: %@ · cambialo in Impostazioni" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Automatic: %@ · change it in Settings"
+          }
+        }
+      }
+    },
+    "Invia una copia via email" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Send a copy by e-mail"
+          }
+        }
+      }
+    },
+    "Invia una copia a un utente Norður" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Send a copy to a Norður user"
+          }
+        }
+      }
+    },
+    "Una copia separata: gli compare in Viaggio › Ricevuti. Le modifiche non si sincronizzano: per quello usa «Modificatelo insieme» qui sopra." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A separate copy: it appears in their Trip › Received. Changes are not synced: for that use “Plan it together” above."
+          }
+        }
+      }
+    },
+    "%@ (tu)" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ (you)"
+          }
+        }
+      }
+    },
+    "Email della persona da invitare" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "E-mail of the person to invite"
+          }
+        }
+      }
+    },
+    "Modificatelo insieme" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Plan it together"
+          }
+        }
+      }
+    },
+    "Invita anche questa persona" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Invite this person too"
+          }
+        }
+      }
+    },
+    "Smetti di modificare insieme" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Stop planning together"
+          }
+        }
+      }
+    },
+    "Accedi per modificarlo insieme" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sign in to plan it together"
+          }
+        }
+      }
+    },
+    "Le persone invitate lo trovano in Viaggio › Ricevuti e partecipano: da quel momento tappe, attrazioni, orari e note cambiati da uno arrivano a tutti in pochi secondi. Se due persone cambiano cose diverse restano entrambe le modifiche; sulla stessa cosa vale la più recente." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Invited people find it in Trip › Received and join: from then on stops, attractions, times and notes changed by one reach everyone within seconds. If two people change different things both changes stay; on the same thing the latest wins."
+          }
+        }
+      }
+    },
+    "Smettere di modificare insieme?" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Stop planning together?"
+          }
+        }
+      }
+    },
+    "Smetti" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Stop"
+          }
+        }
+      }
+    },
+    "Il viaggio resta sul tuo telefono com'è adesso; gli altri continuano con il loro." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The trip stays on your phone as it is now; the others carry on with theirs."
+          }
+        }
+      }
+    },
+    "Il nostro viaggio in Islanda" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Our trip to Iceland"
+          }
+        }
+      }
+    },
+    "Invito inviato, anche per email." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Invitation sent, by e-mail too."
+          }
+        }
+      }
+    },
+    "Invito inviato: lo trova in Viaggio › Ricevuti." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Invitation sent: they find it in Trip › Received."
+          }
+        }
+      }
+    },
+    "Condiviso: in attesa che gli invitati partecipino" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Shared: waiting for the invited people to join"
+          }
+        }
+      }
+    },
+    "Insieme a %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "With %@"
+          }
+        }
+      }
+    },
+    "Sincronizzazione…" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Syncing…"
+          }
+        }
+      }
+    },
+    "Non sincronizzato: %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Not synced: %@"
+          }
+        }
+      }
+    },
+    "Da modificare insieme · di %@ · %lld tappe" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "To plan together · by %1$@ · %2$lld stops"
+          }
+        }
+      }
+    },
+    "PARTECIPA" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "JOIN"
+          }
+        }
+      }
+    },
+    "Inviti" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Invitations"
+          }
+        }
+      }
+    },
+    "Partecipa" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Join"
+          }
+        }
+      }
+    },
+    "Partecipa (sostituisce il viaggio sul telefono)" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Join (replaces the trip on this phone)"
+          }
+        }
+      }
+    },
+    "Da qui in poi le modifiche di ognuno arrivano a tutti." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "From now on everyone's changes reach everyone."
+          }
+        }
+      }
     }
   },
   "version" : "1.0"

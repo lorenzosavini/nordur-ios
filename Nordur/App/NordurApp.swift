@@ -40,7 +40,7 @@ struct NordurApp: App {
             switch phase {
             case .background:
                 AlertCenter.scheduleBackgroundRefresh()
-                Task { await Account.shared.sync() }
+                Task { await Account.shared.syncIfDue(leavingApp: true) }
             case .active:
                 // Back in the app: what changed meanwhile is fetched at once.
                 Task {
@@ -55,6 +55,8 @@ struct NordurApp: App {
         }
         .backgroundTask(.appRefresh(AlertCenter.refreshTaskID)) {
             await AlertCenter.shared.check()
+            // iOS wakes the app now and then: a due backup runs too (e.g. the daily one).
+            await Account.shared.syncIfDue()
             await AlertCenter.scheduleBackgroundRefresh()
         }
     }
@@ -72,6 +74,7 @@ private extension View {
 
 struct RootView: View {
     @Environment(AppModel.self) private var model
+    @Environment(TripStore.self) private var trip
     @Environment(AlertCenter.self) private var alerts
     @Environment(DriveRecorder.self) private var recorder
     // `-initialTab drive` as launch argument opens a given tab (used by the CI screenshots).
@@ -210,15 +213,22 @@ struct RootView: View {
         .task {
             // Foreground polling while the app is open: country-wide feeds (warnings,
             // quakes, roads, aurora) every 2 minutes, the place forecast every 15.
-            var tick = 0
             while !Task.isCancelled {
                 try? await Task.sleep(nanoseconds: 2 * 60 * 1_000_000_000)
                 guard UIApplication.shared.applicationState == .active else { continue }
-                tick += 1
                 await model.refreshGlobal()
                 await model.refreshPlaceIfOld()
                 await alerts.check()
-                if tick % 3 == 0 { await Account.shared.sync() }
+            }
+        }
+        .task {
+            // The backup at the frequency chosen in Settings (checked every 30 s).
+            while !Task.isCancelled {
+                try? await Task.sleep(nanoseconds: 30 * 1_000_000_000)
+                guard UIApplication.shared.applicationState == .active else { continue }
+                await Account.shared.syncIfDue()
+                // A trip edited together: the others' changes arrive within half a minute.
+                await trip.syncShared()
             }
         }
     }

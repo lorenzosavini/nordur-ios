@@ -27,6 +27,8 @@ struct TripShareSheet: View {
                     Text(String(localized: "\(trip.stops.count) tappe, \(trip.stops.reduce(0) { $0 + $1.visits.count }) attrazioni, \(trip.days.count) giorni."))
                 }
 
+                TogetherSection()
+
                 Section {
                     if MFMailComposeViewController.canSendMail(), gpx != nil {
                         Button { composing = true } label: {
@@ -38,7 +40,7 @@ struct TripShareSheet: View {
                             Label("Altre app (WhatsApp, Messaggi, File…)", systemImage: "square.and.arrow.up").font(.app(.headline))
                         }
                     }
-                } header: { Text("Via email, a chiunque").pinnedHeader() } footer: {
+                } header: { Text("Invia una copia via email").pinnedHeader() } footer: {
                     Text("Nel testo il programma giorno per giorno; allegato il file GPX con tappe e attrazioni. Chi ha Norður tocca il file e lo importa nel suo Viaggio; gli altri lo aprono con Google Maps, Komoot o un'app GPS.")
                 }
 
@@ -65,8 +67,8 @@ struct TripShareSheet: View {
                         Label(message, systemImage: failed ? "exclamationmark.triangle.fill" : "checkmark.circle.fill")
                             .font(.app(.subheadline, .semibold)).foregroundStyle(failed ? Theme.danger : Theme.aurora)
                     }
-                } header: { Text("A un altro utente Norður").pinnedHeader() } footer: {
-                    Text("Il viaggio gli compare in Viaggio › Ricevuti, con l'accesso fatto con quell'indirizzo; se non ha ancora un account, lo trova appena lo crea.")
+                } header: { Text("Invia una copia a un utente Norður").pinnedHeader() } footer: {
+                    Text("Una copia separata: gli compare in Viaggio › Ricevuti. Le modifiche non si sincronizzano: per quello usa «Modificatelo insieme» qui sopra.")
                 }
             }
             .themedList()
@@ -176,9 +178,32 @@ struct ReceivedTripsSection: View {
     @Environment(TripStore.self) private var trip
     @State private var items: [Account.ReceivedTrip] = []
     @State private var choosing: Account.ReceivedTrip?
+    @State private var invitations: [Account.SharedTripSummary] = []
+    @State private var joining: Account.SharedTripSummary?
+    @State private var joinError: String?
 
     var body: some View {
         Group {
+            if !invitations.isEmpty {
+                Section {
+                    ForEach(invitations) { invite in
+                        Button { joining = invite } label: {
+                            HStack(spacing: 12) {
+                                Image(systemName: "person.2.fill").font(.system(size: 20)).foregroundStyle(Theme.aurora).frame(width: 32)
+                                VStack(alignment: .leading, spacing: 2) {
+                                    Text(invite.title).font(.app(.headline)).foregroundStyle(Theme.text)
+                                    Text(String(localized: "Da modificare insieme · di \(invite.owner) · \(invite.stops) tappe"))
+                                        .font(.app(.caption)).foregroundStyle(Theme.dim)
+                                }
+                                Spacer()
+                                Text("PARTECIPA").font(.mono(11, .semibold)).foregroundStyle(Theme.aurora)
+                            }
+                        }
+                        .buttonStyle(.plain)
+                    }
+                    if let joinError { Text(joinError).font(.app(.caption)).foregroundStyle(Theme.danger) }
+                } header: { Text("Inviti").pinnedHeader() }
+            }
             if !items.isEmpty {
                 Section {
                     ForEach(items) { item in
@@ -200,6 +225,22 @@ struct ReceivedTripsSection: View {
             }
         }
         .task(id: account.isSignedIn) { await load() }
+        .confirmationDialog(joining?.title ?? "", isPresented: Binding(get: { joining != nil }, set: { if !$0 { joining = nil } }), titleVisibility: .visible) {
+            if let invite = joining {
+                Button(trip.stops.isEmpty ? String(localized: "Partecipa") : String(localized: "Partecipa (sostituisce il viaggio sul telefono)")) {
+                    Task {
+                        do {
+                            try await trip.join(invite.id)
+                            invitations.removeAll { $0.id == invite.id }
+                            joinError = nil
+                            Haptics.result(true)
+                        } catch {
+                            joinError = error.localizedDescription
+                        }
+                    }
+                }
+            }
+        } message: { Text("Da qui in poi le modifiche di ognuno arrivano a tutti.") }
         .confirmationDialog(choosing?.title ?? "", isPresented: Binding(get: { choosing != nil }, set: { if !$0 { choosing = nil } }), titleVisibility: .visible) {
             if let item = choosing {
                 Button(trip.stops.isEmpty ? String(localized: "Importa come mio viaggio") : String(localized: "Sostituisci il mio viaggio")) {
@@ -214,13 +255,113 @@ struct ReceivedTripsSection: View {
     }
 
     private func load() async {
-        guard account.isSignedIn else { items = []; return }
-        items = (try? await account.receivedTrips()) ?? []
+        guard account.isSignedIn else { items = []; invitations = []; return }
+        async let received = try? account.receivedTrips()
+        async let shared = try? account.sharedTrips()
+        items = await received ?? []
+        invitations = (await shared ?? []).filter { $0.id != trip.shared?.id }
     }
 
     private func remove(_ item: Account.ReceivedTrip) {
         items.removeAll { $0.id == item.id }
         Haptics.result(true)
         Task { try? await account.deleteReceived(item.id) }
+    }
+}
+
+/// "Plan it together": the trip lives on the server, every member's phone keeps
+/// it in step, and each change reaches the others within half a minute.
+struct TogetherSection: View {
+    @Environment(TripStore.self) private var trip
+    @Environment(Account.self) private var account
+    @State private var email = ""
+    @State private var working = false
+    @State private var message: String?
+    @State private var failed = false
+    @State private var confirmLeave = false
+    @State private var signingIn = false
+
+    var body: some View {
+        Section {
+            if let shared = trip.shared {
+                ForEach(shared.members, id: \.self) { member in
+                    Label(member == account.email ? String(localized: "\(member) (tu)") : member,
+                          systemImage: member == shared.owner ? "person.crop.circle.badge.checkmark" : "person.crop.circle")
+                        .font(.app(.subheadline))
+                }
+                SharedStatusLine()
+            }
+            if account.isSignedIn {
+                TextField("Email della persona da invitare", text: $email)
+                    .keyboardType(.emailAddress).textContentType(.emailAddress)
+                    .textInputAutocapitalization(.never).autocorrectionDisabled()
+                Button { Task { await invite() } } label: {
+                    HStack {
+                        Label(trip.shared == nil ? String(localized: "Modificatelo insieme") : String(localized: "Invita anche questa persona"),
+                              systemImage: "person.2.fill").font(.app(.headline))
+                        if working { Spacer(); ProgressView() }
+                    }
+                }
+                .disabled(working || !email.contains("@") || trip.stops.isEmpty)
+                if trip.shared != nil {
+                    Button(role: .destructive) { confirmLeave = true } label: {
+                        Label("Smetti di modificare insieme", systemImage: "person.2.slash")
+                    }
+                }
+            } else {
+                Button { signingIn = true } label: { Label("Accedi per modificarlo insieme", systemImage: "person.crop.circle") }
+            }
+            if let message {
+                Label(message, systemImage: failed ? "exclamationmark.triangle.fill" : "checkmark.circle.fill")
+                    .font(.app(.subheadline, .semibold)).foregroundStyle(failed ? Theme.danger : Theme.aurora)
+            }
+        } header: { Text("Modificatelo insieme").pinnedHeader() } footer: {
+            Text("Le persone invitate lo trovano in Viaggio › Ricevuti e partecipano: da quel momento tappe, attrazioni, orari e note cambiati da uno arrivano a tutti in pochi secondi. Se due persone cambiano cose diverse restano entrambe le modifiche; sulla stessa cosa vale la più recente.")
+        }
+        .confirmationDialog("Smettere di modificare insieme?", isPresented: $confirmLeave, titleVisibility: .visible) {
+            Button("Smetti", role: .destructive) { Task { await trip.leaveShared() } }
+        } message: { Text("Il viaggio resta sul tuo telefono com'è adesso; gli altri continuano con il loro.") }
+        .sheet(isPresented: $signingIn) { AccountView() }
+    }
+
+    private func invite() async {
+        working = true
+        defer { working = false }
+        do {
+            let notified = try await trip.shareTogether(title: trip.shared?.title ?? String(localized: "Il nostro viaggio in Islanda"),
+                                                        with: email.trimmingCharacters(in: .whitespaces).lowercased())
+            failed = false
+            message = notified ? String(localized: "Invito inviato, anche per email.") : String(localized: "Invito inviato: lo trova in Viaggio › Ricevuti.")
+            email = ""
+            Haptics.result(true)
+        } catch {
+            failed = true
+            message = error.localizedDescription
+            Haptics.result(false)
+        }
+    }
+}
+
+/// "Edited together with … · up to date 10 s ago".
+struct SharedStatusLine: View {
+    @Environment(TripStore.self) private var trip
+    @Environment(Account.self) private var account
+
+    var body: some View {
+        if let shared = trip.shared {
+            let others = shared.members.filter { $0 != account.email }
+            VStack(alignment: .leading, spacing: 3) {
+                Label(others.isEmpty ? String(localized: "Condiviso: in attesa che gli invitati partecipino")
+                                     : String(localized: "Insieme a \(others.joined(separator: ", "))"),
+                      systemImage: "person.2.fill")
+                    .font(.app(.subheadline, .semibold)).foregroundStyle(Theme.text)
+                TimelineView(.periodic(from: .now, by: 10)) { _ in
+                    Text(trip.isSyncingShared ? String(localized: "Sincronizzazione…")
+                         : trip.sharedError.map { String(localized: "Non sincronizzato: \($0)") }
+                         ?? shared.lastSynced.map { String(localized: "Aggiornato \(Fmt.relative($0))") } ?? "")
+                        .font(.app(.caption)).foregroundStyle(trip.sharedError == nil ? Theme.dim : Theme.danger)
+                }
+            }
+        }
     }
 }

@@ -133,7 +133,8 @@ struct AccountView: View {
             if let error = account.lastError { ErrorNote(message: error) }
             if let message { Text(message.loc).font(.app(.footnote)).foregroundStyle(Theme.text) }
 
-            actionRow(String(localized: "Esegui backup ora"), detail: account.isSyncing ? String(localized: "In corso…") : nil) {
+            actionRow(String(localized: "Esegui backup ora"),
+                      detail: account.isSyncing ? String(localized: "In corso…") : String(localized: "Automatico: \(account.backupFrequency.label.lowercased()) · cambialo in Impostazioni")) {
                 run { await account.sync(); return account.lastError == nil ? String(localized: "Backup completato.") : nil }
             }
             actionRow(String(localized: "Ripristina dal backup"), detail: String(localized: "Scarica i dati salvati sul telefono")) {

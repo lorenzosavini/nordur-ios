@@ -37,6 +37,8 @@ struct SettingsView: View {
                     .pickerStyle(.menu)
                 } header: { Text("Schermo").pinnedHeader() }
 
+                BackupSettingsSection()
+
                 Section {
                     NavigationLink { AlertSettingsView() } label: { Label("Allerte e notifiche", systemImage: "bell.badge") }
                     NavigationLink { OfflineView() } label: { Label("Pacchetto offline", systemImage: "arrow.down.circle") }

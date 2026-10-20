@@ -75,6 +75,9 @@ struct TripView: View {
                 if !trip.stops.isEmpty {
                     Section {
                         TripOverview()
+                        if trip.shared != nil {
+                            Button { sharing = true } label: { SharedStatusLine() }.buttonStyle(.plain)
+                        }
                         HStack(spacing: 8) {
                             actionButton(String(localized: "TAPPA"), "plus") { creating = true }
                             actionButton(String(localized: "IMPORTA"), "square.and.arrow.down") { importing = true }
@@ -161,9 +164,11 @@ struct TripView: View {
             }
             .toolbar(.hidden, for: .navigationBar)
             .refreshable {
+                await trip.syncShared()
                 await model.refreshGlobal(force: true)
                 await trip.loadForecasts()
             }
+            .task { await trip.syncShared() }
             .task(id: trip.stops.map { ([$0.place] + $0.visits.map(\.place)).map(\.coordinate.key).joined() }.joined()) {
                 await trip.loadForecasts()
             }

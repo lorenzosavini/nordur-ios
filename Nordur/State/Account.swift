@@ -151,6 +151,73 @@ final class Account {
         _ = try await request("data", method: "DELETE", items: [URLQueryItem(name: "inbox", value: id), URLQueryItem(name: "email", value: email)])
     }
 
+    // MARK: Trips edited together
+
+    struct SharedTrip: Decodable {
+        let id: String
+        let title: String
+        let owner: String
+        let members: [String]
+        let version: Int
+        let updatedAt: String?
+        let editedBy: String?
+        let stops: [TripStop]
+        let tombstones: [String: Date]
+    }
+
+    struct SharedTripSummary: Decodable, Identifiable {
+        let id: String
+        let title: String
+        let owner: String
+        let members: [String]
+        let stops: Int
+        let updatedAt: String?
+    }
+
+    private struct TripAnswer: Decodable { let trip: SharedTrip; let notified: Bool? }
+    private struct TripBody: Encodable { let email: String; let title: String; let stops: [TripStop]; let tombstones: [String: Date] }
+
+    private func signedInEmail() throws -> String {
+        guard let email else { throw AccountError.message(String(localized: "Accedi al tuo account")) }
+        return email
+    }
+
+    func createSharedTrip(title: String, stops: [TripStop], tombstones: [String: Date]) async throws -> SharedTrip {
+        let body = TripBody(email: try signedInEmail(), title: title, stops: stops, tombstones: tombstones)
+        let data = try await request("data", method: "POST", items: [URLQueryItem(name: "trip", value: "new")], body: try JSONEncoder().encode(body))
+        return try JSONDecoder().decode(TripAnswer.self, from: data).trip
+    }
+
+    func putSharedTrip(_ id: String, title: String, stops: [TripStop], tombstones: [String: Date]) async throws -> SharedTrip {
+        let body = TripBody(email: try signedInEmail(), title: title, stops: stops, tombstones: tombstones)
+        let data = try await request("data", method: "PUT", items: [URLQueryItem(name: "trip", value: id)], body: try JSONEncoder().encode(body))
+        return try JSONDecoder().decode(TripAnswer.self, from: data).trip
+    }
+
+    func sharedTrip(_ id: String) async throws -> SharedTrip {
+        let data = try await request("data", method: "GET", items: [URLQueryItem(name: "trip", value: id), URLQueryItem(name: "email", value: try signedInEmail())])
+        return try JSONDecoder().decode(TripAnswer.self, from: data).trip
+    }
+
+    func inviteToSharedTrip(_ id: String, email to: String) async throws -> (SharedTrip, Bool) {
+        struct Body: Encodable { let email: String; let to: String; let lang: String }
+        let lang = Bundle.main.preferredLocalizations.first == "en" ? "en" : "it"
+        let data = try await request("data", method: "POST", items: [URLQueryItem(name: "trip", value: id), URLQueryItem(name: "invite", value: "1")],
+                                     body: try JSONEncoder().encode(Body(email: try signedInEmail(), to: to, lang: lang)))
+        let answer = try JSONDecoder().decode(TripAnswer.self, from: data)
+        return (answer.trip, answer.notified ?? false)
+    }
+
+    func leaveSharedTrip(_ id: String) async throws {
+        _ = try await request("data", method: "DELETE", items: [URLQueryItem(name: "trip", value: id), URLQueryItem(name: "email", value: try signedInEmail())])
+    }
+
+    func sharedTrips() async throws -> [SharedTripSummary] {
+        struct Answer: Decodable { let trips: [SharedTripSummary] }
+        let data = try await request("data", method: "GET", items: [URLQueryItem(name: "trips", value: "1"), URLQueryItem(name: "email", value: try signedInEmail())])
+        return try JSONDecoder().decode(Answer.self, from: data).trips
+    }
+
     /// Deletes every document stored online for this account.
     func deleteRemoteData() async throws {
         _ = try await request("data", method: "DELETE")
@@ -158,6 +225,49 @@ final class Account {
     }
 
     // MARK: Sync
+
+    /// How often the backup runs by itself (Settings › Backup).
+    enum BackupFrequency: String, CaseIterable, Identifiable {
+        case onChange, quarterHour, hourly, daily, manual
+        var id: String { rawValue }
+
+        var label: String {
+            switch self {
+            case .onChange: return String(localized: "A ogni modifica")
+            case .quarterHour: return String(localized: "Ogni 15 minuti")
+            case .hourly: return String(localized: "Ogni ora")
+            case .daily: return String(localized: "Una volta al giorno")
+            case .manual: return String(localized: "Solo a mano")
+            }
+        }
+
+        /// Minimum time between two automatic backups (nil: never by itself).
+        var interval: TimeInterval? {
+            switch self {
+            case .onChange: return 0
+            case .quarterHour: return 15 * 60
+            case .hourly: return 3600
+            case .daily: return 24 * 3600
+            case .manual: return nil
+            }
+        }
+    }
+
+    static let frequencyKey = "backup.frequency"
+    var backupFrequency: BackupFrequency {
+        get { access(keyPath: \.backupFrequency); return BackupFrequency(rawValue: UserDefaults.standard.string(forKey: Self.frequencyKey) ?? "") ?? .onChange }
+        set { withMutation(keyPath: \.backupFrequency) { UserDefaults.standard.set(newValue.rawValue, forKey: Self.frequencyKey) } }
+    }
+
+    /// The automatic backup, when its time has come. With "at every change" only
+    /// what changed is sent, so checking often costs nothing when nothing changed.
+    func syncIfDue(leavingApp: Bool = false) async {
+        guard isSignedIn, let interval = backupFrequency.interval else { return }
+        // Leaving the app saves the latest changes, except for the once-a-day backup.
+        if leavingApp && backupFrequency != .daily { return await sync() }
+        if let last = lastSync, Date().timeIntervalSince(last) < interval { return }
+        await sync()
+    }
 
     /// Uploads files changed since the last sync and removes deleted ones.
     func sync() async {
@@ -287,7 +397,7 @@ enum SyncFiles {
 
     static func snapshot() -> [Item] {
         var items: [Item] = []
-        var paths = ["trip.json", "alerts.json"]
+        var paths = ["trip.json", "trip-share.json", "alerts.json"]
         let drives = documents.appendingPathComponent("drives")
         if let names = try? FileManager.default.contentsOfDirectory(atPath: drives.path) {
             paths += names.filter { $0.hasSuffix(".json") && $0 != "in-progress.json" }.map { "drives/\($0)" }

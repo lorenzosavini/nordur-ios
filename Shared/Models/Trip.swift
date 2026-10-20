@@ -41,6 +41,8 @@ struct TripStop: Codable, Identifiable, Hashable {
     var transport: Transport = .car
     var notes: String = ""
     var visits: [TripVisit] = []
+    /// When this stop was last changed (its own fields, not its visits): for trips edited together.
+    var modified: Date?
 
     var endDate: Date {
         Calendar.current.date(byAdding: .day, value: max(nights, 0), to: date) ?? date
@@ -72,6 +74,14 @@ extension TripStop {
         transport = try c.decodeIfPresent(Transport.self, forKey: .transport) ?? .car
         notes = try c.decodeIfPresent(String.self, forKey: .notes) ?? ""
         visits = try c.decodeIfPresent([TripVisit].self, forKey: .visits) ?? []
+        modified = try c.decodeIfPresent(Date.self, forKey: .modified)
+    }
+
+    /// Same place, dates and notes, whatever the visits and the change time.
+    func sameFields(as other: TripStop) -> Bool {
+        var a = self, b = other
+        a.visits = []; b.visits = []; a.modified = nil; b.modified = nil
+        return a == b
     }
 }
 
@@ -84,8 +94,16 @@ struct TripVisit: Codable, Identifiable, Hashable {
     var minutes: Int = 60
     var kind: AttractionKind?
     var notes: String = ""
+    /// When this visit was last changed: for trips edited together.
+    var modified: Date?
 
     var end: Date { date.addingTimeInterval(Double(minutes) * 60) }
+
+    func sameContent(as other: TripVisit) -> Bool {
+        var a = self, b = other
+        a.modified = nil; b.modified = nil
+        return a == b
+    }
 
     /// The same visit at the same time of day on another day.
     func moved(to day: Date) -> TripVisit {
