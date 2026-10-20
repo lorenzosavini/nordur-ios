@@ -322,6 +322,7 @@ struct DriveDetailView: View {
     @State private var name = ""
     @State private var notes = ""
     @State private var gpxURL: URL?
+    @State private var sharingCard = false
 
     private var session: DriveSession { full ?? drive }
 
@@ -391,6 +392,12 @@ struct DriveDetailView: View {
             } header: { Text("Dettagli").pinnedHeader() }
 
             Section {
+                if session.points.count > 1 {
+                    Button { sharingCard = true } label: {
+                        Label("Condividi su Instagram: immagine e video 3D", systemImage: "camera.filters").font(.app(.headline))
+                    }
+                    .accessibilityIdentifier("drive.shareCard")
+                }
                 if let gpxURL {
                     ShareLink(item: gpxURL) { Label("Esporta GPX", systemImage: "square.and.arrow.up") }
                 }
@@ -407,6 +414,7 @@ struct DriveDetailView: View {
         .themedList()
         .navigationTitle(session.name)
         .navigationBarTitleDisplayMode(.inline)
+        .sheet(isPresented: $sharingCard) { RouteShareSheet(session: session) }
         .task {
             full = store.load(drive.id) ?? drive
             name = session.name

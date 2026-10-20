@@ -16087,6 +16087,396 @@
           }
         }
       }
+    },
+    "Storia 9:16" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Story 9:16"
+          }
+        }
+      }
+    },
+    "Post 4:5" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Post 4:5"
+          }
+        }
+      }
+    },
+    "DISTANZA" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "DISTANCE"
+          }
+        }
+      }
+    },
+    "TEMPO" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "TIME"
+          }
+        }
+      }
+    },
+    "DISLIVELLO" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "CLIMB"
+          }
+        }
+      }
+    },
+    "MEDIA" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "AVERAGE"
+          }
+        }
+      }
+    },
+    "PASSO" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "PACE"
+          }
+        }
+      }
+    },
+    "Formato" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Format"
+          }
+        }
+      }
+    },
+    "Preparo la mappa 3D…" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Preparing the 3D map…"
+          }
+        }
+      }
+    },
+    "Condividi l'immagine" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Share the picture"
+          }
+        }
+      }
+    },
+    "Condividi il video 3D" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Share the 3D video"
+          }
+        }
+      }
+    },
+    "Creo il video…" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Making the video…"
+          }
+        }
+      }
+    },
+    "Crea il video 3D (8 s)" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Make the 3D video (8 s)"
+          }
+        }
+      }
+    },
+    "Dal menu di condivisione: Instagram (storia o post), WhatsApp, oppure «Salva immagine/video» nelle Foto. Il terreno in 3D e il satellite sono di Apple Mappe." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "From the share menu: Instagram (story or post), WhatsApp, or “Save image/video” to Photos. The 3D terrain and satellite are from Apple Maps."
+          }
+        }
+      }
+    },
+    "Condividi il percorso" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Share the route"
+          }
+        }
+      }
+    },
+    "Condividi su Instagram: immagine e video 3D" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Share on Instagram: picture and 3D video"
+          }
+        }
+      }
+    },
+    "NOTTE ON" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "NIGHT ON"
+          }
+        }
+      }
+    },
+    "Visione notturna rossa" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Red night vision"
+          }
+        }
+      }
+    },
+    "Visione notturna (rosso)" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Night vision (red)"
+          }
+        }
+      }
+    },
+    "Da sola di notte nella scheda Aurora" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Automatically at night on the Aurora tab"
+          }
+        }
+      }
+    },
+    "Lo schermo diventa rosso scuro su nero: la luce bianca e blu fa perdere l'adattamento degli occhi al buio (servono 20-30 minuti per recuperarlo), il rosso no. Abbassa anche la luminosità del telefono." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The screen turns deep red on black: white and blue light undo the eyes' adaptation to the dark (20-30 minutes to get it back), red does not. Turn the phone's brightness down too."
+          }
+        }
+      }
+    },
+    "Islanda: aurora, meteo, strade" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Iceland: aurora, weather, roads"
+          }
+        }
+      }
+    },
+    "In breve" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "At a glance"
+          }
+        }
+      }
+    },
+    "Allerta IMO" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "IMO warning"
+          }
+        }
+      }
+    },
+    "Aurora stanotte: %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aurora tonight: %@"
+          }
+        }
+      }
+    },
+    "Il momento migliore verso le %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Best time around %@"
+          }
+        }
+      }
+    },
+    "raffiche fino a %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "gusts up to %@"
+          }
+        }
+      }
+    },
+    "pioggia %@ mm" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "rain %@ mm"
+          }
+        }
+      }
+    },
+    "asciutto" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "dry"
+          }
+        }
+      }
+    },
+    "Prossime 12 ore" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Next 12 hours"
+          }
+        }
+      }
+    },
+    "Percorribili nel raggio di 60 km" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Passable within 60 km"
+          }
+        }
+      }
+    },
+    "%lld chiuse" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld closed"
+          }
+        }
+      }
+    },
+    "%lld difficili" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld difficult"
+          }
+        }
+      }
+    },
+    "Strade vicine" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Roads nearby"
+          }
+        }
+      }
+    },
+    "Nessuna allerta IMO qui" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No IMO warnings here"
+          }
+        }
+      }
+    },
+    "Meteo, vulcani e terremoti: tutto tranquillo" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Weather, volcanoes and earthquakes: all quiet"
+          }
+        }
+      }
+    },
+    "Il viaggio di oggi · giorno %lld" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Today's trip · day %lld"
+          }
+        }
+      }
+    },
+    "Prossima alle %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Next at %@"
+          }
+        }
+      }
+    },
+    "Attrazioni di oggi finite" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Today's attractions done"
+          }
+        }
+      }
     }
   },
   "version" : "1.0"
