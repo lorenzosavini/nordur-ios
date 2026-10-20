@@ -21,7 +21,8 @@ final class TripStore {
     }
 
     private static func demoTrip() -> [TripStop] {
-        let start = Calendar.current.date(byAdding: .day, value: 1, to: Calendar.current.startOfDay(for: Date()))!.addingTimeInterval(10 * 3600)
+        // From today, so "today's trip" shows on Today.
+        let start = Calendar.current.startOfDay(for: Date()).addingTimeInterval(10 * 3600)
         let plan: [(String, Int)] = [("Reykjavík", 2), ("Vík í Mýrdal", 1), ("Höfn", 1), ("Akureyri", 2)]
         var date = start
         var result: [TripStop] = []

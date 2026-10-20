@@ -95,6 +95,7 @@ struct RootView: View {
     /// The opening animation (not in the CI runs, which open a given screen).
     @State private var launching = UserDefaults.standard.string(forKey: "initialTab") == nil
         && UserDefaults.standard.string(forKey: "ciScreen") == nil && !UserDefaults.standard.bool(forKey: "ciDemoTrip")
+        || UserDefaults.standard.bool(forKey: "ciShowLaunch")
     @State private var importError: String?
 
     enum CIScreen: String, Identifiable {

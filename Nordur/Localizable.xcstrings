@@ -16487,6 +16487,16 @@
           }
         }
       }
+    },
+    "Costa sud: Seljalandsfoss → Vík" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "South coast: Seljalandsfoss → Vík"
+          }
+        }
+      }
     }
   },
   "version" : "1.0"

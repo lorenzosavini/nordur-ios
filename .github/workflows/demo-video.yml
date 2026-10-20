@@ -12,7 +12,7 @@ permissions:
 jobs:
   video:
     runs-on: macos-latest
-    timeout-minutes: 40
+    timeout-minutes: 60
     steps:
       - uses: actions/checkout@v4
 
@@ -39,19 +39,22 @@ jobs:
           idb connect localhost 10882 || idb connect "$UDID" || true
           idb list-targets || true
           # -initialTab skips the notification permission sheet; -ciAuroraDemo shows the aurora animation.
+          # A first launch loads the data and the demo trip, drive and places (photos cached), then the
+          # recording starts from a fresh launch with the opening animation.
           xcrun simctl launch "$UDID" it.lorenzosavini.nordur -initialTab today -ciAuroraDemo YES -ciDemoTrip YES -ciAlertsYellow YES -appearance dark -AppleLanguages "(it)" -AppleLocale it_IT
-          sleep 30
+          sleep 40
           idb ui describe-all --udid "$UDID" --json | head -c 300 || true
-          python3 tools/ci/demo_video.py "$UDID" raw.mp4
-          # Facebook-friendly: still moments (waits for the next tap) cut, 1080 px wide, 30 fps, H.264.
-          ffmpeg -y -loglevel error -i raw.mp4 -vf "mpdecimate=hi=64*12:lo=64*5:frac=0.33,setpts=N/(30*TB),scale=1080:-2" -r 30 -c:v libx264 -preset slow -crf 23 -pix_fmt yuv420p -movflags +faststart Nordur-demo.mp4
+          python3 tools/ci/demo_video.py "$UDID" raw.mp4 chapters.json
+          cat chapters.json
+          # Chapter captions, 1080 px wide, 30 fps, H.264 (Facebook / Instagram / WhatsApp).
+          python3 tools/ci/caption_video.py raw.mp4 chapters.json Nordur-demo.mp4
           ls -lh raw.mp4 Nordur-demo.mp4
 
       - name: Publish to branch demo-video
         env:
           TOKEN: ${{ github.token }}
         run: |
-          rm -rf /tmp/v && mkdir -p /tmp/v && cp Nordur-demo.mp4 /tmp/v/
+          rm -rf /tmp/v && mkdir -p /tmp/v && cp Nordur-demo.mp4 chapters.json /tmp/v/
           cd /tmp/v
           git init -q -b demo-video
           git -c user.name=nordur-ci -c user.email=ci@users.noreply.github.com add -A

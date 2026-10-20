@@ -11,6 +11,27 @@ final class DriveStore {
 
     private init() {
         drives = Self.loadIndex()
+        // Demo video only (`-ciDemoTrip YES`): a drive on the south coast to show a route and its sharing.
+        if drives.isEmpty, UserDefaults.standard.bool(forKey: "ciDemoTrip") { saveImported(Self.demoDrive()) }
+    }
+
+    private static func demoDrive() -> DriveSession {
+        let way: [(Double, Double)] = [(63.6156, -19.9886), (63.6000, -19.9500), (63.5700, -19.8000), (63.5450, -19.6500), (63.5321, -19.5114),
+                                       (63.5150, -19.4000), (63.4700, -19.2500), (63.4300, -19.1000), (63.4186, -19.0060)]
+        let start = Calendar.current.startOfDay(for: Date()).addingTimeInterval(11 * 3600)
+        var points: [TrackPoint] = []
+        for i in 0..<(way.count - 1) {
+            for k in 0..<50 {
+                let f = Double(k) / 50
+                let lat = way[i].0 + (way[i + 1].0 - way[i].0) * f, lon = way[i].1 + (way[i + 1].1 - way[i].1) * f
+                let n = points.count
+                points.append(TrackPoint(t: start.addingTimeInterval(Double(n) * 9), lat: lat, lon: lon,
+                                         alt: 40 + 60 * sin(Double(n) / 40), speed: 21, course: nil, accuracy: 5))
+            }
+        }
+        var session = DriveMath.imported(name: String(localized: "Costa sud: Seljalandsfoss → Vík"), points: points)
+        session.importID = "ci-demo-drive"
+        return session
     }
 
     func reload() { drives = Self.loadIndex() }
