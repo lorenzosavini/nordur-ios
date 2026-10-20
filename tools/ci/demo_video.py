@@ -121,7 +121,7 @@ time.sleep(2.5)
 
 # 0 · Opening
 chapter("Norður", "Islanda: aurora, meteo, strade e viaggio in un'app sola")
-subprocess.run(["xcrun", "simctl", "launch", udid, BUNDLE, "-ciShowLaunch", "YES", "-ciAuroraDemo", "YES", "-ciDemoTrip", "YES",
+subprocess.run(["xcrun", "simctl", "launch", udid, BUNDLE, "-initialTab", "today", "-ciShowLaunch", "YES", "-ciAuroraDemo", "YES", "-ciDemoTrip", "YES",
                 "-ciAlertsYellow", "YES", "-appearance", "dark", "-AppleLanguages", "(it)", "-AppleLocale", "it_IT"], capture_output=True)
 time.sleep(4)
 screen_size()
