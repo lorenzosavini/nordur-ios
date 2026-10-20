@@ -102,9 +102,16 @@ def tap(ident=None, label=None, exact=False, pause=1.8, scrolls=0, anywhere=Fals
 # Tab bar: five equal buttons under the pages.
 TABS = ["Oggi", "Meteo", "Aurora", "Mappa", "Viaggio"]
 
+KEYS = ["today", "weather", "aurora", "map", "trip"]
+
+def notify(command, pause=2.4):
+    """The app listens for these in the demo run (CIRemote): taps from idb on
+    the tab bar do not always land."""
+    subprocess.run(["xcrun", "simctl", "spawn", udid, "notifyutil", "-p", f"nordur.ci.{command}"], capture_output=True)
+    time.sleep(pause)
+
 def tab(name):
-    i = TABS.index(name)
-    tap(label=name, exact=True, pause=2.4, anywhere=True, fallback=((i + 0.5) / 5, 0.955))
+    notify("tab." + KEYS[TABS.index(name)])
 
 chapters = []
 t0 = None
@@ -135,7 +142,7 @@ chapter("1 · Oggi", "Il viaggio di oggi e l'aurora adesso, con «vedo / non ved
 scroll(1, 0.35, 2.8)
 scroll(1, 0.4, 2.2)
 chapter("1 · Oggi", "Esplora: da vedere, strade, vulcani, webcam")
-if tap(ident="tile.Da vedere", pause=3, scrolls=4):
+if tap(ident="tile.Da vedere", pause=3, scrolls=2):
     chapter("Da vedere", "Cascate, belvedere, sorgenti calde: 1.300 luoghi su mappa")
     time.sleep(2)
     scroll(1, 0.4, 1.6)
@@ -255,7 +262,8 @@ if tap(ident="trip.drive", pause=3, anywhere=True):
 # 7 · Settings
 tab("Oggi")
 scroll_top()
-if tap(label="Impostazioni", exact=True, pause=3, anywhere=True):
+notify("settings", 3)
+if True:
     chapter("7 · Impostazioni", "Backup automatico, visione notturna, fonti e stato dei dati")
     scroll(1, 0.4, 2)
     if tap(label="Fonti e stato dei dati", pause=3, scrolls=2):
