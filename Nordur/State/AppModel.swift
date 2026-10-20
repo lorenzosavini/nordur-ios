@@ -36,6 +36,8 @@ final class AppModel {
     /// A GPX/KML trip opened from another app, waiting for the Trip tab to show it.
     var pendingTripImport: TripImportFile?
     var showSettings = false
+    /// The map without the chips and the tab bar.
+    var immersiveMap = false
 
     private(set) var useCurrentLocation: Bool
     private(set) var chosenPlace: Place

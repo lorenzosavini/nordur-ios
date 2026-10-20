@@ -111,7 +111,10 @@ struct RootView: View {
                 TripView().tag(Tab.trip).toolbar(.hidden, for: .tabBar).statusBarScrim()
             }
             .id(windUnit)  // every screen redraws with the new wind unit
-            NordurTabBar(selection: $tab, badge: alerts.unreadCount, recording: recorder.isRecording)
+            if !(tab == .map && model.immersiveMap) {
+                NordurTabBar(selection: $tab, badge: alerts.unreadCount, recording: recorder.isRecording)
+                    .transition(.move(edge: .bottom))
+            }
         }
         .overlay(alignment: .top) { OfflineBanner() }
         .animation(.snappy, value: Connectivity.shared.isOnline)
@@ -125,6 +128,7 @@ struct RootView: View {
             }
         }
         .sensoryFeedback(.selection, trigger: tab)
+        .onChange(of: tab) { if tab != .map { model.immersiveMap = false } }
         .ignoresSafeArea(.keyboard, edges: .bottom)
         .onOpenURL { url in
             guard url.isFileURL, ["gpx", "kml"].contains(url.pathExtension.lowercased()) else { return }

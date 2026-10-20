@@ -66,8 +66,9 @@ struct MapScreen: View {
                 onSelectSection: showRoadInfo ? { id in selectedSection = model.roadInfo?.value.sections.first { $0.id == id } } : nil
             )
             .ignoresSafeArea(edges: .top)
-            .overlay(alignment: .top) { layerChips }
-            .safeAreaInset(edge: .bottom) { bottomPanel }
+            // The map takes the whole screen; chips, legend and time float on it.
+            .overlay(alignment: .top) { if !model.immersiveMap { layerChips.transition(.move(edge: .top).combined(with: .opacity)) } }
+            .overlay(alignment: .bottom) { bottomPanel }
             .toolbar(.hidden, for: .navigationBar)
             .task { await model.refreshMapData() }
             .task(id: rasterRequestKey) { await rebuildRaster() }
@@ -173,56 +174,68 @@ struct MapScreen: View {
     @AppStorage("map.legendOpen") private var legendOpen = true
     @State private var detailsHeight: CGFloat = 120
 
-    /// Probe card and legends scroll inside a capped height; the time slider
-    /// always stays visible at the bottom, above the tab bar.
+    /// Floating on the map: the values at a tapped point, a compact legend and a
+    /// thin time bar, translucent, so the map keeps the whole screen.
     private var bottomPanel: some View {
-        VStack(alignment: .leading, spacing: 6) {
-            if probe != nil || legendOpen {
+        VStack(alignment: .leading, spacing: 8) {
+            if let probe {
                 ScrollView {
-                    panelDetails
+                    ProbeCard(coordinate: probe, hour: hourIndex) { self.probe = nil }
                         .background(GeometryReader { g in
                             Color.clear.preference(key: PanelHeightKey.self, value: g.size.height)
                         })
                 }
                 .scrollBounceBehavior(.basedOnSize)
-                .frame(height: min(max(detailsHeight, 1), 300))
+                .frame(height: min(max(detailsHeight, 1), 220))
                 .onPreferenceChange(PanelHeightKey.self) { detailsHeight = $0 }
+                .padding(10)
+                .background(.regularMaterial, in: RoundedRectangle(cornerRadius: 14, style: .continuous))
             }
-            HStack(alignment: .center, spacing: 10) {
-                VStack(alignment: .leading, spacing: 4) { timeControls }
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                Button {
-                    withAnimation(.snappy) { legendOpen.toggle() }
-                } label: {
-                    Image(systemName: legendOpen ? "chevron.down" : "list.bullet.below.rectangle")
-                        .font(.system(size: 15, weight: .semibold))
-                        .frame(width: 36, height: 36)
-                        .contentShape(Rectangle())
+            HStack(alignment: .bottom, spacing: 8) {
+                if legendOpen {
+                    VStack(alignment: .leading, spacing: 6) {
+                        legend
+                        if showRoadInfo && model.roadGeometry != nil && model.roadInfo != nil && !model.immersiveMap { roadLegend }
+                    }
+                    .padding(.horizontal, 10).padding(.vertical, 8)
+                    .frame(maxWidth: 300, alignment: .leading)
+                    .background(.regularMaterial, in: RoundedRectangle(cornerRadius: 12, style: .continuous))
+                    .transition(.opacity.combined(with: .move(edge: .leading)))
                 }
-                .buttonStyle(.plain)
-                .foregroundStyle(Theme.text)
-                .accessibilityLabel(legendOpen ? String(localized: "Nascondi legenda") : String(localized: "Mostra legenda"))
+                Spacer(minLength: 0)
+                VStack(spacing: 8) {
+                    mapButton(model.immersiveMap ? "arrow.down.right.and.arrow.up.left" : "arrow.up.left.and.arrow.down.right",
+                              label: model.immersiveMap ? String(localized: "Esci da schermo intero") : String(localized: "Mappa a schermo intero")) {
+                        withAnimation(.snappy) { model.immersiveMap.toggle() }
+                    }
+                    .accessibilityIdentifier("map.fullscreen")
+                    mapButton(legendOpen ? "list.bullet.rectangle.fill" : "list.bullet.rectangle",
+                              label: legendOpen ? String(localized: "Nascondi legenda") : String(localized: "Mostra legenda")) {
+                        withAnimation(.snappy) { legendOpen.toggle() }
+                    }
+                }
             }
-            .padding(.horizontal, 12).padding(.vertical, 8)
-            .background(Theme.bg.opacity(0.94)).overlay(Rectangle().strokeBorder(Theme.hairline))
+            if layer.isForecast || layer == .radar || layer == .aurora {
+                VStack(alignment: .leading, spacing: 4) { timeControls }
+                    .padding(.horizontal, 12).padding(.vertical, 8)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .background(.regularMaterial, in: RoundedRectangle(cornerRadius: 14, style: .continuous))
+            }
         }
-        .padding(.horizontal)
-        .padding(.bottom, 10)
+        .padding(.horizontal, 12)
+        .padding(.bottom, 8)
     }
 
-    @ViewBuilder private var panelDetails: some View {
-        VStack(alignment: .leading, spacing: 6) {
-            if let probe { ProbeCard(coordinate: probe, hour: hourIndex) { self.probe = nil } }
-            if legendOpen {
-                VStack(alignment: .leading, spacing: 8) {
-                    legend
-                    if showRoadInfo && model.roadGeometry != nil && model.roadInfo != nil { roadLegend }
-                }
-                .padding(12)
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .background(Theme.bg.opacity(0.94)).overlay(Rectangle().strokeBorder(Theme.hairline))
-            }
+    private func mapButton(_ symbol: String, label: String, action: @escaping () -> Void) -> some View {
+        Button(action: action) {
+            Image(systemName: symbol)
+                .font(.system(size: 16, weight: .semibold))
+                .foregroundStyle(Theme.text)
+                .frame(width: 44, height: 44)
+                .background(.regularMaterial, in: Circle())
         }
+        .buttonStyle(.plain)
+        .accessibilityLabel(label)
     }
 
     @ViewBuilder private var legend: some View {
@@ -287,7 +300,7 @@ struct MapScreen: View {
                 }
                 Button("Adesso") { hour = -1; playing = false }.font(.app(.caption))
             }
-            if let fetched = model.weatherGrid {
+            if let fetched = model.weatherGrid, !model.immersiveMap {
                 FreshnessLabel(date: fetched.date, isStale: fetched.isStale, source: String(localized: "Open-Meteo"))
             }
         } else if layer.isForecast {
