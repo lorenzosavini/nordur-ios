@@ -15367,6 +15367,256 @@
           }
         }
       }
+    },
+    "CONDIVIDI" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SHARE"
+          }
+        }
+      }
+    },
+    "Il mio viaggio in Islanda" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "My trip to Iceland"
+          }
+        }
+      }
+    },
+    "Nome del viaggio" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Trip name"
+          }
+        }
+      }
+    },
+    "%lld tappe, %lld attrazioni, %lld giorni." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$lld stops, %2$lld attractions, %3$lld days."
+          }
+        }
+      }
+    },
+    "Scrivi un'email con il viaggio" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Write an e-mail with the trip"
+          }
+        }
+      }
+    },
+    "Altre app (WhatsApp, Messaggi, File…)" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Other apps (WhatsApp, Messages, Files…)"
+          }
+        }
+      }
+    },
+    "Via email, a chiunque" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "By e-mail, to anyone"
+          }
+        }
+      }
+    },
+    "Nel testo il programma giorno per giorno; allegato il file GPX con tappe e attrazioni. Chi ha Norður tocca il file e lo importa nel suo Viaggio; gli altri lo aprono con Google Maps, Komoot o un'app GPS." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The plan day by day in the text, the GPX file with stops and attractions attached. Norður users tap the file and import it into their Trip; others open it with Google Maps, Komoot or a GPS app."
+          }
+        }
+      }
+    },
+    "Email del destinatario" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Recipient's e-mail"
+          }
+        }
+      }
+    },
+    "Invia a questo utente Norður" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Send to this Norður user"
+          }
+        }
+      }
+    },
+    "Accedi per inviarlo a un altro utente" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sign in to send it to another user"
+          }
+        }
+      }
+    },
+    "A un altro utente Norður" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "To another Norður user"
+          }
+        }
+      }
+    },
+    "Il viaggio gli compare in Viaggio › Ricevuti, con l'accesso fatto con quell'indirizzo; se non ha ancora un account, lo trova appena lo crea." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The trip appears in their Trip › Received when signed in with that address; without an account yet, they find it as soon as they create one."
+          }
+        }
+      }
+    },
+    "Condividi il viaggio" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Share the trip"
+          }
+        }
+      }
+    },
+    "Inviato: gli arriva anche un'email di avviso." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sent: they also get a notification e-mail."
+          }
+        }
+      }
+    },
+    "Inviato: lo trova in Viaggio › Ricevuti." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sent: they find it in Trip › Received."
+          }
+        }
+      }
+    },
+    "Allegato: il viaggio in GPX, da aprire con Norður." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Attached: the trip as GPX, to open with Norður."
+          }
+        }
+      }
+    },
+    "In allegato il viaggio in GPX: aprilo con Norður per importarlo, o con Google Maps / un'app GPS." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The trip is attached as GPX: open it with Norður to import it, or with Google Maps / a GPS app."
+          }
+        }
+      }
+    },
+    "Da %@ · %lld tappe" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "From %1$@ · %2$lld stops"
+          }
+        }
+      }
+    },
+    "APRI" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "OPEN"
+          }
+        }
+      }
+    },
+    "Ricevuti" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Received"
+          }
+        }
+      }
+    },
+    "Importa come mio viaggio" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Import as my trip"
+          }
+        }
+      }
+    },
+    "Sostituisci il mio viaggio" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Replace my trip"
+          }
+        }
+      }
+    },
+    "Aggiungi dopo il mio viaggio" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Add after my trip"
+          }
+        }
+      }
+    },
+    "Condiviso da %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Shared by %@"
+          }
+        }
+      }
     }
   },
   "version" : "1.0"

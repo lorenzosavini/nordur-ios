@@ -10,7 +10,7 @@ struct TripView: View {
     @State private var importing = false
     @State private var importFile: TripImportFile?
     @State private var importError: String?
-    @State private var exportURL: URL?
+    @State private var sharing = false
     /// Days (everything on one page), stops (cards to open), or the route on a map.
     @AppStorage("trip.view") private var mode = "days"
     @State private var dayVisit: VisitDraft?
@@ -71,13 +71,15 @@ struct TripView: View {
                     .padding(.vertical, 12)
                     .listRowSeparator(.hidden)
                 }
+                ReceivedTripsSection()
                 if !trip.stops.isEmpty {
                     Section {
                         TripOverview()
                         HStack(spacing: 8) {
                             actionButton(String(localized: "TAPPA"), "plus") { creating = true }
                             actionButton(String(localized: "IMPORTA"), "square.and.arrow.down") { importing = true }
-                            if let exportURL { ShareLink(item: exportURL) { actionLabel(String(localized: "ESPORTA"), "square.and.arrow.up") } }
+                            actionButton(String(localized: "CONDIVIDI"), "square.and.arrow.up") { sharing = true }
+                                .accessibilityIdentifier("trip.share")
                         }
                         .buttonStyle(.plain)
                         Picker("Vista", selection: $mode) {
@@ -166,6 +168,7 @@ struct TripView: View {
                 await trip.loadForecasts()
             }
             .sheet(isPresented: $showAccount) { AccountView() }
+            .sheet(isPresented: $sharing) { TripShareSheet() }
             .fullScreenCover(isPresented: $showDrive) { DriveView(onClose: { showDrive = false }) }
             .sheet(isPresented: $creating) {
                 StopEditor(stop: nil)
@@ -190,7 +193,6 @@ struct TripView: View {
                     model.pendingTripImport = nil
                 }
             }
-            .task(id: trip.stops) { exportURL = trip.exportGPX() }
             .alert("Importazione non riuscita", isPresented: Binding(get: { importError != nil }, set: { if !$0 { importError = nil } })) {
                 Button("OK", role: .cancel) {}
             } message: { Text(importError ?? "") }

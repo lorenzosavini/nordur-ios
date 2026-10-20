@@ -224,6 +224,18 @@ extension TripStore {
         save()
     }
 
+    /// A trip received from someone: as the new trip, or after the current one.
+    func adopt(_ received: [TripStop], replacing: Bool) {
+        let copies = received.map { stop -> TripStop in
+            var s = stop
+            s.id = UUID()
+            s.visits = stop.visits.map { var v = $0; v.id = UUID(); return v }
+            return s
+        }
+        stops = (replacing ? [] : stops) + copies
+        save()
+    }
+
     /// The trip as GPX: stops and attractions as waypoints (with their times),
     /// and the stops again as a route, so other apps show the itinerary.
     func exportGPX() -> URL? {

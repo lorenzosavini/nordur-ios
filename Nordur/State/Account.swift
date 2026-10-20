@@ -115,6 +115,42 @@ final class Account {
         _ = try await request("sightings", method: "POST", body: try JSONSerialization.data(withJSONObject: body))
     }
 
+    // MARK: Shared trips
+
+    struct ReceivedTrip: Decodable, Identifiable {
+        let id: String
+        let from: String
+        let title: String
+        let createdAt: String?
+        let payload: [TripStop]
+        var date: Date? { createdAt.flatMap(DateParse.iso) }
+    }
+
+    /// Sends the trip to another account by e-mail address; it shows up in their
+    /// Trip › Received (and they get an e-mail when the server can send one).
+    /// Returns whether the e-mail went out.
+    func shareTrip(_ stops: [TripStop], title: String, to recipient: String) async throws -> Bool {
+        guard let email else { throw AccountError.message(String(localized: "Accedi al tuo account")) }
+        struct Body: Encodable { let email: String; let to: String; let title: String; let lang: String; let payload: [TripStop] }
+        struct Answer: Decodable { let notified: Bool? }
+        let lang = Bundle.main.preferredLocalizations.first == "en" ? "en" : "it"
+        let data = try await request("data", method: "POST", items: [URLQueryItem(name: "share", value: "trip")],
+                                     body: try JSONEncoder().encode(Body(email: email, to: recipient, title: title, lang: lang, payload: stops)))
+        return (try? JSONDecoder().decode(Answer.self, from: data))?.notified ?? false
+    }
+
+    func receivedTrips() async throws -> [ReceivedTrip] {
+        guard let email else { return [] }
+        struct Answer: Decodable { let items: [ReceivedTrip] }
+        let data = try await request("data", method: "GET", items: [URLQueryItem(name: "inbox", value: "1"), URLQueryItem(name: "email", value: email)])
+        return try JSONDecoder().decode(Answer.self, from: data).items
+    }
+
+    func deleteReceived(_ id: String) async throws {
+        guard let email else { return }
+        _ = try await request("data", method: "DELETE", items: [URLQueryItem(name: "inbox", value: id), URLQueryItem(name: "email", value: email)])
+    }
+
     /// Deletes every document stored online for this account.
     func deleteRemoteData() async throws {
         _ = try await request("data", method: "DELETE")
@@ -192,9 +228,11 @@ final class Account {
 
     // MARK: Networking
 
-    private func request(_ path: String, method: String, query doc: String? = nil, body: Data? = nil, authorized: Bool = true) async throws -> Data {
+    private func request(_ path: String, method: String, query doc: String? = nil, items: [URLQueryItem]? = nil,
+                         body: Data? = nil, authorized: Bool = true) async throws -> Data {
         var components = URLComponents(url: Self.api.appendingPathComponent(path), resolvingAgainstBaseURL: false)!
         if let doc { components.queryItems = [URLQueryItem(name: "doc", value: doc)] }
+        if let items { components.queryItems = (components.queryItems ?? []) + items }
         var request = URLRequest(url: components.url!)
         request.httpMethod = method
         request.httpBody = body
