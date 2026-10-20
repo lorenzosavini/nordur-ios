@@ -97,8 +97,15 @@ enum RouteCard {
         }
 
         let margin: CGFloat = 72
-        text("NORÐUR", at: CGPoint(x: margin, y: 70), font: condensed(46), color: .white, kern: 9)
-        text(stats.date.uppercased(), at: CGPoint(x: margin, y: 128), font: mono(30), color: UIColor(white: 1, alpha: 0.8), kern: 2)
+        // The app's mark and name, so a shared picture says where it comes from.
+        logo(ctx, at: CGPoint(x: margin, y: 64), side: 104)
+        text("NORÐUR", at: CGPoint(x: margin + 128, y: 66), font: condensed(58), color: .white, kern: 10)
+        text(stats.date.uppercased(), at: CGPoint(x: margin + 130, y: 134), font: mono(30), color: UIColor(white: 1, alpha: 0.8), kern: 2)
+        let credit = String(localized: "Creato con Norður")
+        let creditFont = mono(26)
+        let creditWidth = (credit as NSString).size(withAttributes: [.font: creditFont, .kern: 2]).width
+        text(credit, at: CGPoint(x: size.width - margin - creditWidth, y: size.height - 62), font: creditFont,
+             color: UIColor(white: 1, alpha: 0.75), kern: 2)
         // Stats at the bottom, two by two.
         let bottom = size.height - 90
         let colWidth = (size.width - margin * 2) / 2
@@ -123,6 +130,46 @@ enum RouteCard {
         var digits = String(format: "%.\(number.contains(",") || number.contains(".") ? 1 : 0)f", shown)
         if comma { digits = digits.replacingOccurrences(of: ".", with: ",") }
         return digits + value[range.upperBound...]
+    }
+
+    /// The app icon's mark: the white Ð with its orange bar on the night blue tile.
+    private static func logo(_ ctx: CGContext, at origin: CGPoint, side: CGFloat) {
+        let tile = UIBezierPath(roundedRect: CGRect(origin: origin, size: CGSize(width: side, height: side)), cornerRadius: side * 0.22)
+        ctx.saveGState()
+        ctx.setShadow(offset: .zero, blur: 10, color: UIColor.black.withAlphaComponent(0.5).cgColor)
+        UIColor(red: 0.05, green: 0.08, blue: 0.16, alpha: 1).setFill()
+        tile.fill()
+        ctx.restoreGState()
+        // A band of aurora across the top of the tile.
+        ctx.saveGState()
+        tile.addClip()
+        let aurora = [UIColor(red: 0.2, green: 0.85, blue: 0.6, alpha: 0.85).cgColor, UIColor(red: 0.2, green: 0.85, blue: 0.6, alpha: 0).cgColor] as CFArray
+        if let g = CGGradient(colorsSpace: CGColorSpaceCreateDeviceRGB(), colors: aurora, locations: [0, 1]) {
+            ctx.drawLinearGradient(g, start: CGPoint(x: origin.x, y: origin.y + side * 0.18), end: CGPoint(x: origin.x, y: origin.y + side * 0.5), options: [])
+        }
+        ctx.restoreGState()
+        // The D: a stem and a bowl, white.
+        let w = side * 0.42, h = side * 0.56
+        let x = origin.x + side * 0.36, y = origin.y + side * 0.24
+        let d = UIBezierPath()
+        d.move(to: CGPoint(x: x, y: y))
+        d.addLine(to: CGPoint(x: x + w * 0.45, y: y))
+        d.addArc(withCenter: CGPoint(x: x + w * 0.45, y: y + h / 2), radius: h / 2, startAngle: -.pi / 2, endAngle: .pi / 2, clockwise: true)
+        d.addLine(to: CGPoint(x: x, y: y + h))
+        d.close()
+        let inner = UIBezierPath()
+        let t = side * 0.1
+        inner.move(to: CGPoint(x: x + t, y: y + t))
+        inner.addLine(to: CGPoint(x: x + w * 0.45, y: y + t))
+        inner.addArc(withCenter: CGPoint(x: x + w * 0.45, y: y + h / 2), radius: h / 2 - t, startAngle: -.pi / 2, endAngle: .pi / 2, clockwise: true)
+        inner.addLine(to: CGPoint(x: x + t, y: y + h - t))
+        inner.close()
+        d.append(inner.reversing())
+        UIColor(white: 0.97, alpha: 1).setFill()
+        d.fill()
+        // The bar of the Ð.
+        UIColor(red: 0.94, green: 0.29, blue: 0, alpha: 1).setFill()
+        UIBezierPath(rect: CGRect(x: origin.x + side * 0.24, y: y + h * 0.47, width: side * 0.27, height: side * 0.075)).fill()
     }
 
     private static func dot(_ ctx: CGContext, _ p: CGPoint, color: UIColor, ring: Bool = false) {

@@ -16477,6 +16477,16 @@
           }
         }
       }
+    },
+    "Creato con Norður" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Made with Norður"
+          }
+        }
+      }
     }
   },
   "version" : "1.0"
