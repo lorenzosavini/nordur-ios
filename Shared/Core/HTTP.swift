@@ -74,15 +74,22 @@ enum HTTP {
     /// Set for a warm start: requests answer from the copy saved on the phone only, with no network.
     @TaskLocal static var cacheOnly = false
 
-    /// Downloads `url`; on failure falls back to the last cached copy.
-    static func get(_ url: URL, cacheKey: String) async throws -> Fetched<Data> {
+    /// Downloads `url`; on failure tries `mirror` (the same data relayed by
+    /// nordur-api), then falls back to the last cached copy.
+    static func get(_ url: URL, cacheKey: String, mirror: URL? = nil) async throws -> Fetched<Data> {
         if cacheOnly {
             guard let cached = DiskCache.read(cacheKey) else { throw HTTPError.notCached }
             // Recent copies are shown as current; older ones carry the offline label until the refresh lands.
             return Fetched(value: cached.data, date: cached.date, isStale: Date().timeIntervalSince(cached.date) > 1800)
         }
         do {
-            let data = try await download(url, retries: 2)
+            let data: Data
+            do {
+                data = try await download(url, retries: mirror == nil ? 2 : 0)
+            } catch {
+                guard let mirror, !(error is CancellationError) else { throw error }
+                data = try await download(mirror, retries: 1)
+            }
             DiskCache.write(data, key: cacheKey)
             return Fetched(value: data, date: Date(), isStale: false)
         } catch {
@@ -120,8 +127,8 @@ enum HTTP {
         }
     }
 
-    static func json<T: Decodable>(_ type: T.Type, from url: URL, cacheKey: String) async throws -> Fetched<T> {
-        let fetched = try await get(url, cacheKey: cacheKey)
+    static func json<T: Decodable>(_ type: T.Type, from url: URL, cacheKey: String, mirror: URL? = nil) async throws -> Fetched<T> {
+        let fetched = try await get(url, cacheKey: cacheKey, mirror: mirror)
         return try fetched.map { data in
             // Some feeds answer "204 No Content" (an empty body) when there is nothing,
             // e.g. the IMO warnings with no warning in force: that is an empty list.

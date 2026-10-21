@@ -35,7 +35,10 @@ struct NordurApp: App {
                     AlertCenter.shared.reloadAfterRestore()
                     model.reloadSelection()
                 }
-                .onAppear { AlertCenter.shared.model = model }
+                .onAppear {
+                    AlertCenter.shared.model = model
+                    if UIApplication.shared.applicationState == .active { CrashLog.phase("active") }
+                }
         }
         .onChange(of: scenePhase) { _, phase in
             switch phase {
