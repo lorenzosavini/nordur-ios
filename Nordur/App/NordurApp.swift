@@ -199,15 +199,15 @@ struct RootView: View {
                 closeAll()
             case "settings":
                 closeAll()
-                DispatchQueue.main.asyncAfter(deadline: .now() + 1) { model.showSettings = true }
+                DispatchQueue.main.asyncAfter(deadline: .now() + 2) { model.showSettings = true }
             case "night":
                 nightVision.toggle()
             case "drive.demo":
-                DispatchQueue.main.asyncAfter(deadline: .now() + 1) { openedTrack = DriveStore.shared.drives.first }
+                DispatchQueue.main.asyncAfter(deadline: .now() + 2) { openedTrack = DriveStore.shared.drives.first }
             case let c where c.hasPrefix("screen."):
                 closeAll()
                 let target = CIScreen(rawValue: String(c.dropFirst(7)))
-                DispatchQueue.main.asyncAfter(deadline: .now() + 1) { ciScreen = target }
+                DispatchQueue.main.asyncAfter(deadline: .now() + 2) { ciScreen = target }
             case let c where c.hasPrefix("tab."):
                 closeAll()
                 if let target = Tab(rawValue: String(c.dropFirst(4))) { tab = target }

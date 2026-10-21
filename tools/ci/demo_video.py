@@ -110,7 +110,7 @@ TABS = ["Oggi", "Meteo", "Aurora", "Mappa", "Viaggio"]
 KEYS = ["today", "weather", "aurora", "map", "trip"]
 
 def notify(command, pause=2.4):
-    pause += 3   # the app closes what is open first, then opens (slow simulator)
+    pause += 4.5   # the app closes what is open first, then opens (slow simulator)
     """The app listens for these in the demo run (CIRemote): taps from idb on
     the tab bar do not always land."""
     subprocess.run(["xcrun", "simctl", "spawn", udid, "notifyutil", "-p", f"nordur.ci.{command}"], capture_output=True)
