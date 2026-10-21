@@ -213,7 +213,11 @@ struct RootView: View {
                         self.model.immersiveMap = false
                         return
                     }
-                    if command == "settings" { self.model.showSettings = true; return }
+                    if command == "settings" {
+                        CIRemote.dismissAll()
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 1) { self.model.showSettings = true }
+                        return
+                    }
                     if let target = Tab(rawValue: command.replacingOccurrences(of: "tab.", with: "")) {
                         CIRemote.dismissAll()
                         self.model.showSettings = false

@@ -142,7 +142,7 @@ chapter("1 · Oggi", "Il viaggio di oggi e l'aurora adesso, con «vedo / non ved
 scroll(1, 0.35, 2.8)
 scroll(1, 0.4, 2.2)
 chapter("1 · Oggi", "Esplora: da vedere, strade, vulcani, webcam")
-if tap(ident="tile.Da vedere", pause=3, scrolls=4):
+if tap(ident="tile.Da vedere", pause=3, scrolls=4) or tap(label="Da vedere", pause=3):
     chapter("Da vedere", "Cascate, belvedere, sorgenti calde: 1.300 luoghi su mappa")
     time.sleep(2)
     scroll(1, 0.4, 1.6)

@@ -48,13 +48,15 @@ jobs:
           cat chapters.json
           # Chapter captions, 1080 px wide, 30 fps, H.264 (Facebook / Instagram / WhatsApp).
           python3 tools/ci/caption_video.py raw.mp4 chapters.json Nordur-demo.mp4
-          ls -lh raw.mp4 Nordur-demo.mp4
+          # The same without captions, to fix their timing afterwards if the recording drifted.
+          ffmpeg -y -loglevel error -i raw.mp4 -vf scale=1080:-2 -r 30 -c:v libx264 -preset veryfast -crf 23 -pix_fmt yuv420p -movflags +faststart Nordur-demo-clean.mp4
+          ls -lh raw.mp4 Nordur-demo.mp4 Nordur-demo-clean.mp4
 
       - name: Publish to branch demo-video
         env:
           TOKEN: ${{ github.token }}
         run: |
-          rm -rf /tmp/v && mkdir -p /tmp/v && cp Nordur-demo.mp4 chapters.json /tmp/v/
+          rm -rf /tmp/v && mkdir -p /tmp/v && cp Nordur-demo.mp4 Nordur-demo-clean.mp4 chapters.json /tmp/v/
           cd /tmp/v
           git init -q -b demo-video
           git -c user.name=nordur-ci -c user.email=ci@users.noreply.github.com add -A
