@@ -34,8 +34,18 @@ struct AuroraVerdict: Equatable {
                                  detail: String(localized: "Osservabilità \(s.observability.label.lowercased()): attività in corso e cielo \(Int(((s.clear ?? 0) * 100).rounded()))% sereno.") + look,
                                  at: now)
         }
-        // 1b. The aurora is on and the sky clear, but from here the light hides it
-        //     (city lights, twilight, Moon): go somewhere darker.
+        // 1b. Strong aurora shows through city lights and nautical twilight: the
+        //     observability index rates the conditions, but a bright display still
+        //     reads overhead and on the northern horizon, only less vivid.
+        if let s = current, s.darkness >= .nautical, (s.clear ?? 0) >= 0.5,
+           (s.ovationValue ?? 0) >= 30 || (s.kp ?? 0) >= 5 {
+            let strength = s.ovationValue.map { "OVATION \(Int($0.rounded()))" } ?? "Kp \(Fmt.number(s.kp ?? 0, decimals: 1))"
+            return AuroraVerdict(level: .now, title: String(localized: "Esci adesso: visibile anche da qui"),
+                                 detail: String(localized: "Aurora forte (\(strength)) e cielo \(Int(((s.clear ?? 0) * 100).rounded()))% sereno: si vede anche con le luci e il crepuscolo, più bella lontano dalle luci.") + look,
+                                 at: now)
+        }
+        // 1c. The aurora is on and the sky clear, but not strong enough to beat the
+        //     light here (city lights, twilight, Moon): go somewhere darker.
         if let s = current, s.activityFactor >= 0.5, (s.clear ?? 0) >= 0.5 {
             let why = s.reasons.first.map { $0 + ". " } ?? ""
             let whereTo = darker.map { String(localized: "Più buio vicino: \($0.name), \(Int($0.km.rounded())) km.") }
