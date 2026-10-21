@@ -28,20 +28,11 @@ struct AuroraVerdict: Equatable {
         let lead = sw?.propagation?.minutes ?? 45
         let look = current?.lookAzimuth.map { String(localized: " Guarda verso \(Fmt.compass($0)).") } ?? String(localized: " Guarda verso nord.")
 
-        // 1. Now: it can be seen from here (observability at least moderate), with a clear sky.
+        // 1. Now: it can be seen from here. The engine weighs the aurora's brightness
+        //    against the sky's (twilight, Moon, city lights) and the clouds.
         if let s = current, s.darkness >= .nautical, (s.clear ?? 0) >= 0.5, s.observability >= .moderate {
             return AuroraVerdict(level: .now, title: String(localized: "Esci adesso"),
                                  detail: String(localized: "Osservabilità \(s.observability.label.lowercased()): attività in corso e cielo \(Int(((s.clear ?? 0) * 100).rounded()))% sereno.") + look,
-                                 at: now)
-        }
-        // 1b. Strong aurora shows through city lights and nautical twilight: the
-        //     observability index rates the conditions, but a bright display still
-        //     reads overhead and on the northern horizon, only less vivid.
-        if let s = current, s.darkness >= .nautical, (s.clear ?? 0) >= 0.5,
-           (s.ovationValue ?? 0) >= 30 || (s.kp ?? 0) >= 5 {
-            let strength = s.ovationValue.map { "OVATION \(Int($0.rounded()))" } ?? "Kp \(Fmt.number(s.kp ?? 0, decimals: 1))"
-            return AuroraVerdict(level: .now, title: String(localized: "Esci adesso: visibile anche da qui"),
-                                 detail: String(localized: "Aurora forte (\(strength)) e cielo \(Int(((s.clear ?? 0) * 100).rounded()))% sereno: si vede anche con le luci e il crepuscolo, più bella lontano dalle luci.") + look,
                                  at: now)
         }
         // 1c. The aurora is on and the sky clear, but not strong enough to beat the

@@ -251,6 +251,13 @@ enum LightPollution {
     /// Artificial sky glow from NASA Black Marble night lights (SkyGlowGrid):
     /// 1 far from lights, about 0.5 in central Reykjavík. Night lights measure
     /// light emitted upwards, not sky brightness at the observer: an indicator.
+    /// Sky brightness at the observer from artificial light, as a multiple of a
+    /// natural dark sky (1 far from lights, about 16 in central Reykjavík).
+    static func skyRatio(at c: Coordinate) -> Double {
+        guard let s = SkyGlowGrid.index(at: c) else { return 1 }
+        return 1 + s / 3
+    }
+
     static func factor(at c: Coordinate) -> (value: Double, note: String?) {
         guard let s = SkyGlowGrid.index(at: c) else { return (1, nil) }
         let value = pow(1 + s / 3, -0.25)
@@ -354,7 +361,8 @@ enum AuroraEngine {
         var reasons: [(weight: Double, text: String)] = []
         var notes: [String] = []
 
-        // 1 · activity
+        // 1 · activity (and how bright the aurora should be, in kilorayleigh)
+        var brightness = 0.0
         let block = kp(at: date, in: inputs.kp)
         let kpValue = block?.value
         var source = "Kp → ovale"
@@ -367,6 +375,9 @@ enum AuroraEngine {
             geometry = g.category; ovationValue = g.value; azimuth = g.azimuth; elevation = g.elevation
             let geo = g.category == .overhead ? 1 : g.category == .toward ? 0.85 : g.category == .low ? 0.45 : 0
             activity = min(1, g.value / 40) * geo
+            // OVATION's probability follows the energy flux: ~1 kR (a faint glow, like the
+            // Milky Way) around 10 %, several kR (bright, moving) at 40–50 %.
+            brightness = g.value / 8 * (g.category == .overhead ? 1 : g.category == .toward ? 0.8 : g.category == .low ? 0.45 : 0)
             if g.category == .none { reasons.append((1, String(localized: "OVATION non prevede aurora nel tuo cielo"))) }
         } else if let kpValue {
             let g = ViewingGeometry.fromKp(kpValue, at: place, horizon: inputs.horizon ?? .flat)
@@ -374,6 +385,7 @@ enum AuroraEngine {
             azimuth = g.category == .overhead ? nil : ViewingGeometry.bearing(from: place, to: Coordinate(lat: Geomagnetic.poleLat, lon: Geomagnetic.poleLon))
             let geo = g.category == .overhead ? 1 : g.category == .toward ? 0.6 : g.category == .low ? 0.3 : 0
             activity = kpActivity(kpValue) * geo
+            brightness = 0.6 * pow(2, kpValue - 2) * geo
             if g.category == .none { reasons.append((1, String(localized: "Con Kp \(Fmt.number(kpValue, decimals: 1)) l'ovale resta lontano"))) }
         } else {
             notes.append(String(localized: "Nessuna previsione geomagnetica per quest'ora"))
@@ -385,7 +397,6 @@ enum AuroraEngine {
         // 2 · observability
         let sunAlt = Astro.sunAltitude(date, at: place)
         let darkness = Astro.Darkness(sunAltitude: sunAlt)
-        let darkFactor: Double = [.day: 0, .civil: 0.05, .nautical: 0.5, .astronomical: 0.85, .night: 1][darkness] ?? 0
         if darkness <= .civil { reasons.append((1, darkness == .day ? String(localized: "È giorno") : String(localized: "Cielo ancora chiaro (crepuscolo civile)"))) }
         else if darkness == .nautical { reasons.append((0.5, String(localized: "Crepuscolo nautico: solo aurore intense"))) }
 
@@ -396,7 +407,7 @@ enum AuroraEngine {
 
         let moon = Astro.moon(date, at: place)
         let moonUp = moon.altitude > 0 ? min(1, (moon.altitude + 5) / 30) : 0
-        let moonFactor = 1 - 0.35 * moon.illuminatedFraction * moonUp
+        let moonFactor = 1 - 0.35 * moon.illuminatedFraction * moonUp   // for the reason only
         if moonFactor < 0.85 { reasons.append((1 - moonFactor, String(localized: "Luna illuminata al \(Int((moon.illuminatedFraction * 100).rounded()))% sopra l'orizzonte"))) }
 
         if let h = inputs.horizon {
@@ -409,7 +420,15 @@ enum AuroraEngine {
         let light = LightPollution.factor(at: place)
         if let note = light.note { reasons.append((1 - light.value, note)) }
 
-        let index = activity * clearFactor * darkFactor * moonFactor * light.value
+        // Can the eye see it from here? The aurora's brightness against the sky's:
+        // twilight, Moon and artificial light all brighten the background, a bright
+        // aurora still stands out over a city or in nautical twilight, a faint one
+        // needs real darkness. Background as a multiple of a natural dark sky
+        // (~0.2 kR of airglow); contrast mapped to 0…1, then the clouds.
+        let background = twilightSky(sunAlt) + 15 * pow(moon.illuminatedFraction, 1.5) * moonUp + (LightPollution.skyRatio(at: place) - 1)
+        let contrast = brightness / 0.2 / background
+        let visibility = darkness == .day ? 0 : 1 - exp(-contrast / 3)
+        let index = visibility * clearFactor
         let cls = ObservabilityClass(index: index)
         if reasons.isEmpty && cls >= .good {
             reasons.append((0, String(localized: "Buio, cielo in gran parte sereno e attività sufficiente")))
@@ -435,6 +454,19 @@ enum AuroraEngine {
             index: index, observability: cls,
             reasons: reasons.sorted { $0.weight > $1.weight }.map(\.text),
             reliability: reliability, reliabilityNotes: notes)
+    }
+
+    /// Twilight sky brightness as a multiple of the night sky: 1 below −18°,
+    /// about 3 at −12° (end of nautical twilight), 60 at −6°, thousands at sunset.
+    static func twilightSky(_ sunAltitude: Double) -> Double {
+        let points: [(alt: Double, mag: Double)] = [(-18, 0), (-12, 1.2), (-6, 4.5), (-0.833, 9)]
+        guard sunAltitude > -18 else { return 1 }
+        guard sunAltitude < -0.833 else { return pow(10, 0.4 * 9) }
+        for (a, b) in zip(points, points.dropFirst()) where sunAltitude <= b.alt {
+            let f = (sunAltitude - a.alt) / (b.alt - a.alt)
+            return pow(10, 0.4 * (a.mag + f * (b.mag - a.mag)))
+        }
+        return 1
     }
 
     static func forecast(_ inputs: AuroraInputs, hours: Int = 72) -> [AuroraSlot] {
