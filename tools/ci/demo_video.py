@@ -110,6 +110,7 @@ TABS = ["Oggi", "Meteo", "Aurora", "Mappa", "Viaggio"]
 KEYS = ["today", "weather", "aurora", "map", "trip"]
 
 def notify(command, pause=2.4):
+    pause += 3   # the app closes what is open first, then opens (slow simulator)
     """The app listens for these in the demo run (CIRemote): taps from idb on
     the tab bar do not always land."""
     subprocess.run(["xcrun", "simctl", "spawn", udid, "notifyutil", "-p", f"nordur.ci.{command}"], capture_output=True)
@@ -157,10 +158,7 @@ notify("screen.sights", 3.5)
 chapter("Da vedere", "Cascate, belvedere, sorgenti calde: 1.300 luoghi su mappa")
 time.sleep(2)
 scroll(1, 0.4, 2)
-at(200, 330, 4)     # a place in the list
-chapter("Da vedere", "Ogni luogo: foto, descrizione, indicazioni, «aggiungi al viaggio»")
-time.sleep(2)
-scroll(1, 0.4, 2)
+scroll(1, 0.45, 2.5)
 notify("screen.roads", 3.5)
 chapter("Strade", "Condizioni in tempo reale di Vegagerðin: chiuse, ghiaccio, vento")
 scroll(1, 0.4, 2)
