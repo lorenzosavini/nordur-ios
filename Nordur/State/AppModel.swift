@@ -546,7 +546,12 @@ final class AppModel {
 
     /// "Esci adesso" / "Preparati" / "Stanotte verso le…" / "Non adesso".
     var auroraVerdict: AuroraVerdict {
-        AuroraVerdict.make(slots: auroraSlots, state: aurora?.value, zone: forecast?.value.timeZone ?? .iceland)
+        let here = auroraNow?.observability ?? .veryPoor
+        let darker = siteRanking
+            .filter { ($0.now?.observability ?? .veryPoor) > here && ($0.distanceKm ?? .infinity) <= 120 }
+            .min { ($0.distanceKm ?? .infinity) < ($1.distanceKm ?? .infinity) }
+            .map { (name: $0.site.name, km: $0.distanceKm ?? 0) }
+        return AuroraVerdict.make(slots: auroraSlots, state: aurora?.value, zone: forecast?.value.timeZone ?? .iceland, darker: darker)
     }
 
     var auroraNow: AuroraSlot? { auroraSlots.first { abs($0.date.timeIntervalSinceNow) < 1800 } ?? auroraSlots.first }

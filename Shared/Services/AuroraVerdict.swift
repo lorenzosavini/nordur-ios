@@ -16,7 +16,10 @@ struct AuroraVerdict: Equatable {
     /// When it should start (soon) or the best moment (later).
     let at: Date?
 
-    static func make(slots: [AuroraSlot], state: AuroraState?, zone: TimeZone, now: Date = Date()) -> AuroraVerdict {
+    /// `darker`: a place near with better observability now (name, km), for when the
+    /// aurora is on but cannot be seen from here (city lights, twilight).
+    static func make(slots: [AuroraSlot], state: AuroraState?, zone: TimeZone, now: Date = Date(),
+                     darker: (name: String, km: Double)? = nil) -> AuroraVerdict {
         let current = slots.first { abs($0.date.timeIntervalSince(now)) < 1800 } ?? slots.first
         let sw = state?.source("solarWind")?.isOK == true ? state?.solarWind : nil
         let bz15 = sw?.average(15)?.bz
@@ -25,12 +28,20 @@ struct AuroraVerdict: Equatable {
         let lead = sw?.propagation?.minutes ?? 45
         let look = current?.lookAzimuth.map { String(localized: " Guarda verso \(Fmt.compass($0)).") } ?? String(localized: " Guarda verso nord.")
 
-        // 1. Now: good or better here, or strong activity over a dark, clear sky.
-        if let s = current, s.darkness >= .nautical, (s.clear ?? 0) >= 0.5,
-           s.observability >= .good || (s.activityFactor >= 0.6 && (s.ovationValue ?? 0) >= 10) {
+        // 1. Now: it can be seen from here (observability at least moderate), with a clear sky.
+        if let s = current, s.darkness >= .nautical, (s.clear ?? 0) >= 0.5, s.observability >= .moderate {
             return AuroraVerdict(level: .now, title: String(localized: "Esci adesso"),
-                                 detail: String(localized: "Condizioni \(s.observability.label.lowercased()): attività in corso e cielo \(Int(((s.clear ?? 0) * 100).rounded()))% sereno.") + look,
+                                 detail: String(localized: "Osservabilità \(s.observability.label.lowercased()): attività in corso e cielo \(Int(((s.clear ?? 0) * 100).rounded()))% sereno.") + look,
                                  at: now)
+        }
+        // 1b. The aurora is on and the sky clear, but from here the light hides it
+        //     (city lights, twilight, Moon): go somewhere darker.
+        if let s = current, s.activityFactor >= 0.5, (s.clear ?? 0) >= 0.5 {
+            let why = s.reasons.first.map { $0 + ". " } ?? ""
+            let whereTo = darker.map { String(localized: "Più buio vicino: \($0.name), \(Int($0.km.rounded())) km.") }
+                ?? String(localized: "Allontanati dalle luci della città, verso un posto buio con l'orizzonte libero a nord.")
+            return AuroraVerdict(level: .soon, title: String(localized: "Aurora attiva: allontanati dalle luci"),
+                                 detail: why + whereTo + look, at: now)
         }
 
         // 2. Soon: the solar wind on its way is geo-effective (Bz south for a while),
