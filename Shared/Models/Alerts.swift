@@ -149,6 +149,11 @@ struct AlertInput {
     var sightings: [SightingReport] = []
     var flights: [Flight] = []
     var ferry: FerryNotice?
+    /// The drives between trip stops in the next days, with their forecast.
+    var legs: [TripLegCheck] = []
+    /// The forecast where you are (or at the place chosen), next hours.
+    var hereHours: [TripLegCheck.Hour] = []
+    var herePlace = ""
     var now = Date()
 }
 
@@ -232,6 +237,8 @@ enum AlertEngine {
                     title: String(localized: "SafeTravel: \(item.title)"), body: String(item.summary.prefix(220))))
             }
         }
+
+        events += travelEvents(input, settings: settings)
 
         if settings.isOn(.aurora) {
             events += auroraEvents(input, settings: settings)
@@ -336,7 +343,12 @@ extension AlertEngine {
             guard let k = alert.kp, Double(k) >= settings.auroraKp else { continue }
             events.append(AlertEvent(
                 id: "swpc:\(alert.id)", date: now, category: .aurora, severity: (k >= 7 ? Risk.warning : Risk.caution).rawValue,
-                title: String(localized: "NOAA: attività geomagnetica Kp \(k)"), body: alert.italian,
+                title: String(localized: "NOAA: attività geomagnetica Kp \(k)"),
+                body: [alert.italian + ".",
+                       alert.issuedDate.map { String(localized: "Emesso \(Fmt.dayTime($0, in: zone))") },
+                       alert.validTo.flatMap { DateParse.iso($0) }.map { String(localized: "valido fino a \(Fmt.dayTime($0, in: zone))") },
+                       zone == .iceland ? String(localized: "(ora islandese)") : nil]
+                    .compactMap { $0 }.joined(separator: " "),
                 expires: alert.validTo.flatMap { DateParse.iso($0) }))
         }
         // NASA DONKI CME expected at Earth within 36 h.

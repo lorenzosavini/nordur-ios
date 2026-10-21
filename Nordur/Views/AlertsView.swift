@@ -201,7 +201,7 @@ struct AlertSettingsView: View {
             } header: {
                 Text("Cosa monitorare").pinnedHeader().pinnedHeader().pinnedHeader()
             } footer: {
-                Text("Le allerte IMO e i terremoti vengono controllati per la tua posizione e per le tappe del viaggio dei prossimi 3 giorni.")
+                Text("Allerte IMO, vento, pioggia forte, neve, ghiaccio e strade vengono controllati dove sei (o nel luogo scelto a mano), alle tappe del viaggio e lungo i tragitti tra una tappa e l'altra fino a dopodomani. Durante una registrazione di guida anche la strada davanti a te.")
             }
 
             Section {

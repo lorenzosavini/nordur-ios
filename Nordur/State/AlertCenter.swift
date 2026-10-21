@@ -273,6 +273,10 @@ final class AlertCenter: NSObject {
             }
         }
 
+        if settings.isOn(.wind) || settings.isOn(.weatherWarning) || settings.isOn(.road) {
+            await addTravelForecast(to: &input, place: currentPlace, now: now)
+        }
+
         if settings.isOn(.flight), !settings.followedFlights.isEmpty {
             input.flights = (try? await TransportService.kefFlights().value) ?? []
         }
@@ -280,6 +284,46 @@ final class AlertCenter: NSObject {
             if let fetched = try? await TransportService.herjolfur() { input.ferry = fetched.value }
         }
         return input
+    }
+
+    /// Forecasts kept 30 minutes: the watch checks every few minutes.
+    @ObservationIgnored private var forecastCache: [String: (date: Date, forecast: Forecast)] = [:]
+
+    private func cachedForecast(_ c: Coordinate) async -> Forecast? {
+        let key = c.key
+        if let hit = forecastCache[key], Date().timeIntervalSince(hit.date) < 1800 { return hit.forecast }
+        guard let fetched = try? await WeatherService.forecast(c).value else { return forecastCache[key]?.forecast }
+        forecastCache[key] = (Date(), fetched)
+        return fetched
+    }
+
+    /// The drives between trip stops from today to the day after tomorrow, and the
+    /// next hours at the place watched: the forecast along each of them.
+    private func addTravelForecast(to input: inout AlertInput, place: Place, now: Date) async {
+        let calendar = Calendar.iceland
+        let today = calendar.startOfDay(for: now)
+        let stops = TripStore.loadFromDisk().sorted { $0.date < $1.date }
+        for (previous, stop) in zip(stops, stops.dropFirst()) {
+            let day = calendar.startOfDay(for: stop.date)
+            guard day >= today, day <= today.addingTimeInterval(2 * 24 * 3600),
+                  Geo.distanceKm(previous.place.coordinate, stop.place.coordinate) >= 15 else { continue }
+            var leg = TripLegCheck(from: previous.place.name, to: stop.place.name, day: day,
+                                   samples: TripLegCheck.samples(from: previous.place.coordinate, to: stop.place.coordinate))
+            // Driving hours: 07–21 of the travel day.
+            let start = day.addingTimeInterval(7 * 3600), end = day.addingTimeInterval(21 * 3600)
+            var hours: [Date: TripLegCheck.Hour] = [:]
+            for sample in leg.samples {
+                if let forecast = await cachedForecast(sample) { TripLegCheck.merge(&hours, forecast, from: start, to: end) }
+            }
+            leg.hours = hours.values.sorted { $0.date < $1.date }
+            input.legs.append(leg)
+        }
+        if let forecast = await cachedForecast(place.coordinate) {
+            var hours: [Date: TripLegCheck.Hour] = [:]
+            TripLegCheck.merge(&hours, forecast, from: now.addingTimeInterval(-3600), to: now.addingTimeInterval(7 * 3600))
+            input.hereHours = hours.values.sorted { $0.date < $1.date }
+            input.herePlace = place.name
+        }
     }
 
     private func deliver(_ candidates: [AlertEvent]) async {
