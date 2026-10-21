@@ -189,6 +189,16 @@ struct TripView: View {
                 case "trip.share": sharing = true
                 case "trip.inbox": showInbox = true
                 case "trip.drive": showDrive = true
+                case "dismiss", "drive.demo", "settings":
+                    sharing = false
+                    showInbox = false
+                    showDrive = false
+                    mapStop = nil
+                case let c where c.hasPrefix("tab.") || c.hasPrefix("screen."):
+                    sharing = false
+                    showInbox = false
+                    showDrive = false
+                    mapStop = nil
                 case let c where c.hasPrefix("trip.mode."): mode = String(c.dropFirst(10))
                 default: break
                 }

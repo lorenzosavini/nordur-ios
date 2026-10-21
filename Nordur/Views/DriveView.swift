@@ -415,7 +415,7 @@ struct DriveDetailView: View {
         .navigationTitle(session.name)
         .navigationBarTitleDisplayMode(.inline)
         .sheet(isPresented: $sharingCard) { RouteShareSheet(session: session) }
-        .onCICommand { if $0 == "drive.share" { sharingCard = true } }
+        .onCICommand { sharingCard = $0 == "drive.share" }
         .task {
             full = store.load(drive.id) ?? drive
             name = session.name

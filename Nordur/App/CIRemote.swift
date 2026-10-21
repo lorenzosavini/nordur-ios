@@ -13,12 +13,6 @@ enum CIRemote {
     static let notification = Notification.Name("nordur.ci.command")
     private static var listening = false
 
-    /// Closes whatever sheet or menu is on screen.
-    static func dismissAll() {
-        let root = UIApplication.shared.connectedScenes.compactMap { ($0 as? UIWindowScene)?.keyWindow }.first?.rootViewController
-        root?.dismiss(animated: true)
-    }
-
     /// Turns the Darwin notifications into `notification` posts, in the demo run only.
     static func start() {
         guard !listening, UserDefaults.standard.bool(forKey: "ciDemoTrip") else { return }

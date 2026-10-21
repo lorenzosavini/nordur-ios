@@ -183,28 +183,30 @@ struct RootView: View {
             NavigationStack { AuroraLiveView() }
         }
         .onCICommand { command in
+            // Each sheet closes through its own state: closing them from UIKit leaves
+            // SwiftUI thinking they are still up, and nothing opens after that.
+            func closeAll() {
+                ciScreen = nil
+                openedTrack = nil
+                model.showSettings = false
+                model.immersiveMap = false
+            }
             switch command {
             case "dismiss":
-                CIRemote.dismissAll()
-                ciScreen = nil
-                model.immersiveMap = false
+                closeAll()
             case "settings":
-                CIRemote.dismissAll()
+                closeAll()
                 DispatchQueue.main.asyncAfter(deadline: .now() + 1) { model.showSettings = true }
             case "night":
                 nightVision.toggle()
             case "drive.demo":
-                CIRemote.dismissAll()
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) { openedTrack = DriveStore.shared.drives.first }
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1) { openedTrack = DriveStore.shared.drives.first }
             case let c where c.hasPrefix("screen."):
-                CIRemote.dismissAll()
+                closeAll()
                 let target = CIScreen(rawValue: String(c.dropFirst(7)))
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) { ciScreen = target }
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1) { ciScreen = target }
             case let c where c.hasPrefix("tab."):
-                CIRemote.dismissAll()
-                ciScreen = nil
-                model.showSettings = false
-                model.immersiveMap = false
+                closeAll()
                 if let target = Tab(rawValue: String(c.dropFirst(4))) { tab = target }
             default:
                 break
