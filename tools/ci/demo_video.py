@@ -23,7 +23,12 @@ udid, out, chapters_path = sys.argv[1], sys.argv[2], sys.argv[3]
 BUNDLE = "it.lorenzosavini.nordur"
 
 def idb(*args):
-    return subprocess.run(["idb", *args, "--udid", udid], capture_output=True, text=True, timeout=60)
+    # A slow answer from idb skips that step instead of ending the recording.
+    try:
+        return subprocess.run(["idb", *args, "--udid", udid], capture_output=True, text=True, timeout=60)
+    except subprocess.TimeoutExpired:
+        print("idb timed out:", " ".join(args))
+        return subprocess.CompletedProcess(args, 1, "", "")
 
 def elements():
     try:
