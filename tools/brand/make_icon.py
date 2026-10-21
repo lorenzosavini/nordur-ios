@@ -61,19 +61,22 @@ def ridge(img):
     d.polygon(pts, fill=(4, 7, 14))
 
 def glyph(img, mark_only=False):
-    font = ImageFont.truetype(FONT, 700)
+    # Big: the letter fills about 84 % of the height, so the icon reads at a glance
+    # (home screen, notifications, Settings) without opening the app.
+    size = 1140
+    font = ImageFont.truetype(FONT, size)
     d = ImageDraw.Draw(img)
     text = "D"
     l, t, r, b = d.textbbox((0, 0), text, font=font)
     w, h = r - l, b - t
-    x = (S - w) / 2 - l + 18
-    y = (S - h) / 2 - t + 30
+    x = (S - w) / 2 - l + size * 0.045
+    y = (S - h) / 2 - t - 4
     d.text((x, y), text, font=font, fill=SNOW)
     # Eth crossbar across the stem, in signal orange.
     stem_left = x + l
-    bar_h = 64
+    bar_h = size * 0.095
     cy = y + t + h * 0.53
-    d.rectangle((stem_left - 74, cy - bar_h / 2, stem_left + 168, cy + bar_h / 2), fill=ORANGE)
+    d.rectangle((stem_left - size * 0.115, cy - bar_h / 2, stem_left + size * 0.245, cy + bar_h / 2), fill=ORANGE)
 
 def icon():
     img = sky()
@@ -90,9 +93,30 @@ def tinted():
     glyph(img)
     return img.convert("L").convert("RGB")
 
+# Every size iOS asks for, as PNG files: with only the 1024 px image some iOS
+# versions show no icon in notifications and Settings for an app installed
+# outside the App Store.
+SIZES = [  # (idiom, points, scales)
+    ("iphone", 20, (2, 3)), ("iphone", 29, (2, 3)), ("iphone", 40, (2, 3)), ("iphone", 60, (2, 3)),
+    ("ipad", 20, (1, 2)), ("ipad", 29, (1, 2)), ("ipad", 40, (1, 2)), ("ipad", 76, (1, 2)), ("ipad", 83.5, (2,)),
+]
+
 if __name__ == "__main__":
+    import json
     out = os.path.join(ROOT, "Nordur/Assets.xcassets/AppIcon.appiconset")
-    icon().save(os.path.join(out, "AppIcon.png"))
-    icon().save(os.path.join(out, "AppIcon-Dark.png"))
-    tinted().save(os.path.join(out, "AppIcon-Tinted.png"))
-    print("ok")
+    for f in os.listdir(out):
+        if f.endswith(".png"):
+            os.remove(os.path.join(out, f))
+    big = icon()
+    big.save(os.path.join(out, "AppIcon-1024.png"))
+    images = [{"filename": "AppIcon-1024.png", "idiom": "ios-marketing", "scale": "1x", "size": "1024x1024"}]
+    for idiom, pt, scales in SIZES:
+        for sc in scales:
+            px = int(round(pt * sc))
+            name = f"AppIcon-{px}.png"
+            if not os.path.exists(os.path.join(out, name)):
+                big.resize((px, px), Image.LANCZOS).save(os.path.join(out, name))
+            label = f"{pt:g}x{pt:g}"
+            images.append({"filename": name, "idiom": idiom, "scale": f"{sc}x", "size": label})
+    json.dump({"images": images, "info": {"author": "xcode", "version": 1}}, open(os.path.join(out, "Contents.json"), "w"), indent=2)
+    print("ok", len(images))
