@@ -69,8 +69,13 @@ if __name__ == "__main__":
     notes = [1046.5, 1318.5, 1568.0, 1760.0, 2093.0, 2637.0]
     write("aurora_now", reverb(place(2.8, [(0.11 * i, bell(f, 2.6, 2.2)) for i, f in enumerate(notes)] +
                                       [(0.75, 0.5 * bell(1046.5 / 2, 2.2, 1.6))]), 0.5))
-    # Aurora, get ready / tonight: the same opening, three notes, lighter.
-    write("aurora_soon", reverb(place(1.8, [(0.13 * i, bell(f, 1.6, 2.8)) for i, f in enumerate(notes[:3])]), 0.4), 0.65)
+    # Aurora, get ready / tonight: told apart at once from "go out now" — two lower,
+    # slower notes (C5 then G5) that swell in softly, a gentle "heads up".
+    def swell(freq, sec):
+        x = t(sec)
+        return bell(freq, sec, 1.8) * np.minimum(1, x / 0.12)
+    write("aurora_soon", reverb(place(2.0, [(0, swell(523.3, 1.4)), (0.45, swell(784.0, 1.5)),
+                                             (0.45, 0.35 * swell(392.0, 1.5))]), 0.45), 0.55)
     # Official weather warning: two soft tones, once; urgent (orange/red): the same, a
     # step higher, twice. Recognisable, not alarming.
     write("warning", reverb(place(1.0, [(0, bell(880, 0.6, 3.5)), (0.28, bell(659.3, 0.7, 3.0))]), 0.3))
