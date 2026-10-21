@@ -142,7 +142,7 @@ chapter("1 · Oggi", "Il viaggio di oggi e l'aurora adesso, con «vedo / non ved
 scroll(1, 0.35, 2.8)
 scroll(1, 0.4, 2.2)
 chapter("1 · Oggi", "Esplora: da vedere, strade, vulcani, webcam")
-if tap(ident="tile.Da vedere", pause=3, scrolls=2):
+if tap(ident="tile.Da vedere", pause=3, scrolls=4):
     chapter("Da vedere", "Cascate, belvedere, sorgenti calde: 1.300 luoghi su mappa")
     time.sleep(2)
     scroll(1, 0.4, 1.6)
@@ -196,23 +196,30 @@ if tap(ident="nightVision", pause=3.5, anywhere=True):
     tap(ident="nightVision", pause=1.5, anywhere=True)
 
 # 4 · Map
+# No accessibility queries here: with a thousand pins the tree is so big that
+# idb's describe-all keeps the app busy until it stops responding. Taps by
+# position instead (points on a 402 × 874 screen).
+def at(x, y, pause=2.2):
+    tap_at(W * x / 402, H * y / 874, pause)
+
 tab("Mappa")
 chapter("4 · Mappa", "Vento, raffiche, pioggia, neve, nuvole, temperatura, aurora, radar")
 time.sleep(3)
-for layer in ["gust", "precipitation", "snow", "cloud", "temperature", "aurora", "radar", "wind"]:
-    tap(ident=f"layer.{layer}", pause=2.2, anywhere=True)
-if tap(label="Play", pause=4, anywhere=True) or tap(label="play", pause=4, anywhere=True):
-    tap(label="Pausa", pause=1, anywhere=True)
-tap_at(W * 0.45, H * 0.5, 3)
+for x, y in [(250, 130), (62, 166), (150, 166), (237, 166), (75, 201), (185, 201), (275, 201), (157, 130)]:
+    at(x, y, 2.6)
+at(31, 719, 5)      # play the next hours
+at(31, 719, 1.5)    # pause
+at(360, 505, 3.5)   # a point at sea off the east coast, away from the pins
 chapter("4 · Mappa", "Tocca un punto: meteo, aurora e strada in quel posto")
-if tap(ident="map.fullscreen", pause=3, anywhere=True):
-    chapter("4 · Mappa", "A schermo intero, legenda e tempo sopra la mappa")
-    time.sleep(2)
-    tap(ident="map.fullscreen", pause=2, anywhere=True)
-if tap(ident="layers.menu", pause=2.5, anywhere=True):
-    chapter("4 · Mappa", "Livelli: allerte, strade, webcam, distributori, attrazioni, viaggio")
-    time.sleep(2)
-    tap_at(W * 0.5, H * 0.92, 1.5)
+time.sleep(2)
+at(367, 604, 3)     # full screen
+chapter("4 · Mappa", "A schermo intero, legenda e tempo sopra la mappa")
+time.sleep(2.5)
+notify("dismiss", 1.5)
+at(60, 240, 2.5)    # layers menu
+chapter("4 · Mappa", "Livelli: allerte, strade, webcam, distributori, attrazioni, viaggio")
+time.sleep(2.5)
+notify("dismiss", 1.5)
 
 # 5 · Trip
 tab("Viaggio")
@@ -233,9 +240,6 @@ if tap(label="Tappe", exact=True, pause=2.5, anywhere=True):
         scroll(3, 0.45, 1.6)
         back()
     scroll_top()
-if tap(label="Mappa", exact=True, pause=3.5, anywhere=False):
-    chapter("5 · Viaggio", "Il percorso sulla mappa, tappe numerate e attrazioni")
-    time.sleep(1.5)
 tap(label="Giorni", exact=True, pause=1.5)
 if tap(ident="trip.share", pause=3, scrolls=1):
     chapter("5 · Viaggio", "Condividi: modificatelo insieme, o una copia via email")

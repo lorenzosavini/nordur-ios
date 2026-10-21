@@ -208,9 +208,16 @@ struct RootView: View {
         .task {
             if UserDefaults.standard.bool(forKey: "ciDemoTrip") {
                 CIRemote.listen { command in
+                    if command == "dismiss" {
+                        CIRemote.dismissAll()
+                        self.model.immersiveMap = false
+                        return
+                    }
                     if command == "settings" { self.model.showSettings = true; return }
                     if let target = Tab(rawValue: command.replacingOccurrences(of: "tab.", with: "")) {
+                        CIRemote.dismissAll()
                         self.model.showSettings = false
+                        self.model.immersiveMap = false
                         tab = target
                     }
                 }
