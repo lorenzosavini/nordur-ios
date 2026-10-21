@@ -75,7 +75,8 @@ export async function buildState(now = Date.now()) {
     if (src[name].status === "ok" && (age == null || age > limit)) src[name].status = "stale";
     if (src[name].meta) src[name].meta.ageMinutes = age == null ? null : Math.round(age);
   }
-  if (src.donki.meta?.cachedCopy) src.donki.status = "stale";
+  // A saved copy shown because the source did not answer: yellow, not red.
+  for (const v of Object.values(src)) if (v.status === "ok" && v.meta?.cachedCopy) v.status = "stale";
 
   const usable = (name) => (src[name].status === "ok" ? src[name].data : null);
   const kpBlocks = src.kpForecast.data

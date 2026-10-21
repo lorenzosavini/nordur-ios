@@ -1,4 +1,5 @@
 // Ingestion + normalisation of the official space-weather feeds.
+import { readObject, writeObject } from "./core.js";
 // Every loader returns { data, meta } where meta records provider, endpoint,
 // the time the data refers to and when it was published, so the client can
 // show provenance and refuse to present old data as live.
@@ -33,17 +34,28 @@ export async function kpEstimated() {
   return { data, meta: meta("NOAA SWPC", endpoint, { observedAt: iso(data.at(-1)?.t) }) };
 }
 
-// GFZ answers in a fraction of a second or not at all (30+ s): a short timeout,
-// no retry, and the last good answer of this instance when it does not answer.
+// GFZ answers in a fraction of a second or not at all (30+ s, or 503 for hours):
+// a short timeout, no retry, and the last good answer when it does not answer:
+// this instance's, else the one kept in storage (written at most every 10 min,
+// served for up to 48 h) so a fresh instance has it too.
 const GFZ = { timeout: 5000, retries: 0 };
 const lastGood = new Map();
+const savedAt = new Map();
 async function remembered(name, load) {
   try {
     const result = await load();
     lastGood.set(name, result);
+    if (Date.now() - (savedAt.get(name) || 0) > 10 * 60e3) {
+      savedAt.set(name, Date.now());
+      writeObject(`cache/last-${name}.bin`, { at: Date.now(), result }, { ttl: 48 * 3600 }).catch(() => {});
+    }
     return result;
   } catch (e) {
-    const previous = lastGood.get(name);
+    let previous = lastGood.get(name);
+    if (!previous) {
+      const stored = await readObject(`cache/last-${name}.bin`).catch(() => null);
+      if (stored?.result && Date.now() - stored.at < 48 * 3600e3) previous = stored.result;
+    }
     if (previous) return { ...previous, meta: { ...previous.meta, cachedCopy: true, error: String(e.message || e) } };
     throw e;
   }
