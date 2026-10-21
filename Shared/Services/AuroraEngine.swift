@@ -361,8 +361,8 @@ enum AuroraEngine {
         var reasons: [(weight: Double, text: String)] = []
         var notes: [String] = []
 
-        // 1 · activity (and how bright the aurora should be, in kilorayleigh)
-        var brightness = 0.0
+        // 1 · activity (and the electron energy flux behind it, erg cm⁻² s⁻¹)
+        var flux = 0.0
         let block = kp(at: date, in: inputs.kp)
         let kpValue = block?.value
         var source = "Kp → ovale"
@@ -375,9 +375,10 @@ enum AuroraEngine {
             geometry = g.category; ovationValue = g.value; azimuth = g.azimuth; elevation = g.elevation
             let geo = g.category == .overhead ? 1 : g.category == .toward ? 0.85 : g.category == .low ? 0.45 : 0
             activity = min(1, g.value / 40) * geo
-            // OVATION's probability follows the energy flux: ~1 kR (a faint glow, like the
-            // Milky Way) around 10 %, several kR (bright, moving) at 40–50 %.
-            brightness = g.value / 8 * (g.category == .overhead ? 1 : g.category == .toward ? 0.8 : g.category == .low ? 0.45 : 0)
+            // SWPC's "probability of visible aurora" is P = 10 + 8·Σj of the energy flux
+            // Σj (Case, MacDonald & Viereck 2016, Space Weather): invert it. An aurora
+            // seen on the horizon rather than overhead counts less.
+            flux = max(0, (g.value - 10) / 8) * (g.category == .overhead ? 1 : g.category == .toward ? 0.8 : g.category == .low ? 0.45 : 0)
             if g.category == .none { reasons.append((1, String(localized: "OVATION non prevede aurora nel tuo cielo"))) }
         } else if let kpValue {
             let g = ViewingGeometry.fromKp(kpValue, at: place, horizon: inputs.horizon ?? .flat)
@@ -385,7 +386,9 @@ enum AuroraEngine {
             azimuth = g.category == .overhead ? nil : ViewingGeometry.bearing(from: place, to: Coordinate(lat: Geomagnetic.poleLat, lon: Geomagnetic.poleLon))
             let geo = g.category == .overhead ? 1 : g.category == .toward ? 0.6 : g.category == .low ? 0.3 : 0
             activity = kpActivity(kpValue) * geo
-            brightness = 0.6 * pow(2, kpValue - 2) * geo
+            // Without OVATION, a rough flux from Kp (about doubling per Kp step, 2 erg at
+            // Kp 4 under the oval); the slot's reliability already says it is coarser.
+            flux = 0.5 * pow(2, kpValue - 2) * geo
             if g.category == .none { reasons.append((1, String(localized: "Con Kp \(Fmt.number(kpValue, decimals: 1)) l'ovale resta lontano"))) }
         } else {
             notes.append(String(localized: "Nessuna previsione geomagnetica per quest'ora"))
@@ -420,14 +423,15 @@ enum AuroraEngine {
         let light = LightPollution.factor(at: place)
         if let note = light.note { reasons.append((1 - light.value, note)) }
 
-        // Can the eye see it from here? The aurora's brightness against the sky's:
-        // twilight, Moon and artificial light all brighten the background, a bright
-        // aurora still stands out over a city or in nautical twilight, a faint one
-        // needs real darkness. Background as a multiple of a natural dark sky
-        // (~0.2 kR of airglow); contrast mapped to 0…1, then the clouds.
-        let background = twilightSky(sunAlt) + 15 * pow(moon.illuminatedFraction, 1.5) * moonUp + (LightPollution.skyRatio(at: place) - 1)
-        let contrast = brightness / 0.2 / background
-        let visibility = darkness == .day ? 0 : 1 - exp(-contrast / 3)
+        // Can the eye see it from here? Under a dark sky the aurora is visible from
+        // about 1 erg cm⁻² s⁻¹ (Machol et al. 2012, the 18 % of SWPC's scale). A brighter
+        // sky (twilight, Moon, city lights; as a multiple of a natural night sky) raises
+        // the threshold with its square root, as night vision does (de Vries–Rose law).
+        // The margin over the threshold gives 0…1 (1× → moderate, 2× → good, 4× → excellent),
+        // then the clouds take their share.
+        let background = twilightSky(sunAlt) + 30 * pow(moon.illuminatedFraction, 2.5) * moonUp + (LightPollution.skyRatio(at: place) - 1)
+        let margin = flux / sqrt(background)
+        let visibility = darkness == .day ? 0 : 1 - exp(-0.29 * margin)
         let index = visibility * clearFactor
         let cls = ObservabilityClass(index: index)
         if reasons.isEmpty && cls >= .good {
@@ -456,12 +460,12 @@ enum AuroraEngine {
             reliability: reliability, reliabilityNotes: notes)
     }
 
-    /// Twilight sky brightness as a multiple of the night sky: 1 below −18°,
-    /// about 3 at −12° (end of nautical twilight), 60 at −6°, thousands at sunset.
+    /// Twilight sky brightness at the zenith as a multiple of the night sky, from the
+    /// measured twilight curve (about 21.8 mag/arcsec² at night, 19 at −12°, 15 at −6°).
     static func twilightSky(_ sunAltitude: Double) -> Double {
-        let points: [(alt: Double, mag: Double)] = [(-18, 0), (-12, 1.2), (-6, 4.5), (-0.833, 9)]
+        let points: [(alt: Double, mag: Double)] = [(-18, 0), (-15, 1.2), (-12, 2.8), (-9, 5), (-6, 7), (-0.833, 11)]
         guard sunAltitude > -18 else { return 1 }
-        guard sunAltitude < -0.833 else { return pow(10, 0.4 * 9) }
+        guard sunAltitude < -0.833 else { return pow(10, 0.4 * 11) }
         for (a, b) in zip(points, points.dropFirst()) where sunAltitude <= b.alt {
             let f = (sunAltitude - a.alt) / (b.alt - a.alt)
             return pow(10, 0.4 * (a.mag + f * (b.mag - a.mag)))
