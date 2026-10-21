@@ -141,3 +141,43 @@ struct SeededRandom {
         return CGFloat(Double(state >> 11) / Double(1 << 53))
     }
 }
+
+/// The aurora behind the app: when the aurora is possible where you are, soft
+/// curtains move at the top of every screen, brighter the better the chances,
+/// gone when there is none. Light enough not to cover what is written (it adds
+/// light on the dark theme, it does not paint over it), still with Reduce
+/// Motion and Low Power Mode, off from Settings › Schermo.
+struct AmbientAurora: View {
+    static let key = "ambientAurora"
+    @Environment(AppModel.self) private var model
+    @Environment(\.colorScheme) private var scheme
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @Environment(\.scenePhase) private var phase
+    @AppStorage(AmbientAurora.key) private var enabled = true
+
+    /// 0 with no chance, 1 with excellent conditions (observability index here, now).
+    static func intensity(_ slot: AuroraSlot?) -> Double {
+        guard let index = slot?.index else { return 0 }
+        return min(1, max(0, (index - 0.08) / 0.47))
+    }
+
+    var body: some View {
+        let strength = enabled ? Self.intensity(model.auroraNow) : 0
+        GeometryReader { geo in
+            if strength > 0 {
+                AuroraCurtain(moving: !reduceMotion && phase == .active && !ProcessInfo.processInfo.isLowPowerModeEnabled,
+                              strength: 0.4 + 0.6 * strength)
+                    .frame(height: geo.size.height * (0.28 + 0.17 * strength))
+                    .mask(LinearGradient(colors: [.black, .black.opacity(0.6), .clear], startPoint: .top, endPoint: .bottom))
+                    .opacity(scheme == .dark ? 0.16 + 0.34 * strength : 0.08 + 0.14 * strength)
+                    .blendMode(scheme == .dark ? .screen : .multiply)
+                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
+                    .transition(.opacity)
+            }
+        }
+        .ignoresSafeArea()
+        .allowsHitTesting(false)
+        .accessibilityHidden(true)
+        .animation(.easeInOut(duration: 2), value: strength)
+    }
+}

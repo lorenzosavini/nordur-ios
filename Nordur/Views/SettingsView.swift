@@ -10,6 +10,7 @@ struct SettingsView: View {
     @State private var showAccount = false
     @AppStorage(NightVision.key) private var nightVision = false
     @AppStorage(NightVision.autoKey) private var nightAuto = false
+    @AppStorage(AmbientAurora.key) private var ambientAurora = true
 
     var body: some View {
         NavigationStack {
@@ -43,8 +44,11 @@ struct SettingsView: View {
                     Toggle(isOn: $nightAuto) {
                         Label("Da sola di notte nella scheda Aurora", systemImage: "moon.stars")
                     }
+                    Toggle(isOn: $ambientAurora) {
+                        Label("Aurora animata sullo sfondo", systemImage: "sparkles")
+                    }
                 } header: { Text("Schermo").pinnedHeader() } footer: {
-                    Text("Lo schermo diventa rosso scuro su nero: la luce bianca e blu fa perdere l'adattamento degli occhi al buio (servono 20-30 minuti per recuperarlo), il rosso no. Abbassa anche la luminosità del telefono.")
+                    Text("Lo schermo diventa rosso scuro su nero: la luce bianca e blu fa perdere l'adattamento degli occhi al buio (servono 20-30 minuti per recuperarlo), il rosso no. Abbassa anche la luminosità del telefono.\n\nAurora animata: quando l'aurora è possibile dove sei, in alto compaiono le sue tende, più evidenti quanto più sono buone le probabilità; spariscono quando non ce n'è.")
                 }
 
                 BackupSettingsSection()

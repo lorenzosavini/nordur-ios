@@ -16887,6 +16887,26 @@
           }
         }
       }
+    },
+    "Lo schermo diventa rosso scuro su nero: la luce bianca e blu fa perdere l'adattamento degli occhi al buio (servono 20-30 minuti per recuperarlo), il rosso no. Abbassa anche la luminosità del telefono.\n\nAurora animata: quando l'aurora è possibile dove sei, in alto compaiono le sue tende, più evidenti quanto più sono buone le probabilità; spariscono quando non ce n'è." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The screen turns deep red on black: white and blue light undo the eyes' adaptation to the dark (20-30 minutes to get it back), red does not. Turn the phone's brightness down too.\n\nAnimated aurora: when the aurora is possible where you are, its curtains appear at the top, the clearer the better the chances; they disappear when there is none."
+          }
+        }
+      }
+    },
+    "Aurora animata sullo sfondo" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Animated aurora in the background"
+          }
+        }
+      }
     }
   },
   "version" : "1.0"

@@ -127,6 +127,7 @@ struct RootView: View {
                     .transition(.move(edge: .bottom))
             }
         }
+        .overlay { AmbientAurora() }
         .overlay(alignment: .top) { OfflineBanner() }
         .nightVision(nightVision || (nightAuto && tab == .aurora && NightVision.auto(at: model.activePlace.coordinate)))
         .overlay {
