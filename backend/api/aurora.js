@@ -17,9 +17,15 @@ import { watchConditions } from "../lib/watch.js";
 // Maximum age before a "live" source is flagged stale (minutes).
 const LIVE_LIMITS = { solarWind: 15, kpEstimated: 20, ovation: 25, hemisphericPower: 25, magnetometer: 45, hp30: 120 };
 
+// No source may hold the whole answer: past 9 s it counts as not answering.
+const SOURCE_BUDGET_MS = 9000;
+
 async function settle(name, loader) {
   try {
-    const r = await loader();
+    const r = await Promise.race([
+      loader(),
+      new Promise((_, reject) => setTimeout(() => reject(new Error(`timeout ${SOURCE_BUDGET_MS / 1000} s`)), SOURCE_BUDGET_MS)),
+    ]);
     return [name, { status: "ok", ...r }];
   } catch (e) {
     console.error(name, e.message);
@@ -152,7 +158,7 @@ export default async function handler(req, res) {
     new Promise((resolve) => setTimeout(resolve, 4000)),
   ]);
   const essential = state.sources.kpForecast.status !== "error" || state.sources.solarWind.status !== "error";
-  res.setHeader("Cache-Control", essential ? "public, s-maxage=60, stale-while-revalidate=120" : "no-store");
+  res.setHeader("Cache-Control", essential ? "public, s-maxage=60, stale-while-revalidate=3600" : "no-store");
   const compact = query.get("compact") === "1";
   return send(res, essential ? 200 : 502, compact ? compactState(state) : state);
 }

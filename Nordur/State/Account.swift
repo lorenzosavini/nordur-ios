@@ -353,7 +353,14 @@ final class Account {
             guard let token else { throw AccountError.message(String(localized: "Accedi al tuo account")) }
             request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
         }
-        let (data, response) = try await URLSession.shared.data(for: request)
+        // A connection lost or timed out (mobile network, a tunnel) is tried once more.
+        let (data, response): (Data, URLResponse)
+        do {
+            (data, response) = try await URLSession.shared.data(for: request)
+        } catch let error as URLError where [.timedOut, .networkConnectionLost, .notConnectedToInternet].contains(error.code) {
+            try await Task.sleep(nanoseconds: 3_000_000_000)
+            (data, response) = try await URLSession.shared.data(for: request)
+        }
         let status = (response as? HTTPURLResponse)?.statusCode ?? 0
         guard (200..<300).contains(status) else {
             // An expired session signs out; a wrong password on account actions does not.

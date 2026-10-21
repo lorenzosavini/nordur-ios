@@ -250,6 +250,12 @@ struct FuelDetail: View {
                 Section { DirectionsRows(to: station.coordinate) }
             }
             .themedList()
+            .task {
+                // Opening a pump: prices older than 5 minutes are fetched again.
+                if let fetched = model.fuelPrices, Date().timeIntervalSince(fetched.date) < 300, !fetched.isStale { return }
+                await model.loadFuelPrices(force: true)
+            }
+            .refreshable { await model.loadFuelPrices(force: true) }
             .navigationTitle(station.kind == .charger ? String(localized: "Ricarica") : String(localized: "Carburante"))
             .navigationBarTitleDisplayMode(.inline)
             .toolbar { ToolbarItem(placement: .cancellationAction) { Button("Chiudi") { dismiss() } } }

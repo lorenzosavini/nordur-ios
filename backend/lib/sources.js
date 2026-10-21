@@ -33,22 +33,40 @@ export async function kpEstimated() {
   return { data, meta: meta("NOAA SWPC", endpoint, { observedAt: iso(data.at(-1)?.t) }) };
 }
 
+// GFZ answers in a fraction of a second or not at all (30+ s): a short timeout,
+// no retry, and the last good answer of this instance when it does not answer.
+const GFZ = { timeout: 5000, retries: 0 };
+const lastGood = new Map();
+async function remembered(name, load) {
+  try {
+    const result = await load();
+    lastGood.set(name, result);
+    return result;
+  } catch (e) {
+    const previous = lastGood.get(name);
+    if (previous) return { ...previous, meta: { ...previous.meta, cachedCopy: true, error: String(e.message || e) } };
+    throw e;
+  }
+}
+
 /** GFZ Potsdam Kp (the official producer of Kp): definitive / preliminary / nowcast, CC BY 4.0. */
-export async function kpGFZ() {
+export async function kpGFZ() { return remembered("kpGFZ", kpGFZLive); }
+async function kpGFZLive() {
   const start = new Date(Date.now() - 3 * 864e5).toISOString().slice(0, 10) + "T00:00:00Z";
   const end = new Date(Date.now() + 864e5).toISOString().slice(0, 10) + "T00:00:00Z";
   const endpoint = `https://kp.gfz.de/app/json/?start=${start}&end=${end}&index=Kp&status=all`;
-  const json = await fetchJSON(endpoint);
+  const json = await fetchJSON(endpoint, GFZ);
   const data = (json.datetime || []).map((t, i) => ({ t: utc(t), kp: num(json.Kp?.[i]), status: json.status?.[i] || null })).filter((r) => r.t && r.kp != null);
   return { data, meta: meta("GFZ Potsdam", "https://kp.gfz.de/app/json/", { license: json.meta?.license || "CC BY 4.0", observedAt: iso(data.at(-1)?.t) }) };
 }
 
 /** GFZ Hp30: the Kp scale over 30 minutes instead of 3 hours (CC BY 4.0). */
-export async function hp30() {
+export async function hp30() { return remembered("hp30", hp30Live); }
+async function hp30Live() {
   const start = new Date(Date.now() - 864e5).toISOString().slice(0, 19) + "Z";
   const end = new Date(Date.now() + 3600e3).toISOString().slice(0, 19) + "Z";
   const endpoint = `https://kp.gfz.de/app/json/?start=${start}&end=${end}&index=Hp30`;
-  const json = await fetchJSON(endpoint);
+  const json = await fetchJSON(endpoint, GFZ);
   const data = (json.datetime || []).map((t, i) => ({ t: utc(t), hp30: num(json.Hp30?.[i]) })).filter((r) => r.t && r.hp30 != null);
   if (!data.length) throw new Error("Hp30 vuoto");
   return { data, meta: meta("GFZ Potsdam", "https://kp.gfz.de/app/json/", { license: json.meta?.license || "CC BY 4.0", observedAt: iso(data.at(-1).t) }) };

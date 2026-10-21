@@ -337,9 +337,10 @@ final class AppModel {
         await loadFuelPrices(force: force)
     }
 
-    /// Pump prices every 30 minutes, exchange rates every 6 hours.
+    /// Pump prices every 10 minutes (Gasvaktin reads the companies about every
+    /// quarter of an hour), exchange rates every 6 hours.
     func loadFuelPrices(force: Bool = false) async {
-        if force || fuelPrices.map({ Date().timeIntervalSince($0.date) > 1800 || $0.isStale }) ?? true {
+        if force || fuelPrices.map({ Date().timeIntervalSince($0.date) > 600 || $0.isStale }) ?? true {
             await load(.fuelPrices, { try await FuelPrices.load() }) { self.fuelPrices = $0 }
         }
         if force || rates.map({ Date().timeIntervalSince($0.date) > 6 * 3600 || $0.isStale }) ?? true {
