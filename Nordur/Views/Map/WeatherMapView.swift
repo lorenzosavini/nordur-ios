@@ -144,6 +144,8 @@ struct WeatherMapView: UIViewRepresentable {
 
     func makeUIView(context: Context) -> MKMapView {
         let map = MKMapView()
+        // CI only (the demo video): see ciHiddenFromAccessibility.
+        if UserDefaults.standard.bool(forKey: "ciDemoTrip") { map.accessibilityElementsHidden = true }
         map.delegate = context.coordinator
         map.showsUserLocation = true
         map.showsCompass = true

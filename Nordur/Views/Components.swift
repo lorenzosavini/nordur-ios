@@ -497,6 +497,7 @@ struct ExpandableMap<MapBody: View, Legend: View>: View {
 
     var body: some View {
         map()
+            .ciHiddenFromAccessibility()
             .frame(height: height)
             .clipShape(Rectangle())
             .overlay(alignment: .topTrailing) {
@@ -1144,5 +1145,13 @@ struct PlaceHero: View {
                 withAnimation(.easeOut(duration: 0.2)) { summary = text }
             }
         }
+    }
+}
+
+extension View {
+    /// CI only (the demo video): maps with many pins make the accessibility tree
+    /// so large that reading it from idb hangs the app, so they leave it there.
+    @ViewBuilder func ciHiddenFromAccessibility() -> some View {
+        if UserDefaults.standard.bool(forKey: "ciDemoTrip") { accessibilityHidden(true) } else { self }
     }
 }

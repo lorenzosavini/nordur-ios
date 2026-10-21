@@ -104,7 +104,7 @@ struct TripView: View {
                     }, onAdd: { dayAdd = $0 })
                 } else if mode == "map", !trip.stops.isEmpty {
                     Section {
-                        TripMap { mapStop = $0 }
+                        TripMap { mapStop = $0 }.ciHiddenFromAccessibility()
                             .frame(height: 480)
                             .listRowInsets(EdgeInsets())
                     } footer: {
