@@ -47,7 +47,9 @@ struct DataSourcesView: View {
                         Text(source.rawValue.loc).font(.app(.subheadline)).foregroundStyle(Theme.text)
                         Spacer()
                         Text(f.map { $0.stale ? String(localized: "copia del \(Fmt.dayTime($0.date))") : Fmt.relative($0.date) }
-                             ?? (error != nil ? String(localized: "errore") : String(localized: "non ancora caricato")))
+                             ?? (error != nil ? String(localized: "errore")
+                                : [.flights, .ferry, .grid, .radar].contains(source) ? String(localized: "quando apri la sezione")
+                                : String(localized: "non ancora caricato")))
                             .font(.mono(11)).foregroundStyle(error != nil ? Theme.danger : Theme.dim).lineLimit(1)
                     }
                 }
@@ -63,14 +65,16 @@ struct DataSourcesView: View {
                             Circle().fill(s.status == "ok" ? Theme.aurora : s.status == "stale" ? Theme.caution : Theme.danger).frame(width: 9, height: 9)
                             Text(Self.auroraSourceName(key)).font(.app(.subheadline)).foregroundStyle(Theme.text)
                             Spacer()
-                            Text([s.provider, s.ageMinutes.map { String(localized: "\(Int($0)) min") }, s.status == "ok" ? nil : s.status.uppercased()].compactMap { $0 }.joined(separator: " · "))
+                            Text([s.provider, s.ageMinutes.map { String(localized: "\(Int($0)) min") }, s.status == "ok" ? nil : s.status == "stale" ? String(localized: "copia salvata") : String(localized: "non risponde")].compactMap { $0 }.joined(separator: " · "))
                                 .font(.mono(11)).foregroundStyle(s.status == "ok" ? Theme.dim : Theme.warning).lineLimit(1)
                         }
                     }
                 } else {
                     ErrorNote(message: model.errors[.aurora] ?? String(localized: "Stato delle fonti non disponibile"))
                 }
-            } header: { Text("Aurora: fonti scientifiche").pinnedHeader() }
+            } header: { Text("Aurora: fonti scientifiche").pinnedHeader() } footer: {
+                Text("Giallo: la fonte non ha risposto e si usa la sua ultima copia buona. Rosso: non risponde e non c'è una copia; il problema è della fonte, e il resto (Kp, previsioni) viene comunque da NOAA.")
+            }
 
             Section {
                 if let bt = backtest {
