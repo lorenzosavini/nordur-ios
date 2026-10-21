@@ -249,6 +249,7 @@ final class TripStore {
             sharedError = nil
         } catch {
             sharedError = error.localizedDescription
+            ErrorLog.record("Viaggio condiviso", error)
         }
     }
 

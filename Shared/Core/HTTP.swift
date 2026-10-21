@@ -86,9 +86,12 @@ enum HTTP {
             DiskCache.write(data, key: cacheKey)
             return Fetched(value: data, date: Date(), isStale: false)
         } catch {
+            let host = (url.host ?? "") + url.path
             if let cached = DiskCache.read(cacheKey) {
+                ErrorLog.record("Rete · \(url.host ?? "")", error, detail: "\(host) — mostrata la copia salvata del \(cached.date.formatted(date: .abbreviated, time: .shortened))")
                 return Fetched(value: cached.data, date: cached.date, isStale: true)
             }
+            ErrorLog.record("Rete · \(url.host ?? "")", error, detail: host)
             throw error
         }
     }
@@ -126,7 +129,12 @@ enum HTTP {
                let empty = try? JSONDecoder().decode(T.self, from: Data("[]".utf8)) {
                 return empty
             }
-            return try JSONDecoder().decode(T.self, from: data)
+            do {
+                return try JSONDecoder().decode(T.self, from: data)
+            } catch {
+                ErrorLog.record("Dati · \(url.host ?? "")", error, detail: (url.host ?? "") + url.path + " · " + String(describing: T.self))
+                throw error
+            }
         }
     }
 }

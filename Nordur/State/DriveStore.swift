@@ -158,6 +158,7 @@ final class DriveStore {
             try DriveMath.gpx(full).write(to: url, atomically: true, encoding: .utf8)
             return url
         } catch {
+            ErrorLog.record("GPX", error)
             return nil
         }
     }

@@ -292,7 +292,11 @@ final class AlertCenter: NSObject {
     private func cachedForecast(_ c: Coordinate) async -> Forecast? {
         let key = c.key
         if let hit = forecastCache[key], Date().timeIntervalSince(hit.date) < 1800 { return hit.forecast }
-        guard let fetched = try? await WeatherService.forecast(c).value else { return forecastCache[key]?.forecast }
+        let fetched: Forecast
+        do { fetched = try await WeatherService.forecast(c).value } catch {
+            ErrorLog.record("Allerte · previsioni", error, detail: key)
+            return forecastCache[key]?.forecast
+        }
         forecastCache[key] = (Date(), fetched)
         return fetched
     }
@@ -434,7 +438,7 @@ extension AlertCenter: CLLocationManagerDelegate {
         Task { @MainActor in AlertCenter.shared.requestFix() }
     }
 
-    nonisolated func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {}
+    nonisolated func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) { ErrorLog.record("Posizione", error) }
 
     nonisolated func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
         Task { @MainActor in

@@ -410,6 +410,7 @@ final class AppModel {
             // A request stopped because its screen went away is not a failure of the source.
             if error is CancellationError || (error as? URLError)?.code == .cancelled { return }
             errors[source] = error.localizedDescription
+            ErrorLog.record("Fonte · \(source.rawValue)", error)
         }
     }
 

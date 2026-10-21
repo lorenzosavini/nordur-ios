@@ -16827,6 +16827,66 @@
           }
         }
       }
+    },
+    "Mostra" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Show"
+          }
+        }
+      }
+    },
+    "Chiusure (%lld)" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Closings (%lld)"
+          }
+        }
+      }
+    },
+    "Errori (%lld)" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Errors (%lld)"
+          }
+        }
+      }
+    },
+    "Nessun errore registrato" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No errors recorded"
+          }
+        }
+      }
+    },
+    "Qui finiscono le fonti che non rispondono, i dati non leggibili, i backup e le sincronizzazioni non riuscite, il GPS." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sources that do not answer, data that cannot be read, failed backups and syncs, the GPS: they end up here."
+          }
+        }
+      }
+    },
+    "Lo stesso errore ripetuto entro 10 minuti viene contato (×N) invece di ripetuto. Molti errori di rete sono normali senza campo: l'app mostra l'ultima copia salvata." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The same error within 10 minutes is counted (×N) instead of repeated. Many network errors are normal without signal: the app shows the last saved copy."
+          }
+        }
+      }
     }
   },
   "version" : "1.0"

@@ -294,6 +294,7 @@ final class Account {
             lastError = nil
         } catch {
             lastError = error.localizedDescription
+            ErrorLog.record("Backup", error)
         }
     }
 
@@ -358,6 +359,7 @@ final class Account {
             // An expired session signs out; a wrong password on account actions does not.
             if status == 401, authorized, path != "auth" { signOut() }
             let message = (try? JSONDecoder().decode(ErrorResponse.self, from: data))?.error ?? String(localized: "Errore \(status)")
+            ErrorLog.record("Account · \(path)", "\(status): \(message)", detail: "\(method) \(components.path)")
             throw AccountError.message(message)
         }
         return data

@@ -59,6 +59,7 @@ final class LocationManager: NSObject, CLLocationManagerDelegate {
 
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         // Keep the last known position; the UI falls back to the chosen place.
+        ErrorLog.record("Posizione", error)
     }
 
     private static let lastKnownKey = "lastKnownLocation"
