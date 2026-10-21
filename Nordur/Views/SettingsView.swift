@@ -11,6 +11,7 @@ struct SettingsView: View {
     @AppStorage(NightVision.key) private var nightVision = false
     @AppStorage(NightVision.autoKey) private var nightAuto = false
     @AppStorage(AmbientAurora.key) private var ambientAurora = true
+    @AppStorage(CurrencyDisplay.key) private var currency = CurrencyDisplay.both.rawValue
 
     var body: some View {
         NavigationStack {
@@ -20,6 +21,12 @@ struct SettingsView: View {
                         ForEach(WindUnit.allCases) { Text($0.label).tag($0.rawValue) }
                     } label: {
                         Label("Vento", systemImage: "wind")
+                    }
+                    .pickerStyle(.menu)
+                    Picker(selection: $currency) {
+                        ForEach(CurrencyDisplay.allCases) { Text($0.label).tag($0.rawValue) }
+                    } label: {
+                        Label("Prezzi in corone anche in", systemImage: "eurosign.circle")
                     }
                     .pickerStyle(.menu)
                     LabeledContent {

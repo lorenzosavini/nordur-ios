@@ -19,6 +19,8 @@ final class AppModel {
         case news = "SafeTravel"
         case webcams = "Webcam"
         case fuel = "Distributori"
+        case fuelPrices = "Prezzi carburante (Gasvaktin)"
+        case rates = "Cambio valuta (BCE)"
         case shops = "Supermercati e negozi"
         case sights = "Attrazioni (OpenStreetMap)"
         case flights = "Voli KEF"
@@ -71,6 +73,9 @@ final class AppModel {
     var news: Fetched<[NewsItem]>?
     var webcams: Fetched<[WebcamSite]>?
     var fuel: Fetched<[FuelStation]>?
+    /// Live pump prices and the króna exchange rates.
+    var fuelPrices: Fetched<[FuelPrice]>?
+    var rates: Fetched<ExchangeRates>?
     var shops: Fetched<[Shop]>?
     @ObservationIgnored private var shopsTask: Task<Void, Never>?
     /// Places to visit: the app's own list, plus OpenStreetMap once downloaded.
@@ -329,6 +334,17 @@ final class AppModel {
         }
         await loadShops(force: force)
         await loadSights(force: force)
+        await loadFuelPrices(force: force)
+    }
+
+    /// Pump prices every 30 minutes, exchange rates every 6 hours.
+    func loadFuelPrices(force: Bool = false) async {
+        if force || fuelPrices.map({ Date().timeIntervalSince($0.date) > 1800 || $0.isStale }) ?? true {
+            await load(.fuelPrices, { try await FuelPrices.load() }) { self.fuelPrices = $0 }
+        }
+        if force || rates.map({ Date().timeIntervalSince($0.date) > 6 * 3600 || $0.isStale }) ?? true {
+            await load(.rates, { try await ExchangeRates.load() }) { self.rates = $0 }
+        }
     }
 
     /// Places to visit from OpenStreetMap (30-day on-device copy), merged with the app's list.
@@ -564,6 +580,8 @@ extension AppModel {
         case .news: return f(news)
         case .webcams: return f(webcams)
         case .fuel: return f(fuel)
+        case .fuelPrices: return f(fuelPrices)
+        case .rates: return f(rates)
         case .shops: return f(shops)
         case .sights: return f(sights)
         case .flights: return f(flights)

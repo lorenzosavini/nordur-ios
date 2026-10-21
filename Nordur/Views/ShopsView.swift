@@ -209,6 +209,8 @@ struct FuelDetail: View {
     let station: FuelStation
     let from: Place
     @Environment(\.dismiss) private var dismiss
+    @Environment(AppModel.self) private var model
+    @AppStorage(CurrencyDisplay.key) private var currency = CurrencyDisplay.both.rawValue
 
     var body: some View {
         let status = station.status()
@@ -233,6 +235,7 @@ struct FuelDetail: View {
                     Text(status.text).font(.app(.headline))
                         .foregroundStyle(status.open == true ? Theme.aurora : status.open == false ? Theme.danger : Theme.dim)
                 }
+                if station.kind == .fuel { prices }
                 if let raw = station.openingHours {
                     Section {
                         Text(raw.replacingOccurrences(of: "; ", with: "\n")).font(.mono(13)).foregroundStyle(Theme.text)
@@ -253,3 +256,75 @@ struct FuelDetail: View {
         }
     }
 }
+
+extension FuelDetail {
+    /// Prices at this pump now, in króna and the other currency chosen, and the
+    /// cheapest pump around.
+    @ViewBuilder var prices: some View {
+        let all = model.fuelPrices?.value ?? []
+        let display = CurrencyDisplay(rawValue: currency) ?? .both
+        let rates = model.rates?.value
+        Section {
+            if let price = FuelPrices.match(station, in: all) {
+                ForEach(FuelKind.allCases) { fuel in
+                    if let value = price.price(fuel) {
+                        FuelPriceRow(label: fuel.label, isk: value, discount: price.discount(fuel), display: display, rates: rates)
+                    }
+                }
+                if price.name != station.name {
+                    Text(String(localized: "Prezzi di \(price.company) \(price.name)")).font(.app(.caption)).foregroundStyle(Theme.dim)
+                }
+            } else if model.fuelPrices == nil {
+                Text(model.errors[.fuelPrices] == nil ? String(localized: "Prezzi in arrivo…") : String(localized: "Prezzi non disponibili"))
+                    .font(.app(.subheadline)).foregroundStyle(Theme.dim)
+            } else {
+                Text("Nessun prezzo pubblicato per questo distributore.").font(.app(.subheadline)).foregroundStyle(Theme.dim)
+            }
+            if let best = FuelPrices.cheapest(all, near: station.coordinate, fuel: .petrol), let value = best.price.price(.petrol) {
+                VStack(alignment: .leading, spacing: 2) {
+                    Text("Il più economico entro 30 km").font(.app(.caption, .semibold)).foregroundStyle(Theme.aurora)
+                    Text("\(best.price.company) \(best.price.name) · \(Fmt.number(value, decimals: 1)) kr/l · \(Fmt.number(best.km, decimals: best.km < 10 ? 1 : 0)) km")
+                        .font(.app(.subheadline)).foregroundStyle(Theme.text)
+                    Link(destination: Directions.apple(to: best.price.coordinate)) {
+                        Label("Indicazioni", systemImage: "arrow.triangle.turn.up.right.diamond")
+                    }
+                    .font(.app(.caption, .semibold))
+                }
+            }
+        } header: {
+            Text("Prezzi adesso").pinnedHeader()
+        } footer: {
+            VStack(alignment: .leading, spacing: 4) {
+                if let fetched = model.fuelPrices {
+                    FreshnessLabel(date: fetched.date, isStale: fetched.isStale, source: "Gasvaktin")
+                }
+                Text("Prezzo alla pompa self-service al litro. «Con sconto»: con la carta o l'app della compagnia. Cambio BCE del \(rates?.date ?? "–").")
+            }
+        }
+    }
+}
+
+private struct FuelPriceRow: View {
+    let label: String
+    let isk: Double
+    let discount: Double?
+    let display: CurrencyDisplay
+    let rates: ExchangeRates?
+
+    var body: some View {
+        HStack(alignment: .firstTextBaseline) {
+            Text(label).font(.app(.subheadline)).foregroundStyle(Theme.text)
+            Spacer()
+            VStack(alignment: .trailing, spacing: 2) {
+                Text("\(Fmt.number(isk, decimals: 1)) kr/l").font(.metric(22, .semibold)).foregroundStyle(Theme.text)
+                if let converted = display.converted(isk, rates) {
+                    Text(converted).font(.mono(11)).foregroundStyle(Theme.dim)
+                }
+                if let discount, discount < isk {
+                    Text("Con sconto \(Fmt.number(discount, decimals: 1)) kr").font(.mono(11)).foregroundStyle(Theme.aurora)
+                }
+            }
+        }
+    }
+}
+

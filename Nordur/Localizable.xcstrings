@@ -16907,6 +16907,156 @@
           }
         }
       }
+    },
+    "Benzina 95" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Petrol 95"
+          }
+        }
+      }
+    },
+    "Diesel" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Diesel"
+          }
+        }
+      }
+    },
+    "Euro e dollari" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Euro and dollars"
+          }
+        }
+      }
+    },
+    "Euro" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Euro"
+          }
+        }
+      }
+    },
+    "Dollari" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dollars"
+          }
+        }
+      }
+    },
+    "Solo corone" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Króna only"
+          }
+        }
+      }
+    },
+    "Prezzi di %@ %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Prices of %1$@ %2$@"
+          }
+        }
+      }
+    },
+    "Prezzi in arrivo…" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Prices loading…"
+          }
+        }
+      }
+    },
+    "Prezzi non disponibili" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Prices not available"
+          }
+        }
+      }
+    },
+    "Nessun prezzo pubblicato per questo distributore." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No price published for this station."
+          }
+        }
+      }
+    },
+    "Il più economico entro 30 km" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cheapest within 30 km"
+          }
+        }
+      }
+    },
+    "Prezzi adesso" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Prices now"
+          }
+        }
+      }
+    },
+    "Prezzi in corone anche in" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Króna prices also in"
+          }
+        }
+      }
+    },
+    "Prezzo alla pompa self-service al litro. «Con sconto»: con la carta o l'app della compagnia. Cambio BCE del %@." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Self-service pump price per litre. \"Discount\": with the company's card or app. ECB rate of %@."
+          }
+        }
+      }
+    },
+    "Con sconto %@ kr" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Discount %@ kr"
+          }
+        }
+      }
     }
   },
   "version" : "1.0"

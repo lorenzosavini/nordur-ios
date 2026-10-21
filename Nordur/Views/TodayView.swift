@@ -681,6 +681,9 @@ struct TodayView: View {
                 .onTapGesture { selectedFuel = first.station }
                 Text(first.station.name).font(.app(.caption)).foregroundStyle(Theme.dim).lineLimit(1)
                     .onTapGesture { selectedFuel = first.station }
+                if let price = FuelPrices.match(first.station, in: model.fuelPrices?.value ?? []), let petrol = price.bensin95 {
+                    Text("95: \(Fmt.number(petrol, decimals: 1)) KR/L").font(.mono(9.5, .semibold)).foregroundStyle(Theme.text)
+                }
                 if let charger = FuelStations.nearest(stations, to: model.activePlace.coordinate, kind: .charger, limit: 1).first {
                     Text("RICARICA EV \(Fmt.number(charger.km, decimals: 0)) KM").font(.mono(9)).foregroundStyle(Theme.faint)
                 }
