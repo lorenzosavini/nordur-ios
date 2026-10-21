@@ -16707,6 +16707,126 @@
           }
         }
       }
+    },
+    "Registro errori" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Error log"
+          }
+        }
+      }
+    },
+    "Nessuna chiusura registrata" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No closings recorded"
+          }
+        }
+      }
+    },
+    "Se l'app si chiude da sola, qui trovi quando, dove e perché." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "If the app closes by itself, here you find when, where and why."
+          }
+        }
+      }
+    },
+    "Invia il registro" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Send the log"
+          }
+        }
+      }
+    },
+    "Copia tutto" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Copy all"
+          }
+        }
+      }
+    },
+    "Schermata: %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Screen: %@"
+          }
+        }
+      }
+    },
+    "Chiusura inattesa" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Unexpected closing"
+          }
+        }
+      }
+    },
+    "Crash" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Crash"
+          }
+        }
+      }
+    },
+    "Crash (rapporto iOS)" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Crash (iOS report)"
+          }
+        }
+      }
+    },
+    "Blocco (rapporto iOS)" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hang (iOS report)"
+          }
+        }
+      }
+    },
+    "L'app si è chiusa mentre era aperta, senza un errore del codice." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The app closed while open, without a code error."
+          }
+        }
+      }
+    },
+    "Il registro resta sul telefono e parte solo se lo invii tu. I rapporti di iOS («rapporto iOS») arrivano a un avvio successivo, a volte il giorno dopo." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The log stays on the phone and leaves it only if you send it. iOS reports arrive at a later launch, sometimes the day after."
+          }
+        }
+      }
     }
   },
   "version" : "1.0"

@@ -53,6 +53,11 @@ struct SettingsView: View {
                     NavigationLink { AlertSettingsView() } label: { Label("Allerte e notifiche", systemImage: "bell.badge") }
                     NavigationLink { OfflineView() } label: { Label("Pacchetto offline", systemImage: "arrow.down.circle") }
                     NavigationLink { DataSourcesView() } label: { Label("Fonti e stato dei dati", systemImage: "doc.text.magnifyingglass") }
+                    NavigationLink { CrashLogView() } label: {
+                        LabeledContent {
+                            if !CrashLog.shared.entries.isEmpty { Text("\(CrashLog.shared.entries.count)").foregroundStyle(Theme.danger) }
+                        } label: { Label("Registro errori", systemImage: "ladybug") }
+                    }
                     Button { showAccount = true } label: {
                         Label(account.isSignedIn ? String(localized: "Account e backup") : String(localized: "Accedi o crea un account"), systemImage: "person.crop.circle")
                     }

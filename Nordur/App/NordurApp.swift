@@ -9,6 +9,7 @@ struct NordurApp: App {
     @AppStorage(Appearance.key) private var appearance = Appearance.system.rawValue
 
     init() {
+        CrashLog.shared.install()
         Appearance.configureUIKit()
         // Touch the singletons early: when iOS relaunches the app in the background
         // for a location event, their delegates must be installed immediately.
@@ -39,10 +40,12 @@ struct NordurApp: App {
         .onChange(of: scenePhase) { _, phase in
             switch phase {
             case .background:
+                CrashLog.phase("background")
                 AlertCenter.scheduleBackgroundRefresh()
                 AuroraWatch.shared.update()
                 Task { await Account.shared.syncIfDue(leavingApp: true) }
             case .active:
+                CrashLog.phase("active")
                 // Back in the app: what changed meanwhile is fetched at once.
                 Task {
                     async let global: Void = model.refreshGlobal()
@@ -144,7 +147,10 @@ struct RootView: View {
             }
         }
         .sensoryFeedback(.selection, trigger: tab)
-        .onChange(of: tab) { if tab != .map { model.immersiveMap = false } }
+        .onChange(of: tab) {
+            if tab != .map { model.immersiveMap = false }
+            CrashLog.note(screen: tab.rawValue)
+        }
         .ignoresSafeArea(.keyboard, edges: .bottom)
         .onOpenURL { url in
             guard url.isFileURL, ["gpx", "kml"].contains(url.pathExtension.lowercased()) else { return }
