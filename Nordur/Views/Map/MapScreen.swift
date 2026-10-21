@@ -17,6 +17,8 @@ struct MapScreen: View {
     @AppStorage("map.webcams") private var showWebcams = false
     @AppStorage("map.quakes") private var showQuakes = false
     @AppStorage("map.fuel") private var showFuel = false
+    /// Petrol or diesel: the price and colour of the pump pins (shared with the price list).
+    @AppStorage("fuel.kind") private var fuelRaw = FuelKind.petrol.rawValue
     @AppStorage("map.chargers") private var showChargers = false
     @AppStorage("map.shops") private var showShops = false
     @State private var selectedShop: Shop?
@@ -142,6 +144,11 @@ struct MapScreen: View {
                     Toggle("Webcam", systemImage: "video", isOn: $showWebcams)
                     Toggle("Terremoti 48 h", systemImage: "waveform.path.ecg", isOn: $showQuakes)
                     Toggle("Distributori", systemImage: "fuelpump", isOn: $showFuel)
+                    if showFuel {
+                        Picker("Prezzi di", selection: $fuelRaw) {
+                            ForEach(FuelKind.allCases) { Text($0.label).tag($0.rawValue) }
+                        }
+                    }
                     Toggle("Ricarica EV", systemImage: "bolt.car", isOn: $showChargers)
                     Toggle("Supermercati e negozi", systemImage: "cart", isOn: $showShops)
                     Toggle("Attrazioni e luoghi da vedere", systemImage: "binoculars", isOn: $showSights)
@@ -489,23 +496,25 @@ struct MapScreen: View {
         }
         if showFuel || showChargers {
             let prices = model.fuelPrices?.value ?? []
+            let fuel = FuelKind(rawValue: fuelRaw) ?? .petrol
             for station in model.fuel?.value ?? [] where (station.kind == .fuel && showFuel) || (station.kind == .charger && showChargers) {
-                // The petrol price inside the pin, coloured cheap (green) to dear (red): compare without opening.
-                var color: UIColor = station.kind == .fuel ? .systemOrange : .systemGreen
+                // The pump icon coloured cheap (green) to dear (red) for the fuel chosen, the price
+                // small under it where there is room: compare without opening.
+                var color: UIColor = station.kind == .fuel ? .systemGray : .systemGreen
                 var text: String?
-                if station.kind == .fuel, let price = FuelPrices.match(station, in: prices), let petrol = price.bensin95 {
-                    text = "\(Int(petrol.rounded()))"
-                    switch FuelPrices.level(petrol, among: prices, fuel: .petrol) {
+                if station.kind == .fuel, let price = FuelPrices.match(station, in: prices), let value = price.price(fuel) {
+                    text = "\(Int(value.rounded())) kr"
+                    switch FuelPrices.level(value, among: prices, fuel: fuel) {
                     case .cheap: color = .systemGreen
                     case .average: color = .systemOrange
                     case .dear: color = .systemRed
                     }
                 }
                 pois.append(PoiAnnotation(kind: station.kind == .fuel ? .fuel : .charger, key: "f\(station.id)",
-                                          coordinate: station.coordinate.clCoordinate, title: station.name,
-                                          color: color, text: text))
+                                          coordinate: station.coordinate.clCoordinate, title: text ?? station.name,
+                                          subtitle: station.name, color: color, text: text))
             }
-            poisKey += "fuel\(showFuel)\(showChargers)\(model.fuel?.value.count ?? 0)\(model.fuelPrices?.date.timeIntervalSince1970 ?? 0)"
+            poisKey += "fuel\(showFuel)\(showChargers)\(fuelRaw)\(model.fuel?.value.count ?? 0)\(model.fuelPrices?.date.timeIntervalSince1970 ?? 0)"
         }
         if showSights {
             for sight in model.spots {

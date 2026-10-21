@@ -17187,6 +17187,16 @@
           }
         }
       }
+    },
+    "Prezzi di" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Prices of"
+          }
+        }
+      }
     }
   },
   "version" : "1.0"

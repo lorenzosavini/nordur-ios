@@ -357,15 +357,14 @@ struct WeatherMapView: UIViewRepresentable {
             default:
                 let view = mapView.dequeueReusableAnnotationView(withIdentifier: "marker", for: poi) as! MKMarkerAnnotationView
                 view.markerTintColor = poi.color
-                if poi.kind == .fuel, let text = poi.text {
-                    view.glyphImage = nil
-                    view.glyphText = text   // the price, readable without opening
-                } else {
-                    view.glyphText = nil
-                    view.glyphImage = UIImage(systemName: poi.glyph ?? Self.glyph(poi.kind))
-                }
+                view.glyphText = nil
+                view.glyphImage = UIImage(systemName: poi.glyph ?? Self.glyph(poi.kind))
                 let pinned = poi.kind == .stop || poi.kind == .place || poi.kind == .visit || poi.kind == .topSight
                 view.titleVisibility = pinned ? .visible : .hidden
+                if poi.kind == .fuel, poi.text != nil {
+                    // The price under the pump, shown by MapKit only where it does not crowd the map.
+                    view.titleVisibility = .adaptive
+                }
                 view.subtitleVisibility = poi.kind == .place ? .visible : .hidden
                 view.canShowCallout = false
                 view.displayPriority = pinned ? .required : .defaultLow
