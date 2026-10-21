@@ -185,7 +185,7 @@ struct RootView: View {
         .onCICommand { command in
             // Each sheet closes through its own state: closing them from UIKit leaves
             // SwiftUI thinking they are still up, and nothing opens after that.
-            func closeAll() {
+            @MainActor func closeAll() {
                 ciScreen = nil
                 openedTrack = nil
                 model.showSettings = false
