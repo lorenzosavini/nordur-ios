@@ -1,5 +1,6 @@
 import SwiftUI
 import CoreLocation
+import AVFoundation
 
 /// Inbox of every alert raised, newest first.
 struct AlertsView: View {
@@ -233,6 +234,21 @@ struct AlertSettingsView: View {
             }
 
             Section {
+                Toggle("Suoni Norður per ogni tipo di avviso", isOn: Binding(get: { draft.customSounds }, set: { draft.customSoundsOff = !$0 }))
+                if draft.customSounds {
+                    ForEach(NotificationSoundPreview.all, id: \.file) { item in
+                        Button { NotificationSoundPreview.play(item.file) } label: {
+                            Label(item.label, systemImage: "speaker.wave.2")
+                        }
+                    }
+                }
+            } header: {
+                Text("Suoni").pinnedHeader()
+            } footer: {
+                Text("L'aurora ha il suo suono, gli altri avvisi uno diverso per tipo: capisci cos'è senza guardare. Tocca per ascoltarli. Con il telefono in silenzioso non suonano.")
+            }
+
+            Section {
                 Toggle("Avvisi vocali durante la guida", isOn: $draft.spoken)
                 Toggle("Allerte in base a dove ti trovi, anche ad app chiusa", isOn: $draft.backgroundLocation)
                 if draft.backgroundLocation && alerts.backgroundLocationStatus != .authorizedAlways {
@@ -289,5 +305,30 @@ struct AlertSettingsView: View {
                 if on { draft.enabled.insert(category) } else { draft.enabled.remove(category) }
             }
         )
+    }
+}
+
+/// Plays the notification sounds in Settings, to hear which is which.
+enum NotificationSoundPreview {
+    static let all: [(file: String, label: String)] = [
+        ("aurora_now", String(localized: "Aurora: esci adesso")),
+        ("aurora_soon", String(localized: "Aurora: preparati, stanotte")),
+        ("warning", String(localized: "Allerta meteo gialla")),
+        ("warning_urgent", String(localized: "Allerta meteo arancione o rossa")),
+        ("wind", String(localized: "Vento e raffiche")),
+        ("road", String(localized: "Strade")),
+        ("quake", String(localized: "Terremoti")),
+        ("info", String(localized: "SafeTravel")),
+        ("flight", String(localized: "Voli")),
+        ("ferry", String(localized: "Traghetto")),
+        ("speed", String(localized: "Velocità in guida")),
+    ]
+    private static var player: AVAudioPlayer?
+
+    static func play(_ file: String) {
+        guard let url = Bundle.main.url(forResource: file, withExtension: "wav") else { return }
+        try? AVAudioSession.sharedInstance().setCategory(.ambient)
+        player = try? AVAudioPlayer(contentsOf: url)
+        player?.play()
     }
 }

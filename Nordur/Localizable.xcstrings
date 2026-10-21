@@ -17197,6 +17197,96 @@
           }
         }
       }
+    },
+    "Suoni Norður per ogni tipo di avviso" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Norður sounds for each kind of alert"
+          }
+        }
+      }
+    },
+    "Suoni" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sounds"
+          }
+        }
+      }
+    },
+    "L'aurora ha il suo suono, gli altri avvisi uno diverso per tipo: capisci cos'è senza guardare. Tocca per ascoltarli. Con il telefono in silenzioso non suonano." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The aurora has its own sound, the other alerts one per kind: you know what it is without looking. Tap to hear them. With the phone on silent they do not play."
+          }
+        }
+      }
+    },
+    "Aurora: esci adesso" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aurora: go out now"
+          }
+        }
+      }
+    },
+    "Aurora: preparati, stanotte" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aurora: get ready, tonight"
+          }
+        }
+      }
+    },
+    "Allerta meteo gialla" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Yellow weather warning"
+          }
+        }
+      }
+    },
+    "Allerta meteo arancione o rossa" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Orange or red weather warning"
+          }
+        }
+      }
+    },
+    "Vento e raffiche" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wind and gusts"
+          }
+        }
+      }
+    },
+    "Velocità in guida" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Speed while driving"
+          }
+        }
+      }
     }
   },
   "version" : "1.0"

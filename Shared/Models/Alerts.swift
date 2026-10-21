@@ -92,6 +92,9 @@ struct AlertSettings: Codable, Equatable {
     var auroraKpAlert: Double?
     /// "off", "night" (default) or "always": the aurora checked every few minutes with the app closed.
     var auroraWatchMode: String?
+    /// Norður's own sound for each kind of alert (nil = on); off: the iPhone's standard sound.
+    var customSoundsOff: Bool?
+    var customSounds: Bool { customSoundsOff != true }
     var spoken = true
     var backgroundLocation = true     // position-based checks with the app closed (needs "Always")
     var followedFlights: [String] = []
@@ -433,5 +436,23 @@ extension AlertEngine {
             }
         }
         return events
+    }
+}
+
+extension AlertEvent {
+    /// The sound file (Nordur/Sounds) for this alert: the aurora its own, the rest by kind.
+    var soundName: String {
+        let prefix = id.split(separator: ":").first.map(String.init) ?? ""
+        switch category {
+        case .aurora: return prefix == "aurora-now" || prefix.hasPrefix("seen") ? "aurora_now" : "aurora_soon"
+        case .weatherWarning: return risk >= .warning ? "warning_urgent" : "warning"
+        case .wind: return "wind"
+        case .road: return "road"
+        case .quake: return "quake"
+        case .safeTravel: return "info"
+        case .flight: return "flight"
+        case .ferry: return "ferry"
+        case .speed: return "speed"
+        }
     }
 }

@@ -357,7 +357,7 @@ final class AlertCenter: NSObject {
         content.title = event.title
         content.subtitle = event.category.shortLabel
         content.body = event.body
-        content.sound = .default
+        content.sound = settings.customSounds ? UNNotificationSound(named: UNNotificationSoundName(event.soundName + ".wav")) : .default
         if let picture = NotificationIcon.attachment(for: event) { content.attachments = [picture] }
         content.threadIdentifier = event.category.rawValue
         content.interruptionLevel = event.risk >= .warning ? .timeSensitive : .active
