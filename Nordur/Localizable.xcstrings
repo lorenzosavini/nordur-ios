@@ -16627,6 +16627,86 @@
           }
         }
       }
+    },
+    "Spenta" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Off"
+          }
+        }
+      }
+    },
+    "Di notte" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "At night"
+          }
+        }
+      }
+    },
+    "Sempre" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Always"
+          }
+        }
+      }
+    },
+    "Sorveglianza aurora" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aurora watch"
+          }
+        }
+      }
+    },
+    "Attiva: ultimo controllo alle %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "On: last check at %@"
+          }
+        }
+      }
+    },
+    "Attiva" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "On"
+          }
+        }
+      }
+    },
+    "Aurora in tempo reale" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aurora in real time"
+          }
+        }
+      }
+    },
+    "Con l'app chiusa iOS la sveglia solo di rado, soprattutto di notte. Con la sorveglianza attiva l'aurora (attività adesso, Bz, allerte NOAA) viene controllata ogni 3 minuti per il luogo scelto, o per la tappa del viaggio di stanotte: l'app resta attiva in background con la posizione a bassa precisione (vedi l'indicatore blu) e consuma un po' più batteria. «Di notte» si accende al tramonto e si spegne all'alba." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "With the app closed iOS wakes it only rarely, especially at night. With the watch on, the aurora (activity now, Bz, NOAA alerts) is checked every 3 minutes for the chosen place, or tonight's trip stop: the app stays active in the background with low-accuracy location (see the blue indicator) and uses a little more battery. \"At night\" turns on at dusk and off at dawn."
+          }
+        }
+      }
     }
   },
   "version" : "1.0"

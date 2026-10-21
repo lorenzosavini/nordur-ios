@@ -218,6 +218,21 @@ struct AlertSettingsView: View {
             } header: { Text("Soglie").pinnedHeader() }
 
             Section {
+                Picker("Sorveglianza aurora", selection: Binding(get: { draft.auroraWatch }, set: { draft.auroraWatchMode = $0.rawValue })) {
+                    ForEach(AuroraWatchMode.allCases) { Text($0.label).tag($0) }
+                }
+                if AuroraWatch.shared.isActive {
+                    Label(AuroraWatch.shared.lastRun.map { String(localized: "Attiva: ultimo controllo alle \(Fmt.time($0))") } ?? String(localized: "Attiva"),
+                          systemImage: "dot.radiowaves.left.and.right")
+                        .font(.app(.caption)).foregroundStyle(Theme.aurora)
+                }
+            } header: {
+                Text("Aurora in tempo reale").pinnedHeader()
+            } footer: {
+                Text("Con l'app chiusa iOS la sveglia solo di rado, soprattutto di notte. Con la sorveglianza attiva l'aurora (attività adesso, Bz, allerte NOAA) viene controllata ogni 3 minuti per il luogo scelto, o per la tappa del viaggio di stanotte: l'app resta attiva in background con la posizione a bassa precisione (vedi l'indicatore blu) e consuma un po' più batteria. «Di notte» si accende al tramonto e si spegne all'alba.")
+            }
+
+            Section {
                 Toggle("Avvisi vocali durante la guida", isOn: $draft.spoken)
                 Toggle("Allerte in base a dove ti trovi, anche ad app chiusa", isOn: $draft.backgroundLocation)
                 if draft.backgroundLocation && alerts.backgroundLocationStatus != .authorizedAlways {

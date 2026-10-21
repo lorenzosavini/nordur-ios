@@ -73,6 +73,7 @@ final class AlertCenter: NSObject {
         settings = newSettings
         settings.save()
         applyBackgroundLocation()
+        AuroraWatch.shared.update()
     }
 
     func toggleFollow(_ flightNumber: String) {
@@ -196,13 +197,27 @@ final class AlertCenter: NSObject {
         lastCheck = Date()
     }
 
+    /// The place watched for "where you are": the place chosen by hand when there
+    /// is one (a pin in Iceland while the phone is elsewhere), otherwise the GPS;
+    /// and with the GPS outside Iceland, the trip stop of tonight if there is one.
+    func auroraPlace(current: Coordinate?) -> Place {
+        let useCurrent = model?.useCurrentLocation ?? (UserDefaults.standard.object(forKey: "useCurrentLocation") as? Bool ?? true)
+        if !useCurrent { return model?.activePlace ?? AppModel.monitoredPlace }
+        guard let current else { return AppModel.monitoredPlace }
+        if !Coverage.iceland(current) {
+            let now = Date()
+            if let stop = TripStore.loadFromDisk().first(where: { $0.date <= now && now < $0.endDate }) { return stop.place }
+        }
+        return Place(name: String(localized: "la tua posizione"), coordinate: current)
+    }
+
     private func buildInput(position: Coordinate?) async -> AlertInput {
         let now = Date()
         var input = AlertInput()
         input.now = now
 
         let current = position ?? model?.location.coordinate ?? LocationManager.lastKnown
-        let currentPlace = current.map { Place(name: String(localized: "la tua posizione"), coordinate: $0) } ?? AppModel.monitoredPlace
+        let currentPlace = auroraPlace(current: current)
         input.watched.append(.init(name: currentPlace.name, coordinate: currentPlace.coordinate,
                                    from: now, to: now.addingTimeInterval(12 * 3600), isCurrent: true))
         let horizon = now.addingTimeInterval(3 * 24 * 3600)
@@ -242,7 +257,7 @@ final class AlertCenter: NSObject {
             } else {
                 state = try? await AuroraStateService.load().value
             }
-            let forecast = (current != nil && model?.useCurrentLocation == true) ? model?.forecast?.value : nil
+            let forecast = model?.activePlace.coordinate == currentPlace.coordinate ? model?.forecast?.value : nil
             let weather: Forecast?
             if let forecast { weather = forecast } else { weather = try? await WeatherService.forecast(currentPlace.coordinate).value }
             let inputs = AuroraInputs.make(place: currentPlace.coordinate, forecast: weather, state: state,
@@ -319,7 +334,7 @@ final class AlertCenter: NSObject {
 
     static func scheduleBackgroundRefresh() {
         let request = BGAppRefreshTaskRequest(identifier: refreshTaskID)
-        request.earliestBeginDate = Date(timeIntervalSinceNow: 30 * 60)
+        request.earliestBeginDate = Date(timeIntervalSinceNow: 15 * 60)
         try? BGTaskScheduler.shared.submit(request)
     }
 

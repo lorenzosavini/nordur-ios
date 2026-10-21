@@ -65,6 +65,18 @@ struct AlertEvent: Codable, Identifiable, Hashable {
     var risk: Risk { Risk(rawValue: severity) ?? .caution }
 }
 
+enum AuroraWatchMode: String, CaseIterable, Identifiable {
+    case off, night, always
+    var id: String { rawValue }
+    var label: String {
+        switch self {
+        case .off: return String(localized: "Spenta")
+        case .night: return String(localized: "Di notte")
+        case .always: return String(localized: "Sempre")
+        }
+    }
+}
+
 struct AlertSettings: Codable, Equatable {
     var enabled: Set<AlertCategory> = [.weatherWarning, .wind, .road, .quake, .safeTravel, .aurora, .flight, .speed]
     var includeYellow = false
@@ -78,6 +90,8 @@ struct AlertSettings: Codable, Equatable {
     var auroraMinClass: Int?
     /// NOAA K-index alerts and NASA CMEs notify from this Kp.
     var auroraKpAlert: Double?
+    /// "off", "night" (default) or "always": the aurora checked every few minutes with the app closed.
+    var auroraWatchMode: String?
     var spoken = true
     var backgroundLocation = true     // position-based checks with the app closed (needs "Always")
     var followedFlights: [String] = []
@@ -103,7 +117,8 @@ struct AlertSettings: Codable, Equatable {
     func isOn(_ category: AlertCategory) -> Bool { enabled.contains(category) }
 
     var auroraClass: ObservabilityClass { ObservabilityClass(rawValue: auroraMinClass ?? ObservabilityClass.good.rawValue) ?? .good }
-    var auroraKp: Double { auroraKpAlert ?? 5 }
+    var auroraKp: Double { auroraKpAlert ?? 4 }
+    var auroraWatch: AuroraWatchMode { AuroraWatchMode(rawValue: auroraWatchMode ?? "") ?? .night }
 }
 
 /// Everything the engine looks at in one pass.

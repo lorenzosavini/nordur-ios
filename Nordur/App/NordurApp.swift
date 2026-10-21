@@ -40,6 +40,7 @@ struct NordurApp: App {
             switch phase {
             case .background:
                 AlertCenter.scheduleBackgroundRefresh()
+                AuroraWatch.shared.update()
                 Task { await Account.shared.syncIfDue(leavingApp: true) }
             case .active:
                 // Back in the app: what changed meanwhile is fetched at once.
@@ -54,6 +55,7 @@ struct NordurApp: App {
             }
         }
         .backgroundTask(.appRefresh(AlertCenter.refreshTaskID)) {
+            await AuroraWatch.shared.update()   // after dusk the watch starts from here
             await AlertCenter.shared.check()
             // iOS wakes the app now and then: a due backup runs too (e.g. the daily one).
             await Account.shared.syncIfDue()
@@ -263,6 +265,7 @@ struct RootView: View {
         }
         .task(id: model.placeKey) {
             await model.placeChanged()
+            AuroraWatch.shared.update()
             await alerts.check()
         }
         .task {
