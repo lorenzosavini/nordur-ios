@@ -94,6 +94,7 @@ struct SightsView: View {
         .navigationBarTitleDisplayMode(.inline)
         .searchable(text: $query, prompt: String(localized: "Cascata, grotta, nome…"))
         .task { await model.loadSights() }
+        .onCICommand { _ in selected = nil }  // demo run: the detail closes before the list
         .sheet(item: $selected) { sight in
             SightDetail(sight: sight, from: place).presentationDetents([.medium, .large])
         }

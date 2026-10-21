@@ -183,6 +183,9 @@ struct RootView: View {
             NavigationStack { AuroraLiveView() }
         }
         .onCICommand { command in
+          // Sheets opened from these (a place, the 3D card) close first on the same
+          // command; a sheet closed while another is still up over it stays on screen.
+          DispatchQueue.main.asyncAfter(deadline: .now() + 0.9) {
             // Each sheet closes through its own state: closing them from UIKit leaves
             // SwiftUI thinking they are still up, and nothing opens after that.
             @MainActor func closeAll() {
@@ -211,6 +214,7 @@ struct RootView: View {
             default:
                 break
             }
+          }
         }
         .sheet(item: $ciScreen) { screen in
             NavigationStack {
