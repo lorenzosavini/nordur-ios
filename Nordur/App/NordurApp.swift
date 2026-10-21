@@ -85,7 +85,7 @@ struct RootView: View {
     /// Drives (recording, imports) live inside Trip; the aurora has its own tab.
     enum Tab: String, Hashable { case today, weather, aurora, map, trip }
     @AppStorage(WindUnit.key) private var windUnit = WindUnit.ms.rawValue
-    @State private var showAuroraLive = UserDefaults.standard.string(forKey: "initialTab") == "aurora"
+    @State private var showAuroraLive = UserDefaults.standard.string(forKey: "initialTab") == "aurora" && !UserDefaults.standard.bool(forKey: "ciAuroraMain")
     @State private var showAccount = UserDefaults.standard.string(forKey: "initialTab") == "account"
     @State private var showAuroraIntel = UserDefaults.standard.string(forKey: "initialTab") == "kp"
     // CI only: `-ciScreen quakes` opens a secondary screen over the tabs for the screenshots.

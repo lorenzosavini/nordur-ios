@@ -136,18 +136,18 @@ clip("2 · Meteo", "MET Norway + Open-Meteo, ora per ora, con i rischi", ["-init
 ])
 
 # 3 · Aurora
-clip("3 · Aurora", "Attività, osservabilità qui, affidabilità", ["-initialTab", "aurora"], [
+clip("3 · Aurora", "Attività, osservabilità qui, affidabilità", ["-initialTab", "aurora", "-ciAuroraMain", "YES"], [
     (time.sleep, 3), (scroll, 1, 0.4, 2.5),
     ("chapter", "3 · Aurora", "Tempo reale: vento solare, Bz, Hp30, magnetometro, Kp"),
     (scroll, 3, 0.5, 2),
 ])
-clip("3 · Aurora", "Previsione a 24 ore e località migliori stanotte", ["-initialTab", "aurora", "-auroraMode", "day"], [
+clip("3 · Aurora", "Previsione a 24 ore e località migliori stanotte", ["-initialTab", "aurora", "-ciAuroraMain", "YES", "-auroraMode", "day"], [
     (time.sleep, 3), (scroll, 2, 0.45, 2),
 ])
-clip("3 · Aurora", "Tre giorni: Kp a blocchi di 3 ore e le notti", ["-initialTab", "aurora", "-auroraMode", "three"], [
+clip("3 · Aurora", "Tre giorni: Kp a blocchi di 3 ore e le notti", ["-initialTab", "aurora", "-ciAuroraMain", "YES", "-auroraMode", "three"], [
     (time.sleep, 3), (scroll, 2, 0.45, 2),
 ])
-clip("3 · Aurora", "Visione notturna rossa: non perdi l'adattamento al buio", ["-initialTab", "aurora", "-nightVision", "YES"], [
+clip("3 · Aurora", "Visione notturna rossa: non perdi l'adattamento al buio", ["-initialTab", "aurora", "-ciAuroraMain", "YES", "-nightVision", "YES"], [
     (time.sleep, 4),
 ])
 
@@ -174,16 +174,16 @@ clip("5 · Viaggio", "Le tappe: dove dormi, con il tragitto tra l'una e l'altra"
 clip("5 · Viaggio", "Il percorso sulla mappa, tappe numerate e attrazioni", trip + ["-trip.view", "map"], [
     (time.sleep, 5),
 ])
-clip("5 · Viaggio", "Condividi: modificatelo insieme, o una copia via email", trip + ["-trip.view", "days"], [
-    (notify, "trip.share", 4), (scroll, 1, 0.4, 2.5),
+clip("5 · Viaggio", "Condividi: modificatelo insieme, o una copia via email", trip + ["-trip.view", "days", "-ciTripSheet", "share"], [
+    (time.sleep, 2), (scroll, 1, 0.4, 2.5),
 ])
-clip("5 · Viaggio", "Ricevuti: inviti a modificare insieme e copie", trip + ["-trip.view", "days"], [
-    (notify, "trip.inbox", 4.5),
+clip("5 · Viaggio", "Ricevuti: inviti a modificare insieme e copie", trip + ["-trip.view", "days", "-ciTripSheet", "inbox"], [
+    (time.sleep, 4),
 ])
 
 # 6 · Drive
-clip("6 · Guida", "Registra il percorso: strade davanti, vento, avvisi vocali", trip, [
-    (notify, "trip.drive", 4), (scroll, 2, 0.45, 2.2),
+clip("6 · Guida", "Registra il percorso: strade davanti, vento, avvisi vocali", trip + ["-ciTripSheet", "drive"], [
+    (time.sleep, 2), (scroll, 2, 0.45, 2.2),
 ])
 clip("6 · Guida", "Ogni percorso: mappa, dati, GPX, rifallo con Mappe", today, [
     (notify, "drive.demo", 7), (scroll, 1, 0.45, 2.5),

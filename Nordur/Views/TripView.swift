@@ -10,8 +10,9 @@ struct TripView: View {
     @State private var importing = false
     @State private var importFile: TripImportFile?
     @State private var importError: String?
-    @State private var sharing = false
-    @State private var showInbox = false
+    // CI only (demo video): `-ciTripSheet share|inbox|drive` opens that sheet at launch.
+    @State private var sharing = UserDefaults.standard.string(forKey: "ciTripSheet") == "share"
+    @State private var showInbox = UserDefaults.standard.string(forKey: "ciTripSheet") == "inbox"
     /// Days (everything on one page), stops (cards to open), or the route on a map.
     @AppStorage("trip.view") private var mode = "days"
     @State private var dayVisit: VisitDraft?
@@ -19,7 +20,7 @@ struct TripView: View {
     @State private var pendingVisit: VisitDraft?
     @State private var mapStop: TripStop?
     /// Drives (recording, imports from Apple Health and GPX), opened from here.
-    @State private var showDrive = UserDefaults.standard.string(forKey: "initialTab") == "drive"
+    @State private var showDrive = UserDefaults.standard.string(forKey: "initialTab") == "drive" || UserDefaults.standard.string(forKey: "ciTripSheet") == "drive"
     @Environment(DriveRecorder.self) private var recorder
 
     var body: some View {
