@@ -55,7 +55,7 @@ enum SafeTravel {
         let url = try HTTP.url("https://safetravel.is/wp-json/wp/v2/alert", ["per_page": "20"])
         // safetravel.is can stay unreachable from a phone for hours: nordur-api relays it.
         let fetched = try await HTTP.json([WPAlert].self, from: url, cacheKey: "safetravel_alerts",
-                                          mirror: URL(string: "https://nordur-api.vercel.app/api/safetravel"))
+                                          mirror: URL(string: "https://nordur-api.vercel.app/api/roads?source=safetravel"))
         return fetched.map { alerts in
             alerts.map { alert in
                 NewsItem(

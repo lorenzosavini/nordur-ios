@@ -8,6 +8,7 @@
 // Fetched once every 5 minutes for everyone; last good copy kept in Blob.
 import { fetchWithRetry } from "../lib/fetch.js";
 import { send, readObject, writeObject } from "../lib/core.js";
+import { safeTravel } from "../lib/safetravel.js";
 
 const ENDPOINT = "https://umferdin.is/graphql";
 const TTL = 5 * 60e3;
@@ -225,6 +226,7 @@ async function osm(res, name, refresh) {
 export default async function handler(req, res) {
   const params = new URL(req.url, "http://x").searchParams;
   const refresh = params.get("refresh") === "1";
+  if (params.get("source") === "safetravel") return safeTravel(res);
   if (params.get("shops")) return osm(res, "shops", refresh);
   if (params.get("osm")) {
     // The weekly cron refreshes every layer.
