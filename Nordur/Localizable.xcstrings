@@ -17057,6 +17057,136 @@
           }
         }
       }
+    },
+    "Ordina" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sort"
+          }
+        }
+      }
+    },
+    "Più economico" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cheapest"
+          }
+        }
+      }
+    },
+    "Più vicino" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nearest"
+          }
+        }
+      }
+    },
+    "Entro %lld km" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Within %lld km"
+          }
+        }
+      }
+    },
+    "Nessun prezzo in questa zona" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No prices in this area"
+          }
+        }
+      }
+    },
+    "Allarga la distanza: fuori dalle città i distributori sono pochi." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Widen the distance: outside towns there are few pumps."
+          }
+        }
+      }
+    },
+    "%@ vicino a %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ near %2$@"
+          }
+        }
+      }
+    },
+    "Verde: tra i più economici d'Islanda adesso; rosso: tra i più cari. «+N kr» è quanto costa in più al litro del più economico della lista." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Green: among the cheapest in Iceland now; red: among the dearest. \"+N kr\" is how much more per litre than the cheapest in the list."
+          }
+        }
+      }
+    },
+    "Prezzi carburante" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fuel prices"
+          }
+        }
+      }
+    },
+    "IL PIÙ ECONOMICO" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "CHEAPEST"
+          }
+        }
+      }
+    },
+    "CONFRONTA PREZZI ›" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "COMPARE PRICES ›"
+          }
+        }
+      }
+    },
+    "Confronta i prezzi nei dintorni" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Compare prices nearby"
+          }
+        }
+      }
+    },
+    "Con sconto %@ kr%@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Discount %1$@ kr%2$@"
+          }
+        }
+      }
     }
   },
   "version" : "1.0"

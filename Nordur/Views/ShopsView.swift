@@ -286,6 +286,9 @@ extension FuelDetail {
             } else {
                 Text("Nessun prezzo pubblicato per questo distributore.").font(.app(.subheadline)).foregroundStyle(Theme.dim)
             }
+            NavigationLink { FuelListView(center: Place(name: station.name, coordinate: station.coordinate), embedded: true) } label: {
+                Label("Confronta i prezzi nei dintorni", systemImage: "list.number")
+            }
             if let best = FuelPrices.cheapest(all, near: station.coordinate, fuel: .petrol), let value = best.price.price(.petrol) {
                 VStack(alignment: .leading, spacing: 2) {
                     Text("Il più economico entro 30 km").font(.app(.caption, .semibold)).foregroundStyle(Theme.aurora)
@@ -328,6 +331,9 @@ private struct FuelPriceRow: View {
                 }
                 if let discount, discount < isk {
                     Text("Con sconto \(Fmt.number(discount, decimals: 1)) kr").font(.mono(11)).foregroundStyle(Theme.aurora)
+                    if let converted = display.converted(discount, rates) {
+                        Text(converted).font(.mono(10)).foregroundStyle(Theme.aurora.opacity(0.8))
+                    }
                 }
             }
         }

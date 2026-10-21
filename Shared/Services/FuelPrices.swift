@@ -45,6 +45,17 @@ enum FuelPrices {
             .min { $0.km < $1.km }?.price
     }
 
+    /// Cheap, average or dear compared with all the pumps in Iceland now:
+    /// the cheapest quarter, the middle half, the dearest quarter.
+    enum Level { case cheap, average, dear }
+
+    static func level(_ value: Double, among prices: [FuelPrice], fuel: FuelKind) -> Level {
+        let all = prices.compactMap { $0.price(fuel) }.sorted()
+        guard all.count >= 4 else { return .average }
+        let low = all[all.count / 4], high = all[(all.count * 3) / 4]
+        return value <= low ? .cheap : value >= high ? .dear : .average
+    }
+
     /// The cheapest within `km` of a point, for one fuel.
     static func cheapest(_ prices: [FuelPrice], near point: Coordinate, within km: Double = 30, fuel: FuelKind) -> (price: FuelPrice, km: Double)? {
         prices.compactMap { p -> (FuelPrice, Double)? in

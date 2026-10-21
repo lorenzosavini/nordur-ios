@@ -7,6 +7,7 @@ struct TodayView: View {
     @State private var showInfo = false
     @State private var showAccount = false
     @State private var selectedFuel: FuelStation?
+    @State private var showFuelPrices = false
     @AppStorage("today.detail") private var detailRaw = Detail.wind.rawValue
     @Environment(Account.self) private var account
 
@@ -50,6 +51,7 @@ struct TodayView: View {
             }
             .background(Theme.bg.ignoresSafeArea())
             .toolbar(.hidden, for: .navigationBar)
+            .sheet(isPresented: $showFuelPrices) { FuelListView() }
             .sheet(item: $selectedFuel) { station in
                 FuelDetail(station: station, from: model.activePlace).presentationDetents([.medium, .large])
             }
@@ -683,6 +685,13 @@ struct TodayView: View {
                     .onTapGesture { selectedFuel = first.station }
                 if let price = FuelPrices.match(first.station, in: model.fuelPrices?.value ?? []), let petrol = price.bensin95 {
                     Text("95: \(Fmt.number(petrol, decimals: 1)) KR/L").font(.mono(9.5, .semibold)).foregroundStyle(Theme.text)
+                }
+                if model.fuelPrices != nil {
+                    Button { showFuelPrices = true } label: {
+                        Text("CONFRONTA PREZZI ›").font(.mono(9.5, .bold)).foregroundStyle(Theme.accent)
+                    }
+                    .buttonStyle(.plain)
+                    .accessibilityIdentifier("fuel.compare")
                 }
                 if let charger = FuelStations.nearest(stations, to: model.activePlace.coordinate, kind: .charger, limit: 1).first {
                     Text("RICARICA EV \(Fmt.number(charger.km, decimals: 0)) KM").font(.mono(9)).foregroundStyle(Theme.faint)

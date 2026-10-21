@@ -488,12 +488,24 @@ struct MapScreen: View {
             poisKey += "quakes\(model.quakes?.date.timeIntervalSince1970 ?? 0)"
         }
         if showFuel || showChargers {
+            let prices = model.fuelPrices?.value ?? []
             for station in model.fuel?.value ?? [] where (station.kind == .fuel && showFuel) || (station.kind == .charger && showChargers) {
+                // The petrol price inside the pin, coloured cheap (green) to dear (red): compare without opening.
+                var color: UIColor = station.kind == .fuel ? .systemOrange : .systemGreen
+                var text: String?
+                if station.kind == .fuel, let price = FuelPrices.match(station, in: prices), let petrol = price.bensin95 {
+                    text = "\(Int(petrol.rounded()))"
+                    switch FuelPrices.level(petrol, among: prices, fuel: .petrol) {
+                    case .cheap: color = .systemGreen
+                    case .average: color = .systemOrange
+                    case .dear: color = .systemRed
+                    }
+                }
                 pois.append(PoiAnnotation(kind: station.kind == .fuel ? .fuel : .charger, key: "f\(station.id)",
                                           coordinate: station.coordinate.clCoordinate, title: station.name,
-                                          color: station.kind == .fuel ? .systemOrange : .systemGreen))
+                                          color: color, text: text))
             }
-            poisKey += "fuel\(showFuel)\(showChargers)\(model.fuel?.value.count ?? 0)"
+            poisKey += "fuel\(showFuel)\(showChargers)\(model.fuel?.value.count ?? 0)\(model.fuelPrices?.date.timeIntervalSince1970 ?? 0)"
         }
         if showSights {
             for sight in model.spots {
