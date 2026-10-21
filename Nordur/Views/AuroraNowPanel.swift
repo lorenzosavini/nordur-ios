@@ -128,3 +128,47 @@ struct AuroraCurtain: View {
         .blur(radius: 6)
     }
 }
+
+/// The answer first, in big: go out now, get ready, later tonight, or not now
+/// with the reason. Everything else on the screen is the detail behind it.
+struct AuroraVerdictCard: View {
+    @Environment(AppModel.self) private var model
+    @State private var finder = false
+
+    var body: some View {
+        let verdict = model.auroraVerdict
+        let tint: Color = switch verdict.level {
+        case .now: Theme.aurora
+        case .soon: Theme.caution
+        case .later: Theme.accent
+        case .no: Theme.dim
+        }
+        let symbol = switch verdict.level {
+        case .now: "sparkles"
+        case .soon: "timer"
+        case .later: "moon.stars"
+        case .no: "moon.zzz"
+        }
+        VStack(alignment: .leading, spacing: 8) {
+            HStack(spacing: 10) {
+                Image(systemName: symbol).font(.system(size: 24, weight: .semibold)).foregroundStyle(tint)
+                    .symbolEffect(.pulse, isActive: verdict.level >= .soon)
+                Text(verdict.title).font(.display(26, .bold)).foregroundStyle(tint).lineLimit(2).minimumScaleFactor(0.7)
+            }
+            Text(verdict.detail).font(.app(.subheadline)).foregroundStyle(Theme.text)
+            if verdict.level >= .soon {
+                Button { finder = true } label: {
+                    Label("Dove guardare: mirino con la fotocamera", systemImage: "camera.viewfinder").font(.app(.caption, .semibold))
+                }
+                .foregroundStyle(tint)
+            }
+        }
+        .padding(14)
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .background(tint.opacity(0.12))
+        .overlay(Rectangle().strokeBorder(tint.opacity(0.6), lineWidth: 1.5))
+        .accessibilityElement(children: .combine)
+        .accessibilityIdentifier("aurora.verdict")
+        .fullScreenCover(isPresented: $finder) { AuroraFinderView() }
+    }
+}

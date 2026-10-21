@@ -37,6 +37,7 @@ struct TodayView: View {
                     TodayBrief()
                     warningsSection
                     VStack(spacing: 10) {
+                        AuroraVerdictCard()
                         AuroraNowPanel()
                         AuroraReportBar(compact: true)
                         AuroraFinderButton()

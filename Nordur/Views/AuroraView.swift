@@ -28,6 +28,7 @@ struct AuroraView: View {
                                subtitle: String(localized: "Attività, cielo qui e conferme della community"))
                         .padding(.horizontal, -18)
                     PlaceHeader(size: 30)
+                    AuroraVerdictCard()
                     summary
                     modePicker
                 }

@@ -544,6 +544,11 @@ final class AppModel {
         return AuroraEngine.nextHour(inputs, steps: nowcast.inputs)
     }
 
+    /// "Esci adesso" / "Preparati" / "Stanotte verso le…" / "Non adesso".
+    var auroraVerdict: AuroraVerdict {
+        AuroraVerdict.make(slots: auroraSlots, state: aurora?.value, zone: forecast?.value.timeZone ?? .iceland)
+    }
+
     var auroraNow: AuroraSlot? { auroraSlots.first { abs($0.date.timeIntervalSinceNow) < 1800 } ?? auroraSlots.first }
     var auroraBestTonight: AuroraSlot? { AuroraEngine.best(auroraSlots, within: 24) }
 

@@ -319,6 +319,13 @@ extension AlertEngine {
                 expires: best.date.addingTimeInterval(3600)))
         }
 
+        // Ahead of time: the solar wind on its way will reach a dark, clear sky here.
+        let verdict = AuroraVerdict.make(slots: input.auroraSlots, state: input.auroraState, zone: zone, now: now)
+        if verdict.level == .soon, minClass <= .good {
+            events.append(AlertEvent(
+                id: "aurora-soon:\(Int(now.timeIntervalSince1970 / 7200))", date: now, category: .aurora, severity: Risk.caution.rawValue,
+                title: verdict.title, body: verdict.detail, expires: verdict.at?.addingTimeInterval(3600)))
+        }
         guard let state = input.auroraState else { return events }
 
         // Persistent southward IMF (measured, fresh data only).
