@@ -184,6 +184,15 @@ struct TripView: View {
             .sheet(isPresented: $sharing) { TripShareSheet() }
             .sheet(isPresented: $showInbox) { ReceivedTripsView() }
             .fullScreenCover(isPresented: $showDrive) { DriveView(onClose: { showDrive = false }) }
+            .onCICommand { command in
+                switch command {
+                case "trip.share": sharing = true
+                case "trip.inbox": showInbox = true
+                case "trip.drive": showDrive = true
+                case let c where c.hasPrefix("trip.mode."): mode = String(c.dropFirst(10))
+                default: break
+                }
+            }
             .sheet(isPresented: $creating) {
                 StopEditor(stop: nil)
             }

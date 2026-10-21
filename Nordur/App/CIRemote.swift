@@ -1,11 +1,17 @@
-import UIKit
+import SwiftUI
 
-/// CI only (the demo video): the recording script switches tab with a Darwin
-/// notification (`simctl spawn <udid> notifyutil -p nordur.ci.tab.weather`),
-/// because taps on the tab bar from idb do not always land.
+/// CI only (the demo video): the recording script drives the app with Darwin
+/// notifications (`simctl spawn <udid> notifyutil -p nordur.ci.tab.weather`)
+/// instead of reading the screen with idb, whose accessibility queries can
+/// hang the app on screens with many map pins.
 enum CIRemote {
-    static let tabs = ["today", "weather", "aurora", "map", "trip"]
-    private static var handler: ((String) -> Void)?
+    static let commands = ["tab.today", "tab.weather", "tab.aurora", "tab.map", "tab.trip",
+                           "settings", "dismiss", "night",
+                           "screen.sights", "screen.roads", "screen.quakes", "screen.webcams", "screen.sources",
+                           "trip.share", "trip.inbox", "trip.drive", "trip.mode.days", "trip.mode.stops", "trip.mode.map",
+                           "aurora.mode.live", "aurora.mode.day", "aurora.mode.three", "drive.demo", "drive.share"]
+    static let notification = Notification.Name("nordur.ci.command")
+    private static var listening = false
 
     /// Closes whatever sheet or menu is on screen.
     static func dismissAll() {
@@ -13,16 +19,26 @@ enum CIRemote {
         root?.dismiss(animated: true)
     }
 
-    static func listen(_ handle: @escaping (String) -> Void) {
-        guard handler == nil else { handler = handle; return }
-        handler = handle
+    /// Turns the Darwin notifications into `notification` posts, in the demo run only.
+    static func start() {
+        guard !listening, UserDefaults.standard.bool(forKey: "ciDemoTrip") else { return }
+        listening = true
         let center = CFNotificationCenterGetDarwinNotifyCenter()
-        for name in tabs.map({ "nordur.ci.tab.\($0)" }) + ["nordur.ci.settings", "nordur.ci.dismiss"] {
+        for command in commands {
             CFNotificationCenterAddObserver(center, nil, { _, _, name, _, _ in
                 guard let raw = name?.rawValue as String? else { return }
                 let command = raw.replacingOccurrences(of: "nordur.ci.", with: "")
-                DispatchQueue.main.async { CIRemote.handler?(command) }
-            }, name as CFString, nil, .deliverImmediately)
+                DispatchQueue.main.async { NotificationCenter.default.post(name: CIRemote.notification, object: command) }
+            }, "nordur.ci.\(command)" as CFString, nil, .deliverImmediately)
+        }
+    }
+}
+
+extension View {
+    /// Reacts to a command of the demo run (see CIRemote).
+    func onCICommand(_ perform: @escaping (String) -> Void) -> some View {
+        onReceive(NotificationCenter.default.publisher(for: CIRemote.notification)) { note in
+            if let command = note.object as? String { perform(command) }
         }
     }
 }

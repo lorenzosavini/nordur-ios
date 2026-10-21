@@ -99,7 +99,7 @@ struct RootView: View {
     @State private var importError: String?
 
     enum CIScreen: String, Identifiable {
-        case alerts, alertSettings, info, quakes, roads, transport, webcams, warnings, offline, stop, settings
+        case alerts, alertSettings, info, quakes, roads, transport, webcams, warnings, offline, stop, settings, sights, sources
         var id: String { rawValue }
     }
 
@@ -182,6 +182,34 @@ struct RootView: View {
         .sheet(isPresented: $showAuroraLive) {
             NavigationStack { AuroraLiveView() }
         }
+        .onCICommand { command in
+            switch command {
+            case "dismiss":
+                CIRemote.dismissAll()
+                ciScreen = nil
+                model.immersiveMap = false
+            case "settings":
+                CIRemote.dismissAll()
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1) { model.showSettings = true }
+            case "night":
+                nightVision.toggle()
+            case "drive.demo":
+                CIRemote.dismissAll()
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) { openedTrack = DriveStore.shared.drives.first }
+            case let c where c.hasPrefix("screen."):
+                CIRemote.dismissAll()
+                let target = CIScreen(rawValue: String(c.dropFirst(7)))
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) { ciScreen = target }
+            case let c where c.hasPrefix("tab."):
+                CIRemote.dismissAll()
+                ciScreen = nil
+                model.showSettings = false
+                model.immersiveMap = false
+                if let target = Tab(rawValue: String(c.dropFirst(4))) { tab = target }
+            default:
+                break
+            }
+        }
         .sheet(item: $ciScreen) { screen in
             NavigationStack {
                 switch screen {
@@ -196,6 +224,8 @@ struct RootView: View {
                 case .offline: OfflineView()
                 case .stop: StopEditor(stop: nil)
                 case .settings: SettingsView()
+                case .sights: SightsView()
+                case .sources: DataSourcesView()
                 }
             }
         }
@@ -206,26 +236,7 @@ struct RootView: View {
             }
         }
         .task {
-            if UserDefaults.standard.bool(forKey: "ciDemoTrip") {
-                CIRemote.listen { command in
-                    if command == "dismiss" {
-                        CIRemote.dismissAll()
-                        self.model.immersiveMap = false
-                        return
-                    }
-                    if command == "settings" {
-                        CIRemote.dismissAll()
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 1) { self.model.showSettings = true }
-                        return
-                    }
-                    if let target = Tab(rawValue: command.replacingOccurrences(of: "tab.", with: "")) {
-                        CIRemote.dismissAll()
-                        self.model.showSettings = false
-                        self.model.immersiveMap = false
-                        tab = target
-                    }
-                }
-            }
+            CIRemote.start()
             await model.warmStart()
             model.location.request()
             await alerts.refreshPermissionState()

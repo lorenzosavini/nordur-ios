@@ -130,9 +130,14 @@ time.sleep(2.5)
 chapter("Norður", "Islanda: aurora, meteo, strade e viaggio in un'app sola")
 subprocess.run(["xcrun", "simctl", "launch", udid, BUNDLE, "-initialTab", "today", "-ciShowLaunch", "YES", "-ciAuroraDemo", "YES", "-ciDemoTrip", "YES",
                 "-ciAlertsYellow", "YES", "-appearance", "dark", "-AppleLanguages", "(it)", "-AppleLocale", "it_IT"], capture_output=True)
-time.sleep(4)
-screen_size()
-time.sleep(4)   # the data arrive
+time.sleep(8)   # the data arrive
+
+# No accessibility queries from here on: idb's describe-all can hang the app
+# (screens with many map pins), so screens open with commands the app listens
+# for in the demo run (notify) and the rest is swipes and taps by position
+# (points on a 402 × 874 screen).
+def at(x, y, pause=2.2):
+    tap_at(W * x / 402, H * y / 874, pause)
 
 # 1 · Today
 chapter("1 · Oggi", "In breve: aurora stanotte, prossime ore, strade e allerte")
@@ -142,27 +147,25 @@ chapter("1 · Oggi", "Il viaggio di oggi e l'aurora adesso, con «vedo / non ved
 scroll(1, 0.35, 2.8)
 scroll(1, 0.4, 2.2)
 chapter("1 · Oggi", "Esplora: da vedere, strade, vulcani, webcam")
-if tap(ident="tile.Da vedere", pause=3, scrolls=4) or tap(label="Da vedere", pause=3):
-    chapter("Da vedere", "Cascate, belvedere, sorgenti calde: 1.300 luoghi su mappa")
-    time.sleep(2)
-    scroll(1, 0.4, 1.6)
-    if tap(ident="sight.row", pause=3.5):
-        chapter("Da vedere", "Ogni luogo: foto, descrizione, indicazioni, «aggiungi al viaggio»")
-        time.sleep(2)
-        scroll(1, 0.4, 1.8)
-        dismiss_sheet()
-    back()
-if tap(ident="tile.Strade", pause=3, scrolls=2):
-    chapter("Strade", "Condizioni in tempo reale di Vegagerðin: chiuse, ghiaccio, vento")
-    scroll(1, 0.4, 1.8)
-    if tap(ident="road.row", pause=3):
-        scroll(1, 0.4, 1.6)
-        back()
-    back()
-if tap(ident="tile.Vulcani e terremoti", pause=3, scrolls=2):
-    chapter("Vulcani e terremoti", "Scosse delle ultime 48 ore dall'IMO")
-    scroll(1, 0.4, 1.8)
-    back()
+time.sleep(1.5)
+notify("screen.sights", 3.5)
+chapter("Da vedere", "Cascate, belvedere, sorgenti calde: 1.300 luoghi su mappa")
+time.sleep(2)
+scroll(1, 0.4, 2)
+at(200, 330, 4)     # a place in the list
+chapter("Da vedere", "Ogni luogo: foto, descrizione, indicazioni, «aggiungi al viaggio»")
+time.sleep(2)
+scroll(1, 0.4, 2)
+notify("screen.roads", 3.5)
+chapter("Strade", "Condizioni in tempo reale di Vegagerðin: chiuse, ghiaccio, vento")
+scroll(1, 0.4, 2)
+notify("screen.quakes", 3.5)
+chapter("Vulcani e terremoti", "Scosse delle ultime 48 ore dall'IMO")
+scroll(1, 0.4, 2)
+notify("screen.webcams", 3.5)
+chapter("Webcam", "Le strade come sono adesso")
+scroll(1, 0.4, 2)
+notify("dismiss", 1.5)
 scroll(2, 0.45, 1.5)
 chapter("1 · Oggi", "Terra, mare e servizi: carburante, voli, spesa")
 scroll(1, 0.45, 2)
@@ -171,37 +174,33 @@ scroll(1, 0.45, 2)
 tab("Meteo")
 chapter("2 · Meteo", "MET Norway + Open-Meteo, ora per ora, con i rischi")
 time.sleep(2)
-scroll(3, 0.45, 1.5)
+scroll(3, 0.45, 1.6)
 
 # 3 · Aurora
 tab("Aurora")
+notify("aurora.mode.live", 1)
+scroll_top()
 chapter("3 · Aurora", "Attività, osservabilità qui, affidabilità")
-time.sleep(2.5)
-if tap(label="Come si calcola", pause=3):
-    chapter("3 · Aurora", "«Come si calcola»: la spiegazione in un riquadro")
-    tap_at(W * 0.5, H * 0.08, 1)
+time.sleep(3)
 scroll(1, 0.4, 2)
 chapter("3 · Aurora", "Tempo reale: vento solare, Bz, Hp30, magnetometro, Kp")
-scroll(3, 0.5, 1.5)
+scroll(3, 0.5, 1.6)
 scroll_top()
-for mode in ["24 ORE", "3 GIORNI"]:
-    if tap(label=mode, exact=True, pause=2.5, scrolls=1):
-        chapter("3 · Aurora", "Previsioni a 24 ore e a 3 giorni, località migliori")
-        scroll(2, 0.45, 1.4)
-        scroll_top()
-tap(label="LIVE", exact=True, pause=1.5, scrolls=1)
-if tap(ident="nightVision", pause=3.5, anywhere=True):
-    chapter("3 · Aurora", "Visione notturna rossa: non perdi l'adattamento al buio")
-    time.sleep(1.5)
-    tap(ident="nightVision", pause=1.5, anywhere=True)
+notify("aurora.mode.day", 2.5)
+chapter("3 · Aurora", "Previsione a 24 ore e località migliori stanotte")
+scroll(2, 0.45, 1.5)
+scroll_top()
+notify("aurora.mode.three", 2.5)
+chapter("3 · Aurora", "Tre giorni: Kp a blocchi di 3 ore e le notti")
+scroll(2, 0.45, 1.5)
+scroll_top()
+notify("aurora.mode.live", 1.5)
+notify("night", 3.5)
+chapter("3 · Aurora", "Visione notturna rossa: non perdi l'adattamento al buio")
+time.sleep(1.5)
+notify("night", 1.5)
 
 # 4 · Map
-# No accessibility queries here: with a thousand pins the tree is so big that
-# idb's describe-all keeps the app busy until it stops responding. Taps by
-# position instead (points on a 402 × 874 screen).
-def at(x, y, pause=2.2):
-    tap_at(W * x / 402, H * y / 874, pause)
-
 tab("Mappa")
 chapter("4 · Mappa", "Vento, raffiche, pioggia, neve, nuvole, temperatura, aurora, radar")
 time.sleep(3)
@@ -216,64 +215,55 @@ at(367, 604, 3)     # full screen
 chapter("4 · Mappa", "A schermo intero, legenda e tempo sopra la mappa")
 time.sleep(2.5)
 notify("dismiss", 1.5)
-at(60, 240, 2.5)    # layers menu
-chapter("4 · Mappa", "Livelli: allerte, strade, webcam, distributori, attrazioni, viaggio")
-time.sleep(2.5)
-notify("dismiss", 1.5)
 
 # 5 · Trip
 tab("Viaggio")
+notify("trip.mode.days", 1)
+scroll_top()
 chapter("5 · Viaggio", "Giorno per giorno: tragitto, notte, meteo e attrazioni con orari")
 time.sleep(3)
 scroll(1, 0.4, 2.2)
-if tap(ident="trip.visit", pause=3.5, scrolls=2):
-    chapter("5 · Viaggio", "Ogni attrazione: foto, descrizione, giorno, ora e durata")
-    scroll(1, 0.45, 1.8)
-    dismiss_sheet()
-scroll(2, 0.45, 1.6)
+scroll(1, 0.45, 2.2)
+scroll(1, 0.45, 2.2)
 scroll_top()
-if tap(label="Tappe", exact=True, pause=2.5, anywhere=True):
-    chapter("5 · Viaggio", "Le tappe: dove dormi, con il tragitto tra l'una e l'altra")
-    scroll(1, 0.4, 1.8)
-    if tap(ident="trip.stop", pause=3, scrolls=1):
-        chapter("5 · Viaggio", "Una tappa: meteo, programma, consigliati vicino e lungo la strada")
-        scroll(3, 0.45, 1.6)
-        back()
-    scroll_top()
-tap(label="Giorni", exact=True, pause=1.5)
-if tap(ident="trip.share", pause=3, scrolls=1):
-    chapter("5 · Viaggio", "Condividi: modificatelo insieme, o una copia via email")
-    scroll(1, 0.4, 1.8)
-    dismiss_sheet()
-if tap(ident="trip.inbox", pause=3, anywhere=True):
-    chapter("5 · Viaggio", "Ricevuti: inviti a modificare insieme e copie")
-    dismiss_sheet()
+notify("trip.mode.stops", 2.5)
+chapter("5 · Viaggio", "Le tappe: dove dormi, con il tragitto tra l'una e l'altra")
+scroll(2, 0.4, 2)
+scroll_top()
+notify("trip.mode.map", 3.5)
+chapter("5 · Viaggio", "Il percorso sulla mappa, tappe numerate e attrazioni")
+time.sleep(2)
+notify("trip.mode.days", 1.5)
+notify("trip.share", 3)
+chapter("5 · Viaggio", "Condividi: modificatelo insieme, o una copia via email")
+scroll(1, 0.4, 2)
+notify("dismiss", 1.5)
+notify("trip.inbox", 3)
+chapter("5 · Viaggio", "Ricevuti: inviti a modificare insieme e copie")
+notify("dismiss", 1.5)
 
 # 6 · Drive
-if tap(ident="trip.drive", pause=3, anywhere=True):
-    chapter("6 · Guida", "Registra il percorso: strade davanti, vento, avvisi vocali")
-    scroll(2, 0.45, 1.6)
-    if tap(label="Costa sud", pause=3, scrolls=3):
-        chapter("6 · Guida", "Ogni percorso: mappa, dati, GPX, rifallo con Mappe")
-        scroll(1, 0.45, 1.6)
-        if tap(ident="drive.shareCard", pause=9, scrolls=3):
-            chapter("6 · Guida", "Condividi su Instagram: immagine e video in 3D")
-            time.sleep(4)
-            dismiss_sheet()
-        back()
-    tap(label="CHIUDI", pause=2, anywhere=True)
+notify("trip.drive", 3)
+chapter("6 · Guida", "Registra il percorso: strade davanti, vento, avvisi vocali")
+scroll(2, 0.45, 1.8)
+notify("drive.demo", 3.5)
+chapter("6 · Guida", "Ogni percorso: mappa, dati, GPX, rifallo con Mappe")
+scroll(1, 0.45, 1.8)
+notify("drive.share", 10)
+chapter("6 · Guida", "Condividi su Instagram: immagine e video in 3D")
+time.sleep(5)
+notify("dismiss", 1.5)
 
 # 7 · Settings
 tab("Oggi")
-scroll_top()
 notify("settings", 3)
-if True:
-    chapter("7 · Impostazioni", "Backup automatico, visione notturna, fonti e stato dei dati")
-    scroll(1, 0.4, 2)
-    if tap(label="Fonti e stato dei dati", pause=3, scrolls=2):
-        scroll(1, 0.45, 1.8)
-        back()
-    dismiss_sheet()
+chapter("7 · Impostazioni", "Backup automatico, visione notturna, fonti e stato dei dati")
+scroll(1, 0.4, 2)
+scroll(1, 0.4, 2)
+notify("screen.sources", 3.5)
+chapter("7 · Impostazioni", "Fonti e stato dei dati: ogni fonte, quando è stata aggiornata")
+scroll(1, 0.45, 2)
+notify("dismiss", 2)
 chapter("Norður", "Dal 6 al 13 novembre in Islanda: lo provo sul campo")
 time.sleep(3.5)
 

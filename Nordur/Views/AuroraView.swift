@@ -57,6 +57,14 @@ struct AuroraView: View {
         .navigationBarTitleDisplayMode(.inline)
         .refreshable { await model.refreshAurora() }
         .task { await model.refreshAurora() }
+        .onCICommand { command in
+            switch command {
+            case "aurora.mode.live": mode = .live
+            case "aurora.mode.day": mode = .day
+            case "aurora.mode.three": mode = .three
+            default: break
+            }
+        }
         .sheet(item: $reporting, onDismiss: { Task { await model.refreshSightings() } }) { kind in
             SightingSheet(coordinate: model.location.coordinate ?? place, kind: kind)
         }
