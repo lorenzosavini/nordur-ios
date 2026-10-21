@@ -76,7 +76,10 @@ struct SettingsView: View {
 
                 Section {
                     NavigationLink { InfoView(embedded: true) } label: { Label("Info, SOS, fonti e crediti", systemImage: "info.circle") }
-                } header: { Text("Informazioni").pinnedHeader() }
+                } header: { Text("Informazioni").pinnedHeader() } footer: {
+                    // Which build is installed (the .ipa files all have the same name).
+                    Text("Norður \(CrashLog.version)").font(.mono(11)).textSelection(.enabled)
+                }
             }
             .themedList()
             .navigationTitle("Impostazioni")

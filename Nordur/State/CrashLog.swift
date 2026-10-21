@@ -45,7 +45,8 @@ final class CrashLog: NSObject {
 
     static var version: String {
         let info = Bundle.main.infoDictionary
-        return "\(info?["CFBundleShortVersionString"] as? String ?? "?") (\(info?["CFBundleVersion"] as? String ?? "?")) · iOS \(UIDevice.current.systemVersion)"
+        let commit = (info?["NordurCommit"] as? String).map { " · \($0)" } ?? ""
+        return "\(info?["CFBundleShortVersionString"] as? String ?? "?") (build \(info?["CFBundleVersion"] as? String ?? "?")\(commit)) · iOS \(UIDevice.current.systemVersion)"
     }
 
     @ObservationIgnored private var heartbeat: Timer?

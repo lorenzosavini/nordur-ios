@@ -77,6 +77,10 @@ jobs:
           cp $I/AppIcon-80.png "$A/AppIcon40x40@2x.png"; cp $I/AppIcon-120.png "$A/AppIcon40x40@3x.png"
           cp $I/AppIcon-180.png "$A/AppIcon60x60@3x.png"
           P=/usr/libexec/PlistBuddy
+          # A build number of its own and the commit, shown in Settings: which version is installed.
+          $P -c "Set :CFBundleVersion ${{ github.run_number }}" "$A/Info.plist"
+          $P -c "Delete :NordurCommit" "$A/Info.plist" || true
+          $P -c "Add :NordurCommit string ${GITHUB_SHA::7}" "$A/Info.plist"
           $P -c "Delete :CFBundleIcons:CFBundlePrimaryIcon:CFBundleIconFiles" "$A/Info.plist" || true
           $P -c "Add :CFBundleIcons:CFBundlePrimaryIcon:CFBundleIconFiles array" "$A/Info.plist"
           for n in AppIcon20x20 AppIcon29x29 AppIcon40x40 AppIcon60x60; do
