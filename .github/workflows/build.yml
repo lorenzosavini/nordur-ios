@@ -68,6 +68,21 @@ jobs:
             build 2>&1 | tee build-device.log | grep -E "error:|BUILD (SUCCEEDED|FAILED)" | head -100
           mkdir -p Payload
           cp -R build-device/Release-iphoneos/Nordur.app Payload/
+          # Loose icon files for every small size (notifications use 20 pt, Settings 29 pt):
+          # Xcode copies only the 60 pt one, and for an app installed outside the App
+          # Store iOS may show a blank icon in notifications without them.
+          I=Nordur/Assets.xcassets/AppIcon.appiconset; A=Payload/Nordur.app
+          cp $I/AppIcon-40.png "$A/AppIcon20x20@2x.png"; cp $I/AppIcon-60.png "$A/AppIcon20x20@3x.png"
+          cp $I/AppIcon-58.png "$A/AppIcon29x29@2x.png"; cp $I/AppIcon-87.png "$A/AppIcon29x29@3x.png"
+          cp $I/AppIcon-80.png "$A/AppIcon40x40@2x.png"; cp $I/AppIcon-120.png "$A/AppIcon40x40@3x.png"
+          cp $I/AppIcon-180.png "$A/AppIcon60x60@3x.png"
+          P=/usr/libexec/PlistBuddy
+          $P -c "Delete :CFBundleIcons:CFBundlePrimaryIcon:CFBundleIconFiles" "$A/Info.plist" || true
+          $P -c "Add :CFBundleIcons:CFBundlePrimaryIcon:CFBundleIconFiles array" "$A/Info.plist"
+          for n in AppIcon20x20 AppIcon29x29 AppIcon40x40 AppIcon60x60; do
+            $P -c "Add :CFBundleIcons:CFBundlePrimaryIcon:CFBundleIconFiles: string $n" "$A/Info.plist"
+          done
+          $P -c "Print :CFBundleIcons" "$A/Info.plist"
           # Without Apple Health (no entitlements at all): fallback if the Apple ID cannot sign HealthKit.
           zip -qry Nordur-senza-Salute.ipa Payload
           # Ad-hoc signature carrying the app's entitlements (HealthKit), so Sideloadly/AltStore
