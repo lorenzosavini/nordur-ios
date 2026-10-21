@@ -19,8 +19,8 @@ struct AuroraVerdict: Equatable {
     /// `darker`: a place near with better observability now (name, km), for when the
     /// aurora is on but cannot be seen from here (city lights, twilight).
     static func make(slots: [AuroraSlot], state: AuroraState?, zone: TimeZone, now: Date = Date(),
-                     darker: (name: String, km: Double)? = nil) -> AuroraVerdict {
-        let current = slots.first { abs($0.date.timeIntervalSince(now)) < 1800 } ?? slots.first
+                     current live: AuroraSlot? = nil, darker: (name: String, km: Double)? = nil) -> AuroraVerdict {
+        let current = live ?? slots.first { $0.date <= now && now < $0.date.addingTimeInterval(3600) } ?? slots.first
         let sw = state?.source("solarWind")?.isOK == true ? state?.solarWind : nil
         let bz15 = sw?.average(15)?.bz
         let south = sw?.bzSouth.continuousMinutes ?? 0

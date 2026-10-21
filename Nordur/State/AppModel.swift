@@ -66,6 +66,8 @@ final class AppModel {
     var auroraSites: Fetched<AuroraSitesResponse>?
     /// Engine output for the active place, hourly for 72 h (recomputed when inputs change).
     private(set) var auroraSlots: [AuroraSlot] = []
+    /// The aurora at this moment (recomputed with every refresh, at least every 2 minutes).
+    private(set) var auroraCurrent: AuroraSlot?
     /// Reference sites ranked by observability in the next 12 h.
     private(set) var siteRanking: [SiteOutlook] = []
     /// Terrain skylines by rounded coordinate (TerrainService.key).
@@ -528,11 +530,13 @@ final class AppModel {
         recomputeTask = Task { [weak self] in
             try? await Task.sleep(nanoseconds: 60_000_000)
             guard !Task.isCancelled else { return }
-            let (slots, ranking) = await Task.detached(priority: .userInitiated) {
-                (AuroraEngine.forecast(inputs), sites.map { AuroraSitesService.rank($0, base: inputs, from: from, horizons: horizons) })
+            let (slots, current, ranking) = await Task.detached(priority: .userInitiated) {
+                (AuroraEngine.forecast(inputs), AuroraEngine.current(inputs),
+                 sites.map { AuroraSitesService.rank($0, base: inputs, from: from, horizons: horizons) })
             }.value
             guard !Task.isCancelled, let self else { return }
             self.auroraSlots = slots
+            self.auroraCurrent = current
             if let ranking { self.siteRanking = ranking }
         }
     }
@@ -551,10 +555,16 @@ final class AppModel {
             .filter { ($0.now?.observability ?? .veryPoor) > here && ($0.distanceKm ?? .infinity) <= 120 }
             .min { ($0.distanceKm ?? .infinity) < ($1.distanceKm ?? .infinity) }
             .map { (name: $0.site.name, km: $0.distanceKm ?? 0) }
-        return AuroraVerdict.make(slots: auroraSlots, state: aurora?.value, zone: forecast?.value.timeZone ?? .iceland, darker: darker)
+        return AuroraVerdict.make(slots: auroraSlots, state: aurora?.value, zone: forecast?.value.timeZone ?? .iceland,
+                                  current: auroraNow, darker: darker)
     }
 
-    var auroraNow: AuroraSlot? { auroraSlots.first { abs($0.date.timeIntervalSinceNow) < 1800 } ?? auroraSlots.first }
+    /// Now: computed for this moment, so the header and the "now" row of the next hour
+    /// agree (the nearest whole hour can be 30 minutes darker or lighter).
+    var auroraNow: AuroraSlot? {
+        if let current = auroraCurrent, abs(current.date.timeIntervalSinceNow) < 600 { return current }
+        return auroraSlots.first { $0.date <= Date() && Date() < $0.date.addingTimeInterval(3600) } ?? auroraSlots.first
+    }
     var auroraBestTonight: AuroraSlot? { AuroraEngine.best(auroraSlots, within: 24) }
 
     var recentQuakes24h: [Quake] {

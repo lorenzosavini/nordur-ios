@@ -473,6 +473,15 @@ enum AuroraEngine {
         return 1
     }
 
+    /// This very moment (not the nearest whole hour): the sun, the Moon and the
+    /// activity at `now`, with the weather of the hour it falls in. The same as the
+    /// "now" row of the next hour, so the two never disagree.
+    static func current(_ inputs: AuroraInputs) -> AuroraSlot? {
+        guard var sky = inputs.sky.last(where: { $0.date <= inputs.now }) ?? inputs.sky.first else { return nil }
+        sky.date = inputs.now
+        return slot(for: sky, inputs: inputs)
+    }
+
     static func forecast(_ inputs: AuroraInputs, hours: Int = 72) -> [AuroraSlot] {
         let start = inputs.now.addingTimeInterval(-3600)
         return inputs.sky
