@@ -14,6 +14,24 @@
             "state" : "translated",
             "value" : "With “Always” access Norður checks weather warnings, gusts and closed roads near you even when the app is closed, and keeps recording your drive with the screen locked."
           }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mit Zugriff „Immer“ prüft Norður Wetterwarnungen, Böen und gesperrte Straßen in deiner Nähe auch bei geschlossener App und zeichnet deine Fahrt bei gesperrtem Bildschirm weiter auf."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Avec l'accès «Toujours», Norður vérifie les alertes météo, les rafales et les routes fermées autour de vous même quand l'app est fermée, et continue d'enregistrer votre trajet écran verrouillé."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Con el acceso «Siempre», Norður comprueba avisos meteorológicos, rachas y carreteras cerradas cerca de ti incluso con la app cerrada, y sigue registrando tu trayecto con la pantalla bloqueada."
+          }
         }
       }
     },
@@ -23,6 +41,24 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Norður uses your location for weather, warnings, roads and aurora where you are, and to record your drives."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Norður nutzt deinen Standort für Wetter, Warnungen, Straßen und Polarlicht vor Ort sowie zum Aufzeichnen deiner Fahrten."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Norður utilise votre position pour la météo, les alertes, les routes et l'aurore là où vous êtes, et pour enregistrer vos trajets."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Norður usa tu ubicación para el tiempo, los avisos, las carreteras y la aurora donde estás, y para registrar tus trayectos."
           }
         }
       }
@@ -34,6 +70,24 @@
             "state" : "translated",
             "value" : "Norður reads from Health the activities you choose to import (for example from Garmin Connect or Apple Watch): GPS route, distance, duration, altitude and heart rate. It writes nothing to Health."
           }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Norður liest aus Health die Aktivitäten, die du importierst (z. B. von Garmin Connect oder Apple Watch): GPS-Route, Distanz, Dauer, Höhe und Herzfrequenz. Es schreibt nichts in Health."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Norður lit dans Santé les activités que vous choisissez d'importer (par exemple depuis Garmin Connect ou l'Apple Watch) : trace GPS, distance, durée, altitude et fréquence cardiaque. Rien n'est écrit dans Santé."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Norður lee de Salud las actividades que eliges importar (por ejemplo de Garmin Connect o Apple Watch): ruta GPS, distancia, duración, altitud y frecuencia cardíaca. No escribe nada en Salud."
+          }
         }
       }
     },
@@ -44,6 +98,24 @@
             "state" : "translated",
             "value" : "The camera is used for the \"Find the aurora\" viewfinder, which shows you where to look in the sky. Images are never saved or sent."
           }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Die Kamera wird für den Sucher „Polarlicht finden“ genutzt, der dir zeigt, wohin du am Himmel schauen sollst. Bilder werden nie gespeichert oder gesendet."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "L'appareil photo sert au viseur «Trouver l'aurore», qui vous montre où regarder dans le ciel. Les images ne sont jamais enregistrées ni envoyées."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La cámara se usa para el visor «Encuentra la aurora», que te muestra hacia dónde mirar en el cielo. Las imágenes nunca se guardan ni se envían."
+          }
         }
       }
     },
@@ -53,6 +125,24 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Motion data tells where the phone is pointing, to guide you towards the aurora."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bewegungsdaten zeigen, wohin das Telefon zeigt, um dich zum Polarlicht zu führen."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Les données de mouvement indiquent où pointe le téléphone, pour vous guider vers l'aurore."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Los datos de movimiento indican hacia dónde apunta el teléfono, para guiarte hacia la aurora."
           }
         }
       }
