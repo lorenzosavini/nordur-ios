@@ -15613,25 +15613,25 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Moon %lld%% lit above the horizon"
+            "value" : "Moon %lld%% illuminated, above the horizon"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Mond zu %lld%% beleuchtet über dem Horizont"
+            "value" : "Mond zu %lld %% beleuchtet, über dem Horizont"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Lune éclairée à %lld%% au-dessus de l'horizon"
+            "value" : "Lune éclairée à %lld %% au-dessus de l’horizon"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Luna iluminada al %lld%% sobre el horizonte"
+            "value" : "Luna iluminada al %lld %% sobre el horizonte"
           }
         }
       }
@@ -20003,19 +20003,19 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Bewölkung %lld%% (Schätzung nach Schichten)"
+            "value" : "Bewölkung %lld %% (Schätzung nach Schichten)"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Nébulosité %lld%% (estimation par couches)"
+            "value" : "Nébulosité %lld %% (estimation par couches)"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Nubosidad %lld%% (estimación por capas)"
+            "value" : "Nubosidad %lld %% (estimación por capas)"
           }
         }
       }
@@ -23899,25 +23899,25 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "The sky here is %lld%% clear now."
+            "value" : "The sky here is now %lld%% clear."
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Hier ist der Himmel gerade zu %lld%% klar."
+            "value" : "Hier ist der Himmel jetzt zu %lld %% klar."
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Le ciel ici est dégagé à %lld%% maintenant."
+            "value" : "Ici, le ciel est actuellement dégagé à %lld %%."
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Aquí el cielo está ahora despejado al %lld%%."
+            "value" : "Aquí el cielo está ahora despejado al %lld %%."
           }
         }
       }
@@ -27427,19 +27427,19 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Heuristische Schätzung: %1$@, Himmel zu %2$lld%% klar.%3$@ Keine Garantie für sichtbares Polarlicht."
+            "value" : "Heuristische Schätzung: %1$@, Himmel zu %2$lld %% klar.%3$@ Keine Garantie für sichtbare Polarlichter."
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Estimation heuristique : %1$@, ciel dégagé à %2$lld%%.%3$@ Aurore visible non garantie."
+            "value" : "Estimation heuristique : %1$@, ciel dégagé à %2$lld %%.%3$@ Aucune garantie d’aurore visible."
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Estimación heurística: %1$@, cielo despejado al %2$lld%%.%3$@ No garantiza una aurora visible."
+            "value" : "Estimación heurística: %1$@, cielo despejado al %2$lld %%.%3$@ No garantiza que la aurora sea visible."
           }
         }
       }
@@ -33133,19 +33133,19 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Wolken jetzt %lld%%"
+            "value" : "Wolken jetzt %lld %%"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "nuages %lld%% maintenant"
+            "value" : "nuages actuellement %lld %%"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "nubes ahora %lld%%"
+            "value" : "nubes ahora %lld %%"
           }
         }
       }
@@ -49240,6 +49240,1070 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Añadir parada"
+          }
+        }
+      }
+    },
+    "Memoria usata: %lld MB" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Memory used: %lld MB"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Speicher belegt: %lld MB"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mémoire utilisée : %lld MB"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Memoria usada: %lld MB"
+          }
+        }
+      }
+    },
+    " · ancora disponibile: %lld MB" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : " · still available: %lld MB"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : " · noch verfügbar: %lld MB"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : " · encore disponible : %lld MB"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : " · aún disponible: %lld MB"
+          }
+        }
+      }
+    },
+    "L'app non rispondeva da %lld s quando si è chiusa: iOS chiude un'app ferma troppo a lungo (watchdog). Il punto del codice arriva con il «Blocco (rapporto iOS)», di solito il giorno dopo." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The app had not responded for %lld s when it closed: iOS closes an app that freezes for too long (watchdog). The code location arrives with the “Hang (iOS report)”, usually the next day."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Die App hat seit %lld s nicht reagiert, als sie geschlossen wurde: iOS schließt eine App, die zu lange hängt (Watchdog). Die Codestelle kommt mit dem „Hänger (iOS-Bericht)“, meist am nächsten Tag."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "L’app ne répondait plus depuis %lld s lorsqu’elle s’est fermée : iOS ferme une app bloquée trop longtemps (watchdog). L’emplacement dans le code arrive avec le « Blocage (rapport iOS) », généralement le lendemain."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La app no respondía desde hacía %lld s cuando se cerró: iOS cierra una app bloqueada demasiado tiempo (watchdog). La ubicación en el código llega con el «Bloqueo (informe de iOS)», normalmente al día siguiente."
+          }
+        }
+      }
+    },
+    "iOS aveva avvisato di memoria quasi finita alle %@, poco prima della chiusura." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "iOS had warned of low memory at %@, shortly before the app closed."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "iOS hatte um %@ kurz vor dem Schließen vor knappem Speicher gewarnt."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "iOS avait signalé une mémoire presque saturée à %@, peu avant la fermeture."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "iOS había avisado de memoria casi agotada a las %@, poco antes del cierre."
+          }
+        }
+      }
+    },
+    "Restavano solo %lld MB prima del limite che iOS concede all'app." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Only %lld MB were left before the limit iOS allows the app."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bis zum Limit, das iOS der App gewährt, blieben nur noch %lld MB."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Il ne restait que %lld MB avant la limite accordée par iOS à l’app."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Solo quedaban %lld MB antes del límite que iOS permite a la app."
+          }
+        }
+      }
+    },
+    "Ultimo segnale di vita: %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Last sign of life: %@"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Letztes Lebenszeichen: %@"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dernier signe de vie : %@"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Última señal de vida: %@"
+          }
+        }
+      }
+    },
+    "In uso %lld MB, ancora disponibili %lld MB" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$lld MB in use, %2$lld MB still available"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$lld MB belegt, noch %2$lld MB verfügbar"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$lld MB utilisés, encore %2$lld MB disponibles"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$lld MB en uso, aún disponibles %2$lld MB"
+          }
+        }
+      }
+    },
+    "Eccezione: %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Exception: %@"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ausnahme: %@"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Exception : %@"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Excepción: %@"
+          }
+        }
+      }
+    },
+    "Accesso a memoria non valida (%@)." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Invalid memory access (%@)."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ungültiger Speicherzugriff (%@)."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Accès mémoire non valide (%@)."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Acceso a memoria no válida (%@)."
+          }
+        }
+      }
+    },
+    "Crash (segnale %d)." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Crash (signal %d)."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Absturz (Signal %d)."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Plantage (signal %d)."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fallo (señal %d)."
+          }
+        }
+      }
+    },
+    "Schermo bloccato per %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Screen frozen for %@"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bildschirm hing %@ lang"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Écran figé pendant %@"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pantalla bloqueada durante %@"
+          }
+        }
+      }
+    },
+    "Con l'app aperta: %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "With the app open: %@"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bei geöffneter App: %@"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Avec l’app ouverte : %@"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Con la app abierta: %@"
+          }
+        }
+      }
+    },
+    "Chiusure normali con l'app aperta: %lld" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Normal closures with the app open: %lld"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Normale Beendigungen bei geöffneter App: %lld"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fermetures normales avec l’app ouverte : %lld"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cierres normales con la app abierta: %lld"
+          }
+        }
+      }
+    },
+    "In background (di solito normali): %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "In the background (usually normal): %@"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Im Hintergrund (meist normal): %@"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "En arrière-plan (généralement normales) : %@"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "En segundo plano (normalmente normales): %@"
+          }
+        }
+      }
+    },
+    "Lo schermo non ha risposto per %@ s" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The screen didn’t respond for %@ s"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Der Bildschirm hat %@ s lang nicht reagiert"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "L’écran n’a pas répondu pendant %@ s"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La pantalla no respondió durante %@ s"
+          }
+        }
+      }
+    },
+    "vento %@ raff. %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "wind %1$@ gusts %2$@"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wind %1$@ Böen %2$@"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "vent %1$@ raf. %2$@"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "viento %1$@ rach. %2$@"
+          }
+        }
+      }
+    },
+    "Emesso %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Issued %@"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ausgegeben %@"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Émis %@"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Emitido %@"
+          }
+        }
+      }
+    },
+    "valido fino a %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "valid until %@"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "gültig bis %@"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "valable jusqu’à %@"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "válido hasta %@"
+          }
+        }
+      }
+    },
+    "Vento sul viaggio %@, %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wind on trip %1$@, %2$@"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wind auf der Reise %1$@, %2$@"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vent sur le trajet %1$@, %2$@"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Viento en el viaje %1$@, %2$@"
+          }
+        }
+      }
+    },
+    "Raffiche previste fino a %@ verso le %@ lungo il percorso. %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gusts of up to %1$@ expected around %2$@ along the route. %3$@"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Böen bis %1$@ gegen %2$@ entlang der Strecke erwartet. %3$@"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rafales jusqu’à %1$@ prévues vers %2$@ le long du trajet. %3$@"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rachas previstas de hasta %1$@ hacia las %2$@ a lo largo de la ruta. %3$@"
+          }
+        }
+      }
+    },
+    "Meteo sul viaggio %@, %@: %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Weather on trip %1$@, %2$@: %3$@"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wetter auf der Reise %1$@, %2$@: %3$@"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Météo sur le trajet %1$@, %2$@ : %3$@"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tiempo en el viaje %1$@, %2$@: %3$@"
+          }
+        }
+      }
+    },
+    "%@ sul percorso %@: %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ on route %2$@: %3$@"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ auf der Strecke %2$@: %3$@"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ sur le trajet %2$@ : %3$@"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ en la ruta %2$@: %3$@"
+          }
+        }
+      }
+    },
+    "Viaggio di %@. Aggiornato %@. Fonte: Vegagerðin (umferdin.is), informazioni 1777." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Trip on %1$@. Updated %2$@. Source: Vegagerðin (umferdin.is), information line 1777."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reise am %1$@. Aktualisiert %2$@. Quelle: Vegagerðin (umferdin.is), Auskunft 1777."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Trajet du %1$@. Mis à jour %2$@. Source : Vegagerðin (umferdin.is), informations 1777."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Viaje del %1$@. Actualizado %2$@. Fuente: Vegagerðin (umferdin.is), información 1777."
+          }
+        }
+      }
+    },
+    "Raffiche di %@ adesso sul percorso di oggi" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gusts of %@ now on today’s route"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jetzt Böen von %@ auf der heutigen Strecke"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rafales de %@ en ce moment sur le trajet du jour"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rachas de %@ ahora en la ruta de hoy"
+          }
+        }
+      }
+    },
+    "Stazione %@, sul viaggio %@. Vento medio %@ %@. %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Station %1$@, on trip %2$@. Mean wind %3$@ %4$@. %5$@"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Station %1$@, auf der Reise %2$@. Mittlerer Wind %3$@ %4$@. %5$@"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Station %1$@, sur le trajet %2$@. Vent moyen %3$@ %4$@. %5$@"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Estación %1$@, en el viaje %2$@. Viento medio %3$@ %4$@. %5$@"
+          }
+        }
+      }
+    },
+    "Nelle prossime ore a %@: %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "In the coming hours at %1$@: %2$@"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "In den nächsten Stunden in %1$@: %2$@"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dans les prochaines heures à %1$@ : %2$@"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "En las próximas horas en %1$@: %2$@"
+          }
+        }
+      }
+    },
+    "Raffiche fino a %@ nelle prossime ore a %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gusts of up to %1$@ in the coming hours at %2$@"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Böen bis %1$@ in den nächsten Stunden in %2$@"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rafales jusqu’à %1$@ dans les prochaines heures à %2$@"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rachas de hasta %1$@ en las próximas horas en %2$@"
+          }
+        }
+      }
+    },
+    "Previste verso le %@. %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Expected around %1$@. %2$@"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Erwartet gegen %1$@. %2$@"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Prévues vers %1$@. %2$@"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Previstas hacia las %1$@. %2$@"
+          }
+        }
+      }
+    },
+    "Fino a %@ mm/h verso le %@, %lld mm in tutto." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Up to %1$@ mm/h around %2$@, %3$lld mm in total."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bis zu %1$@ mm/h gegen %2$@, insgesamt %3$lld mm."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jusqu’à %1$@ mm/h vers %2$@, %3$lld mm au total."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hasta %1$@ mm/h hacia las %2$@, %3$lld mm en total."
+          }
+        }
+      }
+    },
+    "Circa %lld cm di neve fresca." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "About %lld cm of fresh snow."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Etwa %lld cm Neuschnee."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Environ %lld cm de neige fraîche."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Unos %lld cm de nieve nueva."
+          }
+        }
+      }
+    },
+    "Pioggia con temperature intorno a 0 °C dalle %@: strade e passerelle possono gelare." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rain with temperatures around 0 °C from %@: roads and footpaths may freeze."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Regen bei Temperaturen um 0 °C ab %@: Straßen und Wege können vereisen."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pluie avec des températures autour de 0 °C à partir de %@ : routes et passerelles peuvent geler."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lluvia con temperaturas en torno a 0 °C desde las %@: carreteras y pasarelas pueden helarse."
+          }
+        }
+      }
+    },
+    "Osservabilità %@: attività in corso e cielo %lld%% sereno." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Visibility %1$@: activity under way and sky %2$lld%% clear."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sichtbarkeit %1$@: Aktivität läuft und Himmel zu %2$lld %% klar."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Observabilité %1$@ : activité en cours et ciel dégagé à %2$lld %%."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Observabilidad %1$@: actividad en curso y cielo despejado al %2$lld %%."
+          }
+        }
+      }
+    },
+    "Più buio vicino: %@, %lld km." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Darkest nearby: %1$@, %2$lld km."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Am dunkelsten in der Nähe: %1$@, %2$lld km."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Plus sombre à proximité : %1$@, %2$lld km."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lo más oscuro cerca: %1$@, %2$lld km."
+          }
+        }
+      }
+    },
+    "Preparati: probabile tra ~%lld min" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Get ready: likely in ~%lld min"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mach dich bereit: wahrscheinlich in ~%lld min"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Préparez-vous : probable dans ~%lld min"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Prepárate: probable en ~%lld min"
+          }
+        }
+      }
+    },
+    "Il vento solare in arrivo è favorevole (Bz %@ nT da %lld min%@). Verso le %@ qui sarà buio e sereno al %lld%%." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The incoming solar wind is favourable (Bz %1$@ nT for %2$lld min%3$@). Around %4$@ it will be dark here and %5$lld%% clear."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Der ankommende Sonnenwind ist günstig (Bz %1$@ nT seit %2$lld min%3$@). Gegen %4$@ wird es hier dunkel und zu %5$lld %% klar sein."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Le vent solaire entrant est favorable (Bz %1$@ nT depuis %2$lld min%3$@). Vers %4$@, il fera nuit ici avec un ciel dégagé à %5$lld %%."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "El viento solar entrante es favorable (Bz %1$@ nT desde hace %2$lld min%3$@). Hacia las %4$@ aquí estará oscuro y despejado al %5$lld %%."
+          }
+        }
+      }
+    },
+    "Stanotte, verso le %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tonight, around %@"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Heute Nacht, gegen %@"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cette nuit, vers %@"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Esta noche, hacia las %@"
+          }
+        }
+      }
+    },
+    "L'ora migliore: %@. Ti avviso quando è il momento: tieni attiva la sorveglianza aurora." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Best time: %@. I’ll let you know when it’s time: keep aurora watch switched on."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Beste Zeit: %@. Ich sage dir Bescheid, wenn es so weit ist: Lass die Polarlicht-Überwachung aktiviert."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Meilleur moment : %@. Je vous préviens le moment venu : gardez la surveillance des aurores activée."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mejor hora: %@. Te aviso cuando llegue el momento: mantén activada la vigilancia de auroras."
+          }
+        }
+      }
+    },
+    "È ancora chiaro: il buio arriva verso le %@." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "It’s still light: darkness falls around %@."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Es ist noch hell: Dunkel wird es gegen %@."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Il fait encore jour : la nuit tombe vers %@."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Todavía hay luz: oscurece hacia las %@."
           }
         }
       }
