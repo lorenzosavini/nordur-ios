@@ -16893,7 +16893,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "The screen turns deep red on black: white and blue light undo the eyes' adaptation to the dark (20-30 minutes to get it back), red does not. Turn the phone's brightness down too.\n\nAnimated aurora: when the aurora is possible where you are, its curtains appear at the top, the clearer the better the chances; they disappear when there is none."
+            "value" : "The screen turns dark red on black: white and blue light ruin the eyes' adaptation to the dark (it takes 20-30 minutes to get it back), red does not. Lower the phone's brightness too.\n\nAnimated aurora: when an aurora is possible where you are, its curtains appear at the top, clearer the better the chances; they go away when there is none."
           }
         }
       }
@@ -17284,6 +17284,516 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Speed while driving"
+          }
+        }
+      }
+    },
+    "Come il telefono" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Same as the phone"
+          }
+        }
+      }
+    },
+    "Lingua" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Language"
+          }
+        }
+      }
+    },
+    "La nuova lingua si vede quando riapri l'app. Le notizie e gli avvisi delle fonti islandesi restano nella lingua in cui li pubblicano, con la traduzione dove c'è." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The new language shows when you open the app again. News and notices from Icelandic sources stay in the language they are published in, translated where available."
+          }
+        }
+      }
+    },
+    "Riapri l'app" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Open the app again"
+          }
+        }
+      }
+    },
+    "Chiudi ora" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Close now"
+          }
+        }
+      }
+    },
+    "Più tardi" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Later"
+          }
+        }
+      }
+    },
+    "La lingua cambia alla prossima apertura. Chiudi l'app ora e riaprila dalla schermata Home." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The language changes the next time the app opens. Close it now and open it again from the Home Screen."
+          }
+        }
+      }
+    },
+    "(ora islandese)" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "(Iceland time)"
+          }
+        }
+      }
+    },
+    "Allerte IMO, vento, pioggia forte, neve, ghiaccio e strade vengono controllati dove sei (o nel luogo scelto a mano), alle tappe del viaggio e lungo i tragitti tra una tappa e l'altra fino a dopodomani. Durante una registrazione di guida anche la strada davanti a te." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "IMO warnings, wind, heavy rain, snow, ice and roads are checked where you are (or at the place chosen by hand), at the trip's stops and along the drives between them until the day after tomorrow. While recording a drive, also the road ahead."
+          }
+        }
+      }
+    },
+    "Dove guardare: mirino con la fotocamera" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Where to look: camera finder"
+          }
+        }
+      }
+    },
+    " Guarda verso nord." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : " Look north."
+          }
+        }
+      }
+    },
+    "Allontanati dalle luci della città, verso un posto buio con l'orizzonte libero a nord." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Get away from the city lights, to a dark place with a clear horizon to the north."
+          }
+        }
+      }
+    },
+    "Attività prevista debole nelle prossime ore." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Weak activity expected in the next hours."
+          }
+        }
+      }
+    },
+    "Aurora attiva: allontanati dalle luci" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aurora active: get away from the lights"
+          }
+        }
+      }
+    },
+    "Cielo coperto: anche con l'aurora non si vedrebbe." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Overcast: even with an aurora it would not be seen."
+          }
+        }
+      }
+    },
+    "Condizioni sfavorevoli nelle prossime 12 ore." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Unfavourable conditions in the next 12 hours."
+          }
+        }
+      }
+    },
+    "Esci adesso" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Go out now"
+          }
+        }
+      }
+    },
+    "Non adesso" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Not now"
+          }
+        }
+      }
+    },
+    "Arresto forzato (SIGABRT): il sistema o una libreria ha fermato l'app." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Forced stop (SIGABRT): the system or a library stopped the app."
+          }
+        }
+      }
+    },
+    "Chiusa mentre era aperta, senza crash, blocchi o avvisi di memoria." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Closed while open, with no crash, freeze or memory warning."
+          }
+        }
+      }
+    },
+    "Chiusure del giorno (rapporto iOS)" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Day's closings (iOS report)"
+          }
+        }
+      }
+    },
+    "Crash registrato da iOS" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Crash recorded by iOS"
+          }
+        }
+      }
+    },
+    "Errore aritmetico (SIGFPE)." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Arithmetic error (SIGFPE)."
+          }
+        }
+      }
+    },
+    "Errore nel codice Swift (SIGTRAP): un valore mancante o un indice fuori dai limiti." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Error in the Swift code (SIGTRAP): a missing value or an index out of range."
+          }
+        }
+      }
+    },
+    "Istruzione non valida (SIGILL)." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Invalid instruction (SIGILL)."
+          }
+        }
+      }
+    },
+    "L'app non ha visto la causa: niente errori nel codice, schermo che rispondeva, memoria nella norma. Di solito è iOS che chiude l'app (per esempio per liberare memoria per un'altra app o la fotocamera), oppure l'app è stata chiusa dal multitasking mentre era aperta. Se è un crash, il «rapporto iOS» arriva a un avvio successivo." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The app did not see the cause: no code errors, the screen was answering, memory was normal. Usually iOS closed the app (for example to free memory for another app or the camera), or it was closed from the app switcher while open. If it was a crash, the “iOS report” arrives at a later launch."
+          }
+        }
+      }
+    },
+    "Memoria esaurita: iOS l'ha chiusa." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Out of memory: iOS closed it."
+          }
+        }
+      }
+    },
+    "Schermo bloccato: iOS l'ha chiusa." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Screen frozen: iOS closed it."
+          }
+        }
+      }
+    },
+    "accesso a memoria non valida" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "invalid memory access"
+          }
+        }
+      }
+    },
+    "altra chiusura anomala" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "other abnormal exit"
+          }
+        }
+      }
+    },
+    "chiusura anomala" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "abnormal exit"
+          }
+        }
+      }
+    },
+    "file bloccato" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "locked file"
+          }
+        }
+      }
+    },
+    "iOS ha avvisato: memoria quasi finita" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "iOS warned: memory almost exhausted"
+          }
+        }
+      }
+    },
+    "istruzione non valida" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "invalid instruction"
+          }
+        }
+      }
+    },
+    "limite di memoria" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "memory limit"
+          }
+        }
+      }
+    },
+    "memoria esaurita" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "out of memory"
+          }
+        }
+      }
+    },
+    "memoria liberata da iOS" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "memory freed by iOS"
+          }
+        }
+      }
+    },
+    "schermo bloccato (watchdog)" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "screen frozen (watchdog)"
+          }
+        }
+      }
+    },
+    "tempo in background scaduto" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "background time expired"
+          }
+        }
+      }
+    },
+    "troppo uso del processore" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "too much CPU"
+          }
+        }
+      }
+    },
+    "watchdog" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "watchdog"
+          }
+        }
+      }
+    },
+    "Norður: registro errori" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Norður: error log"
+          }
+        }
+      }
+    },
+    "Giallo: la fonte non ha risposto e si usa la sua ultima copia buona. Rosso: non risponde e non c'è una copia; il problema è della fonte, e il resto (Kp, previsioni) viene comunque da NOAA." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Yellow: the source did not answer and its last good copy is used. Red: it does not answer and there is no copy; the problem is the source's, and the rest (Kp, forecasts) still comes from NOAA."
+          }
+        }
+      }
+    },
+    "copia salvata" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "saved copy"
+          }
+        }
+      }
+    },
+    "non risponde" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "not answering"
+          }
+        }
+      }
+    },
+    "quando apri la sezione" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "when you open the section"
+          }
+        }
+      }
+    },
+    " Previsione lungo il percorso, verifica su vedur.is e umferdin.is." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : " Forecast along the route, check vedur.is and umferdin.is."
+          }
+        }
+      }
+    },
+    "neve" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "snow"
+          }
+        }
+      }
+    },
+    "pioggia forte" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "heavy rain"
+          }
+        }
+      }
+    },
+    "rischio ghiaccio" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ice risk"
+          }
+        }
+      }
+    },
+    "Aggiungi tappa" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Add stop"
           }
         }
       }
