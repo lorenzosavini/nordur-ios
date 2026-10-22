@@ -1,0 +1,155 @@
+{
+ "chapters": [
+  {
+   "t": 0.0,
+   "title": "Norður",
+   "subtitle": "Islanda: aurora, meteo, strade e viaggio in un'app sola"
+  },
+  {
+   "t": 13.33,
+   "title": "1 · Oggi",
+   "subtitle": "In breve: aurora stanotte, prossime ore, strade e allerte"
+  },
+  {
+   "t": 84.91,
+   "title": "1 · Oggi",
+   "subtitle": "Il viaggio di oggi e l'aurora adesso, con «vedo / non vedo»"
+  },
+  {
+   "t": 125.28,
+   "title": "1 · Oggi",
+   "subtitle": "Esplora: da vedere, strade, vulcani, webcam"
+  },
+  {
+   "t": 146.35,
+   "title": "1 · Oggi",
+   "subtitle": "Terra, mare e servizi: carburante, voli, spesa"
+  },
+  {
+   "t": 163.17,
+   "title": "Da vedere",
+   "subtitle": "Cascate, belvedere, sorgenti calde: 1.300 luoghi su mappa"
+  },
+  {
+   "t": 180.44,
+   "title": "Da vedere",
+   "subtitle": "Foto, tempi di visita e avvertenze per ogni luogo"
+  },
+  {
+   "t": 190.07,
+   "title": "Strade",
+   "subtitle": "Condizioni in tempo reale di Vegagerðin: chiuse, ghiaccio, vento"
+  },
+  {
+   "t": 209.7,
+   "title": "Vulcani e terremoti",
+   "subtitle": "Scosse delle ultime 48 ore dall'IMO"
+  },
+  {
+   "t": 222.07,
+   "title": "Webcam",
+   "subtitle": "Le strade come sono adesso"
+  },
+  {
+   "t": 234.6,
+   "title": "2 · Meteo",
+   "subtitle": "MET Norway + Open-Meteo, ora per ora, con i rischi"
+  },
+  {
+   "t": 258.97,
+   "title": "3 · Aurora",
+   "subtitle": "Attività, osservabilità qui, affidabilità"
+  },
+  {
+   "t": 268.75,
+   "title": "3 · Aurora",
+   "subtitle": "Tempo reale: vento solare, Bz, Hp30, magnetometro, Kp"
+  },
+  {
+   "t": 289.23,
+   "title": "3 · Aurora",
+   "subtitle": "Previsione a 24 ore e località migliori stanotte"
+  },
+  {
+   "t": 305.2,
+   "title": "3 · Aurora",
+   "subtitle": "Tre giorni: Kp a blocchi di 3 ore e le notti"
+  },
+  {
+   "t": 320.17,
+   "title": "3 · Aurora",
+   "subtitle": "Visione notturna rossa: non perdi l'adattamento al buio"
+  },
+  {
+   "t": 321.83,
+   "title": "4 · Mappa",
+   "subtitle": "Vento, raffiche, pioggia, neve, nuvole, temperatura, aurora, radar"
+  },
+  {
+   "t": 371.88,
+   "title": "4 · Mappa",
+   "subtitle": "Tocca un punto: meteo, aurora e strada in quel posto"
+  },
+  {
+   "t": 378.01,
+   "title": "4 · Mappa",
+   "subtitle": "A schermo intero, legenda e tempo sopra la mappa"
+  },
+  {
+   "t": 382.6,
+   "title": "5 · Viaggio",
+   "subtitle": "Giorno per giorno: tragitto, notte, meteo e attrazioni con orari"
+  },
+  {
+   "t": 406.47,
+   "title": "5 · Viaggio",
+   "subtitle": "Le tappe: dove dormi, con il tragitto tra l'una e l'altra"
+  },
+  {
+   "t": 422.3,
+   "title": "5 · Viaggio",
+   "subtitle": "Il percorso sulla mappa, tappe numerate e attrazioni"
+  },
+  {
+   "t": 426.03,
+   "title": "5 · Viaggio",
+   "subtitle": "Condividi: modificatelo insieme, o una copia via email"
+  },
+  {
+   "t": 436.73,
+   "title": "5 · Viaggio",
+   "subtitle": "Ricevuti: inviti a modificare insieme e copie"
+  },
+  {
+   "t": 438.4,
+   "title": "6 · Guida",
+   "subtitle": "Registra il percorso: strade davanti, vento, avvisi vocali"
+  },
+  {
+   "t": 453.53,
+   "title": "6 · Guida",
+   "subtitle": "Ogni percorso: mappa, dati, GPX, rifallo con Mappe"
+  },
+  {
+   "t": 484.7,
+   "title": "6 · Guida",
+   "subtitle": "Condividi su Instagram: immagine e video in 3D"
+  },
+  {
+   "t": 491.57,
+   "title": "7 · Impostazioni",
+   "subtitle": "Backup automatico, visione notturna, fonti e stato dei dati"
+  },
+  {
+   "t": 513.0,
+   "title": "7 · Impostazioni",
+   "subtitle": "Fonti e stato dei dati: ogni fonte, quando è stata aggiornata"
+  },
+  {
+   "t": 523.17,
+   "title": "Norður",
+   "subtitle": "Dal 6 al 13 novembre in Islanda: lo provo sul campo"
+  }
+ ],
+ "duration": 528.33
+}
