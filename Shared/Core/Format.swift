@@ -1,8 +1,19 @@
 import Foundation
 
+/// The language the interface is running in: one of the app's localizations.
+enum UILanguage {
+    static let supported = ["it", "en", "de", "fr", "es"]
+    static let code: String = {
+        let first = Bundle.main.preferredLocalizations.first ?? "it"
+        return supported.contains(first) ? first : "it"
+    }()
+    /// Region form for dates, numbers and the voice.
+    static var region: String { ["it": "it_IT", "en": "en_GB", "de": "de_DE", "fr": "fr_FR", "es": "es_ES"][code] ?? "it_IT" }
+}
+
 enum Fmt {
-    /// Locale for dates and numbers in the app language (Italian by default, British English otherwise).
-    static let italian = Locale(identifier: Bundle.main.preferredLocalizations.first == "en" ? "en_GB" : "it_IT")
+    /// Locale for dates and numbers in the app language.
+    static let italian = Locale(identifier: UILanguage.region)
 
     static func temp(_ value: Double?) -> String {
         guard let value else { return "–" }

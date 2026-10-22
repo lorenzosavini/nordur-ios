@@ -1,4 +1,4 @@
-// POST /api/translate  { to: "it" | "en", texts: [string] }  ->  { translations: [string] }
+// POST /api/translate  { to: "it" | "en" | "de" | "fr" | "es", texts: [string] }  ->  { translations: [string] }
 //
 // Text that the app shows from the web (IMO warnings, SafeTravel notices,
 // Vegagerðin road news and hazards, Herjólfur notices, NOAA alerts) in the
@@ -15,7 +15,15 @@ const MAX_TEXTS = 25, MAX_CHARS = 12000, MAX_TEXT = 4000;
 const memory = new Map(); // `${to}:${sha}` -> translation
 const perClient = new Map(); // ip -> { minute, count }
 
-const LANG = { it: "Italian", en: "English" };
+const LANG = { it: "Italian", en: "English", de: "German", fr: "French", es: "Spanish" };
+
+const CONVENTIONS = {
+  it: `Italian conventions: "allerta gialla/arancione/rossa" for IMO warning colours; "raffiche" for gusts; "strada impraticabile", "tratti ghiacciati", "strada scivolosa", "neve sulla carreggiata", "lavori stradali", "limite di peso per asse"; "tempesta geomagnetica" (G1–G5), "indice K"; times stay in 24-hour form; keep m/s, km/h, °C, mm.`,
+  en: `British English spelling; keep the official English wording used by the Icelandic Met Office and NOAA where the source already is English.`,
+  de: `German conventions: "gelbe/orange/rote Warnung" for IMO warning colours; "Böen" for gusts; "Straße unpassierbar", "glatte Abschnitte", "Schnee auf der Fahrbahn", "Bauarbeiten", "Achslastbeschränkung"; "geomagnetischer Sturm" (G1–G5), "K-Index"; times stay in 24-hour form; keep m/s, km/h, °C, mm.`,
+  fr: `French conventions: "vigilance jaune/orange/rouge" for IMO warning colours; "rafales" for gusts; "route impraticable", "plaques de verglas", "neige sur la chaussée", "travaux", "limitation de charge par essieu"; "tempête géomagnétique" (G1–G5), "indice K"; times stay in 24-hour form; keep m/s, km/h, °C, mm.`,
+  es: `Spanish conventions: "aviso amarillo/naranja/rojo" for IMO warning colours; "rachas" for gusts; "carretera intransitable", "tramos helados", "nieve en la calzada", "obras", "limitación de peso por eje"; "tormenta geomagnética" (G1–G5), "índice K"; times stay in 24-hour form; keep m/s, km/h, °C, mm.`,
+};
 
 export function systemPrompt(to) {
   const lang = LANG[to];
@@ -25,7 +33,7 @@ Vegagerðin / umferdin.is (road conditions, closures, roadworks, weight limits),
 They can be in English, Icelandic or ${lang} already.
 
 Write as a careful native ${lang} editor would for an official notice: correct grammar, natural phrasing, no calques, no added or removed information.
-${to === "it" ? `Italian conventions: "allerta gialla/arancione/rossa" for IMO warning colours; "raffiche" for gusts; "strada impraticabile", "tratti ghiacciati", "strada scivolosa", "neve sulla carreggiata", "lavori stradali", "limite di peso per asse"; "tempesta geomagnetica" (G1–G5), "indice K"; times stay in 24-hour form; keep m/s, km/h, °C, mm.` : `British English spelling; keep the official English wording used by the Icelandic Met Office and NOAA where the source already is English.`}
+${CONVENTIONS[to]}
 Never translate proper names: Icelandic place names, mountain passes, road names and numbers (e.g. "Hellisheiði", "road 1", "F35"), region names, organisation names, ship names. Keep numbers, units, dates, times, URLs and phone numbers exactly.
 If a text is already in ${lang}, return it unchanged.
 Answer with JSON only: {"translations": [...]} with exactly one string per input text, in the same order.`;
@@ -66,7 +74,7 @@ export function parseTranslations(answer, count) {
 export default async function handler(req, res) {
   if (req.method !== "POST") return send(res, 405, { error: "method" });
   const body = await readJSON(req).catch(() => ({}));
-  const to = body.to === "en" ? "en" : body.to === "it" ? "it" : null;
+  const to = Object.hasOwn(LANG, body.to) ? body.to : null;
   const texts = Array.isArray(body.texts) ? body.texts : null;
   if (!to || !texts || !texts.length || texts.length > MAX_TEXTS || texts.some((t) => typeof t !== "string" || t.length > MAX_TEXT)
       || texts.reduce((n, t) => n + t.length, 0) > MAX_CHARS) {

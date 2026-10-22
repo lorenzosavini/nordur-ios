@@ -12,8 +12,8 @@ final class Translator {
 
     static let endpoint = URL(string: "https://nordur-api.vercel.app/api/translate")!
 
-    /// "it" or "en": the language the interface is running in.
-    var language: String { Bundle.main.preferredLocalizations.first == "en" ? "en" : "it" }
+    /// The language the interface is running in.
+    var language: String { UILanguage.code }
 
     private var cache: [String: String] = [:]
     private var dirty = false

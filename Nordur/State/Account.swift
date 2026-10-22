@@ -44,7 +44,7 @@ final class Account {
     }
 
     /// Language of the account e-mails: the app's.
-    private var lang: String { Bundle.main.preferredLocalizations.first == "en" ? "en" : "it" }
+    private var lang: String { (UILanguage.code == "it" ? "it" : "en") }
 
     /// E-mails a 6-digit code (valid 15 minutes) to reset the password.
     func requestResetCode(email: String) async throws {
@@ -133,7 +133,7 @@ final class Account {
         guard let email else { throw AccountError.message(String(localized: "Accedi al tuo account")) }
         struct Body: Encodable { let email: String; let to: String; let title: String; let lang: String; let payload: [TripStop] }
         struct Answer: Decodable { let notified: Bool? }
-        let lang = Bundle.main.preferredLocalizations.first == "en" ? "en" : "it"
+        let lang = (UILanguage.code == "it" ? "it" : "en")
         let data = try await request("data", method: "POST", items: [URLQueryItem(name: "share", value: "trip")],
                                      body: try JSONEncoder().encode(Body(email: email, to: recipient, title: title, lang: lang, payload: stops)))
         return (try? JSONDecoder().decode(Answer.self, from: data))?.notified ?? false
@@ -201,7 +201,7 @@ final class Account {
 
     func inviteToSharedTrip(_ id: String, email to: String) async throws -> (SharedTrip, Bool) {
         struct Body: Encodable { let email: String; let to: String; let lang: String }
-        let lang = Bundle.main.preferredLocalizations.first == "en" ? "en" : "it"
+        let lang = (UILanguage.code == "it" ? "it" : "en")
         let data = try await request("data", method: "POST", items: [URLQueryItem(name: "trip", value: id), URLQueryItem(name: "invite", value: "1")],
                                      body: try JSONEncoder().encode(Body(email: try signedInEmail(), to: to, lang: lang)))
         let answer = try JSONDecoder().decode(TripAnswer.self, from: data)

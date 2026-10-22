@@ -4,7 +4,7 @@ import SwiftUI
 /// reads it once at launch (AppleLanguages for this app only), so the change
 /// applies when the app is opened again.
 enum AppLanguage: String, CaseIterable, Identifiable {
-    case system, it, en
+    case system, it, en, de, fr, es
 
     static let key = "app.language"
     var id: String { rawValue }
@@ -15,6 +15,9 @@ enum AppLanguage: String, CaseIterable, Identifiable {
         case .system: return String(localized: "Come il telefono")
         case .it: return "Italiano"
         case .en: return "English"
+        case .de: return "Deutsch"
+        case .fr: return "Français"
+        case .es: return "Español"
         }
     }
 
@@ -24,7 +27,7 @@ enum AppLanguage: String, CaseIterable, Identifiable {
     }
 
     /// The language the app is showing now.
-    static var showing: String { Bundle.main.preferredLocalizations.first ?? "it" }
+    static var showing: String { UILanguage.code }
 }
 
 struct LanguageSection: View {

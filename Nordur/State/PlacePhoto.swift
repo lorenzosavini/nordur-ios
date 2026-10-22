@@ -91,7 +91,7 @@ final class PlacePhotoService {
     /// (Commons, 1 km). Then: a search, the nearest article with a photo, Commons 5 km.
     private func lookup(_ place: Place, hint: (wikidata: String?, wikipedia: String?)?) async -> PlacePhoto? {
         let name = Self.searchName(place.name)
-        let preferred = Bundle.main.preferredLocalizations.first == "en" ? ["en", "it"] : ["it", "en"]
+        let preferred = UILanguage.code == "en" ? ["en", "it"] : [UILanguage.code, "en"]
         var first: [@MainActor () async -> PlacePhoto?] = []
         if let q = hint?.wikidata { first.append { await self.wikidataImage(q) } }
         if let link = hint?.wikipedia, let colon = link.firstIndex(of: ":") {

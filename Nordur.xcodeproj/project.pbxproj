@@ -177,6 +177,9 @@
 			knownRegions = (
 				it,
 				en,
+				de,
+				fr,
+				es,
 				Base,
 			);
 			mainGroup = AA0000000000000000000004;
