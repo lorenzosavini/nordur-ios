@@ -1,0 +1,283 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Norður · Admin</title>
+<link rel="icon" type="image/png" href="/favicon.png">
+<link rel="stylesheet" href="/landing/style.css">
+<style>
+  body { font-size: 15px; }
+  main { max-width: 1240px; margin: 0 auto; padding: 28px 20px 80px; }
+  h1 { font-size: 46px; margin: 8px 0 20px; }
+  h2 { font-size: 30px; margin: 0 0 14px; }
+  .card { border: 1px solid var(--hair); background: var(--surface); padding: 22px; margin-bottom: 22px; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 0; border-top: 2px solid var(--rule); }
+  .grid > div { padding: 16px 16px 16px 0; border-bottom: 1px solid var(--hair); }
+  .grid b { display: block; font: 700 44px/1 var(--cond); }
+  .grid span { font: 500 11px/1.3 var(--mono); letter-spacing: .1em; text-transform: uppercase; color: var(--dim); }
+  .warn { border: 1px solid var(--caution); color: var(--caution); padding: 14px 16px; margin-bottom: 14px; font-size: 14px; }
+  .warn code { color: var(--text); }
+  table { width: 100%; border-collapse: collapse; font-size: 14px; }
+  th, td { text-align: left; padding: 10px 8px 10px 0; border-bottom: 1px solid var(--hair); vertical-align: top; }
+  th { font: 600 10px/1.3 var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--dim); position: sticky; top: 0; background: var(--surface); }
+  .tag { font: 600 10px/1 var(--mono); text-transform: uppercase; letter-spacing: .06em; padding: 5px 6px; border: 1px solid var(--hair); white-space: nowrap; }
+  .tag.confirmed { border-color: var(--aurora); color: var(--aurora); }
+  .tag.pending { border-color: var(--caution); color: var(--caution); }
+  .tag.unsubscribed { color: var(--faint); }
+  .row { display: flex; flex-wrap: wrap; gap: 12px; align-items: end; margin-bottom: 14px; }
+  .row .field { margin: 0; flex: 1; min-width: 180px; }
+  textarea { width: 100%; min-height: 120px; font: 400 15px/1.5 var(--sans); color: var(--text); background: #000; border: 1px solid var(--hair); padding: 12px; border-radius: 0; }
+  .btn { padding: 12px 14px; font-size: 12px; }
+  .btn.small { padding: 7px 9px; font-size: 10px; }
+  .tabs { display: flex; gap: 0; border-bottom: 1px solid var(--hair); margin-bottom: 12px; }
+  .tabs button { background: none; border: 0; color: var(--dim); font: 600 12px/1 var(--mono); text-transform: uppercase; padding: 12px 14px; cursor: pointer; border-bottom: 2px solid transparent; }
+  .tabs button.on { color: var(--text); border-bottom-color: var(--accent); }
+  .bars { display: flex; align-items: flex-end; gap: 3px; height: 90px; margin-top: 10px; }
+  .bars i { flex: 1; background: var(--aurora); min-height: 1px; opacity: .85; }
+  .list { font: 400 13px/1.7 var(--mono); color: var(--dim); }
+  .list b { color: var(--text); font-weight: 600; }
+  pre { white-space: pre-wrap; font: 400 12px/1.5 var(--mono); color: var(--dim); background: #000; border: 1px solid var(--hair); padding: 12px; margin: 8px 0 0; }
+  .two { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; }
+  @media (max-width: 900px) { .two { grid-template-columns: 1fr; } .hide-m { display: none; } }
+  #login { max-width: 420px; margin: 8vh auto; }
+  .ok { color: var(--aurora); font-size: 14px; }
+  .scroll { max-height: 640px; overflow: auto; }
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap"><a class="logo" href="/"><img src="/landing/img/icon.png" alt="" width="30" height="30">Norður</a><span class="kicker" style="margin-left:14px">Admin</span>
+  <button class="btn small" id="logout" style="margin-left:auto;display:none">Esci</button></div></header>
+
+<main>
+  <form id="login" class="card" style="display:none">
+    <div class="kicker">Accesso amministratore</div>
+    <h1>Admin</h1>
+    <p class="dim">Accedi con l'account Norður (lo stesso dell'app) il cui indirizzo è tra gli amministratori (<code>ADMIN_EMAILS</code> su Vercel).</p>
+    <div class="field"><label>Email</label><input type="email" id="lemail" autocomplete="username" required></div>
+    <div class="field"><label>Password</label><input type="password" id="lpass" autocomplete="current-password" required style="width:100%;font:400 17px var(--sans);color:var(--text);background:#000;border:1px solid var(--hair);padding:14px"></div>
+    <div class="form-error" id="lerr"></div>
+    <button class="btn primary" type="submit">Accedi</button>
+  </form>
+
+  <div id="app" style="display:none">
+    <h1>Lista di lancio</h1>
+    <div id="warnings"></div>
+
+    <div class="card">
+      <div class="grid" id="stats"></div>
+      <div class="two" style="margin-top:20px">
+        <div><div class="kicker">Iscrizioni negli ultimi 30 giorni</div><div class="bars" id="bars"></div></div>
+        <div class="list" id="breakdown"></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="row">
+        <h2 style="margin:0;flex:1">Iscritti</h2>
+        <div class="field"><input type="text" id="q" placeholder="Cerca email o nome"></div>
+        <div class="field" style="max-width:200px"><select id="fstatus"><option value="">Tutti</option><option value="confirmed">Confermati</option><option value="pending">Da confermare</option><option value="unsubscribed">Cancellati</option></select></div>
+        <button class="btn" id="export">Esporta CSV</button>
+        <button class="btn" id="reconfirm">Reinvia conferme</button>
+      </div>
+      <div class="scroll"><table><thead><tr><th>Email</th><th>Nome</th><th>Lingua</th><th>Stato</th><th class="hide-m">Iscritto</th><th class="hide-m">Interessi</th><th class="hide-m">Viaggio</th><th></th></tr></thead><tbody id="rows"></tbody></table></div>
+      <p class="small" style="margin-top:12px">Chi non conferma entro 60 giorni e chi si è cancellato da più di 30 giorni viene eliminato automaticamente quando apri questa pagina. «Dettagli» mostra le prove del consenso.</p>
+    </div>
+
+    <div class="two">
+      <div class="card">
+        <h2>Stato del lancio</h2>
+        <p class="small">Si vede sulla landing nella sezione «Verso il lancio».</p>
+        <div class="row">
+          <div class="field"><label>Fase</label><select id="phase"><option value="idea">Idea</option><option value="development">Sviluppo</option><option value="beta">Beta privata</option><option value="testflight">Beta pubblica</option><option value="review">Revisione Apple</option><option value="launched">Disponibile</option></select></div>
+          <div class="field"><label>Avanzamento <span id="pv"></span></label><input type="range" id="progress" min="0" max="100" style="width:100%"></div>
+        </div>
+        <div class="tabs" id="ltabs"></div>
+        <div class="field"><label>Nota (testo libero)</label><textarea id="note"></textarea></div>
+        <div class="field"><label>Traguardi, uno per riga. Nella lingua italiana «x » all'inizio = fatto. Le altre lingue seguono lo stesso ordine.</label><textarea id="items"></textarea></div>
+        <div class="field"><label>Link App Store (quando esce)</label><input type="text" id="store" placeholder="https://apps.apple.com/…"></div>
+        <label class="check"><input type="checkbox" id="showCount"><span>Mostra quante persone sono in lista</span></label>
+        <h2 style="margin-top:24px">Dati del titolare</h2>
+        <p class="small">Obbligatori per l'informativa: senza nome e email di contatto il modulo resta chiuso.</p>
+        <div class="field"><label>Titolare (nome e cognome o ragione sociale)</label><input type="text" id="controller"></div>
+        <div class="field"><label>Email per la privacy</label><input type="email" id="cemail"></div>
+        <div class="field"><label>Indirizzo (facoltativo)</label><input type="text" id="address"></div>
+        <div class="field"><label>Partita IVA / C.F. (facoltativo)</label><input type="text" id="vat"></div>
+        <button class="btn primary" id="saveStatus">Salva</button> <span class="ok" id="saved"></span>
+      </div>
+
+      <div class="card">
+        <h2>Invia un aggiornamento</h2>
+        <p class="small">Va solo a chi ha confermato l'iscrizione. Ogni email ha il link per cancellarsi. <code>{name}</code> diventa il nome dell'iscritto. Paragrafi separati da una riga vuota.</p>
+        <div class="field"><label>Destinatari</label><select id="mlang"><option value="all">Tutte le lingue</option><option value="it">Solo italiano</option><option value="en">Solo inglese</option><option value="de">Solo tedesco</option><option value="fr">Solo francese</option><option value="es">Solo spagnolo</option></select></div>
+        <div class="field"><label>Oggetto</label><input type="text" id="subject" maxlength="150"></div>
+        <div class="field"><label>Testo</label><textarea id="text" style="min-height:220px"></textarea></div>
+        <div class="row"><button class="btn" id="test">Mandala a me (prova)</button><button class="btn primary" id="send">Invia a tutti</button></div>
+        <p class="ok" id="sendState"></p>
+        <h2 style="margin-top:24px;font-size:22px">Inviate</h2>
+        <div class="list" id="campaigns"></div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<script>
+(() => {
+  const API = "/api/data";
+  const LANGS = { it: "Italiano", en: "English", de: "Deutsch", fr: "Français", es: "Español" };
+  const ss = { get: (k) => { try { return sessionStorage.getItem(k); } catch { return null; } }, set: (k, v) => { try { sessionStorage.setItem(k, v); } catch {} }, del: (k) => { try { sessionStorage.removeItem(k); } catch {} } };
+  let session = JSON.parse(ss.get("nordur.admin") || "null");
+  let data = null, noteLang = "it";
+  const $ = (id) => document.getElementById(id);
+  const esc = (s) => String(s ?? "").replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
+  const day = (iso) => iso ? new Date(iso).toLocaleString("it-IT", { day: "2-digit", month: "short", year: "numeric", hour: "2-digit", minute: "2-digit" }) : "—";
+  const headers = () => ({ Authorization: `Bearer ${session.token}`, "X-Admin-Email": session.email, "Content-Type": "application/json" });
+
+  async function call(path, opts = {}) {
+    const r = await fetch(`${API}?${path}`, { ...opts, headers: headers() });
+    if (r.status === 401) { const d = await r.json().catch(() => ({})); logout(d.error === "no_admins" ? "Nessun amministratore configurato: aggiungi ADMIN_EMAILS su Vercel." : "Accesso non autorizzato per questo account."); throw new Error("401"); }
+    return r;
+  }
+
+  function logout(msg) { session = null; ss.del("nordur.admin"); $("app").style.display = "none"; $("logout").style.display = "none"; $("login").style.display = "block"; $("lerr").textContent = msg || ""; }
+  $("logout").onclick = () => logout();
+
+  $("login").onsubmit = async (e) => {
+    e.preventDefault();
+    $("lerr").textContent = "";
+    const email = $("lemail").value.trim().toLowerCase();
+    const r = await fetch("/api/auth", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ mode: "login", email, password: $("lpass").value }) });
+    const d = await r.json().catch(() => ({}));
+    if (!r.ok || !d.token) { $("lerr").textContent = d.error || "Accesso non riuscito"; return; }
+    session = { token: d.token, email };
+    ss.set("nordur.admin", JSON.stringify(session));
+    $("lpass").value = "";
+    load();
+  };
+
+  async function load() {
+    try {
+      const r = await call("admin=leads");
+      data = await r.json();
+    } catch { return; }
+    $("login").style.display = "none"; $("app").style.display = "block"; $("logout").style.display = "inline-flex";
+    render();
+    loadCampaigns();
+  }
+
+  function render() {
+    const s = data.stats, st = s.status || {};
+    const w = [];
+    if (!data.mail) w.push("<div class='warn'><b>Email non configurata.</b> Senza un servizio di invio le iscrizioni restano «da confermare» e non puoi mandare aggiornamenti. Su Vercel (progetto nordur-api › Settings › Environment Variables) aggiungi <code>RESEND_API_KEY</code> e <code>MAIL_FROM</code> (consigliato, resend.com) oppure <code>SMTP_HOST</code>, <code>SMTP_PORT</code>, <code>SMTP_USER</code>, <code>SMTP_PASS</code>, poi ripubblica. Quindi usa «Reinvia conferme».</div>");
+    if (!data.legal.controller || !data.legal.email) w.push("<div class='warn'><b>Dati del titolare mancanti.</b> Compila «Dati del titolare» qui sotto: finché mancano, il modulo della landing resta chiuso (servono per l'informativa).</div>");
+    $("warnings").innerHTML = w.join("");
+    $("stats").innerHTML = [["Totale", s.total], ["Confermati", st.confirmed || 0], ["Da confermare", st.pending || 0], ["Cancellati", st.unsubscribed || 0]]
+      .map(([l, n]) => `<div><b>${n}</b><span>${l}</span></div>`).join("");
+    const days = [];
+    for (let i = 29; i >= 0; i--) { const d = new Date(Date.now() - i * 864e5).toISOString().slice(0, 10); days.push(s.days[d] || 0); }
+    const max = Math.max(1, ...days);
+    $("bars").innerHTML = days.map((n, i) => `<i style="height:${(n / max) * 100}%" title="${n}"></i>`).join("");
+    const fmt = (o, names = {}) => Object.entries(o).sort((a, b) => b[1] - a[1]).map(([k, n]) => `<b>${esc(names[k] || k)}</b> ${n}`).join(" · ") || "—";
+    $("breakdown").innerHTML = `<div class="kicker">Lingua</div>${fmt(s.lang, LANGS)}<br><br><div class="kicker">Interessi</div>${fmt(s.interests)}<br><br><div class="kicker">Periodo di viaggio</div>${fmt(s.travel)}`;
+    renderRows();
+    // Status editor
+    const status = data.status;
+    $("phase").value = status.phase; $("progress").value = status.progress; $("pv").textContent = `${status.progress}%`;
+    $("store").value = status.appStoreUrl || ""; $("showCount").checked = Boolean(status.showCount);
+    editing = { note: { ...status.note }, items: Object.fromEntries(Object.keys(LANGS).map((l) => [l, (status.items || []).map((i) => (l === "it" && i.done ? "x " : "") + (i.label?.[l] || "")).join("\n")])) };
+    renderTabs();
+    $("controller").value = data.legal.controller || ""; $("cemail").value = data.legal.email || ""; $("address").value = data.legal.address || ""; $("vat").value = data.legal.vat || "";
+  }
+
+  function renderRows() {
+    const q = $("q").value.trim().toLowerCase(), f = $("fstatus").value;
+    const rows = data.leads.filter((l) => (!f || l.status === f) && (!q || l.email.includes(q) || (l.name || "").toLowerCase().includes(q)));
+    $("rows").innerHTML = rows.map((l) => `<tr data-id="${l.id}">
+      <td>${esc(l.email)}</td><td>${esc(l.name)}</td><td>${esc(l.lang)}</td>
+      <td><span class="tag ${l.status}">${{ confirmed: "confermato", pending: "da confermare", unsubscribed: "cancellato" }[l.status] || l.status}</span></td>
+      <td class="hide-m">${day(l.createdAt)}</td><td class="hide-m">${esc((l.interests || []).join(", "))}</td><td class="hide-m">${esc(l.travel || "")}</td>
+      <td style="white-space:nowrap"><button class="btn small" data-act="info">Dettagli</button> <button class="btn small" data-act="del">Elimina</button></td></tr>
+      <tr class="detail" data-for="${l.id}" style="display:none"><td colspan="8"><pre>${esc((l.consents || []).map((c) => `${c.at}  ${c.type}${c.version ? " v" + c.version : ""}  ip ${c.ip || "—"}\n  ${c.text || ""}\n  ${c.ua || ""}${c.source ? "\n  da " + c.source : ""}`).join("\n\n"))}\n\nEventi: ${esc((l.events || []).map((e) => `${e.t} ${e.at}`).join(" · "))}</pre></td></tr>`).join("")
+      || `<tr><td colspan="8" class="dim">Nessun iscritto.</td></tr>`;
+  }
+  $("q").oninput = renderRows; $("fstatus").onchange = renderRows;
+  $("rows").onclick = async (e) => {
+    const b = e.target.closest("button"); if (!b) return;
+    const id = b.closest("tr").dataset.id;
+    if (b.dataset.act === "info") { const d = document.querySelector(`tr[data-for="${id}"]`); d.style.display = d.style.display === "none" ? "" : "none"; }
+    if (b.dataset.act === "del") {
+      const lead = data.leads.find((l) => l.id === id);
+      if (!confirm(`Eliminare definitivamente ${lead.email} e le sue prove di consenso?`)) return;
+      await call(`admin=lead&id=${id}`, { method: "DELETE" });
+      data.leads = data.leads.filter((l) => l.id !== id);
+      renderRows();
+    }
+  };
+
+  $("export").onclick = async () => {
+    const r = await call("admin=export");
+    const blob = await r.blob();
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(blob); a.download = `nordur-iscritti-${new Date().toISOString().slice(0, 10)}.csv`; a.click();
+    setTimeout(() => URL.revokeObjectURL(a.href), 2000);
+  };
+
+  async function batches(path, body, label) {
+    let offset = 0, sent = 0, total = 0, campaign;
+    $("sendState").textContent = `${label}…`;
+    while (offset != null) {
+      const r = await call(path, { method: "POST", body: JSON.stringify({ ...body, offset, campaign }) });
+      const d = await r.json();
+      if (!r.ok) { $("sendState").textContent = d.error === "no_mailer" ? "Email non configurata." : "Errore nell'invio."; return; }
+      sent += d.sent; total = d.total; offset = d.next; campaign = d.campaign;
+      $("sendState").textContent = `${label}: ${sent} / ${total}`;
+    }
+    $("sendState").textContent = `${label}: inviate ${sent} su ${total}.`;
+  }
+  $("reconfirm").onclick = () => { if (confirm("Mandare di nuovo l'email di conferma a chi non ha ancora confermato?")) batches("admin=reconfirm", {}, "Conferme"); };
+  $("test").onclick = () => batches("admin=send", { subject: $("subject").value, text: $("text").value, test: true }, "Prova");
+  $("send").onclick = async () => {
+    if (!$("subject").value.trim() || !$("text").value.trim()) { $("sendState").textContent = "Scrivi oggetto e testo."; return; }
+    const n = data.leads.filter((l) => l.status === "confirmed" && ($("mlang").value === "all" || l.lang === $("mlang").value)).length;
+    if (!confirm(`Inviare «${$("subject").value}» a ${n} iscritti confermati?`)) return;
+    await batches("admin=send", { subject: $("subject").value, text: $("text").value, lang: $("mlang").value }, "Invio");
+    loadCampaigns();
+  };
+  async function loadCampaigns() {
+    const r = await call("admin=campaigns").catch(() => null);
+    if (!r) return;
+    const { campaigns } = await r.json();
+    $("campaigns").innerHTML = campaigns.map((c) => `<div><b>${esc(c.subject)}</b> · ${esc(c.lang)} · ${c.sent}/${c.total} · ${day(c.startedAt)}</div>`).join("") || "Nessuna.";
+  }
+
+  // Status editor, notes and milestones per language
+  let editing = { note: {}, items: {} };
+  function renderTabs() {
+    $("ltabs").innerHTML = Object.entries(LANGS).map(([k, n]) => `<button type="button" data-l="${k}" class="${k === noteLang ? "on" : ""}">${n}</button>`).join("");
+    $("note").value = editing.note[noteLang] || ""; $("items").value = editing.items[noteLang] || "";
+  }
+  $("ltabs").onclick = (e) => { const b = e.target.closest("button"); if (!b) return; keep(); noteLang = b.dataset.l; renderTabs(); };
+  function keep() { editing.note[noteLang] = $("note").value; editing.items[noteLang] = $("items").value; }
+  $("progress").oninput = () => { $("pv").textContent = `${$("progress").value}%`; };
+  $("saveStatus").onclick = async () => {
+    keep();
+    const lines = Object.fromEntries(Object.keys(LANGS).map((l) => [l, (editing.items[l] || "").split("\n")]));
+    const items = lines.it.map((line, i) => line.trim() && ({
+      done: /^x\s/i.test(line.trim()),
+      label: Object.fromEntries(Object.keys(LANGS).map((l) => [l, (lines[l][i] || "").trim().replace(l === "it" ? /^x\s+/i : /^$/, "")])),
+    })).filter(Boolean);
+    const body = {
+      status: { phase: $("phase").value, progress: $("progress").value, note: editing.note, items, appStoreUrl: $("store").value.trim(), showCount: $("showCount").checked },
+      legal: { controller: $("controller").value.trim(), email: $("cemail").value.trim(), address: $("address").value.trim(), vat: $("vat").value.trim() },
+    };
+    const r = await call("admin=status", { method: "PUT", body: JSON.stringify(body) });
+    const d = await r.json();
+    if (r.ok) { data.status = d.status; data.legal = d.legal; render(); $("saved").textContent = "Salvato. La landing si aggiorna entro 2 minuti."; setTimeout(() => { $("saved").textContent = ""; }, 5000); }
+  };
+
+  if (session) load(); else logout();
+})();
+</script>
+</body>
+</html>

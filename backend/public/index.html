@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Norður · L'Islanda in un'app sola</title>
+<meta name="description" content="Aurora, meteo, strade, allerte e viaggio per l'Islanda in un'unica app per iPhone. Iscriviti per sapere quando esce.">
+<meta name="theme-color" content="#000000">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Norður · L'Islanda in un'app sola">
+<meta property="og:description" content="Aurora, meteo, strade, allerte e viaggio per l'Islanda in un'unica app per iPhone.">
+<meta property="og:image" content="https://nordur-api.vercel.app/landing/img/og.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/png" href="/favicon.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="stylesheet" href="/landing/style.css">
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <a class="logo" href="#top"><img src="/landing/img/icon.png" alt="" width="30" height="30">Norður</a>
+    <nav class="links">
+      <a href="#features" data-i18n="nav.features">Funzioni</a>
+      <a href="#aurora" data-i18n="nav.aurora">Aurora</a>
+      <a href="#honest" data-i18n="nav.honest">Cosa non fa</a>
+      <a href="#status" data-i18n="nav.status">Lancio</a>
+    </nav>
+    <select class="lang" id="lang" aria-label="Lingua / Language">
+      <option value="it">IT</option><option value="en">EN</option><option value="de">DE</option><option value="fr">FR</option><option value="es">ES</option>
+    </select>
+    <a class="btn primary" href="#join" data-i18n="nav.join">Avvisami</a>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero">
+    <canvas id="sky" aria-hidden="true"></canvas>
+    <div class="wrap">
+      <div>
+        <div class="kicker aurora" data-i18n="hero.kicker">Islanda · iPhone · in arrivo</div>
+        <h1 data-i18n-html="hero.title">L'Islanda<br>in un'app sola.</h1>
+        <p class="lead" data-i18n="hero.lead"></p>
+        <div class="actions">
+          <a class="btn primary" href="#join" data-i18n="hero.cta">Avvisami al lancio</a>
+          <a class="btn" href="#features" data-i18n="hero.secondary">Guarda come funziona</a>
+        </div>
+        <p class="note" data-i18n="hero.note"></p>
+      </div>
+      <div class="phone"><video src="/landing/video/aurora.mp4" poster="/landing/video/aurora.webp" muted loop playsinline autoplay preload="metadata"></video></div>
+    </div>
+  </section>
+
+  <div class="wrap">
+    <div class="stats reveal">
+      <div><b>15+</b><span data-i18n="stats.sources"></span></div>
+      <div><b>1.300</b><span data-i18n="stats.places"></span></div>
+      <div><b>5</b><span data-i18n="stats.languages"></span></div>
+      <div><b>0</b><span data-i18n="stats.ads"></span></div>
+    </div>
+  </div>
+
+  <section id="features" style="border-top:0">
+    <div class="wrap">
+      <div class="kicker" data-i18n="features.kicker">Cosa fa</div>
+      <h2 data-i18n="features.title"></h2>
+      <div class="features">
+        <div class="feature reveal"><div><div class="kicker" data-i18n="f.today.kicker"></div><h3 data-i18n="f.today.title"></h3><p data-i18n="f.today.text"></p></div>
+          <div class="media"><div class="phone small"><video data-src="/landing/video/today.mp4" poster="/landing/video/today.webp" muted loop playsinline preload="none"></video></div></div></div>
+        <div class="feature reveal"><div><div class="kicker aurora" data-i18n="f.aurora.kicker"></div><h3 data-i18n="f.aurora.title"></h3><p data-i18n="f.aurora.text"></p></div>
+          <div class="media"><div class="phone small"><img src="/landing/img/aurora.webp" alt="" loading="lazy"></div></div></div>
+        <div class="feature reveal"><div><div class="kicker" data-i18n="f.map.kicker"></div><h3 data-i18n="f.map.title"></h3><p data-i18n="f.map.text"></p></div>
+          <div class="media"><div class="phone small"><video data-src="/landing/video/map.mp4" poster="/landing/video/map.webp" muted loop playsinline preload="none"></video></div></div></div>
+        <div class="feature reveal"><div><div class="kicker" data-i18n="f.roads.kicker"></div><h3 data-i18n="f.roads.title"></h3><p data-i18n="f.roads.text"></p></div>
+          <div class="media"><div class="phone small"><img src="/landing/img/roads.webp" alt="" loading="lazy"></div></div></div>
+        <div class="feature reveal"><div><div class="kicker" data-i18n="f.trip.kicker"></div><h3 data-i18n="f.trip.title"></h3><p data-i18n="f.trip.text"></p></div>
+          <div class="media"><div class="phone small"><video data-src="/landing/video/trip.mp4" poster="/landing/video/trip.webp" muted loop playsinline preload="none"></video></div></div></div>
+        <div class="feature reveal"><div><div class="kicker" data-i18n="f.drive.kicker"></div><h3 data-i18n="f.drive.title"></h3><p data-i18n="f.drive.text"></p></div>
+          <div class="media"><div class="phone small"><video data-src="/landing/video/drive.mp4" poster="/landing/video/drive.webp" muted loop playsinline preload="none"></video></div></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="aurora">
+    <div class="wrap">
+      <div class="kicker aurora" data-i18n="aurora.kicker"></div>
+      <h2 data-i18n="aurora.title"></h2>
+      <p class="lead" data-i18n="aurora.lead"></p>
+      <div class="steps reveal">
+        <div><div class="n">1</div><h3 data-i18n="aurora.s1.title"></h3><p data-i18n="aurora.s1.text"></p></div>
+        <div><div class="n">2</div><h3 data-i18n="aurora.s2.title"></h3><p data-i18n="aurora.s2.text"></p></div>
+        <div><div class="n">3</div><h3 data-i18n="aurora.s3.title"></h3><p data-i18n="aurora.s3.text"></p></div>
+      </div>
+      <div class="verdicts reveal" id="verdicts"></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="kicker" data-i18n="gallery.kicker"></div>
+      <h2 data-i18n="gallery.title"></h2>
+    </div>
+    <div class="gallery" id="gallery"></div>
+  </section>
+
+  <section id="honest">
+    <div class="wrap">
+      <div class="kicker" data-i18n="honest.kicker"></div>
+      <h2 data-i18n="honest.title"></h2>
+      <div class="cols reveal">
+        <div class="yes"><h3 data-i18n="honest.does"></h3><ul id="does"></ul></div>
+        <div class="no"><h3 data-i18n="honest.doesnt"></h3><ul id="doesnt"></ul></div>
+      </div>
+      <div style="margin-top:46px">
+        <div class="kicker" data-i18n="sources.kicker"></div>
+        <div class="chips">
+          <span>Veðurstofa Íslands</span><span>Vegagerðin · umferdin.is</span><span>SafeTravel</span><span>NOAA SWPC</span><span>OVATION Prime</span><span>GFZ Potsdam</span><span>NASA DONKI</span><span>MET Norway</span><span>Open-Meteo</span><span>RainViewer</span><span>Isavia · KEF</span><span>Herjólfur</span><span>OpenStreetMap</span><span>Gasvaktin</span><span>DTU Space</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="status">
+    <div class="wrap">
+      <div class="kicker aurora" data-i18n="status.kicker"></div>
+      <h2 data-i18n="status.title"></h2>
+      <div class="phases" id="phases"></div>
+      <div class="progress"><i id="bar"></i></div>
+      <div class="progress-label"><span id="pct"></span><span id="updated"></span></div>
+      <p class="status-note" id="note"></p>
+      <ul class="items" id="items"></ul>
+      <p id="count" class="dim" style="margin-top:20px"></p>
+      <p id="store" style="margin-top:20px"></p>
+    </div>
+  </section>
+
+  <section id="join" class="join">
+    <div class="wrap">
+      <div>
+        <div class="kicker aurora" data-i18n="join.kicker"></div>
+        <h2 data-i18n="join.title"></h2>
+        <p class="lead" data-i18n="join.lead"></p>
+      </div>
+      <div id="formbox">
+        <form class="signup" id="signup" novalidate>
+          <div class="field"><label for="email" data-i18n="form.email">Email</label><input id="email" name="email" type="email" autocomplete="email" required data-i18n-ph="form.emailPh"></div>
+          <div class="field"><label for="name" data-i18n="form.name"></label><input id="name" name="name" type="text" autocomplete="given-name" maxlength="60"></div>
+          <div class="field"><label for="travel" data-i18n="form.travel"></label><select id="travel" name="travel"></select></div>
+          <div class="field"><span class="label" data-i18n="form.interests"></span>
+            <div class="toggles" id="interests"></div>
+          </div>
+          <div class="hp" aria-hidden="true"><label>Website <input name="website" tabindex="-1" autocomplete="off"></label></div>
+          <label class="check"><input type="checkbox" id="cPrivacy"><span data-i18n-html="form.consentPrivacy"></span></label>
+          <label class="check"><input type="checkbox" id="cUpdates"><span data-i18n="form.consentUpdates"></span></label>
+          <div class="form-error" id="err" role="alert"></div>
+          <button class="btn primary" type="submit" id="submit" data-i18n="form.submit">Iscrivimi</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <section id="faq">
+    <div class="wrap">
+      <div class="kicker" data-i18n="faq.kicker"></div>
+      <div id="faqs" style="margin-top:24px"></div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div>
+      <a class="logo" href="#top" style="color:var(--text)"><img src="/landing/img/icon.png" alt="" width="26" height="26">Norður</a>
+      <p style="margin-top:12px" data-i18n="footer.made"></p>
+    </div>
+    <div class="legal" id="legalInfo"></div>
+    <div class="legal"><a href="/legal.html#privacy" data-i18n="footer.privacy">Privacy</a> · <a href="/legal.html#cookie" data-i18n="footer.cookie">Cookie</a> · <a href="/privacy.html">App</a></div>
+  </div>
+</footer>
+
+<div id="banner"></div>
+
+<script src="/landing/i18n.js"></script>
+<script src="/landing/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Norður · Privacy e cookie</title>
+<meta name="robots" content="noindex">
+<link rel="icon" type="image/png" href="/favicon.png">
+<link rel="stylesheet" href="/landing/style.css">
+</head>
+<body class="legal-page">
+<header class="top">
+  <div class="wrap">
+    <a class="logo" href="/"><img src="/landing/img/icon.png" alt="" width="30" height="30">Norður</a>
+    <select class="lang" id="lang" aria-label="Lingua / Language" style="margin-left:auto">
+      <option value="it">IT</option><option value="en">EN</option><option value="de">DE</option><option value="fr">FR</option><option value="es">ES</option>
+    </select>
+  </div>
+</header>
+<main>
+  <p><a href="/" id="back"></a></p>
+  <section id="privacy" style="padding:20px 0;border:0">
+    <div class="kicker" id="pv"></div>
+    <h1 id="pt"></h1>
+    <p class="dim" id="pref"></p>
+    <div id="pbody"></div>
+  </section>
+  <section id="cookie" style="padding:40px 0;border-top:1px solid var(--hair)">
+    <h1 id="ct"></h1>
+    <div id="cbody"></div>
+  </section>
+</main>
+<script src="/landing/i18n.js"></script>
+<script>
+(() => {
+  const VERSION = "2026-10-23";
+  const LANGS = ["it", "en", "de", "fr", "es"];
+  const get = (k) => { try { return localStorage.getItem(k); } catch { return null; } };
+  const browser = (navigator.languages || [navigator.language || "en"]).map((l) => l.slice(0, 2)).find((l) => LANGS.includes(l));
+  let lang = [new URLSearchParams(location.search).get("lang"), get("nordur.lang"), browser, "en"].find((l) => l && window.I18N[l]) || "it";
+  let legal = {};
+  const esc = (s) => String(s ?? "").replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
+  function render() {
+    const T = window.I18N[lang], miss = `<span class="missing">[${esc(T["legal.missing"])}]</span>`;
+    document.documentElement.lang = lang;
+    document.getElementById("lang").value = lang;
+    document.getElementById("back").textContent = T["legal.back"];
+    document.getElementById("pv").textContent = `${T["legal.version"]} ${VERSION}`;
+    document.getElementById("pt").textContent = T["legal.privacyTitle"];
+    document.getElementById("pref").textContent = T["legal.reference"];
+    document.getElementById("ct").textContent = T["legal.cookieTitle"];
+    const fill = (s) => s
+      .replace("{controller}", legal.controller ? esc(legal.controller) : miss)
+      .replace("{address}", legal.address ? `, ${esc(legal.address)}` : "")
+      .replace("{vat}", legal.vat ? `, ${esc(legal.vat)}` : "")
+      .replaceAll("{email}", legal.email ? `<a href="mailto:${esc(legal.email)}">${esc(legal.email)}</a>` : miss);
+    // Texts are ours (i18n.js); only the controller's details come from the server and are escaped.
+    document.getElementById("pbody").innerHTML = T.privacy.map(([h, p], i) => `<h2><span>${String(i + 1).padStart(2, "0")}</span>${esc(h)}</h2><p>${fill(p)}</p>`).join("");
+    document.getElementById("cbody").innerHTML = T.cookie.map(([h, p], i) => `<h2><span>${String(i + 1).padStart(2, "0")}</span>${esc(h)}</h2><p>${p}</p>`).join("");
+    document.title = `Norður · ${T["legal.privacyTitle"]}`;
+  }
+  document.getElementById("lang").addEventListener("change", (e) => { lang = e.target.value; try { localStorage.setItem("nordur.lang", lang); } catch {} render(); });
+  render();
+  fetch("/api/data?lead=status").then((r) => r.json()).then((d) => { legal = d.legal || {}; render(); }).catch(() => {});
+})();
+</script>
+</body>
+</html>

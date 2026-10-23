@@ -19,6 +19,7 @@
 import crypto from "node:crypto";
 import { verifyToken, readObject, writeObject, listObjects, deleteObjects, docPrefix, docPath, readJSON, send, isRevoked, userPath, hmac } from "../lib/core.js";
 import { sendMail } from "../lib/mail.js";
+import { leads } from "../lib/leads.js";
 
 const EMAIL = /^[^\s@]{1,64}@[^\s@]{1,190}\.[^\s@]{2,24}$/;
 const inboxPrefix = (email) => `inbox/${hmac(email.trim().toLowerCase(), "inbox")}/`;
@@ -178,6 +179,9 @@ async function inbox(req, res, uid, url) {
 const DOC = /^[a-z0-9][a-z0-9_-]{0,80}$/;
 
 export default async function handler(req, res) {
+  const params = new URL(req.url, "http://x").searchParams;
+  // The landing page's launch list and its admin panel (lib/leads.js).
+  if (params.has("lead") || params.has("admin")) return leads(req, res, new URL(req.url, "http://x"));
   const uid = verifyToken(req.headers.authorization);
   if (!uid) return send(res, 401, { error: "Sessione scaduta, accedi di nuovo" });
   const url = new URL(req.url, "http://x");
