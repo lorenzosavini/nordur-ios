@@ -5,8 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
 <title>Norður · Admin</title>
-<link rel="icon" type="image/png" href="/favicon.png">
-<link rel="stylesheet" href="/landing/style.css">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="stylesheet" href="../landing/style.css">
 <style>
   body { font-size: 15px; }
   main { max-width: 1240px; margin: 0 auto; padding: 28px 20px 80px; }
@@ -47,7 +47,7 @@
 </style>
 </head>
 <body>
-<header class="top"><div class="wrap"><a class="logo" href="/"><img src="/landing/img/icon.png" alt="" width="30" height="30">Norður</a><span class="kicker" style="margin-left:14px">Admin</span>
+<header class="top"><div class="wrap"><a class="logo" href="../"><img src="../landing/img/icon.png" alt="" width="30" height="30">Norður</a><span class="kicker" style="margin-left:14px">Admin</span>
   <button class="btn small" id="logout" style="margin-left:auto;display:none">Esci</button></div></header>
 
 <main>
@@ -122,9 +122,10 @@
   </div>
 </main>
 
+<script src="../config.js"></script>
 <script>
 (() => {
-  const API = "/api/data";
+  const API = `${window.NORDUR_API || ""}/api/data`;
   const LANGS = { it: "Italiano", en: "English", de: "Deutsch", fr: "Français", es: "Español" };
   const ss = { get: (k) => { try { return sessionStorage.getItem(k); } catch { return null; } }, set: (k, v) => { try { sessionStorage.setItem(k, v); } catch {} }, del: (k) => { try { sessionStorage.removeItem(k); } catch {} } };
   let session = JSON.parse(ss.get("nordur.admin") || "null");
@@ -147,7 +148,7 @@
     e.preventDefault();
     $("lerr").textContent = "";
     const email = $("lemail").value.trim().toLowerCase();
-    const r = await fetch("/api/auth", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ mode: "login", email, password: $("lpass").value }) });
+    const r = await fetch(`${window.NORDUR_API || ""}/api/auth`, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ mode: "login", email, password: $("lpass").value }) });
     const d = await r.json().catch(() => ({}));
     if (!r.ok || !d.token) { $("lerr").textContent = d.error || "Accesso non riuscito"; return; }
     session = { token: d.token, email };

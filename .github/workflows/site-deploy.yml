@@ -1,0 +1,54 @@
+# Publishes the website (folder site/) to the owner's hosting by FTP, FTPS or
+# SFTP whenever site/ changes on main, or by hand from the Actions tab.
+#
+# Repository secrets (Settings › Secrets and variables › Actions), set by the
+# owner, never written in the code:
+#   SITE_HOST      ftp.example.com
+#   SITE_USER      the FTP/SFTP user
+#   SITE_PASSWORD  its password
+#   SITE_DIR       remote folder of the site, e.g. /public_html or /www
+#   SITE_PROTOCOL  ftps (default), ftp or sftp        (optional)
+#   SITE_PORT      only if not the usual one          (optional)
+# Files are uploaded and overwritten; nothing on the hosting is deleted.
+name: Deploy site
+
+on:
+  push:
+    branches: [main]
+    paths: ["site/**", ".github/workflows/site-deploy.yml"]
+  workflow_dispatch:
+
+concurrency: { group: site-deploy, cancel-in-progress: false }
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check the hosting is configured
+        id: cfg
+        env: { SITE_HOST: "${{ secrets.SITE_HOST }}" }
+        run: |
+          if [ -z "$SITE_HOST" ]; then echo "SITE_HOST not set: nothing to deploy yet."; echo "skip=1" >> "$GITHUB_OUTPUT"; fi
+      - name: Upload
+        if: steps.cfg.outputs.skip != '1'
+        env:
+          SITE_HOST: ${{ secrets.SITE_HOST }}
+          SITE_USER: ${{ secrets.SITE_USER }}
+          SITE_PASSWORD: ${{ secrets.SITE_PASSWORD }}
+          SITE_DIR: ${{ secrets.SITE_DIR }}
+          SITE_PROTOCOL: ${{ secrets.SITE_PROTOCOL }}
+          SITE_PORT: ${{ secrets.SITE_PORT }}
+        run: |
+          sudo apt-get install -y -qq lftp >/dev/null
+          proto="${SITE_PROTOCOL:-ftps}"
+          port="${SITE_PORT:+:$SITE_PORT}"
+          case "$proto" in
+            ftps) url="ftp://$SITE_HOST$port"; tls="set ftp:ssl-force true; set ftp:ssl-protect-data true; set ssl:verify-certificate no;" ;;
+            ftp)  url="ftp://$SITE_HOST$port"; tls="set ftp:ssl-allow false;" ;;
+            sftp) url="sftp://$SITE_HOST$port"; tls="set sftp:auto-confirm yes;" ;;
+            *) echo "SITE_PROTOCOL must be ftp, ftps or sftp"; exit 1 ;;
+          esac
+          lftp -u "$SITE_USER","$SITE_PASSWORD" "$url" -e "$tls set net:max-retries 3; set net:timeout 30; mirror -R --verbose --parallel=4 --exclude-glob .DS_Store site/ ${SITE_DIR:-/}; bye"
+          echo "Published to $proto $SITE_HOST ${SITE_DIR:-/}"

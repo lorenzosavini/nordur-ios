@@ -32,7 +32,10 @@ const PREFIX = "leads/";
 const STATUS = "site/status.bin";
 const leadPath = (id) => `${PREFIX}${id}.bin`;
 const leadId = (email) => hmac(email.trim().toLowerCase(), "lead").slice(0, 32);
-const SITE = process.env.SITE_URL || "https://nordur-api.vercel.app";
+// The API (links in the e-mails) and the site (where those links land), which
+// can be on another host: SITE_URL, e.g. https://www.example.com
+const API_URL = (process.env.API_URL || "https://nordur-api.vercel.app").replace(/\/$/, "");
+const SITE = (process.env.SITE_URL || API_URL).replace(/\/$/, "");
 
 const tokenFor = (id, purpose) => `${id}.${hmac(id, `lead-${purpose}`).slice(0, 24)}`;
 function idFrom(token, purpose) {
@@ -112,8 +115,8 @@ function mailLayout(paragraphs, button, footer) {
 
 async function sendConfirmation(lead) {
   const m = MAIL[lead.lang] || MAIL.en;
-  const href = `${SITE}/api/data?lead=confirm&t=${tokenFor(lead.id, "confirm")}`;
-  const unsub = `${SITE}/api/data?lead=unsubscribe&t=${tokenFor(lead.id, "unsub")}`;
+  const href = `${API_URL}/api/data?lead=confirm&t=${tokenFor(lead.id, "confirm")}`;
+  const unsub = `${API_URL}/api/data?lead=unsubscribe&t=${tokenFor(lead.id, "unsub")}`;
   const paragraphs = m.confirm.map((p) => p.replace("{name}", lead.name ? ` ${lead.name}` : ""));
   const footer = m.footer.replace("{site}", SITE.replace(/^https?:\/\//, "")).replace("{unsub}", unsub);
   return sendMail({
@@ -125,7 +128,7 @@ async function sendConfirmation(lead) {
 
 async function sendUpdate(lead, subject, text) {
   const m = MAIL[lead.lang] || MAIL.en;
-  const unsub = `${SITE}/api/data?lead=unsubscribe&t=${tokenFor(lead.id, "unsub")}`;
+  const unsub = `${API_URL}/api/data?lead=unsubscribe&t=${tokenFor(lead.id, "unsub")}`;
   const footer = m.footer.replace("{site}", SITE.replace(/^https?:\/\//, "")).replace("{unsub}", unsub);
   const body = String(text).replace(/\{name\}/g, lead.name || "");
   return sendMail({
@@ -192,7 +195,7 @@ function redirect(res, to) {
 async function confirm(req, res, url) {
   const id = idFrom(url.searchParams.get("t"), "confirm");
   const lead = id && (await readObject(leadPath(id)).catch(() => null));
-  if (!lead) return redirect(res, "/?confirmed=0");
+  if (!lead) return redirect(res, `${SITE}/?confirmed=0`);
   if (lead.status === "pending") {
     const now = new Date().toISOString();
     lead.status = "confirmed";
@@ -201,14 +204,14 @@ async function confirm(req, res, url) {
     lead.events.push({ t: "confirmed", at: now });
     await writeObject(leadPath(id), lead);
   }
-  redirect(res, `/?confirmed=1&lang=${lead.lang}`);
+  redirect(res, `${SITE}/?confirmed=1&lang=${lead.lang}`);
 }
 
 async function unsubscribe(req, res, url) {
   const token = url.searchParams.get("t");
   const id = idFrom(token, "unsub");
   const lead = id && (await readObject(leadPath(id)).catch(() => null));
-  if (!lead) return redirect(res, "/?unsubscribed=0");
+  if (!lead) return redirect(res, `${SITE}/?unsubscribed=0`);
   if (lead.status !== "unsubscribed") {
     const now = new Date().toISOString();
     lead.status = "unsubscribed";
@@ -219,7 +222,7 @@ async function unsubscribe(req, res, url) {
     lead.events.push({ t: "unsubscribed", at: now });
     await writeObject(leadPath(id), lead);
   }
-  redirect(res, `/?unsubscribed=1&lang=${lead.lang}&t=${encodeURIComponent(token)}`);
+  redirect(res, `${SITE}/?unsubscribed=1&lang=${lead.lang}&t=${encodeURIComponent(token)}`);
 }
 
 async function forget(req, res) {
@@ -381,7 +384,18 @@ async function admin(req, res, url) {
   send(res, 404, { error: "unknown" });
 }
 
+/** The site can be hosted elsewhere: these endpoints answer any origin (no cookies are used; the admin calls carry a Bearer token). */
+export function cors(req, res) {
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization, X-Admin-Email");
+  res.setHeader("Access-Control-Max-Age", "86400");
+  if (req.method === "OPTIONS") { res.statusCode = 204; res.end(); return true; }
+  return false;
+}
+
 export async function leads(req, res, url) {
+  if (cors(req, res)) return;
   try {
     const lead = url.searchParams.get("lead");
     if (lead === "subscribe" && req.method === "POST") return await subscribe(req, res);

@@ -16,6 +16,7 @@
 // the user's aurora sightings.
 import crypto from "node:crypto";
 import { accountMail, mailer } from "../lib/mail.js";
+import { cors } from "../lib/leads.js";
 import { hashPassword, safeEqual, issueToken, verifyToken, readObject, writeObject, userPath, docPrefix, revokedPath, listObjects, deleteObjects, readJSON, send, hmac } from "../lib/core.js";
 
 const EMAIL = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
@@ -42,6 +43,8 @@ async function checkPassword(user, password) {
 }
 
 export default async function handler(req, res) {
+  // The admin panel of the site signs in from the site's own host.
+  if (cors(req, res)) return;
   try {
     const body = await readJSON(req).catch(() => ({}));
     const email = String(body.email || "").trim().toLowerCase();

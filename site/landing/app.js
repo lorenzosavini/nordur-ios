@@ -2,7 +2,7 @@
 (() => {
   const POLICY_VERSION = "2026-10-23";
   const LANGS = ["it", "en", "de", "fr", "es"];
-  const API = "/api/data";
+  const API = `${window.NORDUR_API || ""}/api/data`;
   const qs = new URLSearchParams(location.search);
   const store = {
     get(k) { try { return localStorage.getItem(k); } catch { return null; } },
@@ -51,7 +51,7 @@
 
   // ——— Gallery ———
   const shots = ["today", "aurora", "weather", "map-aurora", "map-wind", "trip", "roads", "explore", "quakes", "webcams", "alerts", "offline", "info", "map-radar"];
-  document.getElementById("gallery").innerHTML = shots.map((s) => `<div class="phone"><img src="/landing/img/${s}.webp" alt="" loading="lazy"></div>`).join("");
+  document.getElementById("gallery").innerHTML = shots.map((s) => `<div class="phone"><img src="landing/img/${s}.webp" alt="" loading="lazy"></div>`).join("");
 
   // ——— Aurora sky: curtains that drift, slower and fainter for reduced motion ———
   const canvas = document.getElementById("sky");

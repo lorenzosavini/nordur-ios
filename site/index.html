@@ -11,15 +11,15 @@
 <meta property="og:description" content="Aurora, meteo, strade, allerte e viaggio per l'Islanda in un'unica app per iPhone.">
 <meta property="og:image" content="https://nordur-api.vercel.app/landing/img/og.jpg">
 <meta name="twitter:card" content="summary_large_image">
-<link rel="icon" type="image/png" href="/favicon.png">
-<link rel="apple-touch-icon" href="/apple-touch-icon.png">
-<link rel="stylesheet" href="/landing/style.css">
+<link rel="icon" type="image/png" href="favicon.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="stylesheet" href="landing/style.css">
 </head>
 <body>
 
 <header class="top">
   <div class="wrap">
-    <a class="logo" href="#top"><img src="/landing/img/icon.png" alt="" width="30" height="30">Norður</a>
+    <a class="logo" href="#top"><img src="landing/img/icon.png" alt="" width="30" height="30">Norður</a>
     <nav class="links">
       <a href="#features" data-i18n="nav.features">Funzioni</a>
       <a href="#aurora" data-i18n="nav.aurora">Aurora</a>
@@ -47,7 +47,7 @@
         </div>
         <p class="note" data-i18n="hero.note"></p>
       </div>
-      <div class="phone"><video src="/landing/video/aurora.mp4" poster="/landing/video/aurora.webp" muted loop playsinline autoplay preload="metadata"></video></div>
+      <div class="phone"><video src="landing/video/aurora.mp4" poster="landing/video/aurora.webp" muted loop playsinline autoplay preload="metadata"></video></div>
     </div>
   </section>
 
@@ -66,17 +66,17 @@
       <h2 data-i18n="features.title"></h2>
       <div class="features">
         <div class="feature reveal"><div><div class="kicker" data-i18n="f.today.kicker"></div><h3 data-i18n="f.today.title"></h3><p data-i18n="f.today.text"></p></div>
-          <div class="media"><div class="phone small"><video data-src="/landing/video/today.mp4" poster="/landing/video/today.webp" muted loop playsinline preload="none"></video></div></div></div>
+          <div class="media"><div class="phone small"><video data-src="landing/video/today.mp4" poster="landing/video/today.webp" muted loop playsinline preload="none"></video></div></div></div>
         <div class="feature reveal"><div><div class="kicker aurora" data-i18n="f.aurora.kicker"></div><h3 data-i18n="f.aurora.title"></h3><p data-i18n="f.aurora.text"></p></div>
-          <div class="media"><div class="phone small"><img src="/landing/img/aurora.webp" alt="" loading="lazy"></div></div></div>
+          <div class="media"><div class="phone small"><img src="landing/img/aurora.webp" alt="" loading="lazy"></div></div></div>
         <div class="feature reveal"><div><div class="kicker" data-i18n="f.map.kicker"></div><h3 data-i18n="f.map.title"></h3><p data-i18n="f.map.text"></p></div>
-          <div class="media"><div class="phone small"><video data-src="/landing/video/map.mp4" poster="/landing/video/map.webp" muted loop playsinline preload="none"></video></div></div></div>
+          <div class="media"><div class="phone small"><video data-src="landing/video/map.mp4" poster="landing/video/map.webp" muted loop playsinline preload="none"></video></div></div></div>
         <div class="feature reveal"><div><div class="kicker" data-i18n="f.roads.kicker"></div><h3 data-i18n="f.roads.title"></h3><p data-i18n="f.roads.text"></p></div>
-          <div class="media"><div class="phone small"><img src="/landing/img/roads.webp" alt="" loading="lazy"></div></div></div>
+          <div class="media"><div class="phone small"><img src="landing/img/roads.webp" alt="" loading="lazy"></div></div></div>
         <div class="feature reveal"><div><div class="kicker" data-i18n="f.trip.kicker"></div><h3 data-i18n="f.trip.title"></h3><p data-i18n="f.trip.text"></p></div>
-          <div class="media"><div class="phone small"><video data-src="/landing/video/trip.mp4" poster="/landing/video/trip.webp" muted loop playsinline preload="none"></video></div></div></div>
+          <div class="media"><div class="phone small"><video data-src="landing/video/trip.mp4" poster="landing/video/trip.webp" muted loop playsinline preload="none"></video></div></div></div>
         <div class="feature reveal"><div><div class="kicker" data-i18n="f.drive.kicker"></div><h3 data-i18n="f.drive.title"></h3><p data-i18n="f.drive.text"></p></div>
-          <div class="media"><div class="phone small"><video data-src="/landing/video/drive.mp4" poster="/landing/video/drive.webp" muted loop playsinline preload="none"></video></div></div></div>
+          <div class="media"><div class="phone small"><video data-src="landing/video/drive.mp4" poster="landing/video/drive.webp" muted loop playsinline preload="none"></video></div></div></div>
       </div>
     </div>
   </section>
@@ -170,17 +170,18 @@
 <footer>
   <div class="wrap">
     <div>
-      <a class="logo" href="#top" style="color:var(--text)"><img src="/landing/img/icon.png" alt="" width="26" height="26">Norður</a>
+      <a class="logo" href="#top" style="color:var(--text)"><img src="landing/img/icon.png" alt="" width="26" height="26">Norður</a>
       <p style="margin-top:12px" data-i18n="footer.made"></p>
     </div>
     <div class="legal" id="legalInfo"></div>
-    <div class="legal"><a href="/legal.html#privacy" data-i18n="footer.privacy">Privacy</a> · <a href="/legal.html#cookie" data-i18n="footer.cookie">Cookie</a> · <a href="/privacy.html">App</a></div>
+    <div class="legal"><a href="legal.html#privacy" data-i18n="footer.privacy">Privacy</a> · <a href="legal.html#cookie" data-i18n="footer.cookie">Cookie</a> · <a href="https://nordur-api.vercel.app/privacy.html">App</a></div>
   </div>
 </footer>
 
 <div id="banner"></div>
 
-<script src="/landing/i18n.js"></script>
-<script src="/landing/app.js"></script>
+<script src="config.js"></script>
+<script src="landing/i18n.js"></script>
+<script src="landing/app.js"></script>
 </body>
 </html>

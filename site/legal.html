@@ -5,20 +5,20 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Norður · Privacy e cookie</title>
 <meta name="robots" content="noindex">
-<link rel="icon" type="image/png" href="/favicon.png">
-<link rel="stylesheet" href="/landing/style.css">
+<link rel="icon" type="image/png" href="favicon.png">
+<link rel="stylesheet" href="landing/style.css">
 </head>
 <body class="legal-page">
 <header class="top">
   <div class="wrap">
-    <a class="logo" href="/"><img src="/landing/img/icon.png" alt="" width="30" height="30">Norður</a>
+    <a class="logo" href="./"><img src="landing/img/icon.png" alt="" width="30" height="30">Norður</a>
     <select class="lang" id="lang" aria-label="Lingua / Language" style="margin-left:auto">
       <option value="it">IT</option><option value="en">EN</option><option value="de">DE</option><option value="fr">FR</option><option value="es">ES</option>
     </select>
   </div>
 </header>
 <main>
-  <p><a href="/" id="back"></a></p>
+  <p><a href="./" id="back"></a></p>
   <section id="privacy" style="padding:20px 0;border:0">
     <div class="kicker" id="pv"></div>
     <h1 id="pt"></h1>
@@ -30,7 +30,8 @@
     <div id="cbody"></div>
   </section>
 </main>
-<script src="/landing/i18n.js"></script>
+<script src="config.js"></script>
+<script src="landing/i18n.js"></script>
 <script>
 (() => {
   const VERSION = "2026-10-23";
@@ -61,7 +62,7 @@
   }
   document.getElementById("lang").addEventListener("change", (e) => { lang = e.target.value; try { localStorage.setItem("nordur.lang", lang); } catch {} render(); });
   render();
-  fetch("/api/data?lead=status").then((r) => r.json()).then((d) => { legal = d.legal || {}; render(); }).catch(() => {});
+  fetch(`${window.NORDUR_API || ""}/api/data?lead=status`).then((r) => r.json()).then((d) => { legal = d.legal || {}; render(); }).catch(() => {});
 })();
 </script>
 </body>
