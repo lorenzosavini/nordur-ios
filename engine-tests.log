@@ -1,0 +1,87 @@
+ok   moon full
+ok   moon new
+ok   eclipse alignment
+ok   Reykjavík sunset
+ok   no astronomical night in June
+ok   darkness classes
+ok   dipole pole is 90°
+ok   Leirvogur CGM ≈ 64.06°
+ok   Leirvogur eccentric dipole ≈ 64.63°
+ok   Leirvogur centred dipole ≈ 68.74° (ISGI)
+ok   Tromsø CGM ≈ 66.92°
+ok   Reykjavík CGM ≈ 64.1°
+ok   oval edge fit
+ok   emission overhead at 90°
+ok   emission on the horizon at the geometric limit
+ok   elevation decreases with distance
+ok   bearing north
+ok   band overhead
+ok   band 3° north is toward the horizon
+ok   look north
+ok   distant band low or invisible
+ok   below NOAA display threshold ignored
+ok   clear sky
+ok   low overcast closes the sky
+ok   thin high cloud counts half
+ok   fog closes the sky
+ok   cloud lowers observability
+ok   overcast is unfavourable
+ok   reason names the clouds
+ok   daytime is never favourable
+ok   Kp-based slot has medium reliability within 24 h
+ok   lead > 24 h lowers reliability
+ok   OVATION usable at its time
+ok   OVATION not used 6 h later
+ok   old OVATION run not used
+ok   horizon interpolation
+ok   aurora behind a mountain is not visible
+ok   same aurora with a flat horizon
+ok   Kp 1 aurora low on the horizon from 59.8° CGM
+ok   low aurora hidden by a 12° skyline
+ok   sky-glow grid decodes
+ok   central Reykjavík strongly lit
+ok   Selfoss less lit than Reykjavík
+ok   Vík and Vatnajökull dark
+ok   outside Iceland: no data, neutral
+ok   next hour starts from the current Kp
+ok   expected Kp follows the Newell change of the arriving wind
+ok   beyond the measured wind: current Kp
+ok   rising activity does not lower observability
+ok   summary names the southward Bz
+ok   no reports, no confirmation
+ok   two recent naked-eye reports nearby confirm
+ok   old or far reports are ignored
+ok   one distant camera-only report stays a report
+ok   a cloudy negative says nothing
+ok   a clear-sky negative against a strong model is flagged
+ok   a report the model does not explain is shown as a disagreement
+ok   gpx points
+ok   gpx track name wins
+ok   gpx distance
+ok   gpx duration
+ok   gpx climb
+ok   empty gpx is refused
+ok   gpx route without times
+ok   hours parse
+ok   open monday noon
+ok   closed monday evening
+ok   closes at 19
+ok   sunday closed, opens monday 10
+ok   open after midnight
+ok   24/7
+ok   24/7 never closes
+ok   PH rule ignored
+ok   unreadable hours
+ok   comma before days
+ok   day list with comma
+ok   dated rules skipped
+ok   closes at midnight
+ok   trip gpx places
+ok   trip gpx stops and attractions
+ok   trip gpx nights from description
+ok   trip gpx dates
+ok   kml folders
+ok   kml lon,lat order
+ok   kml description
+ok   short unmarked list = stops
+ALL ENGINE TESTS PASSED

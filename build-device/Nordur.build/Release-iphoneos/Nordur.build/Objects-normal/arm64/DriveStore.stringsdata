@@ -1,0 +1,40 @@
+{
+  "source": "/Users/runner/work/nordur-ios/nordur-ios/Nordur/State/DriveStore.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Traccia GPX",
+        "location": {
+          "startingColumn": 46,
+          "startingLine": 127
+        }
+      },
+      {
+        "comment": "",
+        "key": "Costa sud: Seljalandsfoss → Vík",
+        "location": {
+          "startingColumn": 66,
+          "startingLine": 32
+        }
+      },
+      {
+        "comment": "",
+        "key": "Il file non contiene una traccia GPX leggibile",
+        "location": {
+          "startingColumn": 56,
+          "startingLine": 113
+        }
+      },
+      {
+        "comment": "",
+        "key": "Questa traccia è già nello storico",
+        "location": {
+          "startingColumn": 55,
+          "startingLine": 114
+        }
+      }
+    ]
+  },
+  "version": 1
+}

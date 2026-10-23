@@ -1,0 +1,32 @@
+{
+  "source": "/Users/runner/work/nordur-ios/nordur-ios/Shared/Core/HTTP.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Il server ha risposto con errore %lld",
+        "location": {
+          "startingColumn": 58,
+          "startingLine": 50
+        }
+      },
+      {
+        "comment": "",
+        "key": "Indirizzo non valido",
+        "location": {
+          "startingColumn": 52,
+          "startingLine": 51
+        }
+      },
+      {
+        "comment": "",
+        "key": "Nessuna copia salvata sul telefono",
+        "location": {
+          "startingColumn": 51,
+          "startingLine": 52
+        }
+      }
+    ]
+  },
+  "version": 1
+}

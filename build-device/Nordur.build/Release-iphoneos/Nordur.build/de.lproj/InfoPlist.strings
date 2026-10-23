@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>NSCameraUsageDescription</key>
+	<string>Die Kamera wird für den Sucher „Polarlicht finden“ genutzt, der dir zeigt, wohin du am Himmel schauen sollst. Bilder werden nie gespeichert oder gesendet.</string>
+	<key>NSHealthShareUsageDescription</key>
+	<string>Norður liest aus Health die Aktivitäten, die du importierst (z. B. von Garmin Connect oder Apple Watch): GPS-Route, Distanz, Dauer, Höhe und Herzfrequenz. Es schreibt nichts in Health.</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>Mit Zugriff „Immer“ prüft Norður Wetterwarnungen, Böen und gesperrte Straßen in deiner Nähe auch bei geschlossener App und zeichnet deine Fahrt bei gesperrtem Bildschirm weiter auf.</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Norður nutzt deinen Standort für Wetter, Warnungen, Straßen und Polarlicht vor Ort sowie zum Aufzeichnen deiner Fahrten.</string>
+	<key>NSMotionUsageDescription</key>
+	<string>Bewegungsdaten zeigen, wohin das Telefon zeigt, um dich zum Polarlicht zu führen.</string>
+</dict>
+</plist>

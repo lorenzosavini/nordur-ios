@@ -1,0 +1,384 @@
+{
+  "source": "/Users/runner/work/nordur-ios/nordur-ios/Nordur/State/CrashLog.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Eccezione: %@",
+        "location": {
+          "startingColumn": 41,
+          "startingLine": 216
+        }
+      },
+      {
+        "comment": "",
+        "key": "Crash",
+        "location": {
+          "startingColumn": 43,
+          "startingLine": 221
+        }
+      },
+      {
+        "comment": "",
+        "key": "Memoria usata: %lld MB",
+        "location": {
+          "startingColumn": 44,
+          "startingLine": 103
+        }
+      },
+      {
+        "comment": "",
+        "key": "Schermo bloccato: iOS l'ha chiusa.",
+        "location": {
+          "startingColumn": 41,
+          "startingLine": 106
+        }
+      },
+      {
+        "comment": "",
+        "key": "L'app non rispondeva da %lld s quando si è chiusa: iOS chiude un'app ferma troppo a lungo (watchdog). Il punto del codice arriva con il «Blocco (rapporto iOS)», di solito il giorno dopo.",
+        "location": {
+          "startingColumn": 39,
+          "startingLine": 107
+        }
+      },
+      {
+        "comment": "",
+        "key": "Memoria esaurita: iOS l'ha chiusa.",
+        "location": {
+          "startingColumn": 41,
+          "startingLine": 109
+        }
+      },
+      {
+        "comment": "",
+        "key": "iOS aveva avvisato di memoria quasi finita alle %@, poco prima della chiusura.",
+        "location": {
+          "startingColumn": 39,
+          "startingLine": 110
+        }
+      },
+      {
+        "comment": "",
+        "key": "Memoria esaurita: iOS l'ha chiusa.",
+        "location": {
+          "startingColumn": 41,
+          "startingLine": 112
+        }
+      },
+      {
+        "comment": "",
+        "key": "Restavano solo %lld MB prima del limite che iOS concede all'app.",
+        "location": {
+          "startingColumn": 39,
+          "startingLine": 113
+        }
+      },
+      {
+        "comment": "",
+        "key": "Chiusa mentre era aperta, senza crash, blocchi o avvisi di memoria.",
+        "location": {
+          "startingColumn": 41,
+          "startingLine": 115
+        }
+      },
+      {
+        "comment": "",
+        "key": "L'app non ha visto la causa: niente errori nel codice, schermo che rispondeva, memoria nella norma. Di solito è iOS che chiude l'app (per esempio per liberare memoria per un'altra app o la fotocamera), oppure l'app è stata chiusa dal multitasking mentre era aperta. Se è un crash, il «rapporto iOS» arriva a un avvio successivo.",
+        "location": {
+          "startingColumn": 39,
+          "startingLine": 116
+        }
+      },
+      {
+        "comment": "",
+        "key": "Chiusura inattesa",
+        "location": {
+          "startingColumn": 58,
+          "startingLine": 118
+        }
+      },
+      {
+        "comment": "",
+        "key": "Ultimo segnale di vita: %@",
+        "location": {
+          "startingColumn": 69,
+          "startingLine": 119
+        }
+      },
+      {
+        "comment": "",
+        "key": "iOS ha avvisato: memoria quasi finita",
+        "location": {
+          "startingColumn": 54,
+          "startingLine": 134
+        }
+      },
+      {
+        "comment": "",
+        "key": "In uso %lld MB, ancora disponibili %lld MB",
+        "location": {
+          "startingColumn": 51,
+          "startingLine": 135
+        }
+      },
+      {
+        "comment": "",
+        "key": "Schermata: %@",
+        "location": {
+          "startingColumn": 49,
+          "startingLine": 136
+        }
+      },
+      {
+        "comment": "",
+        "key": " · ancora disponibile: %lld MB",
+        "location": {
+          "startingColumn": 112,
+          "startingLine": 103
+        }
+      },
+      {
+        "comment": "",
+        "key": "Schermata: %@",
+        "location": {
+          "startingColumn": 97,
+          "startingLine": 184
+        }
+      },
+      {
+        "comment": "",
+        "key": "Errore nel codice Swift (SIGTRAP): un valore mancante o un indice fuori dai limiti.",
+        "location": {
+          "startingColumn": 48,
+          "startingLine": 231
+        }
+      },
+      {
+        "comment": "",
+        "key": "Arresto forzato (SIGABRT): il sistema o una libreria ha fermato l'app.",
+        "location": {
+          "startingColumn": 48,
+          "startingLine": 232
+        }
+      },
+      {
+        "comment": "",
+        "key": "Accesso a memoria non valida (%@).",
+        "location": {
+          "startingColumn": 56,
+          "startingLine": 233
+        }
+      },
+      {
+        "comment": "",
+        "key": "Istruzione non valida (SIGILL).",
+        "location": {
+          "startingColumn": 47,
+          "startingLine": 234
+        }
+      },
+      {
+        "comment": "",
+        "key": "Errore aritmetico (SIGFPE).",
+        "location": {
+          "startingColumn": 47,
+          "startingLine": 235
+        }
+      },
+      {
+        "comment": "",
+        "key": "Crash (segnale %d).",
+        "location": {
+          "startingColumn": 43,
+          "startingLine": 236
+        }
+      },
+      {
+        "comment": "",
+        "key": "Crash (rapporto iOS)",
+        "location": {
+          "startingColumn": 88,
+          "startingLine": 290
+        }
+      },
+      {
+        "comment": "",
+        "key": "Crash registrato da iOS",
+        "location": {
+          "startingColumn": 80,
+          "startingLine": 291
+        }
+      },
+      {
+        "comment": "",
+        "key": "Blocco (rapporto iOS)",
+        "location": {
+          "startingColumn": 88,
+          "startingLine": 296
+        }
+      },
+      {
+        "comment": "",
+        "key": "Schermo bloccato per %@",
+        "location": {
+          "startingColumn": 63,
+          "startingLine": 297
+        }
+      },
+      {
+        "comment": "",
+        "key": "memoria esaurita",
+        "location": {
+          "startingColumn": 36,
+          "startingLine": 314
+        }
+      },
+      {
+        "comment": "",
+        "key": "schermo bloccato (watchdog)",
+        "location": {
+          "startingColumn": 36,
+          "startingLine": 315
+        }
+      },
+      {
+        "comment": "",
+        "key": "accesso a memoria non valida",
+        "location": {
+          "startingColumn": 36,
+          "startingLine": 316
+        }
+      },
+      {
+        "comment": "",
+        "key": "istruzione non valida",
+        "location": {
+          "startingColumn": 36,
+          "startingLine": 317
+        }
+      },
+      {
+        "comment": "",
+        "key": "altra chiusura anomala",
+        "location": {
+          "startingColumn": 36,
+          "startingLine": 318
+        }
+      },
+      {
+        "comment": "",
+        "key": "memoria liberata da iOS",
+        "location": {
+          "startingColumn": 36,
+          "startingLine": 322
+        }
+      },
+      {
+        "comment": "",
+        "key": "limite di memoria",
+        "location": {
+          "startingColumn": 36,
+          "startingLine": 323
+        }
+      },
+      {
+        "comment": "",
+        "key": "troppo uso del processore",
+        "location": {
+          "startingColumn": 36,
+          "startingLine": 324
+        }
+      },
+      {
+        "comment": "",
+        "key": "tempo in background scaduto",
+        "location": {
+          "startingColumn": 36,
+          "startingLine": 325
+        }
+      },
+      {
+        "comment": "",
+        "key": "file bloccato",
+        "location": {
+          "startingColumn": 36,
+          "startingLine": 326
+        }
+      },
+      {
+        "comment": "",
+        "key": "watchdog",
+        "location": {
+          "startingColumn": 36,
+          "startingLine": 327
+        }
+      },
+      {
+        "comment": "",
+        "key": "chiusura anomala",
+        "location": {
+          "startingColumn": 36,
+          "startingLine": 328
+        }
+      },
+      {
+        "comment": "",
+        "key": "Chiusure del giorno (rapporto iOS)",
+        "location": {
+          "startingColumn": 84,
+          "startingLine": 332
+        }
+      },
+      {
+        "comment": "",
+        "key": "Con l'app aperta: %@",
+        "location": {
+          "startingColumn": 59,
+          "startingLine": 333
+        }
+      },
+      {
+        "comment": "",
+        "key": "Chiusure normali con l'app aperta: %lld",
+        "location": {
+          "startingColumn": 60,
+          "startingLine": 335
+        }
+      },
+      {
+        "comment": "",
+        "key": "In background (di solito normali): %@",
+        "location": {
+          "startingColumn": 83,
+          "startingLine": 336
+        }
+      },
+      {
+        "comment": "",
+        "key": "Lo schermo non ha risposto per %@ s",
+        "location": {
+          "startingColumn": 65,
+          "startingLine": 389
+        }
+      },
+      {
+        "comment": "",
+        "key": "Schermata: %@",
+        "location": {
+          "startingColumn": 63,
+          "startingLine": 390
+        }
+      },
+      {
+        "comment": "",
+        "key": "Memoria usata: %lld MB",
+        "location": {
+          "startingColumn": 116,
+          "startingLine": 390
+        }
+      }
+    ]
+  },
+  "version": 1
+}

@@ -1,0 +1,512 @@
+{
+  "source": "/Users/runner/work/nordur-ios/nordur-ios/Nordur/Views/InfoView.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Info & SOS",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 114
+        }
+      },
+      {
+        "comment": "",
+        "key": "Chiudi",
+        "location": {
+          "startingColumn": 74,
+          "startingLine": 15
+        }
+      },
+      {
+        "comment": "",
+        "key": "Emergenza: 112",
+        "location": {
+          "startingColumn": 54,
+          "startingLine": 24
+        }
+      },
+      {
+        "comment": "",
+        "key": "Polizia, ambulanza, vigili del fuoco, soccorso alpino",
+        "location": {
+          "startingColumn": 101,
+          "startingLine": 24
+        }
+      },
+      {
+        "comment": "",
+        "key": "Numero alternativo: 599-0112",
+        "location": {
+          "startingColumn": 54,
+          "startingLine": 25
+        }
+      },
+      {
+        "comment": "",
+        "key": "Se il 112 non si connette (spegnimento reti 2G/3G)",
+        "location": {
+          "startingColumn": 115,
+          "startingLine": 25
+        }
+      },
+      {
+        "comment": "",
+        "key": "112.is – Centrale emergenze",
+        "location": {
+          "startingColumn": 54,
+          "startingLine": 26
+        }
+      },
+      {
+        "comment": "",
+        "key": "Chat con il 112 e informazioni per i viaggiatori",
+        "location": {
+          "startingColumn": 116,
+          "startingLine": 26
+        }
+      },
+      {
+        "comment": "",
+        "key": "Registra il piano di viaggio",
+        "location": {
+          "startingColumn": 54,
+          "startingLine": 27
+        }
+      },
+      {
+        "comment": "",
+        "key": "SafeTravel – i soccorsi sapranno dove cercarti",
+        "location": {
+          "startingColumn": 115,
+          "startingLine": 27
+        }
+      },
+      {
+        "comment": "",
+        "key": "Guardia medica 1700",
+        "location": {
+          "startingColumn": 54,
+          "startingLine": 28
+        }
+      },
+      {
+        "comment": "",
+        "key": "Consulenza sanitaria non urgente",
+        "location": {
+          "startingColumn": 106,
+          "startingLine": 28
+        }
+      },
+      {
+        "comment": "",
+        "key": "Sicurezza",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 30
+        }
+      },
+      {
+        "comment": "",
+        "key": "Allerte e notifiche",
+        "location": {
+          "startingColumn": 75,
+          "startingLine": 34
+        }
+      },
+      {
+        "comment": "",
+        "key": "Storico allerte",
+        "location": {
+          "startingColumn": 68,
+          "startingLine": 35
+        }
+      },
+      {
+        "comment": "",
+        "key": "Pacchetto offline",
+        "location": {
+          "startingColumn": 69,
+          "startingLine": 36
+        }
+      },
+      {
+        "comment": "",
+        "key": "Voli KEF e traghetti",
+        "location": {
+          "startingColumn": 71,
+          "startingLine": 37
+        }
+      },
+      {
+        "comment": "",
+        "key": "Webcam stradali",
+        "location": {
+          "startingColumn": 69,
+          "startingLine": 38
+        }
+      },
+      {
+        "comment": "",
+        "key": "Condizioni delle strade",
+        "location": {
+          "startingColumn": 67,
+          "startingLine": 39
+        }
+      },
+      {
+        "comment": "",
+        "key": "Terremoti e vulcani",
+        "location": {
+          "startingColumn": 68,
+          "startingLine": 40
+        }
+      },
+      {
+        "comment": "",
+        "key": "Strumenti",
+        "location": {
+          "startingColumn": 34,
+          "startingLine": 41
+        }
+      },
+      {
+        "comment": "",
+        "key": "Vedur.is – Meteo ufficiale islandese",
+        "location": {
+          "startingColumn": 54,
+          "startingLine": 45
+        }
+      },
+      {
+        "comment": "",
+        "key": "Previsioni, allerte, mappe del vento",
+        "location": {
+          "startingColumn": 125,
+          "startingLine": 45
+        }
+      },
+      {
+        "comment": "",
+        "key": "Windy",
+        "location": {
+          "startingColumn": 54,
+          "startingLine": 46
+        }
+      },
+      {
+        "comment": "",
+        "key": "Modelli a confronto, vento e raffiche",
+        "location": {
+          "startingColumn": 92,
+          "startingLine": 46
+        }
+      },
+      {
+        "comment": "",
+        "key": "Previsioni norvegesi (MET Norway)",
+        "location": {
+          "startingColumn": 73,
+          "startingLine": 47
+        }
+      },
+      {
+        "comment": "",
+        "key": "Blika.is",
+        "location": {
+          "startingColumn": 54,
+          "startingLine": 48
+        }
+      },
+      {
+        "comment": "",
+        "key": "Previsioni islandesi dettagliate",
+        "location": {
+          "startingColumn": 95,
+          "startingLine": 48
+        }
+      },
+      {
+        "comment": "",
+        "key": "Meteo",
+        "location": {
+          "startingColumn": 34,
+          "startingLine": 49
+        }
+      },
+      {
+        "comment": "",
+        "key": "Umferdin.is",
+        "location": {
+          "startingColumn": 54,
+          "startingLine": 52
+        }
+      },
+      {
+        "comment": "",
+        "key": "Mappa ufficiale di strade, chiusure e webcam",
+        "location": {
+          "startingColumn": 98,
+          "startingLine": 52
+        }
+      },
+      {
+        "comment": "",
+        "key": "SafeTravel – condizioni",
+        "location": {
+          "startingColumn": 54,
+          "startingLine": 53
+        }
+      },
+      {
+        "comment": "",
+        "key": "Avvisi e mappa delle condizioni",
+        "location": {
+          "startingColumn": 112,
+          "startingLine": 53
+        }
+      },
+      {
+        "comment": "",
+        "key": "Strade F (Highlands)",
+        "location": {
+          "startingColumn": 54,
+          "startingLine": 54
+        }
+      },
+      {
+        "comment": "",
+        "key": "Date di apertura – solo 4x4, guadi",
+        "location": {
+          "startingColumn": 107,
+          "startingLine": 54
+        }
+      },
+      {
+        "comment": "",
+        "key": "Distributori e ricarica",
+        "location": {
+          "startingColumn": 54,
+          "startingLine": 55
+        }
+      },
+      {
+        "comment": "",
+        "key": "Mappa di N1 / Orkan / Olís",
+        "location": {
+          "startingColumn": 110,
+          "startingLine": 55
+        }
+      },
+      {
+        "comment": "",
+        "key": "Strade",
+        "location": {
+          "startingColumn": 34,
+          "startingLine": 56
+        }
+      },
+      {
+        "comment": "",
+        "key": "Keflavík – arrivi e partenze",
+        "location": {
+          "startingColumn": 54,
+          "startingLine": 59
+        }
+      },
+      {
+        "comment": "",
+        "key": "Isavia KEF",
+        "location": {
+          "startingColumn": 118,
+          "startingLine": 59
+        }
+      },
+      {
+        "comment": "",
+        "key": "Voli interni",
+        "location": {
+          "startingColumn": 54,
+          "startingLine": 60
+        }
+      },
+      {
+        "comment": "",
+        "key": "Icelandair, Norlandair, Mýflug",
+        "location": {
+          "startingColumn": 99,
+          "startingLine": 60
+        }
+      },
+      {
+        "comment": "",
+        "key": "Flybus / Airport Direct",
+        "location": {
+          "startingColumn": 54,
+          "startingLine": 61
+        }
+      },
+      {
+        "comment": "",
+        "key": "Navette aeroporto ↔ Reykjavík",
+        "location": {
+          "startingColumn": 110,
+          "startingLine": 61
+        }
+      },
+      {
+        "comment": "",
+        "key": "Strætó – bus di linea",
+        "location": {
+          "startingColumn": 54,
+          "startingLine": 62
+        }
+      },
+      {
+        "comment": "",
+        "key": "Reykjavík e lunga distanza",
+        "location": {
+          "startingColumn": 112,
+          "startingLine": 62
+        }
+      },
+      {
+        "comment": "",
+        "key": "Herjólfur",
+        "location": {
+          "startingColumn": 54,
+          "startingLine": 63
+        }
+      },
+      {
+        "comment": "",
+        "key": "Traghetto per Vestmannaeyjar",
+        "location": {
+          "startingColumn": 97,
+          "startingLine": 63
+        }
+      },
+      {
+        "comment": "",
+        "key": "Baldur (Sæferðir)",
+        "location": {
+          "startingColumn": 54,
+          "startingLine": 64
+        }
+      },
+      {
+        "comment": "",
+        "key": "Traghetto Stykkishólmur – Brjánslækur",
+        "location": {
+          "startingColumn": 106,
+          "startingLine": 64
+        }
+      },
+      {
+        "comment": "",
+        "key": "Smyril Line",
+        "location": {
+          "startingColumn": 54,
+          "startingLine": 65
+        }
+      },
+      {
+        "comment": "",
+        "key": "Traghetto Seyðisfjörður – Fær Øer – Danimarca",
+        "location": {
+          "startingColumn": 98,
+          "startingLine": 65
+        }
+      },
+      {
+        "comment": "",
+        "key": "Voli, bus e traghetti",
+        "location": {
+          "startingColumn": 34,
+          "startingLine": 66
+        }
+      },
+      {
+        "comment": "",
+        "key": "• Con vento forte apri la portiera tenendola con due mani: il vento può strapparla (danno non coperto dall'assicurazione).",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 70
+        }
+      },
+      {
+        "comment": "",
+        "key": "• Fuoristrada vietato per legge. Le strade F richiedono un 4x4 e i guadi non sono coperti dall'assicurazione.",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 71
+        }
+      },
+      {
+        "comment": "",
+        "key": "• Ponti a una corsia: ha la precedenza chi arriva prima.",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 72
+        }
+      },
+      {
+        "comment": "",
+        "key": "• Fai rifornimento appena puoi nell'Est e nei fiordi occidentali: i distributori sono distanti.",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 73
+        }
+      },
+      {
+        "comment": "",
+        "key": "• In inverno le giornate sono brevi: pianifica le tratte nelle ore di luce.",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 74
+        }
+      },
+      {
+        "comment": "",
+        "key": "Consigli per guidare in Islanda",
+        "location": {
+          "startingColumn": 34,
+          "startingLine": 77
+        }
+      },
+      {
+        "comment": "",
+        "key": "Veðurstofa Íslands (vedur.is), Vegagerðin (umferdin.is), Open-Meteo, NOAA Space Weather Prediction Center, SafeTravel.is. L'app aggrega dati pubblici: in caso di dubbio prevalgono le fonti ufficiali.",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 92
+        }
+      },
+      {
+        "comment": "",
+        "key": "Stato delle fonti",
+        "location": {
+          "startingColumn": 34,
+          "startingLine": 94
+        }
+      },
+      {
+        "comment": "",
+        "key": "%@ · Wikimedia Commons",
+        "location": {
+          "startingColumn": 46,
+          "startingLine": 105
+        }
+      },
+      {
+        "comment": "",
+        "key": "Crediti foto",
+        "location": {
+          "startingColumn": 34,
+          "startingLine": 111
+        }
+      }
+    ]
+  },
+  "version": 1
+}

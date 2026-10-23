@@ -1,0 +1,24 @@
+{
+  "source": "/Users/runner/work/nordur-ios/nordur-ios/Nordur/App/NordurApp.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Importazione non riuscita",
+        "location": {
+          "startingColumn": 16,
+          "startingLine": 181
+        }
+      },
+      {
+        "comment": "",
+        "key": "OK",
+        "location": {
+          "startingColumn": 20,
+          "startingLine": 182
+        }
+      }
+    ]
+  },
+  "version": 1
+}

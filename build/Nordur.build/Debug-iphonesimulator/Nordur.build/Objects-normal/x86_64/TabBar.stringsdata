@@ -1,0 +1,144 @@
+{
+  "source": "/Users/runner/work/nordur-ios/nordur-ios/Nordur/Views/TabBar.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Automatico",
+        "location": {
+          "startingColumn": 48,
+          "startingLine": 21
+        }
+      },
+      {
+        "comment": "",
+        "key": "Chiaro",
+        "location": {
+          "startingColumn": 47,
+          "startingLine": 22
+        }
+      },
+      {
+        "comment": "",
+        "key": "Scuro",
+        "location": {
+          "startingColumn": 46,
+          "startingLine": 23
+        }
+      },
+      {
+        "comment": "",
+        "key": "AUTO",
+        "location": {
+          "startingColumn": 48,
+          "startingLine": 29
+        }
+      },
+      {
+        "comment": "",
+        "key": "GIORNO",
+        "location": {
+          "startingColumn": 47,
+          "startingLine": 30
+        }
+      },
+      {
+        "comment": "",
+        "key": "NOTTE",
+        "location": {
+          "startingColumn": 46,
+          "startingLine": 31
+        }
+      },
+      {
+        "comment": "",
+        "key": "Oggi",
+        "location": {
+          "startingColumn": 56,
+          "startingLine": 81
+        }
+      },
+      {
+        "comment": "",
+        "key": "Meteo",
+        "location": {
+          "startingColumn": 61,
+          "startingLine": 82
+        }
+      },
+      {
+        "comment": "",
+        "key": "Aurora",
+        "location": {
+          "startingColumn": 49,
+          "startingLine": 83
+        }
+      },
+      {
+        "comment": "",
+        "key": "Mappa",
+        "location": {
+          "startingColumn": 46,
+          "startingLine": 84
+        }
+      },
+      {
+        "comment": "",
+        "key": "Viaggio",
+        "location": {
+          "startingColumn": 60,
+          "startingLine": 85
+        }
+      },
+      {
+        "comment": "",
+        "key": "Oggi",
+        "location": {
+          "startingColumn": 56,
+          "startingLine": 81
+        }
+      },
+      {
+        "comment": "",
+        "key": "Meteo",
+        "location": {
+          "startingColumn": 61,
+          "startingLine": 82
+        }
+      },
+      {
+        "comment": "",
+        "key": "Aurora",
+        "location": {
+          "startingColumn": 49,
+          "startingLine": 83
+        }
+      },
+      {
+        "comment": "",
+        "key": "Mappa",
+        "location": {
+          "startingColumn": 46,
+          "startingLine": 84
+        }
+      },
+      {
+        "comment": "",
+        "key": "Viaggio",
+        "location": {
+          "startingColumn": 60,
+          "startingLine": 85
+        }
+      },
+      {
+        "comment": "",
+        "key": "Aspetto: %@",
+        "location": {
+          "startingColumn": 29,
+          "startingLine": 211
+        }
+      }
+    ]
+  },
+  "version": 1
+}

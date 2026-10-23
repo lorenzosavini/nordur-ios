@@ -1,0 +1,128 @@
+{
+  "source": "/Users/runner/work/nordur-ios/nordur-ios/Nordur/Views/FuelListView.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Prezzi carburante",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 74
+        }
+      },
+      {
+        "comment": "",
+        "key": "Carburante",
+        "location": {
+          "startingColumn": 28,
+          "startingLine": 32
+        }
+      },
+      {
+        "comment": "",
+        "key": "Ordina",
+        "location": {
+          "startingColumn": 28,
+          "startingLine": 36
+        }
+      },
+      {
+        "comment": "",
+        "key": "Entro %lld km",
+        "location": {
+          "startingColumn": 29,
+          "startingLine": 41
+        }
+      },
+      {
+        "comment": "",
+        "key": "Più economico",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 37
+        }
+      },
+      {
+        "comment": "",
+        "key": "Più vicino",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 38
+        }
+      },
+      {
+        "comment": "",
+        "key": "Nessun prezzo in questa zona",
+        "location": {
+          "startingColumn": 81,
+          "startingLine": 47
+        }
+      },
+      {
+        "comment": "",
+        "key": "Allarga la distanza: fuori dalle città i distributori sono pochi.",
+        "location": {
+          "startingColumn": 63,
+          "startingLine": 48
+        }
+      },
+      {
+        "comment": "",
+        "key": "%@ vicino a %@",
+        "location": {
+          "startingColumn": 44,
+          "startingLine": 63
+        }
+      },
+      {
+        "comment": "",
+        "key": "Verde: tra i più economici d'Islanda adesso; rosso: tra i più cari. «+N kr» è quanto costa in più al litro del più economico della lista.",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 69
+        }
+      },
+      {
+        "comment": "",
+        "key": "Chiudi",
+        "location": {
+          "startingColumn": 85,
+          "startingLine": 85
+        }
+      },
+      {
+        "comment": "",
+        "key": "%@ · %@ km",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 107
+        }
+      },
+      {
+        "comment": "",
+        "key": "Con sconto %@ kr%@",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 109
+        }
+      },
+      {
+        "comment": "",
+        "key": "%@ kr",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 115
+        }
+      },
+      {
+        "comment": "",
+        "key": "IL PIÙ ECONOMICO",
+        "location": {
+          "startingColumn": 58,
+          "startingLine": 121
+        }
+      }
+    ]
+  },
+  "version": 1
+}

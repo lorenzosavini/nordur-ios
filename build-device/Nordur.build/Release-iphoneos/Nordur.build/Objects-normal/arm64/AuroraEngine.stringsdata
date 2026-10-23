@@ -1,0 +1,440 @@
+{
+  "source": "/Users/runner/work/nordur-ios/nordur-ios/Shared/Services/AuroraEngine.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Molto sfavorevole",
+        "location": {
+          "startingColumn": 50,
+          "startingLine": 289
+        }
+      },
+      {
+        "comment": "",
+        "key": "Sfavorevole",
+        "location": {
+          "startingColumn": 46,
+          "startingLine": 290
+        }
+      },
+      {
+        "comment": "",
+        "key": "Moderatamente favorevole",
+        "location": {
+          "startingColumn": 50,
+          "startingLine": 291
+        }
+      },
+      {
+        "comment": "",
+        "key": "Favorevole",
+        "location": {
+          "startingColumn": 46,
+          "startingLine": 292
+        }
+      },
+      {
+        "comment": "",
+        "key": "Molto favorevole",
+        "location": {
+          "startingColumn": 51,
+          "startingLine": 293
+        }
+      },
+      {
+        "comment": "",
+        "key": "Alta",
+        "location": {
+          "startingColumn": 59,
+          "startingLine": 301
+        }
+      },
+      {
+        "comment": "",
+        "key": "Media",
+        "location": {
+          "startingColumn": 105,
+          "startingLine": 301
+        }
+      },
+      {
+        "comment": "",
+        "key": "Bassa",
+        "location": {
+          "startingColumn": 134,
+          "startingLine": 301
+        }
+      },
+      {
+        "comment": "",
+        "key": "Sopra di te o quasi",
+        "location": {
+          "startingColumn": 54,
+          "startingLine": 160
+        }
+      },
+      {
+        "comment": "",
+        "key": "Visibile verso l'orizzonte",
+        "location": {
+          "startingColumn": 52,
+          "startingLine": 161
+        }
+      },
+      {
+        "comment": "",
+        "key": "Molto bassa sull'orizzonte",
+        "location": {
+          "startingColumn": 49,
+          "startingLine": 162
+        }
+      },
+      {
+        "comment": "",
+        "key": "Non prevista nel cielo visibile",
+        "location": {
+          "startingColumn": 50,
+          "startingLine": 163
+        }
+      },
+      {
+        "comment": "",
+        "key": "N",
+        "location": {
+          "startingColumn": 40,
+          "startingLine": 501
+        }
+      },
+      {
+        "comment": "",
+        "key": "NNE",
+        "location": {
+          "startingColumn": 64,
+          "startingLine": 501
+        }
+      },
+      {
+        "comment": "",
+        "key": "NE",
+        "location": {
+          "startingColumn": 90,
+          "startingLine": 501
+        }
+      },
+      {
+        "comment": "",
+        "key": "ENE",
+        "location": {
+          "startingColumn": 115,
+          "startingLine": 501
+        }
+      },
+      {
+        "comment": "",
+        "key": "E",
+        "location": {
+          "startingColumn": 141,
+          "startingLine": 501
+        }
+      },
+      {
+        "comment": "",
+        "key": "ESE",
+        "location": {
+          "startingColumn": 165,
+          "startingLine": 501
+        }
+      },
+      {
+        "comment": "",
+        "key": "SE",
+        "location": {
+          "startingColumn": 191,
+          "startingLine": 501
+        }
+      },
+      {
+        "comment": "",
+        "key": "SSE",
+        "location": {
+          "startingColumn": 216,
+          "startingLine": 501
+        }
+      },
+      {
+        "comment": "",
+        "key": "S",
+        "location": {
+          "startingColumn": 242,
+          "startingLine": 501
+        }
+      },
+      {
+        "comment": "",
+        "key": "SSO",
+        "location": {
+          "startingColumn": 266,
+          "startingLine": 501
+        }
+      },
+      {
+        "comment": "",
+        "key": "SO",
+        "location": {
+          "startingColumn": 292,
+          "startingLine": 501
+        }
+      },
+      {
+        "comment": "",
+        "key": "OSO",
+        "location": {
+          "startingColumn": 317,
+          "startingLine": 501
+        }
+      },
+      {
+        "comment": "",
+        "key": "O",
+        "location": {
+          "startingColumn": 343,
+          "startingLine": 501
+        }
+      },
+      {
+        "comment": "",
+        "key": "ONO",
+        "location": {
+          "startingColumn": 367,
+          "startingLine": 501
+        }
+      },
+      {
+        "comment": "",
+        "key": "NO",
+        "location": {
+          "startingColumn": 393,
+          "startingLine": 501
+        }
+      },
+      {
+        "comment": "",
+        "key": "NNO",
+        "location": {
+          "startingColumn": 418,
+          "startingLine": 501
+        }
+      },
+      {
+        "comment": "",
+        "key": "Bz verso sud in arrivo intorno alle %@: l'attività può aumentare",
+        "location": {
+          "startingColumn": 38,
+          "startingLine": 558
+        }
+      },
+      {
+        "comment": "",
+        "key": "Attività in aumento nella prossima ora",
+        "location": {
+          "startingColumn": 53,
+          "startingLine": 561
+        }
+      },
+      {
+        "comment": "",
+        "key": "Attività in calo nella prossima ora",
+        "location": {
+          "startingColumn": 54,
+          "startingLine": 562
+        }
+      },
+      {
+        "comment": "",
+        "key": "Bz verso nord: attività stabile e debole nella prossima ora",
+        "location": {
+          "startingColumn": 78,
+          "startingLine": 563
+        }
+      },
+      {
+        "comment": "",
+        "key": "Attività stabile nella prossima ora",
+        "location": {
+          "startingColumn": 34,
+          "startingLine": 564
+        }
+      },
+      {
+        "comment": "",
+        "key": "Cielo molto illuminato dalle luci della città",
+        "location": {
+          "startingColumn": 60,
+          "startingLine": 264
+        }
+      },
+      {
+        "comment": "",
+        "key": "Cielo illuminato dalle luci vicine",
+        "location": {
+          "startingColumn": 59,
+          "startingLine": 265
+        }
+      },
+      {
+        "comment": "",
+        "key": "Lieve inquinamento luminoso",
+        "location": {
+          "startingColumn": 60,
+          "startingLine": 266
+        }
+      },
+      {
+        "comment": "",
+        "key": "OVATION non prevede aurora nel tuo cielo",
+        "location": {
+          "startingColumn": 75,
+          "startingLine": 382
+        }
+      },
+      {
+        "comment": "",
+        "key": "Con Kp %@ l'ovale resta lontano",
+        "location": {
+          "startingColumn": 75,
+          "startingLine": 392
+        }
+      },
+      {
+        "comment": "",
+        "key": "Nessuna previsione geomagnetica per quest'ora",
+        "location": {
+          "startingColumn": 44,
+          "startingLine": 394
+        }
+      },
+      {
+        "comment": "",
+        "key": "È giorno",
+        "location": {
+          "startingColumn": 89,
+          "startingLine": 403
+        }
+      },
+      {
+        "comment": "",
+        "key": "Cielo ancora chiaro (crepuscolo civile)",
+        "location": {
+          "startingColumn": 122,
+          "startingLine": 403
+        }
+      },
+      {
+        "comment": "",
+        "key": "Crepuscolo nautico: solo aurore intense",
+        "location": {
+          "startingColumn": 80,
+          "startingLine": 404
+        }
+      },
+      {
+        "comment": "",
+        "key": "Nuvolosità non disponibile",
+        "location": {
+          "startingColumn": 58,
+          "startingLine": 408
+        }
+      },
+      {
+        "comment": "",
+        "key": "Cielo coperto",
+        "location": {
+          "startingColumn": 89,
+          "startingLine": 409
+        }
+      },
+      {
+        "comment": "",
+        "key": "Nuvolosità %lld%% (stima per strati)",
+        "location": {
+          "startingColumn": 126,
+          "startingLine": 409
+        }
+      },
+      {
+        "comment": "",
+        "key": "Luna illuminata al %lld%% sopra l'orizzonte",
+        "location": {
+          "startingColumn": 82,
+          "startingLine": 414
+        }
+      },
+      {
+        "comment": "",
+        "key": "Rilievi verso nord-ovest: orizzonte a %lld°",
+        "location": {
+          "startingColumn": 93,
+          "startingLine": 418
+        }
+      },
+      {
+        "comment": "",
+        "key": "Orizzonte del terreno non disponibile: considerato libero",
+        "location": {
+          "startingColumn": 44,
+          "startingLine": 420
+        }
+      },
+      {
+        "comment": "",
+        "key": "Buio, cielo in gran parte sereno e attività sufficiente",
+        "location": {
+          "startingColumn": 50,
+          "startingLine": 438
+        }
+      },
+      {
+        "comment": "",
+        "key": "Vento solare non aggiornato",
+        "location": {
+          "startingColumn": 114,
+          "startingLine": 444
+        }
+      },
+      {
+        "comment": "",
+        "key": "Previsione Kp non aggiornata",
+        "location": {
+          "startingColumn": 104,
+          "startingLine": 445
+        }
+      },
+      {
+        "comment": "",
+        "key": "I modelli meteo non concordano sulle nuvole",
+        "location": {
+          "startingColumn": 44,
+          "startingLine": 450
+        }
+      },
+      {
+        "comment": "",
+        "key": "Attività prevista debole (Kp %@)",
+        "location": {
+          "startingColumn": 75,
+          "startingLine": 397
+        }
+      },
+      {
+        "comment": "",
+        "key": "Attività prevista debole",
+        "location": {
+          "startingColumn": 163,
+          "startingLine": 397
+        }
+      }
+    ]
+  },
+  "version": 1
+}

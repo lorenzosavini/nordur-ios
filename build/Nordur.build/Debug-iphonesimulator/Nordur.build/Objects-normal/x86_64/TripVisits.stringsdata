@@ -1,0 +1,400 @@
+{
+  "source": "/Users/runner/work/nordur-ios/nordur-ios/Nordur/Views/TripVisits.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Modifica",
+        "location": {
+          "startingColumn": 40,
+          "startingLine": 11
+        }
+      },
+      {
+        "comment": "",
+        "key": "Sposta a un altro giorno",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 21
+        }
+      },
+      {
+        "comment": "",
+        "key": "%@ · %@",
+        "location": {
+          "startingColumn": 28,
+          "startingLine": 27
+        }
+      },
+      {
+        "comment": "",
+        "key": "Sposta in un'altra tappa",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 34
+        }
+      },
+      {
+        "comment": "",
+        "key": "Togli dal viaggio",
+        "location": {
+          "startingColumn": 19,
+          "startingLine": 37
+        }
+      },
+      {
+        "comment": "",
+        "key": "Supermercati vicino alla tappa",
+        "location": {
+          "startingColumn": 65,
+          "startingLine": 61
+        }
+      },
+      {
+        "comment": "",
+        "key": "Nessun supermercato entro 80 km: fai scorta prima",
+        "location": {
+          "startingColumn": 119,
+          "startingLine": 61
+        }
+      },
+      {
+        "comment": "",
+        "key": "Spesa: %@, %@ km",
+        "location": {
+          "startingColumn": 48,
+          "startingLine": 54
+        }
+      },
+      {
+        "comment": "",
+        "key": "%lld attrazioni · ~%lld km · ~%@ di guida + %@ di visita",
+        "location": {
+          "startingColumn": 40,
+          "startingLine": 118
+        }
+      },
+      {
+        "comment": "",
+        "key": "Luce %@–%@: l'ultima visita finisce al buio",
+        "location": {
+          "startingColumn": 48,
+          "startingLine": 123
+        }
+      },
+      {
+        "comment": "",
+        "key": "Luce %@–%@",
+        "location": {
+          "startingColumn": 48,
+          "startingLine": 124
+        }
+      },
+      {
+        "comment": "",
+        "key": "LUCE DEL GIORNO",
+        "location": {
+          "startingColumn": 61,
+          "startingLine": 91
+        }
+      },
+      {
+        "comment": "",
+        "key": "TEMPI DEL GIORNO",
+        "location": {
+          "startingColumn": 100,
+          "startingLine": 91
+        }
+      },
+      {
+        "comment": "",
+        "key": "Sposta la giornata",
+        "location": {
+          "startingColumn": 33,
+          "startingLine": 97
+        }
+      },
+      {
+        "comment": "",
+        "key": "Scambia con %@",
+        "location": {
+          "startingColumn": 65,
+          "startingLine": 100
+        }
+      },
+      {
+        "comment": "",
+        "key": "Sposta a %@",
+        "location": {
+          "startingColumn": 65,
+          "startingLine": 101
+        }
+      },
+      {
+        "comment": "",
+        "key": "Sposta",
+        "location": {
+          "startingColumn": 31,
+          "startingLine": 108
+        }
+      },
+      {
+        "comment": "",
+        "key": "Strada vicina: %@ · %@",
+        "location": {
+          "startingColumn": 45,
+          "startingLine": 197
+        }
+      },
+      {
+        "comment": "",
+        "key": "Vento forte sulla spiaggia: onde pericolose, valuta di saltarla",
+        "location": {
+          "startingColumn": 27,
+          "startingLine": 193
+        }
+      },
+      {
+        "comment": "",
+        "key": "%@–%@",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 178
+        }
+      },
+      {
+        "comment": "",
+        "key": "raff. %@",
+        "location": {
+          "startingColumn": 48,
+          "startingLine": 185
+        }
+      },
+      {
+        "comment": "",
+        "key": "Meteo disponibile circa 10 giorni prima",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 187
+        }
+      },
+      {
+        "comment": "",
+        "key": "buio",
+        "location": {
+          "startingColumn": 37,
+          "startingLine": 189
+        }
+      },
+      {
+        "comment": "",
+        "key": "difficile",
+        "location": {
+          "startingColumn": 121,
+          "startingLine": 197
+        }
+      },
+      {
+        "comment": "",
+        "key": "Cascata, spiaggia, ghiacciaio…",
+        "location": {
+          "startingColumn": 65,
+          "startingLine": 276
+        }
+      },
+      {
+        "comment": "",
+        "key": "Aggiungi attrazione",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 274
+        }
+      },
+      {
+        "comment": "",
+        "key": "Cerca un altro luogo",
+        "location": {
+          "startingColumn": 31,
+          "startingLine": 243
+        }
+      },
+      {
+        "comment": "",
+        "key": "Fare la spesa",
+        "location": {
+          "startingColumn": 38,
+          "startingLine": 258
+        }
+      },
+      {
+        "comment": "",
+        "key": "Entro 60 km da %@",
+        "location": {
+          "startingColumn": 56,
+          "startingLine": 263
+        }
+      },
+      {
+        "comment": "",
+        "key": "Resto dell'Islanda",
+        "location": {
+          "startingColumn": 38,
+          "startingLine": 268
+        }
+      },
+      {
+        "comment": "",
+        "key": "Chiudi",
+        "location": {
+          "startingColumn": 77,
+          "startingLine": 277
+        }
+      },
+      {
+        "comment": "",
+        "key": "Nuova attrazione",
+        "location": {
+          "startingColumn": 62,
+          "startingLine": 385
+        }
+      },
+      {
+        "comment": "",
+        "key": "Attrazione",
+        "location": {
+          "startingColumn": 102,
+          "startingLine": 385
+        }
+      },
+      {
+        "comment": "",
+        "key": "Togliere questa attrazione dal viaggio?",
+        "location": {
+          "startingColumn": 33,
+          "startingLine": 388
+        }
+      },
+      {
+        "comment": "",
+        "key": "%lld km in linea d'aria da %@",
+        "location": {
+          "startingColumn": 49,
+          "startingLine": 330
+        }
+      },
+      {
+        "comment": "",
+        "key": "Luogo",
+        "location": {
+          "startingColumn": 105,
+          "startingLine": 329
+        }
+      },
+      {
+        "comment": "",
+        "key": "Visita: %@",
+        "location": {
+          "startingColumn": 47,
+          "startingLine": 355
+        }
+      },
+      {
+        "comment": "",
+        "key": "Tappa",
+        "location": {
+          "startingColumn": 32,
+          "startingLine": 342
+        }
+      },
+      {
+        "comment": "",
+        "key": "Giorno",
+        "location": {
+          "startingColumn": 28,
+          "startingLine": 348
+        }
+      },
+      {
+        "comment": "",
+        "key": "Ora di arrivo",
+        "location": {
+          "startingColumn": 32,
+          "startingLine": 353
+        }
+      },
+      {
+        "comment": "",
+        "key": "Note (biglietti, parcheggio, orari…)",
+        "location": {
+          "startingColumn": 31,
+          "startingLine": 356
+        }
+      },
+      {
+        "comment": "",
+        "key": "%@ · %@",
+        "location": {
+          "startingColumn": 38,
+          "startingLine": 344
+        }
+      },
+      {
+        "comment": "",
+        "key": "Quando",
+        "location": {
+          "startingColumn": 34,
+          "startingLine": 357
+        }
+      },
+      {
+        "comment": "",
+        "key": "Giorni e orari sono in ora islandese (un'ora indietro rispetto all'Italia in inverno). Il meteo e la luce vengono calcolati per l'ora di arrivo.",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 358
+        }
+      },
+      {
+        "comment": "",
+        "key": "Aggiungi al viaggio",
+        "location": {
+          "startingColumn": 63,
+          "startingLine": 372
+        }
+      },
+      {
+        "comment": "",
+        "key": "Salva modifiche",
+        "location": {
+          "startingColumn": 106,
+          "startingLine": 372
+        }
+      },
+      {
+        "comment": "",
+        "key": "Togli dal viaggio",
+        "location": {
+          "startingColumn": 35,
+          "startingLine": 378
+        }
+      },
+      {
+        "comment": "",
+        "key": "Chiudi",
+        "location": {
+          "startingColumn": 77,
+          "startingLine": 387
+        }
+      },
+      {
+        "comment": "",
+        "key": "Togli",
+        "location": {
+          "startingColumn": 24,
+          "startingLine": 389
+        }
+      }
+    ]
+  },
+  "version": 1
+}

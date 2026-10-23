@@ -1,0 +1,104 @@
+{
+  "source": "/Users/runner/work/nordur-ios/nordur-ios/Nordur/State/Account.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Accedi al tuo account",
+        "location": {
+          "startingColumn": 81,
+          "startingLine": 353
+        }
+      },
+      {
+        "comment": "",
+        "key": "Accedi al tuo account",
+        "location": {
+          "startingColumn": 77,
+          "startingLine": 80
+        }
+      },
+      {
+        "comment": "",
+        "key": "Accedi al tuo account",
+        "location": {
+          "startingColumn": 77,
+          "startingLine": 87
+        }
+      },
+      {
+        "comment": "",
+        "key": "Accedi al tuo account",
+        "location": {
+          "startingColumn": 77,
+          "startingLine": 94
+        }
+      },
+      {
+        "comment": "",
+        "key": "Accedi al tuo account",
+        "location": {
+          "startingColumn": 77,
+          "startingLine": 133
+        }
+      },
+      {
+        "comment": "",
+        "key": "Accedi al tuo account",
+        "location": {
+          "startingColumn": 77,
+          "startingLine": 181
+        }
+      },
+      {
+        "comment": "",
+        "key": "A ogni modifica",
+        "location": {
+          "startingColumn": 54,
+          "startingLine": 236
+        }
+      },
+      {
+        "comment": "",
+        "key": "Ogni 15 minuti",
+        "location": {
+          "startingColumn": 57,
+          "startingLine": 237
+        }
+      },
+      {
+        "comment": "",
+        "key": "Ogni ora",
+        "location": {
+          "startingColumn": 52,
+          "startingLine": 238
+        }
+      },
+      {
+        "comment": "",
+        "key": "Una volta al giorno",
+        "location": {
+          "startingColumn": 51,
+          "startingLine": 239
+        }
+      },
+      {
+        "comment": "",
+        "key": "Solo a mano",
+        "location": {
+          "startingColumn": 52,
+          "startingLine": 240
+        }
+      },
+      {
+        "comment": "",
+        "key": "Errore %lld",
+        "location": {
+          "startingColumn": 115,
+          "startingLine": 368
+        }
+      }
+    ]
+  },
+  "version": 1
+}

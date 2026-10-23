@@ -1,0 +1,56 @@
+{
+  "source": "/Users/runner/work/nordur-ios/nordur-ios/Shared/Services/FuelPrices.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Benzina 95",
+        "location": {
+          "startingColumn": 61,
+          "startingLine": 27
+        }
+      },
+      {
+        "comment": "",
+        "key": "Diesel",
+        "location": {
+          "startingColumn": 95,
+          "startingLine": 27
+        }
+      },
+      {
+        "comment": "",
+        "key": "Euro e dollari",
+        "location": {
+          "startingColumn": 46,
+          "startingLine": 89
+        }
+      },
+      {
+        "comment": "",
+        "key": "Euro",
+        "location": {
+          "startingColumn": 45,
+          "startingLine": 90
+        }
+      },
+      {
+        "comment": "",
+        "key": "Dollari",
+        "location": {
+          "startingColumn": 45,
+          "startingLine": 91
+        }
+      },
+      {
+        "comment": "",
+        "key": "Solo corone",
+        "location": {
+          "startingColumn": 46,
+          "startingLine": 92
+        }
+      }
+    ]
+  },
+  "version": 1
+}

@@ -1,0 +1,504 @@
+{
+  "source": "/Users/runner/work/nordur-ios/nordur-ios/Shared/Models/Alerts.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Allerte meteo IMO",
+        "location": {
+          "startingColumn": 56,
+          "startingLine": 10
+        }
+      },
+      {
+        "comment": "",
+        "key": "Raffiche forti vicino a te",
+        "location": {
+          "startingColumn": 46,
+          "startingLine": 11
+        }
+      },
+      {
+        "comment": "",
+        "key": "Strade chiuse o impraticabili",
+        "location": {
+          "startingColumn": 46,
+          "startingLine": 12
+        }
+      },
+      {
+        "comment": "",
+        "key": "Terremoti",
+        "location": {
+          "startingColumn": 47,
+          "startingLine": 13
+        }
+      },
+      {
+        "comment": "",
+        "key": "Avvisi SafeTravel",
+        "location": {
+          "startingColumn": 52,
+          "startingLine": 14
+        }
+      },
+      {
+        "comment": "",
+        "key": "Aurora boreale",
+        "location": {
+          "startingColumn": 48,
+          "startingLine": 15
+        }
+      },
+      {
+        "comment": "",
+        "key": "Voli seguiti (KEF)",
+        "location": {
+          "startingColumn": 48,
+          "startingLine": 16
+        }
+      },
+      {
+        "comment": "",
+        "key": "Traghetto Herjólfur",
+        "location": {
+          "startingColumn": 47,
+          "startingLine": 17
+        }
+      },
+      {
+        "comment": "",
+        "key": "Limite di velocità (in guida)",
+        "location": {
+          "startingColumn": 47,
+          "startingLine": 18
+        }
+      },
+      {
+        "comment": "",
+        "key": "Meteo IMO",
+        "location": {
+          "startingColumn": 56,
+          "startingLine": 25
+        }
+      },
+      {
+        "comment": "",
+        "key": "Raffiche",
+        "location": {
+          "startingColumn": 46,
+          "startingLine": 26
+        }
+      },
+      {
+        "comment": "",
+        "key": "Strade",
+        "location": {
+          "startingColumn": 46,
+          "startingLine": 27
+        }
+      },
+      {
+        "comment": "",
+        "key": "Terremoti",
+        "location": {
+          "startingColumn": 47,
+          "startingLine": 28
+        }
+      },
+      {
+        "comment": "",
+        "key": "SafeTravel",
+        "location": {
+          "startingColumn": 52,
+          "startingLine": 29
+        }
+      },
+      {
+        "comment": "",
+        "key": "Aurora",
+        "location": {
+          "startingColumn": 48,
+          "startingLine": 30
+        }
+      },
+      {
+        "comment": "",
+        "key": "Voli",
+        "location": {
+          "startingColumn": 48,
+          "startingLine": 31
+        }
+      },
+      {
+        "comment": "",
+        "key": "Traghetto",
+        "location": {
+          "startingColumn": 47,
+          "startingLine": 32
+        }
+      },
+      {
+        "comment": "",
+        "key": "Velocità",
+        "location": {
+          "startingColumn": 47,
+          "startingLine": 33
+        }
+      },
+      {
+        "comment": "",
+        "key": "Spenta",
+        "location": {
+          "startingColumn": 45,
+          "startingLine": 73
+        }
+      },
+      {
+        "comment": "",
+        "key": "Di notte",
+        "location": {
+          "startingColumn": 47,
+          "startingLine": 74
+        }
+      },
+      {
+        "comment": "",
+        "key": "Sempre",
+        "location": {
+          "startingColumn": 48,
+          "startingLine": 75
+        }
+      },
+      {
+        "comment": "",
+        "key": "in corso",
+        "location": {
+          "startingColumn": 74,
+          "startingLine": 174
+        }
+      },
+      {
+        "comment": "",
+        "key": "dalle %@",
+        "location": {
+          "startingColumn": 106,
+          "startingLine": 174
+        }
+      },
+      {
+        "comment": "",
+        "key": "%@ · %@ · %@ fino alle %@",
+        "location": {
+          "startingColumn": 45,
+          "startingLine": 178
+        }
+      },
+      {
+        "comment": "",
+        "key": "Raffiche di %@ a %@",
+        "location": {
+          "startingColumn": 50,
+          "startingLine": 196
+        }
+      },
+      {
+        "comment": "",
+        "key": "A %lld km da te. Vento medio %@ %@. %@",
+        "location": {
+          "startingColumn": 49,
+          "startingLine": 197
+        }
+      },
+      {
+        "comment": "",
+        "key": "Tratto vicino a %@, a %lld km da te. Verifica su umferdin.is o chiama il 1777.",
+        "location": {
+          "startingColumn": 53,
+          "startingLine": 210
+        }
+      },
+      {
+        "comment": "",
+        "key": "Terremoto M%@ – %@",
+        "location": {
+          "startingColumn": 46,
+          "startingLine": 229
+        }
+      },
+      {
+        "comment": "",
+        "key": "%@, profondità %@%@",
+        "location": {
+          "startingColumn": 45,
+          "startingLine": 230
+        }
+      },
+      {
+        "comment": "",
+        "key": "SafeTravel: %@",
+        "location": {
+          "startingColumn": 46,
+          "startingLine": 240
+        }
+      },
+      {
+        "comment": "",
+        "key": "Orario %@%@",
+        "location": {
+          "startingColumn": 45,
+          "startingLine": 258
+        }
+      },
+      {
+        "comment": "",
+        "key": "Herjólfur – nuovo avviso",
+        "location": {
+          "startingColumn": 42,
+          "startingLine": 265
+        }
+      },
+      {
+        "comment": "",
+        "key": "a %lld km da te",
+        "location": {
+          "startingColumn": 41,
+          "startingLine": 408
+        }
+      },
+      {
+        "comment": "",
+        "key": "vicino alla tappa %@",
+        "location": {
+          "startingColumn": 41,
+          "startingLine": 409
+        }
+      },
+      {
+        "comment": "",
+        "key": "Tratto %@. Aggiornato %@. Fonte: Vegagerðin (umferdin.is), informazioni 1777.",
+        "location": {
+          "startingColumn": 45,
+          "startingLine": 414
+        }
+      },
+      {
+        "comment": "",
+        "key": "%@ a %lld km: %@",
+        "location": {
+          "startingColumn": 50,
+          "startingLine": 432
+        }
+      },
+      {
+        "comment": "",
+        "key": " · %lld km da %@",
+        "location": {
+          "startingColumn": 61,
+          "startingLine": 226
+        }
+      },
+      {
+        "comment": "",
+        "key": "Aurora in corso: confermata da %lld persone vicino a te",
+        "location": {
+          "startingColumn": 58,
+          "startingLine": 292
+        }
+      },
+      {
+        "comment": "",
+        "key": "Aurora segnalata a %lld km da te",
+        "location": {
+          "startingColumn": 58,
+          "startingLine": 293
+        }
+      },
+      {
+        "comment": "",
+        "key": "OVATION %lld nel tuo cielo",
+        "location": {
+          "startingColumn": 37,
+          "startingLine": 304
+        }
+      },
+      {
+        "comment": "",
+        "key": "Condizioni %@ per l'aurora, adesso",
+        "location": {
+          "startingColumn": 42,
+          "startingLine": 309
+        }
+      },
+      {
+        "comment": "",
+        "key": "Stima euristica: %@, cielo sereno al %lld%%.%@ Non è garanzia di aurora visibile.",
+        "location": {
+          "startingColumn": 41,
+          "startingLine": 310
+        }
+      },
+      {
+        "comment": "",
+        "key": "Finestra %@ per l'aurora verso le %@",
+        "location": {
+          "startingColumn": 42,
+          "startingLine": 320
+        }
+      },
+      {
+        "comment": "",
+        "key": "%@. Affidabilità %@: ricontrolla più tardi.",
+        "location": {
+          "startingColumn": 41,
+          "startingLine": 321
+        }
+      },
+      {
+        "comment": "",
+        "key": "Bz negativo persistente: %@ nT da %lld min",
+        "location": {
+          "startingColumn": 42,
+          "startingLine": 340
+        }
+      },
+      {
+        "comment": "",
+        "key": "Il campo interplanetario è orientato a sud: favorisce l'attività geomagnetica.%@ Non garantisce un'aurora visibile.",
+        "location": {
+          "startingColumn": 41,
+          "startingLine": 341
+        }
+      },
+      {
+        "comment": "",
+        "key": "Possibile shock nel vento solare",
+        "location": {
+          "startingColumn": 42,
+          "startingLine": 347
+        }
+      },
+      {
+        "comment": "",
+        "key": "A L1 alle %@: velocità +%lld km/s, densità ×%@. Rilevamento automatico: l'attività potrebbe aumentare nella prossima ora.",
+        "location": {
+          "startingColumn": 41,
+          "startingLine": 348
+        }
+      },
+      {
+        "comment": "",
+        "key": "NOAA: attività geomagnetica Kp %lld",
+        "location": {
+          "startingColumn": 42,
+          "startingLine": 356
+        }
+      },
+      {
+        "comment": "",
+        "key": "(ora islandese)",
+        "location": {
+          "startingColumn": 61,
+          "startingLine": 360
+        }
+      },
+      {
+        "comment": "",
+        "key": "CME di striscio in arrivo",
+        "location": {
+          "startingColumn": 57,
+          "startingLine": 371
+        }
+      },
+      {
+        "comment": "",
+        "key": "Espulsione di massa coronale in arrivo",
+        "location": {
+          "startingColumn": 106,
+          "startingLine": 371
+        }
+      },
+      {
+        "comment": "",
+        "key": "NASA (WSA-ENLIL) prevede l'arrivo verso %@ ±7 h, %@. L'effetto dipende dal Bz all'arrivo.",
+        "location": {
+          "startingColumn": 41,
+          "startingLine": 372
+        }
+      },
+      {
+        "comment": "",
+        "key": "Possibile arrivo di una CME verso %@",
+        "location": {
+          "startingColumn": 42,
+          "startingLine": 380
+        }
+      },
+      {
+        "comment": "",
+        "key": "Il modello WSA-ENLIL di NOAA prevede l'arrivo di materiale di CME sulla Terra (picco ~%lld km/s). Intensità non prevedibile prima dell'arrivo.",
+        "location": {
+          "startingColumn": 41,
+          "startingLine": 381
+        }
+      },
+      {
+        "comment": "",
+        "key": " · gate %@",
+        "location": {
+          "startingColumn": 132,
+          "startingLine": 258
+        }
+      },
+      {
+        "comment": "",
+        "key": " Guarda verso %@.",
+        "location": {
+          "startingColumn": 65,
+          "startingLine": 306
+        }
+      },
+      {
+        "comment": "",
+        "key": "Buio e cielo in gran parte sereno",
+        "location": {
+          "startingColumn": 84,
+          "startingLine": 321
+        }
+      },
+      {
+        "comment": "",
+        "key": " Arriva a terra tra ~%lld min.",
+        "location": {
+          "startingColumn": 63,
+          "startingLine": 337
+        }
+      },
+      {
+        "comment": "",
+        "key": "Emesso %@",
+        "location": {
+          "startingColumn": 65,
+          "startingLine": 358
+        }
+      },
+      {
+        "comment": "",
+        "key": "valido fino a %@",
+        "location": {
+          "startingColumn": 92,
+          "startingLine": 359
+        }
+      },
+      {
+        "comment": "",
+        "key": "Fino al %@.",
+        "location": {
+          "startingColumn": 66,
+          "startingLine": 425
+        }
+      }
+    ]
+  },
+  "version": 1
+}

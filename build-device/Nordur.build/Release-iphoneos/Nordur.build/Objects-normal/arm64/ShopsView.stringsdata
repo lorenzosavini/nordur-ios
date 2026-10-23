@@ -1,0 +1,400 @@
+{
+  "source": "/Users/runner/work/nordur-ios/nordur-ios/Nordur/Views/ShopsView.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Aperto · chiude alle %@",
+        "location": {
+          "startingColumn": 39,
+          "startingLine": 199
+        }
+      },
+      {
+        "comment": "",
+        "key": "Aperto 24 ore",
+        "location": {
+          "startingColumn": 61,
+          "startingLine": 198
+        }
+      },
+      {
+        "comment": "",
+        "key": "Chiuso · apre alle %@",
+        "location": {
+          "startingColumn": 85,
+          "startingLine": 202
+        }
+      },
+      {
+        "comment": "",
+        "key": "Chiuso · apre %@",
+        "location": {
+          "startingColumn": 85,
+          "startingLine": 203
+        }
+      },
+      {
+        "comment": "",
+        "key": "Chiuso",
+        "location": {
+          "startingColumn": 57,
+          "startingLine": 201
+        }
+      },
+      {
+        "comment": "",
+        "key": "Aperto · chiude alle %@",
+        "location": {
+          "startingColumn": 39,
+          "startingLine": 13
+        }
+      },
+      {
+        "comment": "",
+        "key": "Aperto 24 ore",
+        "location": {
+          "startingColumn": 61,
+          "startingLine": 12
+        }
+      },
+      {
+        "comment": "",
+        "key": "Chiuso · apre alle %@",
+        "location": {
+          "startingColumn": 45,
+          "startingLine": 17
+        }
+      },
+      {
+        "comment": "",
+        "key": "Chiuso · apre %@",
+        "location": {
+          "startingColumn": 45,
+          "startingLine": 18
+        }
+      },
+      {
+        "comment": "",
+        "key": "Chiuso",
+        "location": {
+          "startingColumn": 57,
+          "startingLine": 15
+        }
+      },
+      {
+        "comment": "",
+        "key": "Orari non indicati",
+        "location": {
+          "startingColumn": 55,
+          "startingLine": 7
+        }
+      },
+      {
+        "comment": "",
+        "key": "Bónus, Krónan, città…",
+        "location": {
+          "startingColumn": 61,
+          "startingLine": 95
+        }
+      },
+      {
+        "comment": "",
+        "key": "Spesa e negozi",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 93
+        }
+      },
+      {
+        "comment": "",
+        "key": "Chiudi",
+        "location": {
+          "startingColumn": 85,
+          "startingLine": 39
+        }
+      },
+      {
+        "comment": "",
+        "key": "Solo aperti adesso",
+        "location": {
+          "startingColumn": 24,
+          "startingLine": 64
+        }
+      },
+      {
+        "comment": "",
+        "key": "Tutti",
+        "location": {
+          "startingColumn": 48,
+          "startingLine": 58
+        }
+      },
+      {
+        "comment": "",
+        "key": "Nessun negozio trovato",
+        "location": {
+          "startingColumn": 73,
+          "startingLine": 70
+        }
+      },
+      {
+        "comment": "",
+        "key": "Prova a togliere \"Solo aperti adesso\".",
+        "location": {
+          "startingColumn": 69,
+          "startingLine": 71
+        }
+      },
+      {
+        "comment": "",
+        "key": "Vicino a %@",
+        "location": {
+          "startingColumn": 40,
+          "startingLine": 80
+        }
+      },
+      {
+        "comment": "",
+        "key": "Bónus, Krónan e Nettó sono i supermercati più economici; i minimarket e i negozi dei distributori (N1, Olís, Orkan) costano di più ma sono spesso aperti fino a tardi.",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 83
+        }
+      },
+      {
+        "comment": "",
+        "key": "Vino, birra forte e superalcolici si comprano solo da Vínbúðin, con orari ridotti (spesso chiusa la domenica). Nei supermercati c'è solo birra leggera.",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 84
+        }
+      },
+      {
+        "comment": "",
+        "key": "Fuori dalle città i negozi sono pochi e chiudono presto: fai scorta prima delle tappe lunghe. Orari da OpenStreetMap, verifica nei giorni festivi.",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 85
+        }
+      },
+      {
+        "comment": "",
+        "key": "OpenStreetMap",
+        "location": {
+          "startingColumn": 108,
+          "startingLine": 87
+        }
+      },
+      {
+        "comment": "",
+        "key": "ECONOMICO",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 131
+        }
+      },
+      {
+        "comment": "",
+        "key": "%@ km",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 136
+        }
+      },
+      {
+        "comment": "",
+        "key": "Orari (OpenStreetMap)",
+        "location": {
+          "startingColumn": 38,
+          "startingLine": 174
+        }
+      },
+      {
+        "comment": "",
+        "key": "Chiudi",
+        "location": {
+          "startingColumn": 77,
+          "startingLine": 183
+        }
+      },
+      {
+        "comment": "",
+        "key": "Orari non indicati (spesso self-service 24 h con carta)",
+        "location": {
+          "startingColumn": 74,
+          "startingLine": 194
+        }
+      },
+      {
+        "comment": "",
+        "key": "Ricarica",
+        "location": {
+          "startingColumn": 75,
+          "startingLine": 259
+        }
+      },
+      {
+        "comment": "",
+        "key": "Carburante",
+        "location": {
+          "startingColumn": 107,
+          "startingLine": 259
+        }
+      },
+      {
+        "comment": "",
+        "key": "%@ km da %@",
+        "location": {
+          "startingColumn": 45,
+          "startingLine": 233
+        }
+      },
+      {
+        "comment": "",
+        "key": "Ricarica auto elettriche",
+        "location": {
+          "startingColumn": 80,
+          "startingLine": 224
+        }
+      },
+      {
+        "comment": "",
+        "key": "Distributore",
+        "location": {
+          "startingColumn": 128,
+          "startingLine": 224
+        }
+      },
+      {
+        "comment": "",
+        "key": "Orari (OpenStreetMap)",
+        "location": {
+          "startingColumn": 38,
+          "startingLine": 242
+        }
+      },
+      {
+        "comment": "",
+        "key": "In Islanda le colonnine veloci sono soprattutto di ON, Ísorka e N1: serve spesso l'app o la tessera dell'operatore.",
+        "location": {
+          "startingColumn": 46,
+          "startingLine": 246
+        }
+      },
+      {
+        "comment": "",
+        "key": "Fuori città molti distributori sono solo self-service: si paga alla colonnina con carta e PIN (o carta prepagata N1/Olís). Fai il pieno prima delle tratte lunghe.",
+        "location": {
+          "startingColumn": 46,
+          "startingLine": 247
+        }
+      },
+      {
+        "comment": "",
+        "key": "Chiudi",
+        "location": {
+          "startingColumn": 77,
+          "startingLine": 261
+        }
+      },
+      {
+        "comment": "",
+        "key": "Prezzi di %@ %@",
+        "location": {
+          "startingColumn": 44,
+          "startingLine": 281
+        }
+      },
+      {
+        "comment": "",
+        "key": "Prezzi in arrivo…",
+        "location": {
+          "startingColumn": 75,
+          "startingLine": 284
+        }
+      },
+      {
+        "comment": "",
+        "key": "Prezzi non disponibili",
+        "location": {
+          "startingColumn": 118,
+          "startingLine": 284
+        }
+      },
+      {
+        "comment": "",
+        "key": "Nessun prezzo pubblicato per questo distributore.",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 287
+        }
+      },
+      {
+        "comment": "",
+        "key": "Confronta i prezzi nei dintorni",
+        "location": {
+          "startingColumn": 23,
+          "startingLine": 290
+        }
+      },
+      {
+        "comment": "",
+        "key": "Il più economico entro 30 km",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 294
+        }
+      },
+      {
+        "comment": "",
+        "key": "%@ %@ · %@ kr/l · %@ km",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 295
+        }
+      },
+      {
+        "comment": "",
+        "key": "Indicazioni",
+        "location": {
+          "startingColumn": 31,
+          "startingLine": 298
+        }
+      },
+      {
+        "comment": "",
+        "key": "Prezzi adesso",
+        "location": {
+          "startingColumn": 18,
+          "startingLine": 304
+        }
+      },
+      {
+        "comment": "",
+        "key": "Prezzo alla pompa self-service al litro. «Con sconto»: con la carta o l'app della compagnia. Cambio BCE del %@.",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 310
+        }
+      },
+      {
+        "comment": "",
+        "key": "%@ kr/l",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 328
+        }
+      },
+      {
+        "comment": "",
+        "key": "Con sconto %@ kr",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 333
+        }
+      }
+    ]
+  },
+  "version": 1
+}

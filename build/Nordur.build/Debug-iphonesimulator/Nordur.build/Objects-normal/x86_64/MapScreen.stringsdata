@@ -1,0 +1,392 @@
+{
+  "source": "/Users/runner/work/nordur-ios/nordur-ios/Nordur/Views/Map/MapScreen.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Posizione impostata",
+        "location": {
+          "startingColumn": 86,
+          "startingLine": 548
+        }
+      },
+      {
+        "comment": "",
+        "key": "Fuori copertura: la mappa meteo e le strade coprono solo l'Islanda",
+        "location": {
+          "startingColumn": 23,
+          "startingLine": 169
+        }
+      },
+      {
+        "comment": "",
+        "key": "Allerte meteo IMO",
+        "location": {
+          "startingColumn": 28,
+          "startingLine": 141
+        }
+      },
+      {
+        "comment": "",
+        "key": "Strade: chiusure, lavori e pericoli",
+        "location": {
+          "startingColumn": 28,
+          "startingLine": 142
+        }
+      },
+      {
+        "comment": "",
+        "key": "Stazioni stradali (raffiche)",
+        "location": {
+          "startingColumn": 28,
+          "startingLine": 143
+        }
+      },
+      {
+        "comment": "",
+        "key": "Webcam",
+        "location": {
+          "startingColumn": 28,
+          "startingLine": 144
+        }
+      },
+      {
+        "comment": "",
+        "key": "Terremoti 48 h",
+        "location": {
+          "startingColumn": 28,
+          "startingLine": 145
+        }
+      },
+      {
+        "comment": "",
+        "key": "Distributori",
+        "location": {
+          "startingColumn": 28,
+          "startingLine": 146
+        }
+      },
+      {
+        "comment": "",
+        "key": "Prezzi di",
+        "location": {
+          "startingColumn": 32,
+          "startingLine": 148
+        }
+      },
+      {
+        "comment": "",
+        "key": "Ricarica EV",
+        "location": {
+          "startingColumn": 28,
+          "startingLine": 152
+        }
+      },
+      {
+        "comment": "",
+        "key": "Supermercati e negozi",
+        "location": {
+          "startingColumn": 28,
+          "startingLine": 153
+        }
+      },
+      {
+        "comment": "",
+        "key": "Attrazioni e luoghi da vedere",
+        "location": {
+          "startingColumn": 28,
+          "startingLine": 154
+        }
+      },
+      {
+        "comment": "",
+        "key": "Viaggio e percorso",
+        "location": {
+          "startingColumn": 28,
+          "startingLine": 155
+        }
+      },
+      {
+        "comment": "",
+        "key": "Animazione particelle vento",
+        "location": {
+          "startingColumn": 28,
+          "startingLine": 156
+        }
+      },
+      {
+        "comment": "",
+        "key": "LIVELLI +",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 158
+        }
+      },
+      {
+        "comment": "",
+        "key": "Radar RainViewer, ultime 2 ore. Copertura parziale.",
+        "location": {
+          "startingColumn": 18,
+          "startingLine": 270
+        }
+      },
+      {
+        "comment": "",
+        "key": "Tocca la mappa per i valori in un punto",
+        "location": {
+          "startingColumn": 18,
+          "startingLine": 273
+        }
+      },
+      {
+        "comment": "",
+        "key": "Percorribile",
+        "location": {
+          "startingColumn": 32,
+          "startingLine": 280
+        }
+      },
+      {
+        "comment": "",
+        "key": "Ghiaccio a tratti",
+        "location": {
+          "startingColumn": 32,
+          "startingLine": 281
+        }
+      },
+      {
+        "comment": "",
+        "key": "Scivolosa / neve",
+        "location": {
+          "startingColumn": 32,
+          "startingLine": 282
+        }
+      },
+      {
+        "comment": "",
+        "key": "Difficile",
+        "location": {
+          "startingColumn": 32,
+          "startingLine": 283
+        }
+      },
+      {
+        "comment": "",
+        "key": "Chiusa",
+        "location": {
+          "startingColumn": 32,
+          "startingLine": 284
+        }
+      },
+      {
+        "comment": "",
+        "key": "Nessun servizio",
+        "location": {
+          "startingColumn": 32,
+          "startingLine": 285
+        }
+      },
+      {
+        "comment": "",
+        "key": "Esci da schermo intero",
+        "location": {
+          "startingColumn": 77,
+          "startingLine": 216
+        }
+      },
+      {
+        "comment": "",
+        "key": "Mappa a schermo intero",
+        "location": {
+          "startingColumn": 123,
+          "startingLine": 216
+        }
+      },
+      {
+        "comment": "",
+        "key": "Nascondi legenda",
+        "location": {
+          "startingColumn": 69,
+          "startingLine": 221
+        }
+      },
+      {
+        "comment": "",
+        "key": "Mostra legenda",
+        "location": {
+          "startingColumn": 109,
+          "startingLine": 221
+        }
+      },
+      {
+        "comment": "",
+        "key": "Open-Meteo",
+        "location": {
+          "startingColumn": 104,
+          "startingLine": 312
+        }
+      },
+      {
+        "comment": "",
+        "key": "%@, %@",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 266
+        }
+      },
+      {
+        "comment": "",
+        "key": "Strade: condizioni Vegagerðin. Tocca una strada per i dettagli.",
+        "location": {
+          "startingColumn": 18,
+          "startingLine": 296
+        }
+      },
+      {
+        "comment": "",
+        "key": "Adesso",
+        "location": {
+          "startingColumn": 24,
+          "startingLine": 309
+        }
+      },
+      {
+        "comment": "",
+        "key": "Riprova",
+        "location": {
+          "startingColumn": 24,
+          "startingLine": 319
+        }
+      },
+      {
+        "comment": "",
+        "key": "Carico la griglia meteo…",
+        "location": {
+          "startingColumn": 77,
+          "startingLine": 317
+        }
+      },
+      {
+        "comment": "",
+        "key": " (previsione)",
+        "location": {
+          "startingColumn": 95,
+          "startingLine": 325
+        }
+      },
+      {
+        "comment": "",
+        "key": "%@%@",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 325
+        }
+      },
+      {
+        "comment": "",
+        "key": "Sull'Islanda adesso il valore massimo è %lld: troppo basso per essere colorato (la scala parte da 4). Il colore compare quando l'ovale si allarga verso sud.",
+        "location": {
+          "startingColumn": 46,
+          "startingLine": 340
+        }
+      },
+      {
+        "comment": "",
+        "key": "Valore massimo sull'Islanda adesso: %lld.",
+        "location": {
+          "startingColumn": 46,
+          "startingLine": 341
+        }
+      },
+      {
+        "comment": "",
+        "key": "Ovale OVATION previsto per le %@ · Kp %@",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 334
+        }
+      },
+      {
+        "comment": "",
+        "key": "Fuori dalla griglia meteo dell'Islanda.",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 663
+        }
+      },
+      {
+        "comment": "",
+        "key": "Aurora adesso: %@",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 666
+        }
+      },
+      {
+        "comment": "",
+        "key": "Stazione %@ (%lld km): %@ / raff. %@, asfalto %@",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 670
+        }
+      },
+      {
+        "comment": "",
+        "key": "· %@",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 646
+        }
+      },
+      {
+        "comment": "",
+        "key": "Temp.",
+        "location": {
+          "startingColumn": 53,
+          "startingLine": 653
+        }
+      },
+      {
+        "comment": "",
+        "key": "Vento",
+        "location": {
+          "startingColumn": 53,
+          "startingLine": 654
+        }
+      },
+      {
+        "comment": "",
+        "key": "Raffiche",
+        "location": {
+          "startingColumn": 53,
+          "startingLine": 655
+        }
+      },
+      {
+        "comment": "",
+        "key": "Pioggia",
+        "location": {
+          "startingColumn": 53,
+          "startingLine": 658
+        }
+      },
+      {
+        "comment": "",
+        "key": "Neve",
+        "location": {
+          "startingColumn": 53,
+          "startingLine": 659
+        }
+      },
+      {
+        "comment": "",
+        "key": "Nuvole",
+        "location": {
+          "startingColumn": 53,
+          "startingLine": 660
+        }
+      }
+    ]
+  },
+  "version": 1
+}
