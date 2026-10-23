@@ -12,9 +12,7 @@
 <header class="top">
   <div class="wrap">
     <a class="logo" href="./"><img src="landing/img/icon.png" alt="" width="30" height="30">Norður</a>
-    <select class="lang" id="lang" aria-label="Lingua / Language" style="margin-left:auto">
-      <option value="it">IT</option><option value="en">EN</option><option value="de">DE</option><option value="fr">FR</option><option value="es">ES</option>
-    </select>
+    <div id="lang" style="margin-left:auto"></div>
   </div>
 </header>
 <main>
@@ -32,6 +30,7 @@
 </main>
 <script src="config.js"></script>
 <script src="landing/i18n.js"></script>
+<script src="landing/langpicker.js"></script>
 <script>
 (() => {
   const VERSION = "2026-10-23";
@@ -44,7 +43,7 @@
   function render() {
     const T = window.I18N[lang], miss = `<span class="missing">[${esc(T["legal.missing"])}]</span>`;
     document.documentElement.lang = lang;
-    document.getElementById("lang").value = lang;
+    picker.set(lang);
     document.getElementById("back").textContent = T["legal.back"];
     document.getElementById("pv").textContent = `${T["legal.version"]} ${VERSION}`;
     document.getElementById("pt").textContent = T["legal.privacyTitle"];
@@ -61,7 +60,7 @@
     document.getElementById("cbody").innerHTML = T.cookie.map(([h, p], i) => `<h2><span>${String(i + 1).padStart(2, "0")}</span>${esc(h)}</h2><p>${fill(p)}</p>`).join("");
     document.title = `Norður · ${T["legal.privacyTitle"]}`;
   }
-  document.getElementById("lang").addEventListener("change", (e) => { lang = e.target.value; try { localStorage.setItem("nordur.lang", lang); } catch {} render(); });
+  const picker = window.NordurLangPicker(document.getElementById("lang"), lang, (l) => { lang = l; try { localStorage.setItem("nordur.lang", lang); } catch {} render(); });
   render();
   fetch(`${window.NORDUR_API}?lead=status`).then((r) => r.json()).then((d) => { legal = d.legal || {}; render(); }).catch(() => {});
 })();

@@ -26,9 +26,7 @@
       <a href="#honest" data-i18n="nav.honest">Cosa non fa</a>
       <a href="#status" data-i18n="nav.status">Lancio</a>
     </nav>
-    <select class="lang" id="lang" aria-label="Lingua / Language">
-      <option value="it">IT</option><option value="en">EN</option><option value="de">DE</option><option value="fr">FR</option><option value="es">ES</option>
-    </select>
+    <div id="lang"></div>
     <a class="btn primary" href="#join" data-i18n="nav.join">Avvisami</a>
   </div>
 </header>
@@ -47,7 +45,7 @@
         </div>
         <p class="note" data-i18n="hero.note"></p>
       </div>
-      <div class="phone"><video src="landing/video/aurora.mp4" poster="landing/video/aurora.webp" muted loop playsinline autoplay preload="metadata"></video></div>
+      <div class="phone"><video data-clip="aurora" data-eager="1" muted loop playsinline autoplay preload="metadata"></video></div>
     </div>
   </section>
 
@@ -66,18 +64,31 @@
       <h2 data-i18n="features.title"></h2>
       <div class="features">
         <div class="feature reveal"><div><div class="kicker" data-i18n="f.today.kicker"></div><h3 data-i18n="f.today.title"></h3><p data-i18n="f.today.text"></p></div>
-          <div class="media"><div class="phone small"><video data-src="landing/video/today.mp4" poster="landing/video/today.webp" muted loop playsinline preload="none"></video></div></div></div>
+          <div class="media"><div class="phone small"><video data-clip="today" muted loop playsinline preload="none"></video></div></div></div>
         <div class="feature reveal"><div><div class="kicker aurora" data-i18n="f.aurora.kicker"></div><h3 data-i18n="f.aurora.title"></h3><p data-i18n="f.aurora.text"></p></div>
-          <div class="media"><div class="phone small"><img src="landing/img/aurora.webp" alt="" loading="lazy"></div></div></div>
+          <div class="media"><div class="phone small"><img data-shot="aurora" alt="" loading="lazy"></div></div></div>
         <div class="feature reveal"><div><div class="kicker" data-i18n="f.map.kicker"></div><h3 data-i18n="f.map.title"></h3><p data-i18n="f.map.text"></p></div>
-          <div class="media"><div class="phone small"><video data-src="landing/video/map.mp4" poster="landing/video/map.webp" muted loop playsinline preload="none"></video></div></div></div>
+          <div class="media"><div class="phone small"><video data-clip="map" muted loop playsinline preload="none"></video></div></div></div>
         <div class="feature reveal"><div><div class="kicker" data-i18n="f.roads.kicker"></div><h3 data-i18n="f.roads.title"></h3><p data-i18n="f.roads.text"></p></div>
-          <div class="media"><div class="phone small"><img src="landing/img/roads.webp" alt="" loading="lazy"></div></div></div>
+          <div class="media"><div class="phone small"><img data-shot="roads" alt="" loading="lazy"></div></div></div>
         <div class="feature reveal"><div><div class="kicker" data-i18n="f.trip.kicker"></div><h3 data-i18n="f.trip.title"></h3><p data-i18n="f.trip.text"></p></div>
-          <div class="media"><div class="phone small"><video data-src="landing/video/trip.mp4" poster="landing/video/trip.webp" muted loop playsinline preload="none"></video></div></div></div>
+          <div class="media"><div class="phone small"><video data-clip="trip" muted loop playsinline preload="none"></video></div></div></div>
         <div class="feature reveal"><div><div class="kicker" data-i18n="f.drive.kicker"></div><h3 data-i18n="f.drive.title"></h3><p data-i18n="f.drive.text"></p></div>
-          <div class="media"><div class="phone small"><video data-src="landing/video/drive.mp4" poster="landing/video/drive.webp" muted loop playsinline preload="none"></video></div></div></div>
+          <div class="media"><div class="phone small"><video data-clip="drive" muted loop playsinline preload="none"></video></div></div></div>
       </div>
+    </div>
+  </section>
+
+  <section id="try" hidden>
+    <div class="wrap try">
+      <div>
+        <div class="kicker aurora" data-i18n="try.kicker"></div>
+        <h2 data-i18n="try.title"></h2>
+        <p class="lead" data-i18n="try.lead"></p>
+        <p class="small" data-i18n="try.notice"></p>
+        <button class="btn primary" id="tryStart" data-i18n="try.button"></button>
+      </div>
+      <div class="phone try-phone" id="tryFrame"><img data-shot="today" alt="" loading="lazy"></div>
     </div>
   </section>
 
@@ -182,6 +193,7 @@
 
 <script src="config.js"></script>
 <script src="landing/i18n.js"></script>
+<script src="landing/langpicker.js"></script>
 <script src="landing/app.js"></script>
 </body>
 </html>

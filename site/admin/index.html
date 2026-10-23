@@ -99,6 +99,7 @@
         <div class="field"><label>Traguardi, uno per riga. Nella lingua italiana «x » all'inizio = fatto. Le altre lingue seguono lo stesso ordine.</label><textarea id="items"></textarea></div>
         <div class="field"><label>Link App Store (quando esce)</label><input type="text" id="store" placeholder="https://apps.apple.com/…"></div>
         <label class="check"><input type="checkbox" id="showCount"><span>Mostra quante persone sono in lista</span></label>
+        <div class="field"><label>Demo nel browser: chiave pubblica Appetize (vuoto = sezione nascosta)</label><input type="text" id="appetize" placeholder="es. b_abc123…"></div>
         <h2 style="margin-top:24px">Dati del titolare</h2>
         <p class="small">Obbligatori per l'informativa: senza nome e email di contatto il modulo resta chiuso.</p>
         <div class="field"><label>Titolare (nome e cognome o ragione sociale)</label><input type="text" id="controller"></div>
@@ -208,7 +209,7 @@
     // Status editor
     const status = data.status;
     $("phase").value = status.phase; $("progress").value = status.progress; $("pv").textContent = `${status.progress}%`;
-    $("store").value = status.appStoreUrl || ""; $("showCount").checked = Boolean(status.showCount);
+    $("store").value = status.appStoreUrl || ""; $("showCount").checked = Boolean(status.showCount); $("appetize").value = status.appetize || "";
     editing = { note: { ...status.note }, items: Object.fromEntries(Object.keys(LANGS).map((l) => [l, (status.items || []).map((i) => (l === "it" && i.done ? "x " : "") + (i.label?.[l] || "")).join("\n")])) };
     renderTabs();
     $("controller").value = data.legal.controller || ""; $("cemail").value = data.legal.email || ""; $("address").value = data.legal.address || ""; $("vat").value = data.legal.vat || ""; $("hosting").value = data.legal.hosting || "";
@@ -292,7 +293,7 @@
       label: Object.fromEntries(Object.keys(LANGS).map((l) => [l, (lines[l][i] || "").trim().replace(l === "it" ? /^x\s+/i : /^$/, "")])),
     })).filter(Boolean);
     const body = {
-      status: { phase: $("phase").value, progress: $("progress").value, note: editing.note, items, appStoreUrl: $("store").value.trim(), showCount: $("showCount").checked },
+      status: { phase: $("phase").value, progress: $("progress").value, note: editing.note, items, appStoreUrl: $("store").value.trim(), showCount: $("showCount").checked, appetize: $("appetize").value.trim() },
       legal: { controller: $("controller").value.trim(), email: $("cemail").value.trim(), address: $("address").value.trim(), vat: $("vat").value.trim(), hosting: $("hosting").value.trim() },
     };
     const r = await call("admin=status", { method: "PUT", body: JSON.stringify(body) });

@@ -23,7 +23,7 @@
     document.querySelectorAll("[data-i18n]").forEach((el) => { el.textContent = t(el.dataset.i18n); });
     document.querySelectorAll("[data-i18n-html]").forEach((el) => { el.innerHTML = t(el.dataset.i18nHtml); });
     document.querySelectorAll("[data-i18n-ph]").forEach((el) => { el.placeholder = t(el.dataset.i18nPh); });
-    document.getElementById("lang").value = lang;
+    picker.set(lang);
     document.getElementById("does").innerHTML = t("honest.do").map((x) => `<li>${esc(x)}</li>`).join("");
     document.getElementById("doesnt").innerHTML = t("honest.dont").map((x) => `<li>${esc(x)}</li>`).join("");
     document.getElementById("faqs").innerHTML = t("faq.items").map(([q, a]) => `<details><summary>${esc(q)}</summary><p>${esc(a)}</p></details>`).join("");
@@ -46,12 +46,26 @@
     sel.innerHTML = opts;
     sel.value = current;
     if (statusData) renderStatus(statusData);
+    media();
   }
-  document.getElementById("lang").addEventListener("change", (e) => { lang = e.target.value; store.set("nordur.lang", lang); apply(); });
+  const picker = window.NordurLangPicker(document.getElementById("lang"), lang, (l) => { lang = l; store.set("nordur.lang", lang); apply(); });
 
-  // ——— Gallery ———
+  // ——— Screens and loops, in the page's language ———
+  // Languages recorded so far (landing/img/<lang>/, landing/video/<lang>/); the others use Italian.
+  const MEDIA_LANGS = window.NORDUR_MEDIA_LANGS || [];
   const shots = ["today", "aurora", "weather", "map-aurora", "map-wind", "trip", "roads", "explore", "quakes", "webcams", "alerts", "offline", "info", "map-radar"];
-  document.getElementById("gallery").innerHTML = shots.map((s) => `<div class="phone"><img src="landing/img/${s}.webp" alt="" loading="lazy"></div>`).join("");
+  document.getElementById("gallery").innerHTML = shots.map((s) => `<div class="phone"><img data-shot="${s}" alt="" loading="lazy"></div>`).join("");
+  function media() {
+    const dir = MEDIA_LANGS.includes(lang) ? `${lang}/` : MEDIA_LANGS.includes("it") ? "it/" : "";
+    document.querySelectorAll("img[data-shot]").forEach((img) => { img.src = `landing/img/${dir}${img.dataset.shot}.webp`; });
+    document.querySelectorAll("video[data-clip]").forEach((v) => {
+      const src = `landing/video/${dir}${v.dataset.clip}.mp4`;
+      v.poster = `landing/video/${dir}${v.dataset.clip}.webp`;
+      v.dataset.src = src;
+      // Already playing (or the hero): switch now; the others load when they come into view.
+      if (v.dataset.eager || v.getAttribute("src")) { v.src = src; if (!reduce) v.play().catch(() => {}); }
+    });
+  }
 
   // ——— Aurora sky: curtains that drift, slower and fainter for reduced motion ———
   const canvas = document.getElementById("sky");
@@ -116,7 +130,7 @@
   document.querySelectorAll(".reveal").forEach((el) => io.observe(el));
   const vio = new IntersectionObserver((entries) => entries.forEach((e) => {
     const v = e.target;
-    if (e.isIntersecting) { if (!v.src && v.dataset.src) v.src = v.dataset.src; if (!reduce) v.play().catch(() => {}); } else v.pause();
+    if (e.isIntersecting) { if (v.dataset.src && v.getAttribute("src") !== v.dataset.src) v.src = v.dataset.src; if (!reduce) v.play().catch(() => {}); } else v.pause();
   }), { threshold: 0.3 });
   document.querySelectorAll("video").forEach((v) => { if (reduce) v.removeAttribute("autoplay"); vio.observe(v); });
 
@@ -140,6 +154,16 @@
     const l = d.legal || {};
     const parts = [l.controller, l.address, l.vat].filter(Boolean).map(esc);
     document.getElementById("legalInfo").innerHTML = parts.length ? `${esc(t("footer.controller"))}: ${parts.join(" · ")}${l.email ? `<br>${esc(t("footer.contact"))}: <a href="mailto:${esc(l.email)}">${esc(l.email)}</a>` : ""}` : "";
+    // The interactive demo (Appetize): shown once its key is set in the admin panel; it loads only on a click.
+    const tryBox = document.getElementById("try");
+    if (s.appetize) {
+      tryBox.hidden = false;
+      document.getElementById("tryStart").onclick = () => {
+        const args = encodeURIComponent(JSON.stringify(["-ciDemoTrip", "YES", "-initialTab", "today", "-appearance", "dark"]));
+        document.getElementById("tryFrame").innerHTML = `<iframe src="https://appetize.io/embed/${encodeURIComponent(s.appetize)}?device=iphone15pro&scale=auto&autoplay=true&orientation=portrait&locale=${lang}&launchArgs=${args}" allow="clipboard-write" title="Norður demo"></iframe>`;
+        document.getElementById("tryStart").style.display = "none";
+      };
+    } else tryBox.hidden = true;
     if (!d.ready) {
       document.getElementById("err").textContent = t("form.notReady");
       document.getElementById("submit").disabled = true;

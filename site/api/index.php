@@ -376,6 +376,8 @@ function admin(string $what, string $method): void {
             'note' => $note, 'items' => $items,
             'appStoreUrl' => preg_match('#^https://apps\.apple\.com/#', (string)($s['appStoreUrl'] ?? '')) ? $s['appStoreUrl'] : '',
             'showCount' => !empty($s['showCount']), 'updatedAt' => gmdate('c'),
+            // Public key of the app uploaded to Appetize: the "try it in the browser" section.
+            'appetize' => preg_match('/^[A-Za-z0-9_]{8,64}$/', (string)($s['appetize'] ?? '')) ? $s['appetize'] : '',
         ];
         $l = is_array($b['legal'] ?? null) ? $b['legal'] : $cl;
         $legal = ['controller' => str($l['controller'] ?? '', 120), 'email' => preg_match(EMAIL_RE, (string)($l['email'] ?? '')) ? $l['email'] : '',
