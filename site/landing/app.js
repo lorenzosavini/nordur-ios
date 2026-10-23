@@ -2,7 +2,7 @@
 (() => {
   const POLICY_VERSION = "2026-10-23";
   const LANGS = ["it", "en", "de", "fr", "es"];
-  const API = `${window.NORDUR_API || ""}/api/data`;
+  const API = window.NORDUR_API;
   const qs = new URLSearchParams(location.search);
   const store = {
     get(k) { try { return localStorage.getItem(k); } catch { return null; } },

@@ -52,13 +52,14 @@
 
 <main>
   <form id="login" class="card" style="display:none">
-    <div class="kicker">Accesso amministratore</div>
-    <h1>Admin</h1>
-    <p class="dim">Accedi con l'account Norður (lo stesso dell'app) il cui indirizzo è tra gli amministratori (<code>ADMIN_EMAILS</code> su Vercel).</p>
+    <div class="kicker" id="lkicker">Accesso amministratore</div>
+    <h1 id="ltitle">Admin</h1>
+    <p class="dim" id="lintro">Accedi con l'email e la password dell'amministratore.</p>
     <div class="field"><label>Email</label><input type="email" id="lemail" autocomplete="username" required></div>
     <div class="field"><label>Password</label><input type="password" id="lpass" autocomplete="current-password" required style="width:100%;font:400 17px var(--sans);color:var(--text);background:#000;border:1px solid var(--hair);padding:14px"></div>
+    <div class="field" id="lrepeatBox" style="display:none"><label>Ripeti la password</label><input type="password" id="lrepeat" autocomplete="new-password" style="width:100%;font:400 17px var(--sans);color:var(--text);background:#000;border:1px solid var(--hair);padding:14px"></div>
     <div class="form-error" id="lerr"></div>
-    <button class="btn primary" type="submit">Accedi</button>
+    <button class="btn primary" type="submit" id="lbtn">Accedi</button>
   </form>
 
   <div id="app" style="display:none">
@@ -104,6 +105,7 @@
         <div class="field"><label>Email per la privacy</label><input type="email" id="cemail"></div>
         <div class="field"><label>Indirizzo (facoltativo)</label><input type="text" id="address"></div>
         <div class="field"><label>Partita IVA / C.F. (facoltativo)</label><input type="text" id="vat"></div>
+        <div class="field"><label>Fornitore di hosting (per l'informativa, es. «Aruba S.p.A., server in Italia»)</label><input type="text" id="hosting"></div>
         <button class="btn primary" id="saveStatus">Salva</button> <span class="ok" id="saved"></span>
       </div>
 
@@ -117,6 +119,10 @@
         <p class="ok" id="sendState"></p>
         <h2 style="margin-top:24px;font-size:22px">Inviate</h2>
         <div class="list" id="campaigns"></div>
+        <h2 style="margin-top:28px;font-size:22px">Cambia password</h2>
+        <div class="field"><label>Password attuale</label><input type="password" id="pwOld" autocomplete="current-password" style="width:100%;font:400 17px var(--sans);color:var(--text);background:#000;border:1px solid var(--hair);padding:14px"></div>
+        <div class="field"><label>Nuova password (almeno 10 caratteri)</label><input type="password" id="pwNew" autocomplete="new-password" style="width:100%;font:400 17px var(--sans);color:var(--text);background:#000;border:1px solid var(--hair);padding:14px"></div>
+        <button class="btn" id="pwSave">Cambia password</button> <span class="ok" id="pwState"></span>
       </div>
     </div>
   </div>
@@ -125,7 +131,7 @@
 <script src="../config.js"></script>
 <script>
 (() => {
-  const API = `${window.NORDUR_API || ""}/api/data`;
+  const API = window.NORDUR_API;
   const LANGS = { it: "Italiano", en: "English", de: "Deutsch", fr: "Français", es: "Español" };
   const ss = { get: (k) => { try { return sessionStorage.getItem(k); } catch { return null; } }, set: (k, v) => { try { sessionStorage.setItem(k, v); } catch {} }, del: (k) => { try { sessionStorage.removeItem(k); } catch {} } };
   let session = JSON.parse(ss.get("nordur.admin") || "null");
@@ -133,24 +139,41 @@
   const $ = (id) => document.getElementById(id);
   const esc = (s) => String(s ?? "").replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
   const day = (iso) => iso ? new Date(iso).toLocaleString("it-IT", { day: "2-digit", month: "short", year: "numeric", hour: "2-digit", minute: "2-digit" }) : "—";
-  const headers = () => ({ Authorization: `Bearer ${session.token}`, "X-Admin-Email": session.email, "Content-Type": "application/json" });
+  const headers = () => ({ "X-Admin-Token": session ? session.token : "", "Content-Type": "application/json" });
+  let setupNeeded = false;
 
   async function call(path, opts = {}) {
     const r = await fetch(`${API}?${path}`, { ...opts, headers: headers() });
-    if (r.status === 401) { const d = await r.json().catch(() => ({})); logout(d.error === "no_admins" ? "Nessun amministratore configurato: aggiungi ADMIN_EMAILS su Vercel." : "Accesso non autorizzato per questo account."); throw new Error("401"); }
+    if (r.status === 401) { logout("Sessione scaduta: accedi di nuovo."); throw new Error("401"); }
     return r;
   }
 
-  function logout(msg) { session = null; ss.del("nordur.admin"); $("app").style.display = "none"; $("logout").style.display = "none"; $("login").style.display = "block"; $("lerr").textContent = msg || ""; }
-  $("logout").onclick = () => logout();
+  function logout(msg) {
+    session = null; ss.del("nordur.admin");
+    $("app").style.display = "none"; $("logout").style.display = "none"; $("login").style.display = "block"; $("lerr").textContent = msg || "";
+    $("lrepeatBox").style.display = setupNeeded ? "block" : "none";
+    $("lkicker").textContent = setupNeeded ? "Primo avvio" : "Accesso amministratore";
+    $("ltitle").textContent = setupNeeded ? "Crea l'admin" : "Admin";
+    $("lintro").textContent = setupNeeded ? "Nessun amministratore ancora: scegli email e password (almeno 10 caratteri). Le userai per entrare qui." : "Accedi con l'email e la password dell'amministratore.";
+    $("lbtn").textContent = setupNeeded ? "Crea e accedi" : "Accedi";
+  }
+  $("logout").onclick = () => { fetch(`${API}?admin=logout`, { method: "POST", headers: headers() }).catch(() => {}); logout(); };
 
   $("login").onsubmit = async (e) => {
     e.preventDefault();
     $("lerr").textContent = "";
     const email = $("lemail").value.trim().toLowerCase();
-    const r = await fetch(`${window.NORDUR_API || ""}/api/auth`, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ mode: "login", email, password: $("lpass").value }) });
+    if (setupNeeded && $("lpass").value !== $("lrepeat").value) { $("lerr").textContent = "Le due password non coincidono."; return; }
+    const r = await fetch(`${API}?admin=${setupNeeded ? "setup" : "login"}`, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ email, password: $("lpass").value }) });
     const d = await r.json().catch(() => ({}));
-    if (!r.ok || !d.token) { $("lerr").textContent = d.error || "Accesso non riuscito"; return; }
+    if (!r.ok || !d.token) {
+      const msg = { wrong: "Email o password sbagliate.", weak_password: "La password deve avere almeno 10 caratteri.", email: "Email non valida.", too_many: "Troppi tentativi: riprova tra un'ora.", not_configured: "Manca api/config.php sull'hosting.", database: "Il server non riesce a collegarsi al database: controlla api/config.php.", already_set_up: "L'amministratore esiste già: accedi." }[d.error] || "Accesso non riuscito.";
+      if (d.error === "already_set_up") setupNeeded = false;
+      logout(msg);
+      return;
+    }
+    setupNeeded = false;
+    $("lrepeat").value = "";
     session = { token: d.token, email };
     ss.set("nordur.admin", JSON.stringify(session));
     $("lpass").value = "";
@@ -170,7 +193,7 @@
   function render() {
     const s = data.stats, st = s.status || {};
     const w = [];
-    if (!data.mail) w.push("<div class='warn'><b>Email non configurata.</b> Senza un servizio di invio le iscrizioni restano «da confermare» e non puoi mandare aggiornamenti. Su Vercel (progetto nordur-api › Settings › Environment Variables) aggiungi <code>RESEND_API_KEY</code> e <code>MAIL_FROM</code> (consigliato, resend.com) oppure <code>SMTP_HOST</code>, <code>SMTP_PORT</code>, <code>SMTP_USER</code>, <code>SMTP_PASS</code>, poi ripubblica. Quindi usa «Reinvia conferme».</div>");
+    if (!data.mail) w.push("<div class='warn'><b>Email non configurata.</b> Senza invio le iscrizioni restano «da confermare» e non puoi mandare aggiornamenti. Nel file <code>api/config.php</code> sull'hosting imposta <code>mail_transport</code> a <code>'smtp'</code> con i dati di una casella del tuo dominio (<code>smtp_host</code>, <code>smtp_port</code>, <code>smtp_user</code>, <code>smtp_pass</code>), oppure a <code>'mail'</code> per usare la funzione mail() dell'hosting. Poi usa «Mandala a me (prova)» e «Reinvia conferme».</div>");
     if (!data.legal.controller || !data.legal.email) w.push("<div class='warn'><b>Dati del titolare mancanti.</b> Compila «Dati del titolare» qui sotto: finché mancano, il modulo della landing resta chiuso (servono per l'informativa).</div>");
     $("warnings").innerHTML = w.join("");
     $("stats").innerHTML = [["Totale", s.total], ["Confermati", st.confirmed || 0], ["Da confermare", st.pending || 0], ["Cancellati", st.unsubscribed || 0]]
@@ -188,7 +211,7 @@
     $("store").value = status.appStoreUrl || ""; $("showCount").checked = Boolean(status.showCount);
     editing = { note: { ...status.note }, items: Object.fromEntries(Object.keys(LANGS).map((l) => [l, (status.items || []).map((i) => (l === "it" && i.done ? "x " : "") + (i.label?.[l] || "")).join("\n")])) };
     renderTabs();
-    $("controller").value = data.legal.controller || ""; $("cemail").value = data.legal.email || ""; $("address").value = data.legal.address || ""; $("vat").value = data.legal.vat || "";
+    $("controller").value = data.legal.controller || ""; $("cemail").value = data.legal.email || ""; $("address").value = data.legal.address || ""; $("vat").value = data.legal.vat || ""; $("hosting").value = data.legal.hosting || "";
   }
 
   function renderRows() {
@@ -208,10 +231,10 @@
     const id = b.closest("tr").dataset.id;
     if (b.dataset.act === "info") { const d = document.querySelector(`tr[data-for="${id}"]`); d.style.display = d.style.display === "none" ? "" : "none"; }
     if (b.dataset.act === "del") {
-      const lead = data.leads.find((l) => l.id === id);
+      const lead = data.leads.find((l) => String(l.id) === id);
       if (!confirm(`Eliminare definitivamente ${lead.email} e le sue prove di consenso?`)) return;
       await call(`admin=lead&id=${id}`, { method: "DELETE" });
-      data.leads = data.leads.filter((l) => l.id !== id);
+      data.leads = data.leads.filter((l) => String(l.id) !== id);
       renderRows();
     }
   };
@@ -270,14 +293,26 @@
     })).filter(Boolean);
     const body = {
       status: { phase: $("phase").value, progress: $("progress").value, note: editing.note, items, appStoreUrl: $("store").value.trim(), showCount: $("showCount").checked },
-      legal: { controller: $("controller").value.trim(), email: $("cemail").value.trim(), address: $("address").value.trim(), vat: $("vat").value.trim() },
+      legal: { controller: $("controller").value.trim(), email: $("cemail").value.trim(), address: $("address").value.trim(), vat: $("vat").value.trim(), hosting: $("hosting").value.trim() },
     };
     const r = await call("admin=status", { method: "PUT", body: JSON.stringify(body) });
     const d = await r.json();
-    if (r.ok) { data.status = d.status; data.legal = d.legal; render(); $("saved").textContent = "Salvato. La landing si aggiorna entro 2 minuti."; setTimeout(() => { $("saved").textContent = ""; }, 5000); }
+    if (r.ok) { data.status = d.status; data.legal = d.legal; render(); $("saved").textContent = "Salvato. La landing si aggiorna entro un minuto."; setTimeout(() => { $("saved").textContent = ""; }, 5000); }
   };
 
-  if (session) load(); else logout();
+  $("pwSave").onclick = async () => {
+    const r = await call("admin=password", { method: "POST", body: JSON.stringify({ password: $("pwOld").value, newPassword: $("pwNew").value }) }).catch(() => null);
+    if (!r) return;
+    const d = await r.json().catch(() => ({}));
+    $("pwState").textContent = r.ok ? "Password cambiata." : d.error === "weak_password" ? "Almeno 10 caratteri." : "Password attuale sbagliata.";
+    if (r.ok) { $("pwOld").value = ""; $("pwNew").value = ""; }
+  };
+
+  if (session) load();
+  else fetch(`${API}?admin=setup`).then((r) => r.json()).then((d) => {
+    setupNeeded = Boolean(d.needed);
+    logout(d.error === "not_configured" ? "Manca api/config.php sull'hosting: copia config.sample.php in config.php e compilalo." : d.error === "database" ? "Il server non riesce a collegarsi al database: controlla api/config.php." : "");
+  }).catch(() => logout("Il server del sito non risponde: controlla che la cartella api/ sia stata caricata e che l'hosting abbia PHP."));
 })();
 </script>
 </body>

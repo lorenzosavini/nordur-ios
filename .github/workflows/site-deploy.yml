@@ -9,7 +9,8 @@
 #   SITE_DIR       remote folder of the site, e.g. /public_html or /www
 #   SITE_PROTOCOL  ftps (default), ftp or sftp        (optional)
 #   SITE_PORT      only if not the usual one          (optional)
-# Files are uploaded and overwritten; nothing on the hosting is deleted.
+# Files are uploaded and overwritten; nothing on the hosting is deleted, and
+# api/config.php (database and mail passwords, written on the hosting) is never touched.
 name: Deploy site
 
 on:
@@ -50,5 +51,5 @@ jobs:
             sftp) url="sftp://$SITE_HOST$port"; tls="set sftp:auto-confirm yes;" ;;
             *) echo "SITE_PROTOCOL must be ftp, ftps or sftp"; exit 1 ;;
           esac
-          lftp -u "$SITE_USER","$SITE_PASSWORD" "$url" -e "$tls set net:max-retries 3; set net:timeout 30; mirror -R --verbose --parallel=4 --exclude-glob .DS_Store site/ ${SITE_DIR:-/}; bye"
+          lftp -u "$SITE_USER","$SITE_PASSWORD" "$url" -e "$tls set net:max-retries 3; set net:timeout 30; mirror -R --verbose --parallel=4 --exclude-glob .DS_Store --exclude-glob README.md --exclude-glob config.php site/ ${SITE_DIR:-/}; bye"
           echo "Published to $proto $SITE_HOST ${SITE_DIR:-/}"

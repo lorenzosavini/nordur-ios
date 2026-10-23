@@ -1,3 +1,3 @@
-// Where the site's server lives: sign-ups, launch status and the admin panel
-// talk to it. The site itself is static and can be hosted anywhere.
-window.NORDUR_API = "https://nordur-api.vercel.app";
+// Where the site's API is: api/index.php next to this file (PHP + MySQL on the
+// same hosting). Sign-ups, launch status and the admin panel talk to it.
+window.NORDUR_API = new URL("api/index.php", document.currentScript.src).href;

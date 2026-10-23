@@ -54,15 +54,16 @@
       .replace("{controller}", legal.controller ? esc(legal.controller) : miss)
       .replace("{address}", legal.address ? `, ${esc(legal.address)}` : "")
       .replace("{vat}", legal.vat ? `, ${esc(legal.vat)}` : "")
+      .replaceAll("{hosting}", legal.hosting ? esc(legal.hosting) : miss)
       .replaceAll("{email}", legal.email ? `<a href="mailto:${esc(legal.email)}">${esc(legal.email)}</a>` : miss);
     // Texts are ours (i18n.js); only the controller's details come from the server and are escaped.
     document.getElementById("pbody").innerHTML = T.privacy.map(([h, p], i) => `<h2><span>${String(i + 1).padStart(2, "0")}</span>${esc(h)}</h2><p>${fill(p)}</p>`).join("");
-    document.getElementById("cbody").innerHTML = T.cookie.map(([h, p], i) => `<h2><span>${String(i + 1).padStart(2, "0")}</span>${esc(h)}</h2><p>${p}</p>`).join("");
+    document.getElementById("cbody").innerHTML = T.cookie.map(([h, p], i) => `<h2><span>${String(i + 1).padStart(2, "0")}</span>${esc(h)}</h2><p>${fill(p)}</p>`).join("");
     document.title = `Norður · ${T["legal.privacyTitle"]}`;
   }
   document.getElementById("lang").addEventListener("change", (e) => { lang = e.target.value; try { localStorage.setItem("nordur.lang", lang); } catch {} render(); });
   render();
-  fetch(`${window.NORDUR_API || ""}/api/data?lead=status`).then((r) => r.json()).then((d) => { legal = d.legal || {}; render(); }).catch(() => {});
+  fetch(`${window.NORDUR_API}?lead=status`).then((r) => r.json()).then((d) => { legal = d.legal || {}; render(); }).catch(() => {});
 })();
 </script>
 </body>

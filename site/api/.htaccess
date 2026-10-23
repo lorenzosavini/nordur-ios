@@ -1,0 +1,5 @@
+# Only index.php answers; configuration, schema and helpers are not reachable.
+<FilesMatch "^(config|config\.sample|mail|db)\.php$|\.(sql|md)$">
+  Require all denied
+</FilesMatch>
+Options -Indexes
