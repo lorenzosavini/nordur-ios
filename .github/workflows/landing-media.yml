@@ -1,0 +1,51 @@
+name: Landing media
+
+# Run by hand: screenshots and short loops of the app in the five languages
+# for the website, published to the branch landing-media.
+on:
+  workflow_dispatch:
+    inputs:
+      langs:
+        description: "Languages, comma separated"
+        default: "it,en,de,fr,es"
+
+permissions:
+  contents: write
+
+jobs:
+  media:
+    runs-on: macos-latest
+    timeout-minutes: 150
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build the app (simulator)
+        run: |
+          set -o pipefail
+          xcodebuild -project Nordur.xcodeproj -target Nordur -sdk iphonesimulator -configuration Debug \
+            ARCHS="arm64 x86_64" ONLY_ACTIVE_ARCH=NO CODE_SIGNING_ALLOWED=NO build 2>&1 | grep -E "error:|BUILD (SUCCEEDED|FAILED)"
+      - name: Record
+        run: |
+          brew tap facebook/fb >/dev/null
+          brew trust facebook/fb 2>/dev/null || true
+          brew install -q facebook/fb/idb-companion >/dev/null
+          python3 -m pip install -q --break-system-packages fb-idb || pipx install fb-idb
+          UDID=$(xcrun simctl list devices available -j | python3 -c "import json,sys; d=json.load(sys.stdin)['devices']; print(next(x['udid'] for k,v in sorted(d.items(), reverse=True) if 'iOS' in k for x in v if x['name'].startswith('iPhone') and 'Pro' in x['name'] and 'Max' not in x['name']))")
+          xcrun simctl boot "$UDID"; xcrun simctl bootstatus "$UDID" -b
+          xcrun simctl status_bar "$UDID" override --time 21:30 --batteryLevel 100 --wifiBars 3 --cellularBars 4 || true
+          xcrun simctl install "$UDID" build/Debug-iphonesimulator/Nordur.app
+          xcrun simctl privacy "$UDID" grant location-always it.lorenzosavini.nordur || true
+          xcrun simctl location "$UDID" set 63.4186,-19.0060 || true
+          idb_companion --udid "$UDID" > /tmp/idb.log 2>&1 &
+          sleep 5
+          idb connect localhost 10882 || idb connect "$UDID" || true
+          python3 tools/ci/landing_media.py "$UDID" media "${{ github.event.inputs.langs || 'it,en,de,fr,es' }}"
+          du -sh media/*
+      - name: Publish to branch landing-media
+        env:
+          TOKEN: ${{ github.token }}
+        run: |
+          cd media
+          git init -q -b landing-media
+          git add -A
+          git -c user.name=nordur-ci -c user.email=ci@users.noreply.github.com commit -qm "Landing media for ${GITHUB_SHA}"
+          git push -qf "https://x-access-token:${TOKEN}@github.com/${GITHUB_REPOSITORY}.git" HEAD:landing-media
