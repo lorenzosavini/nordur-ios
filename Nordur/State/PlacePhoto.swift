@@ -28,8 +28,8 @@ final class PlacePhotoService {
     private static let agent = "Nordur/1.0 (iOS; https://github.com/lorenzosavini/nordur-ios)"
 
     private func key(_ place: Place) -> String {
-        // v3: photos showing people's faces are left out; everything is looked up again.
-        "place_photo3_\(stableHash(place.name))_\(Int(place.coordinate.lat * 20))_\(Int(place.coordinate.lon * 20))"
+        // v4: looked up by nordur-api; faces are still left out on the phone. Everything is looked up again.
+        "place_photo4_\(stableHash(place.name))_\(Int(place.coordinate.lat * 20))_\(Int(place.coordinate.lon * 20))"
     }
 
     /// Wikidata / Wikipedia links of the places to see (from OpenStreetMap), by place.
@@ -90,6 +90,40 @@ final class PlacePhotoService {
     /// the article with the place's name (it/en/is), photos taken on the spot
     /// (Commons, 1 km). Then: a search, the nearest article with a photo, Commons 5 km.
     private func lookup(_ place: Place, hint: (wikidata: String?, wikipedia: String?)?) async -> PlacePhoto? {
+        // nordur-api looks the place up once for everyone; asking Wikimedia from the
+        // phone is the fallback when it can't be reached.
+        if let candidates = await serverCandidates(place, hint: hint) {
+            for photo in candidates {
+                if let clean = await placeOnly(photo) { return clean }
+            }
+            return nil
+        }
+        return await directLookup(place, hint: hint)
+    }
+
+    private struct ServerPhotos: Decodable {
+        struct Candidate: Decodable { let imageURL: URL; let title: String; let author: String?; let license: String?; let page: URL? }
+        let candidates: [Candidate]
+    }
+
+    /// The candidates from nordur-api, best first; nil when the server didn't answer.
+    private func serverCandidates(_ place: Place, hint: (wikidata: String?, wikipedia: String?)?) async -> [PlacePhoto]? {
+        var query = ["photo": "1", "name": Self.searchName(place.name), "lang": UILanguage.code,
+                     "lat": String(format: "%.4f", place.coordinate.lat), "lon": String(format: "%.4f", place.coordinate.lon)]
+        if let q = hint?.wikidata { query["wikidata"] = q }
+        if let w = hint?.wikipedia { query["wikipedia"] = w }
+        guard let url = try? HTTP.url("https://nordur-api.vercel.app/api/sites", query) else { return nil }
+        var request = URLRequest(url: url, timeoutInterval: 20)
+        request.setValue(Self.agent, forHTTPHeaderField: "User-Agent")
+        guard let (data, response) = try? await HTTP.session.data(for: request), (response as? HTTPURLResponse)?.statusCode == 200,
+              let decoded = try? JSONDecoder().decode(ServerPhotos.self, from: data) else {
+            failures += 1
+            return nil
+        }
+        return decoded.candidates.map { PlacePhoto(imageURL: $0.imageURL, title: $0.title, author: $0.author, license: $0.license, page: $0.page) }
+    }
+
+    private func directLookup(_ place: Place, hint: (wikidata: String?, wikipedia: String?)?) async -> PlacePhoto? {
         let name = Self.searchName(place.name)
         let preferred = UILanguage.code == "en" ? ["en", "it"] : [UILanguage.code, "en"]
         var first: [@MainActor () async -> PlacePhoto?] = []

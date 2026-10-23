@@ -6,6 +6,7 @@
 import { fetchJSON, utc } from "../lib/fetch.js";
 import { send } from "../lib/core.js";
 import { SITES } from "../lib/archive.js";
+import { placePhotos } from "../lib/photos.js";
 
 const NAMES = {
   reykjavik: "Reykjavík", keflavik: "Keflavík", vik: "Vík í Mýrdal", skogar: "Skógar", hofn: "Höfn", jokulsarlon: "Jökulsárlón",
@@ -30,6 +31,9 @@ async function site([id, lat, lon]) {
 }
 
 export default async function handler(req, res) {
+  // Photos of places for the app (lib/photos.js), on this function: the Hobby plan allows 12.
+  const params = new URL(req.url, "http://x").searchParams;
+  if (params.get("photo")) return placePhotos(req, res, params);
   if (!memory || Date.now() - memory.at > TTL) {
     const results = await Promise.allSettled(SITES.map(site));
     const sites = results.filter((r) => r.status === "fulfilled").map((r) => r.value);
