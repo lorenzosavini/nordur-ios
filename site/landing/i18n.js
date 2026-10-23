@@ -2,6 +2,8 @@
 // version of the privacy and cookie notices; the others are translations.
 window.I18N = {
   it: {
+    "status.phase": "Fase",
+    "faq.title": "Domande frequenti",
     "status.focusTitle": "Adesso stiamo lavorando a",
     "status.areasTitle": "Le parti dell'app",
     "status.timelineTitle": "Tabella di marcia",
@@ -153,6 +155,8 @@ window.I18N = {
     ],
   },
   en: {
+    "status.phase": "Phase",
+    "faq.title": "Frequently asked questions",
     "status.focusTitle": "What we're working on now",
     "status.areasTitle": "The parts of the app",
     "status.timelineTitle": "Roadmap",
@@ -304,6 +308,8 @@ window.I18N = {
     ],
   },
   de: {
+    "status.phase": "Phase",
+    "faq.title": "Häufige Fragen",
     "status.focusTitle": "Daran arbeiten wir gerade",
     "status.areasTitle": "Die Teile der App",
     "status.timelineTitle": "Fahrplan",
@@ -455,6 +461,8 @@ window.I18N = {
     ],
   },
   fr: {
+    "status.phase": "Phase",
+    "faq.title": "Questions fréquentes",
     "status.focusTitle": "En ce moment, nous travaillons sur",
     "status.areasTitle": "Les parties de l'app",
     "status.timelineTitle": "Feuille de route",
@@ -606,6 +614,8 @@ window.I18N = {
     ],
   },
   es: {
+    "status.phase": "Fase",
+    "faq.title": "Preguntas frecuentes",
     "status.focusTitle": "Ahora estamos trabajando en",
     "status.areasTitle": "Las partes de la app",
     "status.timelineTitle": "Hoja de ruta",

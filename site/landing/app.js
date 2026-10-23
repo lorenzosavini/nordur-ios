@@ -140,21 +140,28 @@
   function renderStatus(d) {
     const s = d.status || {};
     const idx = Math.max(0, PHASES.indexOf(s.phase));
-    document.getElementById("phases").innerHTML = PHASES.map((p, i) => `<div class="${i < idx ? "done" : i === idx ? "current" : ""}">${esc(t("phase." + p))}</div>`).join("");
     const R = t("roadmap") || {};
     const areas = R.areas || [];
     // Overall: the average of the parts of the app.
     const overall = areas.length ? Math.round(areas.reduce((a, x) => a + x.pct, 0) / areas.length) : (s.progress || 0);
     document.getElementById("bar").style.width = `${overall}%`;
     document.getElementById("pct").textContent = `${overall}%`;
-    document.getElementById("updated").textContent = s.updatedAt ? `${t("status.updated")} ${new Intl.DateTimeFormat(lang, { day: "numeric", month: "long", year: "numeric" }).format(new Date(s.updatedAt))}` : "";
+    document.getElementById("phaseNow").textContent = `${t("status.phase")}: ${t("phase." + PHASES[idx])}`;
+    document.getElementById("updated").textContent = s.updatedAt ? `${t("status.updated")} ${new Intl.DateTimeFormat(lang, { day: "numeric", month: "short", year: "numeric" }).format(new Date(s.updatedAt))}` : "";
     document.getElementById("focus").innerHTML = (R.focus || []).map((x) => `<li>${esc(x)}</li>`).join("");
-    const note = (s.note && (s.note[lang] || s.note.en || s.note.it)) || "";
-    document.getElementById("note").textContent = note;
-    document.getElementById("areas").innerHTML = areas.map((a) => `<div class="area"><div class="area-head"><h4>${esc(a.name)}</h4><b>${a.pct}%</b></div>
-      <div class="progress"><i style="width:${a.pct}%"></i></div><ul>${a.items.map(([st, x]) => `<li class="${st}">${esc(x)}</li>`).join("")}</ul></div>`).join("");
+    document.getElementById("note").textContent = (s.note && (s.note[lang] || s.note.en || s.note.it)) || "";
+    const open = new Set([...document.querySelectorAll("#areas details[open]")].map((d) => d.dataset.i));
+    document.getElementById("areas").innerHTML = areas.map((a, i) => {
+      const n = (st) => a.items.filter(([x]) => x === st).length;
+      return `<details class="area" data-i="${i}"${open.has(String(i)) ? " open" : ""}><summary>
+        <span class="area-name">${esc(a.name)}</span><div class="progress"><i style="width:${a.pct}%"></i></div><span class="area-pct">${a.pct}%</span>
+        <span class="area-counts"><span><em class="done"></em>${n("done")}</span><span><em class="doing"></em>${n("doing")}</span><span><em class="next"></em>${n("next")}</span></span></summary>
+        <ul>${a.items.map(([st, x]) => `<li class="${st}">${esc(x)}</li>`).join("")}</ul></details>`;
+    }).join("");
     document.getElementById("timeline").innerHTML = (R.timeline || []).map(([st, when, x]) => `<li class="${st}"><span class="when">${esc(when)}</span>${esc(x)}</li>`).join("");
-    document.getElementById("log").innerHTML = (R.log || []).map(([d, x]) => `<li><span>${esc(d)}</span><div>${esc(x)}</div></li>`).join("");
+    const log = R.log || [];
+    document.getElementById("logLatest").textContent = log[0] ? `${log[0][0]} · ${log[0][1]}` : "";
+    document.getElementById("log").innerHTML = log.map(([d, x]) => `<li><span>${esc(d)}</span><div>${esc(x)}</div></li>`).join("");
     document.getElementById("items").innerHTML = (s.items || []).map((i) => {
       const label = i.label && (i.label[lang] || i.label.en || i.label.it);
       return label ? `<li class="${i.done ? "done" : ""}">${esc(label)}</li>` : "";
