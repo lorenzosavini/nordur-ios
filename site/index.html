@@ -136,11 +136,29 @@
       <div class="kicker aurora" data-i18n="status.kicker"></div>
       <h2 data-i18n="status.title"></h2>
       <div class="phases" id="phases"></div>
-      <div class="progress"><i id="bar"></i></div>
-      <div class="progress-label"><span id="pct"></span><span id="updated"></span></div>
-      <p class="status-note" id="note"></p>
-      <ul class="items" id="items"></ul>
-      <p id="count" class="dim" style="margin-top:20px"></p>
+      <div class="overall">
+        <div class="overall-num"><b id="pct"></b><span data-i18n="status.overall"></span></div>
+        <div class="overall-bar"><div class="progress"><i id="bar"></i></div><div class="progress-label"><span class="legend"><em class="done"></em><span data-i18n="status.legendDone"></span><em class="doing"></em><span data-i18n="status.legendDoing"></span><em class="next"></em><span data-i18n="status.legendNext"></span></span><span id="updated"></span></div></div>
+      </div>
+      <div class="focus reveal">
+        <div class="kicker aurora" data-i18n="status.focusTitle"></div>
+        <ul id="focus"></ul>
+        <p class="status-note" id="note"></p>
+      </div>
+      <h3 class="sub" data-i18n="status.areasTitle"></h3>
+      <div class="areas" id="areas"></div>
+      <div class="two-col">
+        <div>
+          <h3 class="sub" data-i18n="status.timelineTitle"></h3>
+          <ol class="timeline" id="timeline"></ol>
+        </div>
+        <div>
+          <h3 class="sub" data-i18n="status.logTitle"></h3>
+          <ul class="log" id="log"></ul>
+          <ul class="items" id="items"></ul>
+        </div>
+      </div>
+      <p id="count" class="dim" style="margin-top:28px"></p>
       <p id="store" style="margin-top:20px"></p>
     </div>
   </section>

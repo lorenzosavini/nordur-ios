@@ -45,7 +45,8 @@
     }
     sel.innerHTML = opts;
     sel.value = current;
-    if (statusData) renderStatus(statusData);
+    // The roadmap is part of the page; the server adds the phase, the note and the controller.
+    renderStatus(statusData || { status: {}, legal: {}, ready: true });
     media();
   }
   const picker = window.NordurLangPicker(document.getElementById("lang"), lang, (l) => { lang = l; store.set("nordur.lang", lang); apply(); });
@@ -140,11 +141,20 @@
     const s = d.status || {};
     const idx = Math.max(0, PHASES.indexOf(s.phase));
     document.getElementById("phases").innerHTML = PHASES.map((p, i) => `<div class="${i < idx ? "done" : i === idx ? "current" : ""}">${esc(t("phase." + p))}</div>`).join("");
-    document.getElementById("bar").style.width = `${s.progress || 0}%`;
-    document.getElementById("pct").textContent = `${s.progress || 0}%`;
+    const R = t("roadmap") || {};
+    const areas = R.areas || [];
+    // Overall: the average of the parts of the app.
+    const overall = areas.length ? Math.round(areas.reduce((a, x) => a + x.pct, 0) / areas.length) : (s.progress || 0);
+    document.getElementById("bar").style.width = `${overall}%`;
+    document.getElementById("pct").textContent = `${overall}%`;
     document.getElementById("updated").textContent = s.updatedAt ? `${t("status.updated")} ${new Intl.DateTimeFormat(lang, { day: "numeric", month: "long", year: "numeric" }).format(new Date(s.updatedAt))}` : "";
+    document.getElementById("focus").innerHTML = (R.focus || []).map((x) => `<li>${esc(x)}</li>`).join("");
     const note = (s.note && (s.note[lang] || s.note.en || s.note.it)) || "";
     document.getElementById("note").textContent = note;
+    document.getElementById("areas").innerHTML = areas.map((a) => `<div class="area"><div class="area-head"><h4>${esc(a.name)}</h4><b>${a.pct}%</b></div>
+      <div class="progress"><i style="width:${a.pct}%"></i></div><ul>${a.items.map(([st, x]) => `<li class="${st}">${esc(x)}</li>`).join("")}</ul></div>`).join("");
+    document.getElementById("timeline").innerHTML = (R.timeline || []).map(([st, when, x]) => `<li class="${st}"><span class="when">${esc(when)}</span>${esc(x)}</li>`).join("");
+    document.getElementById("log").innerHTML = (R.log || []).map(([d, x]) => `<li><span>${esc(d)}</span><div>${esc(x)}</div></li>`).join("");
     document.getElementById("items").innerHTML = (s.items || []).map((i) => {
       const label = i.label && (i.label[lang] || i.label.en || i.label.it);
       return label ? `<li class="${i.done ? "done" : ""}">${esc(label)}</li>` : "";

@@ -216,3 +216,51 @@ footer .legal { font: 400 12px/1.6 var(--mono); }
 .try { display: grid; grid-template-columns: 1.1fr .9fr; gap: 56px; align-items: center; }
 .try-phone iframe { width: 100%; height: 100%; border: 0; border-radius: 34px; background: #000; }
 @media (max-width: 900px) { .try { grid-template-columns: 1fr; } }
+
+/* Launch status, in detail */
+.overall { display: grid; grid-template-columns: auto 1fr; gap: 28px; align-items: center; margin-top: 30px; }
+.overall-num b { display: block; font: 700 76px/1 var(--cond); color: var(--aurora); }
+.overall-num span { font: 600 11px/1.3 var(--mono); letter-spacing: .1em; text-transform: uppercase; color: var(--dim); }
+.overall .progress { margin: 0 0 10px; height: 10px; }
+.legend { display: inline-flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+.legend em { display: inline-block; width: 10px; height: 10px; margin-left: 8px; }
+.legend em:first-child { margin-left: 0; }
+em.done { background: var(--aurora); } em.doing { background: var(--caution); } em.next { background: transparent; box-shadow: inset 0 0 0 1px var(--faint); }
+@media (max-width: 700px) { .overall { grid-template-columns: 1fr; gap: 12px; } }
+.focus { margin-top: 38px; border: 1px solid var(--aurora); background: rgba(61,224,168,.05); padding: 24px 26px; }
+.focus ul { list-style: none; padding: 0; margin: 14px 0 0; }
+.focus li { padding: 10px 0 10px 28px; position: relative; font-size: 18px; border-top: 1px solid var(--hair); }
+.focus li:first-child { border-top: 0; }
+.focus li::before { content: ""; position: absolute; left: 2px; top: 19px; width: 10px; height: 10px; background: var(--caution); animation: pulse 1.6s ease-in-out infinite; }
+@keyframes pulse { 50% { opacity: .35; } }
+@media (prefers-reduced-motion: reduce) { .focus li::before { animation: none; } }
+.focus .status-note:empty { display: none; }
+h3.sub { font-size: 30px; margin: 54px 0 18px; }
+.areas { display: grid; grid-template-columns: repeat(auto-fill, minmax(330px, 1fr)); gap: 0; border-top: 2px solid var(--rule); }
+.area { padding: 22px 24px 18px 0; border-bottom: 1px solid var(--hair); }
+@media (min-width: 700px) { .area { padding-right: 28px; } }
+.area-head { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; }
+.area-head h4 { margin: 0; font: 700 26px/1 var(--cond); text-transform: uppercase; }
+.area-head b { font: 700 30px/1 var(--cond); color: var(--aurora); }
+.area .progress { margin: 12px 0 14px; height: 4px; }
+.area ul { list-style: none; padding: 0; margin: 0; }
+.area li { display: grid; grid-template-columns: 22px 1fr; gap: 8px; padding: 7px 0; font-size: 15px; line-height: 1.45; color: #d6d6d4; }
+.area li::before { font: 600 14px/1.45 var(--mono); }
+.area li.done::before { content: "✓"; color: var(--aurora); }
+.area li.doing::before { content: "◐"; color: var(--caution); }
+.area li.next::before { content: "○"; color: var(--faint); }
+.area li.next { color: var(--dim); }
+.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; }
+@media (max-width: 900px) { .two-col { grid-template-columns: 1fr; gap: 0; } }
+.timeline { list-style: none; padding: 0; margin: 0; border-left: 2px solid var(--hair); }
+.timeline li { position: relative; padding: 0 0 26px 26px; }
+.timeline li::before { content: ""; position: absolute; left: -7px; top: 3px; width: 12px; height: 12px; background: var(--bg); box-shadow: inset 0 0 0 2px var(--faint); }
+.timeline li.done::before { background: var(--aurora); box-shadow: none; }
+.timeline li.doing::before { background: var(--caution); box-shadow: 0 0 0 5px rgba(242,184,7,.18); }
+.timeline .when { display: block; font: 600 12px/1.2 var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--dim); margin-bottom: 6px; }
+.timeline li.doing .when { color: var(--caution); }
+.timeline li.next { color: var(--dim); }
+.log { list-style: none; padding: 0; margin: 0; }
+.log li { display: grid; grid-template-columns: 110px 1fr; gap: 14px; padding: 12px 0; border-top: 1px solid var(--hair); font-size: 15px; color: #d6d6d4; }
+.log li span { font: 600 12px/1.6 var(--mono); color: var(--dim); text-transform: uppercase; }
+@media (max-width: 500px) { .log li { grid-template-columns: 1fr; gap: 2px; } }
