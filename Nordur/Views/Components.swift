@@ -1,4 +1,5 @@
 import SwiftUI
+import ImageIO
 
 // MARK: - Containers
 
@@ -709,14 +710,39 @@ extension View {
 
 // MARK: - Remote images
 
-/// Downloaded pictures kept in memory for the session (webcam frames).
+/// Downloaded pictures kept in memory for the session (webcam frames, place
+/// photos), at most about 80 MB of pixels and emptied when memory runs low:
+/// a hundred full-size photos decoded took gigabytes and iOS closed the app.
 @MainActor
 final class RemoteImageCache {
     static let shared = RemoteImageCache()
     private let cache = NSCache<NSURL, UIImage>()
-    init() { cache.countLimit = 120 }
+    init() {
+        cache.countLimit = 80
+        cache.totalCostLimit = 80 * 1024 * 1024
+        NotificationCenter.default.addObserver(forName: UIApplication.didReceiveMemoryWarningNotification, object: nil, queue: .main) { [cache] _ in
+            cache.removeAllObjects()
+        }
+    }
     func image(_ url: URL) -> UIImage? { cache.object(forKey: url as NSURL) }
-    func store(_ image: UIImage, _ url: URL) { cache.setObject(image, forKey: url as NSURL) }
+    func store(_ image: UIImage, _ url: URL) {
+        let pixels = (image.cgImage.map { $0.bytesPerRow * $0.height }) ?? Int(image.size.width * image.size.height * image.scale * image.scale * 4)
+        cache.setObject(image, forKey: url as NSURL, cost: pixels)
+    }
+
+    /// A picture from downloaded data, no larger than `maxPixels` on its long side
+    /// and decoded once (not again at every redraw).
+    nonisolated static func decode(_ data: Data, maxPixels: Int = 1400) -> UIImage? {
+        guard let source = CGImageSourceCreateWithData(data as CFData, [kCGImageSourceShouldCache: false] as CFDictionary) else { return nil }
+        let options: [CFString: Any] = [
+            kCGImageSourceCreateThumbnailFromImageAlways: true,
+            kCGImageSourceCreateThumbnailWithTransform: true,
+            kCGImageSourceShouldCacheImmediately: true,
+            kCGImageSourceThumbnailMaxPixelSize: maxPixels,
+        ]
+        guard let cg = CGImageSourceCreateThumbnailAtIndex(source, 0, options as CFDictionary) else { return nil }
+        return UIImage(cgImage: cg)
+    }
 }
 
 /// Image from the network that survives re-renders: SwiftUI's AsyncImage
@@ -729,6 +755,23 @@ struct RemoteImage: View {
     @State private var failed = false
 
     var body: some View {
+        Group {
+            if contentMode == .fill {
+                // Filling, the picture is wider or taller than its frame: drawn in an
+                // overlay it never widens the layout (a wider row let the whole
+                // screen slide sideways) and is cut at the frame.
+                Color.clear
+                    .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
+                    .overlay { picture }
+                    .clipped()
+            } else {
+                picture
+            }
+        }
+        .task(id: url) { await load() }
+    }
+
+    private var picture: some View {
         ZStack {
             if let image {
                 Image(uiImage: image).resizable().aspectRatio(contentMode: contentMode)
@@ -738,7 +781,6 @@ struct RemoteImage: View {
                 ProgressView().tint(Theme.dim)
             }
         }
-        .task(id: url) { await load() }
     }
 
     private func load() async {
@@ -746,7 +788,8 @@ struct RemoteImage: View {
         for attempt in 0..<2 {
             do {
                 let (data, response) = try await HTTP.session.data(from: url)
-                guard (response as? HTTPURLResponse)?.statusCode == 200, let picture = UIImage(data: data) else { throw URLError(.badServerResponse) }
+                guard (response as? HTTPURLResponse)?.statusCode == 200 else { throw URLError(.badServerResponse) }
+                guard let picture = await Task.detached(priority: .utility, operation: { RemoteImageCache.decode(data) }).value else { throw URLError(.cannotDecodeContentData) }
                 RemoteImageCache.shared.store(picture, url)
                 image = picture
                 failed = false

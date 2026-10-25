@@ -583,11 +583,13 @@ enum RouteTerrain3D {
         writer.startWriting()
         writer.startSession(atSourceTime: .zero)
         for (i, (view, progress)) in views.enumerated() {
-            let picture = frame(renderer, world, view, progress: progress, size: size)
             guard let pool = adaptor.pixelBufferPool else { break }
             var buffer: CVPixelBuffer?
             CVPixelBufferPoolCreatePixelBuffer(nil, pool, &buffer)
             guard let buffer else { continue }
+            // Each frame's picture (8 MB) is released right away, not when the loop ends.
+            autoreleasepool {
+            let picture = frame(renderer, world, view, progress: progress, size: size)
             CVPixelBufferLockBaseAddress(buffer, [])
             if let ctx = CGContext(data: CVPixelBufferGetBaseAddress(buffer), width: Int(size.width), height: Int(size.height), bitsPerComponent: 8,
                                    bytesPerRow: CVPixelBufferGetBytesPerRow(buffer), space: CGColorSpaceCreateDeviceRGB(),
@@ -601,6 +603,7 @@ enum RouteTerrain3D {
                 UIGraphicsPopContext()
             }
             CVPixelBufferUnlockBaseAddress(buffer, [])
+            }
             while !input.isReadyForMoreMediaData { try await Task.sleep(nanoseconds: 3_000_000) }
             adaptor.append(buffer, withPresentationTime: CMTime(value: CMTimeValue(i), timescale: CMTimeScale(fps)))
             if i % 6 == 0 {

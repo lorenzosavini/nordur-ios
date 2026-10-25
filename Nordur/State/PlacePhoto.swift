@@ -195,7 +195,8 @@ final class PlacePhotoService {
         if Self.aboutPeople(photo.title) { return nil }
         var request = URLRequest(url: photo.imageURL, timeoutInterval: 15)
         request.setValue(Self.agent, forHTTPHeaderField: "User-Agent")
-        guard let (data, _) = try? await HTTP.session.data(for: request), let image = UIImage(data: data), let cg = image.cgImage else {
+        guard let (data, _) = try? await HTTP.session.data(for: request),
+              let image = await Task.detached(priority: .utility, operation: { RemoteImageCache.decode(data) }).value, let cg = image.cgImage else {
             return photo
         }
         let faces = await Task.detached(priority: .utility) { () -> Bool in

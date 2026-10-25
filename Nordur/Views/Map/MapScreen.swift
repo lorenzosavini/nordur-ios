@@ -257,13 +257,13 @@ struct MapScreen: View {
                 .clipShape(Rectangle())
                 GeometryReader { geo in
                     ForEach(layer.legendValues, id: \.self) { value in
-                        Text(layer.showsArrows ? Fmt.wind(value) : Fmt.number(value, decimals: value < 1 && value > 0 ? 1 : 0))
+                        Text(layer.showsArrows ? Fmt.wind(value) : layer == .temperature ? Fmt.degrees(value) : Fmt.number(value, decimals: value < 1 && value > 0 ? 1 : 0))
                             .font(.app(.caption2))
                             .position(x: geo.size.width * (value - minV) / (maxV - minV), y: 6)
                     }
                 }
                 .frame(height: 12)
-                Text("\(layer.label), \(layer.showsArrows ? Fmt.windUnit : layer.unit)")
+                Text("\(layer.label), \(layer.showsArrows ? Fmt.windUnit : layer == .temperature ? Fmt.tempUnit : layer.unit)")
                     .font(.app(.caption2)).foregroundStyle(.secondary)
             }
         } else if layer == .radar {

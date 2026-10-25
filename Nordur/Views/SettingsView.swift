@@ -12,6 +12,7 @@ struct SettingsView: View {
     @AppStorage(NightVision.autoKey) private var nightAuto = false
     @AppStorage(AmbientAurora.key) private var ambientAurora = true
     @AppStorage(CurrencyDisplay.key) private var currency = CurrencyDisplay.both.rawValue
+    @AppStorage(TempUnit.key) private var tempUnit = TempUnit.celsius.rawValue
 
     var body: some View {
         NavigationStack {
@@ -23,16 +24,26 @@ struct SettingsView: View {
                         Label("Vento", systemImage: "wind")
                     }
                     .pickerStyle(.menu)
-                    Picker(selection: $currency) {
-                        ForEach(CurrencyDisplay.allCases) { Text($0.label).tag($0.rawValue) }
+                    Picker(selection: $tempUnit) {
+                        ForEach(TempUnit.allCases) { Text($0.label).tag($0.rawValue) }
                     } label: {
-                        Label("Prezzi in corone anche in", systemImage: "eurosign.circle")
+                        Label("Temperatura", systemImage: "thermometer.medium")
                     }
                     .pickerStyle(.menu)
+                    NavigationLink { CurrencyChoiceView() } label: {
+                        LabeledContent {
+                            Text((CurrencyDisplay(rawValue: currency) ?? .both).label).foregroundStyle(.secondary)
+                        } label: {
+                            Label("Prezzi in corone anche in", systemImage: "eurosign.circle")
+                        }
+                    }
+                    NavigationLink { CurrencyConverterView() } label: {
+                        Label("Convertitore valute", systemImage: "arrow.left.arrow.right.circle")
+                    }
                     LabeledContent {
-                        Text("°C · mm · km").foregroundStyle(.secondary)
+                        Text("mm · km").foregroundStyle(.secondary)
                     } label: {
-                        Label("Temperatura, pioggia, distanze", systemImage: "thermometer.medium")
+                        Label("Pioggia, distanze", systemImage: "ruler")
                     }
                 } header: { Text("Unità di misura").pinnedHeader() } footer: {
                     Text("Esempio: 15 m/s = \(Int((15 * 3.6).rounded())) km/h = \(Int((15 * 1.943844).rounded())) nodi. Le soglie degli avvisi restano le stesse, cambia solo come vengono mostrate.")

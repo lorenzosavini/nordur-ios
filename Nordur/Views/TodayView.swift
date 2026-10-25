@@ -251,11 +251,11 @@ struct TodayView: View {
             VStack(alignment: .leading, spacing: 12) {
                 HStack(alignment: .top, spacing: 16) {
                     HStack(alignment: .top, spacing: 2) {
-                        Text(current.temperature_2m.map { "\(Int($0.rounded()))" } ?? "–")
+                        Text(Fmt.degrees(current.temperature_2m))
                             .font(.metric(128, .semibold))
                             .foregroundStyle(Theme.text)
                             .padding(.top, -14)
-                        Text("°C").font(.mono(14, .medium)).foregroundStyle(Theme.dim).padding(.top, 10)
+                        Text(Fmt.tempUnit).font(.mono(14, .medium)).foregroundStyle(Theme.dim).padding(.top, 10)
                     }
                     VStack(alignment: .leading, spacing: 8) {
                         Text(info.text.uppercased()).font(.display(24, .semibold)).foregroundStyle(Theme.text)
@@ -859,7 +859,7 @@ struct HourTable: View {
     var body: some View {
         HStack(alignment: .top, spacing: 0) {
             VStack(alignment: .leading, spacing: 0) {
-                label(String(localized: "ORA")); label(String(localized: "CIELO")); label("°C"); label(String(localized: "VENTO")); label(String(localized: "RAFF.")); label(String(localized: "DIR")); label("MM")
+                label(String(localized: "ORA")); label(String(localized: "CIELO")); label(Fmt.tempUnit); label(String(localized: "VENTO")); label(String(localized: "RAFF.")); label(String(localized: "DIR")); label("MM")
             }
             .frame(width: labelWidth, alignment: .leading)
             ScrollView(.horizontal, showsIndicators: false) {
@@ -872,7 +872,7 @@ struct HourTable: View {
                                 .font(.system(size: 13))
                                 .foregroundStyle(Theme.text)
                                 .frame(height: 30)
-                            cell(Fmt.number(hour.temperature), color: Theme.text)
+                            cell(Fmt.degrees(hour.temperature), color: Theme.text)
                             cell(Fmt.wind(hour.wind), color: hour.wind.map { $0 >= 15 ? Theme.warning : Theme.text } ?? Theme.text)
                             gustCell(hour.gust)
                             WindArrow(degrees: hour.windDirection).font(.system(size: 11)).foregroundStyle(Theme.dim).frame(height: 30)

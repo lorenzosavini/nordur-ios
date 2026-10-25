@@ -15,10 +15,20 @@ enum Fmt {
     /// Locale for dates and numbers in the app language.
     static let italian = Locale(identifier: UILanguage.region)
 
+    /// Temperature with the degree sign, in the unit chosen in Settings (values are °C inside the app).
     static func temp(_ value: Double?) -> String {
         guard let value else { return "–" }
-        return "\(Int(value.rounded()))°"
+        return "\(Int(TempUnit.current.value(value).rounded()))°"
     }
+
+    /// Temperature number only, in the chosen unit.
+    static func degrees(_ value: Double?) -> String {
+        guard let value else { return "–" }
+        return "\(Int(TempUnit.current.value(value).rounded()))"
+    }
+
+    /// "°C" or "°F".
+    static var tempUnit: String { TempUnit.current.label }
 
     /// Wind speed with its unit, in the unit chosen in Settings (values are m/s inside the app).
     static func ms(_ value: Double?) -> String {
@@ -162,6 +172,18 @@ extension String {
 }
 
 /// Unit for wind speeds (Settings › Units). Data stay in m/s; only the display changes.
+enum TempUnit: String, CaseIterable, Identifiable {
+    case celsius, fahrenheit
+
+    static let key = "units.temperature"
+    static var current: TempUnit { TempUnit(rawValue: UserDefaults.standard.string(forKey: key) ?? "") ?? .celsius }
+
+    var id: String { rawValue }
+    var label: String { self == .celsius ? "°C" : "°F" }
+    /// A temperature in °C in this unit.
+    func value(_ celsius: Double) -> Double { self == .celsius ? celsius : celsius * 9 / 5 + 32 }
+}
+
 enum WindUnit: String, CaseIterable, Identifiable {
     case ms, kmh, knots
 

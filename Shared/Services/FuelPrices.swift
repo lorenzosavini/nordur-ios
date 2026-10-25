@@ -67,38 +67,102 @@ enum FuelPrices {
     }
 }
 
-/// Euro and dollar for one Icelandic króna, from the European Central Bank's
-/// daily reference rates (Frankfurter).
+/// Every world currency for one Icelandic króna: ExchangeRate-API's open daily
+/// rates (about 160 currencies, no key; attribution required), or the European
+/// Central Bank's reference rates (Frankfurter, about 30) when it doesn't answer.
 struct ExchangeRates: Decodable {
     let date: String
     let rates: [String: Double]
+    var source: String?
+
+    /// Amount in króna for one unit of a currency (ISK itself is 1).
+    func perUnit(_ code: String) -> Double? { code == "ISK" ? 1 : rates[code].flatMap { $0 > 0 ? 1 / $0 : nil } }
+
+    /// An amount from one currency to another.
+    func convert(_ amount: Double, from: String, to: String) -> Double? {
+        guard let a = perUnit(from), let b = perUnit(to) else { return nil }
+        return amount * a / b
+    }
+
+    private struct Open: Decodable {
+        let result: String
+        let time_last_update_unix: Double?
+        let rates: [String: Double]?
+    }
 
     static func load() async throws -> Fetched<ExchangeRates> {
-        guard let url = URL(string: "https://api.frankfurter.dev/v1/latest?base=ISK&symbols=EUR,USD") else { throw HTTPError.invalidURL }
-        return try await HTTP.json(ExchangeRates.self, from: url, cacheKey: "rates_isk")
-    }
-}
-
-/// Which other currency the prices in króna are shown in (Settings › Unità di misura).
-enum CurrencyDisplay: String, CaseIterable, Identifiable {
-    case both, eur, usd, none
-    static let key = "currency.display"
-    var id: String { rawValue }
-    var label: String {
-        switch self {
-        case .both: return String(localized: "Euro e dollari")
-        case .eur: return String(localized: "Euro")
-        case .usd: return String(localized: "Dollari")
-        case .none: return String(localized: "Solo corone")
+        do {
+            guard let url = URL(string: "https://open.er-api.com/v6/latest/ISK") else { throw HTTPError.invalidURL }
+            let fetched = try await HTTP.json(Open.self, from: url, cacheKey: "rates_isk_world")
+            guard fetched.value.result == "success", let rates = fetched.value.rates, rates.count > 30 else { throw URLError(.badServerResponse) }
+            let day = Date(timeIntervalSince1970: fetched.value.time_last_update_unix ?? fetched.date.timeIntervalSince1970)
+            let formatter = DateFormatter()
+            formatter.dateFormat = "yyyy-MM-dd"
+            formatter.timeZone = TimeZone(identifier: "UTC")
+            return Fetched(value: ExchangeRates(date: formatter.string(from: day), rates: rates, source: "ExchangeRate-API"), date: fetched.date, isStale: fetched.isStale)
+        } catch {
+            guard let url = URL(string: "https://api.frankfurter.dev/v1/latest?base=ISK") else { throw HTTPError.invalidURL }
+            let fetched = try await HTTP.json(ExchangeRates.self, from: url, cacheKey: "rates_isk_ecb")
+            var value = fetched.value
+            value.source = String(localized: "BCE")
+            return Fetched(value: value, date: fetched.date, isStale: fetched.isStale)
         }
     }
 
-    /// "≈ 1,87 € · 2,09 $" for an amount in króna, or nil without rates.
+    /// Currency codes known to the system, with these rates when loaded, by localized name.
+    static func codes(_ rates: ExchangeRates?) -> [String] {
+        let all = Set(Locale.commonISOCurrencyCodes).subtracting(["ISK"])
+        let known = rates.map { all.intersection($0.rates.keys) } ?? all
+        return known.sorted { name($0).localizedCaseInsensitiveCompare(name($1)) == .orderedAscending }
+    }
+
+    static func name(_ code: String) -> String {
+        Fmt.italian.localizedString(forCurrencyCode: code)?.capitalized(with: Fmt.italian) ?? code
+    }
+
+    /// "1,87 €", "¥ 290", "2,09 US$" in the app language, without more decimals than asked.
+    static func format(_ amount: Double, _ code: String, decimals: Int = 2) -> String {
+        let f = NumberFormatter()
+        f.numberStyle = .currency
+        f.locale = Fmt.italian
+        f.currencyCode = code
+        f.maximumFractionDigits = min(decimals, f.maximumFractionDigits)
+        f.minimumFractionDigits = min(f.minimumFractionDigits, f.maximumFractionDigits)
+        return f.string(from: NSNumber(value: amount)) ?? "\(Fmt.number(amount, decimals: decimals)) \(code)"
+    }
+}
+
+/// The other currencies the prices in króna are shown in (Settings › Unità di misura):
+/// up to three of any in the world, or none.
+struct CurrencyDisplay: Equatable {
+    static let key = "currency.display"
+    static let both = CurrencyDisplay(codes: ["EUR", "USD"])
+    static let limit = 3
+    let codes: [String]
+
+    init(codes: [String]) { self.codes = Array(codes.prefix(Self.limit)) }
+
+    /// Older choices ("both", "eur", "usd", "none") and lists of codes ("EUR,GBP").
+    init?(rawValue: String) {
+        switch rawValue {
+        case "both": self.init(codes: ["EUR", "USD"])
+        case "eur": self.init(codes: ["EUR"])
+        case "usd": self.init(codes: ["USD"])
+        case "none", "": self.init(codes: [])
+        default:
+            let codes = rawValue.split(separator: ",").map { $0.trimmingCharacters(in: .whitespaces).uppercased() }.filter { $0.count == 3 }
+            self.init(codes: codes)
+        }
+    }
+
+    var rawValue: String { codes.isEmpty ? "none" : codes.joined(separator: ",") }
+
+    var label: String { codes.isEmpty ? String(localized: "Solo corone") : codes.joined(separator: " · ") }
+
+    /// "≈ 1,87 € · 2,09 US$" for an amount in króna, or nil without rates.
     func converted(_ isk: Double, _ rates: ExchangeRates?, decimals: Int = 2) -> String? {
-        guard let rates, self != .none else { return nil }
-        var parts: [String] = []
-        if self == .both || self == .eur, let eur = rates.rates["EUR"] { parts.append("\(Fmt.number(isk * eur, decimals: decimals)) €") }
-        if self == .both || self == .usd, let usd = rates.rates["USD"] { parts.append("\(Fmt.number(isk * usd, decimals: decimals)) $") }
+        guard let rates, !codes.isEmpty else { return nil }
+        let parts = codes.compactMap { code in rates.convert(isk, from: "ISK", to: code).map { ExchangeRates.format($0, code, decimals: decimals) } }
         return parts.isEmpty ? nil : "≈ " + parts.joined(separator: " · ")
     }
 }

@@ -95,25 +95,27 @@ struct WeatherView: View {
     }
 
     private func meteogram(_ hours: [HourPoint]) -> some View {
-        let temps = hours.compactMap(\.temperature)
+        let unit = TempUnit.current
+        let temps = hours.compactMap(\.temperature).map(unit.value)
         let low = floor((temps.min() ?? 0) - 1), high = ceil((temps.max() ?? 10) + 1)
         let peak = hours.compactMap(\.gust).max() ?? 0
         let rain = hours.compactMap(\.precipitation).reduce(0, +)
+        let freezing = unit.value(0)
         return VStack(alignment: .leading, spacing: 14) {
             SectionLabel(index: "01", title: String(localized: "Meteogramma · 48 h"))
 
-            chartHeader(String(localized: "TEMPERATURA"), "\(Fmt.temp(temps.min())) / \(Fmt.temp(temps.max()))")
+            chartHeader(String(localized: "TEMPERATURA"), "\(Fmt.temp(hours.compactMap(\.temperature).min())) / \(Fmt.temp(hours.compactMap(\.temperature).max()))")
             Chart {
                 ForEach(hours) { hour in
                     if let temp = hour.temperature {
-                        LineMark(x: .value(String(localized: "Ora"), hour.date, unit: .hour), y: .value("°C", temp))
+                        LineMark(x: .value(String(localized: "Ora"), hour.date, unit: .hour), y: .value(unit.label, unit.value(temp)))
                             .foregroundStyle(Theme.text)
                             .lineStyle(StrokeStyle(lineWidth: 1.6))
                             .interpolationMethod(.monotone)
                     }
                 }
-                if low < 0 && high > 0 {
-                    RuleMark(y: .value("0", 0)).foregroundStyle(Theme.accent).lineStyle(StrokeStyle(lineWidth: 1, dash: [2, 3]))
+                if low < freezing && high > freezing {
+                    RuleMark(y: .value("0", freezing)).foregroundStyle(Theme.accent).lineStyle(StrokeStyle(lineWidth: 1, dash: [2, 3]))
                 }
                 RuleMark(x: .value(String(localized: "Adesso"), Date())).foregroundStyle(Theme.accent).lineStyle(StrokeStyle(lineWidth: 1))
             }
@@ -218,8 +220,8 @@ struct WeatherView: View {
                 VStack(spacing: 0) {
                     HStack(spacing: 0) {
                         head(String(localized: "ORA"), 40, .leading)
-                        head(String(localized: "IMO °C"), 52)
-                        head(String(localized: "MET °C"), 52)
+                        head("IMO \(Fmt.tempUnit)", 52)
+                        head("MET \(Fmt.tempUnit)", 52)
                         head("IMO \(Fmt.windUnit.uppercased())", 58)
                         head("MET \(Fmt.windUnit.uppercased())", 58)
                         head(String(localized: "CIELO (IMO)"), nil, .leading).padding(.leading, 10)
@@ -232,8 +234,8 @@ struct WeatherView: View {
                         HStack(spacing: 0) {
                             Text(Fmt.hour(hour.date, in: .iceland)).font(.mono(10.5, .medium)).foregroundStyle(Theme.dim)
                                 .frame(width: 40, alignment: .leading)
-                            num(Fmt.number(hour.temperature), 52, Theme.text)
-                            num(Fmt.number(met?.temperature), 52, Theme.dim)
+                            num(Fmt.degrees(hour.temperature), 52, Theme.text)
+                            num(Fmt.degrees(met?.temperature), 52, Theme.dim)
                             num(Fmt.wind(hour.wind), 58, (hour.wind ?? 0) >= 15 ? Theme.warning : Theme.text)
                             num(Fmt.wind(met?.wind), 58, diff >= 4 ? Theme.accent : Theme.dim)
                             Text("\(hour.direction) · \(hour.text)").font(.app(.caption)).foregroundStyle(Theme.dim)
@@ -280,9 +282,9 @@ struct WeatherView: View {
                         .frame(width: 44, alignment: .leading)
                         Image(systemName: info.symbol).symbolRenderingMode(.monochrome).font(.system(size: 14))
                             .foregroundStyle(Theme.text).frame(width: 22)
-                        Text(Fmt.number(day.minTemp)).font(.metric(19)).foregroundStyle(Theme.dim).frame(width: 26, alignment: .trailing)
+                        Text(Fmt.degrees(day.minTemp)).font(.metric(19)).foregroundStyle(Theme.dim).frame(width: 26, alignment: .trailing)
                         RangeBar(low: day.minTemp ?? 0, high: day.maxTemp ?? 0, scaleMin: scaleMin, scaleMax: scaleMax)
-                        Text(Fmt.number(day.maxTemp)).font(.metric(19, .semibold)).foregroundStyle(Theme.text).frame(width: 26, alignment: .leading)
+                        Text(Fmt.degrees(day.maxTemp)).font(.metric(19, .semibold)).foregroundStyle(Theme.text).frame(width: 26, alignment: .leading)
                         gust(day.maxGust).frame(width: 34)
                         Text(Fmt.number(day.precipitation, decimals: (day.precipitation ?? 0) < 10 ? 1 : 0))
                             .font(.metric(16)).foregroundStyle((day.precipitation ?? 0) >= 10 ? Theme.accent : Theme.dim)
@@ -336,7 +338,7 @@ struct WeatherView: View {
                     Reading(label: "Da", value: Fmt.compass(c.wave_direction), size: 26),
                     Reading(label: String(localized: "Swell"), value: Fmt.number(c.swell_wave_height, decimals: 1), unit: "m", size: 26),
                     Reading(label: String(localized: "Max 48 h"), value: Fmt.number(marine.maxWaveHeight(next: 48), decimals: 1), unit: "m", size: 26),
-                    Reading(label: String(localized: "Acqua"), value: Fmt.number(c.sea_surface_temperature), unit: "°C", size: 26),
+                    Reading(label: String(localized: "Acqua"), value: Fmt.degrees(c.sea_surface_temperature), unit: Fmt.tempUnit, size: 26),
                 ], columns: 3)
                 .overlay(alignment: .top) { Rule() }
                 .overlay(alignment: .bottom) { Rule() }

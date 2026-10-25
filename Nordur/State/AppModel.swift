@@ -20,7 +20,7 @@ final class AppModel {
         case webcams = "Webcam"
         case fuel = "Distributori"
         case fuelPrices = "Prezzi carburante (Gasvaktin)"
-        case rates = "Cambio valuta (BCE)"
+        case rates = "Cambio valuta"
         case shops = "Supermercati e negozi"
         case sights = "Attrazioni (OpenStreetMap)"
         case flights = "Voli KEF"
@@ -345,6 +345,11 @@ final class AppModel {
         if force || fuelPrices.map({ Date().timeIntervalSince($0.date) > 600 || $0.isStale }) ?? true {
             await load(.fuelPrices, { try await FuelPrices.load() }) { self.fuelPrices = $0 }
         }
+        await loadRates(force: force)
+    }
+
+    /// Exchange rates of every world currency, every 6 hours.
+    func loadRates(force: Bool = false) async {
         if force || rates.map({ Date().timeIntervalSince($0.date) > 6 * 3600 || $0.isStale }) ?? true {
             await load(.rates, { try await ExchangeRates.load() }) { self.rates = $0 }
         }

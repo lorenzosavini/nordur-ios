@@ -307,7 +307,7 @@ extension FuelDetail {
                 if let fetched = model.fuelPrices {
                     FreshnessLabel(date: fetched.date, isStale: fetched.isStale, source: "Gasvaktin")
                 }
-                Text("Prezzo alla pompa self-service al litro. «Con sconto»: con la carta o l'app della compagnia. Cambio BCE del \(rates?.date ?? "–").")
+                Text("Prezzo alla pompa self-service al litro. «Con sconto»: con la carta o l'app della compagnia. Cambio del \(rates?.date ?? "–") (\(rates?.source ?? "–")).")
             }
         }
     }
