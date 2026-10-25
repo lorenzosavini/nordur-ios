@@ -172,9 +172,14 @@ struct AlertRow: View {
                 }
                 Text(event.body).font(.app(.caption)).foregroundStyle(.secondary).lineLimit(3)
                 HStack(spacing: 6) {
-                    Text(Fmt.time(event.date)).font(.app(.caption2)).foregroundStyle(.tertiary)
-                    if let expires = event.expires, expires < Date() {
-                        Text("· scaduta").font(.app(.caption2)).foregroundStyle(.tertiary)
+                    // When it was noticed, and whether it still applies.
+                    Text(Fmt.dayTime(event.date)).font(.app(.caption2)).foregroundStyle(.tertiary)
+                    if let expires = event.expires {
+                        if expires < Date() {
+                            Text("· terminata").font(.app(.caption2)).foregroundStyle(.tertiary)
+                        } else {
+                            Text("· in corso fino alle \(Fmt.time(expires))").font(.app(.caption2, .semibold)).foregroundStyle(event.risk.color)
+                        }
                     }
                     if event.coordinate != nil {
                         Image(systemName: "mappin.and.ellipse").font(.app(.caption2)).foregroundStyle(.tertiary)

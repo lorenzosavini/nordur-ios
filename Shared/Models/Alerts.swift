@@ -179,7 +179,7 @@ enum AlertEngine {
                     id: "w:\(warning.identifier)", date: now, category: .weatherWarning, severity: warning.color.risk.rawValue,
                     title: "\(warning.color.label): \(warning.headline)",
                     body: String(localized: "\(place.name) · \(warning.region) · \(when) fino alle \(Fmt.time(warning.expires, in: .iceland))"),
-                    coordinate: place.coordinate))
+                    coordinate: place.coordinate, expires: warning.expires))
             }
         }
 
@@ -198,7 +198,7 @@ enum AlertEngine {
                         id: "g:\(station.id):\(bucket)", date: now, category: .wind, severity: station.windRisk.rawValue,
                         title: String(localized: "Raffiche di \(Fmt.ms(station.Vindhvida)) a \(station.name)"),
                         body: String(localized: "A \(Int(km)) km da te. Vento medio \(Fmt.ms(station.Vindhradi)) \(station.windDirection). \(Risk.windAdvice(station.windRisk))"),
-                        coordinate: station.coordinate))
+                        coordinate: station.coordinate, expires: now.addingTimeInterval(3 * 3600)))
                 }
             }
             if settings.isOn(.road), input.roadInfo == nil {

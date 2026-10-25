@@ -198,7 +198,15 @@ final class AlertCenter: NSObject {
         defer { isChecking = false }
         let input = await buildInput(position: position)
         let candidates = AlertEngine.evaluate(input, settings: settings)
-        await deliver(candidates)
+        // A place chosen by hand (browsing Akureyri from home): what is going on
+        // there now goes in the inbox without a banner; only what starts after that
+        // is notified. Moving with the GPS is not affected.
+        let useCurrent = model?.useCurrentLocation ?? (UserDefaults.standard.object(forKey: "useCurrentLocation") as? Bool ?? true)
+        let here = input.watched.first { $0.isCurrent }.map { "\(useCurrent ? "gps" : "pin"):\(useCurrent ? "" : $0.coordinate.key)" } ?? ""
+        let previous = UserDefaults.standard.string(forKey: "alerts.watchedPlace")
+        let quiet = !useCurrent && previous != nil && previous != here
+        UserDefaults.standard.set(here, forKey: "alerts.watchedPlace")
+        await deliver(candidates, quiet: quiet)
         lastCheck = Date()
     }
 
@@ -335,7 +343,7 @@ final class AlertCenter: NSObject {
         }
     }
 
-    private func deliver(_ candidates: [AlertEvent]) async {
+    private func deliver(_ candidates: [AlertEvent], quiet: Bool = false) async {
         let fresh = candidates.filter { fired[$0.id] == nil }.sorted { $0.severity > $1.severity }
         guard !fresh.isEmpty else { return }
         for event in fresh { fired[event.id] = event.date }
@@ -344,6 +352,7 @@ final class AlertCenter: NSObject {
             var event = original
             if Self.quotesWeb(original) { event = await Translator.shared.localize(original) }
             events.insert(event, at: 0)
+            if quiet { continue }
             post(event)
             if (isDriving || isMoving) && settings.spoken && event.risk >= .warning {
                 say(event.title)
