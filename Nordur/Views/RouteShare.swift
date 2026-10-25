@@ -54,7 +54,7 @@ enum RouteCard {
         return try await MKMapSnapshotter(options: options).start()
     }
 
-    private static func bearing(_ a: Coordinate, _ b: Coordinate) -> CLLocationDirection {
+    static func bearing(_ a: Coordinate, _ b: Coordinate) -> CLLocationDirection {
         let φ1 = a.lat * .pi / 180, φ2 = b.lat * .pi / 180, Δλ = (b.lon - a.lon) * .pi / 180
         let y = sin(Δλ) * cos(φ2), x = cos(φ1) * sin(φ2) - sin(φ1) * cos(φ2) * cos(Δλ)
         return (atan2(y, x) * 180 / .pi + 360).truncatingRemainder(dividingBy: 360)
@@ -88,7 +88,11 @@ enum RouteCard {
             dot(ctx, pts.last!, color: .white, ring: progress < 1)
         }
         ctx.restoreGState()
+        overlay(ctx, size: size, stats: stats, progress: progress)
+    }
 
+    /// The shades, the mark, the title and the stats over the map.
+    static func overlay(_ ctx: CGContext, size: CGSize, stats: Stats, progress: Double) {
         // Shades for the text.
         let colors = [UIColor.black.withAlphaComponent(0.75).cgColor, UIColor.black.withAlphaComponent(0).cgColor] as CFArray
         if let g = CGGradient(colorsSpace: CGColorSpaceCreateDeviceRGB(), colors: colors, locations: [0, 1]) {
@@ -172,7 +176,7 @@ enum RouteCard {
         UIBezierPath(rect: CGRect(x: origin.x + side * 0.24, y: y + h * 0.47, width: side * 0.27, height: side * 0.075)).fill()
     }
 
-    private static func dot(_ ctx: CGContext, _ p: CGPoint, color: UIColor, ring: Bool = false) {
+    static func dot(_ ctx: CGContext, _ p: CGPoint, color: UIColor, ring: Bool = false) {
         let r: CGFloat = ring ? 18 : 14
         ctx.setFillColor(UIColor.black.withAlphaComponent(0.35).cgColor)
         ctx.fillEllipse(in: CGRect(x: p.x - r - 4, y: p.y - r - 4, width: (r + 4) * 2, height: (r + 4) * 2))
@@ -182,10 +186,10 @@ enum RouteCard {
         ctx.strokeEllipse(in: CGRect(x: p.x - r, y: p.y - r, width: r * 2, height: r * 2))
     }
 
-    private static func condensed(_ size: CGFloat) -> UIFont { UIFont(name: AppFontName.condensed(.bold), size: size) ?? .boldSystemFont(ofSize: size) }
-    private static func mono(_ size: CGFloat) -> UIFont { UIFont(name: AppFontName.mono(.semibold), size: size) ?? .monospacedSystemFont(ofSize: size, weight: .semibold) }
+    static func condensed(_ size: CGFloat) -> UIFont { UIFont(name: AppFontName.condensed(.bold), size: size) ?? .boldSystemFont(ofSize: size) }
+    static func mono(_ size: CGFloat) -> UIFont { UIFont(name: AppFontName.mono(.semibold), size: size) ?? .monospacedSystemFont(ofSize: size, weight: .semibold) }
 
-    private static func text(_ s: String, at p: CGPoint, font: UIFont, color: UIColor, kern: CGFloat = 0, width: CGFloat = 2000) {
+    static func text(_ s: String, at p: CGPoint, font: UIFont, color: UIColor, kern: CGFloat = 0, width: CGFloat = 2000) {
         let shadow = NSShadow()
         shadow.shadowColor = UIColor.black.withAlphaComponent(0.55)
         shadow.shadowBlurRadius = 8
@@ -203,69 +207,28 @@ enum RouteCard {
 
     // MARK: Picture and video
 
+    /// The whole route on the 3D terrain, with its stops numbered.
     static func image(_ session: DriveSession, format: Format) async throws -> URL {
-        let snap = try await snapshot(session.points, format: format)
-        let route = route(session.points, in: snap)
+        let points = DriveMath.downsample(session.points, maxPoints: 2500)
+        guard points.count > 1 else { throw NSError(domain: "Nordur", code: 3) }
+        let over = RouteFlyover.overview(points, format: format)
+        let camera = MKMapCamera(lookingAtCenter: CLLocationCoordinate2D(latitude: over.center.lat, longitude: over.center.lon),
+                                 fromDistance: over.distance, pitch: 55, heading: over.heading)
+        let shot = RouteFlyover.Shot(camera: camera, progress: 1, focus: over.center, following: false)
+        async let snap = RouteFlyover.snapshot(shot, format: format)
+        let stops = await RouteFlyover.named(RouteFlyover.stops(session.points))
+        let snapshot = try await snap
         let stats = stats(session)
         let renderer = UIGraphicsImageRenderer(size: format.size, format: { let f = UIGraphicsImageRendererFormat(); f.scale = 1; return f }())
-        let image = renderer.image { r in draw(r.cgContext, snapshot: snap, route: route, size: format.size, stats: stats, progress: 1, zoom: 1) }
+        let image = renderer.image { r in RouteFlyover.draw(r.cgContext, snapshot: snapshot, shot: shot, points: points, stops: stops, size: format.size, stats: stats) }
         let url = FileManager.default.temporaryDirectory.appendingPathComponent("Nordur-\(format.rawValue).jpg")
         try image.jpegData(compressionQuality: 0.92)?.write(to: url, options: .atomic)
         return url
     }
 
-    /// 8 seconds at 30 fps: the route draws itself on the 3D terrain while the
-    /// camera moves in slowly, then holds on the whole route.
+    /// A flight over the 3D terrain along the route (RouteFlyover).
     static func video(_ session: DriveSession, format: Format, progress report: @escaping (Double) -> Void) async throws -> URL {
-        let snap = try await snapshot(session.points, format: format)
-        let route = route(session.points, in: snap)
-        let stats = stats(session)
-        let url = FileManager.default.temporaryDirectory.appendingPathComponent("Nordur-\(format.rawValue).mp4")
-        try? FileManager.default.removeItem(at: url)
-        let size = format.size
-        let writer = try AVAssetWriter(outputURL: url, fileType: .mp4)
-        let input = AVAssetWriterInput(mediaType: .video, outputSettings: [
-            AVVideoCodecKey: AVVideoCodecType.h264, AVVideoWidthKey: size.width, AVVideoHeightKey: size.height,
-            AVVideoCompressionPropertiesKey: [AVVideoAverageBitRateKey: 10_000_000],
-        ])
-        input.expectsMediaDataInRealTime = false
-        let adaptor = AVAssetWriterInputPixelBufferAdaptor(assetWriterInput: input, sourcePixelBufferAttributes: [
-            kCVPixelBufferPixelFormatTypeKey as String: kCVPixelFormatType_32BGRA,
-            kCVPixelBufferWidthKey as String: size.width, kCVPixelBufferHeightKey as String: size.height,
-        ])
-        writer.add(input)
-        writer.startWriting()
-        writer.startSession(atSourceTime: .zero)
-        let fps = 30, frames = 8 * fps
-        for frame in 0..<frames {
-            while !input.isReadyForMoreMediaData { try await Task.sleep(nanoseconds: 5_000_000) }
-            let t = Double(frame) / Double(frames - 1)
-            // Draw over the first 5.5 s (eased), hold the rest.
-            let drawT = min(1, t / 0.69)
-            let eased = drawT < 0.5 ? 2 * drawT * drawT : 1 - pow(-2 * drawT + 2, 2) / 2
-            let zoom = 1.12 - 0.12 * CGFloat(eased)
-            guard let pool = adaptor.pixelBufferPool else { break }
-            var buffer: CVPixelBuffer?
-            CVPixelBufferPoolCreatePixelBuffer(nil, pool, &buffer)
-            guard let buffer else { continue }
-            CVPixelBufferLockBaseAddress(buffer, [])
-            if let ctx = CGContext(data: CVPixelBufferGetBaseAddress(buffer), width: Int(size.width), height: Int(size.height), bitsPerComponent: 8,
-                                   bytesPerRow: CVPixelBufferGetBytesPerRow(buffer), space: CGColorSpaceCreateDeviceRGB(),
-                                   bitmapInfo: CGImageAlphaInfo.premultipliedFirst.rawValue | CGBitmapInfo.byteOrder32Little.rawValue) {
-                // UIKit drawing is top-down.
-                ctx.translateBy(x: 0, y: size.height)
-                ctx.scaleBy(x: 1, y: -1)
-                draw(ctx, snapshot: snap, route: route, size: size, stats: stats, progress: eased, zoom: zoom)
-            }
-            CVPixelBufferUnlockBaseAddress(buffer, [])
-            adaptor.append(buffer, withPresentationTime: CMTime(value: CMTimeValue(frame), timescale: CMTimeScale(fps)))
-            if frame % 10 == 0 { report(Double(frame) / Double(frames)) }
-        }
-        input.markAsFinished()
-        await writer.finishWriting()
-        if writer.status != .completed { throw writer.error ?? NSError(domain: "Nordur", code: 2) }
-        report(1)
-        return url
+        try await RouteFlyover.video(session, format: format, progress: report)
     }
 }
 
@@ -312,7 +275,7 @@ struct RouteShareSheet: View {
                     } else {
                         Button { Task { await makeVideo() } } label: {
                             HStack {
-                                Label(making ? String(localized: "Creo il video…") : String(localized: "Crea il video 3D (8 s)"), systemImage: "video.badge.plus")
+                                Label(making ? String(localized: "Creo il video…") : String(localized: "Crea il volo 3D sul percorso"), systemImage: "video.badge.plus")
                                     .font(.app(.headline))
                                 if making { Spacer(); ProgressView(value: progress).frame(width: 90) }
                             }
@@ -321,7 +284,7 @@ struct RouteShareSheet: View {
                     }
                     if let error { Text(error).font(.app(.caption)).foregroundStyle(Theme.danger) }
                 } footer: {
-                    Text("Dal menu di condivisione: Instagram (storia o post), WhatsApp, oppure «Salva immagine/video» nelle Foto. Il terreno in 3D e il satellite sono di Apple Mappe.")
+                    Text("Il video vola sul terreno in 3D lungo il percorso, con le soste dove ti sei fermato; ci vuole circa un minuto per crearlo. Dal menu di condivisione: Instagram (storia o post), WhatsApp, oppure «Salva immagine/video» nelle Foto. Terreno 3D e satellite di Apple Mappe.")
                 }
             }
             .themedList()

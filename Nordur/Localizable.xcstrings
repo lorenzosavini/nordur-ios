@@ -50307,6 +50307,62 @@
           }
         }
       }
+    },
+    "Crea il volo 3D sul percorso" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Create the 3D flight over the route"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "3D-Flug über die Strecke erstellen"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Créer le survol 3D du parcours"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Crear el vuelo 3D sobre la ruta"
+          }
+        }
+      }
+    },
+    "Il video vola sul terreno in 3D lungo il percorso, con le soste dove ti sei fermato; ci vuole circa un minuto per crearlo. Dal menu di condivisione: Instagram (storia o post), WhatsApp, oppure «Salva immagine/video» nelle Foto. Terreno 3D e satellite di Apple Mappe." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The video flies over the 3D terrain along the route, with the stops where you stopped; it takes about a minute to create. From the share menu: Instagram (story or post), WhatsApp, or \"Save image/video\" to Photos. 3D terrain and satellite from Apple Maps."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Das Video fliegt über das 3D-Gelände entlang der Strecke, mit den Stopps, an denen du angehalten hast; das Erstellen dauert etwa eine Minute. Über das Teilen-Menü: Instagram (Story oder Beitrag), WhatsApp oder „Bild/Video sichern“ in Fotos. 3D-Gelände und Satellit von Apple Karten."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La vidéo survole le relief en 3D le long du parcours, avec les arrêts que vous avez faits ; sa création prend environ une minute. Depuis le menu de partage : Instagram (story ou publication), WhatsApp, ou « Enregistrer l'image/la vidéo » dans Photos. Relief 3D et satellite d'Apple Plans."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "El vídeo vuela sobre el relieve en 3D a lo largo de la ruta, con las paradas donde te detuviste; crearlo tarda alrededor de un minuto. Desde el menú de compartir: Instagram (historia o publicación), WhatsApp o «Guardar imagen/vídeo» en Fotos. Relieve 3D y satélite de Apple Mapas."
+          }
+        }
+      }
     }
   },
   "version" : "1.0"
