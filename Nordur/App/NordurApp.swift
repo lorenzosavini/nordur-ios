@@ -308,13 +308,14 @@ struct RootView: View {
     }
 }
 
-/// Phones stay upright; wide screens (iPhone Duo open, iPad) turn freely.
-/// Asked again whenever the window changes size (folding and unfolding).
+/// Small windows (a phone, iPhone Duo folded) stay upright; large ones (iPhone
+/// Duo open, iPad) turn freely. Decided by the window's own size, never by the
+/// device or the main screen (Apple's guidance for iPhone Duo); asked again
+/// whenever the window changes size.
 final class OrientationDelegate: NSObject, UIApplicationDelegate {
     func application(_ application: UIApplication, supportedInterfaceOrientationsFor window: UIWindow?) -> UIInterfaceOrientationMask {
-        if UIDevice.current.userInterfaceIdiom == .pad { return .all }
-        let size = window?.windowScene?.screen.bounds.size ?? window?.bounds.size ?? .zero
-        return min(size.width, size.height) >= 600 ? .allButUpsideDown : .portrait
+        guard let size = window?.bounds.size, size != .zero else { return .portrait }
+        return min(size.width, size.height) >= 600 ? .all : .portrait
     }
 }
 

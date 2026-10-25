@@ -1,15 +1,19 @@
 name: Simulators
 
-# Run by hand: lists the Xcode versions, runtimes and device types on the runner.
+# Run by hand: lists the Xcode versions, runtimes and device types on each runner image.
 on:
   workflow_dispatch:
 
 jobs:
   list:
-    runs-on: macos-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        runner: [macos-latest, macos-26, macos-26-xlarge, macos-15]
+    runs-on: ${{ matrix.runner }}
     steps:
       - run: |
           ls /Applications | grep -i xcode
           xcodebuild -version
           xcrun simctl list runtimes
-          xcrun simctl list devicetypes | grep -i -E "iphone|ipad"
+          xcrun simctl list devicetypes | grep -i -E "duo|fold|iphone 18|resizable" || echo "no Duo device type"
