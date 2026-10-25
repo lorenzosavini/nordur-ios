@@ -128,8 +128,9 @@ enum RouteFlyover {
         let length = cum.last!
         let over = overview(points, format: format)
         // Low and close while following: the relief reads from 2–6 km away.
-        let followDistance = min(4200, max(1600, length * 0.065))
-        let followPitch = 72.0
+        // Far enough to take in the valley and the slopes around the line, low enough for the relief.
+        let followDistance = min(14_000, max(4_500, length * 0.17))
+        let followPitch = 63.0
         let look = max(300, length * 0.04)
         let heading = { (m: Double) -> Double in
             let a = position(points, cum, m - look), b = position(points, cum, m + look)
@@ -166,7 +167,7 @@ enum RouteFlyover {
                 focus = position(points, cum, m)
                 smoothed = lerpAngle(smoothed, heading(m), 0.12)
                 // A little to the side of the way, swinging slowly: the relief moves against the line.
-                camera = cam(focus, followDistance, followPitch, smoothed + 22 * sin(k * .pi * 1.5))
+                camera = cam(focus, followDistance, followPitch, smoothed + 28 * sin(k * .pi * 1.5))
                 following = true
             } else if t < seconds.intro + seconds.dive + seconds.follow + seconds.rise {
                 let k = ease((t - seconds.intro - seconds.dive - seconds.follow) / seconds.rise)
@@ -261,6 +262,81 @@ enum RouteFlyover {
             RouteCard.dot(ctx, screen(head), color: .white, ring: true)
         }
         RouteCard.overlay(ctx, size: size, stats: stats, progress: max(shot.progress, 0.001))
+        profile(ctx, points: points, cum: cum, progress: shot.progress, size: size, figures: stats.figures.count)
+    }
+
+    /// The climbs and descents: the altitude along the route as a filled
+    /// profile above the title, done in orange up to where the line is, the
+    /// rest grey, with the current altitude and the metres climbed and
+    /// descended so far.
+    static func profile(_ ctx: CGContext, points: [TrackPoint], cum: [Double], progress: Double, size: CGSize, figures: Int) {
+        let raw = points.compactMap(\.alt)
+        guard raw.count == points.count, cum.last! > 0 else { return }
+        // GPS altitude is noisy: a running mean over a few fixes.
+        let w = 4
+        let alts = raw.indices.map { i -> Double in
+            let r = max(0, i - w)...min(raw.count - 1, i + w)
+            return raw[r].reduce(0, +) / Double(r.count)
+        }
+        guard let lo = alts.min(), let hi = alts.max() else { return }
+        let span = max(hi - lo, 40)
+        let margin: CGFloat = 72
+        let titleY = size.height - 90 - CGFloat((figures + 1) / 2) * 150 - 110
+        let box = CGRect(x: margin, y: titleY - 230, width: size.width - margin * 2, height: 190)
+        // A shade behind it, for the satellite.
+        let shade = [UIColor.black.withAlphaComponent(0).cgColor, UIColor.black.withAlphaComponent(0.55).cgColor] as CFArray
+        if let g = CGGradient(colorsSpace: CGColorSpaceCreateDeviceRGB(), colors: shade, locations: [0, 1]) {
+            ctx.drawLinearGradient(g, start: CGPoint(x: 0, y: box.minY - 80), end: CGPoint(x: 0, y: box.maxY), options: [.drawsAfterEndLocation])
+        }
+        let step = max(1, points.count / 320)
+        let idx = Array(stride(from: 0, to: points.count, by: step)) + [points.count - 1]
+        func at(_ i: Int) -> CGPoint {
+            CGPoint(x: box.minX + CGFloat(cum[i] / cum.last!) * box.width, y: box.maxY - CGFloat((alts[i] - lo) / span) * (box.height - 34))
+        }
+        let all = idx.map(at)
+        func area(_ pts: [CGPoint]) -> CGPath {
+            let p = CGMutablePath()
+            guard let first = pts.first, let last = pts.last else { return p }
+            p.move(to: CGPoint(x: first.x, y: box.maxY)); p.addLines(between: pts); p.addLine(to: CGPoint(x: last.x, y: box.maxY)); p.closeSubpath()
+            return p
+        }
+        ctx.addPath(area(all)); ctx.setFillColor(UIColor(white: 1, alpha: 0.16).cgColor); ctx.fillPath()
+        let line = CGMutablePath(); line.addLines(between: all)
+        ctx.addPath(line); ctx.setStrokeColor(UIColor(white: 1, alpha: 0.45).cgColor); ctx.setLineWidth(3); ctx.strokePath()
+        // Done so far.
+        let drawn = progress * cum.last!
+        let doneIdx = idx.filter { cum[$0] <= drawn }
+        var done = doneIdx.map(at)
+        var climb = 0.0, descent = 0.0
+        if doneIdx.count > 1 { for k in 1..<doneIdx.count { let d = alts[doneIdx[k]] - alts[doneIdx[k - 1]]; if d > 0 { climb += d } else { descent -= d } } }
+        let headAlt: Double = {
+            guard let j = cum.firstIndex(where: { $0 >= drawn }), j > 0 else { return alts.last! }
+            let f = (drawn - cum[j - 1]) / max(cum[j] - cum[j - 1], 0.001)
+            return alts[j - 1] + (alts[j] - alts[j - 1]) * f
+        }()
+        let head = CGPoint(x: box.minX + CGFloat(progress) * box.width, y: box.maxY - CGFloat((headAlt - lo) / span) * (box.height - 34))
+        if progress > 0 { done.append(head) }
+        if done.count > 1 {
+            ctx.saveGState()
+            ctx.addPath(area(done)); ctx.clip()
+            let fill = [UIColor(red: 1, green: 0.42, blue: 0.12, alpha: 0.75).cgColor, UIColor(red: 1, green: 0.42, blue: 0.12, alpha: 0.1).cgColor] as CFArray
+            if let g = CGGradient(colorsSpace: CGColorSpaceCreateDeviceRGB(), colors: fill, locations: [0, 1]) {
+                ctx.drawLinearGradient(g, start: CGPoint(x: 0, y: box.minY), end: CGPoint(x: 0, y: box.maxY), options: [])
+            }
+            ctx.restoreGState()
+            let l = CGMutablePath(); l.addLines(between: done)
+            ctx.addPath(l); ctx.setStrokeColor(UIColor(red: 1, green: 0.5, blue: 0.2, alpha: 1).cgColor); ctx.setLineWidth(5); ctx.strokePath()
+        }
+        if progress > 0 && progress < 1 {
+            ctx.setStrokeColor(UIColor(white: 1, alpha: 0.6).cgColor); ctx.setLineWidth(2)
+            ctx.move(to: CGPoint(x: head.x, y: box.maxY)); ctx.addLine(to: head); ctx.strokePath()
+            ctx.setFillColor(UIColor.white.cgColor)
+            ctx.fillEllipse(in: CGRect(x: head.x - 10, y: head.y - 10, width: 20, height: 20))
+        }
+        // Figures: altitude here, climbed, descended, the highest point.
+        let font = RouteCard.mono(27)
+        let label = "\(Int(headAlt.rounded())) m   ↗ \(Int(climb.rounded())) m   ↘ \(Int(descent.rounded())) m   ▲ \(Int(hi.rounded())) m"
+        RouteCard.text(label, at: CGPoint(x: box.minX, y: box.minY - 6), font: font, color: UIColor(white: 1, alpha: 0.9), kern: 1)
     }
 
     /// A stop: a numbered square on a stem, its label in a dark tag.
