@@ -157,13 +157,14 @@ enum RouteTerrain3D {
         var pins: [(SCNNode, Int)] = []
         let route: [SCNVector3]          // the route on the ground, in scene metres
         let cum: [Double]
-        let ribbon: Float
+        /// Line width and marker sizes follow the camera distance, so they look the same on screen.
+        var ribbon: Float = 40
+        let start = SCNNode()
 
         init(terrain: Terrain, points: [TrackPoint], stops: [RouteFlyover.Stop], cum: [Double]) {
             self.terrain = terrain
             self.cum = cum
             let size = Float(terrain.sizeMeters)
-            ribbon = max(14, size * 0.0028)
             route = points.map { terrain.scene($0.coordinate, lift: 0) }
             // Ground: the height grid as a mesh, the satellite on it.
             scene.rootNode.addChildNode(RouteTerrain3D.ground(terrain))
@@ -195,15 +196,14 @@ enum RouteTerrain3D {
             scene.rootNode.addChildNode(camera)
             scene.rootNode.addChildNode(routeNode)
             // Start, head and stops.
-            let start = SCNNode(geometry: SCNSphere(radius: CGFloat(ribbon * 1.6)))
+            start.geometry = SCNSphere(radius: 1)
             start.geometry!.firstMaterial = RouteTerrain3D.flat(UIColor(red: 0.2, green: 0.9, blue: 0.6, alpha: 1))
-            start.position = RouteTerrain3D.lifted(route.first!, ribbon)
             scene.rootNode.addChildNode(start)
-            head.geometry = SCNSphere(radius: CGFloat(ribbon * 1.5))
+            head.geometry = SCNSphere(radius: 1)
             head.geometry!.firstMaterial = RouteTerrain3D.flat(.white)
             scene.rootNode.addChildNode(head)
             for (n, stop) in stops.enumerated() {
-                let pin = RouteTerrain3D.pin(number: n + 1, label: [stop.name, "\(stop.minutes) min"].compactMap { $0 }.joined(separator: " · "), scale: size)
+                let pin = RouteTerrain3D.pin(number: n + 1, label: [stop.name, "\(stop.minutes) min"].compactMap { $0 }.joined(separator: " · "))
                 pin.position = terrain.scene(stop.coordinate)
                 pin.opacity = 0
                 scene.rootNode.addChildNode(pin)
@@ -212,7 +212,15 @@ enum RouteTerrain3D {
         }
 
         /// The ribbon up to `progress` (orange, with a light core), the rest faint.
-        func show(progress: Double) {
+        func show(progress: Double, distance: Float) {
+            ribbon = max(8, distance * 0.0042)
+            let marker = ribbon * 1.1
+            start.scale = SCNVector3(marker, marker, marker)
+            head.scale = SCNVector3(marker, marker, marker)
+            start.position = RouteTerrain3D.lifted(route.first!, ribbon)
+            // Pins are built 1:1 for a camera 6 km away.
+            let pinScale = distance / 6000
+            for (pin, _) in pins { pin.scale = SCNVector3(pinScale, pinScale, pinScale) }
             routeNode.childNodes.forEach { $0.removeFromParentNode() }
             let drawn = progress * cum.last!
             let headIndex = cum.firstIndex { $0 > drawn } ?? route.count
@@ -309,21 +317,21 @@ enum RouteTerrain3D {
     }
 
     /// A stop: a stem and a numbered tag facing the camera.
-    private static func pin(number: Int, label: String, scale: Float) -> SCNNode {
+    private static func pin(number: Int, label: String) -> SCNNode {
         let node = SCNNode()
-        let tall = max(90, scale * 0.028)
+        let tall: Float = 260
         let stem = SCNNode(geometry: SCNCylinder(radius: CGFloat(tall * 0.025), height: CGFloat(tall)))
         stem.geometry!.firstMaterial = flat(.white)
         stem.position = SCNVector3(0, tall / 2, 0)
         node.addChildNode(stem)
         let image = tagImage(number: number, label: label)
-        let w = tall * 0.42 * Float(image.size.width / image.size.height)
-        let plane = SCNPlane(width: CGFloat(w), height: CGFloat(tall * 0.42))
+        let w = tall * 0.6 * Float(image.size.width / image.size.height)
+        let plane = SCNPlane(width: CGFloat(w), height: CGFloat(tall * 0.6))
         plane.firstMaterial = flat(.white)
         plane.firstMaterial!.diffuse.contents = image
         plane.firstMaterial!.blendMode = .alpha
         let tag = SCNNode(geometry: plane)
-        tag.position = SCNVector3(0, tall * 1.12, 0)
+        tag.position = SCNVector3(0, tall * 1.2, 0)
         tag.constraints = [SCNBillboardConstraint()]
         tag.renderingOrder = 20
         node.addChildNode(tag)
@@ -456,7 +464,7 @@ enum RouteTerrain3D {
 
     @MainActor
     static func frame(_ renderer: SCNRenderer, _ world: World, _ view: View, progress: Double, size: CGSize) -> UIImage {
-        world.show(progress: progress)
+        world.show(progress: progress, distance: view.distance)
         place(world.camera, view)
         return renderer.snapshot(atTime: 0, with: size, antialiasingMode: .multisampling4X)
     }
