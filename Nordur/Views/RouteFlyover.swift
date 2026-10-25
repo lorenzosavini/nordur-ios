@@ -63,7 +63,9 @@ enum RouteFlyover {
         for s in stops {
             var named = s
             let placemark = try? await CLGeocoder().reverseGeocodeLocation(CLLocation(latitude: s.coordinate.lat, longitude: s.coordinate.lon)).first
-            named.name = placemark?.areasOfInterest?.first ?? placemark?.locality ?? placemark?.subLocality ?? placemark?.name
+            // A landmark or a town; never just the country or the region.
+            let candidates = [placemark?.areasOfInterest?.first, placemark?.locality, placemark?.subLocality, placemark?.subAdministrativeArea]
+            named.name = candidates.compactMap { $0 }.first { $0 != placemark?.country && $0 != placemark?.administrativeArea }
             out.append(named)
         }
         return out
@@ -123,8 +125,8 @@ enum RouteFlyover {
         let length = cum.last!
         let over = overview(points, format: format)
         // Low and close while following: the relief reads from 2–6 km away.
-        let followDistance = min(7000, max(2200, length * 0.12))
-        let followPitch = 66.0
+        let followDistance = min(4200, max(1600, length * 0.065))
+        let followPitch = 72.0
         let look = max(300, length * 0.04)
         let heading = { (m: Double) -> Double in
             let a = position(points, cum, m - look), b = position(points, cum, m + look)
@@ -160,7 +162,8 @@ enum RouteFlyover {
                 let m = progress * length
                 focus = position(points, cum, m)
                 smoothed = lerpAngle(smoothed, heading(m), 0.12)
-                camera = cam(focus, followDistance, followPitch, smoothed)
+                // A little to the side of the way, swinging slowly: the relief moves against the line.
+                camera = cam(focus, followDistance, followPitch, smoothed + 22 * sin(k * .pi * 1.5))
                 following = true
             } else if t < seconds.intro + seconds.dive + seconds.follow + seconds.rise {
                 let k = ease((t - seconds.intro - seconds.dive - seconds.follow) / seconds.rise)
@@ -246,7 +249,8 @@ enum RouteFlyover {
         // Stops reached so far: a numbered pin with the place and the minutes.
         for (n, stop) in stops.enumerated() where cum[min(stop.index, cum.count - 1)] <= drawnTo + 1 && visible(stop.coordinate) {
             pin(ctx, at: screen(stop.coordinate), number: n + 1,
-                label: [stop.name, "\(stop.minutes) min"].compactMap { $0 }.joined(separator: " · "), compact: !shot.following && stops.count > 5)
+                label: [stop.name, "\(stop.minutes) min"].compactMap { $0 }.joined(separator: " · "), compact: !shot.following && stops.count > 5,
+                bottomLimit: size.height * 0.62)
         }
         if shot.progress >= 1, let last = points.last?.coordinate, visible(last) {
             RouteCard.dot(ctx, screen(last), color: UIColor(red: 1, green: 0.42, blue: 0.12, alpha: 1))
@@ -257,7 +261,7 @@ enum RouteFlyover {
     }
 
     /// A stop: a numbered square on a stem, its label in a dark tag.
-    private static func pin(_ ctx: CGContext, at p: CGPoint, number: Int, label: String, compact: Bool) {
+    private static func pin(_ ctx: CGContext, at p: CGPoint, number: Int, label: String, compact: Bool, bottomLimit: CGFloat = .infinity) {
         let side: CGFloat = 46, stem: CGFloat = 40
         let top = CGPoint(x: p.x, y: p.y - stem)
         ctx.setStrokeColor(UIColor.white.cgColor); ctx.setLineWidth(3)
@@ -274,7 +278,7 @@ enum RouteFlyover {
         let font = RouteCard.condensed(36)
         let ns = num.size(withAttributes: [.font: font])
         num.draw(at: CGPoint(x: box.midX - ns.width / 2, y: box.midY - ns.height / 2), withAttributes: [.font: font, .foregroundColor: UIColor.black])
-        guard !compact, !label.isEmpty else { return }
+        guard !compact, !label.isEmpty, p.y < bottomLimit else { return }
         let lfont = RouteCard.mono(26)
         let text = label.uppercased() as NSString
         let ls = text.size(withAttributes: [.font: lfont, .kern: 1.5])

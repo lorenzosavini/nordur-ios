@@ -284,7 +284,7 @@ struct RouteShareSheet: View {
                     }
                     if let error { Text(error).font(.app(.caption)).foregroundStyle(Theme.danger) }
                 } footer: {
-                    Text("Il video vola sul terreno in 3D lungo il percorso, con le soste dove ti sei fermato; ci vuole circa un minuto per crearlo. Dal menu di condivisione: Instagram (storia o post), WhatsApp, oppure «Salva immagine/video» nelle Foto. Terreno 3D e satellite di Apple Mappe.")
+                    Text("Il video vola sul terreno in 3D lungo il percorso, con le soste dove ti sei fermato; ci vogliono uno o due minuti per crearlo. Dal menu di condivisione: Instagram (storia o post), WhatsApp, oppure «Salva immagine/video» nelle Foto. Terreno 3D e satellite di Apple Mappe.")
                 }
             }
             .themedList()
