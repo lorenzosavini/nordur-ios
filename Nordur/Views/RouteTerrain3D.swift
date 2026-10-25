@@ -213,7 +213,7 @@ enum RouteTerrain3D {
 
         /// The ribbon up to `progress` (orange, with a light core), the rest faint.
         func show(progress: Double, distance: Float) {
-            ribbon = max(8, distance * 0.0042)
+            ribbon = max(10, distance * 0.0058)
             let marker = ribbon * 1.1
             start.scale = SCNVector3(marker, marker, marker)
             head.scale = SCNVector3(marker, marker, marker)
