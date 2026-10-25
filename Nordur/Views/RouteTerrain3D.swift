@@ -3,13 +3,15 @@ import MapKit
 import SceneKit
 import AVFoundation
 
-/// The route flight rendered by a real 3D engine (SceneKit), like Strava's:
+/// The route flight rendered by a real 3D engine (SceneKit), like Strava's, and
+/// the same flight as the landing's share section (nordur.info, landing/scenes.js):
 /// - the terrain is a mesh built from elevation data (Terrain Tiles, open data
 ///   from Mapzen and others on AWS, no key), slightly exaggerated so the relief
-///   reads on a phone;
+///   reads on a phone, with the surroundings four times wider around it;
 /// - the colours are Apple Maps' satellite picture of the same area, laid on it;
 /// - a low sun shades the slopes and a haze fades the distance;
-/// - the route is a ribbon lying on the ground, so it climbs and drops with it;
+/// - the route is a ribbon lying on the ground, so it climbs and drops with it,
+///   never hidden by the relief;
 /// - stops are pins standing on the terrain with their place and minutes;
 /// - the camera flies smoothly at 30 fps; the altitude profile uses the
 ///   terrain's heights.
@@ -65,10 +67,10 @@ enum RouteTerrain3D {
         return Coordinate(lat: lat, lon: lon)
     }
 
-    /// Elevation tiles around the route, a height grid of up to 320 × 320 and the satellite picture.
-    static func terrain(for points: [TrackPoint]) async throws -> Terrain {
+    /// The terrain around the route, as on the landing: a detailed square (the
+    /// route plus a border, at least 8 km) and its surroundings four times wider.
+    static func terrain(for points: [TrackPoint]) async throws -> (detail: Terrain, wide: Terrain) {
         let lats = points.map(\.lat), lons = points.map(\.lon)
-        // The route plus a border, at least 8 km across.
         let centerLat = (lats.min()! + lats.max()!) / 2
         // Pick the finest zoom that keeps the area within 6 × 6 tiles.
         var zoom = 13
@@ -86,15 +88,26 @@ enum RouteTerrain3D {
             zoom -= 1
         }
         let (x0, y0, x1, y1) = bounds
+        // The same centre two zooms out, four times the side: about as many tiles.
+        let cx = (x0 + x1) / 8, cy = (y0 + y1) / 8, half = (x1 - x0) / 2
+        async let detail = grid(x0, y0, x1, y1, zoom: zoom, samples: 384, centerLat: centerLat)
+        async let wide = grid(cx - half, cy - half, cx + half, cy + half, zoom: zoom - 2, samples: 161, centerLat: centerLat)
+        return try await (detail, wide)
+    }
+
+    /// Heights (samples × samples) and the satellite picture of a square in world pixels.
+    private static func grid(_ x0: Double, _ y0: Double, _ x1: Double, _ y1: Double, zoom: Int, samples: Int, centerLat: Double) async throws -> Terrain {
         let tx0 = Int(floor(x0 / 256)), tx1 = Int(floor(x1 / 256)), ty0 = Int(floor(y0 / 256)), ty1 = Int(floor(y1 / 256))
         let cols = tx1 - tx0 + 1, rows = ty1 - ty0 + 1
+        let tiles = Int(pow(2.0, Double(zoom)))
         // Elevation of the tiles, decoded (Terrarium: R·256 + G + B/256 − 32768).
         var mosaic = [Float](repeating: 0, count: cols * 256 * rows * 256)
         try await withThrowingTaskGroup(of: (Int, Int, [Float]).self) { group in
-            for ty in ty0...ty1 { for tx in tx0...tx1 {
+            for ty in ty0...ty1 where ty >= 0 && ty < tiles { for tx in tx0...tx1 {
                 group.addTask {
-                    let url = URL(string: "https://s3.amazonaws.com/elevation-tiles-prod/terrarium/\(zoom)/\(tx)/\(ty).png")!
-                    let fetched = try await HTTP.get(url, cacheKey: "terrarium_\(zoom)_\(tx)_\(ty)")
+                    let wrapped = (tx % tiles + tiles) % tiles
+                    let url = URL(string: "https://s3.amazonaws.com/elevation-tiles-prod/terrarium/\(zoom)/\(wrapped)/\(ty).png")!
+                    let fetched = try await HTTP.get(url, cacheKey: "terrarium_\(zoom)_\(wrapped)_\(ty)")
                     guard let image = UIImage(data: fetched.value)?.cgImage else { throw NSError(domain: "Nordur", code: 4) }
                     return (tx - tx0, ty - ty0, decode(image))
                 }
@@ -107,7 +120,6 @@ enum RouteTerrain3D {
             }
         }
         // Resampled to the area, sea and holes at 0.
-        let samples = 320
         let width = samples, height = samples
         var heights = [Float](repeating: 0, count: width * height)
         let mw = cols * 256, mh = rows * 256
@@ -116,7 +128,7 @@ enum RouteTerrain3D {
                 let px = x0 + (x1 - x0) * Double(i) / Double(width - 1) - Double(tx0 * 256)
                 let py = y0 + (y1 - y0) * Double(j) / Double(height - 1) - Double(ty0 * 256)
                 let ix = max(0, min(mw - 2, Int(px))), iy = max(0, min(mh - 2, Int(py)))
-                let fx = Float(px - Double(ix)), fy = Float(py - Double(iy))
+                let fx = Float(max(0, min(1, px - Double(ix)))), fy = Float(max(0, min(1, py - Double(iy))))
                 let a = mosaic[iy * mw + ix], b = mosaic[iy * mw + ix + 1], c = mosaic[(iy + 1) * mw + ix], d = mosaic[(iy + 1) * mw + ix + 1]
                 heights[j * width + i] = max(0, (a * (1 - fx) + b * fx) * (1 - fy) + (c * (1 - fx) + d * fx) * fy)
             }
@@ -152,6 +164,7 @@ enum RouteTerrain3D {
         let scene = SCNScene()
         let camera = SCNNode()
         let terrain: Terrain
+        let wide: Terrain
         let routeNode = SCNNode()
         let head = SCNNode()
         var pins: [(SCNNode, Int)] = []
@@ -161,12 +174,19 @@ enum RouteTerrain3D {
         var ribbon: Float = 40
         let start = SCNNode()
 
-        init(terrain: Terrain, points: [TrackPoint], stops: [RouteFlyover.Stop], cum: [Double]) {
+        init(terrain: Terrain, wide: Terrain, points: [TrackPoint], stops: [RouteFlyover.Stop], cum: [Double]) {
             self.terrain = terrain
+            self.wide = wide
             self.cum = cum
             let size = Float(terrain.sizeMeters)
-            route = points.map { terrain.scene($0.coordinate, lift: 0) }
-            // Ground: the height grid as a mesh, the satellite on it.
+            // The line sits 15 m over the ground, and is never hidden by the relief:
+            // along the south coast the road runs under the cliffs.
+            route = points.map { terrain.scene($0.coordinate, lift: 15) }
+            // Ground: the surroundings a little lower under the detail, the satellite on both,
+            // shaded by a sun from the south-west as on the landing.
+            let around = RouteTerrain3D.ground(wide)
+            around.position.y = -40
+            scene.rootNode.addChildNode(around)
             scene.rootNode.addChildNode(RouteTerrain3D.ground(terrain))
             // Sky and haze.
             scene.background.contents = RouteTerrain3D.sky()
@@ -174,24 +194,10 @@ enum RouteTerrain3D {
             scene.fogStartDistance = CGFloat(size * 0.55)
             scene.fogEndDistance = CGFloat(size * 2.4)
             scene.fogDensityExponent = 1.4
-            // A low sun from the south-west, and soft light from the sky.
-            let sun = SCNNode()
-            sun.light = SCNLight()
-            sun.light!.type = .directional
-            sun.light!.intensity = 1150
-            sun.light!.color = UIColor(red: 1, green: 0.96, blue: 0.9, alpha: 1)
-            sun.eulerAngles = SCNVector3(-0.55, -0.75, 0)
-            scene.rootNode.addChildNode(sun)
-            let sky = SCNNode()
-            sky.light = SCNLight()
-            sky.light!.type = .ambient
-            sky.light!.intensity = 380
-            sky.light!.color = UIColor(red: 0.8, green: 0.86, blue: 1, alpha: 1)
-            scene.rootNode.addChildNode(sky)
             camera.camera = SCNCamera()
             camera.camera!.fieldOfView = 48
             camera.camera!.zNear = 5
-            camera.camera!.zFar = Double(size) * 4
+            camera.camera!.zFar = Double(size) * 4 + wide.sizeMeters * 2
             camera.camera!.wantsHDR = false
             scene.rootNode.addChildNode(camera)
             scene.rootNode.addChildNode(routeNode)
@@ -243,7 +249,8 @@ enum RouteTerrain3D {
                 routeNode.addChildNode(RouteTerrain3D.ribbonNode(Array(route.suffix(from: max(0, headIndex - 1))), width: ribbon * 0.45, lift: ribbon * 0.5,
                                                                  color: UIColor(white: 1, alpha: 0.45)))
             }
-            for (pin, index) in pins { pin.opacity = cum[min(index, cum.count - 1)] <= drawn + 1 ? 1 : 0 }
+            // Stops stand up as the line nears them, and stay.
+            for (pin, index) in pins { pin.opacity = CGFloat(max(0, min(1, (drawn + 2500 - cum[min(index, cum.count - 1)]) / 900))) }
         }
     }
 
@@ -256,6 +263,9 @@ enum RouteTerrain3D {
         m.isDoubleSided = true
         m.transparency = color.cgColor.alpha
         m.blendMode = color.cgColor.alpha < 1 ? .alpha : .replace
+        // Line, markers and stops are drawn over the relief, never hidden by it.
+        m.readsFromDepthBuffer = false
+        m.writesToDepthBuffer = false
         return m
     }
 
@@ -287,8 +297,16 @@ enum RouteTerrain3D {
         let m = SCNMaterial()
         m.diffuse.contents = t.texture
         m.diffuse.mipFilter = .linear
-        m.lightingModel = .lambert
+        m.diffuse.maxAnisotropy = 8
+        m.lightingModel = .constant
         m.isDoubleSided = true
+        // The landing's light: 0.74 + 0.42 · n·l, the sun from the south-west
+        // (x east, y up, z south), and a little lift in the mid-tones.
+        m.shaderModifiers = [.surface: """
+            float3 sunDir = normalize((scn_frame.viewTransform * float4(-0.62, 0.48, 0.62, 0.0)).xyz);
+            float shade = 0.74 + 0.42 * max(dot(normalize(_surface.normal), sunDir), 0.0);
+            _surface.diffuse.rgb = pow(max(_surface.diffuse.rgb, float3(0.0)), float3(0.82)) * shade * 1.06;
+            """]
         geometry.firstMaterial = m
         return SCNNode(geometry: geometry)
     }
@@ -316,12 +334,16 @@ enum RouteTerrain3D {
         return node
     }
 
+    /// Height of a pin's stem, built 1:1 for a camera 6 km away; the tag is 0.6 of it, 1.2 up.
+    static let pinTall: Float = 260
+
     /// A stop: a stem and a numbered tag facing the camera.
     private static func pin(number: Int, label: String) -> SCNNode {
         let node = SCNNode()
-        let tall: Float = 260
+        let tall = pinTall
         let stem = SCNNode(geometry: SCNCylinder(radius: CGFloat(tall * 0.025), height: CGFloat(tall)))
         stem.geometry!.firstMaterial = flat(.white)
+        stem.renderingOrder = 19
         stem.position = SCNVector3(0, tall / 2, 0)
         node.addChildNode(stem)
         let image = tagImage(number: number, label: label)
@@ -330,8 +352,10 @@ enum RouteTerrain3D {
         plane.firstMaterial = flat(.white)
         plane.firstMaterial!.diffuse.contents = image
         plane.firstMaterial!.blendMode = .alpha
+        plane.firstMaterial!.readsFromDepthBuffer = false
         let tag = SCNNode(geometry: plane)
         tag.position = SCNVector3(0, tall * 1.2, 0)
+        tag.name = "tag"
         tag.constraints = [SCNBillboardConstraint()]
         tag.renderingOrder = 20
         node.addChildNode(tag)
@@ -369,11 +393,26 @@ enum RouteTerrain3D {
 
     struct View { let focus: SCNVector3; let distance: Float; let pitch: Float; let heading: Float }
 
-    static func place(_ camera: SCNNode, _ v: View) {
+    static func place(_ camera: SCNNode, _ v: View, size: CGSize) {
         let h = v.heading * .pi / 180, p = v.pitch * .pi / 180
         let forward = SCNVector3(sin(h), 0, -cos(h))
         camera.position = SCNVector3(v.focus.x - forward.x * v.distance * cos(p), v.focus.y + v.distance * sin(p), v.focus.z - forward.z * v.distance * cos(p))
         camera.look(at: v.focus, up: SCNVector3(0, 1, 0), localFront: SCNVector3(0, 0, -1))
+        // In the 4:5 post the card's text takes the lower half: the focus sits higher.
+        if size.height / size.width < 1.5 {
+            camera.localRotate(by: SCNQuaternion(axis: SCNVector3(1, 0, 0), angle: -atan(0.24 * tan(24 * Float.pi / 180))))
+        }
+        camera.camera?.zNear = Double(max(5, v.distance * 0.02))
+    }
+
+    /// A point in the picture (UIKit coordinates) and its depth, nil behind the camera.
+    static func project(_ camera: SCNNode, _ p: SCNVector3, size: CGSize) -> (CGPoint, Float)? {
+        let c = camera.convertPosition(p, from: nil)
+        let depth = -c.z
+        guard depth > 1 else { return nil }
+        let f = 1 / tan(24 * Float.pi / 180), aspect = Float(size.width / size.height)
+        let x = (1 + c.x / depth * f / aspect) * Float(size.width) / 2, y = (1 - c.y / depth * f) * Float(size.height) / 2
+        return (CGPoint(x: CGFloat(x), y: CGFloat(y)), depth)
     }
 
     /// The cameras of the video, 30 a second: over the whole route, down behind
@@ -399,8 +438,23 @@ enum RouteTerrain3D {
         let s0 = route.first!, s1 = route.last!
         let overHeading = (atan2(s1.x - s0.x, -(s1.z - s0.z)) * 180 / .pi + 360).truncatingRemainder(dividingBy: 360)
         let over = View(focus: center, distance: size * 0.95, pitch: 48, heading: overHeading)
-        let followDistance = Float(min(12_000, max(3_500, length * 0.15)))
-        let seconds = (intro: 1.6, dive: 1.8, follow: max(7.0, min(12.0, length / 1000 / 10 + 7)), rise: 2.2, hold: 1.6)
+        // Further back, so the valley and the coast stay in view (as on the landing).
+        let followDistance = Float(min(16_000, max(5_000, length * 0.22))), followPitch: Float = 38
+        let seconds = (intro: 1.6, dive: 1.8, follow: 14.0, rise: 2.2, hold: 1.6)
+        // Slower around the stops (about a second each), so their names can be read.
+        let n = 400, stopM = world.pins.map { cum[min($0.1, cum.count - 1)] }
+        var table = [0.0]
+        for i in 1...n {
+            let m = (Double(i) - 0.5) / Double(n) * length
+            let near = stopM.map { exp(-pow(($0 - m) / 1800, 2)) }.max() ?? 0
+            table.append(table[i - 1] + 1 / (1 - 0.8 * near))
+        }
+        func warp(_ p: Double) -> Double {
+            let want = p * table[n]
+            var i = 1
+            while i < n && table[i] < want { i += 1 }
+            return min(1, max(0, (Double(i - 1) + (want - table[i - 1]) / (table[i] - table[i - 1])) / Double(n)))
+        }
         let total = seconds.intro + seconds.dive + seconds.follow + seconds.rise + seconds.hold
         func ease(_ t: Double) -> Float { Float(t < 0.5 ? 4 * t * t * t : 1 - pow(-2 * t + 2, 3) / 2) }
         func mix(_ a: SCNVector3, _ b: SCNVector3, _ k: Float) -> SCNVector3 { SCNVector3(a.x + (b.x - a.x) * k, a.y + (b.y - a.y) * k, a.z + (b.z - a.z) * k) }
@@ -418,18 +472,18 @@ enum RouteTerrain3D {
             } else if t < seconds.intro + seconds.dive {
                 let k = ease((t - seconds.intro) / seconds.dive)
                 out.append((View(focus: mix(over.focus, at(0), k), distance: exp(log(over.distance) + (log(followDistance) - log(over.distance)) * k),
-                                 pitch: 48 + (34 - 48) * k, heading: angle(over.heading, smoothed, k)), 0))
+                                 pitch: 48 + (followPitch - 48) * k, heading: angle(over.heading, smoothed, k)), 0))
             } else if t < seconds.intro + seconds.dive + seconds.follow {
                 let k = (t - seconds.intro - seconds.dive) / seconds.follow
                 let p = k < 0.1 ? 5 * k * k : k > 0.9 ? 1 - 5 * (1 - k) * (1 - k) : (k - 0.05) / 0.9
-                let progress = min(1, max(0, p))
+                let progress = warp(min(1, max(0, p)))
                 let m = progress * length
                 smoothed = angle(smoothed, heading(m), 0.06)
-                out.append((View(focus: at(m), distance: followDistance, pitch: 34, heading: smoothed + 30 * Float(sin(k * .pi * 1.5))), progress))
+                out.append((View(focus: at(m), distance: followDistance, pitch: followPitch, heading: smoothed + 30 * Float(sin(k * .pi * 1.5))), progress))
             } else if t < total - seconds.hold {
                 let k = ease((t - seconds.intro - seconds.dive - seconds.follow) / seconds.rise)
                 out.append((View(focus: mix(at(length), over.focus, k), distance: exp(log(followDistance) + (log(over.distance) - log(followDistance)) * k),
-                                 pitch: 34 + (46 - 34) * k, heading: angle(smoothed, over.heading, k)), 1))
+                                 pitch: followPitch + (46 - followPitch) * k, heading: angle(smoothed, over.heading, k)), 1))
             } else {
                 let k = Float((t - total + seconds.hold) / seconds.hold)
                 out.append((View(focus: over.focus, distance: over.distance * (1 + 0.03 * k), pitch: 46, heading: over.heading + 5 * k), 1))
@@ -446,7 +500,7 @@ enum RouteTerrain3D {
         guard points.count > 1 else { throw NSError(domain: "Nordur", code: 3) }
         async let terrainTask = terrain(for: points)
         let stops = await RouteFlyover.named(RouteFlyover.stops(session.points))
-        let terrain = try await terrainTask
+        let (terrain, wide) = try await terrainTask
         var cum = [0.0]
         for i in 1..<points.count { cum.append(cum[i - 1] + Geo.distanceKm(points[i - 1].coordinate, points[i].coordinate) * 1000) }
         // Stops indexed on the downsampled route.
@@ -454,7 +508,7 @@ enum RouteTerrain3D {
             let i = points.indices.min { Geo.distanceKm(points[$0].coordinate, s.coordinate) < Geo.distanceKm(points[$1].coordinate, s.coordinate) } ?? 0
             return RouteFlyover.Stop(coordinate: s.coordinate, start: s.start, minutes: s.minutes, index: i, name: s.name)
         }
-        return (World(terrain: terrain, points: points, stops: mapped, cum: cum), points, mapped, RouteCard.stats(session))
+        return (World(terrain: terrain, wide: wide, points: points, stops: mapped, cum: cum), points, mapped, RouteCard.stats(session))
     }
 
     /// Ground heights under the route, for the profile.
@@ -465,7 +519,16 @@ enum RouteTerrain3D {
     @MainActor
     static func frame(_ renderer: SCNRenderer, _ world: World, _ view: View, progress: Double, size: CGSize) -> UIImage {
         world.show(progress: progress, distance: view.distance)
-        place(world.camera, view)
+        place(world.camera, view, size: size)
+        // Never a stop over the card's name and date, its profile or its figures.
+        let u = size.width / 1080
+        for (pin, _) in world.pins where pin.opacity > 0 {
+            guard let tag = pin.childNode(withName: "tag", recursively: false),
+                  let hit = project(world.camera, tag.worldPosition, size: size) else { pin.opacity = 0; continue }
+            let (p, depth) = hit
+            let half = CGFloat(pinTall * 0.6 * pin.scale.y / depth / tan(24 * Float.pi / 180)) * size.height / 4
+            if p.y - half < 190 * u || p.y + half > size.height - 790 * u { pin.opacity = 0 }
+        }
         return renderer.snapshot(atTime: 0, with: size, antialiasingMode: .multisampling4X)
     }
 
