@@ -166,7 +166,9 @@ struct WindArrow: View {
 /// Place selector: mono context line, condensed uppercase name.
 struct PlaceHeader: View {
     @Environment(AppModel.self) private var model
+    @Environment(AlertCenter.self) private var alerts
     @State private var showPicker = false
+    @State private var fullFollow = false
     var onHero = false
     var size: CGFloat = 34
 
@@ -201,6 +203,28 @@ struct PlaceHeader: View {
             .contentShape(Rectangle())
         }
         .buttonStyle(.plain)
+        .overlay(alignment: .bottomTrailing) {
+            // The bell: this place is followed for notifications, without being in the trip.
+            if !model.useCurrentLocation {
+                let following = alerts.settings.follows(model.activePlace)
+                Button {
+                    if !following && alerts.settings.followed.count >= AlertSettings.followLimit { fullFollow = true; return }
+                    Haptics.tap()
+                    alerts.toggleFollow(model.activePlace)
+                } label: {
+                    Image(systemName: following ? "bell.fill" : "bell")
+                        .font(.system(size: 17, weight: .semibold))
+                        .foregroundStyle(following ? Theme.accent : Theme.dim)
+                        .frame(width: 40, height: 40)
+                        .contentShape(Rectangle())
+                }
+                .buttonStyle(.plain)
+                .accessibilityLabel(following ? Text("Non seguire più \(model.activePlace.name)") : Text("Segui \(model.activePlace.name) per le allerte"))
+            }
+        }
+        .alert("Segui al massimo \(AlertSettings.followLimit) luoghi", isPresented: $fullFollow) {
+            Button("OK", role: .cancel) {}
+        } message: { Text("Togline uno in Allerte › Impostazioni allerte › Luoghi seguiti.") }
         .sheet(isPresented: $showPicker) {
             PlacePicker(allowCurrentLocation: true) { choice in
                 switch choice {

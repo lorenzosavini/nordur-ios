@@ -52153,34 +52153,6 @@
         }
       }
     },
-    "Una notifica arriva quando un'allerta è nuova, peggiora o inizia prima; se resta uguale si aggiorna solo nell'elenco. Il luogo scelto a mano è di solito un posto che stai solo guardando: senza questa opzione compare nelle schermate ma non manda notifiche. Il riepilogo arriva la sera prima di ogni giorno di viaggio (dalle 19:30, ora islandese): il tragitto, vento, pioggia, strade chiuse, allerte e aurora. Di notte (22:30–7:00) solo il pericolo suona; l'arancione arriva senza suono, il resto in silenzio nel Centro notifiche." : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "A notification arrives when an alert is new, gets worse or starts earlier; if it stays the same it is only updated in the list. The place chosen by hand is usually somewhere you are only looking at: without this option it shows on the screens but sends no notifications. The summary arrives the evening before each travel day (from 19:30, Iceland time): the drive, wind, rain, closed roads, warnings and aurora. At night (22:30–7:00) only danger makes a sound; orange arrives silently, the rest quietly in Notification Centre."
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Eine Mitteilung kommt, wenn eine Warnung neu ist, sich verschärft oder früher beginnt; bleibt sie gleich, wird sie nur in der Liste aktualisiert. Der manuell gewählte Ort ist meist ein Ort, den du dir nur ansiehst: ohne diese Option erscheint er auf den Bildschirmen, sendet aber keine Mitteilungen. Die Übersicht kommt am Abend vor jedem Reisetag (ab 19:30 isländischer Zeit): Strecke, Wind, Regen, gesperrte Straßen, Warnungen und Polarlicht. Nachts (22:30–7:00) klingelt nur Gefahr; Orange kommt lautlos, der Rest still in die Mitteilungszentrale."
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Une notification arrive quand une alerte est nouvelle, s'aggrave ou commence plus tôt ; si elle reste identique, elle est seulement mise à jour dans la liste. Le lieu choisi à la main est souvent un endroit que vous regardez seulement : sans cette option il s'affiche dans les écrans mais n'envoie pas de notifications. Le résumé arrive la veille de chaque jour de voyage (dès 19 h 30, heure islandaise) : trajet, vent, pluie, routes fermées, alertes et aurores. La nuit (22 h 30–7 h) seul le danger sonne ; l'orange arrive sans son, le reste en silence dans le centre de notifications."
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Llega una notificación cuando una alerta es nueva, empeora o empieza antes; si sigue igual solo se actualiza en la lista. El lugar elegido a mano suele ser un sitio que solo estás mirando: sin esta opción aparece en las pantallas pero no envía notificaciones. El resumen llega la tarde antes de cada día de viaje (desde las 19:30, hora de Islandia): el trayecto, viento, lluvia, carreteras cerradas, alertas y aurora. De noche (22:30–7:00) solo suena el peligro; el naranja llega sin sonido, el resto en silencio en el centro de notificaciones."
-          }
-        }
-      }
-    },
     "Allerte IMO, vento, pioggia forte, neve, ghiaccio e strade vengono controllati dove sei davvero, alle tappe del viaggio nei giorni in cui ci sarai e lungo i tragitti tra una tappa e l'altra fino a dopodomani. Durante una registrazione di guida anche la strada davanti a te." : {
       "localizations" : {
         "en" : {
@@ -52485,6 +52457,258 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Mañana en %@"
+          }
+        }
+      }
+    },
+    "Una notifica arriva quando un'allerta è nuova, peggiora o inizia prima; se resta uguale si aggiorna solo nell'elenco. Un luogo che stai solo guardando compare nelle schermate ma non manda notifiche, a meno che tu non lo segua con la campanella. Il riepilogo arriva la sera prima di ogni giorno di viaggio (dalle 19:30, ora islandese): il tragitto, vento, pioggia, strade chiuse, allerte e aurora. Di notte (22:30–7:00) solo il pericolo suona; l'arancione arriva senza suono, il resto in silenzio nel Centro notifiche." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A notification arrives when an alert is new, gets worse or starts earlier; if it stays the same it is only updated in the list. A place you are only looking at shows on the screens but sends no notifications, unless you follow it with the bell. The summary arrives the evening before each travel day (from 19:30, Iceland time): the drive, wind, rain, closed roads, warnings and aurora. At night (22:30–7:00) only danger makes a sound; orange arrives silently, the rest quietly in Notification Centre."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Eine Mitteilung kommt, wenn eine Warnung neu ist, sich verschärft oder früher beginnt; bleibt sie gleich, wird sie nur in der Liste aktualisiert. Ein Ort, den du dir nur ansiehst, erscheint auf den Bildschirmen, sendet aber keine Mitteilungen – außer du folgst ihm mit der Glocke. Die Übersicht kommt am Abend vor jedem Reisetag (ab 19:30 isländischer Zeit): Strecke, Wind, Regen, gesperrte Straßen, Warnungen und Polarlicht. Nachts (22:30–7:00) klingelt nur Gefahr; Orange kommt lautlos, der Rest still in die Mitteilungszentrale."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Une notification arrive quand une alerte est nouvelle, s'aggrave ou commence plus tôt ; si elle reste identique, elle est seulement mise à jour dans la liste. Un lieu que vous regardez seulement s'affiche dans les écrans mais n'envoie pas de notifications, sauf si vous le suivez avec la cloche. Le résumé arrive la veille de chaque jour de voyage (dès 19 h 30, heure islandaise) : trajet, vent, pluie, routes fermées, alertes et aurores. La nuit (22 h 30–7 h) seul le danger sonne ; l'orange arrive sans son, le reste en silence dans le centre de notifications."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Llega una notificación cuando una alerta es nueva, empeora o empieza antes; si sigue igual solo se actualiza en la lista. Un lugar que solo estás mirando aparece en las pantallas pero no envía notificaciones, salvo que lo sigas con la campana. El resumen llega la tarde antes de cada día de viaje (desde las 19:30, hora de Islandia): el trayecto, viento, lluvia, carreteras cerradas, alertas y aurora. De noche (22:30–7:00) solo suena el peligro; el naranja llega sin sonido, el resto en silencio en el centro de notificaciones."
+          }
+        }
+      }
+    },
+    "Nessun luogo seguito. Scegli un luogo in alto nella schermata Oggi e tocca la campanella." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No places followed. Choose a place at the top of Today and tap the bell."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Keine Orte gefolgt. Wähle oben in Heute einen Ort und tippe auf die Glocke."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aucun lieu suivi. Choisissez un lieu en haut d'Aujourd'hui et touchez la cloche."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ningún lugar seguido. Elige un lugar arriba en Hoy y toca la campana."
+          }
+        }
+      }
+    },
+    "Luoghi seguiti" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Followed places"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gefolgte Orte"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lieux suivis"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lugares seguidos"
+          }
+        }
+      }
+    },
+    "Fino a %lld luoghi seguiti anche senza metterli nel viaggio: ricevi le allerte meteo IMO, le strade chiuse e i terremoti vicini. Vento, raffiche e aurora restano per dove sei davvero e per le tappe del viaggio." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Up to %lld places followed even without adding them to the trip: you get IMO weather warnings, closed roads and nearby earthquakes. Wind, gusts and aurora stay for where you really are and the trip stops."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bis zu %lld Orte, auch ohne sie in die Reise aufzunehmen: du erhältst IMO-Wetterwarnungen, gesperrte Straßen und Erdbeben in der Nähe. Wind, Böen und Polarlicht gelten weiter für deinen echten Standort und die Reisestationen."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jusqu'à %lld lieux suivis même sans les mettre dans le voyage : vous recevez les alertes météo IMO, les routes fermées et les séismes proches. Vent, rafales et aurores restent pour l'endroit où vous êtes vraiment et les étapes du voyage."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hasta %lld lugares seguidos aunque no estén en el viaje: recibes las alertas IMO, las carreteras cerradas y los terremotos cercanos. Viento, rachas y aurora siguen siendo para donde estás de verdad y las etapas del viaje."
+          }
+        }
+      }
+    },
+    "Non seguire più %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Stop following %@"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ nicht mehr folgen"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ne plus suivre %@"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dejar de seguir %@"
+          }
+        }
+      }
+    },
+    "Segui %@ per le allerte" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Follow %@ for alerts"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ für Warnungen folgen"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Suivre %@ pour les alertes"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Seguir %@ para las alertas"
+          }
+        }
+      }
+    },
+    "Segui al massimo %lld luoghi" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Follow at most %lld places"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Folge höchstens %lld Orten"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Suivez au plus %lld lieux"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sigue como máximo %lld lugares"
+          }
+        }
+      }
+    },
+    "Togline uno in Allerte › Impostazioni allerte › Luoghi seguiti." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Remove one in Alerts › Alert settings › Followed places."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Entferne einen unter Warnungen › Warnungseinstellungen › Gefolgte Orte."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Retirez-en un dans Alertes › Réglages des alertes › Lieux suivis."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Quita uno en Alertas › Ajustes de alertas › Lugares seguidos."
+          }
+        }
+      }
+    },
+    "vicino a %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "near %@"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "in der Nähe von %@"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "près de %@"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "cerca de %@"
           }
         }
       }

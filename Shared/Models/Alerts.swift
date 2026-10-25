@@ -110,6 +110,12 @@ struct AlertSettings: Codable, Equatable {
     var spoken = true
     /// Also notify for the place chosen by hand (off: only where you really are and the trip stops).
     var followChosenPlace: Bool?
+    /// Places followed without being in the trip (the bell next to the place): their
+    /// IMO warnings, closed roads and quakes are notified, at most `followLimit`.
+    var followedPlaces: [Place]?
+    static let followLimit = 5
+    var followed: [Place] { followedPlaces ?? [] }
+    func follows(_ place: Place) -> Bool { followed.contains { $0.coordinate.key == place.coordinate.key } }
     /// The evening summary of tomorrow's travel (nil = on).
     var eveningSummaryOff: Bool?
     /// At night only danger rings; orange is silent, the rest quiet (nil = on).
@@ -427,7 +433,7 @@ extension AlertEngine {
                 let road = section.numbers.isEmpty ? section.name : "\(section.name) (\(section.numbers))"
                 let whereText = place.isCurrent
                     ? String(localized: "a \(Int(km.rounded())) km da te")
-                    : String(localized: "vicino alla tappa \(place.name)")
+                    : String(localized: "vicino a \(place.name)")
                 events.append(AlertEvent(
                     id: "ri:\(section.id):\(section.condition?.category ?? "")", date: now, category: .road,
                     severity: (section.isClosed ? Risk.danger : risk).rawValue,

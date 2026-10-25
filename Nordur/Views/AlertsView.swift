@@ -220,9 +220,23 @@ struct AlertSettingsView: View {
             }
 
             Section {
-                Toggle(isOn: Binding(get: { draft.followsChosenPlace }, set: { draft.followChosenPlace = $0 })) {
-                    Label("Anche il luogo scelto a mano", systemImage: "mappin.and.ellipse")
+                if draft.followed.isEmpty {
+                    Text("Nessun luogo seguito. Scegli un luogo in alto nella schermata Oggi e tocca la campanella.")
+                        .font(.app(.subheadline)).foregroundStyle(Theme.dim)
                 }
+                ForEach(draft.followed) { place in
+                    Label(place.name, systemImage: "bell.fill")
+                }
+                .onDelete { offsets in
+                    var list = draft.followed
+                    list.remove(atOffsets: offsets)
+                    draft.followedPlaces = list
+                }
+            } header: { Text("Luoghi seguiti").pinnedHeader() } footer: {
+                Text("Fino a \(AlertSettings.followLimit) luoghi seguiti anche senza metterli nel viaggio: ricevi le allerte meteo IMO, le strade chiuse e i terremoti vicini. Vento, raffiche e aurora restano per dove sei davvero e per le tappe del viaggio.")
+            }
+
+            Section {
                 Toggle(isOn: Binding(get: { draft.eveningSummary }, set: { draft.eveningSummaryOff = !$0 })) {
                     Label("Riepilogo serale del viaggio", systemImage: "calendar.badge.clock")
                 }
@@ -230,7 +244,7 @@ struct AlertSettingsView: View {
                     Label("Notti silenziose", systemImage: "moon.zzz")
                 }
             } header: { Text("Quando avvisare").pinnedHeader() } footer: {
-                Text("Una notifica arriva quando un'allerta è nuova, peggiora o inizia prima; se resta uguale si aggiorna solo nell'elenco. Il luogo scelto a mano è di solito un posto che stai solo guardando: senza questa opzione compare nelle schermate ma non manda notifiche. Il riepilogo arriva la sera prima di ogni giorno di viaggio (dalle 19:30, ora islandese): il tragitto, vento, pioggia, strade chiuse, allerte e aurora. Di notte (22:30–7:00) solo il pericolo suona; l'arancione arriva senza suono, il resto in silenzio nel Centro notifiche.")
+                Text("Una notifica arriva quando un'allerta è nuova, peggiora o inizia prima; se resta uguale si aggiorna solo nell'elenco. Un luogo che stai solo guardando compare nelle schermate ma non manda notifiche, a meno che tu non lo segua con la campanella. Il riepilogo arriva la sera prima di ogni giorno di viaggio (dalle 19:30, ora islandese): il tragitto, vento, pioggia, strade chiuse, allerte e aurora. Di notte (22:30–7:00) solo il pericolo suona; l'arancione arriva senza suono, il resto in silenzio nel Centro notifiche.")
             }
 
             Section {

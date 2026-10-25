@@ -217,6 +217,17 @@ final class AlertCenter: NSObject {
     /// The place watched for "where you are": the place chosen by hand when there
     /// is one (a pin in Iceland while the phone is elsewhere), otherwise the GPS;
     /// and with the GPS outside Iceland, the trip stop of tonight if there is one.
+    /// The bell next to a place: followed for notifications, or no more.
+    func toggleFollow(_ place: Place) {
+        var next = settings
+        var list = next.followed
+        if next.follows(place) { list.removeAll { $0.coordinate.key == place.coordinate.key } }
+        else if list.count < AlertSettings.followLimit { list.append(place) }
+        next.followedPlaces = list
+        update(next)
+        Task { await check() }
+    }
+
     func auroraPlace(current: Coordinate?) -> Place {
         alertPlace(current: current) ?? model?.activePlace ?? AppModel.monitoredPlace
     }
@@ -246,6 +257,11 @@ final class AlertCenter: NSObject {
         if let currentPlace {
             input.watched.append(.init(name: currentPlace.name, coordinate: currentPlace.coordinate,
                                        from: now, to: now.addingTimeInterval(12 * 3600), isCurrent: true))
+        }
+        // Places followed with the bell: watched for the next day, like a stop.
+        for place in settings.followed where place.coordinate.key != currentPlace?.coordinate.key {
+            input.watched.append(.init(name: place.name, coordinate: place.coordinate,
+                                       from: now, to: now.addingTimeInterval(24 * 3600), isCurrent: false))
         }
         let horizon = now.addingTimeInterval(3 * 24 * 3600)
         for stop in TripStore.loadFromDisk() where stop.endDate >= now && stop.date <= horizon {
