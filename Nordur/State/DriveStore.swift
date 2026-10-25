@@ -13,6 +13,25 @@ final class DriveStore {
         drives = Self.loadIndex()
         // Demo video only (`-ciDemoTrip YES`): a drive on the south coast to show a route and its sharing.
         if drives.isEmpty, UserDefaults.standard.bool(forKey: "ciDemoTrip") { saveImported(Self.demoDrive()) }
+        // CI only (`-ciFlyover YES`): the picture and the 3D flight of the demo drive, written to Documents.
+        if UserDefaults.standard.bool(forKey: "ciFlyover") {
+            Task { @MainActor in
+                try? await Task.sleep(nanoseconds: 8_000_000_000)
+                guard let first = drives.first, let session = load(first.id) else { return }
+                let docs = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
+                let began = Date()
+                if let image = try? await RouteCard.image(session, format: .story) {
+                    try? FileManager.default.copyItem(at: image, to: docs.appendingPathComponent("flyover.jpg"))
+                }
+                do {
+                    let video = try await RouteCard.video(session, format: .story) { _ in }
+                    try? FileManager.default.copyItem(at: video, to: docs.appendingPathComponent("flyover.mp4"))
+                    try? "ok \(Int(Date().timeIntervalSince(began))) s".write(to: docs.appendingPathComponent("flyover.txt"), atomically: true, encoding: .utf8)
+                } catch {
+                    try? "error \(error)".write(to: docs.appendingPathComponent("flyover.txt"), atomically: true, encoding: .utf8)
+                }
+            }
+        }
     }
 
     private static func demoDrive() -> DriveSession {
@@ -20,13 +39,22 @@ final class DriveStore {
                                        (63.5150, -19.4000), (63.4700, -19.2500), (63.4300, -19.1000), (63.4186, -19.0060)]
         let start = Calendar.current.startOfDay(for: Date()).addingTimeInterval(11 * 3600)
         var points: [TrackPoint] = []
+        var clock = 0.0
         for i in 0..<(way.count - 1) {
+            // Two stops, as a real drive has: Skógafoss (15 min) and before Vík (10 min).
+            if i == 4 || i == 7 {
+                let minutes = i == 4 ? 15.0 : 10.0
+                for _ in 0..<12 {
+                    clock += minutes * 60 / 12
+                    points.append(TrackPoint(t: start.addingTimeInterval(clock), lat: way[i].0, lon: way[i].1, alt: 40, speed: 0, course: nil, accuracy: 5))
+                }
+            }
             for k in 0..<50 {
                 let f = Double(k) / 50
                 let lat = way[i].0 + (way[i + 1].0 - way[i].0) * f, lon = way[i].1 + (way[i + 1].1 - way[i].1) * f
-                let n = points.count
-                points.append(TrackPoint(t: start.addingTimeInterval(Double(n) * 9), lat: lat, lon: lon,
-                                         alt: 40 + 60 * sin(Double(n) / 40), speed: 21, course: nil, accuracy: 5))
+                clock += 9
+                points.append(TrackPoint(t: start.addingTimeInterval(clock), lat: lat, lon: lon,
+                                         alt: 40 + 60 * sin(Double(points.count) / 40), speed: 21, course: nil, accuracy: 5))
             }
         }
         var session = DriveMath.imported(name: String(localized: "Costa sud: Seljalandsfoss → Vík"), points: points)
