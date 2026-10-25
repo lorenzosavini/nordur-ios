@@ -269,7 +269,7 @@ struct AuroraFinderButton: View {
     @State private var open = false
 
     var body: some View {
-        Button { open = true } label: {
+        Button { if Entitlements.shared.check(.auroraFinder) { open = true } } label: {
             Label("Trova l'aurora con la fotocamera", systemImage: "camera.viewfinder")
                 .font(.mono(12, .bold)).tracking(0.4)
                 .lineLimit(1).minimumScaleFactor(0.7)

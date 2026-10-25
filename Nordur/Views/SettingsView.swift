@@ -37,8 +37,10 @@ struct SettingsView: View {
                             Label("Prezzi in corone anche in", systemImage: "eurosign.circle")
                         }
                     }
-                    NavigationLink { CurrencyConverterView() } label: {
-                        Label("Convertitore valute", systemImage: "arrow.left.arrow.right.circle")
+                    if Entitlements.shared.shows(.currencyConverter) {
+                        NavigationLink { CurrencyConverterView() } label: {
+                            HStack { Label("Convertitore valute", systemImage: "arrow.left.arrow.right.circle"); Spacer(); ProLock(feature: .currencyConverter) }
+                        }
                     }
                     LabeledContent {
                         Text("mm · km").foregroundStyle(.secondary)
@@ -69,13 +71,17 @@ struct SettingsView: View {
                     Text("Lo schermo diventa rosso scuro su nero: la luce bianca e blu fa perdere l'adattamento degli occhi al buio (servono 20-30 minuti per recuperarlo), il rosso no. Abbassa anche la luminosità del telefono.\n\nAurora animata: quando l'aurora è possibile dove sei, in alto compaiono le sue tende, più evidenti quanto più sono buone le probabilità; spariscono quando non ce n'è.")
                 }
 
+                ProSettingsSection()
+
                 LanguageSection()
 
                 BackupSettingsSection()
 
                 Section {
                     NavigationLink { AlertSettingsView() } label: { Label("Allerte e notifiche", systemImage: "bell.badge") }
-                    NavigationLink { OfflineView() } label: { Label("Pacchetto offline", systemImage: "arrow.down.circle") }
+                    if Entitlements.shared.shows(.offline) {
+                        NavigationLink { OfflineView() } label: { HStack { Label("Pacchetto offline", systemImage: "arrow.down.circle"); Spacer(); ProLock(feature: .offline) } }
+                    }
                     NavigationLink { DataSourcesView() } label: { Label("Fonti e stato dei dati", systemImage: "doc.text.magnifyingglass") }
                     NavigationLink { CrashLogView() } label: {
                         LabeledContent {

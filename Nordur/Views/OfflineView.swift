@@ -7,7 +7,9 @@ struct OfflineView: View {
     @State private var running = false
     @State private var log: [String] = []
 
-    var body: some View {
+    var body: some View { ProGate(feature: .offline) { content } }
+
+    @ViewBuilder private var content: some View {
         List {
             Section {
                 Text("Scarica i dati prima di entrare in zone senza copertura (Highlands, fiordi occidentali, parte dell'Est).")

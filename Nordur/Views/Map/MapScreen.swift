@@ -38,7 +38,11 @@ struct MapScreen: View {
     @State private var selectedWebcam: WebcamSite?
     @State private var selectedSection: RoadInfo.Section?
 
-    private var layer: WeatherLayer { WeatherLayer(rawValue: layerRaw) ?? .wind }
+    /// The layer chosen, none while the weather map needs Pro.
+    private var layer: WeatherLayer {
+        let chosen = WeatherLayer(rawValue: layerRaw) ?? .wind
+        return chosen == .none || Entitlements.shared.allows(.weatherMap) ? chosen : .none
+    }
     private var grid: WeatherGrid? { model.weatherGrid?.value }
     private var hourIndex: Int {
         guard let grid, grid.hourCount > 0 else { return 0 }
@@ -116,6 +120,7 @@ struct MapScreen: View {
             FlowLayout(spacing: 6, lineSpacing: 6) {
                 ForEach(WeatherLayer.allCases) { item in
                     Button {
+                        guard item == .none || Entitlements.shared.check(.weatherMap) else { return }
                         if layerRaw != item.rawValue { Haptics.select() }
                         layerRaw = item.rawValue
                         playing = false

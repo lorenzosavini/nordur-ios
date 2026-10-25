@@ -510,9 +510,9 @@ struct AuroraView: View {
                 }
             }
             HStack(spacing: 8) {
-                reportButton(account.isSignedIn ? String(localized: "LA VEDO") : String(localized: "ACCEDI PER SEGNALARE"), "+") { reporting = .seen }
+                reportButton(account.isSignedIn ? String(localized: "LA VEDO") : String(localized: "ACCEDI PER SEGNALARE"), "+") { if Entitlements.shared.check(.auroraReport) { reporting = .seen } }
                 if account.isSignedIn {
-                    reportButton(String(localized: "NON LA VEDO"), "–") { reporting = .notSeen }
+                    reportButton(String(localized: "NON LA VEDO"), "–") { if Entitlements.shared.check(.auroraReport) { reporting = .notSeen } }
                 }
             }
             .disabled(!account.isSignedIn)

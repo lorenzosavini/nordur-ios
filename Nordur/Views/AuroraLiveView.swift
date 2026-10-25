@@ -24,7 +24,9 @@ struct AuroraLiveView: View {
     private static let region = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: 66, longitude: -18),
                                                    span: MKCoordinateSpan(latitudeDelta: 24, longitudeDelta: 60))
 
-    var body: some View {
+    var body: some View { ProGate(feature: .auroraLive) { content } }
+
+    @ViewBuilder private var content: some View {
         ScrollView {
             VStack(spacing: 14) {
                 Card(title: String(localized: "Ovale aurorale sulla mappa"), systemImage: "moon.stars.fill", tint: .mint) {

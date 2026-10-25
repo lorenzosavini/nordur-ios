@@ -282,7 +282,7 @@ struct RouteShareSheet: View {
                             Label("Condividi il video 3D", systemImage: "film.stack").font(.app(.headline))
                         }
                     } else {
-                        Button { Task { await makeVideo() } } label: {
+                        Button { if Entitlements.shared.check(.driveFlight3D) { Task { await makeVideo() } } } label: {
                             HStack {
                                 Label(making ? String(localized: "Creo il video…") : String(localized: "Crea il volo 3D sul percorso"), systemImage: "video.badge.plus")
                                     .font(.app(.headline))

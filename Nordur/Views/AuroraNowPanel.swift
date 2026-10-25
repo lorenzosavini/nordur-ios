@@ -157,7 +157,7 @@ struct AuroraVerdictCard: View {
             }
             Text(verdict.detail).font(.app(.subheadline)).foregroundStyle(Theme.text)
             if verdict.level >= .soon {
-                Button { finder = true } label: {
+                Button { if Entitlements.shared.check(.auroraFinder) { finder = true } } label: {
                     Label("Dove guardare: mirino con la fotocamera", systemImage: "camera.viewfinder").font(.app(.caption, .semibold))
                 }
                 .foregroundStyle(tint)

@@ -8,6 +8,14 @@
     {
       "source": "/api/watch",
       "destination": "/api/aurora?watch=1"
+    },
+    {
+      "source": "/api/admin",
+      "destination": "/api/health?admin=1"
+    },
+    {
+      "source": "/api/config",
+      "destination": "/api/health?config=1"
     }
   ],
   "crons": [

@@ -36,7 +36,7 @@ struct TripView: View {
                                 .accessibilityIdentifier("trip.inbox")
                             HeaderButton(systemImage: "person") { showAccount = true }
                                 .accessibilityLabel(String(localized: "Account"))
-                            HeaderButton(systemImage: "plus") { creating = true }
+                            HeaderButton(systemImage: "plus") { if Entitlements.shared.check(.tripPlanner) { creating = true } }
                                 .accessibilityLabel("Aggiungi tappa")
                                 .accessibilityIdentifier("trip.add")
                         }
@@ -60,7 +60,7 @@ struct TripView: View {
                         Text("NESSUNA TAPPA").font(.display(28, .bold)).foregroundStyle(Theme.text)
                         Text("Per ogni tappa: meteo del giorno, allerte, mare e strade lungo il tragitto.")
                             .font(.app(.subheadline)).foregroundStyle(Theme.dim)
-                        Button { creating = true } label: {
+                        Button { if Entitlements.shared.check(.tripPlanner) { creating = true } } label: {
                             HStack {
                                 Text("AGGIUNGI LA PRIMA TAPPA").font(.mono(12, .semibold)).tracking(0.8)
                                 Spacer()
@@ -84,9 +84,9 @@ struct TripView: View {
                             Button { sharing = true } label: { SharedStatusLine() }.buttonStyle(.plain)
                         }
                         HStack(spacing: 8) {
-                            actionButton(String(localized: "TAPPA"), "plus") { creating = true }
-                            actionButton(String(localized: "IMPORTA"), "square.and.arrow.down") { importing = true }
-                            actionButton(String(localized: "CONDIVIDI"), "square.and.arrow.up") { sharing = true }
+                            actionButton(String(localized: "TAPPA"), "plus") { if Entitlements.shared.check(.tripPlanner) { creating = true } }
+                            actionButton(String(localized: "IMPORTA"), "square.and.arrow.down") { if Entitlements.shared.check(.tripFiles) { importing = true } }
+                            actionButton(String(localized: "CONDIVIDI"), "square.and.arrow.up") { if Entitlements.shared.check(.tripShared) { sharing = true } }
                                 .accessibilityIdentifier("trip.share")
                         }
                         .buttonStyle(.plain)
@@ -138,7 +138,7 @@ struct TripView: View {
                 }
                 if trip.stops.isEmpty {
                     Section {
-                        Button { importing = true } label: {
+                        Button { if Entitlements.shared.check(.tripFiles) { importing = true } } label: {
                             Label("Importa un viaggio da file GPX o KML", systemImage: "square.and.arrow.down")
                         }
                     } footer: {

@@ -25,6 +25,7 @@ struct TodayView: View {
                         // A halo of the background colour keeps the text legible over the photo.
                         .shadow(color: Theme.bg.opacity(0.9), radius: 6)
                         .shadow(color: Theme.bg.opacity(0.6), radius: 14)
+                        NoticeBanner()
                         statusBanner
                         now
                     }

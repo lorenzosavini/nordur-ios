@@ -247,7 +247,7 @@ final class AlertCenter: NSObject {
             input.news = (try? await n.get()) ?? []
         }
 
-        if settings.isOn(.aurora) {
+        if settings.isOn(.aurora), Entitlements.allowsInBackground(.auroraAlerts) {
             // Space weather is checked at any hour (CMEs, Bz, NOAA alerts);
             // the observing conditions only matter after dark, which the engine knows.
             let state: AuroraState?

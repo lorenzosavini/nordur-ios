@@ -57,6 +57,7 @@ struct NordurApp: App {
                     async let place: Void = model.refreshPlaceIfOld()
                     _ = await (global, place)
                     await AlertCenter.shared.check()
+                    await Entitlements.shared.refresh()
                 }
             default:
                 break
@@ -191,6 +192,9 @@ struct RootView: View {
             NavigationStack { AlertsView() }
         }
         .sheet(isPresented: $showAccount) { AccountView() }
+        .sheet(item: Binding(get: { Entitlements.shared.paywall }, set: { Entitlements.shared.paywall = $0 })) { feature in
+            NavigationStack { PaywallView(feature: feature) }
+        }
         .sheet(isPresented: $model.showSettings) { SettingsView() }
         .sheet(isPresented: $showAuroraIntel) { NavigationStack { AuroraView() } }
         .sheet(isPresented: $showAuroraLive) {
@@ -255,6 +259,7 @@ struct RootView: View {
                 recorder.start(name: "Test CI")
             }
         }
+        .task { await Entitlements.shared.refresh() }
         .task {
             CIRemote.start()
             await model.warmStart()

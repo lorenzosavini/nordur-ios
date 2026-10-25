@@ -70,7 +70,9 @@ struct CurrencyConverterView: View {
     @State private var amount: Double? = 1000
     @FocusState private var editing: Bool
 
-    var body: some View {
+    var body: some View { ProGate(feature: .currencyConverter) { content } }
+
+    @ViewBuilder private var content: some View {
         let rates = model.rates?.value
         let codes = ["ISK"] + ExchangeRates.codes(rates)
         List {

@@ -64,6 +64,16 @@ final class Account {
         return try await signIn(with: try await request("auth", method: "POST", body: body, authorized: false))
     }
 
+    struct Status: Decodable { let pro: Bool; let proUntil: String?; let blocked: Bool }
+
+    /// The account's state on the server: Pro given from the admin panel, suspended.
+    func status() async -> Status? {
+        guard isSignedIn, let email else { return nil }
+        guard let body = try? JSONSerialization.data(withJSONObject: ["mode": "me", "email": email]),
+              let data = try? await request("auth", method: "POST", body: body) else { return nil }
+        return try? JSONDecoder().decode(Status.self, from: data)
+    }
+
     private func signIn(with data: Data) async throws -> Int {
         let response = try JSONDecoder().decode(AuthResponse.self, from: data)
         token = response.token
@@ -271,7 +281,7 @@ final class Account {
 
     /// Uploads files changed since the last sync and removes deleted ones.
     func sync() async {
-        guard isSignedIn, !isSyncing else { return }
+        guard isSignedIn, !isSyncing, Entitlements.allowsInBackground(.backup) else { return }
         isSyncing = true
         defer { isSyncing = false }
         do {

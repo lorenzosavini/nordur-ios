@@ -16,10 +16,10 @@ struct ImportSection: View {
 
     var body: some View {
         Section {
-            Button { showHealth = true } label: {
+            Button { if Entitlements.shared.check(.driveHealth) { showHealth = true } } label: {
                 Label("Da Salute: Garmin, Apple Watch, Strava…", systemImage: "heart.text.square")
             }
-            Button { pickingFile = true } label: {
+            Button { if Entitlements.shared.check(.tripFiles) { pickingFile = true } } label: {
                 Label("Da un file GPX", systemImage: "doc.badge.plus")
             }
             if let message {

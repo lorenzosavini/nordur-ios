@@ -1,0 +1,398 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Norður · Pannello app</title>
+<style>
+  :root { --bg:#07090c; --surface:#0e1217; --raised:#151b22; --hair:#232c36; --text:#eef2f5; --dim:#9aa7b3; --faint:#5d6a76;
+    --accent:#ff6b1f; --aurora:#33e0a8; --caution:#f2c14e; --danger:#ff4d4d;
+    --mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace; --cond: "Barlow Condensed", "Arial Narrow", system-ui, sans-serif; --sans: system-ui, -apple-system, "Segoe UI", sans-serif; }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; background: var(--bg); color: var(--text); font: 400 15px/1.5 var(--sans); }
+  header { display: flex; align-items: center; gap: 14px; padding: 14px 20px; border-bottom: 1px solid var(--hair); position: sticky; top: 0; background: rgba(7,9,12,.95); z-index: 5; }
+  header b { font: 700 22px/1 var(--cond); letter-spacing: .12em; }
+  .kicker { font: 600 11px/1.3 var(--mono); letter-spacing: .12em; text-transform: uppercase; color: var(--accent); }
+  main { max-width: 1240px; margin: 0 auto; padding: 22px 16px 80px; }
+  h1 { font: 700 40px/1.05 var(--cond); margin: 6px 0 16px; }
+  h2 { font: 700 26px/1.1 var(--cond); margin: 0 0 12px; }
+  h3 { font: 600 12px/1.3 var(--mono); letter-spacing: .1em; text-transform: uppercase; color: var(--dim); margin: 18px 0 8px; }
+  .card { border: 1px solid var(--hair); background: var(--surface); padding: 18px; margin-bottom: 18px; }
+  .dim { color: var(--dim); } .faint { color: var(--faint); } .small { font-size: 13px; }
+  .tabs { display: flex; flex-wrap: wrap; border-bottom: 1px solid var(--hair); margin-bottom: 18px; }
+  .tabs button { background: none; border: 0; color: var(--dim); font: 600 12px/1 var(--mono); letter-spacing: .06em; text-transform: uppercase; padding: 13px 14px; cursor: pointer; border-bottom: 2px solid transparent; }
+  .tabs button.on { color: var(--text); border-bottom-color: var(--accent); }
+  .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); border-top: 2px solid var(--text); }
+  .stats div { padding: 14px 12px 14px 0; border-bottom: 1px solid var(--hair); }
+  .stats b { display: block; font: 700 42px/1 var(--cond); }
+  .stats span { font: 600 10px/1.3 var(--mono); letter-spacing: .1em; text-transform: uppercase; color: var(--dim); }
+  .bars { display: flex; align-items: flex-end; gap: 3px; height: 90px; margin-top: 8px; }
+  .bars i { flex: 1; background: var(--aurora); min-height: 1px; opacity: .85; }
+  table { width: 100%; border-collapse: collapse; font-size: 14px; }
+  th, td { text-align: left; padding: 9px 8px 9px 0; border-bottom: 1px solid var(--hair); vertical-align: top; }
+  th { font: 600 10px/1.3 var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--dim); }
+  tr.click { cursor: pointer; } tr.click:hover td { background: var(--raised); }
+  .tag { font: 600 10px/1 var(--mono); text-transform: uppercase; letter-spacing: .06em; padding: 4px 6px; border: 1px solid var(--hair); white-space: nowrap; display: inline-block; }
+  .tag.pro { border-color: var(--accent); color: var(--accent); } .tag.blocked { border-color: var(--danger); color: var(--danger); } .tag.ok { border-color: var(--aurora); color: var(--aurora); }
+  input, select, textarea { font: 400 15px var(--sans); color: var(--text); background: #000; border: 1px solid var(--hair); padding: 10px 12px; border-radius: 0; width: 100%; }
+  textarea { min-height: 90px; }
+  label { display: block; font: 600 10px/1.3 var(--mono); letter-spacing: .1em; text-transform: uppercase; color: var(--dim); margin: 0 0 5px; }
+  .field { margin-bottom: 12px; }
+  .row { display: flex; flex-wrap: wrap; gap: 10px; align-items: end; margin-bottom: 12px; }
+  .row > * { flex: 1; min-width: 160px; }
+  .row > .btn { flex: 0 0 auto; min-width: 0; }
+  .btn { background: var(--accent); color: #000; border: 0; font: 700 12px/1 var(--mono); letter-spacing: .08em; text-transform: uppercase; padding: 12px 14px; cursor: pointer; }
+  .btn.ghost { background: none; color: var(--text); border: 1px solid var(--hair); }
+  .btn.danger { background: var(--danger); color: #fff; }
+  .btn.small { padding: 7px 9px; font-size: 10px; }
+  .btn:disabled { opacity: .5; cursor: default; }
+  .two { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+  @media (max-width: 860px) { .two { grid-template-columns: 1fr; } .hide-m { display: none; } }
+  .feature { display: grid; grid-template-columns: 1fr auto; gap: 10px; align-items: center; padding: 9px 0; border-bottom: 1px solid var(--hair); }
+  .seg { display: inline-flex; border: 1px solid var(--hair); }
+  .seg button { background: none; border: 0; color: var(--dim); font: 600 11px/1 var(--mono); text-transform: uppercase; padding: 8px 10px; cursor: pointer; }
+  .seg button.on[data-v="free"] { background: var(--aurora); color: #000; } .seg button.on[data-v="pro"] { background: var(--accent); color: #000; } .seg button.on[data-v="off"] { background: var(--faint); color: #000; }
+  .note { border-left: 3px solid var(--caution); padding: 8px 12px; background: var(--raised); font-size: 14px; margin: 10px 0; }
+  .msg { position: fixed; bottom: 18px; left: 50%; transform: translateX(-50%); background: var(--raised); border: 1px solid var(--hair); padding: 12px 16px; font-size: 14px; display: none; z-index: 9; max-width: 90vw; }
+  .msg.err { border-color: var(--danger); }
+  #login { max-width: 420px; margin: 8vh auto; }
+  dialog { background: var(--surface); color: var(--text); border: 1px solid var(--hair); max-width: 720px; width: 94vw; padding: 20px; }
+  dialog::backdrop { background: rgba(0,0,0,.7); }
+  .langs { display: flex; gap: 0; margin-bottom: 8px; } .langs button { flex: 0 0 auto; }
+  code { font-family: var(--mono); font-size: 13px; color: var(--caution); }
+</style>
+</head>
+<body>
+<header><b>NORÐUR</b><span class="kicker">Pannello dell'app</span><span style="flex:1"></span><button class="btn small ghost" id="logout" hidden>Esci</button></header>
+<main>
+  <form id="login" class="card" hidden>
+    <div class="kicker">Accesso amministratore</div>
+    <h1>Pannello app</h1>
+    <p class="dim small">La password è quella impostata in <code>ADMIN_PASSWORD</code> sul progetto Vercel di nordur-api. Con <code>ADMIN_TOTP_SECRET</code> serve anche il codice dell'app di autenticazione.</p>
+    <div class="field"><label>Password</label><input type="password" id="lpass" autocomplete="current-password" required></div>
+    <div class="field"><label>Codice a 6 cifre (se attivo)</label><input inputmode="numeric" id="lcode" autocomplete="one-time-code" maxlength="6"></div>
+    <button class="btn" style="width:100%">Entra</button>
+  </form>
+
+  <div id="app" hidden>
+    <nav class="tabs" id="tabs">
+      <button data-t="overview" class="on">Panoramica</button>
+      <button data-t="users">Utenti</button>
+      <button data-t="sightings">Avvistamenti</button>
+      <button data-t="features">Funzioni e prezzi</button>
+      <button data-t="notice">Avviso nell'app</button>
+      <button data-t="log">Registro</button>
+    </nav>
+
+    <section data-s="overview">
+      <div id="ov"></div>
+    </section>
+
+    <section data-s="users" hidden>
+      <div class="card">
+        <div class="row">
+          <div><label>Cerca per email</label><input id="uq" placeholder="nome@…"></div>
+          <div style="max-width:200px"><label>Mostra</label><select id="uf"><option value="all">Tutti</option><option value="pro">Pro regalato</option><option value="blocked">Sospesi</option></select></div>
+          <button class="btn ghost" id="ureload">Aggiorna</button>
+        </div>
+        <div id="ulist"></div>
+      </div>
+    </section>
+
+    <section data-s="sightings" hidden>
+      <div class="card">
+        <div class="row">
+          <div style="max-width:200px"><label>Ultimi giorni</label><select id="sd"><option>1</option><option selected>3</option><option>7</option><option>14</option></select></div>
+          <button class="btn ghost" id="sreload">Aggiorna</button>
+        </div>
+        <p class="dim small">Ogni segnalazione mostra il codice anonimo di chi l'ha inviata: bloccandolo, quell'account non può più inviarne (può anche togliere tutte le sue).</p>
+        <div id="slist"></div>
+      </div>
+    </section>
+
+    <section data-s="features" hidden>
+      <div class="two">
+        <div class="card">
+          <h2>Come si paga</h2>
+          <div class="field">
+            <label>Modello</label>
+            <select id="cmode">
+              <option value="free">Tutto incluso (app gratuita o venduta a prezzo su App Store)</option>
+              <option value="freemium">Gratis con funzioni Pro (acquisti nell'app)</option>
+            </select>
+          </div>
+          <div class="note small" id="modeNote"></div>
+          <h3>Prodotti App Store che sbloccano Pro</h3>
+          <p class="dim small">Gli ID creati in App Store Connect › App › Acquisti in-app o Abbonamenti (es. <code>it.lorenzosavini.nordur.pro</code> a vita, <code>it.lorenzosavini.nordur.pro.annual</code>). Prezzi, prove gratuite e codici promozionali si impostano lì.</p>
+          <div id="cproducts"></div>
+          <div class="row"><div><input id="cnewprod" placeholder="it.lorenzosavini.nordur.pro"></div><button class="btn ghost" id="caddprod">Aggiungi</button></div>
+          <h3>Chi ha già comprato l'app</h3>
+          <div class="field"><label>Pro per sempre a chi ha scaricato fino alla build</label><input id="cpaid" inputmode="numeric" placeholder="es. 180 (vuoto: nessuno)"></div>
+          <p class="dim small">Se oggi vendi l'app a prezzo e domani passi a gratis con Pro, scrivi qui l'ultima build venduta a pagamento: chi l'ha comprata tiene tutto (Apple conserva la build del primo acquisto).</p>
+          <h3>Testo sopra i prezzi</h3>
+          <div class="langs" id="plangs"></div>
+          <div class="field"><label>Titolo</label><input id="ptitle" maxlength="80" placeholder="Norður Pro"></div>
+          <div class="field"><label>Testo</label><textarea id="ptext" maxlength="600" placeholder="Sostieni Norður e sblocca…"></textarea></div>
+        </div>
+        <div class="card">
+          <h2>Ogni funzione</h2>
+          <p class="dim small"><b style="color:var(--aurora)">Gratis</b> per tutti · <b style="color:var(--accent)">Pro</b> solo dopo l'acquisto · <b>Spenta</b> nascosta a tutti. Avvisi meteo e strade, chiusure, terremoti e SOS restano sempre gratis e non sono in elenco.</p>
+          <div id="cfeatures"></div>
+        </div>
+      </div>
+      <div class="row"><button class="btn" id="csave">Salva e pubblica</button><span class="dim small" id="csaved"></span></div>
+    </section>
+
+    <section data-s="notice" hidden>
+      <div class="card">
+        <h2>Avviso in evidenza</h2>
+        <p class="dim small">Compare in alto nella schermata Oggi per tutti finché è attivo (ognuno può chiuderlo). Senza titolo nessun avviso. Per un'emergenza vera rimanda sempre alle fonti ufficiali.</p>
+        <div class="row">
+          <div style="max-width:200px"><label>Tipo</label><select id="nlevel"><option value="info">Informazione</option><option value="warning">Attenzione</option><option value="danger">Pericolo</option></select></div>
+          <div><label>Dal</label><input type="datetime-local" id="nfrom"></div>
+          <div><label>Al</label><input type="datetime-local" id="nuntil"></div>
+        </div>
+        <div class="field"><label>Link (facoltativo, https)</label><input id="nurl" placeholder="https://safetravel.is"></div>
+        <div class="langs" id="nlangs"></div>
+        <div class="field"><label>Titolo</label><input id="ntitle" maxlength="120"></div>
+        <div class="field"><label>Testo</label><textarea id="ntext" maxlength="600"></textarea></div>
+        <p class="dim small">Le lingue senza testo mostrano l'inglese, poi l'italiano.</p>
+        <div class="row"><button class="btn" id="nsave">Pubblica</button><button class="btn ghost" id="nclear">Togli l'avviso</button><span class="dim small" id="nsaved"></span></div>
+      </div>
+    </section>
+
+    <section data-s="log" hidden>
+      <div class="card"><h2>Registro delle azioni</h2><div id="loglist"></div></div>
+    </section>
+  </div>
+</main>
+
+<dialog id="udlg"><div id="ubody"></div><div class="row" style="margin-top:14px"><button class="btn ghost" onclick="udlg.close()">Chiudi</button></div></dialog>
+<div class="msg" id="msg"></div>
+
+<script>
+const API = "/api/health?admin=1";
+const LANGS = ["it", "en", "de", "fr", "es"];
+let token = sessionStorage.getItem("nordur-admin") || "";
+let config = null, features = [], plang = "it", nlang = "it";
+const $ = (id) => document.getElementById(id);
+const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+const when = (iso) => iso ? new Date(iso).toLocaleString("it-IT", { dateStyle: "short", timeStyle: "short" }) : "–";
+const dayOf = (iso) => iso ? new Date(iso).toLocaleDateString("it-IT") : "–";
+function toast(text, err) { const m = $("msg"); m.textContent = text; m.className = "msg" + (err ? " err" : ""); m.style.display = "block"; clearTimeout(toast.t); toast.t = setTimeout(() => (m.style.display = "none"), 3500); }
+
+async function call(action, body = {}) {
+  const res = await fetch(API, { method: "POST", headers: { "Content-Type": "application/json", "X-Admin-Token": token }, body: JSON.stringify({ action, ...body }) });
+  const json = await res.json().catch(() => ({}));
+  if (res.status === 401 && action !== "login") { logout(); throw new Error(json.error || "Sessione scaduta"); }
+  if (!res.ok) throw new Error(json.error || `Errore ${res.status}`);
+  return json;
+}
+
+function logout() { token = ""; sessionStorage.removeItem("nordur-admin"); $("app").hidden = true; $("logout").hidden = true; $("login").hidden = false; }
+$("logout").onclick = logout;
+$("login").onsubmit = async (e) => {
+  e.preventDefault();
+  try {
+    const r = await call("login", { password: $("lpass").value, code: $("lcode").value });
+    token = r.token; sessionStorage.setItem("nordur-admin", token); $("lpass").value = ""; $("lcode").value = "";
+    start();
+  } catch (err) { toast(err.message, true); }
+};
+
+document.querySelectorAll("#tabs button").forEach((b) => (b.onclick = () => show(b.dataset.t)));
+function show(t) {
+  document.querySelectorAll("#tabs button").forEach((b) => b.classList.toggle("on", b.dataset.t === t));
+  document.querySelectorAll("section[data-s]").forEach((s) => (s.hidden = s.dataset.s !== t));
+  ({ overview, users: loadUsers, sightings: loadSightings, features: loadConfig, notice: loadConfig, log: loadLog })[t]?.();
+}
+
+async function start() {
+  $("login").hidden = true; $("app").hidden = false; $("logout").hidden = false;
+  show("overview");
+}
+
+// ——— Overview ———
+async function overview() {
+  try {
+    const o = await call("overview");
+    const max = Math.max(1, ...o.perDay.map((d) => d.created));
+    $("ov").innerHTML = `
+      <div class="card"><div class="stats">
+        <div><b>${o.users}</b><span>Account</span></div>
+        <div><b>${o.newToday}</b><span>Nuovi oggi</span></div>
+        <div><b>${o.new7}</b><span>Nuovi 7 giorni</span></div>
+        <div><b>${o.active7}</b><span>Attivi 7 giorni</span></div>
+        <div><b>${o.pro}</b><span>Pro regalato</span></div>
+        <div><b>${o.blocked}</b><span>Sospesi</span></div>
+        <div><b>${o.sightings7}</b><span>Avvistamenti 7 g</span></div>
+      </div>
+      <h3>Nuovi account, ultimi 30 giorni</h3>
+      <div class="bars">${o.perDay.map((d) => `<i title="${d.day}: ${d.created}" style="height:${(d.created / max) * 100}%"></i>`).join("")}</div>
+      <h3>Lingue</h3><p class="dim">${o.langs.map(([l, n]) => `${esc(l)} ${n}`).join(" · ") || "–"}</p></div>
+      <div class="card"><h2>Sistema</h2><p class="dim small">Archivio: ${esc(o.system.storage)} · Email: ${esc(o.system.mail)} · Verifica in due passaggi: ${o.system.totp ? "attiva" : "<b style='color:var(--caution)'>non attiva</b> (imposta ADMIN_TOTP_SECRET)"} · Modello: ${o.system.mode === "freemium" ? "gratis con Pro" : "tutto incluso"} · Configurazione del ${when(o.system.configUpdated)}</p>
+      <p class="dim small">Gli acquisti fatti su App Store (incassi, rinnovi, rimborsi) si vedono in App Store Connect › Vendite e tendenze: Apple non li comunica qui.</p></div>`;
+  } catch (e) { toast(e.message, true); }
+}
+
+// ——— Users ———
+let uPage = 0;
+$("uq").oninput = () => { clearTimeout($("uq").t); $("uq").t = setTimeout(() => { uPage = 0; loadUsers(); }, 300); };
+$("uf").onchange = () => { uPage = 0; loadUsers(); };
+$("ureload").onclick = () => loadUsers(true);
+async function loadUsers(fresh) {
+  try {
+    const r = await call("users", { query: $("uq").value, filter: $("uf").value, page: uPage, fresh: fresh === true });
+    const pages = Math.ceil(r.total / r.size);
+    $("ulist").innerHTML = `<p class="dim small">${r.total} account</p>
+      <table><tr><th>Email</th><th class="hide-m">Creato</th><th class="hide-m">Ultimo uso</th><th>Lingua</th><th>Stato</th></tr>
+      ${r.users.map((u) => `<tr class="click" data-e="${esc(u.email)}"><td>${esc(u.email)}${u.note ? ` <span class="faint small">· ${esc(u.note)}</span>` : ""}</td><td class="hide-m">${dayOf(u.created)}</td><td class="hide-m">${dayOf(u.lastSeen || u.lastLogin)}</td><td>${esc(u.lang || "–")}</td>
+        <td>${u.pro ? `<span class="tag pro">Pro${u.grant?.until ? " al " + dayOf(u.grant.until) : ""}</span> ` : ""}${u.blocked ? `<span class="tag blocked">Sospeso</span>` : ""}</td></tr>`).join("")}</table>
+      ${pages > 1 ? `<div class="row" style="margin-top:12px"><button class="btn ghost small" ${uPage ? "" : "disabled"} id="uprev">←</button><span class="dim small" style="flex:0">${uPage + 1}/${pages}</span><button class="btn ghost small" ${uPage + 1 < pages ? "" : "disabled"} id="unext">→</button></div>` : ""}`;
+    $("ulist").querySelectorAll("tr.click").forEach((tr) => (tr.onclick = () => openUser(tr.dataset.e)));
+    if ($("uprev")) { $("uprev").onclick = () => { uPage--; loadUsers(); }; $("unext").onclick = () => { uPage++; loadUsers(); }; }
+  } catch (e) { toast(e.message, true); }
+}
+
+async function openUser(email) {
+  try {
+    const r = await call("user", { email });
+    const u = r.user;
+    $("ubody").innerHTML = `<div class="kicker">Account</div><h2 style="word-break:break-all">${esc(u.email)}</h2>
+      <p class="dim small">Creato ${when(u.created)} · ultimo accesso ${when(u.lastLogin)} · ultimo uso ${dayOf(u.lastSeen)} · lingua ${esc(u.lang || "–")}</p>
+      <h3>Backup (contenuto non visibile)</h3>
+      <p class="dim small">${r.docs.length ? r.docs.map((d) => `${esc(d.doc)}${d.size ? ` (${Math.round(d.size / 1024)} KB)` : ""}`).join(" · ") : "Nessun documento"}</p>
+      <h3>Avvistamenti</h3><p class="dim small">${r.sightings} inviati${r.sightingsBanned ? " · <b style='color:var(--danger)'>bloccato dagli avvistamenti</b>" : ""}</p>
+      <h3>Pro regalato</h3>
+      <div class="row"><div><label>Fino al (vuoto: per sempre)</label><input type="date" id="gUntil" value="${u.grant?.until ? u.grant.until.slice(0, 10) : ""}"></div><div><label>Motivo</label><input id="gNote" value="${esc(u.grant?.note || "")}" placeholder="tester, regalo, assistenza…"></div>
+        <button class="btn" id="gSave">${u.pro ? "Aggiorna" : "Regala Pro"}</button>${u.pro ? `<button class="btn ghost" id="gRemove">Togli</button>` : ""}</div>
+      <h3>Nota interna</h3>
+      <div class="row"><div><input id="uNote" value="${esc(u.note || "")}" maxlength="500"></div><button class="btn ghost" id="uNoteSave">Salva</button></div>
+      <h3>Azioni</h3>
+      <div class="row">
+        <button class="btn ghost" id="uExport">Esporta i dati (GDPR)</button>
+        <button class="btn ghost" id="uBlock">${u.blocked ? "Riattiva l'account" : "Sospendi l'account"}</button>
+        <button class="btn danger" id="uDelete">Cancella l'account</button>
+      </div>
+      <p class="faint small">L'esportazione contiene anche i backup: serve per rispondere a una richiesta dell'utente ed è registrata nel registro.</p>`;
+    $("gSave").onclick = async () => { await call("grant", { email, until: $("gUntil").value || null, note: $("gNote").value }); toast("Pro regalato"); openUser(email); loadUsers(); };
+    if ($("gRemove")) $("gRemove").onclick = async () => { await call("grant", { email, remove: true }); toast("Pro tolto"); openUser(email); loadUsers(); };
+    $("uNoteSave").onclick = async () => { await call("note", { email, note: $("uNote").value }); toast("Nota salvata"); loadUsers(); };
+    $("uBlock").onclick = async () => {
+      if (!confirm(u.blocked ? "Riattivare l'account?" : "Sospendere l'account? Non potrà accedere né salvare backup o avvistamenti.")) return;
+      await call("block", { email, blocked: !u.blocked }); toast(u.blocked ? "Account riattivato" : "Account sospeso"); openUser(email); loadUsers();
+    };
+    $("uExport").onclick = async () => {
+      const data = await call("export", { email });
+      const a = document.createElement("a");
+      a.href = URL.createObjectURL(new Blob([JSON.stringify(data, null, 2)], { type: "application/json" }));
+      a.download = `nordur-${email.replace(/[^a-z0-9]+/gi, "_")}.json`; a.click();
+    };
+    $("uDelete").onclick = async () => {
+      const typed = prompt(`Per cancellare per sempre account, backup e avvistamenti scrivi l'email:\n${email}`);
+      if (!typed) return;
+      try { const r = await call("delete", { email, confirm: typed }); toast(`Cancellato: ${r.deleted.documents} documenti, ${r.deleted.sightings} avvistamenti`); udlg.close(); loadUsers(true); }
+      catch (e) { toast(e.message, true); }
+    };
+    $("udlg").showModal();
+  } catch (e) { toast(e.message, true); }
+}
+
+// ——— Sightings ———
+$("sd").onchange = () => loadSightings(); $("sreload").onclick = () => loadSightings();
+async function loadSightings() {
+  try {
+    const r = await call("sightings", { days: $("sd").value });
+    $("slist").innerHTML = `<p class="dim small">${r.sightings.length} segnalazioni</p><table><tr><th>Quando</th><th>Dove</th><th>Cosa</th><th class="hide-m">Chi</th><th></th></tr>
+      ${r.sightings.map((s) => `<tr><td>${when(s.t)}</td><td><a style="color:var(--text)" target="_blank" rel="noopener" href="https://www.openstreetmap.org/?mlat=${s.lat}&mlon=${s.lon}#map=9/${s.lat}/${s.lon}">${s.lat}, ${s.lon}</a></td>
+        <td>${s.seen === false ? "<span class='dim'>Niente aurora</span>" : `<span class="tag ok">Aurora</span> ${esc(s.strength || "")} ${s.nakedEye ? "· occhio nudo" : ""} ${s.camera ? "· foto" : ""}`} <span class="faint">${esc(s.sky || "")}</span></td>
+        <td class="hide-m"><code>${esc(s.tag)}</code>${s.banned ? ` <span class="tag blocked">Bloccato</span>` : ""}</td>
+        <td style="white-space:nowrap"><button class="btn ghost small" data-del="${esc(s.key)}">Elimina</button> <button class="btn ghost small" data-ban="${esc(s.tag)}" data-b="${s.banned ? 0 : 1}">${s.banned ? "Sblocca" : "Blocca"}</button></td></tr>`).join("")}</table>`;
+    $("slist").querySelectorAll("[data-del]").forEach((b) => (b.onclick = async () => { await call("sighting-delete", { key: b.dataset.del }); toast("Segnalazione eliminata"); loadSightings(); }));
+    $("slist").querySelectorAll("[data-ban]").forEach((b) => (b.onclick = async () => {
+      const banned = b.dataset.b === "1";
+      const purge = banned && confirm("Togliere anche tutte le sue segnalazioni?");
+      await call("sighter-ban", { tag: b.dataset.ban, banned, purge }); toast(banned ? "Bloccato" : "Sbloccato"); loadSightings();
+    }));
+  } catch (e) { toast(e.message, true); }
+}
+
+// ——— Features, prices, notice ———
+async function loadConfig() {
+  try {
+    const r = await call("config");
+    config = r.config; features = r.features;
+    renderConfig(); renderNotice();
+  } catch (e) { toast(e.message, true); }
+}
+function modeNote() {
+  $("modeNote").innerHTML = $("cmode").value === "free"
+    ? "Tutte le funzioni sono aperte a chi ha l'app. Per far pagare all'installazione imposta il prezzo in App Store Connect › Prezzi e disponibilità: qui non serve altro."
+    : "L'app si scarica gratis; le funzioni segnate Pro si sbloccano con uno dei prodotti qui sotto (acquisto unico o abbonamento). Chi le tocca vede la schermata di acquisto.";
+}
+$("cmode").onchange = () => { config.mode = $("cmode").value; modeNote(); };
+function langButtons(el, current, pick) {
+  el.innerHTML = LANGS.map((l) => `<button class="btn small ${l === current ? "" : "ghost"}" data-l="${l}">${l.toUpperCase()}</button>`).join("");
+  el.querySelectorAll("button").forEach((b) => (b.onclick = (e) => { e.preventDefault(); pick(b.dataset.l); }));
+}
+function storePaywall() { config.paywall ||= {}; config.paywall[plang] = { title: $("ptitle").value, text: $("ptext").value }; }
+function renderPaywall() { langButtons($("plangs"), plang, (l) => { storePaywall(); plang = l; renderPaywall(); }); $("ptitle").value = config.paywall?.[plang]?.title || ""; $("ptext").value = config.paywall?.[plang]?.text || ""; }
+function renderConfig() {
+  $("cmode").value = config.mode; modeNote();
+  $("cpaid").value = config.paidThroughBuild || "";
+  $("cproducts").innerHTML = config.products.length ? config.products.map((p, i) => `<div class="feature"><code>${esc(p)}</code><button class="btn ghost small" data-i="${i}">Togli</button></div>`).join("") : "<p class='faint small'>Nessun prodotto</p>";
+  $("cproducts").querySelectorAll("button").forEach((b) => (b.onclick = () => { config.products.splice(Number(b.dataset.i), 1); renderConfig(); }));
+  let group = "";
+  $("cfeatures").innerHTML = features.map((f) => {
+    const v = config.features[f.key] || "free";
+    const head = f.group !== group ? `<h3>${esc((group = f.group))}</h3>` : "";
+    return `${head}<div class="feature"><div>${esc(f.label)} <span class="faint small">${esc(f.key)}</span></div>
+      <div class="seg" data-k="${f.key}">${[["free", "Gratis"], ["pro", "Pro"], ["off", "Spenta"]].map(([k, t]) => `<button data-v="${k}" class="${v === k ? "on" : ""}">${t}</button>`).join("")}</div></div>`;
+  }).join("");
+  $("cfeatures").querySelectorAll(".seg button").forEach((b) => (b.onclick = () => { config.features[b.parentElement.dataset.k] = b.dataset.v; renderConfig(); }));
+  renderPaywall();
+}
+$("caddprod").onclick = () => { const v = $("cnewprod").value.trim(); if (v) { config.products.push(v); $("cnewprod").value = ""; renderConfig(); } };
+$("csave").onclick = async () => {
+  storePaywall();
+  config.paidThroughBuild = $("cpaid").value ? Number($("cpaid").value) : null;
+  if (config.mode === "freemium" && Object.values(config.features).includes("pro") && !config.products.length && !confirm("Ci sono funzioni Pro ma nessun prodotto: nessuno potrà sbloccarle. Salvare lo stesso?")) return;
+  try { const r = await call("config-save", { config }); config = r.config; renderConfig(); $("csaved").textContent = "Pubblicato " + when(config.updatedAt) + " · le app lo ricevono entro pochi minuti"; }
+  catch (e) { toast(e.message, true); }
+};
+
+const localInput = (iso) => (iso ? new Date(new Date(iso).getTime() - new Date().getTimezoneOffset() * 60e3).toISOString().slice(0, 16) : "");
+let notice = null;
+function storeNotice() { notice.texts[nlang] = { title: $("ntitle").value, text: $("ntext").value }; }
+function renderNotice() {
+  notice = structuredClone(config.announcement || { level: "info", texts: {} });
+  $("nlevel").value = notice.level || "info"; $("nfrom").value = localInput(notice.from); $("nuntil").value = localInput(notice.until); $("nurl").value = notice.url || "";
+  const langs = () => { langButtons($("nlangs"), nlang, (l) => { storeNotice(); nlang = l; langs(); }); $("ntitle").value = notice.texts[nlang]?.title || ""; $("ntext").value = notice.texts[nlang]?.text || ""; };
+  langs();
+}
+async function saveNotice(clear) {
+  if (!clear) {
+    storeNotice();
+    Object.assign(notice, { level: $("nlevel").value, from: $("nfrom").value ? new Date($("nfrom").value).toISOString() : null, until: $("nuntil").value ? new Date($("nuntil").value).toISOString() : null, url: $("nurl").value.trim() || null });
+    notice.id = `a${Date.now().toString(36)}`; // a new id shows it again to those who closed the previous one
+  }
+  try { const r = await call("config-save", { config: { ...config, announcement: clear ? null : notice } }); config = r.config; renderNotice(); $("nsaved").textContent = clear ? "Avviso tolto" : config.announcement ? "Pubblicato " + when(config.updatedAt) : "Nessun avviso (manca il titolo)"; }
+  catch (e) { toast(e.message, true); }
+}
+$("nsave").onclick = () => saveNotice(false);
+$("nclear").onclick = () => confirm("Togliere l'avviso dall'app?") && saveNotice(true);
+
+// ——— Log ———
+const ACTION = { login: "Accesso", "login-failed": "Accesso non riuscito", "pro-grant": "Pro regalato", "pro-remove": "Pro tolto", note: "Nota", block: "Account sospeso", unblock: "Account riattivato", delete: "Account cancellato", export: "Dati esportati", "sighting-delete": "Avvistamento eliminato", "sighter-ban": "Bloccato dagli avvistamenti", "sighter-unban": "Sbloccato dagli avvistamenti", "config-save": "Configurazione pubblicata" };
+async function loadLog() {
+  try {
+    const r = await call("log");
+    $("loglist").innerHTML = `<table><tr><th>Quando</th><th>Azione</th><th>Dettagli</th><th class="hide-m">Da</th></tr>${r.entries.map((e) => `<tr><td>${when(e.at)}</td><td>${esc(ACTION[e.action] || e.action)}</td><td class="small dim">${esc(Object.entries(e.detail || {}).map(([k, v]) => `${k}: ${v}`).join(" · "))}</td><td class="hide-m faint"><code>${esc(e.ip)}</code></td></tr>`).join("")}</table>`;
+  } catch (e) { toast(e.message, true); }
+}
+
+if (token) start(); else $("login").hidden = false;
+</script>
+</body>
+</html>

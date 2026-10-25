@@ -139,6 +139,7 @@ struct DriveView: View {
             Text("GPS, km, tempi, velocità, dislivello e consumi. Continua a schermo bloccato.")
                 .font(.app(.caption)).foregroundStyle(.secondary)
             Button {
+                guard Entitlements.shared.check(.driveRecord) else { return }
                 recorder.start()
                 Haptics.tap()
             } label: {

@@ -12,6 +12,7 @@
 // the same user are rejected. Absence of reports does not mean absence of aurora.
 import crypto from "node:crypto";
 import { verifyToken, readObject, writeObject, listObjects, readJSON, send, hmac, isRevoked } from "../lib/core.js";
+import { bannedSighterPath } from "../lib/accounts.js";
 
 const lastByUser = new Map(); // per instance, first line of defence; the blob key enforces the rest
 const recentCache = new Map(); // hours -> { at, body }: one storage listing per minute at most
@@ -28,6 +29,7 @@ export default async function handler(req, res) {
     const now = Date.now();
     if (now - (lastByUser.get(uid) || 0) < 20 * 60e3) return send(res, 429, { error: "Puoi inviare un avvistamento ogni 20 minuti" });
     const user = hmac(uid, "sighting");
+    if (await readObject(bannedSighterPath(user.slice(0, 16))).catch(() => null)) return send(res, 403, { error: "Non puoi più inviare avvistamenti" });
     const slot = Math.floor(now / (30 * 60e3));
     const cell = `${Math.round(lat * 2) / 2}_${Math.round(lon * 2) / 2}`;
     const day = new Date(now).toISOString().slice(0, 10);

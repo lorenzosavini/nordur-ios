@@ -4,7 +4,9 @@ struct WebcamsView: View {
     @Environment(AppModel.self) private var model
     @State private var query = ""
 
-    var body: some View {
+    var body: some View { ProGate(feature: .webcams) { content } }
+
+    @ViewBuilder private var content: some View {
         let here = model.activePlace.coordinate
         let sites = (model.webcams?.value ?? [])
             .filter { query.isEmpty || $0.name.localizedCaseInsensitiveContains(query) || $0.road.localizedCaseInsensitiveContains(query) }
