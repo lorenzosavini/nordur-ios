@@ -19,18 +19,23 @@ struct AlertsView: View {
         }
     }
 
-    /// Shown alerts grouped by calendar day, newest day first.
-    private var days: [(day: Date, events: [AlertEvent])] {
-        let calendar = Calendar.current
-        let groups = Dictionary(grouping: shown) { calendar.startOfDay(for: $0.date) }
-        return groups.keys.sorted(by: >).map { (day: $0, events: groups[$0]!.sorted { $0.date > $1.date }) }
+    /// Shown alerts in three parts: in progress now, still to come, ended.
+    private var phases: [(phase: AlertLifecycle.Phase, events: [AlertEvent])] {
+        let now = Date()
+        let groups = Dictionary(grouping: shown) { AlertLifecycle.phase(starts: $0.starts, expires: $0.expires, noticed: $0.date, now: now) }
+        return AlertLifecycle.Phase.allCases.compactMap { phase in
+            guard let list = groups[phase], !list.isEmpty else { return nil }
+            let sorted = phase == .upcoming ? list.sorted { ($0.starts ?? $0.date) < ($1.starts ?? $1.date) } : list.sorted { $0.date > $1.date }
+            return (phase, sorted)
+        }
     }
 
-    private func dayTitle(_ day: Date) -> String {
-        let calendar = Calendar.current
-        if calendar.isDateInToday(day) { return String(localized: "Oggi") }
-        if calendar.isDateInYesterday(day) { return String(localized: "Ieri") }
-        return Fmt.day(day)
+    private func phaseTitle(_ phase: AlertLifecycle.Phase) -> String {
+        switch phase {
+        case .now: return String(localized: "Adesso")
+        case .upcoming: return String(localized: "In arrivo")
+        case .ended: return String(localized: "Terminate")
+        }
     }
 
     var body: some View {
@@ -85,7 +90,7 @@ struct AlertsView: View {
                 }
             }
 
-            ForEach(days, id: \.day) { group in
+            ForEach(phases, id: \.phase) { group in
                 Section {
                     ForEach(group.events) { event in
                         NavigationLink(value: event) {
@@ -102,7 +107,7 @@ struct AlertsView: View {
                         }
                     }
                 } header: {
-                    Text("\(dayTitle(group.day)) · \(group.events.count)").pinnedHeader().pinnedHeader().pinnedHeader()
+                    Text("\(phaseTitle(group.phase)) · \(group.events.count)").pinnedHeader().pinnedHeader().pinnedHeader()
                 }
             }
         }
@@ -174,12 +179,15 @@ struct AlertRow: View {
                 HStack(spacing: 6) {
                     // When it was noticed, and whether it still applies.
                     Text(Fmt.dayTime(event.date)).font(.app(.caption2)).foregroundStyle(.tertiary)
-                    if let expires = event.expires {
-                        if expires < Date() {
-                            Text("· terminata").font(.app(.caption2)).foregroundStyle(.tertiary)
-                        } else {
+                    switch AlertLifecycle.phase(starts: event.starts, expires: event.expires, noticed: event.date, now: Date()) {
+                    case .upcoming:
+                        Text("· dalle \(Fmt.dayTime(event.starts))").font(.app(.caption2, .semibold)).foregroundStyle(event.risk.color)
+                    case .now:
+                        if let expires = event.expires {
                             Text("· in corso fino alle \(Fmt.time(expires))").font(.app(.caption2, .semibold)).foregroundStyle(event.risk.color)
                         }
+                    case .ended:
+                        Text("· terminata").font(.app(.caption2)).foregroundStyle(.tertiary)
                     }
                     if event.coordinate != nil {
                         Image(systemName: "mappin.and.ellipse").font(.app(.caption2)).foregroundStyle(.tertiary)
@@ -187,6 +195,7 @@ struct AlertRow: View {
                 }
             }
         }
+        .opacity(AlertLifecycle.phase(starts: event.starts, expires: event.expires, noticed: event.date, now: Date()) == .ended ? 0.55 : 1)
     }
 }
 
@@ -199,7 +208,7 @@ struct AlertSettingsView: View {
     var body: some View {
         Form {
             Section {
-                ForEach(AlertCategory.allCases.filter { $0 != .notice }) { category in
+                ForEach(AlertCategory.allCases.filter { $0 != .notice && $0 != .summary }) { category in
                     Toggle(isOn: binding(for: category)) {
                         Label(category.label, systemImage: category.symbol)
                     }
@@ -207,7 +216,21 @@ struct AlertSettingsView: View {
             } header: {
                 Text("Cosa monitorare").pinnedHeader().pinnedHeader().pinnedHeader()
             } footer: {
-                Text("Allerte IMO, vento, pioggia forte, neve, ghiaccio e strade vengono controllati dove sei (o nel luogo scelto a mano), alle tappe del viaggio e lungo i tragitti tra una tappa e l'altra fino a dopodomani. Durante una registrazione di guida anche la strada davanti a te.")
+                Text("Allerte IMO, vento, pioggia forte, neve, ghiaccio e strade vengono controllati dove sei davvero, alle tappe del viaggio nei giorni in cui ci sarai e lungo i tragitti tra una tappa e l'altra fino a dopodomani. Durante una registrazione di guida anche la strada davanti a te.")
+            }
+
+            Section {
+                Toggle(isOn: Binding(get: { draft.followsChosenPlace }, set: { draft.followChosenPlace = $0 })) {
+                    Label("Anche il luogo scelto a mano", systemImage: "mappin.and.ellipse")
+                }
+                Toggle(isOn: Binding(get: { draft.eveningSummary }, set: { draft.eveningSummaryOff = !$0 })) {
+                    Label("Riepilogo serale del viaggio", systemImage: "calendar.badge.clock")
+                }
+                Toggle(isOn: Binding(get: { draft.quietNights }, set: { draft.quietNightsOff = !$0 })) {
+                    Label("Notti silenziose", systemImage: "moon.zzz")
+                }
+            } header: { Text("Quando avvisare").pinnedHeader() } footer: {
+                Text("Una notifica arriva quando un'allerta è nuova, peggiora o inizia prima; se resta uguale si aggiorna solo nell'elenco. Il luogo scelto a mano è di solito un posto che stai solo guardando: senza questa opzione compare nelle schermate ma non manda notifiche. Il riepilogo arriva la sera prima di ogni giorno di viaggio (dalle 19:30, ora islandese): il tragitto, vento, pioggia, strade chiuse, allerte e aurora. Di notte (22:30–7:00) solo il pericolo suona; l'arancione arriva senza suono, il resto in silenzio nel Centro notifiche.")
             }
 
             Section {

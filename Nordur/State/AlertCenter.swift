@@ -42,6 +42,8 @@ final class AlertCenter: NSObject {
 
     @ObservationIgnored weak var model: AppModel?
     @ObservationIgnored private var fired: [String: Date] = [:]
+    /// The alerts seen lately by group (AlertLifecycle): their worst level and earliest start.
+    @ObservationIgnored private var seen: [String: AlertLifecycle.Seen] = [:]
     @ObservationIgnored private let significant = CLLocationManager()
     @ObservationIgnored private let speech = AVSpeechSynthesizer()
     @ObservationIgnored private var lastPositionCheck: (date: Date, coordinate: Coordinate)?
@@ -202,11 +204,13 @@ final class AlertCenter: NSObject {
         // there now goes in the inbox without a banner; only what starts after that
         // is notified. Moving with the GPS is not affected.
         let useCurrent = model?.useCurrentLocation ?? (UserDefaults.standard.object(forKey: "useCurrentLocation") as? Bool ?? true)
-        let here = input.watched.first { $0.isCurrent }.map { "\(useCurrent ? "gps" : "pin"):\(useCurrent ? "" : $0.coordinate.key)" } ?? ""
+        let pinned = !useCurrent && settings.followsChosenPlace
+        let here = input.watched.first { $0.isCurrent }.map { "\(pinned ? "pin" : "gps"):\(pinned ? $0.coordinate.key : "")" } ?? ""
         let previous = UserDefaults.standard.string(forKey: "alerts.watchedPlace")
-        let quiet = !useCurrent && previous != nil && previous != here
+        let quiet = pinned && previous != nil && previous != here
         UserDefaults.standard.set(here, forKey: "alerts.watchedPlace")
         await deliver(candidates, quiet: quiet)
+        await sendEveningSummary(input)
         lastCheck = Date()
     }
 
@@ -214,13 +218,21 @@ final class AlertCenter: NSObject {
     /// is one (a pin in Iceland while the phone is elsewhere), otherwise the GPS;
     /// and with the GPS outside Iceland, the trip stop of tonight if there is one.
     func auroraPlace(current: Coordinate?) -> Place {
+        alertPlace(current: current) ?? model?.activePlace ?? AppModel.monitoredPlace
+    }
+
+    /// "Where you are" for the notifications: where the phone really is (with the
+    /// GPS outside Iceland, the trip stop of tonight), never a place only being
+    /// looked at, unless asked (Settings › Allerte › "Anche il luogo scelto a mano").
+    /// Nil without a position.
+    func alertPlace(current: Coordinate?) -> Place? {
         let useCurrent = model?.useCurrentLocation ?? (UserDefaults.standard.object(forKey: "useCurrentLocation") as? Bool ?? true)
-        if !useCurrent { return model?.activePlace ?? AppModel.monitoredPlace }
-        guard let current else { return AppModel.monitoredPlace }
-        if !Coverage.iceland(current) {
-            let now = Date()
-            if let stop = TripStore.loadFromDisk().first(where: { $0.date <= now && now < $0.endDate }) { return stop.place }
+        if !useCurrent, settings.followsChosenPlace { return model?.activePlace ?? AppModel.storedChosenPlace }
+        let now = Date()
+        guard let current = current ?? LocationManager.lastKnown else {
+            return TripStore.loadFromDisk().first(where: { $0.date <= now && now < $0.endDate })?.place
         }
+        if !Coverage.iceland(current), let stop = TripStore.loadFromDisk().first(where: { $0.date <= now && now < $0.endDate }) { return stop.place }
         return Place(name: String(localized: "la tua posizione"), coordinate: current)
     }
 
@@ -230,9 +242,11 @@ final class AlertCenter: NSObject {
         input.now = now
 
         let current = position ?? model?.location.coordinate ?? LocationManager.lastKnown
-        let currentPlace = auroraPlace(current: current)
-        input.watched.append(.init(name: currentPlace.name, coordinate: currentPlace.coordinate,
-                                   from: now, to: now.addingTimeInterval(12 * 3600), isCurrent: true))
+        let currentPlace = alertPlace(current: current)
+        if let currentPlace {
+            input.watched.append(.init(name: currentPlace.name, coordinate: currentPlace.coordinate,
+                                       from: now, to: now.addingTimeInterval(12 * 3600), isCurrent: true))
+        }
         let horizon = now.addingTimeInterval(3 * 24 * 3600)
         for stop in TripStore.loadFromDisk() where stop.endDate >= now && stop.date <= horizon {
             input.watched.append(.init(name: stop.place.name, coordinate: stop.place.coordinate,
@@ -270,15 +284,18 @@ final class AlertCenter: NSObject {
             } else {
                 state = try? await AuroraStateService.load().value
             }
-            let forecast = model?.activePlace.coordinate == currentPlace.coordinate ? model?.forecast?.value : nil
-            let weather: Forecast?
-            if let forecast { weather = forecast } else { weather = try? await WeatherService.forecast(currentPlace.coordinate).value }
-            let inputs = AuroraInputs.make(place: currentPlace.coordinate, forecast: weather, state: state,
-                                           kp: model?.kp?.value ?? [], ovation: model?.ovation?.value,
-                                           horizon: model?.horizons[TerrainService.key(currentPlace.coordinate)], now: now)
-            input.auroraSlots = AuroraEngine.forecast(inputs, hours: 12)
+            // The sky "here" only where you really are; space weather (CMEs, NOAA, Bz) for everyone.
+            if let currentPlace {
+                let forecast = model?.activePlace.coordinate == currentPlace.coordinate ? model?.forecast?.value : nil
+                let weather: Forecast?
+                if let forecast { weather = forecast } else { weather = try? await WeatherService.forecast(currentPlace.coordinate).value }
+                let inputs = AuroraInputs.make(place: currentPlace.coordinate, forecast: weather, state: state,
+                                               kp: model?.kp?.value ?? [], ovation: model?.ovation?.value,
+                                               horizon: model?.horizons[TerrainService.key(currentPlace.coordinate)], now: now)
+                input.auroraSlots = AuroraEngine.forecast(inputs, hours: 12)
+                input.auroraZone = weather?.timeZone ?? .iceland
+            }
             input.auroraState = state
-            input.auroraZone = weather?.timeZone ?? .iceland
             if let model {
                 input.sightings = model.sightings?.value.recent ?? []
             } else {
@@ -316,7 +333,7 @@ final class AlertCenter: NSObject {
 
     /// The drives between trip stops from today to the day after tomorrow, and the
     /// next hours at the place watched: the forecast along each of them.
-    private func addTravelForecast(to input: inout AlertInput, place: Place, now: Date) async {
+    private func addTravelForecast(to input: inout AlertInput, place: Place?, now: Date) async {
         let calendar = Calendar.iceland
         let today = calendar.startOfDay(for: now)
         let stops = TripStore.loadFromDisk().sorted { $0.date < $1.date }
@@ -335,7 +352,7 @@ final class AlertCenter: NSObject {
             leg.hours = hours.values.sorted { $0.date < $1.date }
             input.legs.append(leg)
         }
-        if let forecast = await cachedForecast(place.coordinate) {
+        if let place, let forecast = await cachedForecast(place.coordinate) {
             var hours: [Date: TripLegCheck.Hour] = [:]
             TripLegCheck.merge(&hours, forecast, from: now.addingTimeInterval(-3600), to: now.addingTimeInterval(7 * 3600))
             input.hereHours = hours.values.sorted { $0.date < $1.date }
@@ -344,20 +361,54 @@ final class AlertCenter: NSObject {
     }
 
     private func deliver(_ candidates: [AlertEvent], quiet: Bool = false) async {
-        let fresh = candidates.filter { fired[$0.id] == nil }.sorted { $0.severity > $1.severity }
-        guard !fresh.isEmpty else { return }
-        for event in fresh { fired[event.id] = event.date }
-        for original in fresh {
+        let now = Date()
+        // What each alert is in its life: new or worse (a banner), the same again (the inbox only).
+        var decisions: [(AlertEvent, AlertLifecycle.Decision)] = []
+        for event in candidates.sorted(by: { $0.severity > $1.severity }) {
+            let decision = AlertLifecycle.decide(id: event.id, group: event.lifecycleGroup, severity: event.severity, starts: event.starts,
+                                                 fired: fired, seen: seen, now: now)
+            if decision != .skip { decisions.append((event, decision)) }
+            // Still there: remembered, its worst level and earliest start kept.
+            let group = event.lifecycleGroup
+            if let last = seen[group], now.timeIntervalSince(last.at) < AlertLifecycle.memory {
+                seen[group] = .init(severity: max(last.severity, event.severity), starts: [last.starts, event.starts].compactMap { $0 }.min(), at: now)
+            } else {
+                seen[group] = .init(severity: event.severity, starts: event.starts, at: now)
+            }
+        }
+        guard !decisions.isEmpty else { save(); return }
+        for (event, _) in decisions { fired[event.id] = event.date }
+        for (original, decision) in decisions {
             // Alerts quoting web text (IMO, SafeTravel, Vegagerðin, Herjólfur, NOAA) in the app language.
             var event = original
             if Self.quotesWeb(original) { event = await Translator.shared.localize(original) }
+            // The previous version of the same alert gives way to this one.
+            let previous = events.first { $0.lifecycleGroup == event.lifecycleGroup && $0.category == event.category }
+            events.removeAll { $0.lifecycleGroup == event.lifecycleGroup && $0.category == event.category }
+            if decision == .quiet, previous?.read == true { event.read = true }
             events.insert(event, at: 0)
-            if quiet { continue }
+            if quiet || decision == .quiet { continue }
             post(event)
             if (isDriving || isMoving) && settings.spoken && event.risk >= .warning {
                 say(event.title)
             }
         }
+        save()
+    }
+
+    /// Once an evening (from 19:30 Iceland time, at the first check), for whoever
+    /// has a trip tomorrow: one notification with the drive, the weather, the
+    /// roads and the aurora tonight, instead of many small ones.
+    private func sendEveningSummary(_ input: AlertInput) async {
+        guard settings.eveningSummary else { return }
+        var calendar = Calendar(identifier: .gregorian)
+        calendar.timeZone = .iceland
+        let minutes = calendar.component(.hour, from: input.now) * 60 + calendar.component(.minute, from: input.now)
+        guard minutes >= 19 * 60 + 30, minutes < 23 * 60 + 30 else { return }
+        guard let summary = AlertEngine.eveningSummary(input), fired[summary.id] == nil else { return }
+        fired[summary.id] = summary.date
+        events.insert(summary, at: 0)
+        post(summary)
         save()
     }
 
@@ -371,10 +422,14 @@ final class AlertCenter: NSObject {
         content.title = event.title
         content.subtitle = event.category.shortLabel
         content.body = event.body
-        content.sound = settings.customSounds ? UNNotificationSound(named: UNNotificationSoundName(event.soundName + ".wav")) : .default
+        // At night only danger rings; orange arrives silently, the rest quietly.
+        let delivery = AlertLifecycle.delivery(risk: event.severity, at: Date(), quietNights: settings.quietNights)
+        if delivery.sound {
+            content.sound = settings.customSounds ? UNNotificationSound(named: UNNotificationSoundName(event.soundName + ".wav")) : .default
+        }
         if let picture = NotificationIcon.attachment(for: event) { content.attachments = [picture] }
         content.threadIdentifier = event.category.rawValue
-        content.interruptionLevel = event.risk >= .warning ? .timeSensitive : .active
+        content.interruptionLevel = delivery.urgent ? .timeSensitive : delivery.passive ? .passive : .active
         content.relevanceScore = Double(event.severity) / 3
         content.badge = NSNumber(value: unreadCount)
         content.userInfo = ["alertID": event.id]
@@ -409,6 +464,7 @@ final class AlertCenter: NSObject {
     private struct Stored: Codable {
         var events: [AlertEvent]
         var fired: [String: Date]
+        var seen: [String: AlertLifecycle.Seen]?
     }
 
     private func loadFromDisk() {
@@ -416,13 +472,19 @@ final class AlertCenter: NSObject {
               let stored = try? JSONDecoder().decode(Stored.self, from: data) else { return }
         events = stored.events
         fired = stored.fired
+        seen = stored.seen ?? [:]
     }
 
     private func save() {
-        let weekAgo = Date().addingTimeInterval(-7 * 24 * 3600)
+        let now = Date()
+        let weekAgo = now.addingTimeInterval(-7 * 24 * 3600)
         fired = fired.filter { $0.value > weekAgo }
+        seen = seen.filter { now.timeIntervalSince($0.value.at) < AlertLifecycle.memory }
+        // Ended alerts leave the inbox after three days.
+        events.removeAll { AlertLifecycle.phase(starts: $0.starts, expires: $0.expires, noticed: $0.date, now: now) == .ended
+            && now.timeIntervalSince($0.expires ?? $0.date) > 3 * 24 * 3600 }
         if events.count > 300 { events = Array(events.prefix(300)) }
-        if let data = try? JSONEncoder().encode(Stored(events: events, fired: fired)) {
+        if let data = try? JSONEncoder().encode(Stored(events: events, fired: fired, seen: seen)) {
             try? data.write(to: Self.fileURL, options: .atomic)
         }
     }

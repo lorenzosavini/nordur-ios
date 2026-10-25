@@ -77,14 +77,14 @@ extension AlertEngine {
                     id: "lw:\(leg.key):\(Int(gust / 5))", date: now, category: .wind, severity: risk.rawValue,
                     title: String(localized: "Vento sul viaggio \(leg.route), \(day)"),
                     body: String(localized: "Raffiche previste fino a \(Fmt.ms(gust)) verso le \(Fmt.time(worst.date, in: zone)) lungo il percorso. \(Risk.windAdvice(risk))"),
-                    expires: leg.day.addingTimeInterval(24 * 3600)))
+                    expires: leg.day.addingTimeInterval(24 * 3600), group: "lw:\(leg.key)", starts: worst.date))
             }
 
             if settings.isOn(.weatherWarning), let text = weatherSummary(upcoming, zone: zone) {
                 events.append(AlertEvent(
                     id: "lm:\(leg.key):\(text.key)", date: now, category: .weatherWarning, severity: text.risk.rawValue,
                     title: String(localized: "Meteo sul viaggio \(leg.route), \(day): \(text.title)"),
-                    body: text.body, expires: leg.day.addingTimeInterval(24 * 3600)))
+                    body: text.body, expires: leg.day.addingTimeInterval(24 * 3600), group: "lm:\(leg.key)"))
             }
 
             // Roads as they are now matter for today's and tomorrow's drives.
@@ -104,7 +104,7 @@ extension AlertEngine {
                         severity: (section.isClosed ? Risk.danger : (section.risk ?? .warning)).rawValue,
                         title: String(localized: "\(section.label) sul percorso \(leg.route): \(road)"),
                         body: String(localized: "Viaggio di \(day). Aggiornato \(Fmt.time(section.condition?.updated, in: zone)). Fonte: Vegagerðin (umferdin.is), informazioni 1777."),
-                        coordinate: section.center?.coordinate, expires: leg.day.addingTimeInterval(24 * 3600)))
+                        coordinate: section.center?.coordinate, expires: leg.day.addingTimeInterval(24 * 3600), group: "road:\(section.id)"))
                 }
             }
             if isToday, settings.isOn(.wind), let roads = input.roads, leg.samples.count >= 2,
@@ -118,7 +118,7 @@ extension AlertEngine {
                         id: "lg:\(station.id):\(bucket)", date: now, category: .wind, severity: station.windRisk.rawValue,
                         title: String(localized: "Raffiche di \(Fmt.ms(station.Vindhvida)) adesso sul percorso di oggi"),
                         body: String(localized: "Stazione \(station.name), sul viaggio \(leg.route). Vento medio \(Fmt.ms(station.Vindhradi)) \(station.windDirection). \(Risk.windAdvice(station.windRisk))"),
-                        coordinate: station.coordinate, expires: now.addingTimeInterval(3 * 3600)))
+                        coordinate: station.coordinate, expires: now.addingTimeInterval(3 * 3600), group: "g:\(station.id)"))
                 }
             }
         }
@@ -130,7 +130,7 @@ extension AlertEngine {
             events.append(AlertEvent(
                 id: "hm:\(bucket):\(text.key)", date: now, category: .weatherWarning, severity: text.risk.rawValue,
                 title: String(localized: "Nelle prossime ore a \(input.herePlace): \(text.title)"),
-                body: text.body, expires: now.addingTimeInterval(6 * 3600)))
+                body: text.body, expires: now.addingTimeInterval(6 * 3600), group: "hm"))
         }
         if settings.isOn(.wind), let worst = soon.max(by: { ($0.gust ?? 0) < ($1.gust ?? 0) }),
            let gust = worst.gust, gust >= settings.gustThreshold {
@@ -139,13 +139,70 @@ extension AlertEngine {
                 id: "hw:\(bucket):\(Int(gust / 5))", date: now, category: .wind, severity: risk.rawValue,
                 title: String(localized: "Raffiche fino a \(Fmt.ms(gust)) nelle prossime ore a \(input.herePlace)"),
                 body: String(localized: "Previste verso le \(Fmt.time(worst.date, in: zone)). \(Risk.windAdvice(risk))"),
-                expires: now.addingTimeInterval(6 * 3600)))
+                expires: now.addingTimeInterval(6 * 3600), group: "hw", starts: worst.date))
         }
         return events
     }
 
+    /// The evening summary of tomorrow, for whoever is travelling: the drive (or
+    /// the stop), its wind, rain, snow or ice, the roads closed on the way, the IMO
+    /// warnings, and the aurora tonight. Nil without a trip tomorrow.
+    static func eveningSummary(_ input: AlertInput) -> AlertEvent? {
+        let now = input.now, zone = TimeZone.iceland
+        let tomorrow = Calendar.iceland.startOfDay(for: now).addingTimeInterval(24 * 3600)
+        let leg = input.legs.first { $0.day == tomorrow }
+        let stop = input.watched.first { !$0.isCurrent && $0.from <= tomorrow.addingTimeInterval(12 * 3600) && $0.to >= tomorrow.addingTimeInterval(12 * 3600) }
+        guard leg != nil || stop != nil else { return nil }
+        var lines: [String] = []
+        var risk = Risk.ok
+        if let leg {
+            let hours = leg.hours
+            if let worst = hours.max(by: { ($0.gust ?? 0) < ($1.gust ?? 0) }), let gust = worst.gust, gust >= 15 {
+                lines.append(String(localized: "Raffiche fino a \(Fmt.ms(gust)) verso le \(Fmt.time(worst.date, in: zone))"))
+                risk = max(risk, gust >= 30 ? .danger : gust >= 25 ? .warning : .caution)
+            } else if !hours.isEmpty {
+                lines.append(String(localized: "Vento debole o moderato"))
+            }
+            if let text = weatherSummary(hours, zone: zone) {
+                lines.append(text.title.prefix(1).uppercased() + text.title.dropFirst())
+                risk = max(risk, text.risk)
+            }
+            if let info = input.roadInfo {
+                let closed = info.sections.filter { section in
+                    guard section.isClosed || (section.risk ?? .ok) >= .danger else { return false }
+                    return leg.samples.contains { sample in
+                        if let km = input.roadGeometry?.distanceKm(from: sample, to: section.id) { return km <= 15 }
+                        return (section.distanceKm(to: sample) ?? .infinity) <= 3
+                    }
+                }
+                if closed.isEmpty {
+                    lines.append(String(localized: "Nessuna strada chiusa sul percorso"))
+                } else {
+                    lines.append(String(localized: "Strade chiuse o pericolose sul percorso: \(closed.prefix(3).map(\.name).joined(separator: ", "))"))
+                    risk = max(risk, .danger)
+                }
+            }
+        }
+        let points = (leg?.samples ?? []) + (stop.map { [$0.coordinate] } ?? [])
+        let dayEnd = tomorrow.addingTimeInterval(24 * 3600)
+        let warnings = input.warnings.filter { w in
+            w.isRelevant(at: now) && w.overlaps(tomorrow, dayEnd) && points.contains { w.covers($0) }
+        }
+        if let worst = warnings.max(by: { $0.color < $1.color }) {
+            lines.append(String(localized: "\(worst.color.label): \(worst.headline)"))
+            risk = max(risk, worst.color.risk)
+        }
+        if let best = AuroraEngine.best(input.auroraSlots, within: 8, now: now), best.observability >= .moderate {
+            lines.append(String(localized: "Stanotte aurora: condizioni \(best.observability.label.lowercased()) verso le \(Fmt.time(best.date, in: input.auroraZone))"))
+        }
+        let title = leg.map { String(localized: "Domani \($0.route)") } ?? String(localized: "Domani a \(stop!.name)")
+        return AlertEvent(id: "summary:\(Int(tomorrow.timeIntervalSince1970 / 86400))", date: now, category: .summary,
+                          severity: risk.rawValue, title: title, body: lines.joined(separator: " · "),
+                          expires: dayEnd, starts: tomorrow)
+    }
+
     /// "pioggia forte, ghiaccio" with the details, when any of them is expected.
-    private static func weatherSummary(_ hours: [TripLegCheck.Hour], zone: TimeZone) -> (key: String, title: String, body: String, risk: Risk)? {
+    static func weatherSummary(_ hours: [TripLegCheck.Hour], zone: TimeZone) -> (key: String, title: String, body: String, risk: Risk)? {
         guard !hours.isEmpty else { return nil }
         var parts: [String] = [], details: [String] = [], key = "", risk = Risk.caution
         let rainSum = hours.compactMap(\.precipitation).reduce(0, +)

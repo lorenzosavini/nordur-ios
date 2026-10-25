@@ -27,7 +27,7 @@ jobs:
         run: |
           set -o pipefail
           swiftc -O -o engine-tests Shared/Core/Geo.swift Shared/Core/Format.swift Shared/Core/Dates.swift Shared/Core/OpeningHours.swift \
-            Shared/Services/Astro.swift Shared/Services/AuroraEngine.swift Shared/Services/SkyGlowGrid.swift Shared/Services/AuroraConfirm.swift Shared/Models/Drive.swift Shared/Models/GPX.swift Shared/Models/TripFile.swift Tests/EngineTests/main.swift 2>&1 | tee engine-tests.log
+            Shared/Services/Astro.swift Shared/Services/AuroraEngine.swift Shared/Services/SkyGlowGrid.swift Shared/Services/AuroraConfirm.swift Shared/Models/Drive.swift Shared/Models/GPX.swift Shared/Models/TripFile.swift Shared/Models/AlertLifecycle.swift Tests/EngineTests/main.swift 2>&1 | tee engine-tests.log
           ./engine-tests | tee -a engine-tests.log
 
       - name: Backend unit tests (Node)

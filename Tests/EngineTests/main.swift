@@ -280,6 +280,37 @@ do {
     check(plain.count == 2 && plain.allSatisfy(\.isStop), "short unmarked list = stops")
 }
 
+// MARK: Alert lifecycle
+
+do {
+    let now = date("2026-10-25T12:00:00Z")
+    let seen = ["w:Suðurland": AlertLifecycle.Seen(severity: 2, starts: date("2026-10-26T09:00:00Z"), at: now.addingTimeInterval(-3600))]
+    func decide(_ id: String, _ group: String, _ severity: Int, _ starts: Date? = nil) -> AlertLifecycle.Decision {
+        AlertLifecycle.decide(id: id, group: group, severity: severity, starts: starts, fired: ["w:old": now], seen: seen, now: now)
+    }
+    check(decide("w:old", "w:Suðurland", 3) == .skip, "same key never twice")
+    check(decide("w:new", "w:Vestfirðir", 2) == .notify, "new alert notifies")
+    check(decide("w:upd", "w:Suðurland", 2, date("2026-10-26T09:00:00Z")) == .quiet, "same alert reworded stays quiet")
+    check(decide("w:upd", "w:Suðurland", 1) == .quiet, "better is quiet")
+    check(decide("w:upd", "w:Suðurland", 3) == .notify, "worse notifies")
+    check(decide("w:upd", "w:Suðurland", 2, date("2026-10-26T06:00:00Z")) == .notify, "earlier start notifies")
+    let later = AlertLifecycle.decide(id: "w:upd", group: "w:Suðurland", severity: 2, starts: nil, fired: [:], seen: seen, now: now.addingTimeInterval(40 * 3600))
+    check(later == .notify, "back after a day and a half is new")
+
+    var cal = Calendar(identifier: .gregorian); cal.timeZone = TimeZone(identifier: "UTC")!
+    let night = date("2026-10-25T23:30:00Z"), day = date("2026-10-25T14:00:00Z")
+    check(AlertLifecycle.delivery(risk: 3, at: night, quietNights: true, calendar: cal) == .init(sound: true, urgent: true, passive: false), "danger rings at night")
+    check(AlertLifecycle.delivery(risk: 2, at: night, quietNights: true, calendar: cal) == .init(sound: false, urgent: false, passive: false), "orange silent at night")
+    check(AlertLifecycle.delivery(risk: 1, at: night, quietNights: true, calendar: cal).passive, "yellow quiet at night")
+    check(AlertLifecycle.delivery(risk: 2, at: day, quietNights: true, calendar: cal) == .init(sound: true, urgent: true, passive: false), "orange rings by day")
+    check(AlertLifecycle.delivery(risk: 1, at: night, quietNights: false, calendar: cal).sound, "quiet nights off")
+
+    check(AlertLifecycle.phase(starts: nil, expires: now.addingTimeInterval(3600), noticed: now, now: now) == .now, "in progress")
+    check(AlertLifecycle.phase(starts: now.addingTimeInterval(7200), expires: now.addingTimeInterval(9000), noticed: now, now: now) == .upcoming, "upcoming")
+    check(AlertLifecycle.phase(starts: nil, expires: now.addingTimeInterval(-1), noticed: now, now: now) == .ended, "past its end")
+    check(AlertLifecycle.phase(starts: nil, expires: nil, noticed: now.addingTimeInterval(-25 * 3600), now: now) == .ended, "a day old without end")
+}
+
 print(failures == 0 ? "ALL ENGINE TESTS PASSED" : "\(failures) FAILURES")
 exit(failures == 0 ? 0 : 1)
 

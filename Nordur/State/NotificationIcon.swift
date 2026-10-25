@@ -18,6 +18,7 @@ enum NotificationIcon {
         case .ferry: return UIColor(red: 0.08, green: 0.25, blue: 0.50, alpha: 1)
         case .speed: return UIColor(red: 0.85, green: 0.10, blue: 0.15, alpha: 1)
         case .notice: return UIColor(red: 1.0, green: 0.35, blue: 0.12, alpha: 1)
+        case .summary: return UIColor(red: 0.18, green: 0.32, blue: 0.55, alpha: 1)
         }
     }
 

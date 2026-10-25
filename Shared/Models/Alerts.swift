@@ -1,7 +1,7 @@
 import Foundation
 
 enum AlertCategory: String, Codable, CaseIterable, Identifiable {
-    case weatherWarning, wind, road, quake, safeTravel, aurora, flight, ferry, speed, notice
+    case weatherWarning, wind, road, quake, safeTravel, aurora, flight, ferry, speed, notice, summary
 
     var id: String { rawValue }
 
@@ -17,6 +17,7 @@ enum AlertCategory: String, Codable, CaseIterable, Identifiable {
         case .ferry: return String(localized: "Traghetto Herjólfur")
         case .speed: return String(localized: "Limite di velocità (in guida)")
         case .notice: return String(localized: "Avvisi di Norður")
+        case .summary: return String(localized: "Riepilogo serale del viaggio")
         }
     }
 
@@ -33,6 +34,7 @@ enum AlertCategory: String, Codable, CaseIterable, Identifiable {
         case .ferry: return String(localized: "Traghetto")
         case .speed: return String(localized: "Velocità")
         case .notice: return "Norður"
+        case .summary: return String(localized: "Riepilogo")
         }
     }
 
@@ -48,6 +50,7 @@ enum AlertCategory: String, Codable, CaseIterable, Identifiable {
         case .ferry: return "ferry.fill"
         case .speed: return "gauge.with.dots.needle.67percent"
         case .notice: return "megaphone"
+        case .summary: return "calendar.badge.clock"
         }
     }
 }
@@ -64,8 +67,14 @@ struct AlertEvent: Codable, Identifiable, Hashable {
     var read: Bool = false
     /// After this time the condition no longer applies (aurora windows, space-weather alerts).
     var expires: Date?
+    /// The same alert across its updates (an IMO warning for a region, a road
+    /// section, a station): a new version notifies only when it is worse.
+    var group: String?
+    /// When the condition begins, when it is still to come (a warning from tomorrow 9:00).
+    var starts: Date?
 
     var risk: Risk { Risk(rawValue: severity) ?? .caution }
+    var lifecycleGroup: String { group ?? id }
 }
 
 enum AuroraWatchMode: String, CaseIterable, Identifiable {
@@ -99,6 +108,15 @@ struct AlertSettings: Codable, Equatable {
     var customSoundsOff: Bool?
     var customSounds: Bool { customSoundsOff != true }
     var spoken = true
+    /// Also notify for the place chosen by hand (off: only where you really are and the trip stops).
+    var followChosenPlace: Bool?
+    /// The evening summary of tomorrow's travel (nil = on).
+    var eveningSummaryOff: Bool?
+    /// At night only danger rings; orange is silent, the rest quiet (nil = on).
+    var quietNightsOff: Bool?
+    var followsChosenPlace: Bool { followChosenPlace == true }
+    var eveningSummary: Bool { eveningSummaryOff != true }
+    var quietNights: Bool { quietNightsOff != true }
     var backgroundLocation = true     // position-based checks with the app closed (needs "Always")
     var followedFlights: [String] = []
 
@@ -179,7 +197,7 @@ enum AlertEngine {
                     id: "w:\(warning.identifier)", date: now, category: .weatherWarning, severity: warning.color.risk.rawValue,
                     title: "\(warning.color.label): \(warning.headline)",
                     body: String(localized: "\(place.name) · \(warning.region) · \(when) fino alle \(Fmt.time(warning.expires, in: .iceland))"),
-                    coordinate: place.coordinate, expires: warning.expires))
+                    coordinate: place.coordinate, expires: warning.expires, group: "w:\(warning.region)", starts: warning.onset))
             }
         }
 
@@ -198,7 +216,7 @@ enum AlertEngine {
                         id: "g:\(station.id):\(bucket)", date: now, category: .wind, severity: station.windRisk.rawValue,
                         title: String(localized: "Raffiche di \(Fmt.ms(station.Vindhvida)) a \(station.name)"),
                         body: String(localized: "A \(Int(km)) km da te. Vento medio \(Fmt.ms(station.Vindhradi)) \(station.windDirection). \(Risk.windAdvice(station.windRisk))"),
-                        coordinate: station.coordinate, expires: now.addingTimeInterval(3 * 3600)))
+                        coordinate: station.coordinate, expires: now.addingTimeInterval(3 * 3600), group: "g:\(station.id)"))
                 }
             }
             if settings.isOn(.road), input.roadInfo == nil {
@@ -211,7 +229,7 @@ enum AlertEngine {
                             id: "r:\(segment.id):\(segment.AstandYfirbord ?? "")", date: now, category: .road, severity: Risk.danger.rawValue,
                             title: "\(segment.conditionItalian): \(segment.name)",
                             body: String(localized: "Tratto vicino a \(station.name), a \(Int(Geo.distanceKm(c, current.coordinate))) km da te. Verifica su umferdin.is o chiama il 1777."),
-                            coordinate: c))
+                            coordinate: c, group: "r:\(segment.id)"))
                     }
                 }
             }
@@ -415,7 +433,7 @@ extension AlertEngine {
                     severity: (section.isClosed ? Risk.danger : risk).rawValue,
                     title: "\(section.label): \(road)",
                     body: String(localized: "Tratto \(whereText). Aggiornato \(Fmt.time(section.condition?.updated, in: .iceland)). Fonte: Vegagerðin (umferdin.is), informazioni 1777."),
-                    coordinate: section.center?.coordinate))
+                    coordinate: section.center?.coordinate, group: "road:\(section.id)"))
             }
         }
         if let here = input.watched.first(where: \.isCurrent)?.coordinate {
@@ -456,7 +474,7 @@ extension AlertEvent {
         case .flight: return "flight"
         case .ferry: return "ferry"
         case .speed: return "speed"
-        case .notice: return "info"
+        case .notice, .summary: return "info"
         }
     }
 }

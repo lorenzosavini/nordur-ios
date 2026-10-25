@@ -165,6 +165,6 @@ extension Translator {
         let map = await translate([event.title, event.body])
         return AlertEvent(id: event.id, date: event.date, category: event.category, severity: event.severity,
                           title: map[event.title] ?? event.title, body: map[event.body] ?? event.body,
-                          coordinate: event.coordinate, read: event.read, expires: event.expires)
+                          coordinate: event.coordinate, read: event.read, expires: event.expires, group: event.group, starts: event.starts)
     }
 }

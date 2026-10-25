@@ -771,7 +771,32 @@
       "shouldTranslate" : false
     },
     "%@: %@" : {
-      "shouldTranslate" : false
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@: %2$@"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@: %2$@"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@: %2$@"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@: %2$@"
+          }
+        }
+      }
     },
     "%@: errore medio NOAA %@, combinato %@ (n = %lld)" : {
       "localizations" : {
@@ -47842,34 +47867,6 @@
         }
       }
     },
-    "Allerte IMO, vento, pioggia forte, neve, ghiaccio e strade vengono controllati dove sei (o nel luogo scelto a mano), alle tappe del viaggio e lungo i tragitti tra una tappa e l'altra fino a dopodomani. Durante una registrazione di guida anche la strada davanti a te." : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "IMO warnings, wind, heavy rain, snow, ice and roads are checked where you are (or at the place chosen by hand), at the trip's stops and along the drives between them until the day after tomorrow. While recording a drive, also the road ahead."
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "IMO-Warnungen, Wind, Starkregen, Schnee, Eis und Straßen werden bis übermorgen dort geprüft, wo du bist (oder am manuell gewählten Ort), an den Etappen der Reise und auf den Strecken dazwischen. Während einer Fahrtaufzeichnung auch die Straße vor dir."
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Les alertes IMO, le vent, les fortes pluies, la neige, le verglas et les routes sont vérifiés là où vous êtes (ou au lieu choisi manuellement), aux étapes du voyage et sur les trajets entre elles jusqu'à après-demain. Pendant l'enregistrement d'un trajet, aussi la route devant vous."
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Los avisos del IMO, el viento, la lluvia intensa, la nieve, el hielo y las carreteras se comprueban donde estás (o en el lugar elegido a mano), en las paradas del viaje y en los trayectos entre ellas hasta pasado mañana. Al grabar un trayecto, también la carretera por delante."
-          }
-        }
-      }
-    },
     "Dove guardare: mirino con la fotocamera" : {
       "localizations" : {
         "en" : {
@@ -52040,6 +52037,454 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "· en curso hasta las %@"
+          }
+        }
+      }
+    },
+    "Riepilogo serale del viaggio" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Evening trip summary"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Abendliche Reiseübersicht"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Résumé du voyage le soir"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Resumen del viaje por la noche"
+          }
+        }
+      }
+    },
+    "Anche il luogo scelto a mano" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Also the place chosen by hand"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Auch der manuell gewählte Ort"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aussi le lieu choisi à la main"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "También el lugar elegido a mano"
+          }
+        }
+      }
+    },
+    "Notti silenziose" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Quiet nights"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ruhige Nächte"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nuits silencieuses"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Noches silenciosas"
+          }
+        }
+      }
+    },
+    "Quando avvisare" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "When to notify"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wann benachrichtigen"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Quand prévenir"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cuándo avisar"
+          }
+        }
+      }
+    },
+    "Una notifica arriva quando un'allerta è nuova, peggiora o inizia prima; se resta uguale si aggiorna solo nell'elenco. Il luogo scelto a mano è di solito un posto che stai solo guardando: senza questa opzione compare nelle schermate ma non manda notifiche. Il riepilogo arriva la sera prima di ogni giorno di viaggio (dalle 19:30, ora islandese): il tragitto, vento, pioggia, strade chiuse, allerte e aurora. Di notte (22:30–7:00) solo il pericolo suona; l'arancione arriva senza suono, il resto in silenzio nel Centro notifiche." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A notification arrives when an alert is new, gets worse or starts earlier; if it stays the same it is only updated in the list. The place chosen by hand is usually somewhere you are only looking at: without this option it shows on the screens but sends no notifications. The summary arrives the evening before each travel day (from 19:30, Iceland time): the drive, wind, rain, closed roads, warnings and aurora. At night (22:30–7:00) only danger makes a sound; orange arrives silently, the rest quietly in Notification Centre."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Eine Mitteilung kommt, wenn eine Warnung neu ist, sich verschärft oder früher beginnt; bleibt sie gleich, wird sie nur in der Liste aktualisiert. Der manuell gewählte Ort ist meist ein Ort, den du dir nur ansiehst: ohne diese Option erscheint er auf den Bildschirmen, sendet aber keine Mitteilungen. Die Übersicht kommt am Abend vor jedem Reisetag (ab 19:30 isländischer Zeit): Strecke, Wind, Regen, gesperrte Straßen, Warnungen und Polarlicht. Nachts (22:30–7:00) klingelt nur Gefahr; Orange kommt lautlos, der Rest still in die Mitteilungszentrale."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Une notification arrive quand une alerte est nouvelle, s'aggrave ou commence plus tôt ; si elle reste identique, elle est seulement mise à jour dans la liste. Le lieu choisi à la main est souvent un endroit que vous regardez seulement : sans cette option il s'affiche dans les écrans mais n'envoie pas de notifications. Le résumé arrive la veille de chaque jour de voyage (dès 19 h 30, heure islandaise) : trajet, vent, pluie, routes fermées, alertes et aurores. La nuit (22 h 30–7 h) seul le danger sonne ; l'orange arrive sans son, le reste en silence dans le centre de notifications."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Llega una notificación cuando una alerta es nueva, empeora o empieza antes; si sigue igual solo se actualiza en la lista. El lugar elegido a mano suele ser un sitio que solo estás mirando: sin esta opción aparece en las pantallas pero no envía notificaciones. El resumen llega la tarde antes de cada día de viaje (desde las 19:30, hora de Islandia): el trayecto, viento, lluvia, carreteras cerradas, alertas y aurora. De noche (22:30–7:00) solo suena el peligro; el naranja llega sin sonido, el resto en silencio en el centro de notificaciones."
+          }
+        }
+      }
+    },
+    "Allerte IMO, vento, pioggia forte, neve, ghiaccio e strade vengono controllati dove sei davvero, alle tappe del viaggio nei giorni in cui ci sarai e lungo i tragitti tra una tappa e l'altra fino a dopodomani. Durante una registrazione di guida anche la strada davanti a te." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "IMO warnings, wind, heavy rain, snow, ice and roads are checked where you really are, at the trip stops on the days you will be there and along the drives between stops until the day after tomorrow. While recording a drive, also the road ahead of you."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "IMO-Warnungen, Wind, Starkregen, Schnee, Glätte und Straßen werden dort geprüft, wo du wirklich bist, an den Reisestationen an den Tagen, an denen du dort bist, und entlang der Strecken dazwischen bis übermorgen. Während einer Fahrtaufzeichnung auch die Straße vor dir."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Alertes IMO, vent, fortes pluies, neige, verglas et routes sont contrôlés là où vous êtes vraiment, aux étapes du voyage les jours où vous y serez et le long des trajets entre étapes jusqu'à après-demain. Pendant l'enregistrement d'un trajet, aussi la route devant vous."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Alertas IMO, viento, lluvia fuerte, nieve, hielo y carreteras se revisan donde estás de verdad, en las etapas del viaje los días en que estarás allí y a lo largo de los trayectos entre etapas hasta pasado mañana. Durante una grabación de conducción, también la carretera por delante."
+          }
+        }
+      }
+    },
+    "In arrivo" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Coming up"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bevorstehend"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "À venir"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Próximas"
+          }
+        }
+      }
+    },
+    "Terminate" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ended"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Beendet"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Terminées"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Terminadas"
+          }
+        }
+      }
+    },
+    "· dalle %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "· from %@"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "· ab %@"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "· à partir de %@"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "· desde %@"
+          }
+        }
+      }
+    },
+    "Raffiche fino a %@ verso le %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gusts up to %1$@ around %2$@"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Böen bis %1$@ gegen %2$@"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rafales jusqu'à %1$@ vers %2$@"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rachas de hasta %1$@ hacia las %2$@"
+          }
+        }
+      }
+    },
+    "Vento debole o moderato" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Light or moderate wind"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Schwacher oder mäßiger Wind"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vent faible ou modéré"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Viento débil o moderado"
+          }
+        }
+      }
+    },
+    "Nessuna strada chiusa sul percorso" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No closed roads on the way"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Keine gesperrten Straßen auf der Strecke"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aucune route fermée sur le trajet"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ninguna carretera cerrada en el trayecto"
+          }
+        }
+      }
+    },
+    "Strade chiuse o pericolose sul percorso: %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Closed or dangerous roads on the way: %@"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gesperrte oder gefährliche Straßen auf der Strecke: %@"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Routes fermées ou dangereuses sur le trajet : %@"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Carreteras cerradas o peligrosas en el trayecto: %@"
+          }
+        }
+      }
+    },
+    "Stanotte aurora: condizioni %@ verso le %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aurora tonight: %1$@ conditions around %2$@"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Polarlicht heute Nacht: %1$@ Bedingungen gegen %2$@"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aurore cette nuit : conditions %1$@ vers %2$@"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aurora esta noche: condiciones %1$@ hacia las %2$@"
+          }
+        }
+      }
+    },
+    "Domani %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tomorrow %@"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Morgen %@"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Demain %@"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mañana %@"
+          }
+        }
+      }
+    },
+    "Domani a %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tomorrow in %@"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Morgen in %@"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Demain à %@"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mañana en %@"
           }
         }
       }
