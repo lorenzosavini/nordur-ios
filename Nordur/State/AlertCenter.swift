@@ -136,6 +136,9 @@ final class AlertCenter: NSObject {
            Geo.distanceKm(last.coordinate, coordinate) < 3 { return }
         lastPositionCheck = (Date(), coordinate)
         let task = UIApplication.shared.beginBackgroundTask(withName: "alert-check")
+        // Without push (no Apple developer account yet) a notice from the admin panel
+        // arrives when iOS wakes the app: moving a few hundred metres is one of those times.
+        await Entitlements.shared.loadConfig()
         await check(position: coordinate)
         UIApplication.shared.endBackgroundTask(task)
     }
