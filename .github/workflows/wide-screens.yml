@@ -1,0 +1,63 @@
+name: Wide screens
+
+# Run by hand: screenshots on a screen as wide as the iPhone Duo open (7.6",
+# here the iPad mini until Xcode has the Duo), upright and turned, and on a
+# phone for the folded screen. Published to the branch wide-screens.
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  shots:
+    runs-on: macos-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build the app (simulator)
+        run: |
+          set -o pipefail
+          xcodebuild -project Nordur.xcodeproj -target Nordur -sdk iphonesimulator -configuration Debug \
+            ARCHS="arm64 x86_64" ONLY_ACTIVE_ARCH=NO CODE_SIGNING_ALLOWED=NO build 2>&1 | grep -E "error:|BUILD (SUCCEEDED|FAILED)"
+      - name: Screenshots
+        run: |
+          mkdir -p out
+          pick() { xcrun simctl list devices available -j | python3 -c "import json,sys; d=json.load(sys.stdin)['devices']; print(next(x['udid'] for k,v in sorted(d.items(), reverse=True) if 'iOS' in k for x in v if x['name'].startswith('$1')))"; }
+          shoot() {
+            UDID="$1"; tag="$2"
+            for tab in today weather aurora map trip; do
+              xcrun simctl launch "$UDID" it.lorenzosavini.nordur -initialTab "$tab" -ciAuroraMain YES -ciDemoTrip YES -appearance dark -AppleLanguages "(it)" -AppleLocale it_IT
+              sleep 22
+              xcrun simctl io "$UDID" screenshot "out/$tag-$tab.png"
+              xcrun simctl terminate "$UDID" it.lorenzosavini.nordur || true
+              sleep 2
+            done
+          }
+          for dev in "iPad mini (A17 Pro)" "iPhone 17 Pro"; do
+            UDID=$(pick "$dev")
+            xcrun simctl boot "$UDID"; xcrun simctl bootstatus "$UDID" -b
+            xcrun simctl install "$UDID" build/Debug-iphonesimulator/Nordur.app
+            xcrun simctl privacy "$UDID" grant location-always it.lorenzosavini.nordur || true
+            xcrun simctl location "$UDID" set 63.4186,-19.0060 || true
+            tag=$( [ "${dev#iPad}" != "$dev" ] && echo wide || echo phone )
+            shoot "$UDID" "$tag"
+            if [ "$tag" = wide ]; then
+              # Turn the simulator (Device › Rotate Left) and shoot again.
+              open -a Simulator; sleep 5
+              osascript -e 'tell application "Simulator" to activate' -e 'delay 1' -e 'tell application "System Events" to key code 123 using {command down}' || true
+              sleep 4
+              shoot "$UDID" "wide-landscape"
+            fi
+            xcrun simctl shutdown "$UDID" || true
+          done
+          ls out
+      - name: Publish to branch wide-screens
+        env:
+          TOKEN: ${{ github.token }}
+        run: |
+          cd out
+          git init -q -b wide-screens
+          git add -A
+          git -c user.name=nordur-ci -c user.email=ci@users.noreply.github.com commit -qm "Wide screens for ${GITHUB_SHA}"
+          git push -qf "https://x-access-token:${TOKEN}@github.com/${GITHUB_REPOSITORY}.git" HEAD:wide-screens

@@ -1155,3 +1155,42 @@ extension View {
         if UserDefaults.standard.bool(forKey: "ciDemoTrip") { accessibilityHidden(true) } else { self }
     }
 }
+
+/// Sections one under the other on a phone; on a wide screen (iPhone Duo open,
+/// iPad, landscape) two columns side by side, each section going to the shorter
+/// column so both end up about as long.
+struct AdaptiveColumns: Layout {
+    var spacing: CGFloat = 28
+    var columnSpacing: CGFloat = 32
+    /// Two columns from this width up (two sections of at least ~360 pt).
+    var twoColumnsFrom: CGFloat = 720
+
+    private func plan(_ width: CGFloat, _ subviews: Subviews) -> (columnWidth: CGFloat, places: [(column: Int, y: CGFloat, size: CGSize)], height: CGFloat) {
+        let columns = width >= twoColumnsFrom ? 2 : 1
+        let columnWidth = columns == 1 ? width : (width - columnSpacing) / 2
+        var heights = [CGFloat](repeating: 0, count: columns)
+        var places: [(Int, CGFloat, CGSize)] = []
+        for view in subviews {
+            let size = view.sizeThatFits(ProposedViewSize(width: columnWidth, height: nil))
+            if size.height <= 0 { places.append((0, heights[0], .zero)); continue }
+            let c = heights.indices.min { heights[$0] < heights[$1] } ?? 0
+            let y = heights[c] == 0 ? 0 : heights[c] + spacing
+            places.append((c, y, CGSize(width: columnWidth, height: size.height)))
+            heights[c] = y + size.height
+        }
+        return (columnWidth, places, heights.max() ?? 0)
+    }
+
+    func sizeThatFits(proposal: ProposedViewSize, subviews: Subviews, cache: inout ()) -> CGSize {
+        let width = proposal.width ?? 390
+        return CGSize(width: width, height: plan(width, subviews).height)
+    }
+
+    func placeSubviews(in bounds: CGRect, proposal: ProposedViewSize, subviews: Subviews, cache: inout ()) {
+        let p = plan(bounds.width, subviews)
+        for (view, place) in zip(subviews, p.places) {
+            view.place(at: CGPoint(x: bounds.minX + CGFloat(place.column) * (p.columnWidth + columnSpacing), y: bounds.minY + place.y),
+                       proposal: ProposedViewSize(width: p.columnWidth, height: place.size.height))
+        }
+    }
+}

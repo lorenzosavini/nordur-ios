@@ -32,11 +32,13 @@ struct AuroraView: View {
                     summary
                     modePicker
                 }
-                switch mode {
-                case .live: liveMode
-                case .day: dayMode
-                case .three: threeDayMode
-                case .long: longMode
+                AdaptiveColumns {
+                    switch mode {
+                    case .live: liveMode
+                    case .day: dayMode
+                    case .three: threeDayMode
+                    case .long: longMode
+                    }
                 }
                 // Sources, data status and the method live in Settings: only a link here.
                 NavigationLink { DataSourcesView() } label: {

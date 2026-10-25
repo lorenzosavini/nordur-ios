@@ -33,19 +33,21 @@ struct TodayView: View {
                             .padding(.horizontal, -18)
                             .padding(.top, -120)  // reaches under the status bar
                     }
-                    TodayTripCard()
-                    TodayBrief()
-                    warningsSection
-                    VStack(spacing: 10) {
-                        AuroraVerdictCard()
-                        AuroraNowPanel()
-                        AuroraReportBar(compact: true)
-                        AuroraFinderButton()
+                    AdaptiveColumns(spacing: 30) {
+                        TodayTripCard()
+                        TodayBrief()
+                        warningsSection
+                        VStack(spacing: 10) {
+                            AuroraVerdictCard()
+                            AuroraNowPanel()
+                            AuroraReportBar(compact: true)
+                            AuroraFinderButton()
+                        }
+                        nextHours
+                        outlookSection
+                        exploreSection
+                        detailsSection
                     }
-                    nextHours
-                    outlookSection
-                    exploreSection
-                    detailsSection
                 }
                 .padding(.horizontal, 18)
                 .padding(.bottom, 28)

@@ -3,6 +3,7 @@ import UserNotifications
 
 @main
 struct NordurApp: App {
+    @UIApplicationDelegateAdaptor(OrientationDelegate.self) private var orientationDelegate
     @State private var model = AppModel()
     @State private var trip = TripStore()
     @Environment(\.scenePhase) private var scenePhase
@@ -20,6 +21,7 @@ struct NordurApp: App {
     var body: some Scene {
         WindowGroup {
             RootView()
+                .modifier(OrientationRefresh())
                 .preferredColorScheme(Appearance(rawValue: appearance)?.colorScheme)
                 .tint(Theme.accent)
                 .font(.sans(17))
@@ -303,5 +305,28 @@ struct RootView: View {
                 if inboxTick % 4 == 0 { await trip.refreshInbox() }
             }
         }
+    }
+}
+
+/// Phones stay upright; wide screens (iPhone Duo open, iPad) turn freely.
+/// Asked again whenever the window changes size (folding and unfolding).
+final class OrientationDelegate: NSObject, UIApplicationDelegate {
+    func application(_ application: UIApplication, supportedInterfaceOrientationsFor window: UIWindow?) -> UIInterfaceOrientationMask {
+        if UIDevice.current.userInterfaceIdiom == .pad { return .all }
+        let size = window?.windowScene?.screen.bounds.size ?? window?.bounds.size ?? .zero
+        return min(size.width, size.height) >= 600 ? .allButUpsideDown : .portrait
+    }
+}
+
+/// Tells UIKit to ask the orientations again when the screen changes (iPhone Duo folded or open).
+struct OrientationRefresh: ViewModifier {
+    func body(content: Content) -> some View {
+        content.background(GeometryReader { geo in
+            Color.clear.onChange(of: geo.size) { _, _ in
+                for scene in UIApplication.shared.connectedScenes.compactMap({ $0 as? UIWindowScene }) {
+                    scene.keyWindow?.rootViewController?.setNeedsUpdateOfSupportedInterfaceOrientations()
+                }
+            }
+        })
     }
 }

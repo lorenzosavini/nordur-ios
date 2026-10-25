@@ -17,20 +17,22 @@ struct WeatherView: View {
                                subtitle: model.forecast?.value.current.map { String(localized: "\(Fmt.temp($0.temperature_2m)) · vento \(Fmt.ms($0.wind_speed_10m)), raffiche \(Fmt.ms($0.wind_gusts_10m))") },
                                height: 170)
                         .padding(.horizontal, -18)
-                    if let fetched = model.forecast {
-                        let forecast = fetched.value
-                        let next48 = forecast.upcomingHours(48)
-                        sourceBlock(forecast, fetched: fetched)
-                        meteogram(next48)
-                        stationComparison(forecast)
-                        dailyTable(forecast.days, zone: forecast.timeZone)
-                    } else if let error = model.errors[.forecast] {
-                        ErrorNote(message: error)
-                    } else {
-                        SkeletonBlock(lines: 6)
+                    AdaptiveColumns(spacing: 30) {
+                        if let fetched = model.forecast {
+                            let forecast = fetched.value
+                            let next48 = forecast.upcomingHours(48)
+                            sourceBlock(forecast, fetched: fetched)
+                            meteogram(next48)
+                            stationComparison(forecast)
+                            dailyTable(forecast.days, zone: forecast.timeZone)
+                        } else if let error = model.errors[.forecast] {
+                            ErrorNote(message: error)
+                        } else {
+                            SkeletonBlock(lines: 6)
+                        }
+                        seaSection
+                        airSection
                     }
-                    seaSection
-                    airSection
                 }
                 .padding(.horizontal, 18)
                 .padding(.bottom, 28)
