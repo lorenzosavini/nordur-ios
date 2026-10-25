@@ -150,8 +150,8 @@
         <p class="dim small">Compare in alto nella schermata Oggi per tutti finché è attivo (ognuno può chiuderlo). Senza titolo nessun avviso. Per un'emergenza vera rimanda sempre alle fonti ufficiali.</p>
         <div class="row">
           <div style="max-width:200px"><label>Tipo</label><select id="nlevel"><option value="info">Informazione</option><option value="warning">Attenzione</option><option value="danger">Pericolo</option></select></div>
-          <div><label>Dal</label><input type="datetime-local" id="nfrom"></div>
-          <div><label>Al</label><input type="datetime-local" id="nuntil"></div>
+          <div><label>Dal (vuoto: subito)</label><input type="datetime-local" id="nfrom" min="2026-01-01T00:00" max="2099-12-31T23:59"></div>
+          <div><label>Al (vuoto: finché non lo togli)</label><input type="datetime-local" id="nuntil" min="2026-01-01T00:00" max="2099-12-31T23:59"></div>
         </div>
         <div class="field"><label>Link (facoltativo, https)</label><input id="nurl" placeholder="https://safetravel.is"></div>
         <div class="langs" id="nlangs"></div>
@@ -379,6 +379,8 @@ function renderNotice() {
 async function saveNotice(clear) {
   if (!clear) {
     storeNotice();
+    const year = (id) => $(id).value ? new Date($(id).value).getFullYear() : 2026;
+    if (year("nfrom") < 2020 || year("nuntil") < 2020) { toast("Controlla le date: l'anno va scritto con 4 cifre (2026)", true); return; }
     Object.assign(notice, { level: $("nlevel").value, from: $("nfrom").value ? new Date($("nfrom").value).toISOString() : null, until: $("nuntil").value ? new Date($("nuntil").value).toISOString() : null, url: $("nurl").value.trim() || null });
     notice.id = `a${Date.now().toString(36)}`; // a new id shows it again to those who closed the previous one
   }

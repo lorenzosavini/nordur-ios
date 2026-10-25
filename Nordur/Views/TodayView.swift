@@ -60,8 +60,10 @@ struct TodayView: View {
                 FuelDetail(station: station, from: model.activePlace).presentationDetents([.medium, .large])
             }
             .refreshable {
+                async let notice: Void = Entitlements.shared.loadConfig()
                 await model.refreshAll()
                 await alerts.check()
+                await notice
                 Haptics.result(model.errors[.forecast] == nil)
             }
             .sheet(isPresented: $showInfo) { InfoView() }

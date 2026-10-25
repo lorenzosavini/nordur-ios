@@ -20,7 +20,8 @@ export default async function handler(req, res) {
   res.setHeader("Content-Type", "application/json");
   if (params.has("config")) {
     const config = publicConfig(await readConfig().catch(() => ({ mode: "free", features: {}, products: [] })));
-    res.setHeader("Cache-Control", "public, s-maxage=120, stale-while-revalidate=600");
+    // Kept only seconds: a notice must reach the phones as soon as it is published.
+    res.setHeader("Cache-Control", "public, s-maxage=10");
     return res.end(JSON.stringify(config));
   }
   res.end(JSON.stringify({ ok: true, service: "nordur-api", blob: Boolean(process.env.BLOB_READ_WRITE_TOKEN), storage, mail: mailer || "off", secret: Boolean(process.env.APP_SECRET), admin: (process.env.ADMIN_PASSWORD || "").length >= 12 }));

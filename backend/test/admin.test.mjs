@@ -21,8 +21,14 @@ test("config: unknown features, bad rules and products are dropped; free by defa
 });
 
 test("announcement shows only inside its dates", () => {
-  const base = sanitize({ announcement: { texts: { it: { title: "F35 chiusa", text: "…" } }, until: "2000-01-01" } });
+  const base = sanitize({ announcement: { texts: { it: { title: "F35 chiusa", text: "…" } }, until: "2021-01-01" } });
   assert.equal(publicConfig(base).announcement, null);
   const live = sanitize({ announcement: { texts: { it: { title: "F35 chiusa" } }, level: "warning" } });
   assert.equal(publicConfig(live).announcement.level, "warning");
+});
+
+test("a two-digit year is no date: the notice starts at once", () => {
+  const c = sanitize({ announcement: { texts: { it: { title: "x" } }, from: "0022-10-25T23:28:04.000Z" } });
+  assert.equal(c.announcement.from, null);
+  assert.ok(publicConfig(c).announcement);
 });

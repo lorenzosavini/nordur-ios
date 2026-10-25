@@ -51,7 +51,8 @@ export async function readConfig() {
 }
 
 const text = (v, max) => (typeof v === "string" ? v.trim().slice(0, max) : "");
-const date = (v) => (v && !Number.isNaN(Date.parse(v)) ? new Date(v).toISOString() : null);
+// A date typed with a two-digit year ("0022") is no date: the notice starts now / never ends.
+const date = (v) => (v && !Number.isNaN(Date.parse(v)) && new Date(v).getUTCFullYear() >= 2020 ? new Date(v).toISOString() : null);
 
 /** Keeps only what the app understands, so a typo in the panel can't break it. */
 export function sanitize(input) {
