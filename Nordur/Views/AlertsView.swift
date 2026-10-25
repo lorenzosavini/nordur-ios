@@ -194,7 +194,7 @@ struct AlertSettingsView: View {
     var body: some View {
         Form {
             Section {
-                ForEach(AlertCategory.allCases) { category in
+                ForEach(AlertCategory.allCases.filter { $0 != .notice }) { category in
                     Toggle(isOn: binding(for: category)) {
                         Label(category.label, systemImage: category.symbol)
                     }

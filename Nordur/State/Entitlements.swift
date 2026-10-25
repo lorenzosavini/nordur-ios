@@ -189,8 +189,11 @@ final class Entitlements {
         saveBackgroundState()
     }
 
-    private func loadConfig() async {
-        guard let url = URL(string: "health?config=1", relativeTo: Account.api) else { return }
+    /// The rules and the notice from the backend (also every few minutes while the app is open).
+    func loadConfig() async {
+        var components = URLComponents(url: Account.api.appendingPathComponent("health"), resolvingAgainstBaseURL: false)!
+        components.queryItems = [URLQueryItem(name: "config", value: "1")]
+        guard let url = components.url else { return }
         do {
             let (data, response) = try await HTTP.session.data(from: url)
             guard (response as? HTTPURLResponse)?.statusCode == 200 else { return }
@@ -198,10 +201,25 @@ final class Entitlements {
             if next != config {
                 config = next
                 UserDefaults.standard.set(data, forKey: Self.configKey)
+                saveBackgroundState()
             }
+            notifyNotice()
         } catch {
             // Offline: the last rules stay.
         }
+    }
+
+    /// A new notice from the admin panel also arrives as a notification and in the alerts inbox, once.
+    private func notifyNotice() {
+        guard let n = announcement else { return }
+        var notified = UserDefaults.standard.stringArray(forKey: "entitlements.notifiedNotices") ?? []
+        guard !notified.contains(n.id) else { return }
+        notified = Array((notified + [n.id]).suffix(30))
+        UserDefaults.standard.set(notified, forKey: "entitlements.notifiedNotices")
+        let risk: Risk = n.level == "danger" ? .danger : n.level == "warning" ? .warning : .caution
+        let until = config.announcement?.until.flatMap(Self.date)
+        AlertCenter.shared.record(AlertEvent(id: "notice:\(n.id)", date: Date(), category: .notice, severity: risk.rawValue, title: n.title, body: n.text, expires: until),
+                                  notify: true, speak: false)
     }
 
     private func loadProducts() async {

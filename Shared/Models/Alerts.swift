@@ -1,7 +1,7 @@
 import Foundation
 
 enum AlertCategory: String, Codable, CaseIterable, Identifiable {
-    case weatherWarning, wind, road, quake, safeTravel, aurora, flight, ferry, speed
+    case weatherWarning, wind, road, quake, safeTravel, aurora, flight, ferry, speed, notice
 
     var id: String { rawValue }
 
@@ -16,6 +16,7 @@ enum AlertCategory: String, Codable, CaseIterable, Identifiable {
         case .flight: return String(localized: "Voli seguiti (KEF)")
         case .ferry: return String(localized: "Traghetto Herjólfur")
         case .speed: return String(localized: "Limite di velocità (in guida)")
+        case .notice: return String(localized: "Avvisi di Norður")
         }
     }
 
@@ -31,6 +32,7 @@ enum AlertCategory: String, Codable, CaseIterable, Identifiable {
         case .flight: return String(localized: "Voli")
         case .ferry: return String(localized: "Traghetto")
         case .speed: return String(localized: "Velocità")
+        case .notice: return "Norður"
         }
     }
 
@@ -45,6 +47,7 @@ enum AlertCategory: String, Codable, CaseIterable, Identifiable {
         case .flight: return "airplane"
         case .ferry: return "ferry.fill"
         case .speed: return "gauge.with.dots.needle.67percent"
+        case .notice: return "megaphone"
         }
     }
 }
@@ -453,6 +456,7 @@ extension AlertEvent {
         case .flight: return "flight"
         case .ferry: return "ferry"
         case .speed: return "speed"
+        case .notice: return "info"
         }
     }
 }

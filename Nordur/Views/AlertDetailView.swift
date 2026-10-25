@@ -127,6 +127,10 @@ struct AlertDetailView: View {
                 NavigationLink { QuakesView() } label: { Label("Terremoti", systemImage: "waveform.path.ecg") }
             case .safeTravel:
                 LinkRow(title: String(localized: "SafeTravel.is"), subtitle: nil, url: "https://safetravel.is", systemImage: "megaphone")
+            case .notice:
+                if let url = Entitlements.shared.config.announcement?.url {
+                    LinkRow(title: String(localized: "Apri"), subtitle: url, url: url, systemImage: "link")
+                }
             }
         }
     }

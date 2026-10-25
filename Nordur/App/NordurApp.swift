@@ -65,6 +65,7 @@ struct NordurApp: App {
         }
         .backgroundTask(.appRefresh(AlertCenter.refreshTaskID)) {
             await AuroraWatch.shared.update()   // after dusk the watch starts from here
+            await Entitlements.shared.loadConfig()   // a notice from the admin panel arrives as a notification
             await AlertCenter.shared.check()
             // iOS wakes the app now and then: a due backup runs too (e.g. the daily one).
             await Account.shared.syncIfDue()
@@ -293,6 +294,7 @@ struct RootView: View {
                 guard UIApplication.shared.applicationState == .active else { continue }
                 await model.refreshGlobal()
                 await model.refreshPlaceIfOld()
+                await Entitlements.shared.loadConfig()
                 await alerts.check()
             }
         }

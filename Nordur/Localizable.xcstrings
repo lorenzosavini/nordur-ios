@@ -51988,6 +51988,34 @@
           }
         }
       }
+    },
+    "Avvisi di Norður" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Norður notices"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hinweise von Norður"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Avis de Norður"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Avisos de Norður"
+          }
+        }
+      }
     }
   },
   "version" : "1.0"
