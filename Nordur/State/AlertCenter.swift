@@ -138,8 +138,10 @@ final class AlertCenter: NSObject {
         let task = UIApplication.shared.beginBackgroundTask(withName: "alert-check")
         // Without push (no Apple developer account yet) a notice from the admin panel
         // arrives when iOS wakes the app: moving a few hundred metres is one of those times.
-        await Entitlements.shared.loadConfig()
+        // Side by side: the alert check never waits for it.
+        async let notice: Void = Entitlements.shared.loadConfig()
         await check(position: coordinate)
+        await notice
         UIApplication.shared.endBackgroundTask(task)
     }
 

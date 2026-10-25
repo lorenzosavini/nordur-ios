@@ -65,8 +65,10 @@ struct NordurApp: App {
         }
         .backgroundTask(.appRefresh(AlertCenter.refreshTaskID)) {
             await AuroraWatch.shared.update()   // after dusk the watch starts from here
-            await Entitlements.shared.loadConfig()   // a notice from the admin panel arrives as a notification
+            // A notice from the admin panel, side by side with the alerts (they never wait for it).
+            async let notice: Void = Entitlements.shared.loadConfig()
             await AlertCenter.shared.check()
+            await notice
             // iOS wakes the app now and then: a due backup runs too (e.g. the daily one).
             await Account.shared.syncIfDue()
             await AlertCenter.scheduleBackgroundRefresh()
