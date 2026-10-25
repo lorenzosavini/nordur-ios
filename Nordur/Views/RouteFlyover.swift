@@ -65,7 +65,10 @@ enum RouteFlyover {
             let placemark = try? await CLGeocoder().reverseGeocodeLocation(CLLocation(latitude: s.coordinate.lat, longitude: s.coordinate.lon)).first
             // A landmark or a town; never just the country or the region.
             let candidates = [placemark?.areasOfInterest?.first, placemark?.locality, placemark?.subLocality, placemark?.subAdministrativeArea]
-            named.name = candidates.compactMap { $0 }.first { $0 != placemark?.country && $0 != placemark?.administrativeArea }
+            let countries: Set<String> = ["Ísland", "Iceland", "Islanda", "Island", "Islande", "Islandia"]
+            named.name = candidates.compactMap { $0 }.first { $0 != placemark?.country && $0 != placemark?.administrativeArea && !countries.contains($0) }
+                // Out in the country the geocoder knows no town: the nearest known place within 20 km.
+                ?? Place.presets.map { ($0, Geo.distanceKm($0.coordinate, s.coordinate)) }.filter { $0.1 < 20 }.min { $0.1 < $1.1 }?.0.name
             out.append(named)
         }
         return out
