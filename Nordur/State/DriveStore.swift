@@ -20,11 +20,12 @@ final class DriveStore {
                 guard let first = drives.first, let session = load(first.id) else { return }
                 let docs = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
                 let began = Date()
-                if let image = try? await RouteCard.image(session, format: .story) {
+                if let image = try? await RouteTerrain3D.image(session, format: .story) {
                     try? FileManager.default.copyItem(at: image, to: docs.appendingPathComponent("flyover.jpg"))
                 }
                 do {
-                    let video = try await RouteCard.video(session, format: .story) { _ in }
+                    // The 3D engine directly, so a failure shows in the result instead of the fallback.
+                    let video = try await RouteTerrain3D.video(session, format: .story) { _ in }
                     try? FileManager.default.copyItem(at: video, to: docs.appendingPathComponent("flyover.mp4"))
                     try? "ok \(Int(Date().timeIntervalSince(began))) s".write(to: docs.appendingPathComponent("flyover.txt"), atomically: true, encoding: .utf8)
                 } catch {
