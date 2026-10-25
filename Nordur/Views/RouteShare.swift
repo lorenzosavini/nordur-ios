@@ -207,8 +207,15 @@ enum RouteCard {
 
     // MARK: Picture and video
 
-    /// The whole route on the 3D terrain, with its stops numbered.
+    /// The whole route on the 3D terrain (the SceneKit engine; MapKit when the elevation can't be loaded).
+    @MainActor
     static func image(_ session: DriveSession, format: Format) async throws -> URL {
+        if let url = try? await RouteTerrain3D.image(session, format: format) { return url }
+        return try await mapImage(session, format: format)
+    }
+
+    /// The whole route on Apple's 3D map, with its stops numbered.
+    static func mapImage(_ session: DriveSession, format: Format) async throws -> URL {
         let points = DriveMath.downsample(session.points, maxPoints: 2500)
         guard points.count > 1 else { throw NSError(domain: "Nordur", code: 3) }
         let over = RouteFlyover.overview(points, format: format)
@@ -227,8 +234,10 @@ enum RouteCard {
     }
 
     /// A flight over the 3D terrain along the route (RouteFlyover).
+    @MainActor
     static func video(_ session: DriveSession, format: Format, progress report: @escaping (Double) -> Void) async throws -> URL {
-        try await RouteFlyover.video(session, format: format, progress: report)
+        if let url = try? await RouteTerrain3D.video(session, format: format, progress: report) { return url }
+        return try await RouteFlyover.video(session, format: format, progress: report)
     }
 }
 
