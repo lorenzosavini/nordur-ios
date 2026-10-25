@@ -400,7 +400,8 @@ enum RouteTerrain3D {
         camera.look(at: v.focus, up: SCNVector3(0, 1, 0), localFront: SCNVector3(0, 0, -1))
         // In the 4:5 post the card's text takes the lower half: the focus sits higher.
         if size.height / size.width < 1.5 {
-            camera.localRotate(by: SCNQuaternion(axis: SCNVector3(1, 0, 0), angle: -atan(0.24 * tan(24 * Float.pi / 180))))
+            let tilt: Float = -atan(0.24 * tan(24 * Float.pi / 180))
+            camera.simdLocalRotate(by: simd_quatf(angle: tilt, axis: SIMD3<Float>(1, 0, 0)))
         }
         camera.camera?.zNear = Double(max(5, v.distance * 0.02))
     }
@@ -411,7 +412,8 @@ enum RouteTerrain3D {
         let depth = -c.z
         guard depth > 1 else { return nil }
         let f = 1 / tan(24 * Float.pi / 180), aspect = Float(size.width / size.height)
-        let x = (1 + c.x / depth * f / aspect) * Float(size.width) / 2, y = (1 - c.y / depth * f) * Float(size.height) / 2
+        let x: Float = (1 + c.x / depth * f / aspect) * Float(size.width) / 2
+        let y: Float = (1 - c.y / depth * f) * Float(size.height) / 2
         return (CGPoint(x: CGFloat(x), y: CGFloat(y)), depth)
     }
 
@@ -526,7 +528,8 @@ enum RouteTerrain3D {
             guard let tag = pin.childNode(withName: "tag", recursively: false),
                   let hit = project(world.camera, tag.worldPosition, size: size) else { pin.opacity = 0; continue }
             let (p, depth) = hit
-            let half = CGFloat(pinTall * 0.6 * pin.scale.y / depth / tan(24 * Float.pi / 180)) * size.height / 4
+            let tagHeight: Float = pinTall * 0.6 * pin.scale.y
+            let half = CGFloat(tagHeight / depth / tan(24 * Float.pi / 180)) * size.height / 4
             if p.y - half < 190 * u || p.y + half > size.height - 790 * u { pin.opacity = 0 }
         }
         return renderer.snapshot(atTime: 0, with: size, antialiasingMode: .multisampling4X)
