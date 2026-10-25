@@ -17,3 +17,4 @@ Variabili richieste: `APP_SECRET`, `BLOB_READ_WRITE_TOKEN`.
 - Variabili: `ADMIN_PASSWORD` (almeno 12 caratteri, obbligatoria per attivarlo) e `ADMIN_TOTP_SECRET` (facoltativa, base32: con questa serve anche il codice a 6 cifre di un'app di autenticazione).
 - `GET /api/health?config=1` (anche `/api/config`): la configurazione pubblica letta dall'app; `POST /api/health?admin=1` (anche `/api/admin`): le azioni del pannello.
 - `POST /api/auth {mode: "me", email}` (Bearer): Pro regalato e stato dell'account.
+- Notifiche push degli avvisi (APNs): `APNS_KEY` (contenuto del file .p8), `APNS_KEY_ID`, `APNS_TEAM_ID`, `APNS_TOPIC` (facoltativa, default `it.lorenzosavini.nordur`). I telefoni registrano il token con `POST /api/health?device=1`.

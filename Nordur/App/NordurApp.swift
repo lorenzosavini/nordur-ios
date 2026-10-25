@@ -272,6 +272,8 @@ struct RootView: View {
                await UNUserNotificationCenter.current().notificationSettings().authorizationStatus == .notDetermined {
                 await alerts.requestNotificationPermission()
             }
+            // Every launch: iOS hands the push token (it can change) to the delegate.
+            UIApplication.shared.registerForRemoteNotifications()
             await model.refreshGlobal(force: true)
             // CI only: include yellow warnings so the inbox screenshot exercises the whole pipeline on live data.
             if UserDefaults.standard.bool(forKey: "ciAlertsYellow"), !alerts.settings.includeYellow {
@@ -323,6 +325,50 @@ final class OrientationDelegate: NSObject, UIApplicationDelegate {
     func application(_ application: UIApplication, supportedInterfaceOrientationsFor window: UIWindow?) -> UIInterfaceOrientationMask {
         guard let size = window?.bounds.size, size != .zero else { return .portrait }
         return min(size.width, size.height) >= 600 ? .all : .portrait
+    }
+
+    // Push notifications (the notices of the admin panel): the token goes to nordur-api.
+    func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
+        Task { await PushRegistration.send(deviceToken) }
+    }
+
+    func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
+        ErrorLog.record("Notifiche push", error)
+    }
+
+    /// A notice pushed while the app is in the background: it goes in the alerts inbox too.
+    func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable: Any]) async -> UIBackgroundFetchResult {
+        guard userInfo["notice"] != nil else { return .noData }
+        await Entitlements.shared.loadConfig()
+        return .newData
+    }
+}
+
+/// The phone's push token, sent to nordur-api with its language and Apple's
+/// environment (development builds and TestFlight/App Store use different servers).
+enum PushRegistration {
+    static func send(_ token: Data) async {
+        let hex = token.map { String(format: "%02x", $0) }.joined()
+        let key = "push.registered"
+        let stamp = "\(hex)|\(UILanguage.code)|\(Calendar.current.component(.weekOfYear, from: Date()))"
+        guard UserDefaults.standard.string(forKey: key) != stamp else { return }   // again once a week
+        var components = URLComponents(url: Account.api.appendingPathComponent("health"), resolvingAgainstBaseURL: false)!
+        components.queryItems = [URLQueryItem(name: "device", value: "1")]
+        var request = URLRequest(url: components.url!)
+        request.httpMethod = "POST"
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.httpBody = try? JSONSerialization.data(withJSONObject: ["token": hex, "env": environment, "lang": UILanguage.code])
+        if let (_, response) = try? await HTTP.session.data(for: request), (response as? HTTPURLResponse)?.statusCode == 200 {
+            UserDefaults.standard.set(stamp, forKey: key)
+        }
+    }
+
+    /// "development" when the provisioning profile says so (Xcode, Sideloadly), otherwise production.
+    static var environment: String {
+        guard let url = Bundle.main.url(forResource: "embedded", withExtension: "mobileprovision"),
+              let data = try? Data(contentsOf: url), let text = String(data: data, encoding: .isoLatin1),
+              let range = text.range(of: "<key>aps-environment</key>") else { return "production" }
+        return text[range.upperBound...].prefix(80).contains("development") ? "development" : "production"
     }
 }
 

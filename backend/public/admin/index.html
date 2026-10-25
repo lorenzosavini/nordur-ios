@@ -158,7 +158,9 @@
         <div class="field"><label>Titolo</label><input id="ntitle" maxlength="120"></div>
         <div class="field"><label>Testo</label><textarea id="ntext" maxlength="600"></textarea></div>
         <p class="dim small">Le lingue senza testo mostrano l'inglese, poi l'italiano.</p>
-        <div class="row"><button class="btn" id="nsave">Pubblica</button><button class="btn ghost" id="nclear">Togli l'avviso</button><span class="dim small" id="nsaved"></span></div>
+        <div class="field"><label style="display:flex;gap:8px;align-items:center;text-transform:none;letter-spacing:0;font:400 15px var(--sans);color:var(--text)"><input type="checkbox" id="npush" checked style="width:auto"> Invia anche come notifica push a tutti i telefoni</label></div>
+        <p class="dim small" id="npushinfo"></p>
+        <div class="row"><button class="btn" id="nsave">Pubblica</button><button class="btn ghost" id="nresend">Invia di nuovo la notifica</button><button class="btn ghost" id="nclear">Togli l'avviso</button><span class="dim small" id="nsaved"></span></div>
       </div>
     </section>
 
@@ -323,6 +325,9 @@ async function loadConfig() {
   try {
     const r = await call("config");
     config = r.config; features = r.features;
+    $("npushinfo").innerHTML = r.push.ready
+      ? `Notifiche push attive · ${r.push.devices} telefoni registrati.`
+      : `<b style="color:var(--caution)">Notifiche push non configurate</b>: imposta APNS_KEY, APNS_KEY_ID e APNS_TEAM_ID su Vercel. Senza, l'avviso arriva solo quando l'app si apre o iOS la risveglia. ${r.push.devices} telefoni registrati.`;
     renderConfig(); renderNotice();
   } catch (e) { toast(e.message, true); }
 }
@@ -377,14 +382,20 @@ async function saveNotice(clear) {
     Object.assign(notice, { level: $("nlevel").value, from: $("nfrom").value ? new Date($("nfrom").value).toISOString() : null, until: $("nuntil").value ? new Date($("nuntil").value).toISOString() : null, url: $("nurl").value.trim() || null });
     notice.id = `a${Date.now().toString(36)}`; // a new id shows it again to those who closed the previous one
   }
-  try { const r = await call("config-save", { config: { ...config, announcement: clear ? null : notice } }); config = r.config; renderNotice(); $("nsaved").textContent = clear ? "Avviso tolto" : config.announcement ? "Pubblicato " + when(config.updatedAt) : "Nessun avviso (manca il titolo)"; }
+  try {
+    const r = await call("config-save", { config: { ...config, announcement: clear ? null : notice }, push: !clear && $("npush").checked });
+    config = r.config; renderNotice();
+    $("nsaved").textContent = clear ? "Avviso tolto" : !config.announcement ? "Nessun avviso (manca il titolo)" : "Pubblicato " + when(config.updatedAt) + pushText(r.push);
+  }
   catch (e) { toast(e.message, true); }
 }
+const pushText = (p) => !p ? "" : p.error ? ` · notifica non inviata: ${p.error}` : ` · notifica inviata a ${p.sent} telefoni${p.failed ? `, ${p.failed} non raggiunti` : ""}`;
+$("nresend").onclick = async () => { try { const r = await call("notice-push"); $("nsaved").textContent = "Notifica" + pushText(r.push).replace(/^ · notifica/, ""); } catch (e) { toast(e.message, true); } };
 $("nsave").onclick = () => saveNotice(false);
 $("nclear").onclick = () => confirm("Togliere l'avviso dall'app?") && saveNotice(true);
 
 // ——— Log ———
-const ACTION = { login: "Accesso", "login-failed": "Accesso non riuscito", "pro-grant": "Pro regalato", "pro-remove": "Pro tolto", note: "Nota", block: "Account sospeso", unblock: "Account riattivato", delete: "Account cancellato", export: "Dati esportati", "sighting-delete": "Avvistamento eliminato", "sighter-ban": "Bloccato dagli avvistamenti", "sighter-unban": "Sbloccato dagli avvistamenti", "config-save": "Configurazione pubblicata" };
+const ACTION = { login: "Accesso", "login-failed": "Accesso non riuscito", "pro-grant": "Pro regalato", "pro-remove": "Pro tolto", note: "Nota", block: "Account sospeso", unblock: "Account riattivato", delete: "Account cancellato", export: "Dati esportati", "sighting-delete": "Avvistamento eliminato", "sighter-ban": "Bloccato dagli avvistamenti", "sighter-unban": "Sbloccato dagli avvistamenti", "config-save": "Configurazione pubblicata", "notice-push": "Notifica inviata" };
 async function loadLog() {
   try {
     const r = await call("log");

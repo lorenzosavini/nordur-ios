@@ -421,6 +421,8 @@ extension AlertCenter: UNUserNotificationCenterDelegate {
 
     nonisolated func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse) async {
         let id = response.notification.request.content.userInfo["alertID"] as? String
+        // A pushed notice: into the inbox before it opens on it.
+        if response.notification.request.content.userInfo["notice"] != nil { await Entitlements.shared.loadConfig() }
         await MainActor.run {
             AlertCenter.shared.focusedAlertID = id
             AlertCenter.shared.openInbox = true

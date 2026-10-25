@@ -1,6 +1,7 @@
 import Foundation
 import Observation
 import StoreKit
+import UserNotifications
 
 /// What can be sold. The keys are the ones the admin panel lists
 /// (backend/lib/features.js): each is free, Pro or off as the backend says.
@@ -203,23 +204,26 @@ final class Entitlements {
                 UserDefaults.standard.set(data, forKey: Self.configKey)
                 saveBackgroundState()
             }
-            notifyNotice()
+            await notifyNotice()
         } catch {
             // Offline: the last rules stay.
         }
     }
 
     /// A new notice from the admin panel also arrives as a notification and in the alerts inbox, once.
-    private func notifyNotice() {
+    private func notifyNotice() async {
         guard let n = announcement else { return }
         var notified = UserDefaults.standard.stringArray(forKey: "entitlements.notifiedNotices") ?? []
         guard !notified.contains(n.id) else { return }
         notified = Array((notified + [n.id]).suffix(30))
         UserDefaults.standard.set(notified, forKey: "entitlements.notifiedNotices")
+        // Already shown by the push from the server: only into the inbox, no second banner.
+        let delivered = await UNUserNotificationCenter.current().deliveredNotifications()
+        let pushed = delivered.contains { ($0.request.content.userInfo["notice"] as? String) == n.id }
         let risk: Risk = n.level == "danger" ? .danger : n.level == "warning" ? .warning : .caution
         let until = config.announcement?.until.flatMap(Self.date)
         AlertCenter.shared.record(AlertEvent(id: "notice:\(n.id)", date: Date(), category: .notice, severity: risk.rawValue, title: n.title, body: n.text, expires: until),
-                                  notify: true, speak: false)
+                                  notify: !pushed, speak: false)
     }
 
     private func loadProducts() async {

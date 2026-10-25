@@ -14,6 +14,7 @@ import { readObject, writeObject, listObjects, deleteObjects, readJSON, send, hm
 import { mailer } from "./mail.js";
 import { deleteAccount, granted, sightingTag, bannedSighterPath } from "./accounts.js";
 import { FEATURES, readConfig, writeConfig, publicConfig } from "./features.js";
+import { pushReady, pushNotice, deviceCount } from "./push.js";
 
 const PASSWORD = process.env.ADMIN_PASSWORD || "";
 const TOTP = (process.env.ADMIN_TOTP_SECRET || "").replace(/\s/g, "").toUpperCase();
@@ -244,13 +245,27 @@ const ACTIONS = {
   },
 
   async config() {
-    return { config: await readConfig(), features: FEATURES, public: publicConfig(await readConfig()) };
+    return { config: await readConfig(), features: FEATURES, public: publicConfig(await readConfig()), push: { ready: pushReady, devices: await deviceCount() } };
+  },
+
+  /** The current notice again as a push, to every phone. */
+  async "notice-push"(body, req) {
+    const live = publicConfig(await readConfig()).announcement;
+    if (!live) return { error: "Nessun avviso attivo da inviare", status: 400 };
+    const push = await pushNotice(live);
+    await log(req, "notice-push", { id: live.id, sent: push.sent, failed: push.failed });
+    return { push };
   },
 
   async "config-save"(body, req) {
+    const before = (await readConfig()).announcement?.id || null;
     const saved = await writeConfig(body.config || {});
-    await log(req, "config-save", { mode: saved.mode, pro: Object.values(saved.features).filter((v) => v === "pro").length, off: Object.values(saved.features).filter((v) => v === "off").length, products: saved.products.length, announcement: saved.announcement?.id || null });
-    return { config: saved };
+    // A new notice, live now: pushed to every phone at once (unless asked not to).
+    let push = null;
+    const live = publicConfig(saved).announcement;
+    if (live && live.id !== before && body.push !== false) push = await pushNotice(live);
+    await log(req, "config-save", { mode: saved.mode, pro: Object.values(saved.features).filter((v) => v === "pro").length, off: Object.values(saved.features).filter((v) => v === "off").length, products: saved.products.length, announcement: saved.announcement?.id || null, pushed: push?.sent ?? null });
+    return { config: saved, push };
   },
 
   async log() {
