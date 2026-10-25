@@ -1,0 +1,15 @@
+name: Simulators
+
+# Run by hand: lists the Xcode versions, runtimes and device types on the runner.
+on:
+  workflow_dispatch:
+
+jobs:
+  list:
+    runs-on: macos-latest
+    steps:
+      - run: |
+          ls /Applications | grep -i xcode
+          xcodebuild -version
+          xcrun simctl list runtimes
+          xcrun simctl list devicetypes | grep -i -E "iphone|ipad"
