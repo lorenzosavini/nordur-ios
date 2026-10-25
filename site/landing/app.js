@@ -53,7 +53,7 @@
 
   // ——— Screens and loops, in the page's language ———
   // Languages recorded so far (landing/img/<lang>/, landing/video/<lang>/); the others use Italian.
-  const MEDIA_LANGS = window.NORDUR_MEDIA_LANGS || [];
+  const MEDIA_LANGS = ["it", "en", "de", "fr", "es"];
   const shots = ["today", "aurora", "weather", "map-aurora", "map-wind", "trip", "roads", "explore", "quakes", "webcams", "alerts", "offline", "info", "map-radar"];
   document.getElementById("gallery").innerHTML = shots.map((s) => `<div class="phone"><img data-shot="${s}" alt="" loading="lazy"></div>`).join("");
   function media() {
