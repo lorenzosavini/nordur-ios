@@ -225,7 +225,15 @@ struct AlertSettingsView: View {
                         .font(.app(.subheadline)).foregroundStyle(Theme.dim)
                 }
                 ForEach(draft.followed) { place in
-                    Label(place.name, systemImage: "bell.fill")
+                    let now = alerts.followedStatus[place.coordinate.key]
+                    VStack(alignment: .leading, spacing: 3) {
+                        Label(place.name, systemImage: "bell.fill")
+                        if let now {
+                            Text(now.isEmpty ? String(localized: "Adesso nessuna allerta") : now.prefix(2).map(\.title).joined(separator: " · "))
+                                .font(.app(.caption)).foregroundStyle(now.isEmpty ? Theme.dim : (now.map(\.risk).max() ?? .caution).color)
+                                .lineLimit(2)
+                        }
+                    }
                 }
                 .onDelete { offsets in
                     var list = draft.followed

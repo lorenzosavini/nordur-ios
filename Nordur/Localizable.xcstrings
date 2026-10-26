@@ -52712,6 +52712,146 @@
           }
         }
       }
+    },
+    "Ora segui %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Now following %@"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Du folgst jetzt %@"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vous suivez maintenant %@"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ahora sigues %@"
+          }
+        }
+      }
+    },
+    "Allerte meteo IMO, strade chiuse, terremoti" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "IMO weather warnings, closed roads, earthquakes"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "IMO-Wetterwarnungen, gesperrte Straßen, Erdbeben"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Alertes météo IMO, routes fermées, séismes"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Alertas IMO, carreteras cerradas, terremotos"
+          }
+        }
+      }
+    },
+    "Adesso lì non c'è nessuna allerta. Ti avviso quando ne arriva una nuova o se peggiora." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "There are no alerts there right now. You'll be notified when a new one arrives or one gets worse."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dort gibt es gerade keine Warnung. Du wirst benachrichtigt, wenn eine neue kommt oder sich eine verschärft."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aucune alerte là-bas pour l'instant. Vous serez prévenu quand une nouvelle arrive ou s'aggrave."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ahora no hay ninguna alerta allí. Te aviso cuando llegue una nueva o empeore."
+          }
+        }
+      }
+    },
+    "Adesso: %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Now: %@"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jetzt: %@"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Maintenant : %@"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ahora: %@"
+          }
+        }
+      }
+    },
+    "Adesso nessuna allerta" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No alerts right now"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gerade keine Warnung"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aucune alerte pour l'instant"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ahora ninguna alerta"
+          }
+        }
+      }
     }
   },
   "version" : "1.0"

@@ -29,6 +29,8 @@ final class AlertCenter: NSObject {
     private(set) var events: [AlertEvent] = []
     private(set) var settings: AlertSettings
     private(set) var lastCheck: Date?
+    /// What is going on now at each followed place (by coordinate key), from the last check.
+    private(set) var followedStatus: [String: [AlertEvent]] = [:]
     private(set) var isChecking = false
     private(set) var notificationsAllowed = false
     /// Set when the user taps a notification; the UI opens the inbox.
@@ -200,6 +202,18 @@ final class AlertCenter: NSObject {
         defer { isChecking = false }
         let input = await buildInput(position: position)
         let candidates = AlertEngine.evaluate(input, settings: settings)
+        // Each followed place on its own, for its status line (warnings, closed roads, quakes there).
+        var status: [String: [AlertEvent]] = [:]
+        for place in settings.followed {
+            var only = input
+            only.watched = [.init(name: place.name, coordinate: place.coordinate, from: input.now, to: input.now.addingTimeInterval(24 * 3600), isCurrent: false)]
+            only.legs = []
+            only.hereHours = []
+            only.auroraSlots = []
+            status[place.coordinate.key] = AlertEngine.evaluate(only, settings: settings)
+                .filter { [.weatherWarning, .road, .quake].contains($0.category) }
+        }
+        followedStatus = status
         // A place chosen by hand (browsing Akureyri from home): what is going on
         // there now goes in the inbox without a banner; only what starts after that
         // is notified. Moving with the GPS is not affected.
@@ -225,7 +239,26 @@ final class AlertCenter: NSObject {
         else if list.count < AlertSettings.followLimit { list.append(place) }
         next.followedPlaces = list
         update(next)
-        Task { await check() }
+        let started = next.follows(place)
+        Task {
+            await check()
+            // A confirmation with the situation there now: the bell visibly works,
+            // also when there is nothing to report.
+            if started { confirmFollow(place) }
+        }
+    }
+
+    private func confirmFollow(_ place: Place) {
+        let now = followedStatus[place.coordinate.key] ?? []
+        let content = UNMutableNotificationContent()
+        content.title = String(localized: "Ora segui \(place.name)")
+        content.subtitle = String(localized: "Allerte meteo IMO, strade chiuse, terremoti")
+        content.body = now.isEmpty
+            ? String(localized: "Adesso lì non c'è nessuna allerta. Ti avviso quando ne arriva una nuova o se peggiora.")
+            : String(localized: "Adesso: \(now.prefix(3).map(\.title).joined(separator: " · "))")
+        content.sound = .default
+        content.threadIdentifier = "follow"
+        UNUserNotificationCenter.current().add(UNNotificationRequest(identifier: "follow:\(place.coordinate.key):\(Date().timeIntervalSince1970)", content: content, trigger: nil))
     }
 
     func auroraPlace(current: Coordinate?) -> Place {
