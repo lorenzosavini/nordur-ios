@@ -266,7 +266,7 @@ extension DriveRecorder: CLLocationManagerDelegate {
         }
     }
 
-    nonisolated func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) { ErrorLog.record("Posizione", error) }
+    nonisolated func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) { ErrorLog.location(error) }
 
     nonisolated func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
         let status = manager.authorizationStatus

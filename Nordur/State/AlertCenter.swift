@@ -532,7 +532,7 @@ extension AlertCenter: CLLocationManagerDelegate {
         Task { @MainActor in AlertCenter.shared.requestFix() }
     }
 
-    nonisolated func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) { ErrorLog.record("Posizione", error) }
+    nonisolated func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) { ErrorLog.location(error) }
 
     nonisolated func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
         Task { @MainActor in

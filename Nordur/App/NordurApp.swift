@@ -335,6 +335,9 @@ final class OrientationDelegate: NSObject, UIApplicationDelegate {
     }
 
     func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
+        // Without an Apple developer account (Sideloadly with a free Apple ID) the app has no
+        // push entitlement: expected, not an error to report at every launch.
+        if (error as NSError).domain == NSCocoaErrorDomain && (error as NSError).code == 3000 { return }
         ErrorLog.record("Notifiche push", error)
     }
 
