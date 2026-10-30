@@ -5,8 +5,9 @@
 // language of the interface. Translated by Claude with a brief on Icelandic
 // weather, roads and space weather; every result is cached (memory + Blob,
 // encrypted) so a text is translated once for everyone.
-// Needs ANTHROPIC_API_KEY; without it the endpoint answers 503 and the app
-// keeps the original text.
+// With ANTHROPIC_API_KEY: Claude. Without it (or when it fails): MyMemory, a
+// free machine translator with a daily allowance, kept 7 days only so that
+// Claude's translations replace them once the key is set.
 import crypto from "node:crypto";
 import { readObject, writeObject, readJSON, send } from "../lib/core.js";
 
@@ -40,6 +41,45 @@ Answer with JSON only: {"translations": [...]} with exactly one string per input
 }
 
 const sha = (to, text) => crypto.createHash("sha1").update(`${to}\n${text}`).digest("hex");
+
+/** Texts translated now (no cache), for the admin panel's notices. */
+export async function translateTexts(to, texts) {
+  if (process.env.ANTHROPIC_API_KEY) {
+    try { return await claude(to, texts); } catch (e) { console.error("translate claude", e.message); }
+  }
+  const out = [];
+  for (const t of texts) out.push(await freeTranslate(to, t));
+  return out;
+}
+
+/** Pieces of at most ~450 characters, cut at sentence ends (MyMemory's limit is 500 bytes). */
+export function chunks(text, size = 450) {
+  const out = [];
+  let rest = text;
+  while (rest.length > size) {
+    const window = rest.slice(0, size);
+    const cut = Math.max(window.lastIndexOf(". "), window.lastIndexOf("\n"), window.lastIndexOf("; "), window.lastIndexOf(", "));
+    const at = cut > size / 3 ? cut + 1 : (window.lastIndexOf(" ") > 0 ? window.lastIndexOf(" ") : size);
+    out.push(rest.slice(0, at).trim());
+    rest = rest.slice(at).trim();
+  }
+  if (rest) out.push(rest);
+  return out;
+}
+
+/** MyMemory (free, no key): the language of the source is detected. */
+async function freeTranslate(to, text) {
+  const parts = [];
+  for (const piece of chunks(text)) {
+    const url = `https://api.mymemory.translated.net/get?${new URLSearchParams({ q: piece, langpair: `Autodetect|${to}` })}`;
+    const res = await fetch(url, { signal: AbortSignal.timeout(15000) });
+    const json = await res.json().catch(() => null);
+    if (!res.ok || !json || json.quotaFinished || json.responseStatus !== 200) throw new Error(`MyMemory ${json?.responseStatus || res.status}`);
+    const detected = String(json.responseData?.detectedLanguage || "").slice(0, 2);
+    parts.push(detected === to ? piece : String(json.responseData?.translatedText || piece));
+  }
+  return parts.join(" ");
+}
 
 async function claude(to, texts) {
   const res = await fetch("https://api.anthropic.com/v1/messages", {
@@ -88,13 +128,13 @@ export default async function handler(req, res) {
     let hit = memory.get(key);
     if (hit == null) {
       const stored = await readObject(`translations/${to}/${sha(to, text)}.bin`).catch(() => null);
-      if (stored?.t) { hit = stored.t; memory.set(key, hit); }
+      // A free translation gives way to Claude's as soon as the key is there.
+      if (stored?.t && !(stored.free && process.env.ANTHROPIC_API_KEY)) { hit = stored.t; memory.set(key, hit); }
     }
     if (hit != null) out[i] = hit; else missing.push(i);
   }));
 
   if (missing.length) {
-    if (!process.env.ANTHROPIC_API_KEY) return send(res, 503, { error: "Traduzione non configurata" });
     // A light limit per client: translations are cached, so normal use stays far below it.
     const ip = String(req.headers["x-forwarded-for"] || "").split(",")[0].trim() || "?";
     const minute = Math.floor(Date.now() / 60e3);
@@ -103,18 +143,26 @@ export default async function handler(req, res) {
     perClient.set(ip, { minute, count });
     if (count > 200) return send(res, 429, { error: "Troppe richieste" });
 
-    let translated;
-    try {
-      translated = await claude(to, missing.map((i) => texts[i]));
-    } catch (e) {
-      console.error("translate", e.message);
-      return send(res, 502, { error: "Traduzione non disponibile" });
+    let translated = null, free = false;
+    if (process.env.ANTHROPIC_API_KEY) {
+      try { translated = await claude(to, missing.map((i) => texts[i])); } catch (e) { console.error("translate", e.message); }
+    }
+    if (!translated) {
+      // The free translator, one text at a time; what it cannot do keeps the original.
+      free = true;
+      translated = [];
+      for (const i of missing) {
+        try { translated.push(await freeTranslate(to, texts[i])); } catch (e) { console.error("translate free", e.message); translated.push(null); }
+      }
+      if (translated.every((t) => t == null)) return send(res, 502, { error: "Traduzione non disponibile" });
     }
     await Promise.all(missing.map(async (i, j) => {
       const t = translated[j];
+      if (t == null) { out[i] = texts[i]; return; }
       out[i] = t;
       memory.set(`${to}:${sha(to, texts[i])}`, t);
-      await writeObject(`translations/${to}/${sha(to, texts[i])}.bin`, { t }, { ttl: 120 * 86400 }).catch((e) => console.error("translate cache", e.message));
+      await writeObject(`translations/${to}/${sha(to, texts[i])}.bin`, free ? { t, free: true } : { t }, { ttl: (free ? 7 : 120) * 86400 })
+        .catch((e) => console.error("translate cache", e.message));
     }));
   }
   if (memory.size > 20000) memory.clear();

@@ -103,9 +103,10 @@ final class Translator {
 
 extension Translator {
     func localize(_ warnings: [WeatherWarning]) async -> [WeatherWarning] {
-        let map = await translate(warnings.flatMap { [$0.headline, $0.event, $0.details] })
+        let map = await translate(warnings.flatMap { [$0.headline, $0.event, $0.details, $0.region] })
         return warnings.map { w in
             var w = w
+            w.region = map[w.region] ?? w.region
             w.headline = map[w.headline] ?? w.headline
             w.event = map[w.event] ?? w.event
             w.details = map[w.details] ?? w.details
@@ -144,6 +145,24 @@ extension Translator {
             return s
         }
         return out
+    }
+
+    /// Quake areas ("Norðurland", "3,7 km NA af Grindavík") in the app language.
+    func localize(_ quakes: [Quake]) async -> [Quake] {
+        let map = await translate(quakes.map(\.region))
+        guard !map.isEmpty else { return quakes }
+        return quakes.map { var q = $0; q.region = map[q.region] ?? q.region; return q }
+    }
+
+    /// Webcam captions ("Horft til norðurs") in the app language.
+    func localize(_ sites: [WebcamSite]) async -> [WebcamSite] {
+        let map = await translate(sites.flatMap { $0.images.map(\.caption) })
+        guard !map.isEmpty else { return sites }
+        return sites.map { site in
+            var site = site
+            site.images = site.images.map { var i = $0; i.caption = map[i.caption] ?? i.caption; return i }
+            return site
+        }
     }
 
     func localize(_ ferry: FerryNotice) async -> FerryNotice {

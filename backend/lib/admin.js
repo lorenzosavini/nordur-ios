@@ -13,7 +13,8 @@ import crypto from "node:crypto";
 import { readObject, writeObject, listObjects, deleteObjects, readJSON, send, hmac, userPath, docPrefix, revokedPath, storage } from "./core.js";
 import { mailer } from "./mail.js";
 import { deleteAccount, granted, sightingTag, bannedSighterPath } from "./accounts.js";
-import { FEATURES, readConfig, writeConfig, publicConfig } from "./features.js";
+import { FEATURES, readConfig, writeConfig, publicConfig, fillLanguages } from "./features.js";
+import { translateTexts } from "../api/translate.js";
 import { pushReady, pushNotice, deviceCount } from "./push.js";
 
 const PASSWORD = process.env.ADMIN_PASSWORD || "";
@@ -259,7 +260,11 @@ const ACTIONS = {
 
   async "config-save"(body, req) {
     const before = (await readConfig()).announcement?.id || null;
-    const saved = await writeConfig(body.config || {});
+    // The other languages translated automatically from the one written by hand.
+    const input = { ...(body.config || {}) };
+    if (input.announcement?.texts) input.announcement = { ...input.announcement, texts: await fillLanguages(input.announcement.texts, translateTexts) };
+    if (input.paywall) input.paywall = await fillLanguages(input.paywall, translateTexts);
+    const saved = await writeConfig(input);
     // A new notice, live now: pushed to every phone at once (unless asked not to).
     let push = null;
     const live = publicConfig(saved).announcement;

@@ -65,12 +65,12 @@ export function sanitize(input) {
   out.paywall = {};
   for (const l of LANGS) {
     const p = input?.paywall?.[l];
-    if (p && (text(p.title, 80) || text(p.text, 600))) out.paywall[l] = { title: text(p.title, 80), text: text(p.text, 600) };
+    if (p && (text(p.title, 80) || text(p.text, 600))) out.paywall[l] = { title: text(p.title, 80), text: text(p.text, 600), ...(p.auto ? { auto: true } : {}) };
   }
   const a = input?.announcement;
   if (a && Object.values(a.texts || {}).some((t) => text(t?.title, 120))) {
     const texts = {};
-    for (const l of LANGS) if (text(a.texts?.[l]?.title, 120)) texts[l] = { title: text(a.texts[l].title, 120), text: text(a.texts[l].text, 600) };
+    for (const l of LANGS) if (text(a.texts?.[l]?.title, 120)) texts[l] = { title: text(a.texts[l].title, 120), text: text(a.texts[l].text, 600), ...(a.texts[l].auto ? { auto: true } : {}) };
     out.announcement = {
       id: text(a.id, 40) || `a${Date.now().toString(36)}`,
       level: ["info", "warning", "danger"].includes(a.level) ? a.level : "info",
@@ -78,6 +78,30 @@ export function sanitize(input) {
       url: /^https:\/\//.test(a.url || "") ? text(a.url, 300) : null,
       texts,
     };
+  }
+  return out;
+}
+
+/**
+ * Fills the languages left empty (or translated automatically before) from the
+ * one written by hand (Italian first, then English): every phone reads the
+ * notice and the text above the prices in its own language. Languages written
+ * by hand are never touched. Without a translator the texts stay as they are.
+ */
+export async function fillLanguages(copies, translate) {
+  const manual = Object.entries(copies || {}).filter(([, c]) => !c.auto && (c.title || c.text));
+  if (!manual.length) return copies;
+  const [from, source] = manual.find(([l]) => l === "it") || manual.find(([l]) => l === "en") || manual[0];
+  const out = { ...copies };
+  for (const l of LANGS) {
+    if (l === from || (out[l] && !out[l].auto && (out[l].title || out[l].text))) continue;
+    const parts = [source.title || "", source.text || ""].filter(Boolean);
+    try {
+      const done = await translate(l, parts);
+      out[l] = { title: source.title ? done[0] : "", text: source.text ? done[source.title ? 1 : 0] : "", auto: true };
+    } catch (e) {
+      console.error("translate", l, e.message);
+    }
   }
   return out;
 }

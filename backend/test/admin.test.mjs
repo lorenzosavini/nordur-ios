@@ -32,3 +32,23 @@ test("a two-digit year is no date: the notice starts at once", () => {
   assert.equal(c.announcement.from, null);
   assert.ok(publicConfig(c).announcement);
 });
+
+test("languages left empty are filled from Italian, hand-written ones are kept", async () => {
+  const { fillLanguages } = await import("../lib/features.js");
+  const fake = async (to, parts) => parts.map((p) => `${to}:${p}`);
+  const out = await fillLanguages({ it: { title: "Strada chiusa", text: "F35" }, de: { title: "Eigener Text", text: "" } }, fake);
+  assert.deepEqual(out.en, { title: "en:Strada chiusa", text: "en:F35", auto: true });
+  assert.deepEqual(out.de, { title: "Eigener Text", text: "" });
+  assert.equal(out.it.title, "Strada chiusa");
+  // An automatic translation is redone when the source changes.
+  const again = await fillLanguages({ ...out, it: { title: "Strada aperta", text: "" } }, fake);
+  assert.deepEqual(again.fr, { title: "fr:Strada aperta", text: "", auto: true });
+});
+
+test("long texts are cut at sentence ends for the free translator", async () => {
+  const { chunks } = await import("../api/translate.js");
+  const text = "Gul viðvörun. ".repeat(60).trim();
+  const parts = chunks(text);
+  assert.ok(parts.length > 1 && parts.every((p) => p.length <= 450));
+  assert.equal(parts.join(" ").replace(/\s+/g, " "), text);
+});

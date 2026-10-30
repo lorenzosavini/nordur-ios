@@ -198,7 +198,7 @@ final class Entitlements {
         do {
             let (data, response) = try await HTTP.session.data(from: url)
             guard (response as? HTTPURLResponse)?.statusCode == 200 else { return }
-            let next = try JSONDecoder().decode(Config.self, from: data)
+            let next = await Self.inAppLanguage(try JSONDecoder().decode(Config.self, from: data))
             if next != config {
                 config = next
                 UserDefaults.standard.set(data, forKey: Self.configKey)
@@ -208,6 +208,26 @@ final class Entitlements {
         } catch {
             // Offline: the last rules stay.
         }
+    }
+
+    /// The notice and the text above the prices, translated when the panel has
+    /// none in the app's language (written only in Italian, read in German).
+    private static func inAppLanguage(_ config: Config) async -> Config {
+        var config = config
+        let lang = UILanguage.code
+        func translated(_ copies: [String: Copy]) async -> Copy? {
+            guard copies[lang] == nil, let source = copies["en"] ?? copies["it"] ?? copies.values.first else { return nil }
+            let map = await Translator.shared.translate([source.title, source.text].compactMap { $0 })
+            return Copy(title: source.title.map { map[$0] ?? $0 }, text: source.text.map { map[$0] ?? $0 })
+        }
+        if var a = config.announcement, let copy = await translated(a.texts) {
+            a.texts[lang] = copy
+            config.announcement = a
+        }
+        if let paywall = config.paywall, !paywall.isEmpty, let copy = await translated(paywall) {
+            config.paywall?[lang] = copy
+        }
+        return config
     }
 
     /// A new notice from the admin panel also arrives as a notification and in the alerts inbox, once.

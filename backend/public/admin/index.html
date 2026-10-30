@@ -157,7 +157,7 @@
         <div class="langs" id="nlangs"></div>
         <div class="field"><label>Titolo</label><input id="ntitle" maxlength="120"></div>
         <div class="field"><label>Testo</label><textarea id="ntext" maxlength="600"></textarea></div>
-        <p class="dim small">Le lingue senza testo mostrano l'inglese, poi l'italiano.</p>
+        <p class="dim small">Scrivi in italiano (o in una lingua sola): alla pubblicazione le altre si traducono da sole e le puoi correggere.</p>
         <div class="field"><label style="display:flex;gap:8px;align-items:center;text-transform:none;letter-spacing:0;font:400 15px var(--sans);color:var(--text)"><input type="checkbox" id="npush" checked style="width:auto"> Invia anche come notifica push a tutti i telefoni</label></div>
         <p class="dim small" id="npushinfo"></p>
         <div class="row"><button class="btn" id="nsave">Pubblica</button><button class="btn ghost" id="nresend">Invia di nuovo la notifica</button><button class="btn ghost" id="nclear">Togli l'avviso</button><span class="dim small" id="nsaved"></span></div>
@@ -337,12 +337,15 @@ function modeNote() {
     : "L'app si scarica gratis; le funzioni segnate Pro si sbloccano con uno dei prodotti qui sotto (acquisto unico o abbonamento). Chi le tocca vede la schermata di acquisto.";
 }
 $("cmode").onchange = () => { config.mode = $("cmode").value; modeNote(); };
-function langButtons(el, current, pick) {
-  el.innerHTML = LANGS.map((l) => `<button class="btn small ${l === current ? "" : "ghost"}" data-l="${l}">${l.toUpperCase()}</button>`).join("");
+// A copy edited by hand is no longer automatic; one left as it was keeps its mark.
+const keep = (prev, title, text) => ({ title, text, ...(prev?.auto && prev.title === title && prev.text === text ? { auto: true } : {}) });
+function langButtons(el, current, pick, copies = {}) {
+  el.innerHTML = LANGS.map((l) => `<button class="btn small ${l === current ? "" : "ghost"}" data-l="${l}" title="${copies[l]?.auto ? "Tradotto in automatico" : ""}">${l.toUpperCase()}${copies[l]?.auto ? " ·A" : ""}</button>`).join("")
+    + `<span class="faint small" style="align-self:center;margin-left:10px">Scrivi in una lingua: le altre si traducono da sole alla pubblicazione (·A). Puoi correggerle a mano.</span>`;
   el.querySelectorAll("button").forEach((b) => (b.onclick = (e) => { e.preventDefault(); pick(b.dataset.l); }));
 }
-function storePaywall() { config.paywall ||= {}; config.paywall[plang] = { title: $("ptitle").value, text: $("ptext").value }; }
-function renderPaywall() { langButtons($("plangs"), plang, (l) => { storePaywall(); plang = l; renderPaywall(); }); $("ptitle").value = config.paywall?.[plang]?.title || ""; $("ptext").value = config.paywall?.[plang]?.text || ""; }
+function storePaywall() { config.paywall ||= {}; config.paywall[plang] = keep(config.paywall[plang], $("ptitle").value, $("ptext").value); }
+function renderPaywall() { langButtons($("plangs"), plang, (l) => { storePaywall(); plang = l; renderPaywall(); }, config.paywall || {}); $("ptitle").value = config.paywall?.[plang]?.title || ""; $("ptext").value = config.paywall?.[plang]?.text || ""; }
 function renderConfig() {
   $("cmode").value = config.mode; modeNote();
   $("cpaid").value = config.paidThroughBuild || "";
@@ -369,11 +372,11 @@ $("csave").onclick = async () => {
 
 const localInput = (iso) => (iso ? new Date(new Date(iso).getTime() - new Date().getTimezoneOffset() * 60e3).toISOString().slice(0, 16) : "");
 let notice = null;
-function storeNotice() { notice.texts[nlang] = { title: $("ntitle").value, text: $("ntext").value }; }
+function storeNotice() { notice.texts[nlang] = keep(notice.texts[nlang], $("ntitle").value, $("ntext").value); }
 function renderNotice() {
   notice = structuredClone(config.announcement || { level: "info", texts: {} });
   $("nlevel").value = notice.level || "info"; $("nfrom").value = localInput(notice.from); $("nuntil").value = localInput(notice.until); $("nurl").value = notice.url || "";
-  const langs = () => { langButtons($("nlangs"), nlang, (l) => { storeNotice(); nlang = l; langs(); }); $("ntitle").value = notice.texts[nlang]?.title || ""; $("ntext").value = notice.texts[nlang]?.text || ""; };
+  const langs = () => { langButtons($("nlangs"), nlang, (l) => { storeNotice(); nlang = l; langs(); }, notice.texts); $("ntitle").value = notice.texts[nlang]?.title || ""; $("ntext").value = notice.texts[nlang]?.text || ""; };
   langs();
 }
 async function saveNotice(clear) {

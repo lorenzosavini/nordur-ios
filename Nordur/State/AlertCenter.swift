@@ -463,7 +463,9 @@ final class AlertCenter: NSObject {
 
     private static func quotesWeb(_ event: AlertEvent) -> Bool {
         let prefix = event.id.split(separator: ":").first.map(String.init) ?? ""
-        return ["w", "s", "h", "swpc", "ri", "rh", "rwh", "rwi", "r", "rw"].contains(prefix)
+        // Also quakes (area names), road sections on the trip, the evening summary
+        // (it quotes IMO warnings) and admin notices written in another language.
+        return ["w", "s", "h", "swpc", "ri", "rh", "rwh", "rwi", "r", "rw", "q", "lr", "summary", "notice", "cme", "enlil"].contains(prefix)
     }
 
     private func post(_ event: AlertEvent) {

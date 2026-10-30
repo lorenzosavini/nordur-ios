@@ -288,7 +288,21 @@ final class AppModel {
         async let r: Void = localizeRoadInfo()
         async let f: Void = localizeFerry()
         async let a: Void = localizeAurora()
-        _ = await (w, n, r, f, a)
+        async let q: Void = localizeQuakes()
+        async let c: Void = localizeWebcams()
+        _ = await (w, n, r, f, a, q, c)
+    }
+
+    private func localizeWebcams() async {
+        guard let c = webcams else { return }
+        let localized = await Translator.shared.localize(c.value)
+        if webcams?.date == c.date { webcams = Fetched(value: localized, date: c.date, isStale: c.isStale) }
+    }
+
+    private func localizeQuakes() async {
+        guard let q = quakes else { return }
+        let localized = await Translator.shared.localize(q.value)
+        if quakes?.date == q.date { quakes = Fetched(value: localized, date: q.date, isStale: q.isStale) }
     }
 
     private func localizeWarnings() async {

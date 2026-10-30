@@ -4,7 +4,7 @@ import Foundation
 
 struct WebcamImage: Identifiable, Hashable {
     let url: URL
-    let caption: String
+    var caption: String
     var id: URL { url }
 }
 
@@ -13,7 +13,7 @@ struct WebcamSite: Identifiable, Hashable {
     let name: String
     let road: String
     let coordinate: Coordinate
-    let images: [WebcamImage]
+    var images: [WebcamImage]
 
     static func == (lhs: WebcamSite, rhs: WebcamSite) -> Bool { lhs.id == rhs.id }
     func hash(into hasher: inout Hasher) { hasher.combine(id) }

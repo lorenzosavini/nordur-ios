@@ -56,7 +56,7 @@ struct WeatherWarning: Decodable, Identifiable {
     let messageType: String?
     let onset: Date?
     let expires: Date?
-    let region: String
+    var region: String
     let color: WarningColor
     let alertTypes: [String]
     let polygons: [[Coordinate]]
@@ -143,7 +143,7 @@ struct Quake: Identifiable {
     let date: Date
     let magnitude: Double
     let depth: Double?
-    let region: String
+    var region: String
     let kind: String
     let reviewed: Bool
     let coordinate: Coordinate
