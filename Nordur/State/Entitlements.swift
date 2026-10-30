@@ -215,10 +215,10 @@ final class Entitlements {
     private static func inAppLanguage(_ config: Config) async -> Config {
         var config = config
         let lang = UILanguage.code
-        func translated(_ copies: [String: Copy]) async -> Copy? {
+        func translated(_ copies: [String: Config.Copy]) async -> Config.Copy? {
             guard copies[lang] == nil, let source = copies["en"] ?? copies["it"] ?? copies.values.first else { return nil }
             let map = await Translator.shared.translate([source.title, source.text].compactMap { $0 })
-            return Copy(title: source.title.map { map[$0] ?? $0 }, text: source.text.map { map[$0] ?? $0 })
+            return Config.Copy(title: source.title.map { map[$0] ?? $0 }, text: source.text.map { map[$0] ?? $0 })
         }
         if var a = config.announcement, let copy = await translated(a.texts) {
             a.texts[lang] = copy
