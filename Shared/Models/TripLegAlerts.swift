@@ -195,7 +195,7 @@ extension AlertEngine {
         if let best = AuroraEngine.best(input.auroraSlots, within: 8, now: now), best.observability >= .moderate {
             lines.append(String(localized: "Stanotte aurora: condizioni \(best.observability.label.lowercased()) verso le \(Fmt.time(best.date, in: input.auroraZone))"))
         }
-        let title = leg.map { String(localized: "Domani \($0.route)") } ?? String(localized: "Domani a \(stop!.name)")
+        let title = leg.map { String(localized: "Riepilogo di domani: \($0.route)") } ?? String(localized: "Riepilogo di domani: \(stop!.name)")
         return AlertEvent(id: "summary:\(Int(tomorrow.timeIntervalSince1970 / 86400))", date: now, category: .summary,
                           severity: risk.rawValue, title: title, body: lines.joined(separator: " · "),
                           expires: dayEnd, starts: tomorrow)

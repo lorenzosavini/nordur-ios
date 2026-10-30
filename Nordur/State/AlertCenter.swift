@@ -469,7 +469,8 @@ final class AlertCenter: NSObject {
     private func post(_ event: AlertEvent) {
         let content = UNMutableNotificationContent()
         content.title = event.title
-        content.subtitle = event.category.shortLabel
+        // The summary says what it is: "Riepilogo" alone did not.
+        content.subtitle = event.category == .summary ? String(localized: "Il tuo viaggio di domani, in breve") : event.category.shortLabel
         content.body = event.body
         // At night only danger rings; orange arrives silently, the rest quietly.
         let delivery = AlertLifecycle.delivery(risk: event.severity, at: Date(), quietNights: settings.quietNights)
