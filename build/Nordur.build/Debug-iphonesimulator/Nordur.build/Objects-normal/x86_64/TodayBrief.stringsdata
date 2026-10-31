@@ -1,0 +1,176 @@
+{
+  "source": "/Users/runner/work/nordur-ios/nordur-ios/Nordur/Views/TodayBrief.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Allerta IMO",
+        "location": {
+          "startingColumn": 78,
+          "startingLine": 57
+        }
+      },
+      {
+        "comment": "",
+        "key": "%lld allerte IMO",
+        "location": {
+          "startingColumn": 113,
+          "startingLine": 57
+        }
+      },
+      {
+        "comment": "",
+        "key": "Aurora stanotte: %@",
+        "location": {
+          "startingColumn": 56,
+          "startingLine": 64
+        }
+      },
+      {
+        "comment": "",
+        "key": "Il momento migliore verso le %@",
+        "location": {
+          "startingColumn": 55,
+          "startingLine": 65
+        }
+      },
+      {
+        "comment": "",
+        "key": "raffiche fino a %@",
+        "location": {
+          "startingColumn": 58,
+          "startingLine": 77
+        }
+      },
+      {
+        "comment": "",
+        "key": "pioggia %@ mm",
+        "location": {
+          "startingColumn": 58,
+          "startingLine": 78
+        }
+      },
+      {
+        "comment": "",
+        "key": "asciutto",
+        "location": {
+          "startingColumn": 125,
+          "startingLine": 78
+        }
+      },
+      {
+        "comment": "",
+        "key": "Prossime 12 ore",
+        "location": {
+          "startingColumn": 56,
+          "startingLine": 80
+        }
+      },
+      {
+        "comment": "",
+        "key": "Percorribili nel raggio di 60 km",
+        "location": {
+          "startingColumn": 42,
+          "startingLine": 91
+        }
+      },
+      {
+        "comment": "",
+        "key": "%lld chiuse",
+        "location": {
+          "startingColumn": 69,
+          "startingLine": 94
+        }
+      },
+      {
+        "comment": "",
+        "key": "%lld difficili",
+        "location": {
+          "startingColumn": 67,
+          "startingLine": 95
+        }
+      },
+      {
+        "comment": "",
+        "key": "Strade vicine",
+        "location": {
+          "startingColumn": 56,
+          "startingLine": 99
+        }
+      },
+      {
+        "comment": "",
+        "key": "Nessuna allerta IMO qui",
+        "location": {
+          "startingColumn": 102,
+          "startingLine": 102
+        }
+      },
+      {
+        "comment": "",
+        "key": "Meteo, vulcani e terremoti: tutto tranquillo",
+        "location": {
+          "startingColumn": 55,
+          "startingLine": 103
+        }
+      },
+      {
+        "comment": "",
+        "key": "In breve",
+        "location": {
+          "startingColumn": 18,
+          "startingLine": 11
+        }
+      },
+      {
+        "comment": "",
+        "key": "Attrazioni di oggi finite",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 138
+        }
+      },
+      {
+        "comment": "",
+        "key": "Notte: %@",
+        "location": {
+          "startingColumn": 49,
+          "startingLine": 141
+        }
+      },
+      {
+        "comment": "",
+        "key": "%@ → %@",
+        "location": {
+          "startingColumn": 31,
+          "startingLine": 126
+        }
+      },
+      {
+        "comment": "",
+        "key": "Il viaggio di oggi · giorno %lld",
+        "location": {
+          "startingColumn": 48,
+          "startingLine": 121
+        }
+      },
+      {
+        "comment": "",
+        "key": "Prossima alle %@",
+        "location": {
+          "startingColumn": 83,
+          "startingLine": 132
+        }
+      },
+      {
+        "comment": "",
+        "key": "Adesso",
+        "location": {
+          "startingColumn": 163,
+          "startingLine": 132
+        }
+      }
+    ]
+  },
+  "version": 1
+}

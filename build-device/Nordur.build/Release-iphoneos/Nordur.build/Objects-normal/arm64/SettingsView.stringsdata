@@ -1,0 +1,224 @@
+{
+  "source": "/Users/runner/work/nordur-ios/nordur-ios/Nordur/Views/SettingsView.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Impostazioni",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 104
+        }
+      },
+      {
+        "comment": "",
+        "key": "Vento",
+        "location": {
+          "startingColumn": 31,
+          "startingLine": 24
+        }
+      },
+      {
+        "comment": "",
+        "key": "Temperatura",
+        "location": {
+          "startingColumn": 31,
+          "startingLine": 30
+        }
+      },
+      {
+        "comment": "",
+        "key": "Prezzi in corone anche in",
+        "location": {
+          "startingColumn": 35,
+          "startingLine": 37
+        }
+      },
+      {
+        "comment": "",
+        "key": "Convertitore valute",
+        "location": {
+          "startingColumn": 44,
+          "startingLine": 42
+        }
+      },
+      {
+        "comment": "",
+        "key": "mm · km",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 46
+        }
+      },
+      {
+        "comment": "",
+        "key": "Pioggia, distanze",
+        "location": {
+          "startingColumn": 31,
+          "startingLine": 48
+        }
+      },
+      {
+        "comment": "",
+        "key": "Unità di misura",
+        "location": {
+          "startingColumn": 34,
+          "startingLine": 50
+        }
+      },
+      {
+        "comment": "",
+        "key": "Esempio: 15 m/s = %lld km/h = %lld nodi. Le soglie degli avvisi restano le stesse, cambia solo come vengono mostrate.",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 51
+        }
+      },
+      {
+        "comment": "",
+        "key": "Aspetto",
+        "location": {
+          "startingColumn": 31,
+          "startingLine": 58
+        }
+      },
+      {
+        "comment": "",
+        "key": "Visione notturna (rosso)",
+        "location": {
+          "startingColumn": 31,
+          "startingLine": 62
+        }
+      },
+      {
+        "comment": "",
+        "key": "Da sola di notte nella scheda Aurora",
+        "location": {
+          "startingColumn": 31,
+          "startingLine": 65
+        }
+      },
+      {
+        "comment": "",
+        "key": "Aurora animata sullo sfondo",
+        "location": {
+          "startingColumn": 31,
+          "startingLine": 68
+        }
+      },
+      {
+        "comment": "",
+        "key": "Schermo",
+        "location": {
+          "startingColumn": 34,
+          "startingLine": 70
+        }
+      },
+      {
+        "comment": "",
+        "key": "Lo schermo diventa rosso scuro su nero: la luce bianca e blu fa perdere l'adattamento degli occhi al buio (servono 20-30 minuti per recuperarlo), il rosso no. Abbassa anche la luminosità del telefono.\n\nAurora animata: quando l'aurora è possibile dove sei, in alto compaiono le sue tende, più evidenti quanto più sono buone le probabilità; spariscono quando non ce n'è.",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 71
+        }
+      },
+      {
+        "comment": "",
+        "key": "Allerte e notifiche",
+        "location": {
+          "startingColumn": 75,
+          "startingLine": 81
+        }
+      },
+      {
+        "comment": "",
+        "key": "Pacchetto offline",
+        "location": {
+          "startingColumn": 82,
+          "startingLine": 83
+        }
+      },
+      {
+        "comment": "",
+        "key": "Fonti e stato dei dati",
+        "location": {
+          "startingColumn": 73,
+          "startingLine": 85
+        }
+      },
+      {
+        "comment": "",
+        "key": "%lld",
+        "location": {
+          "startingColumn": 72,
+          "startingLine": 88
+        }
+      },
+      {
+        "comment": "",
+        "key": "Registro errori",
+        "location": {
+          "startingColumn": 42,
+          "startingLine": 89
+        }
+      },
+      {
+        "comment": "",
+        "key": "Account e backup",
+        "location": {
+          "startingColumn": 70,
+          "startingLine": 92
+        }
+      },
+      {
+        "comment": "",
+        "key": "Accedi o crea un account",
+        "location": {
+          "startingColumn": 110,
+          "startingLine": 92
+        }
+      },
+      {
+        "comment": "",
+        "key": "App",
+        "location": {
+          "startingColumn": 34,
+          "startingLine": 94
+        }
+      },
+      {
+        "comment": "",
+        "key": "Info, SOS, fonti e crediti",
+        "location": {
+          "startingColumn": 80,
+          "startingLine": 97
+        }
+      },
+      {
+        "comment": "",
+        "key": "Informazioni",
+        "location": {
+          "startingColumn": 34,
+          "startingLine": 98
+        }
+      },
+      {
+        "comment": "",
+        "key": "Norður %@",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 100
+        }
+      },
+      {
+        "comment": "",
+        "key": "Fine",
+        "location": {
+          "startingColumn": 77,
+          "startingLine": 106
+        }
+      }
+    ]
+  },
+  "version": 1
+}

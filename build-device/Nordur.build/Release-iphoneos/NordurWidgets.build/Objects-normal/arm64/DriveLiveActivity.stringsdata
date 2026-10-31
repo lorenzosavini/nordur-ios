@@ -1,0 +1,80 @@
+{
+  "source": "/Users/runner/work/nordur-ios/nordur-ios/NordurWidgets/DriveLiveActivity.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "%lld km/h",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 22
+        }
+      },
+      {
+        "comment": "",
+        "key": "media %lld",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 23
+        }
+      },
+      {
+        "comment": "",
+        "key": "Contachilometri %@",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 33
+        }
+      },
+      {
+        "comment": "",
+        "key": "Contachilometri %@",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 78
+        }
+      },
+      {
+        "comment": "",
+        "key": "In pausa",
+        "location": {
+          "startingColumn": 56,
+          "startingLine": 56
+        }
+      },
+      {
+        "comment": "",
+        "key": "Norður · in viaggio",
+        "location": {
+          "startingColumn": 88,
+          "startingLine": 56
+        }
+      },
+      {
+        "comment": "",
+        "key": "km",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 64
+        }
+      },
+      {
+        "comment": "",
+        "key": "%lld km/h",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 67
+        }
+      },
+      {
+        "comment": "",
+        "key": "media %lld km/h",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 68
+        }
+      }
+    ]
+  },
+  "version": 1
+}

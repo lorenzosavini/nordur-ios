@@ -1,0 +1,144 @@
+{
+  "source": "/Users/runner/work/nordur-ios/nordur-ios/Nordur/Views/RouteShare.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Storia 9:16",
+        "location": {
+          "startingColumn": 64,
+          "startingLine": 12
+        }
+      },
+      {
+        "comment": "",
+        "key": "Post 4:5",
+        "location": {
+          "startingColumn": 99,
+          "startingLine": 12
+        }
+      },
+      {
+        "comment": "",
+        "key": "DISTANZA",
+        "location": {
+          "startingColumn": 32,
+          "startingLine": 29
+        }
+      },
+      {
+        "comment": "",
+        "key": "TEMPO",
+        "location": {
+          "startingColumn": 32,
+          "startingLine": 30
+        }
+      },
+      {
+        "comment": "",
+        "key": "DISLIVELLO",
+        "location": {
+          "startingColumn": 32,
+          "startingLine": 31
+        }
+      },
+      {
+        "comment": "",
+        "key": "MEDIA",
+        "location": {
+          "startingColumn": 47,
+          "startingLine": 34
+        }
+      },
+      {
+        "comment": "",
+        "key": "PASSO",
+        "location": {
+          "startingColumn": 47,
+          "startingLine": 37
+        }
+      },
+      {
+        "comment": "",
+        "key": "Creato con Norður",
+        "location": {
+          "startingColumn": 40,
+          "startingLine": 111
+        }
+      },
+      {
+        "comment": "",
+        "key": "Condividi il percorso",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 303
+        }
+      },
+      {
+        "comment": "",
+        "key": "Formato",
+        "location": {
+          "startingColumn": 28,
+          "startingLine": 262
+        }
+      },
+      {
+        "comment": "",
+        "key": "Preparo la mappa 3D…",
+        "location": {
+          "startingColumn": 71,
+          "startingLine": 271
+        }
+      },
+      {
+        "comment": "",
+        "key": "Condividi l'immagine",
+        "location": {
+          "startingColumn": 35,
+          "startingLine": 280
+        }
+      },
+      {
+        "comment": "",
+        "key": "Condividi il video 3D",
+        "location": {
+          "startingColumn": 35,
+          "startingLine": 285
+        }
+      },
+      {
+        "comment": "",
+        "key": "Creo il video…",
+        "location": {
+          "startingColumn": 66,
+          "startingLine": 290
+        }
+      },
+      {
+        "comment": "",
+        "key": "Crea il volo 3D sul percorso",
+        "location": {
+          "startingColumn": 106,
+          "startingLine": 290
+        }
+      },
+      {
+        "comment": "",
+        "key": "Il video vola sul terreno in 3D lungo il percorso, con le soste dove ti sei fermato; ci vogliono uno o due minuti per crearlo. Dal menu di condivisione: Instagram (storia o post), WhatsApp, oppure «Salva immagine/video» nelle Foto. Terreno 3D e satellite di Apple Mappe.",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 299
+        }
+      },
+      {
+        "comment": "",
+        "key": "Chiudi",
+        "location": {
+          "startingColumn": 77,
+          "startingLine": 305
+        }
+      }
+    ]
+  },
+  "version": 1
+}

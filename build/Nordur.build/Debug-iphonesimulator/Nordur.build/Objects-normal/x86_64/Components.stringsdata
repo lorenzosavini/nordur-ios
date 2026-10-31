@@ -1,0 +1,272 @@
+{
+  "source": "/Users/runner/work/nordur-ios/nordur-ios/Nordur/Views/Components.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "OFFLINE",
+        "location": {
+          "startingColumn": 35,
+          "startingLine": 70
+        }
+      },
+      {
+        "comment": "",
+        "key": "dati di %@",
+        "location": {
+          "startingColumn": 50,
+          "startingLine": 71
+        }
+      },
+      {
+        "comment": "",
+        "key": "agg. %@",
+        "location": {
+          "startingColumn": 103,
+          "startingLine": 71
+        }
+      },
+      {
+        "comment": "",
+        "key": "· %@",
+        "location": {
+          "startingColumn": 38,
+          "startingLine": 72
+        }
+      },
+      {
+        "comment": "",
+        "key": "ERR",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 86
+        }
+      },
+      {
+        "comment": "",
+        "key": "Segui al massimo %lld luoghi",
+        "location": {
+          "startingColumn": 16,
+          "startingLine": 225
+        }
+      },
+      {
+        "comment": "",
+        "key": "GPS · posizione attuale",
+        "location": {
+          "startingColumn": 71,
+          "startingLine": 189
+        }
+      },
+      {
+        "comment": "",
+        "key": "Località scelta",
+        "location": {
+          "startingColumn": 150,
+          "startingLine": 189
+        }
+      },
+      {
+        "comment": "",
+        "key": "CAMBIA",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 199
+        }
+      },
+      {
+        "comment": "",
+        "key": "Non seguire più %@",
+        "location": {
+          "startingColumn": 54,
+          "startingLine": 222
+        }
+      },
+      {
+        "comment": "",
+        "key": "Segui %@ per le allerte",
+        "location": {
+          "startingColumn": 107,
+          "startingLine": 222
+        }
+      },
+      {
+        "comment": "",
+        "key": "OK",
+        "location": {
+          "startingColumn": 20,
+          "startingLine": 226
+        }
+      },
+      {
+        "comment": "",
+        "key": "Togline uno in Allerte › Impostazioni allerte › Luoghi seguiti.",
+        "location": {
+          "startingColumn": 27,
+          "startingLine": 227
+        }
+      },
+      {
+        "comment": "",
+        "key": "↗",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 254
+        }
+      },
+      {
+        "comment": "",
+        "key": "–",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 302
+        }
+      },
+      {
+        "comment": "",
+        "key": "M/S",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 303
+        }
+      },
+      {
+        "comment": "",
+        "key": "%lld",
+        "location": {
+          "startingColumn": 34,
+          "startingLine": 302
+        }
+      },
+      {
+        "comment": "",
+        "key": "–",
+        "location": {
+          "startingColumn": 62,
+          "startingLine": 302
+        }
+      },
+      {
+        "comment": "",
+        "key": "Mappa a schermo intero",
+        "location": {
+          "startingColumn": 55,
+          "startingLine": 539
+        }
+      },
+      {
+        "comment": "",
+        "key": "Chiudi",
+        "location": {
+          "startingColumn": 54,
+          "startingLine": 552
+        }
+      },
+      {
+        "comment": "",
+        "key": "D",
+        "location": {
+          "startingColumn": 14,
+          "startingLine": 618
+        }
+      },
+      {
+        "comment": "",
+        "key": "FUORI COPERTURA",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 892
+        }
+      },
+      {
+        "comment": "",
+        "key": "%@: per ora solo in Islanda. Qui sotto vedi i dati dell'Islanda, non della tua zona.",
+        "location": {
+          "startingColumn": 42,
+          "startingLine": 894
+        }
+      },
+      {
+        "comment": "",
+        "key": "%@: per ora solo in Islanda, per la tua zona non ci sono dati. Meteo, mare, qualità dell'aria e aurora restano attivi.",
+        "location": {
+          "startingColumn": 42,
+          "startingLine": 895
+        }
+      },
+      {
+        "comment": "",
+        "key": "Caricamento",
+        "location": {
+          "startingColumn": 34,
+          "startingLine": 933
+        }
+      },
+      {
+        "comment": "",
+        "key": "OFFLINE · DATI DELLE %@",
+        "location": {
+          "startingColumn": 34,
+          "startingLine": 1012
+        }
+      },
+      {
+        "comment": "",
+        "key": "OFFLINE · NESSUN DATO SALVATO",
+        "location": {
+          "startingColumn": 72,
+          "startingLine": 1011
+        }
+      },
+      {
+        "comment": "",
+        "key": "Indicazioni con Apple Mappe",
+        "location": {
+          "startingColumn": 19,
+          "startingLine": 1039
+        }
+      },
+      {
+        "comment": "",
+        "key": "Indicazioni con Google Maps",
+        "location": {
+          "startingColumn": 19,
+          "startingLine": 1042
+        }
+      },
+      {
+        "comment": "",
+        "key": "Apple Mappe",
+        "location": {
+          "startingColumn": 77,
+          "startingLine": 1055
+        }
+      },
+      {
+        "comment": "",
+        "key": "Google Maps",
+        "location": {
+          "startingColumn": 78,
+          "startingLine": 1056
+        }
+      },
+      {
+        "comment": "",
+        "key": "Da Wikipedia: %@",
+        "location": {
+          "startingColumn": 44,
+          "startingLine": 1196
+        }
+      },
+      {
+        "comment": "",
+        "key": "Leggi su Wikipedia",
+        "location": {
+          "startingColumn": 31,
+          "startingLine": 1202
+        }
+      }
+    ]
+  },
+  "version": 1
+}

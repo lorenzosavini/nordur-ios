@@ -1,0 +1,128 @@
+{
+  "source": "/Users/runner/work/nordur-ios/nordur-ios/Nordur/Views/TripDays.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Meteo disponibile circa 10 giorni prima",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 97
+        }
+      },
+      {
+        "comment": "",
+        "key": "Arrivo a %@",
+        "location": {
+          "startingColumn": 67,
+          "startingLine": 108
+        }
+      },
+      {
+        "comment": "",
+        "key": "A %@",
+        "location": {
+          "startingColumn": 61,
+          "startingLine": 109
+        }
+      },
+      {
+        "comment": "",
+        "key": "Rientro",
+        "location": {
+          "startingColumn": 34,
+          "startingLine": 110
+        }
+      },
+      {
+        "comment": "",
+        "key": "Notte: %@",
+        "location": {
+          "startingColumn": 65,
+          "startingLine": 77
+        }
+      },
+      {
+        "comment": "",
+        "key": "Nessun pernottamento: rientro",
+        "location": {
+          "startingColumn": 115,
+          "startingLine": 77
+        }
+      },
+      {
+        "comment": "",
+        "key": "raff. %@",
+        "location": {
+          "startingColumn": 44,
+          "startingLine": 88
+        }
+      },
+      {
+        "comment": "",
+        "key": "%@/%@",
+        "location": {
+          "startingColumn": 27,
+          "startingLine": 87
+        }
+      },
+      {
+        "comment": "",
+        "key": "%@–%@",
+        "location": {
+          "startingColumn": 31,
+          "startingLine": 90
+        }
+      },
+      {
+        "comment": "",
+        "key": "Aggiungi un'attrazione",
+        "location": {
+          "startingColumn": 74,
+          "startingLine": 147
+        }
+      },
+      {
+        "comment": "",
+        "key": "Aggiungi",
+        "location": {
+          "startingColumn": 120,
+          "startingLine": 147
+        }
+      },
+      {
+        "comment": "",
+        "key": "Consigli e tappa",
+        "location": {
+          "startingColumn": 52,
+          "startingLine": 155
+        }
+      },
+      {
+        "comment": "",
+        "key": "Giorno %lld · %@",
+        "location": {
+          "startingColumn": 44,
+          "startingLine": 162
+        }
+      },
+      {
+        "comment": "",
+        "key": "OGGI",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 164
+        }
+      },
+      {
+        "comment": "",
+        "key": "%lld",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 197
+        }
+      }
+    ]
+  },
+  "version": 1
+}

@@ -1,0 +1,176 @@
+{
+  "source": "/Users/runner/work/nordur-ios/nordur-ios/Shared/Models/Attractions.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Cascata",
+        "location": {
+          "startingColumn": 51,
+          "startingLine": 10
+        }
+      },
+      {
+        "comment": "",
+        "key": "Spiaggia",
+        "location": {
+          "startingColumn": 47,
+          "startingLine": 11
+        }
+      },
+      {
+        "comment": "",
+        "key": "Ghiacciaio e laguna",
+        "location": {
+          "startingColumn": 49,
+          "startingLine": 12
+        }
+      },
+      {
+        "comment": "",
+        "key": "Area geotermica",
+        "location": {
+          "startingColumn": 52,
+          "startingLine": 13
+        }
+      },
+      {
+        "comment": "",
+        "key": "Canyon",
+        "location": {
+          "startingColumn": 48,
+          "startingLine": 14
+        }
+      },
+      {
+        "comment": "",
+        "key": "Paesaggio e belvedere",
+        "location": {
+          "startingColumn": 51,
+          "startingLine": 15
+        }
+      },
+      {
+        "comment": "",
+        "key": "Bagni termali",
+        "location": {
+          "startingColumn": 46,
+          "startingLine": 16
+        }
+      },
+      {
+        "comment": "",
+        "key": "Città e monumenti",
+        "location": {
+          "startingColumn": 46,
+          "startingLine": 17
+        }
+      },
+      {
+        "comment": "",
+        "key": "Natura e animali",
+        "location": {
+          "startingColumn": 50,
+          "startingLine": 18
+        }
+      },
+      {
+        "comment": "",
+        "key": "Spesa",
+        "location": {
+          "startingColumn": 46,
+          "startingLine": 19
+        }
+      },
+      {
+        "comment": "",
+        "key": "Il sentiero dietro la cascata è chiuso e ghiacciato in inverno.",
+        "location": {
+          "startingColumn": 47,
+          "startingLine": 83
+        }
+      },
+      {
+        "comment": "",
+        "key": "Sul ghiacciaio solo con una guida.",
+        "location": {
+          "startingColumn": 47,
+          "startingLine": 87
+        }
+      },
+      {
+        "comment": "",
+        "key": "Strada chiusa con vento forte e in primavera per la nidificazione.",
+        "location": {
+          "startingColumn": 47,
+          "startingLine": 89
+        }
+      },
+      {
+        "comment": "",
+        "key": "Onde anomale: stai lontano dall'acqua, mai di spalle al mare.",
+        "location": {
+          "startingColumn": 47,
+          "startingLine": 91
+        }
+      },
+      {
+        "comment": "",
+        "key": "Onde forti: non salire sui blocchi di ghiaccio vicino all'acqua.",
+        "location": {
+          "startingColumn": 47,
+          "startingLine": 99
+        }
+      },
+      {
+        "comment": "",
+        "key": "Il passo Fjarðarheiði chiude spesso con la neve.",
+        "location": {
+          "startingColumn": 47,
+          "startingLine": 104
+        }
+      },
+      {
+        "comment": "",
+        "key": "La strada 862 d'inverno può essere chiusa.",
+        "location": {
+          "startingColumn": 47,
+          "startingLine": 106
+        }
+      },
+      {
+        "comment": "",
+        "key": "Le uscite per le balene dipendono dal mare.",
+        "location": {
+          "startingColumn": 47,
+          "startingLine": 109
+        }
+      },
+      {
+        "comment": "",
+        "key": "Onde forti: stai lontano dalla riva.",
+        "location": {
+          "startingColumn": 47,
+          "startingLine": 124
+        }
+      },
+      {
+        "comment": "",
+        "key": "D'inverno le strade dei fiordi occidentali chiudono spesso.",
+        "location": {
+          "startingColumn": 47,
+          "startingLine": 127
+        }
+      },
+      {
+        "comment": "",
+        "key": "Solo d'estate, con un 4×4 su strade F con guadi.",
+        "location": {
+          "startingColumn": 47,
+          "startingLine": 130
+        }
+      }
+    ]
+  },
+  "version": 1
+}

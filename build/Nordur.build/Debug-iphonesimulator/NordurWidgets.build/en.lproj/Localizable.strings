@@ -1,0 +1,2114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key> (previsione)</key>
+	<string> (forecast)</string>
+	<key> Arriva a terra tra ~%lld min.</key>
+	<string> Reaches Earth in ~%lld min.</string>
+	<key> Guarda verso %@.</key>
+	<string> Look %@.</string>
+	<key> · %lld km da %@</key>
+	<string> · %1$lld km from %2$@</string>
+	<key> · allerta</key>
+	<string> · warning</string>
+	<key> · automatico</key>
+	<string> · automatic</string>
+	<key> · emessa %@</key>
+	<string> · issued %@</string>
+	<key> · gate %@</key>
+	<string> · gate %@</string>
+	<key> · neve </key>
+	<string> · snow </string>
+	<key> · ~%lld° SULL'ORIZZONTE</key>
+	<string> · ~%lld° ABOVE THE HORIZON</string>
+	<key>%@ KM</key>
+	<string>%@ KM</string>
+	<key>%@ a %lld km: %@</key>
+	<string>%1$@ %2$lld km away: %3$@</string>
+	<key>%@ · %@ · %@ fino alle %@</key>
+	<string>%1$@ · %2$@ · %3$@ until %4$@</string>
+	<key>%@ · %lld MIN FA</key>
+	<string>%1$@ · %2$lld MIN AGO</string>
+	<key>%@ · ARRIVO %@ ±%lld H</key>
+	<string>%1$@ · ARRIVAL %2$@ ±%3$lld H</string>
+	<key>%@ · fino alle %@</key>
+	<string>%1$@ · until %2$@</string>
+	<key>%@ · max %lld km/h</key>
+	<string>%1$@ · max %2$lld km/h</string>
+	<key>%@ · prof. %@%@</key>
+	<string>%1$@ · depth %2$@%3$@</string>
+	<key>%@ · raff. %@%@</key>
+	<string>%1$@ · gusts %2$@%3$@</string>
+	<key>%@, profondità %@%@</key>
+	<string>%1$@, depth %2$@%3$@</string>
+	<key>%@. Affidabilità %@: ricontrolla più tardi.</key>
+	<string>%1$@. Reliability %2$@: check again later.</string>
+	<key>%@: errore medio NOAA %@, combinato %@ (n = %lld)</key>
+	<string>%1$@: mean error NOAA %2$@, blended %3$@ (n = %4$lld)</string>
+	<key>%lld ATTIVI</key>
+	<string>%lld ACTIVE</string>
+	<key>%lld GW</key>
+	<string>%lld GW</string>
+	<key>%lld IN ISLANDA</key>
+	<string>%lld IN ICELAND</string>
+	<key>%lld KM</key>
+	<string>%lld KM</string>
+	<key>%lld KM/H</key>
+	<string>%lld KM/H</string>
+	<key>%lld elementi ripristinati.</key>
+	<string>%lld items restored.</string>
+	<key>%lld km</key>
+	<string>%lld km</string>
+	<key>%lld km da %@</key>
+	<string>%1$lld km from %2$@</string>
+	<key>%lld km · %lld immagini</key>
+	<string>%1$lld km · %2$lld images</string>
+	<key>%lld km/h</key>
+	<string>%lld km/h</string>
+	<key>%lld min</key>
+	<string>%lld min</string>
+	<key>%lld scosse – ultime 48 ore</key>
+	<string>%lld earthquakes – last 48 hours</string>
+	<key>%lld segnalazioni entro 150 km (%lld a occhio nudo).</key>
+	<string>%1$lld reports within 150 km (%2$lld with the naked eye).</string>
+	<key>%lld stazioni · raffica max %@</key>
+	<string>%1$lld stations · max gust %2$@</string>
+	<key>%lld tappe</key>
+	<string>%lld stops</string>
+	<key>%lld tratti con problemi</key>
+	<string>%lld sections with problems</string>
+	<key>%lld tratti · ordinati per distanza da %@</key>
+	<string>%1$lld sections · sorted by distance from %2$@</string>
+	<key>10 giorni</key>
+	<string>10 days</string>
+	<key>112.is – Centrale emergenze</key>
+	<string>112.is – Emergency line</string>
+	<key>24 ORE</key>
+	<string>24 HOURS</string>
+	<key>25 M/S · PERICOLO</key>
+	<string>25 M/S · DANGER</string>
+	<key>27 GIORNI</key>
+	<string>27 DAYS</string>
+	<key>3 GIORNI</key>
+	<string>3 DAYS</string>
+	<key>3 ore</key>
+	<string>3 hours</string>
+	<key>4 = MOLTO FAVOREVOLE</key>
+	<string>4 = VERY FAVOURABLE</string>
+	<key>60 ore</key>
+	<string>60 hours</string>
+	<key>85+ · VALORE OVATION</key>
+	<string>85+ · OVATION VALUE</string>
+	<key>A %lld km da te. Vento medio %@ %@. %@</key>
+	<string>%1$lld km from you. Mean wind %2$@ %3$@. %4$@</string>
+	<key>A L1 alle %@: velocità +%lld km/s, densità ×%@. Rilevamento automatico: l'attività potrebbe aumentare nella prossima ora.</key>
+	<string>At L1 at %1$@: speed +%2$lld km/s, density ×%3$@. Automatic candidate: activity may increase in the next hour.</string>
+	<key>A piedi / trekking</key>
+	<string>On foot / hiking</string>
+	<key>ACCEDI</key>
+	<string>SIGN IN</string>
+	<key>ACCEDI PER SEGNALARE</key>
+	<string>SIGN IN TO REPORT</string>
+	<key>ACCOUNT</key>
+	<string>ACCOUNT</string>
+	<key>ACQUA %@</key>
+	<string>WATER %@</string>
+	<key>AFFIDABILITÀ</key>
+	<string>RELIABILITY</string>
+	<key>AGG. %@</key>
+	<string>UPD. %@</string>
+	<key>AGGIORNATO</key>
+	<string>UPDATED</string>
+	<key>AGGIUNGI LA PRIMA TAPPA</key>
+	<string>ADD THE FIRST STOP</string>
+	<key>ALBA %@</key>
+	<string>SUNRISE %@</string>
+	<key>ASFALTO</key>
+	<string>ROAD SURFACE</string>
+	<key>ATTENZIONE</key>
+	<string>CAUTION</string>
+	<key>ATTIVITÀ</key>
+	<string>ACTIVITY</string>
+	<key>AURORA · STANOTTE</key>
+	<string>AURORA · TONIGHT</string>
+	<key>AUTO</key>
+	<string>AUTO</string>
+	<key>AVVIA REGISTRAZIONE</key>
+	<string>START RECORDING</string>
+	<key>Accedi</key>
+	<string>Sign in</string>
+	<key>Accedi al tuo account</key>
+	<string>Sign in to your account</string>
+	<key>Accedi per inviare un avvistamento</key>
+	<string>Sign in to report a sighting</string>
+	<key>Accesso alla posizione negato: attivalo in Impostazioni › Norður.</key>
+	<string>Location denied: enable it in Settings › Norður.</string>
+	<key>Accesso eseguito. Da ora i dati vengono salvati online.</key>
+	<string>Signed in. From now on your data is saved online.</string>
+	<key>Accesso eseguito: %lld elementi ripristinati.</key>
+	<string>Signed in: %lld items restored.</string>
+	<key>Account</key>
+	<string>Account</string>
+	<key>Account e backup</key>
+	<string>Account and backup</string>
+	<key>Account eliminato</key>
+	<string>Account deleted</string>
+	<key>Account eliminato.</key>
+	<string>Account deleted.</string>
+	<key>Account, backup e avvistamenti, in modo definitivo</key>
+	<string>Account, backup and sightings, permanently</string>
+	<key>Acqua</key>
+	<string>Water</string>
+	<key>Adesso</key>
+	<string>Now</string>
+	<key>Aereo</key>
+	<string>Plane</string>
+	<key>Aeroporto di Keflavík (oggi)</key>
+	<string>Keflavík Airport (today)</string>
+	<key>Aggiorna ora</key>
+	<string>Refresh now</string>
+	<key>Aggiornato %@</key>
+	<string>Updated %@</string>
+	<key>Aggiungi</key>
+	<string>Add</string>
+	<key>Alla guida</key>
+	<string>Driving</string>
+	<key>Allerta arancione</key>
+	<string>Orange warning</string>
+	<key>Allerta gialla</key>
+	<string>Yellow warning</string>
+	<key>Allerta meteo</key>
+	<string>Weather warning</string>
+	<key>Allerta rossa</key>
+	<string>Red warning</string>
+	<key>Allerte</key>
+	<string>Alerts</string>
+	<key>Allerte IMO</key>
+	<string>IMO warnings</string>
+	<key>Allerte IMO sul percorso all'ora del passaggio</key>
+	<string>IMO warnings on the route when you pass</string>
+	<key>Allerte e notifiche</key>
+	<string>Alerts and notifications</string>
+	<key>Allerte in base a dove ti trovi, anche ad app chiusa</key>
+	<string>Alerts based on where you are, even with the app closed</string>
+	<key>Allerte meteo</key>
+	<string>Weather warnings</string>
+	<key>Allerte meteo IMO</key>
+	<string>IMO weather warnings</string>
+	<key>Allerte su vedur.is</key>
+	<string>Warnings on vedur.is</string>
+	<key>Allerte, strade, terremoti, aurora, SafeTravel…</key>
+	<string>Warnings, roads, earthquakes, aurora, SafeTravel…</string>
+	<key>Almeno 8 caratteri</key>
+	<string>At least 8 characters</string>
+	<key>Alta</key>
+	<string>High</string>
+	<key>Altri collegamenti</key>
+	<string>More links</string>
+	<key>Animali sulla strada</key>
+	<string>Animals on the road</string>
+	<key>Animazione particelle vento</key>
+	<string>Wind particle animation</string>
+	<key>Annulla</key>
+	<string>Cancel</string>
+	<key>Apple Mappe: foto profilo › Mappe offline › Scarica nuova mappa › Islanda.</key>
+	<string>Apple Maps: profile picture › Offline Maps › Download New Map › Iceland.</string>
+	<key>Apri Apple Mappe</key>
+	<string>Open Apple Maps</string>
+	<key>Apri Impostazioni</key>
+	<string>Open Settings</string>
+	<key>Apri su umferdin.is</key>
+	<string>Open on umferdin.is</string>
+	<key>Area di Reykjavík</key>
+	<string>Reykjavík area</string>
+	<key>Aria e gas vulcanici</key>
+	<string>Air and volcanic gas</string>
+	<key>Arrivi</key>
+	<string>Arrivals</string>
+	<key>Arrivi e partenze live, Herjólfur</key>
+	<string>Live arrivals and departures, Herjólfur</string>
+	<key>Arrivo</key>
+	<string>Arrival</string>
+	<key>Arrivo a terra</key>
+	<string>Arrival at Earth</string>
+	<key>Arrivo di materiale di CME previsto sulla Terra: %@ (barre arancioni). L'intensità dipenderà dal Bz all'arrivo, misurabile solo ~1 ora prima a L1.</key>
+	<string>CME material forecast at Earth: %@ (orange bars). The intensity will depend on Bz on arrival, measurable only ~1 hour before at L1.</string>
+	<key>Aspetto: %@</key>
+	<string>Appearance: %@</string>
+	<key>Assente qui</key>
+	<string>Absent here</string>
+	<key>Attenzione</key>
+	<string>Caution</string>
+	<key>Atterrato · bagagli al nastro %@</key>
+	<string>Landed · baggage at belt %@</string>
+	<key>Atterrato%@</key>
+	<string>Landed%@</string>
+	<key>Attiva le notifiche</key>
+	<string>Turn on notifications</string>
+	<key>Attività in aumento nella prossima ora</key>
+	<string>Activity rising in the next hour</string>
+	<key>Attività in calo nella prossima ora</key>
+	<string>Activity falling in the next hour</string>
+	<key>Attività prevista debole</key>
+	<string>Weak expected activity</string>
+	<key>Attività prevista debole (Kp %@)</key>
+	<string>Weak expected activity (Kp %@)</string>
+	<key>Attività stabile nella prossima ora</key>
+	<string>Steady activity in the next hour</string>
+	<key>Aurora</key>
+	<string>Aurora</string>
+	<key>Aurora (NOAA/GFZ/NASA)</key>
+	<string>Aurora (NOAA/GFZ/NASA)</string>
+	<key>Aurora adesso: %@</key>
+	<string>Aurora now: %@</string>
+	<key>Aurora boreale</key>
+	<string>Northern lights</string>
+	<key>Aurora live</key>
+	<string>Live aurora</string>
+	<key>Aurora stanotte</key>
+	<string>Aurora tonight</string>
+	<key>Aurora: %@%@</key>
+	<string>Aurora: %1$@%2$@</string>
+	<key>Aurora: avvisa da</key>
+	<string>Aurora: notify from</string>
+	<key>Auto</key>
+	<string>Car</string>
+	<key>Auto e chilometraggio</key>
+	<string>Car and mileage</string>
+	<key>Automatico</key>
+	<string>Automatic</string>
+	<key>Avvia navigazione in Mappe</key>
+	<string>Start navigation in Maps</string>
+	<key>Avvisami se cambia l'avviso Herjólfur</key>
+	<string>Notify me if the Herjólfur notice changes</string>
+	<key>Avvisi NOAA</key>
+	<string>NOAA alerts</string>
+	<key>Avvisi NOAA e CME NASA da Kp %@</key>
+	<string>NOAA alerts and NASA CMEs from Kp %@</string>
+	<key>Avvisi SafeTravel</key>
+	<string>SafeTravel alerts</string>
+	<key>Avvisi e mappa delle condizioni</key>
+	<string>Alerts and conditions map</string>
+	<key>Avvisi vocali</key>
+	<string>Spoken alerts</string>
+	<key>Avvisi vocali durante la guida</key>
+	<string>Spoken alerts while driving</string>
+	<key>Avviso</key>
+	<string>Warning</string>
+	<key>Avviso se superi il limite</key>
+	<string>Warn me when I exceed the limit</string>
+	<key>Avvistamenti</key>
+	<string>Sightings</string>
+	<key>Avvistamento</key>
+	<string>Sighting</string>
+	<key>Avvistamento già registrato per questa zona</key>
+	<string>Sighting already recorded for this area</string>
+	<key>BRILLAMENTI M/X 3 GIORNI: %@</key>
+	<string>M/X FLARES 3 DAYS: %@</string>
+	<key>BUIO</key>
+	<string>DARK</string>
+	<key>BUIO: ore con il Sole sotto −12° (crepuscolo nautico o più scuro). LUNA: illuminazione a mezzanotte locale.</key>
+	<string>DARK: hours with the Sun below −12° (nautical twilight or darker). MOON: illumination at local midnight.</string>
+	<key>BZ GSM, ULTIME 3 ORE · LINEA VERDE −5 NT</key>
+	<string>BZ GSM, LAST 3 HOURS · GREEN LINE −5 NT</string>
+	<key>Backend non raggiungibile: Kp dalla previsione NOAA diretta.</key>
+	<string>Backend unreachable: Kp from the NOAA forecast directly.</string>
+	<key>Backup attivo</key>
+	<string>Backup on</string>
+	<key>Backup completato.</key>
+	<string>Backup complete.</string>
+	<key>Backup dei tuoi dati</key>
+	<string>Back up your data</string>
+	<key>Baldur (Sæferðir)</key>
+	<string>Baldur (Sæferðir)</string>
+	<key>Barca</key>
+	<string>Boat</string>
+	<key>Barca: %@</key>
+	<string>Boat: %@</string>
+	<key>Bassa</key>
+	<string>Low</string>
+	<key>Bitume affiorante: scivoloso</key>
+	<string>Bitumen bleeding: slippery</string>
+	<key>Blika.is</key>
+	<string>Blika.is</string>
+	<key>Buche sulla strada</key>
+	<string>Potholes</string>
+	<key>Bufera di neve</key>
+	<string>Blizzard</string>
+	<key>Buio e cielo in gran parte sereno</key>
+	<string>Dark and mostly clear sky</string>
+	<key>Buio, cielo in gran parte sereno e attività sufficiente</key>
+	<string>Dark, mostly clear sky and adequate activity</string>
+	<key>Buono</key>
+	<string>Good</string>
+	<key>Bus</key>
+	<string>Bus</string>
+	<key>Bus urbani e di lunga distanza</key>
+	<string>City and long-distance buses</string>
+	<key>Bz</key>
+	<string>Bz</string>
+	<key>Bz min / max 60'</key>
+	<string>Bz min / max 60'</string>
+	<key>Bz negativo persistente: %@ nT da %lld min</key>
+	<string>Persistent negative Bz: %1$@ nT for %2$lld min</string>
+	<key>Bz sud continuo</key>
+	<string>Continuous southward Bz</string>
+	<key>Bz verso nord: attività stabile e debole nella prossima ora</key>
+	<string>Northward Bz: steady, weak activity in the next hour</string>
+	<key>Bz verso sud in arrivo intorno alle %@: l'attività può aumentare</key>
+	<string>Southward Bz arriving around %@: activity may increase</string>
+	<key>CAMBIA</key>
+	<string>CHANGE</string>
+	<key>CAMBIA PASSWORD</key>
+	<string>CHANGE PASSWORD</string>
+	<key>CAMS via Open-Meteo</key>
+	<string>CAMS via Open-Meteo</string>
+	<key>CARBURANTE</key>
+	<string>FUEL</string>
+	<key>CHIUSI</key>
+	<string>CLOSED</string>
+	<key>CIELO</key>
+	<string>SKY</string>
+	<key>CIELO (IMO)</key>
+	<string>SKY (IMO)</string>
+	<key>CME</key>
+	<string>CME</string>
+	<key>CME DI STRISCIO</key>
+	<string>GLANCING CME</string>
+	<key>CME DIRETTA</key>
+	<string>DIRECT CME</string>
+	<key>CME di striscio in arrivo</key>
+	<string>Glancing CME on the way</string>
+	<key>CODICE DI RECUPERO</key>
+	<string>RECOVERY CODE</string>
+	<key>CONFERMA</key>
+	<string>CONFIRM</string>
+	<key>COPERTURA NUVOLOSA TOTALE, ORA %@ · OPEN-METEO</key>
+	<string>TOTAL CLOUD COVER, %@ · OPEN-METEO</string>
+	<key>COPIA</key>
+	<string>COPY</string>
+	<key>COPIATO</key>
+	<string>COPIED</string>
+	<key>CREA ACCOUNT</key>
+	<string>CREATE ACCOUNT</string>
+	<key>Caduta massi</key>
+	<string>Falling rocks</string>
+	<key>Calcolato %@ · dati strade %@</key>
+	<string>Calculated %1$@ · road data %2$@</string>
+	<key>Calcolo percorso e previsioni…</key>
+	<string>Calculating route and forecasts…</string>
+	<key>Cambia password</key>
+	<string>Change password</string>
+	<key>Cambiamenti rilevati (%lld)</key>
+	<string>Changes detected (%lld)</string>
+	<key>Cancellato</key>
+	<string>Cancelled</string>
+	<key>Capitale</key>
+	<string>Capital</string>
+	<key>Carburante</key>
+	<string>Fuel</string>
+	<key>Carburante stimato</key>
+	<string>Estimated fuel</string>
+	<key>Carico la griglia meteo…</key>
+	<string>Loading the weather grid…</string>
+	<key>Cerca strada o località</key>
+	<string>Search road or place</string>
+	<key>Cerca strada, numero o località</key>
+	<string>Search road, number or place</string>
+	<key>Cerca un luogo nel mondo</key>
+	<string>Search for a place anywhere</string>
+	<key>Cerca webcam o strada</key>
+	<string>Search webcam or road</string>
+	<key>Certezza</key>
+	<string>Certainty</string>
+	<key>Chat con il 112 e informazioni per i viaggiatori</key>
+	<string>Chat with 112 and information for travellers</string>
+	<key>Che strada è</key>
+	<string>What road this is</string>
+	<key>Chiama il 1777</key>
+	<string>Call 1777</string>
+	<key>Chiaro</key>
+	<string>Light</string>
+	<key>Chiudi</key>
+	<string>Close</string>
+	<key>Chiusa</key>
+	<string>Closed</string>
+	<key>Chiusa al traffico</key>
+	<string>Closed to traffic</string>
+	<key>Chiusure, condizioni, webcam</key>
+	<string>Closures, conditions, webcams</string>
+	<key>Cielo ancora chiaro (crepuscolo civile)</key>
+	<string>Sky still bright (civil twilight)</string>
+	<key>Cielo coperto</key>
+	<string>Overcast sky</string>
+	<key>Cielo illuminato dalle luci vicine</key>
+	<string>Sky lit by nearby lights</string>
+	<key>Cielo molto illuminato dalle luci della città</key>
+	<string>Sky strongly lit by city lights</string>
+	<key>Classe di osservabilità dell’aurora stanotte: attività prevista, nuvole, buio e Luna.</key>
+	<string>Aurora observability class tonight: expected activity, clouds, darkness and Moon.</string>
+	<key>Classe di servizio Vegagerðin</key>
+	<string>Vegagerðin service class</string>
+	<key>Classifica in caricamento</key>
+	<string>Loading ranking</string>
+	<key>Classifica per indice di osservabilità (euristico): attività prevista × cielo sereno × buio × Luna × luci artificiali (NASA Black Marble) × orizzonte del terreno. Non considera sicurezza e percorribilità delle strade: controlla sempre lo stato delle strade prima di muoverti di notte.</key>
+	<string>Ranked by observability index (heuristic): expected activity × clear sky × darkness × Moon × artificial light (NASA Black Marble) × terrain horizon. It does not consider road safety or passability: always check road conditions before driving at night.</string>
+	<key>Classifica per indice di osservabilità (euristico): attività prevista × cielo sereno × buio × Luna × vicinanza a centri abitati. Non considera ostacoli locali dell'orizzonte né sicurezza e percorribilità delle strade: controlla sempre lo stato delle strade prima di muoverti di notte.</key>
+	<string>Ranked by observability index (heuristic): expected activity × clear sky × darkness × Moon × distance from towns. It does not consider road safety or passability: always check road conditions before driving at night.</string>
+	<key>Codice</key>
+	<string>Code</string>
+	<key>Codice di recupero</key>
+	<string>Recovery code</string>
+	<key>Colonnine di ricarica</key>
+	<string>Charging stations</string>
+	<key>Combinato, blocco attuale</key>
+	<string>Blended, current block</string>
+	<key>Come ci arrivi</key>
+	<string>How you get there</string>
+	<key>Completato</key>
+	<string>Done</string>
+	<key>Con Kp %@ l'ovale resta lontano</key>
+	<string>At Kp %@ the oval stays far away</string>
+	<key>Con la stella ricevi una notifica a ogni cambio di stato, orario o gate.</key>
+	<string>With the star you get a notification for every change of status, time or gate.</string>
+	<key>Con mare grosso i traghetti possono essere cancellati.</key>
+	<string>In rough seas ferries may be cancelled.</string>
+	<key>Condizioni</key>
+	<string>Conditions</string>
+	<key>Condizioni %@ per l'aurora, adesso</key>
+	<string>%@ aurora conditions, now</string>
+	<key>Condizioni Norður</key>
+	<string>Norður conditions</string>
+	<key>Condizioni delle strade</key>
+	<string>Road conditions</string>
+	<key>Condizioni sconosciute fuori dall'orario di servizio</key>
+	<string>Conditions unknown outside service hours</string>
+	<key>Condizioni stradali difficili</key>
+	<string>Difficult road conditions</string>
+	<key>Confronto ufficiale IMO</key>
+	<string>Official IMO comparison</string>
+	<key>Conservalo in un posto sicuro (ad esempio in un gestore di password). È l'unico modo per reimpostare la password: non viene inviata nessuna email e Norður non può recuperarlo.</key>
+	<string>Keep it somewhere safe (for example in your password manager). It is the only way to reset your password: no email is sent and Norður cannot recover it.</string>
+	<key>Consigli per guidare in Islanda</key>
+	<string>Tips for driving in Iceland</string>
+	<key>Consulenza sanitaria non urgente</key>
+	<string>Non-urgent medical advice</string>
+	<key>Consumo %@ l/100 km</key>
+	<string>Consumption %@ l/100 km</string>
+	<key>Contachilometri</key>
+	<string>Odometer</string>
+	<key>Contachilometri %@</key>
+	<string>Odometer %@</string>
+	<key>Contachilometri auto</key>
+	<string>Car odometer</string>
+	<key>Continua</key>
+	<string>Continue</string>
+	<key>Controlla ora</key>
+	<string>Check now</string>
+	<key>Coperto</key>
+	<string>Overcast</string>
+	<key>Cosa monitorare</key>
+	<string>What to monitor</string>
+	<key>Cosa significano i colori</key>
+	<string>What the colours mean</string>
+	<key>Cosa viene salvato</key>
+	<string>What is saved</string>
+	<key>Costo</key>
+	<string>Cost</string>
+	<key>Crea account</key>
+	<string>Create account</string>
+	<key>Crepuscolo astronomico</key>
+	<string>Astronomical twilight</string>
+	<key>Crepuscolo civile</key>
+	<string>Civil twilight</string>
+	<key>Crepuscolo nautico</key>
+	<string>Nautical twilight</string>
+	<key>Crepuscolo nautico: solo aurore intense</key>
+	<string>Nautical twilight: only bright aurora</string>
+	<key>Critici</key>
+	<string>Problems</string>
+	<key>DA %@</key>
+	<string>FROM %@</string>
+	<key>DALLE %@</key>
+	<string>FROM %@</string>
+	<key>DIR</key>
+	<string>DIR</string>
+	<key>Dal %@</key>
+	<string>From %@</string>
+	<key>Date di apertura – solo 4x4, guadi</key>
+	<string>Opening dates – 4x4 only, river crossings</string>
+	<key>Dati attuali: ricontrolla prima di partire.</key>
+	<string>Current data: check again before leaving.</string>
+	<key>Dati dell'app</key>
+	<string>App data</string>
+	<key>Dati insufficienti</key>
+	<string>Not enough data</string>
+	<key>Dati online eliminati. Quelli sul telefono restano.</key>
+	<string>Online data deleted. Data on the phone stays.</string>
+	<key>Debole</key>
+	<string>Weak</string>
+	<key>Dentro %@: cielo illuminato</key>
+	<string>Inside %@: lit sky</string>
+	<key>Descrizione (IMO)</key>
+	<string>Description (IMO)</string>
+	<key>Dettagli</key>
+	<string>Details</string>
+	<key>Di giorno l'ovale si trova sul lato notturno della Terra.</key>
+	<string>During the day the oval is on the night side of the Earth.</string>
+	<key>Difficile</key>
+	<string>Difficult</string>
+	<key>Direzione</key>
+	<string>Direction</string>
+	<key>Dirottato</key>
+	<string>Diverted</string>
+	<key>Dislivello</key>
+	<string>Elevation gain</string>
+	<key>Dispersione SO₂ durante le eruzioni</key>
+	<string>SO₂ dispersion during eruptions</string>
+	<key>Dispersione del gas vulcanico: vedur.is.</key>
+	<string>Volcanic gas dispersion: vedur.is.</string>
+	<key>Disponibile durante la registrazione di un percorso.</key>
+	<string>Available while recording a drive.</string>
+	<key>Distanza</key>
+	<string>Distance</string>
+	<key>Distributore più vicino: %@ a %@</key>
+	<string>Nearest fuel station: %1$@ at %2$@</string>
+	<key>Distributori</key>
+	<string>Fuel stations</string>
+	<key>Distributori e ricarica</key>
+	<string>Fuel and charging</string>
+	<key>Distributori salvati sul telefono</key>
+	<string>Fuel stations saved on the phone</string>
+	<key>Distributori sul percorso (%lld)</key>
+	<string>Fuel stations on the route (%lld)</string>
+	<key>Divieto di transito</key>
+	<string>No entry for motor vehicles</string>
+	<key>Download in corso</key>
+	<string>Downloading</string>
+	<key>Durata</key>
+	<string>Duration</string>
+	<key>Durata totale</key>
+	<string>Total duration</string>
+	<key>ELIMINA</key>
+	<string>DELETE</string>
+	<key>ELIMINA ACCOUNT</key>
+	<string>DELETE ACCOUNT</string>
+	<key>EMAIL</key>
+	<string>EMAIL</string>
+	<key>ENE</key>
+	<string>ENE</string>
+	<key>ERR</key>
+	<string>ERR</string>
+	<key>ESE</key>
+	<string>ESE</string>
+	<key>Elimina</key>
+	<string>Delete</string>
+	<key>Elimina account</key>
+	<string>Delete account</string>
+	<key>Elimina dati online</key>
+	<string>Delete online data</string>
+	<key>Elimina percorso</key>
+	<string>Delete drive</string>
+	<key>Elimina tappa</key>
+	<string>Delete stop</string>
+	<key>Eliminare i dati salvati online?</key>
+	<string>Delete the data saved online?</string>
+	<key>Email non valida</key>
+	<string>Invalid email</string>
+	<key>Email o codice di recupero errati</key>
+	<string>Wrong email or recovery code</string>
+	<key>Email o password errate</key>
+	<string>Wrong email or password</string>
+	<key>Emergenza: 112</key>
+	<string>Emergency: 112</string>
+	<key>Errore %lld</key>
+	<string>Error %lld</string>
+	<key>Errore del server</key>
+	<string>Server error</string>
+	<key>Es. FI204</key>
+	<string>E.g. FI204</string>
+	<key>Esci dall'account</key>
+	<string>Sign out</string>
+	<key>Escursione in barca</key>
+	<string>Boat trip</string>
+	<key>Esegui backup ora</key>
+	<string>Back up now</string>
+	<key>Esiste già un account con questa email</key>
+	<string>An account with this email already exists</string>
+	<key>Esporta GPX</key>
+	<string>Export GPX</string>
+	<key>Espulsione di massa coronale in arrivo</key>
+	<string>Coronal mass ejection on the way</string>
+	<key>Est</key>
+	<string>East</string>
+	<key>Estremamente scivolosa</key>
+	<string>Extremely slippery</string>
+	<key>Evacuazioni e zone chiuse</key>
+	<string>Evacuations and closed areas</string>
+	<key>Evento</key>
+	<string>Event</string>
+	<key>FINESTRA MIGLIORE 24 H</key>
+	<string>BEST WINDOW 24 H</string>
+	<key>FONTE</key>
+	<string>SOURCE</string>
+	<key>Falce calante</key>
+	<string>Waning crescent</string>
+	<key>Falce crescente</key>
+	<string>Waxing crescent</string>
+	<key>Favorevole</key>
+	<string>Favourable</string>
+	<key>Fine</key>
+	<string>Done</string>
+	<key>Finestra %@ per l'aurora verso le %@</key>
+	<string>%1$@ aurora window around %2$@</string>
+	<key>Fino al %@</key>
+	<string>Until %@</string>
+	<key>Fino al %@.</key>
+	<string>Until %@.</string>
+	<key>Fiordi occidentali</key>
+	<string>Westfjords</string>
+	<key>Fiordi orientali</key>
+	<string>Eastfjords</string>
+	<key>Flybus / Airport Direct</key>
+	<string>Flybus / Airport Direct</string>
+	<key>Fonte: Vegagerðin (umferdin.is). In caso di dubbio prevalgono le informazioni ufficiali.</key>
+	<string>Source: Vegagerðin (umferdin.is). When in doubt, official information prevails.</string>
+	<key>Fonti e stato</key>
+	<string>Sources and status</string>
+	<key>Forte</key>
+	<string>Strong</string>
+	<key>Fulmini</key>
+	<string>Lightning</string>
+	<key>Fuori da questi orari la strada non viene controllata né pulita: le condizioni possono peggiorare senza aggiornamenti.</key>
+	<string>Outside these hours the road is not monitored or cleared: conditions may get worse without updates.</string>
+	<key>Fuori dalla griglia meteo dell'Islanda.</key>
+	<string>Outside the Iceland weather grid.</string>
+	<key>GENERA NUOVO CODICE</key>
+	<string>GENERATE NEW CODE</string>
+	<key>GIORNO</key>
+	<string>DAY</string>
+	<key>GPS ±%lld m</key>
+	<string>GPS ±%lld m</string>
+	<key>GPS · posizione attuale</key>
+	<string>GPS · current location</string>
+	<key>GPS, km, tempi, velocità, dislivello e consumi. Continua a schermo bloccato.</key>
+	<string>GPS, km, times, speed, elevation and fuel. Keeps running with the screen locked.</string>
+	<key>GUARDA VERSO %@ (%lld°)%@</key>
+	<string>LOOK %1$@ (%2$lld°)%3$@</string>
+	<key>GUIDA · 12 H</key>
+	<string>DRIVING · 12 H</string>
+	<key>Gate %@</key>
+	<string>Gate %@</string>
+	<key>Gate aperto</key>
+	<string>Gate open</string>
+	<key>Gate chiuso</key>
+	<string>Gate closed</string>
+	<key>Gelo</key>
+	<string>Frost</string>
+	<key>Ghiaccio</key>
+	<string>Ice</string>
+	<key>Giallo: possibili disagi.
+Arancione: impatti significativi, valuta di rimandare.
+Rosso: evento estremo, non metterti in viaggio.</key>
+	<string>Yellow: possible disruption.
+Orange: significant impact, consider postponing.
+Red: extreme event, do not travel.</string>
+	<key>Gibbosa calante</key>
+	<string>Waning gibbous</string>
+	<key>Gibbosa crescente</key>
+	<string>Waxing gibbous</string>
+	<key>Giorno</key>
+	<string>Day</string>
+	<key>Golden Circle</key>
+	<string>Golden Circle</string>
+	<key>Granuli di neve</key>
+	<string>Snow grains</string>
+	<key>Gravità</key>
+	<string>Severity</string>
+	<key>Guardia medica 1700</key>
+	<string>Medical helpline 1700</string>
+	<key>Guida</key>
+	<string>Drive</string>
+	<key>Guida difficile</key>
+	<string>Difficult driving</string>
+	<key>Guida e aurora</key>
+	<string>Driving and aurora</string>
+	<key>Guida impegnativa, raffiche forti vicino alle montagne. Evita camper e auto alte.</key>
+	<string>Demanding driving, strong gusts near mountains. Avoid campers and tall vehicles.</string>
+	<key>Guida: %@ · raffiche fino a %@</key>
+	<string>Driving: %1$@ · gusts up to %2$@</string>
+	<key>HO VISTO L'AURORA</key>
+	<string>I SAW THE AURORA</string>
+	<key>Herjólfur</key>
+	<string>Herjólfur</string>
+	<key>Herjólfur – Vestmannaeyjar</key>
+	<string>Herjólfur – Vestmannaeyjar</string>
+	<key>Herjólfur – nuovo avviso</key>
+	<string>Herjólfur – new notice</string>
+	<key>Herjólfur – orari e prenotazioni</key>
+	<string>Herjólfur – timetable and bookings</string>
+	<key>Herjólfur: nessun avviso, orario regolare</key>
+	<string>Herjólfur: no notices, regular timetable</string>
+	<key>Highlands – solo strade F</key>
+	<string>Highlands – F-roads only</string>
+	<key>Hringvegur (Ring Road): strada nazionale principale</key>
+	<string>Hringvegur (Ring Road): the main national road</string>
+	<key>I dati restano sul telefono</key>
+	<string>Data stays on the phone</string>
+	<key>I dati sono cifrati (AES-256) prima di essere salvati. Dopo aver reinstallato l'app basta accedere con la stessa email: tutto torna com'era. Il backup parte da solo quando chiudi l'app e ogni 5 minuti mentre la usi.</key>
+	<string>Data is encrypted (AES-256) before it is stored. After reinstalling the app, sign in with the same email and everything comes back. Backup runs by itself when you close the app and every 5 minutes while you use it.</string>
+	<key>I modelli meteo non concordano sulle nuvole</key>
+	<string>Weather models disagree on clouds</string>
+	<key>IMO M/S</key>
+	<string>IMO M/S</string>
+	<key>IMO °C</key>
+	<string>IMO °C</string>
+	<key>IMPOSTA LA NUOVA PASSWORD</key>
+	<string>SET THE NEW PASSWORD</string>
+	<key>IN CORSO</key>
+	<string>IN FORCE</string>
+	<key>INDICAZIONE PRELIMINARE</key>
+	<string>PRELIMINARY GUIDANCE</string>
+	<key>INVIA</key>
+	<string>SEND</string>
+	<key>ISK</key>
+	<string>ISK</string>
+	<key>Icelandair, Norlandair, Mýflug</key>
+	<string>Icelandair, Norlandair, Mýflug</string>
+	<key>Il campo interplanetario è orientato a sud: favorisce l'attività geomagnetica.%@ Non garantisce un'aurora visibile.</key>
+	<string>The interplanetary field points south: it favours geomagnetic activity.%@ It does not guarantee a visible aurora.</string>
+	<key>Il codice di recupero ti è stato mostrato quando hai creato l'account. Dopo l'uso ne riceverai uno nuovo.</key>
+	<string>The recovery code was shown when you created the account. After using it you will get a new one.</string>
+	<key>Il modello WSA-ENLIL di NOAA prevede l'arrivo di materiale di CME sulla Terra (picco ~%lld km/s). Intensità non prevedibile prima dell'arrivo.</key>
+	<string>NOAA's WSA-ENLIL model forecasts CME material at Earth (peak ~%lld km/s). Intensity cannot be predicted before arrival.</string>
+	<key>Il modello non prevede l'arrivo di materiale di CME sulla Terra fino al %@. ENLIL prevede velocità e densità, non il Bz: da solo non può dire quanto sarà forte una tempesta.</key>
+	<string>The model forecasts no CME material at Earth until %@. ENLIL forecasts speed and density, not Bz: on its own it cannot say how strong a storm will be.</string>
+	<key>Il nuovo codice sostituisce quello precedente, che smette di funzionare.</key>
+	<string>The new code replaces the previous one, which stops working.</string>
+	<key>Il server ha risposto con errore %lld</key>
+	<string>The server responded with error %lld</string>
+	<key>Il telefono era già aggiornato.</key>
+	<string>The phone was already up to date.</string>
+	<key>Il vento misurato ora da %@ a %@ mila km arriva alla Terra tra circa %lld ± %lld minuti (ritardo piatto X/Vx). La risposta di magnetosfera e ionosfera richiede poi da alcuni minuti a decine di minuti: non è l'orario di comparsa dell'aurora.</key>
+	<string>The wind measured now by %1$@ at %2$@ thousand km reaches Earth in about %3$lld ± %4$lld minutes (flat delay X/Vx). The magnetosphere and ionosphere then take from a few to tens of minutes to respond: this is not when the aurora appears.</string>
+	<key>Il vento solare che raggiungerà la Terra nei prossimi minuti è già stato misurato dal satellite in L1, a 1,5 milioni di km: ogni misura è spostata del suo tempo di viaggio. Kp atteso = Kp attuale corretto con la variazione dell'accoppiamento di Newell del vento in arrivo; finché è valido, la geometria usa OVATION. L'aurora risponde con un ritardo che va da alcuni minuti a 20–30 minuti. Oltre l'ultimo dato misurato (–) resta il Kp attuale.</key>
+	<string>The solar wind reaching Earth in the next minutes has already been measured by the satellite at L1, 1.5 million km away: each measurement is shifted by its travel time. Expected Kp = current Kp adjusted by the change in Newell coupling of the arriving wind; while it is valid, the geometry uses OVATION. The aurora responds a few minutes to 20–30 minutes later. Beyond the last measured data (–) the current Kp is kept.</string>
+	<key>Imbarco in corso</key>
+	<string>Boarding</string>
+	<key>Immagine non disponibile</key>
+	<string>Image not available</string>
+	<key>Immagini Vegagerðin, aggiornate ogni pochi minuti.</key>
+	<string>Vegagerðin images, updated every few minutes.</string>
+	<key>Impostazioni</key>
+	<string>Settings</string>
+	<key>Impostazioni allerte</key>
+	<string>Alert settings</string>
+	<key>Impraticabile</key>
+	<string>Impassable</string>
+	<key>Impraticabile / chiusa</key>
+	<string>Impassable / closed</string>
+	<key>In Islanda le multe per eccesso di velocità sono molto alte. Su sterrato il limite è 80 km/h, nei centri abitati 50.</key>
+	<string>Speeding fines in Iceland are very high. On gravel the limit is 80 km/h, in towns 50.</string>
+	<key>In corso…</key>
+	<string>In progress…</string>
+	<key>In marcia</key>
+	<string>Moving</string>
+	<key>In movimento</key>
+	<string>Moving</string>
+	<key>In orario</key>
+	<string>On time</string>
+	<key>In pausa</key>
+	<string>Paused</string>
+	<key>In ritardo%@</key>
+	<string>Delayed%@</string>
+	<key>In viaggio</key>
+	<string>Travelling</string>
+	<key>Includi allerte gialle</key>
+	<string>Include yellow warnings</string>
+	<key>Indicazioni</key>
+	<string>Directions</string>
+	<key>Indice EU</key>
+	<string>EU index</string>
+	<key>Indice Kp</key>
+	<string>Kp index</string>
+	<key>Indirizzo non valido</key>
+	<string>Invalid address</string>
+	<key>Info &amp; SOS</key>
+	<string>Info &amp; SOS</string>
+	<key>Info stradali, strade F nelle Highlands</key>
+	<string>Road info, F-roads in the Highlands</string>
+	<key>Informativa sulla privacy</key>
+	<string>Privacy policy</string>
+	<key>Informazioni stradali (8–16, inverno anche 6:30–22)</key>
+	<string>Road information (8–16, in winter also 6:30–22)</string>
+	<key>Inizio</key>
+	<string>Start</string>
+	<key>Inserisci i km al ritiro dell'auto: si aggiornano a ogni percorso. Limiti: 90 km/h asfalto, 80 sterrato, 50 centri abitati.</key>
+	<string>Enter the km when you pick up the car: they update with every drive. Limits: 90 km/h paved, 80 gravel, 50 in towns.</string>
+	<key>Intensità</key>
+	<string>Intensity</string>
+	<key>Invia una notifica di prova</key>
+	<string>Send a test notification</string>
+	<key>Isavia</key>
+	<string>Isavia</string>
+	<key>Isavia KEF</key>
+	<string>Isavia KEF</string>
+	<key>Islanda</key>
+	<string>Iceland</string>
+	<key>Islanda – luoghi principali</key>
+	<string>Iceland – main places</string>
+	<key>Isole Westman</key>
+	<string>Westman Islands</string>
+	<key>Itinerario</key>
+	<string>Itinerary</string>
+	<key>KEF</key>
+	<string>KEF</string>
+	<key>KM</key>
+	<string>KM</string>
+	<key>KP MAX</key>
+	<string>KP MAX</string>
+	<key>Keflavík – arrivi e partenze</key>
+	<string>Keflavík – arrivals and departures</string>
+	<key>Km auto</key>
+	<string>Car km</string>
+	<key>Kp</key>
+	<string>Kp</string>
+	<key>Kp %@</key>
+	<string>Kp %@</string>
+	<key>Kp GFZ Potsdam</key>
+	<string>Kp GFZ Potsdam</string>
+	<key>Kp a blocchi di 3 ore</key>
+	<string>Kp in 3-hour blocks</string>
+	<key>Kp atteso da NASA %@–%@</key>
+	<string>Kp expected by NASA %1$@–%2$@</string>
+	<key>Kp da vento (Newell)</key>
+	<string>Kp from wind (Newell)</string>
+	<key>Kp previsto NOAA</key>
+	<string>NOAA forecast Kp</string>
+	<key>Kp stimato NOAA (1 min)</key>
+	<string>NOAA estimated Kp (1 min)</string>
+	<key>Kp → ovale</key>
+	<string>Kp → oval</string>
+	<key>L'HO SALVATO</key>
+	<string>I'VE SAVED IT</string>
+	<key>L'account resta attivo</key>
+	<string>The account stays active</string>
+	<key>L'account, il backup online e i tuoi avvistamenti vengono eliminati in modo definitivo. I dati sul telefono restano. Scrivi ELIMINA per confermare.</key>
+	<string>Your account, online backup and sightings are deleted permanently. Data on the phone stays. Type DELETE to confirm.</string>
+	<key>L'indice di osservabilità è una stima euristica trasparente, non una probabilità: moltiplica attività prevista (OVATION entro la sua validità, poi Kp e posizione dell'ovale su latitudine geomagnetica), cielo sereno per strati, buio (altezza del Sole), Luna (fase e altezza) e le luci artificiali misurate dal satellite VIIRS (NASA Black Marble, media annuale) pesate con la distanza, e l'orizzonte del terreno. Le percentuali di probabilità richiedono un modello calibrato su osservazioni reali: le segnalazioni degli utenti servono a costruirlo.</key>
+	<string>The observability index is a transparent heuristic estimate, not a probability: it multiplies expected activity (OVATION within its validity, then Kp and the oval position in geomagnetic latitude), clear sky by layer, darkness (Sun altitude), Moon (phase and altitude), artificial light measured by the VIIRS satellite (NASA Black Marble, annual mean) weighted by distance, and the terrain horizon. Probability percentages need a model calibrated on real observations: user reports are collected to build it.</string>
+	<key>L'indice di osservabilità è una stima euristica trasparente, non una probabilità: moltiplica attività prevista (OVATION entro la sua validità, poi Kp e posizione dell'ovale su latitudine geomagnetica), cielo sereno per strati, buio (altezza del Sole), Luna (fase e altezza) e un indicatore di inquinamento luminoso basato sulla distanza dai centri principali. Le percentuali di probabilità richiedono un modello calibrato su osservazioni reali: le segnalazioni degli utenti servono a costruirlo.</key>
+	<string>The observability index is a transparent heuristic estimate, not a probability: it multiplies expected activity (OVATION within its validity, then Kp and the oval position in geomagnetic latitude), clear sky by layer, darkness (Sun altitude), Moon (phase and altitude) and a light-pollution indicator based on distance from the main towns. Probability percentages need a model calibrated on real observations: user reports are collected to build it.</string>
+	<key>LA TUA ZONA</key>
+	<string>YOUR AREA</string>
+	<key>LIVE</key>
+	<string>LIVE</string>
+	<key>LIVELLI +</key>
+	<string>LAYERS +</string>
+	<key>LUNA</key>
+	<string>MOON</string>
+	<key>La nuova password deve avere almeno 8 caratteri</key>
+	<string>The new password must be at least 8 characters</string>
+	<key>La password deve avere almeno 8 caratteri</key>
+	<string>The password must be at least 8 characters</string>
+	<key>La strada davanti a te</key>
+	<string>The road ahead</string>
+	<key>Laguna glaciale</key>
+	<string>Glacier lagoon</string>
+	<key>Landeyjahöfn / Þorlákshöfn ↔ Vestmannaeyjar</key>
+	<string>Landeyjahöfn / Þorlákshöfn ↔ Vestmannaeyjar</string>
+	<key>Lavori e pericoli</key>
+	<string>Roadworks and hazards</string>
+	<key>Lavori e pericoli (%lld)</key>
+	<string>Roadworks and hazards (%lld)</string>
+	<key>Lavori stradali</key>
+	<string>Roadworks</string>
+	<key>Le allerte IMO e i terremoti vengono controllati per la tua posizione e per le tappe del viaggio dei prossimi 3 giorni.</key>
+	<string>IMO warnings and earthquakes are checked for your position and for the trip stops of the next 3 days.</string>
+	<key>Le condizioni sono peggiorate rispetto alla rilevazione precedente.</key>
+	<string>Conditions have worsened since the previous report.</string>
+	<key>Le notifiche funzionano.</key>
+	<string>Notifications work.</string>
+	<key>Le segnalazioni restano separate da previsioni e misure: servono a verificare e calibrare il modello.</key>
+	<string>Reports are kept separate from forecasts and measurements: they are used to verify and calibrate the model.</string>
+	<key>Lettura %@</key>
+	<string>Reading %@</string>
+	<key>Lieve inquinamento luminoso</key>
+	<string>Slight light pollution</string>
+	<key>Limitazioni</key>
+	<string>Restrictions</string>
+	<key>Limite di carico: %@</key>
+	<string>Axle load limit: %@</string>
+	<key>Limite di peso</key>
+	<string>Weight limit</string>
+	<key>Limite di velocità (in guida)</key>
+	<string>Speed limit (while driving)</string>
+	<key>Limite velocità %lld km/h</key>
+	<string>Speed limit %lld km/h</string>
+	<key>Limiti di peso</key>
+	<string>Weight limits</string>
+	<key>Litri</key>
+	<string>Litres</string>
+	<key>Livelli di allerta aviazione e pericolo</key>
+	<string>Aviation colour codes and hazard levels</string>
+	<key>Località aurora</key>
+	<string>Aurora places</string>
+	<key>Località migliori · 12 h</key>
+	<string>Best places · 12 h</string>
+	<key>Località scelta</key>
+	<string>Chosen place</string>
+	<key>Luce</key>
+	<string>Daylight</string>
+	<key>Luna illuminata al %lld%% sopra l'orizzonte</key>
+	<string>Moon %lld%% lit above the horizon</string>
+	<key>Luna nuova</key>
+	<string>New moon</string>
+	<key>Luna piena</key>
+	<string>Full moon</string>
+	<key>Luogo</key>
+	<string>Place</string>
+	<key>M/S RAFFICHE</key>
+	<string>M/S GUSTS</string>
+	<key>MAPPA DELL'OVALE</key>
+	<string>OVAL MAP</string>
+	<key>MARE · ONDE</key>
+	<string>SEA · WAVES</string>
+	<key>MAX %@ M/S</key>
+	<string>MAX %@ M/S</string>
+	<key>MAX M%@ %@</key>
+	<string>MAX M%1$@ %2$@</string>
+	<key>MET M/S</key>
+	<string>MET M/S</string>
+	<key>MET Norway · MEPS 2,5 km</key>
+	<string>MET Norway · MEPS 2.5 km</string>
+	<key>MET °C</key>
+	<string>MET °C</string>
+	<key>METEO MET NORWAY</key>
+	<string>MET NORWAY WEATHER</string>
+	<key>MIN / MAX</key>
+	<string>MIN / MAX</string>
+	<key>MIN · MAX · RAFF · MM</key>
+	<string>MIN · MAX · GUST · MM</string>
+	<key>MINIMA</key>
+	<string>LOW</string>
+	<key>MISURATO FINO A +%lld MIN</key>
+	<string>MEASURED UP TO +%lld MIN</string>
+	<key>MISURATO ≠ PREVISTO</key>
+	<string>MEASURED ≠ FORECAST</string>
+	<key>Magnitudo minima</key>
+	<string>Minimum magnitude</string>
+	<key>Mancano %@ · circa %@</key>
+	<string>%1$@ to go · about %2$@</string>
+	<key>Mappa</key>
+	<string>Map</string>
+	<key>Mappa a schermo intero</key>
+	<string>Full-screen map</string>
+	<key>Mappa di N1 / Orkan / Olís</key>
+	<string>N1 / Orkan / Olís map</string>
+	<key>Mappa di base</key>
+	<string>Base map</string>
+	<key>Mappa meteo</key>
+	<string>Weather map</string>
+	<key>Mappa ufficiale di Vegagerðin</key>
+	<string>Vegagerðin's official map</string>
+	<key>Mappa ufficiale di strade, chiusure e webcam</key>
+	<string>Official map of roads, closures and webcams</string>
+	<key>Mappa ufficiale in tempo reale</key>
+	<string>Official real-time map</string>
+	<key>Mare</key>
+	<string>Sea</string>
+	<key>Mare ora: onde %@</key>
+	<string>Sea now: waves %@</string>
+	<key>Mareggiata</key>
+	<string>Coastal flooding</string>
+	<key>Max 48 h</key>
+	<string>Max 48 h</string>
+	<key>Media</key>
+	<string>Medium</string>
+	<key>Media in movimento</key>
+	<string>Moving average</string>
+	<key>Meglio verso le %@</key>
+	<string>Best around %@</string>
+	<key>Meteo</key>
+	<string>Weather</string>
+	<key>Meteo e strade lungo un percorso</key>
+	<string>Weather and roads along a route</string>
+	<key>Meteo previsto quando passi</key>
+	<string>Forecast weather when you pass</string>
+	<key>Meteo, strade e webcam lungo il percorso</key>
+	<string>Weather, roads and webcams along the route</string>
+	<key>Meteogramma · 48 h</key>
+	<string>Meteogram · 48 h</string>
+	<key>Metodo</key>
+	<string>Method</string>
+	<key>Mezzo</key>
+	<string>Mode</string>
+	<key>Modelli a confronto, vento e raffiche</key>
+	<string>Models compared, wind and gusts</string>
+	<key>Modello nordico gestito con Veðurstofa Íslands, lo stesso di yr.no. Dopo %@ e per le raffiche: ECMWF/ICON via Open-Meteo.</key>
+	<string>Nordic model run with Veðurstofa Íslands, the same as yr.no. After %@ and for gusts: ECMWF/ICON via Open-Meteo.</string>
+	<key>Moderata</key>
+	<string>Moderate</string>
+	<key>Moderatamente favorevole</key>
+	<string>Moderately favourable</string>
+	<key>Modifica tappa</key>
+	<string>Edit stop</string>
+	<key>Molto bassa sull'orizzonte</key>
+	<string>Very low on the horizon</string>
+	<key>Molto favorevole</key>
+	<string>Very favourable</string>
+	<key>Molto sfavorevole</key>
+	<string>Very unfavourable</string>
+	<key>Mostra anche i voli già passati</key>
+	<string>Also show past flights</string>
+	<key>Mostra meteo e strade sul percorso</key>
+	<string>Show weather and roads on the route</string>
+	<key>NASA (WSA-ENLIL) prevede l'arrivo verso %@ ±7 h, %@. L'effetto dipende dal Bz all'arrivo.</key>
+	<string>NASA (WSA-ENLIL) forecasts arrival around %1$@ ±7 h, %2$@. The effect depends on Bz on arrival.</string>
+	<key>NASA DONKI</key>
+	<string>NASA DONKI</string>
+	<key>NASA DONKI (Goddard CCMC) non risponde: CME e tempeste NASA non sono incluse finché il servizio non torna disponibile. Restano attivi ENLIL di NOAA e gli avvisi NOAA.</key>
+	<string>NASA DONKI (Goddard CCMC) is not responding: NASA CMEs and storms are not included until the service is back. NOAA ENLIL and NOAA alerts remain active.</string>
+	<key>NE</key>
+	<string>NE</string>
+	<key>NESSUNA ORA DI BUIO</key>
+	<string>NO DARK HOURS</string>
+	<key>NESSUNA TAPPA</key>
+	<string>NO STOPS</string>
+	<key>NESSUNO ATTIVO</key>
+	<string>NONE ACTIVE</string>
+	<key>NEVE</key>
+	<string>SNOW</string>
+	<key>NEVE / GHIACCIO</key>
+	<string>SNOW / ICE</string>
+	<key>NNE</key>
+	<string>NNE</string>
+	<key>NNO</key>
+	<string>NNW</string>
+	<key>NO</key>
+	<string>NW</string>
+	<key>NOAA</key>
+	<string>NOAA</string>
+	<key>NOAA SWPC</key>
+	<string>NOAA SWPC</string>
+	<key>NOAA pubblica ogni settimana il Kp massimo atteso per giorno, basato sulla rotazione solare di 27 giorni (ricorrenza dei buchi coronali). Non esiste una previsione affidabile di aurora o nuvole a queste distanze: qui trovi attività attesa, ore di buio e Luna. Il dettaglio aumenta avvicinandosi alla data.</key>
+	<string>Every week NOAA publishes the maximum expected Kp per day, based on the 27-day solar rotation (recurring coronal holes). There is no reliable aurora or cloud forecast this far ahead: here you find expected activity, dark hours and the Moon. Detail increases as the date gets closer.</string>
+	<key>NOAA · GFZ · NASA · MET Norway</key>
+	<string>NOAA · GFZ · NASA · MET Norway</string>
+	<key>NOAA: attività geomagnetica Kp %lld</key>
+	<string>NOAA: geomagnetic activity Kp %lld</string>
+	<key>NON AGGIORNATO · %@</key>
+	<string>NOT UPDATED · %@</string>
+	<key>NON DISPONIBILE</key>
+	<string>NOT AVAILABLE</string>
+	<key>NORÐUR</key>
+	<string>NORÐUR</string>
+	<key>NOTTE</key>
+	<string>NIGHT</string>
+	<key>NUOVA PASSWORD</key>
+	<string>NEW PASSWORD</string>
+	<key>NUVOLE</key>
+	<string>CLOUDS</string>
+	<key>NUVOLE ORA</key>
+	<string>CLOUDS NOW</string>
+	<key>NUVOLOSITÀ IN CARICAMENTO</key>
+	<string>LOADING CLOUD COVER</string>
+	<key>Navette KEF ↔ Reykjavík</key>
+	<string>KEF ↔ Reykjavík shuttles</string>
+	<key>Navette aeroporto ↔ Reykjavík</key>
+	<string>Airport ↔ Reykjavík shuttles</string>
+	<key>Nebbia</key>
+	<string>Fog</string>
+	<key>Nessun percorso registrato.</key>
+	<string>No drives recorded.</string>
+	<key>Nessun percorso stradale trovato tra questi luoghi.</key>
+	<string>No road route found between these places.</string>
+	<key>Nessun problema segnalato</key>
+	<string>No problems reported</string>
+	<key>Nessun risultato</key>
+	<string>No results</string>
+	<key>Nessun servizio</key>
+	<string>No service</string>
+	<key>Nessun servizio invernale</key>
+	<string>No winter service</string>
+	<key>Nessuna CME diretta verso la Terra nelle simulazioni NASA degli ultimi 10 giorni.</key>
+	<string>No Earth-directed CME in NASA simulations of the last 10 days.</string>
+	<key>Nessuna allerta</key>
+	<string>No alerts</string>
+	<key>Nessuna allerta IMO per questa zona</key>
+	<string>No IMO warnings for this area</string>
+	<key>Nessuna allerta meteo attiva</key>
+	<string>No active weather warnings</string>
+	<key>Nessuna criticità nelle prossime 12 ore</key>
+	<string>No issues in the next 12 hours</string>
+	<key>Nessuna destinazione</key>
+	<string>No destination</string>
+	<key>Nessuna notizia sulle strade</key>
+	<string>No road news</string>
+	<key>Nessuna ora di buio nei prossimi 3 giorni.</key>
+	<string>No dark hours in the next 3 days.</string>
+	<key>Nessuna previsione geomagnetica per quest'ora</key>
+	<string>No geomagnetic forecast for this hour</string>
+	<key>Nessuna segnalazione entro 150 km. L'assenza di segnalazioni non indica assenza di aurora.</key>
+	<string>No reports within 150 km. No reports does not mean no aurora.</string>
+	<key>Nessuna stazione stradale davanti a te nel raggio controllato.</key>
+	<string>No road station ahead of you within the checked range.</string>
+	<key>Nessuno</key>
+	<string>None</string>
+	<key>Neve</key>
+	<string>Snow</string>
+	<key>Neve accumulata</key>
+	<string>Snow accumulation</string>
+	<key>Neve bagnata</key>
+	<string>Wet snow</string>
+	<key>Neve debole</key>
+	<string>Light snow</string>
+	<key>Neve forte</key>
+	<string>Heavy snow</string>
+	<key>Neve soffiata dal vento</key>
+	<string>Blowing snow</string>
+	<key>Neve sulla carreggiata</key>
+	<string>Snow on the road</string>
+	<key>Nevicata</key>
+	<string>Snowfall</string>
+	<key>Nevischio</key>
+	<string>Sleet</string>
+	<key>Nevischio debole</key>
+	<string>Light sleet</string>
+	<key>Niente buio stanotte</key>
+	<string>No darkness tonight</string>
+	<key>Nome</key>
+	<string>Name</string>
+	<key>Non ancora scaricati</key>
+	<string>Not downloaded yet</string>
+	<key>Non disponibile</key>
+	<string>Not available</string>
+	<key>Non disponibile per questa località</key>
+	<string>Not available for this place</string>
+	<key>Non mantenuta in questo periodo</key>
+	<string>Not serviced at this time</string>
+	<key>Non prevista nel cielo visibile</key>
+	<string>Not expected in the visible sky</string>
+	<key>Non riuscito: %@</key>
+	<string>Failed: %@</string>
+	<key>Nord</key>
+	<string>North</string>
+	<key>Nord – whale watching</key>
+	<string>North – whale watching</string>
+	<key>Nord-est</key>
+	<string>North-east</string>
+	<key>Norður · in viaggio</key>
+	<string>Norður · on the road</string>
+	<key>Note</key>
+	<string>Notes</string>
+	<key>Notifica di prova</key>
+	<string>Test notification</string>
+	<key>Notifiche attive</key>
+	<string>Notifications on</string>
+	<key>Notifiche disattivate</key>
+	<string>Notifications off</string>
+	<key>Notizie</key>
+	<string>News</string>
+	<key>Notizie in tempo reale</key>
+	<string>Live news</string>
+	<key>Notizie strade (umferdin.is)</key>
+	<string>Road news (umferdin.is)</string>
+	<key>Notte astronomica</key>
+	<string>Astronomical night</string>
+	<key>Notti</key>
+	<string>Nights</string>
+	<key>Notti: %lld</key>
+	<string>Nights: %lld</string>
+	<key>Numero alternativo: 599-0112</key>
+	<string>Alternative number: 599-0112</string>
+	<key>Nuova password con il codice di recupero</key>
+	<string>New password with the recovery code</string>
+	<key>Nuova tappa</key>
+	<string>New stop</string>
+	<key>Nuovo codice di recupero</key>
+	<string>New recovery code</string>
+	<key>Nuvole</key>
+	<string>Clouds</string>
+	<key>Nuvole: copertura efficace dagli strati bassi, medi e alti (le alte contano la metà). Buio: N = notte astronomica, A/NA = crepuscolo astronomico/nautico, C = civile, G = giorno. Dopo i ~90 minuti di validità di OVATION l'attività deriva dal Kp previsto e dalla posizione dell'ovale.</key>
+	<string>Clouds: effective cover from low, mid and high layers (high clouds count half). Dark: N = astronomical night, A/NA = astronomical/nautical twilight, C = civil, G = day. After OVATION's ~90-minute validity, activity comes from the forecast Kp and the oval position.</string>
+	<key>Nuvolosità %lld%% (stima per strati)</key>
+	<string>Cloud cover %lld%% (layered estimate)</string>
+	<key>Nuvolosità non disponibile</key>
+	<string>Cloud cover not available</string>
+	<key>Nuvoloso</key>
+	<string>Cloudy</string>
+	<key>O</key>
+	<string>W</string>
+	<key>OFFLINE</key>
+	<string>OFFLINE</string>
+	<key>OGGI</key>
+	<string>TODAY</string>
+	<key>ONO</key>
+	<string>WNW</string>
+	<key>ORA</key>
+	<string>HOUR</string>
+	<key>ORA LOCALE</key>
+	<string>LOCAL TIME</string>
+	<key>ORA MIGLIORE PER NOTTE</key>
+	<string>BEST HOUR PER NIGHT</string>
+	<key>OSO</key>
+	<string>WSW</string>
+	<key>OSSERVABILITÀ</key>
+	<string>OBSERVABILITY</string>
+	<key>OSSERVABILITÀ QUI</key>
+	<string>OBSERVABILITY HERE</string>
+	<key>OSSERVATO · STIMATO · PREVISTO</key>
+	<string>OBSERVED · ESTIMATED · FORECAST</string>
+	<key>OV %lld</key>
+	<string>OV %lld</string>
+	<key>OVALE OVATION</key>
+	<string>OVATION OVAL</string>
+	<key>OVATION %lld nel tuo cielo</key>
+	<string>OVATION %lld in your sky</string>
+	<key>OVATION %lld · %@</key>
+	<string>OVATION %1$lld · %2$@</string>
+	<key>OVATION Prime</key>
+	<string>OVATION Prime</string>
+	<key>OVATION Prime (NOAA) stima l'aurora per l'orario indicato a partire dal vento solare misurato a L1. Il valore è una grandezza del modello (NOAA la descrive come probabilità di aurora visibile), non la probabilità che tu la veda: nuvole, buio e Luna sono valutati a parte. La direzione considera aurore a ~110 km di quota e la curvatura terrestre.</key>
+	<string>OVATION Prime (NOAA) estimates the aurora for the time shown from the solar wind measured at L1. The value is a model quantity (NOAA describes it as the probability of visible aurora), not the probability that you will see it: clouds, darkness and the Moon are assessed separately. The direction assumes aurora at ~110 km altitude and the Earth's curvature.</string>
+	<key>OVATION non disponibile o fuori validità: l'attività è stimata dal Kp.</key>
+	<string>OVATION unavailable or out of validity: activity is estimated from Kp.</string>
+	<key>OVATION non prevede aurora nel tuo cielo</key>
+	<string>OVATION forecasts no aurora in your sky</string>
+	<key>Oggi</key>
+	<string>Today</string>
+	<key>Ogni volta che ti sposti di circa 2 km l'app controlla allerte, strade, vento e terremoti intorno a te, anche se non stai registrando un percorso. Serve l'accesso alla posizione «Sempre».</key>
+	<string>Every time you move about 2 km the app checks warnings, roads, wind and earthquakes around you, even when you are not recording a drive. Requires “Always” location access.</string>
+	<key>Oltre 7 giorni la previsione è indicativa.</key>
+	<string>Beyond 7 days the forecast is indicative.</string>
+	<key>Oltre il limite</key>
+	<string>Over the limit</string>
+	<key>Onda lunga</key>
+	<string>Swell</string>
+	<key>Onde</key>
+	<string>Waves</string>
+	<key>Open-Meteo</key>
+	<string>Open-Meteo</string>
+	<key>Open-Meteo Marine</key>
+	<string>Open-Meteo Marine</string>
+	<key>OpenStreetMap</key>
+	<string>OpenStreetMap</string>
+	<key>Ora</key>
+	<string>Time</string>
+	<key>Ora lungo il tragitto:</key>
+	<string>Now along the way:</string>
+	<key>Ora per ora</key>
+	<string>Hour by hour</string>
+	<key>Orario %@%@</key>
+	<string>Time %1$@%2$@</string>
+	<key>Ordinate per distanza da %@</key>
+	<string>Sorted by distance from %@</string>
+	<key>Orizzonte del terreno non disponibile: considerato libero</key>
+	<string>Terrain horizon not available: assumed open</string>
+	<key>Ovale OVATION previsto per le %@ · Kp %@</key>
+	<string>OVATION oval forecast for %1$@ · Kp %2$@</string>
+	<key>Ovale adesso</key>
+	<string>Oval now</string>
+	<key>Ovale aurorale</key>
+	<string>Auroral oval</string>
+	<key>Ovale aurorale sulla mappa</key>
+	<string>Auroral oval on the map</string>
+	<key>Ovest</key>
+	<string>West</string>
+	<key>P nPa</key>
+	<string>P nPa</string>
+	<key>PASSWORD</key>
+	<string>PASSWORD</string>
+	<key>PASSWORD ATTUALE</key>
+	<string>CURRENT PASSWORD</string>
+	<key>PASSWORD DIMENTICATA? USA IL CODICE DI RECUPERO</key>
+	<string>FORGOT YOUR PASSWORD? USE THE RECOVERY CODE</string>
+	<key>PEGGIORATA</key>
+	<string>WORSE</string>
+	<key>PERCEPITA</key>
+	<string>FEELS LIKE</string>
+	<key>PERCORRIBILI</key>
+	<string>PASSABLE</string>
+	<key>PIOGGIA OGGI</key>
+	<string>RAIN TODAY</string>
+	<key>POSSIBILE SHOCK INTERPLANETARIO · %@</key>
+	<string>POSSIBLE INTERPLANETARY SHOCK · %@</string>
+	<key>POTENZA EMISFERICA (OVATION)</key>
+	<string>HEMISPHERIC POWER (OVATION)</string>
+	<key>PRECIPITAZIONI</key>
+	<string>PRECIPITATION</string>
+	<key>PREVISIONE COMPLETA →</key>
+	<string>FULL FORECAST →</string>
+	<key>PUNTI: LOCALITÀ DI RIFERIMENTO, COLORATE PER OSSERVABILITÀ MIGLIORE NELLE PROSSIME 12 H (STIMA EURISTICA, NON PROBABILITÀ). GRIGI PICCOLI: TAPPE DEL VIAGGIO.</key>
+	<string>DOTS: REFERENCE PLACES, COLOURED BY BEST OBSERVABILITY IN THE NEXT 12 H (HEURISTIC ESTIMATE, NOT A PROBABILITY). SMALL GREY: TRIP STOPS.</string>
+	<key>Pacchetto offline</key>
+	<string>Offline pack</string>
+	<key>Partenza</key>
+	<string>Departure</string>
+	<key>Partenza alle</key>
+	<string>Departure at</string>
+	<key>Partenze</key>
+	<string>Departures</string>
+	<key>Partito%@</key>
+	<string>Departed%@</string>
+	<key>Parzialmente nuvoloso</key>
+	<string>Partly cloudy</string>
+	<key>Password</key>
+	<string>Password</string>
+	<key>Password aggiornata, accesso eseguito.</key>
+	<string>Password updated, signed in.</string>
+	<key>Password cambiata.</key>
+	<string>Password changed.</string>
+	<key>Password errata</key>
+	<string>Wrong password</string>
+	<key>Pausa</key>
+	<string>Pause</string>
+	<key>Pedaggio</key>
+	<string>Toll</string>
+	<key>Penisola di Reykjanes</key>
+	<string>Reykjanes peninsula</string>
+	<key>Penisola di Tröllaskagi</key>
+	<string>Tröllaskagi peninsula</string>
+	<key>Per ogni tappa: meteo del giorno, allerte, mare e strade lungo il tragitto.</key>
+	<string>For each stop: weather for the day, warnings, sea and roads along the way.</string>
+	<key>Percorribile</key>
+	<string>Passable</string>
+	<key>Percorribilità difficile</key>
+	<string>Difficult driving</string>
+	<key>Percorsi</key>
+	<string>Drives</string>
+	<key>Percorsi e strade</key>
+	<string>Drives and roads</string>
+	<key>Percorsi in auto</key>
+	<string>Car drives</string>
+	<key>Percorso</key>
+	<string>Route</string>
+	<key>Pericoloso</key>
+	<string>Dangerous</string>
+	<key>Periodo</key>
+	<string>Period</string>
+	<key>Pianifica percorso</key>
+	<string>Plan route</string>
+	<key>Pioggia</key>
+	<string>Rain</string>
+	<key>Pioggia debole</key>
+	<string>Light rain</string>
+	<key>Pioggia forte</key>
+	<string>Heavy rain</string>
+	<key>Pioggia gelata</key>
+	<string>Freezing rain</string>
+	<key>Pioviggine</key>
+	<string>Drizzle</string>
+	<key>Pioviggine debole</key>
+	<string>Light drizzle</string>
+	<key>Pioviggine gelata</key>
+	<string>Freezing drizzle</string>
+	<key>Poco nuvoloso</key>
+	<string>Mostly clear</string>
+	<key>Polizia, ambulanza, vigili del fuoco, soccorso alpino</key>
+	<string>Police, ambulance, fire brigade, search and rescue</string>
+	<key>Polvere</key>
+	<string>Dust</string>
+	<key>Porto per Vestmannaeyjar</key>
+	<string>Port for Vestmannaeyjar</string>
+	<key>Posizione arrotondata a ~1 km. Una segnalazione ogni 20 minuti. Le segnalazioni sono anonime per gli altri utenti.</key>
+	<string>Position rounded to ~1 km. One report every 20 minutes. Reports are anonymous to other users.</string>
+	<key>Posizione attuale</key>
+	<string>Current location</string>
+	<key>Posizione non valida</key>
+	<string>Invalid location</string>
+	<key>Possibile arrivo di una CME verso %@</key>
+	<string>Possible CME arrival around %@</string>
+	<key>Possibile shock nel vento solare</key>
+	<string>Possible solar wind shock</string>
+	<key>Potenza emisferica</key>
+	<string>Hemispheric power</string>
+	<key>Precip.</key>
+	<string>Precip.</string>
+	<key>Prenotazioni, orari, telefono alloggio…</key>
+	<string>Bookings, times, accommodation phone…</string>
+	<key>Pressione</key>
+	<string>Pressure</string>
+	<key>Pressione vs 1 h fa</key>
+	<string>Pressure vs 1 h ago</string>
+	<key>Previsione 45 giorni</key>
+	<string>45-day forecast</string>
+	<key>Previsione Kp non aggiornata</key>
+	<string>Kp forecast not up to date</string>
+	<key>Previsione NOAA, blocco attuale</key>
+	<string>NOAA forecast, current block</string>
+	<key>Previsione OVATION valida per le %@ (circa 30–90 minuti dopo la misura del vento solare a L1): non vale per le ore e i giorni successivi. La scala mostra il valore del modello OVATION, non nuvolosità né probabilità di osservazione. Kp previsto per il blocco attuale %@.</key>
+	<string>OVATION forecast valid for %1$@ (about 30–90 minutes after the solar wind measurement at L1): it does not apply to later hours and days. The scale shows the OVATION model value, not cloud cover or the probability of seeing it. Forecast Kp for the current block %2$@.</string>
+	<key>Previsione a breve termine non disponibile: serve il vento solare aggiornato.</key>
+	<string>Short-term forecast not available: up-to-date solar wind is needed.</string>
+	<key>Previsione gas vulcanici</key>
+	<string>Volcanic gas forecast</string>
+	<key>Previsione non disponibile</key>
+	<string>Forecast not available</string>
+	<key>Previsione per stazione di Veðurstofa Íslands%@</key>
+	<string>Veðurstofa Íslands station forecast%@</string>
+	<key>Previsioni</key>
+	<string>Forecasts</string>
+	<key>Previsioni disponibili circa 10 giorni prima (mancano %lld giorni).</key>
+	<string>Forecasts available about 10 days ahead (%lld days to go).</string>
+	<key>Previsioni islandesi dettagliate</key>
+	<string>Detailed Icelandic forecasts</string>
+	<key>Previsioni norvegesi (MET Norway)</key>
+	<string>Norwegian forecasts (MET Norway)</string>
+	<key>Previsioni per %lld tappe del viaggio…</key>
+	<string>Forecasts for %lld trip stops…</string>
+	<key>Previsioni per la posizione…</key>
+	<string>Forecasts for your location…</string>
+	<key>Previsioni · 10 giorni</key>
+	<string>Forecast · 10 days</string>
+	<key>Previsioni, allerte, mappe del vento</key>
+	<string>Forecasts, warnings, wind maps</string>
+	<key>Previsto%@</key>
+	<string>Expected%@</string>
+	<key>Prezzo carburante (ISK/l)</key>
+	<string>Fuel price (ISK/l)</string>
+	<key>Prima</key>
+	<string>Before</string>
+	<key>Primo quarto</key>
+	<string>First quarter</string>
+	<key>Proiezione di ghiaia</key>
+	<string>Flying gravel</string>
+	<key>Prossime ore</key>
+	<string>Next hours</string>
+	<key>Prossimi 60 minuti</key>
+	<string>Next 60 minutes</string>
+	<key>Protezione Civile (Almannavarnir)</key>
+	<string>Civil Protection (Almannavarnir)</string>
+	<key>Punteggio 0–100: attività geomagnetica × cielo sereno nelle ore di buio.</key>
+	<string>Score 0–100: geomagnetic activity × clear sky during dark hours.</string>
+	<key>Puoi inviare un avvistamento ogni 20 minuti</key>
+	<string>You can report one sighting every 20 minutes</string>
+	<key>Quali dati usa Norður e come</key>
+	<string>What data Norður uses and how</string>
+	<key>Qualità dell'aria</key>
+	<string>Air quality</string>
+	<key>Quando</key>
+	<string>When</string>
+	<key>Quando i due modelli differiscono di 4 m/s o più il valore MET è evidenziato: in quel caso considera lo scenario peggiore.</key>
+	<string>When the two models differ by 4 m/s or more the MET value is highlighted: in that case plan for the worse scenario.</string>
+	<key>Qui</key>
+	<string>Here</string>
+	<key>Qui compaiono le allerte inviate.</key>
+	<string>Alerts that were sent appear here.</string>
+	<key>Quota</key>
+	<string>Altitude</string>
+	<key>Quota (scalata)</key>
+	<string>Altitude (scaled)</string>
+	<key>RAFF.</key>
+	<string>GUST</string>
+	<key>RAFF. MAX</key>
+	<string>MAX GUST</string>
+	<key>REC</key>
+	<string>REC</string>
+	<key>REGISTRA IL PERCORSO</key>
+	<string>RECORD THE DRIVE</string>
+	<key>RICARICA EV %@ KM</key>
+	<string>EV CHARGING %@ KM</string>
+	<key>Radar</key>
+	<string>Radar</string>
+	<key>Radar RainViewer, ultime 2 ore. Copertura parziale.</key>
+	<string>RainViewer radar, last 2 hours. Partial coverage.</string>
+	<key>Raffica max 12 h: %@</key>
+	<string>Max gust 12 h: %@</string>
+	<key>Raffiche</key>
+	<string>Gusts</string>
+	<key>Raffiche %@ a %@ tra %lld km (%lld min)</key>
+	<string>Gusts %1$@ at %2$@ in %3$lld km (%4$lld min)</string>
+	<key>Raffiche da %lld m/s</key>
+	<string>Gusts from %lld m/s</string>
+	<key>Raffiche di %@ a %@</key>
+	<string>Gusts of %1$@ at %2$@</string>
+	<key>Raffiche forti vicino a te</key>
+	<string>Strong gusts near you</string>
+	<key>Raffiche improvvise</key>
+	<string>Sudden gusts</string>
+	<key>Recupera</key>
+	<string>Recover</string>
+	<key>Registra il piano di viaggio</key>
+	<string>Register your travel plan</string>
+	<key>Registrazione</key>
+	<string>Recording</string>
+	<key>Registrazione in corso</key>
+	<string>Recording</string>
+	<key>Reykjanes – zona vulcanica attiva</key>
+	<string>Reykjanes – active volcanic area</string>
+	<key>Reykjavík e lunga distanza</key>
+	<string>Reykjavík and long distance</string>
+	<key>Reynisfjara e spiagge del sud: onde anomale senza preavviso. Resta lontano dalla battigia.</key>
+	<string>Reynisfjara and southern beaches: sneaker waves without warning. Stay well back from the water's edge.</string>
+	<key>Ricarica EV</key>
+	<string>EV charging</string>
+	<key>Riepilogo</key>
+	<string>Summary</string>
+	<key>Rilievi verso nord-ovest: orizzonte a %lld°</key>
+	<string>High ground to the north-west: horizon at %lld°</string>
+	<key>Rimuovi destinazione</key>
+	<string>Remove destination</string>
+	<key>Riprendi</key>
+	<string>Resume</string>
+	<key>Ripristina dal backup</key>
+	<string>Restore from backup</string>
+	<key>Riprova</key>
+	<string>Try again</string>
+	<key>Risultati</key>
+	<string>Results</string>
+	<key>Road.is – Vegagerðin</key>
+	<string>Road.is – Vegagerðin</string>
+	<key>Rovesci</key>
+	<string>Showers</string>
+	<key>Rovesci deboli</key>
+	<string>Light showers</string>
+	<key>Rovesci di neve</key>
+	<string>Snow showers</string>
+	<key>Rovesci di neve deboli</key>
+	<string>Light snow showers</string>
+	<key>Rovesci di nevischio</key>
+	<string>Sleet showers</string>
+	<key>Rovesci violenti</key>
+	<string>Violent showers</string>
+	<key>SCADUTO</key>
+	<string>EXPIRED</string>
+	<key>SCOSSE</key>
+	<string>QUAKES</string>
+	<key>SE</key>
+	<string>SE</string>
+	<key>SO</key>
+	<string>SW</string>
+	<key>SOS 112</key>
+	<string>SOS 112</string>
+	<key>SSE</key>
+	<string>SSE</string>
+	<key>SSO</key>
+	<string>SSW</string>
+	<key>STATO</key>
+	<string>STATUS</string>
+	<key>STAZIONE</key>
+	<string>STATION</string>
+	<key>Sabbia sollevata dal vento</key>
+	<string>Blowing sand</string>
+	<key>SafeTravel</key>
+	<string>SafeTravel</string>
+	<key>SafeTravel – condizioni</key>
+	<string>SafeTravel – conditions</string>
+	<key>SafeTravel – i soccorsi sapranno dove cercarti</key>
+	<string>SafeTravel – rescuers will know where to look</string>
+	<key>SafeTravel: %@</key>
+	<string>SafeTravel: %@</string>
+	<key>Salita</key>
+	<string>Climb</string>
+	<key>Salto di velocità +%lld km/s, densità ×%@, campo ×%@. Rilevamento automatico, non confermato.</key>
+	<string>Speed jump +%1$lld km/s, density ×%2$@, field ×%3$@. Automatic candidate, not confirmed.</string>
+	<key>Salva</key>
+	<string>Save</string>
+	<key>Salva modifiche</key>
+	<string>Save changes</string>
+	<key>Scale NOAA</key>
+	<string>NOAA scales</string>
+	<key>Scarica i dati prima di entrare in zone senza copertura (Highlands, fiordi occidentali, parte dell'Est).</key>
+	<string>Download the data before entering areas without coverage (Highlands, Westfjords, parts of the East).</string>
+	<key>Scarica i dati salvati sul telefono</key>
+	<string>Download the saved data to the phone</string>
+	<key>Scarica tutto per l'uso offline</key>
+	<string>Download everything for offline use</string>
+	<key>Scarta</key>
+	<string>Discard</string>
+	<key>Scarta percorso</key>
+	<string>Discard drive</string>
+	<key>Scegli destinazione</key>
+	<string>Choose destination</string>
+	<key>Scegli il luogo da mostrare nel widget.</key>
+	<string>Choose the place to show in the widget.</string>
+	<key>Scegli un luogo</key>
+	<string>Choose a place</string>
+	<key>Scegli un luogo…</key>
+	<string>Choose a place…</string>
+	<key>Scegli…</key>
+	<string>Choose…</string>
+	<key>Sconosciuto</key>
+	<string>Unknown</string>
+	<key>Sconsigliato mettersi in viaggio. Controlla umferdin.is e safetravel.is.</key>
+	<string>Travel not advised. Check umferdin.is and safetravel.is.</string>
+	<key>Scuro</key>
+	<string>Dark</string>
+	<key>Se il 112 non si connette (spegnimento reti 2G/3G)</key>
+	<string>If 112 does not connect (2G/3G networks switched off)</string>
+	<key>Segna tutte come lette</key>
+	<string>Mark all as read</string>
+	<key>Segnalazione registrata. Grazie.</key>
+	<string>Report recorded. Thank you.</string>
+	<key>Senza destinazione: stazioni nella direzione di marcia, entro 60 km.</key>
+	<string>Without a destination: stations in the direction of travel, within 60 km.</string>
+	<key>Sereno</key>
+	<string>Clear</string>
+	<key>Serve l'accesso alla posizione «Sempre»: Impostazioni › Norður › Posizione.</key>
+	<string>Requires “Always” location access: Settings › Norður › Location.</string>
+	<key>Serve per reimpostare la password</key>
+	<string>Needed to reset your password</string>
+	<key>Servizio invernale (sgombero neve)</key>
+	<string>Winter service (snow clearing)</string>
+	<key>Sessione non valida, accedi di nuovo</key>
+	<string>Invalid session, sign in again</string>
+	<key>Sessione scaduta, accedi di nuovo</key>
+	<string>Session expired, sign in again</string>
+	<key>Seyðisfjörður – Fær Øer – Danimarca</key>
+	<string>Seyðisfjörður – Faroe Islands – Denmark</string>
+	<key>Sfavorevole</key>
+	<string>Unfavourable</string>
+	<key>Sgombero neve in corso</key>
+	<string>Snow clearing in progress</string>
+	<key>Sicurezza</key>
+	<string>Safety</string>
+	<key>Smyril Line</key>
+	<string>Smyril Line</string>
+	<key>Snæfellsnes</key>
+	<string>Snæfellsnes</string>
+	<key>Soglie</key>
+	<string>Thresholds</string>
+	<key>Solo veicoli 4x4 da montagna</key>
+	<string>Mountain 4x4 vehicles only</string>
+	<key>Sopra 25 m/s le portiere si aprono a fatica e i mezzi alti rischiano di ribaltarsi: tieni la portiera con due mani.</key>
+	<string>Above 25 m/s doors are hard to open and tall vehicles risk tipping over: hold the door with both hands.</string>
+	<key>Sopra di te o quasi</key>
+	<string>Overhead or nearly</string>
+	<key>Soste</key>
+	<string>Stops</string>
+	<key>Soste (&gt;2 min)</key>
+	<string>Stops (&gt;2 min)</string>
+	<key>Spiagge</key>
+	<string>Beaches</string>
+	<key>Spiagge: %@</key>
+	<string>Beaches: %@</string>
+	<key>Spiaggia nera – onde anomale</key>
+	<string>Black beach – sneaker waves</string>
+	<key>Stato del volo: Voli e traghetti.</key>
+	<string>Flight status: Flights and ferries.</string>
+	<key>Stato delle fonti</key>
+	<string>Source status</string>
+	<key>Stato delle fonti non disponibile</key>
+	<string>Source status not available</string>
+	<key>Stato sconosciuto</key>
+	<string>Unknown status</string>
+	<key>Stazione %@ (%lld km): %@ / raff. %@, asfalto %@</key>
+	<string>Station %1$@ (%2$lld km): %3$@ / gusts %4$@, road %5$@</string>
+	<key>Stazione %lld</key>
+	<string>Station %lld</string>
+	<key>Stazioni</key>
+	<string>Stations</string>
+	<key>Stazioni meteo stradali</key>
+	<string>Road weather stations</string>
+	<key>Stazioni meteo stradali vicine</key>
+	<string>Nearby road weather stations</string>
+	<key>Stazioni stradali (raffiche)</key>
+	<string>Road stations (gusts)</string>
+	<key>Stazioni stradali lungo il percorso (%lld)</key>
+	<string>Road stations along the route (%lld)</string>
+	<key>Stima NOAA (1 min)</key>
+	<string>NOAA estimate (1 min)</string>
+	<key>Stima euristica: %@, cielo sereno al %lld%%.%@ Non è garanzia di aurora visibile.</key>
+	<string>Heuristic estimate: %1$@, sky %2$lld%% clear.%3$@ Not a guarantee of visible aurora.</string>
+	<key>Storico allerte</key>
+	<string>Alert history</string>
+	<key>Storico percorsi</key>
+	<string>Drive history</string>
+	<key>Strada %@</key>
+	<string>Road %@</string>
+	<key>Strada F di montagna: solo 4x4, guadi senza ponti, aperta in genere da giugno a settembre</key>
+	<string>Mountain F-road: 4x4 only, unbridged river crossings, usually open June to September</string>
+	<key>Strada davanti: %@</key>
+	<string>Road ahead: %@</string>
+	<key>Strada dissestata</key>
+	<string>Uneven road</string>
+	<key>Strada locale</key>
+	<string>Local road</string>
+	<key>Strada principale (stofnvegur)</key>
+	<string>Primary road (stofnvegur)</string>
+	<key>Strada regionale o di collegamento (tengivegur)</key>
+	<string>Regional or connecting road (tengivegur)</string>
+	<key>Strada scivolosa</key>
+	<string>Slippery road</string>
+	<key>Strade</key>
+	<string>Roads</string>
+	<key>Strade F (Highlands)</key>
+	<string>F-roads (Highlands)</string>
+	<key>Strade chiuse entro %lld km</key>
+	<string>Closed roads within %lld km</string>
+	<key>Strade chiuse o impraticabili</key>
+	<string>Closed or impassable roads</string>
+	<key>Strade: chiusure, lavori e pericoli</key>
+	<string>Roads: closures, roadworks and hazards</string>
+	<key>Strade: problemi adesso</key>
+	<string>Roads: problems now</string>
+	<key>Strumenti</key>
+	<string>Tools</string>
+	<key>Strætó</key>
+	<string>Strætó</string>
+	<key>Strætó – bus di linea</key>
+	<string>Strætó – public buses</string>
+	<key>Stykkishólmur – Flatey – Brjánslækur</key>
+	<string>Stykkishólmur – Flatey – Brjánslækur</string>
+	<key>Sud</key>
+	<string>South</string>
+	<key>Sud-est</key>
+	<string>South-east</string>
+	<key>Sull'Islanda adesso il valore massimo è %lld: troppo basso per essere colorato (la scala parte da 4). Il colore compare quando l'ovale si allarga verso sud.</key>
+	<string>Over Iceland the highest value right now is %lld: too low to be coloured (scale starts at 4). Colour appears when the oval expands southwards.</string>
+	<key>Sulla strada davanti: %@</key>
+	<string>On the road ahead: %@</string>
+	<key>Svuota</key>
+	<string>Clear</string>
+	<key>Swell</key>
+	<string>Swell</string>
+	<key>TEMPERATURA</key>
+	<string>TEMPERATURE</string>
+	<key>TERREMOTI · 24 H</key>
+	<string>EARTHQUAKES · 24 H</string>
+	<key>TRAMONTO %@</key>
+	<string>SUNSET %@</string>
+	<key>TUTTE →</key>
+	<string>ALL →</string>
+	<key>Tappa del viaggio</key>
+	<string>Trip stop</string>
+	<key>Tappa passata.</key>
+	<string>Stop passed.</string>
+	<key>Temp.</key>
+	<string>Temp.</string>
+	<key>Temperatura</key>
+	<string>Temperature</string>
+	<key>Temperatura, vento, raffiche e allerte IMO per un luogo.</key>
+	<string>Temperature, wind, gusts and IMO warnings for a place.</string>
+	<key>Tempesta</key>
+	<string>Storm</string>
+	<key>Tempo %@</key>
+	<string>Time %@</string>
+	<key>Temporale</key>
+	<string>Thunderstorm</string>
+	<key>Temporale con grandine</key>
+	<string>Thunderstorm with hail</string>
+	<key>Temporali</key>
+	<string>Thunderstorms</string>
+	<key>Temporali (CAPE)</key>
+	<string>Thunderstorms (CAPE)</string>
+	<key>Tendenza 27 giorni</key>
+	<string>27-day outlook</string>
+	<key>Tendenza a 27 giorni non disponibile</key>
+	<string>27-day outlook not available</string>
+	<key>Termina e salva</key>
+	<string>Finish and save</string>
+	<key>Terminare la registrazione?</key>
+	<string>Finish recording?</string>
+	<key>Terra, mare, servizi</key>
+	<string>Land, sea, services</string>
+	<key>Terremoti</key>
+	<string>Earthquakes</string>
+	<key>Terremoti 48 h</key>
+	<string>Earthquakes 48 h</string>
+	<key>Terremoti da M%@</key>
+	<string>Earthquakes from M%@</string>
+	<key>Terremoti e vulcani</key>
+	<string>Earthquakes and volcanoes</string>
+	<key>Terremoto M%@ – %@</key>
+	<string>Earthquake M%1$@ – %2$@</string>
+	<key>Testi originali di Vegagerðin (in inglese), aggiornati ogni 5 minuti.</key>
+	<string>Original texts from Vegagerðin, updated every 5 minutes.</string>
+	<key>Tocca la mappa per i valori in un punto</key>
+	<string>Tap the map for values at a point</string>
+	<key>Totale</key>
+	<string>Total</string>
+	<key>Tra %lld km (%lld min): %@ – %@</key>
+	<string>In %1$lld km (%2$lld min): %3$@ – %4$@</string>
+	<key>Tra %lld km: %@, raffiche %@</key>
+	<string>In %1$lld km: %2$@, gusts %3$@</string>
+	<key>Traghetti</key>
+	<string>Ferries</string>
+	<key>Traghetto</key>
+	<string>Ferry</string>
+	<key>Traghetto Herjólfur</key>
+	<string>Herjólfur ferry</string>
+	<key>Traghetto Seyðisfjörður – Fær Øer – Danimarca</key>
+	<string>Ferry Seyðisfjörður – Faroe Islands – Denmark</string>
+	<key>Traghetto Stykkishólmur – Brjánslækur</key>
+	<string>Ferry Stykkishólmur – Brjánslækur</string>
+	<key>Traghetto per Vestmannaeyjar</key>
+	<string>Ferry to Vestmannaeyjar</string>
+	<key>Tratti critici</key>
+	<string>Problem sections</string>
+	<key>Tratti ghiacciati</key>
+	<string>Icy patches</string>
+	<key>Tratto %@. Aggiornato %@. Fonte: Vegagerðin (umferdin.is), informazioni 1777.</key>
+	<string>Section %1$@. Updated %2$@. Source: Vegagerðin (umferdin.is), road information 1777.</string>
+	<key>Tratto %lld</key>
+	<string>Section %lld</string>
+	<key>Tratto vicino a %@, a %lld km da te. Verifica su umferdin.is o chiama il 1777.</key>
+	<string>Section near %1$@, %2$lld km from you. Check umferdin.is or call 1777.</string>
+	<key>Tutte</key>
+	<string>All</string>
+	<key>ULTIMA COPIA SALVATA</key>
+	<string>LAST SAVED COPY</string>
+	<key>ULTIMA NOTIFICA · %@</key>
+	<string>LAST NOTIFICATION · %@</string>
+	<key>ULTIME 3 ORE</key>
+	<string>LAST 3 HOURS</string>
+	<key>Ufficiale</key>
+	<string>Official</string>
+	<key>Ultimo aggiornamento</key>
+	<string>Last update</string>
+	<key>Ultimo backup</key>
+	<string>Last backup</string>
+	<key>Ultimo controllo %@</key>
+	<string>Last check %@</string>
+	<key>Ultimo quarto</key>
+	<string>Last quarter</string>
+	<key>Umferdin.is</key>
+	<string>Umferdin.is</string>
+	<key>Umferdin.is – mappa strade in tempo reale</key>
+	<string>Umferdin.is – live road map</string>
+	<key>Umidità</key>
+	<string>Humidity</string>
+	<key>Una CME non garantisce un'aurora: l'effetto dipende dall'orientamento del suo campo magnetico, noto solo all'arrivo.</key>
+	<string>A CME does not guarantee an aurora: the effect depends on the orientation of its magnetic field, known only on arrival.</string>
+	<key>Una registrazione del %@ si è interrotta (%@).</key>
+	<string>A recording from %1$@ was interrupted (%2$@).</string>
+	<key>Usa la mia posizione</key>
+	<string>Use my location</string>
+	<key>VALIDO %@</key>
+	<string>VALID %@</string>
+	<key>VALORE OVATION NEL TUO CIELO</key>
+	<string>OVATION VALUE IN YOUR SKY</string>
+	<key>VENTO</key>
+	<string>WIND</string>
+	<key>VENTO · RAFFICHE</key>
+	<string>WIND · GUSTS</string>
+	<key>VENTO/RAFF</key>
+	<string>WIND/GUST</string>
+	<key>VERIFICA DELLE PREVISIONI KP</key>
+	<string>KP FORECAST VERIFICATION</string>
+	<key>VERSO LE %@ · %@</key>
+	<string>AROUND %1$@ · %2$@</string>
+	<key>VOLI E TRAGHETTI</key>
+	<string>FLIGHTS AND FERRIES</string>
+	<key>Valanghe</key>
+	<string>Avalanches</string>
+	<key>Valore massimo sull'Islanda adesso: %lld.</key>
+	<string>Highest value over Iceland right now: %lld.</string>
+	<key>Valutazione complessiva</key>
+	<string>Overall assessment</string>
+	<key>Vatnajökull</key>
+	<string>Vatnajökull</string>
+	<key>Vedur.is – Meteo ufficiale islandese</key>
+	<string>Vedur.is – official Icelandic weather</string>
+	<key>Vedur.is – Terremoti</key>
+	<string>Vedur.is – Earthquakes</string>
+	<key>Vedur.is – Vulcani e mappa dei pericoli</key>
+	<string>Vedur.is – Volcanoes and hazard map</string>
+	<key>Vegagerðin</key>
+	<string>Vegagerðin</string>
+	<key>Vegagerðin · umferdin.is</key>
+	<string>Vegagerðin · umferdin.is</string>
+	<key>Velocità %lld km/h – limite %lld</key>
+	<string>Speed %1$lld km/h – limit %2$lld</string>
+	<key>Velocità e quota</key>
+	<string>Speed and altitude</string>
+	<key>Velocità massima</key>
+	<string>Top speed</string>
+	<key>Velocità max</key>
+	<string>Top speed</string>
+	<key>Velocità media</key>
+	<string>Average speed</string>
+	<key>Vento</key>
+	<string>Wind</string>
+	<key>Vento %@ · raff. %@</key>
+	<string>Wind %1$@ · gusts %2$@</string>
+	<key>Vento forte sulla strada davanti</key>
+	<string>Strong wind on the road ahead</string>
+	<key>Vento gestibile.</key>
+	<string>Manageable wind.</string>
+	<key>Vento solare</key>
+	<string>Solar wind</string>
+	<key>Vento solare RTSW</key>
+	<string>RTSW solar wind</string>
+	<key>Vento solare a L1</key>
+	<string>Solar wind at L1</string>
+	<key>Vento solare non aggiornato</key>
+	<string>Solar wind not up to date</string>
+	<key>Vento solare non disponibile.</key>
+	<string>Solar wind not available.</string>
+	<key>Vento solare previsto · WSA-ENLIL NOAA</key>
+	<string>Forecast solar wind · NOAA WSA-ENLIL</string>
+	<key>Vento sostenuto: tieni salde le portiere dell'auto aprendole.</key>
+	<string>Strong wind: hold the car doors firmly when opening them.</string>
+	<key>Verso %@</key>
+	<string>Towards %@</string>
+	<key>Verso %@ · ~%lld km in linea d'aria</key>
+	<string>Towards %1$@ · ~%2$lld km as the crow flies</string>
+	<key>Veðurstofa Íslands</key>
+	<string>Veðurstofa Íslands</string>
+	<key>Veðurstofa Íslands (vedur.is), Vegagerðin (umferdin.is), Open-Meteo, NOAA Space Weather Prediction Center, SafeTravel.is. L'app aggrega dati pubblici: in caso di dubbio prevalgono le fonti ufficiali.</key>
+	<string>Veðurstofa Íslands (vedur.is), Vegagerðin (umferdin.is), Open-Meteo, NOAA Space Weather Prediction Center, SafeTravel.is. The app aggregates public data: when in doubt, the official sources prevail.</string>
+	<key>Viaggio</key>
+	<string>Trip</string>
+	<key>Viaggio del %@</key>
+	<string>Drive of %@</string>
+	<key>Viaggio e percorso</key>
+	<string>Trip and route</string>
+	<key>Viaggio, percorsi e impostazioni restano sul telefono.</key>
+	<string>Trip, drives and settings stay on the phone.</string>
+	<key>Vicino a %@</key>
+	<string>Near %@</string>
+	<key>Visibile a occhio nudo</key>
+	<string>Visible to the naked eye</string>
+	<key>Visibile in foto</key>
+	<string>Visible in photos</string>
+	<key>Visibile verso l'orizzonte</key>
+	<string>Visible towards the horizon</string>
+	<key>Visibilità</key>
+	<string>Visibility</string>
+	<key>Vista</key>
+	<string>View</string>
+	<key>Vista polare NOAA, ultime 3 ore</key>
+	<string>NOAA polar view, last 3 hours</string>
+	<key>Voli KEF</key>
+	<string>KEF flights</string>
+	<key>Voli KEF e traghetti</key>
+	<string>KEF flights and ferries</string>
+	<key>Voli e traghetti</key>
+	<string>Flights and ferries</string>
+	<key>Voli e traghetti…</key>
+	<string>Flights and ferries…</string>
+	<key>Voli interni</key>
+	<string>Domestic flights</string>
+	<key>Voli interni (Reykjavík RKV, Akureyri…)</key>
+	<string>Domestic flights (Reykjavík RKV, Akureyri…)</string>
+	<key>Voli seguiti</key>
+	<string>Followed flights</string>
+	<key>Voli seguiti (KEF)</key>
+	<string>Followed flights (KEF)</string>
+	<key>Voli, bus e traghetti</key>
+	<string>Flights, buses and ferries</string>
+	<key>Volo, città o compagnia</key>
+	<string>Flight, city or airline</string>
+	<key>Vulcani ed eruzioni</key>
+	<string>Volcanoes and eruptions</string>
+	<key>WINDY ↗</key>
+	<string>WINDY ↗</string>
+	<key>WSA-ENLIL NOAA</key>
+	<string>NOAA WSA-ENLIL</string>
+	<key>Webcam</key>
+	<string>Webcams</string>
+	<key>Webcam %@</key>
+	<string>Webcam %@</string>
+	<key>Webcam %lld</key>
+	<string>Webcam %lld</string>
+	<key>Webcam e distributori…</key>
+	<string>Webcams and fuel stations…</string>
+	<key>Webcam lungo il percorso</key>
+	<string>Webcams along the route</string>
+	<key>Webcam stradali</key>
+	<string>Road webcams</string>
+	<key>Webcam stradali (%lld siti)</key>
+	<string>Road webcams (%lld sites)</string>
+	<key>Webcam vicine</key>
+	<string>Nearby webcams</string>
+	<key>Windy</key>
+	<string>Windy</string>
+	<key>XXXX-XXXX-XXXX-XXXX</key>
+	<string>XXXX-XXXX-XXXX-XXXX</string>
+	<key>Zone di pericolo e chiusure: IMO e Protezione Civile.</key>
+	<string>Hazard zones and closures: IMO and Civil Protection.</string>
+	<key>a %lld km da te</key>
+	<string>%lld km from you</string>
+	<key>adesso</key>
+	<string>just now</string>
+	<key>agg. %@</key>
+	<string>upd. %@</string>
+	<key>al %@</key>
+	<string>to %@</string>
+	<key>asfalto %@</key>
+	<string>road %@</string>
+	<key>da %@</key>
+	<string>from %@</string>
+	<key>dalle %@</key>
+	<string>from %@</string>
+	<key>dati di %@</key>
+	<string>data from %@</string>
+	<key>drive.average</key>
+	<string>Average</string>
+	<key>in corso</key>
+	<string>in force</string>
+	<key>km</key>
+	<string>km</string>
+	<key>km %lld</key>
+	<string>km %lld</string>
+	<key>km/h</key>
+	<string>km/h</string>
+	<key>km/s</key>
+	<string>km/s</string>
+	<key>la tua posizione</key>
+	<string>your location</string>
+	<key>media %lld</key>
+	<string>avg %lld</string>
+	<key>media %lld km/h</key>
+	<string>avg %lld km/h</string>
+	<key>mm</key>
+	<string>mm</string>
+	<key>nome@esempio.it</key>
+	<string>name@example.com</string>
+	<key>now.short</key>
+	<string>NOW</string>
+	<key>nuvole ora %lld%%</key>
+	<string>clouds now %lld%%</string>
+	<key>peggiorata: %@</key>
+	<string>worse: %@</string>
+	<key>produttore ufficiale · %@</key>
+	<string>official producer · %@</string>
+	<key>provvisoria, magnetometri a terra</key>
+	<string>provisional, ground magnetometers</string>
+	<key>qui</key>
+	<string>here</string>
+	<key>raff. %@</key>
+	<string>gusts %@</string>
+	<key>soglie di allerta, guida, aspetto, località scelta, livelli mappa</key>
+	<string>alert thresholds, driving, appearance, chosen place, map layers</string>
+	<key>storico delle notifiche ricevute</key>
+	<string>history of received notifications</string>
+	<key>tappe, date e note</key>
+	<string>stops, dates and notes</string>
+	<key>termine del modello</key>
+	<string>the end of the model run</string>
+	<key>tracce GPS, km, velocità, consumi, contachilometri</key>
+	<string>GPS tracks, km, speed, fuel use, odometer</string>
+	<key>vento medio</key>
+	<string>mean wind</string>
+	<key>verso le %@</key>
+	<string>around %@</string>
+	<key>vicino alla tappa %@</key>
+	<string>near the stop %@</string>
+	<key>±%lld min</key>
+	<string>±%lld min</string>
+	<key>È giorno</key>
+	<string>It is daytime</string>
+	<key>• %@: %@</key>
+	<string>• %1$@: %2$@</string>
+	<key>• Con vento forte apri la portiera tenendola con due mani: il vento può strapparla (danno non coperto dall'assicurazione).</key>
+	<string>• In strong wind open the door holding it with both hands: the wind can rip it off (damage not covered by insurance).</string>
+	<key>• Fai rifornimento appena puoi nell'Est e nei fiordi occidentali: i distributori sono distanti.</key>
+	<string>• Refuel whenever you can in the East and the Westfjords: fuel stations are far apart.</string>
+	<key>• Fuoristrada vietato per legge. Le strade F richiedono un 4x4 e i guadi non sono coperti dall'assicurazione.</key>
+	<string>• Off-road driving is illegal. F-roads require a 4x4 and river crossings are not covered by insurance.</string>
+	<key>• In inverno le giornate sono brevi: pianifica le tratte nelle ore di luce.</key>
+	<string>• Winter days are short: plan your legs in daylight.</string>
+	<key>• Ponti a una corsia: ha la precedenza chi arriva prima.</key>
+	<string>• Single-lane bridges: whoever arrives first has right of way.</string>
+	<key>…entro %lld km</key>
+	<string>…within %lld km</string>
+	<key>≈ %lld min</key>
+	<string>≈ %lld min</string>
+	<key>■ STOP</key>
+	<string>■ STOP</string>
+</dict>
+</plist>

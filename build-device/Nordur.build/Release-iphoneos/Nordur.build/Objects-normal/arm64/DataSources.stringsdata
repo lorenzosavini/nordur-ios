@@ -1,0 +1,276 @@
+{
+  "source": "/Users/runner/work/nordur-ios/nordur-ios/Nordur/Views/DataSources.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Come si calcola"
+      },
+      {
+        "comment": "",
+        "key": "Fonti e stato dei dati",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 103
+        }
+      },
+      {
+        "comment": "",
+        "key": "copia del %@",
+        "location": {
+          "startingColumn": 67,
+          "startingLine": 49
+        }
+      },
+      {
+        "comment": "",
+        "key": "errore",
+        "location": {
+          "startingColumn": 67,
+          "startingLine": 50
+        }
+      },
+      {
+        "comment": "",
+        "key": "quando apri la sezione",
+        "location": {
+          "startingColumn": 106,
+          "startingLine": 51
+        }
+      },
+      {
+        "comment": "",
+        "key": "non ancora caricato",
+        "location": {
+          "startingColumn": 53,
+          "startingLine": 52
+        }
+      },
+      {
+        "comment": "",
+        "key": "Dati dell'app",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 56
+        }
+      },
+      {
+        "comment": "",
+        "key": "Verde: aggiornato. Giallo: copia salvata sul telefono (senza rete o fonte lenta). Rosso: ultimo tentativo fallito.",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 57
+        }
+      },
+      {
+        "comment": "",
+        "key": "copia salvata",
+        "location": {
+          "startingColumn": 170,
+          "startingLine": 68
+        }
+      },
+      {
+        "comment": "",
+        "key": "non risponde",
+        "location": {
+          "startingColumn": 207,
+          "startingLine": 68
+        }
+      },
+      {
+        "comment": "",
+        "key": "Kp previsto NOAA",
+        "location": {
+          "startingColumn": 45,
+          "startingLine": 113
+        }
+      },
+      {
+        "comment": "",
+        "key": "Kp stimato NOAA (1 min)",
+        "location": {
+          "startingColumn": 99,
+          "startingLine": 113
+        }
+      },
+      {
+        "comment": "",
+        "key": "Kp GFZ Potsdam",
+        "location": {
+          "startingColumn": 154,
+          "startingLine": 113
+        }
+      },
+      {
+        "comment": "",
+        "key": "Vento solare RTSW",
+        "location": {
+          "startingColumn": 44,
+          "startingLine": 114
+        }
+      },
+      {
+        "comment": "",
+        "key": "OVATION Prime",
+        "location": {
+          "startingColumn": 95,
+          "startingLine": 114
+        }
+      },
+      {
+        "comment": "",
+        "key": "WSA-ENLIL NOAA",
+        "location": {
+          "startingColumn": 140,
+          "startingLine": 114
+        }
+      },
+      {
+        "comment": "",
+        "key": "Scale NOAA",
+        "location": {
+          "startingColumn": 187,
+          "startingLine": 114
+        }
+      },
+      {
+        "comment": "",
+        "key": "Avvisi NOAA",
+        "location": {
+          "startingColumn": 41,
+          "startingLine": 115
+        }
+      },
+      {
+        "comment": "",
+        "key": "Potenza emisferica",
+        "location": {
+          "startingColumn": 95,
+          "startingLine": 115
+        }
+      },
+      {
+        "comment": "",
+        "key": "Hp30 GFZ",
+        "location": {
+          "startingColumn": 144,
+          "startingLine": 115
+        }
+      },
+      {
+        "comment": "",
+        "key": "Magnetometro Narsarsuaq",
+        "location": {
+          "startingColumn": 191,
+          "startingLine": 115
+        }
+      },
+      {
+        "comment": "",
+        "key": "Tendenza 27 giorni",
+        "location": {
+          "startingColumn": 250,
+          "startingLine": 115
+        }
+      },
+      {
+        "comment": "",
+        "key": "Previsione 45 giorni",
+        "location": {
+          "startingColumn": 45,
+          "startingLine": 116
+        }
+      },
+      {
+        "comment": "",
+        "key": "NASA DONKI",
+        "location": {
+          "startingColumn": 97,
+          "startingLine": 116
+        }
+      },
+      {
+        "comment": "",
+        "key": "%lld min",
+        "location": {
+          "startingColumn": 84,
+          "startingLine": 68
+        }
+      },
+      {
+        "comment": "",
+        "key": "Stato delle fonti non disponibile",
+        "location": {
+          "startingColumn": 83,
+          "startingLine": 73
+        }
+      },
+      {
+        "comment": "",
+        "key": "Aurora: fonti scientifiche",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 75
+        }
+      },
+      {
+        "comment": "",
+        "key": "Giallo: la fonte non ha risposto e si usa la sua ultima copia buona. Rosso: non risponde e non c'è una copia; il problema è della fonte, e il resto (Kp, previsioni) viene comunque da NOAA.",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 76
+        }
+      },
+      {
+        "comment": "",
+        "key": "%@: errore medio NOAA %@, combinato %@ (n = %lld)",
+        "location": {
+          "startingColumn": 38,
+          "startingLine": 84
+        }
+      },
+      {
+        "comment": "",
+        "key": "Dati insufficienti",
+        "location": {
+          "startingColumn": 59,
+          "startingLine": 89
+        }
+      },
+      {
+        "comment": "",
+        "key": "Verifica delle previsioni Kp",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 94
+        }
+      },
+      {
+        "comment": "",
+        "key": "Ogni previsione Kp viene confrontata con il Kp misurato poi da GFZ Potsdam: l'errore medio dice quanto ci si può fidare a ogni orizzonte.",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 95
+        }
+      },
+      {
+        "comment": "",
+        "key": "Metodo dell'aurora",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 100
+        }
+      },
+      {
+        "comment": "",
+        "key": "L'indice di osservabilità è una stima euristica trasparente, non una probabilità: moltiplica attività prevista (OVATION entro la sua validità, poi Kp e posizione dell'ovale su latitudine geomagnetica), cielo sereno per strati, buio (altezza del Sole), Luna (fase e altezza) e le luci artificiali misurate dal satellite VIIRS (NASA Black Marble, media annuale) pesate con la distanza, e l'orizzonte del terreno. Le percentuali di probabilità richiedono un modello calibrato su osservazioni reali: le segnalazioni degli utenti servono a costruirlo.",
+        "location": {
+          "startingColumn": 43,
+          "startingLine": 109
+        }
+      }
+    ]
+  },
+  "version": 1
+}

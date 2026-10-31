@@ -1,0 +1,288 @@
+{
+  "source": "/Users/runner/work/nordur-ios/nordur-ios/Nordur/Views/AlertDetailView.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Ricevuta",
+        "location": {
+          "startingColumn": 50,
+          "startingLine": 31
+        }
+      },
+      {
+        "comment": "",
+        "key": "Non più valida dalle",
+        "location": {
+          "startingColumn": 64,
+          "startingLine": 33
+        }
+      },
+      {
+        "comment": "",
+        "key": "Valida fino alle",
+        "location": {
+          "startingColumn": 109,
+          "startingLine": 33
+        }
+      },
+      {
+        "comment": "",
+        "key": "Livello",
+        "location": {
+          "startingColumn": 50,
+          "startingLine": 36
+        }
+      },
+      {
+        "comment": "",
+        "key": "Informazione",
+        "location": {
+          "startingColumn": 44,
+          "startingLine": 83
+        }
+      },
+      {
+        "comment": "",
+        "key": "Attenzione",
+        "location": {
+          "startingColumn": 49,
+          "startingLine": 84
+        }
+      },
+      {
+        "comment": "",
+        "key": "Avviso",
+        "location": {
+          "startingColumn": 49,
+          "startingLine": 85
+        }
+      },
+      {
+        "comment": "",
+        "key": "Pericolo",
+        "location": {
+          "startingColumn": 48,
+          "startingLine": 86
+        }
+      },
+      {
+        "comment": "",
+        "key": "Quando",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 37
+        }
+      },
+      {
+        "comment": "",
+        "key": "Distanza da te ora",
+        "location": {
+          "startingColumn": 58,
+          "startingLine": 50
+        }
+      },
+      {
+        "comment": "",
+        "key": "Coordinate",
+        "location": {
+          "startingColumn": 54,
+          "startingLine": 52
+        }
+      },
+      {
+        "comment": "",
+        "key": "Dove",
+        "location": {
+          "startingColumn": 34,
+          "startingLine": 54
+        }
+      },
+      {
+        "comment": "",
+        "key": "SafeTravel.is",
+        "location": {
+          "startingColumn": 46,
+          "startingLine": 112
+        }
+      },
+      {
+        "comment": "",
+        "key": "Avvisi ufficiali per chi viaggia",
+        "location": {
+          "startingColumn": 92,
+          "startingLine": 112
+        }
+      },
+      {
+        "comment": "",
+        "key": "SafeTravel.is",
+        "location": {
+          "startingColumn": 50,
+          "startingLine": 129
+        }
+      },
+      {
+        "comment": "",
+        "key": "Apri",
+        "location": {
+          "startingColumn": 54,
+          "startingLine": 135
+        }
+      },
+      {
+        "comment": "",
+        "key": "Dati aggiornati",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 59
+        }
+      },
+      {
+        "comment": "",
+        "key": "Condividi",
+        "location": {
+          "startingColumn": 27,
+          "startingLine": 63
+        }
+      },
+      {
+        "comment": "",
+        "key": "Elimina dallo storico",
+        "location": {
+          "startingColumn": 27,
+          "startingLine": 69
+        }
+      },
+      {
+        "comment": "",
+        "key": "Il testo è quello inviato al momento dell'allerta. Per la situazione attuale apri i dati aggiornati.",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 72
+        }
+      },
+      {
+        "comment": "",
+        "key": "Allerta IMO completa",
+        "location": {
+          "startingColumn": 83,
+          "startingLine": 106
+        }
+      },
+      {
+        "comment": "",
+        "key": "Tutte le allerte IMO",
+        "location": {
+          "startingColumn": 62,
+          "startingLine": 108
+        }
+      },
+      {
+        "comment": "",
+        "key": "Terremoti",
+        "location": {
+          "startingColumn": 60,
+          "startingLine": 110
+        }
+      },
+      {
+        "comment": "",
+        "key": "Voli e traghetti",
+        "location": {
+          "startingColumn": 63,
+          "startingLine": 114
+        }
+      },
+      {
+        "comment": "",
+        "key": "Aurora",
+        "location": {
+          "startingColumn": 64,
+          "startingLine": 118
+        }
+      },
+      {
+        "comment": "",
+        "key": "Mappa dell'ovale e avvistamenti",
+        "location": {
+          "startingColumn": 68,
+          "startingLine": 119
+        }
+      },
+      {
+        "comment": "",
+        "key": "Tutte le allerte IMO",
+        "location": {
+          "startingColumn": 66,
+          "startingLine": 125
+        }
+      },
+      {
+        "comment": "",
+        "key": "Terremoti",
+        "location": {
+          "startingColumn": 64,
+          "startingLine": 127
+        }
+      },
+      {
+        "comment": "",
+        "key": "Strade e stazioni",
+        "location": {
+          "startingColumn": 63,
+          "startingLine": 131
+        }
+      },
+      {
+        "comment": "",
+        "key": "Aurora",
+        "location": {
+          "startingColumn": 64,
+          "startingLine": 132
+        }
+      },
+      {
+        "comment": "",
+        "key": "Voli e traghetti",
+        "location": {
+          "startingColumn": 67,
+          "startingLine": 121
+        }
+      },
+      {
+        "comment": "",
+        "key": "Strade e stazioni",
+        "location": {
+          "startingColumn": 63,
+          "startingLine": 123
+        }
+      },
+      {
+        "comment": "",
+        "key": "Tratto %@ · %@",
+        "location": {
+          "startingColumn": 45,
+          "startingLine": 98
+        }
+      },
+      {
+        "comment": "",
+        "key": "Strade e notizie",
+        "location": {
+          "startingColumn": 59,
+          "startingLine": 101
+        }
+      },
+      {
+        "comment": "",
+        "key": "Strade e stazioni",
+        "location": {
+          "startingColumn": 59,
+          "startingLine": 103
+        }
+      }
+    ]
+  },
+  "version": 1
+}

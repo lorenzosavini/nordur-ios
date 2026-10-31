@@ -1,0 +1,136 @@
+{
+  "source": "/Users/runner/work/nordur-ios/nordur-ios/Nordur/State/AlertCenter.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Il tuo viaggio di domani, in breve",
+        "location": {
+          "startingColumn": 75,
+          "startingLine": 502
+        }
+      },
+      {
+        "comment": "",
+        "key": "Allerta arancione: tempesta da sud-est",
+        "location": {
+          "startingColumn": 49,
+          "startingLine": 240
+        }
+      },
+      {
+        "comment": "",
+        "key": "Vík · Suðurland · dalle 14:00 fino alle 23:00. Raffiche fino a 35 m/s sotto Eyjafjöll.",
+        "location": {
+          "startingColumn": 48,
+          "startingLine": 241
+        }
+      },
+      {
+        "comment": "",
+        "key": "Strada chiusa: Hringvegur (1) a Mýrdalssandur",
+        "location": {
+          "startingColumn": 49,
+          "startingLine": 244
+        }
+      },
+      {
+        "comment": "",
+        "key": "A 12 km da te. Fonte: Vegagerðin (umferdin.is), informazioni 1777.",
+        "location": {
+          "startingColumn": 48,
+          "startingLine": 245
+        }
+      },
+      {
+        "comment": "",
+        "key": "Condizioni buone per l'aurora, adesso",
+        "location": {
+          "startingColumn": 49,
+          "startingLine": 247
+        }
+      },
+      {
+        "comment": "",
+        "key": "OVATION 32 nel tuo cielo, cielo sereno al 80%. Guarda verso nord.",
+        "location": {
+          "startingColumn": 48,
+          "startingLine": 248
+        }
+      },
+      {
+        "comment": "",
+        "key": "Riepilogo di domani: Vík → Höfn",
+        "location": {
+          "startingColumn": 49,
+          "startingLine": 251
+        }
+      },
+      {
+        "comment": "",
+        "key": "Raffiche fino a 22 m/s verso le 14 · Nessuna strada chiusa sul percorso · Stanotte aurora: condizioni buone verso le 23",
+        "location": {
+          "startingColumn": 48,
+          "startingLine": 252
+        }
+      },
+      {
+        "comment": "",
+        "key": "Terremoto M3,8 – Mýrdalsjökull",
+        "location": {
+          "startingColumn": 49,
+          "startingLine": 255
+        }
+      },
+      {
+        "comment": "",
+        "key": "21:12, profondità 4,1 km · 28 km da Vík",
+        "location": {
+          "startingColumn": 48,
+          "startingLine": 256
+        }
+      },
+      {
+        "comment": "",
+        "key": "Ora segui %@",
+        "location": {
+          "startingColumn": 43,
+          "startingLine": 281
+        }
+      },
+      {
+        "comment": "",
+        "key": "Allerte meteo IMO, strade chiuse, terremoti",
+        "location": {
+          "startingColumn": 46,
+          "startingLine": 282
+        }
+      },
+      {
+        "comment": "",
+        "key": "Adesso lì non c'è nessuna allerta. Ti avviso quando ne arriva una nuova o se peggiora.",
+        "location": {
+          "startingColumn": 33,
+          "startingLine": 284
+        }
+      },
+      {
+        "comment": "",
+        "key": "Adesso: %@",
+        "location": {
+          "startingColumn": 33,
+          "startingLine": 285
+        }
+      },
+      {
+        "comment": "",
+        "key": "la tua posizione",
+        "location": {
+          "startingColumn": 46,
+          "startingLine": 307
+        }
+      }
+    ]
+  },
+  "version": 1
+}

@@ -1,0 +1,128 @@
+{
+  "source": "/Users/runner/work/nordur-ios/nordur-ios/Nordur/Views/AuroraFinder.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Consenti la fotocamera in Impostazioni › Norður per usare il mirino.",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 31
+        }
+      },
+      {
+        "comment": "",
+        "key": "Muovi il telefono in un otto per tarare la bussola…",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 59
+        }
+      },
+      {
+        "comment": "",
+        "key": "Guarda qui: sopra di te",
+        "location": {
+          "startingColumn": 49,
+          "startingLine": 95
+        }
+      },
+      {
+        "comment": "",
+        "key": "Guarda qui!",
+        "location": {
+          "startingColumn": 96,
+          "startingLine": 95
+        }
+      },
+      {
+        "comment": "",
+        "key": "Gira a destra di %lld°",
+        "location": {
+          "startingColumn": 48,
+          "startingLine": 97
+        }
+      },
+      {
+        "comment": "",
+        "key": "Gira a sinistra di %lld°",
+        "location": {
+          "startingColumn": 117,
+          "startingLine": 97
+        }
+      },
+      {
+        "comment": "",
+        "key": "Alza il telefono di %lld°",
+        "location": {
+          "startingColumn": 48,
+          "startingLine": 99
+        }
+      },
+      {
+        "comment": "",
+        "key": "Abbassa il telefono di %lld°",
+        "location": {
+          "startingColumn": 120,
+          "startingLine": 99
+        }
+      },
+      {
+        "comment": "",
+        "key": "Chiudi",
+        "location": {
+          "startingColumn": 63,
+          "startingLine": 70
+        }
+      },
+      {
+        "comment": "",
+        "key": "Aurora sopra di te: guarda in alto",
+        "location": {
+          "startingColumn": 47,
+          "startingLine": 110
+        }
+      },
+      {
+        "comment": "",
+        "key": "Direzione %@ %@° · altezza %lld°",
+        "location": {
+          "startingColumn": 39,
+          "startingLine": 111
+        }
+      },
+      {
+        "comment": "",
+        "key": "Adesso qui: %@",
+        "location": {
+          "startingColumn": 40,
+          "startingLine": 114
+        }
+      },
+      {
+        "comment": "",
+        "key": "La fotocamera vede l'aurora debole meglio dell'occhio: se non vedi niente, prova una foto in modalità Notte verso il mirino.",
+        "location": {
+          "startingColumn": 18,
+          "startingLine": 117
+        }
+      },
+      {
+        "comment": "",
+        "key": "AURORA",
+        "location": {
+          "startingColumn": 19,
+          "startingLine": 187
+        }
+      },
+      {
+        "comment": "",
+        "key": "Trova l'aurora con la fotocamera",
+        "location": {
+          "startingColumn": 19,
+          "startingLine": 273
+        }
+      }
+    ]
+  },
+  "version": 1
+}

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>%lld km da %@</key>
+	<string>%lld km da %@</string>
+	<key>%lld tratti · ordinati per distanza da %@</key>
+	<string>%lld tratti · ordinati per distanza da %@</string>
+	<key>Che strada è</key>
+	<string>Che strada è</string>
+	<key>Classifica per indice di osservabilità (euristico): attività prevista × cielo sereno × buio × Luna × luci artificiali (NASA Black Marble) × orizzonte del terreno. Non considera sicurezza e percorribilità delle strade: controlla sempre lo stato delle strade prima di muoverti di notte.</key>
+	<string>Classifica per indice di osservabilità (euristico): attività prevista × cielo sereno × buio × Luna × luci artificiali (NASA Black Marble) × orizzonte del terreno. Non considera sicurezza e percorribilità delle strade: controlla sempre lo stato delle strade prima di muoverti di notte.</string>
+	<key>Condizioni</key>
+	<string>Condizioni</string>
+	<key>Critici</key>
+	<string>Critici</string>
+	<key>Fino al %@</key>
+	<string>Fino al %@</string>
+	<key>Fonte: Vegagerðin (umferdin.is). In caso di dubbio prevalgono le informazioni ufficiali.</key>
+	<string>Fonte: Vegagerðin (umferdin.is). In caso di dubbio prevalgono le informazioni ufficiali.</string>
+	<key>Fuori da questi orari la strada non viene controllata né pulita: le condizioni possono peggiorare senza aggiornamenti.</key>
+	<string>Fuori da questi orari la strada non viene controllata né pulita: le condizioni possono peggiorare senza aggiornamenti.</string>
+	<key>L'indice di osservabilità è una stima euristica trasparente, non una probabilità: moltiplica attività prevista (OVATION entro la sua validità, poi Kp e posizione dell'ovale su latitudine geomagnetica), cielo sereno per strati, buio (altezza del Sole), Luna (fase e altezza) e le luci artificiali misurate dal satellite VIIRS (NASA Black Marble, media annuale) pesate con la distanza, e l'orizzonte del terreno. Le percentuali di probabilità richiedono un modello calibrato su osservazioni reali: le segnalazioni degli utenti servono a costruirlo.</key>
+	<string>L'indice di osservabilità è una stima euristica trasparente, non una probabilità: moltiplica attività prevista (OVATION entro la sua validità, poi Kp e posizione dell'ovale su latitudine geomagnetica), cielo sereno per strati, buio (altezza del Sole), Luna (fase e altezza) e le luci artificiali misurate dal satellite VIIRS (NASA Black Marble, media annuale) pesate con la distanza, e l'orizzonte del terreno. Le percentuali di probabilità richiedono un modello calibrato su osservazioni reali: le segnalazioni degli utenti servono a costruirlo.</string>
+	<key>Lavori e pericoli</key>
+	<string>Lavori e pericoli</string>
+	<key>Lavori e pericoli (%lld)</key>
+	<string>Lavori e pericoli (%lld)</string>
+	<key>Le condizioni sono peggiorate rispetto alla rilevazione precedente.</key>
+	<string>Le condizioni sono peggiorate rispetto alla rilevazione precedente.</string>
+	<key>Limitazioni</key>
+	<string>Limitazioni</string>
+	<key>Nessuna notizia sulle strade</key>
+	<string>Nessuna notizia sulle strade</string>
+	<key>Notizie</key>
+	<string>Notizie</string>
+	<key>Notizie in tempo reale</key>
+	<string>Notizie in tempo reale</string>
+	<key>Notizie strade (umferdin.is)</key>
+	<string>Notizie strade (umferdin.is)</string>
+	<key>PEGGIORATA</key>
+	<string>PEGGIORATA</string>
+	<key>Previsione a breve termine non disponibile: serve il vento solare aggiornato.</key>
+	<string>Previsione a breve termine non disponibile: serve il vento solare aggiornato.</string>
+	<key>Servizio invernale (sgombero neve)</key>
+	<string>Servizio invernale (sgombero neve)</string>
+	<key>Stazioni</key>
+	<string>Stazioni</string>
+	<key>Stazioni meteo stradali vicine</key>
+	<string>Stazioni meteo stradali vicine</string>
+	<key>Strade: chiusure, lavori e pericoli</key>
+	<string>Strade: chiusure, lavori e pericoli</string>
+	<key>Testi originali di Vegagerðin (in inglese), aggiornati ogni 5 minuti.</key>
+	<string>Testi originali di Vegagerðin (in inglese), aggiornati ogni 5 minuti.</string>
+	<key>drive.average</key>
+	<string>Media</string>
+	<key>now.short</key>
+	<string>ORA</string>
+</dict>
+</plist>

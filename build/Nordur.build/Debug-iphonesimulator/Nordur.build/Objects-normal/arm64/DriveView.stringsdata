@@ -1,0 +1,841 @@
+{
+  "source": "/Users/runner/work/nordur-ios/nordur-ios/Nordur/Views/DriveView.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Terminare la registrazione?",
+        "location": {
+          "startingColumn": 33,
+          "startingLine": 122
+        }
+      },
+      {
+        "comment": "",
+        "key": "Guida",
+        "location": {
+          "startingColumn": 59,
+          "startingLine": 22
+        }
+      },
+      {
+        "comment": "",
+        "key": "Registrazione in corso",
+        "location": {
+          "startingColumn": 120,
+          "startingLine": 22
+        }
+      },
+      {
+        "comment": "",
+        "key": "Percorsi e strade",
+        "location": {
+          "startingColumn": 166,
+          "startingLine": 22
+        }
+      },
+      {
+        "comment": "",
+        "key": "CHIUDI",
+        "location": {
+          "startingColumn": 89,
+          "startingLine": 31
+        }
+      },
+      {
+        "comment": "",
+        "key": "■ STOP",
+        "location": {
+          "startingColumn": 38,
+          "startingLine": 25
+        }
+      },
+      {
+        "comment": "",
+        "key": "Ring Road · Hringvegur",
+        "location": {
+          "startingColumn": 77,
+          "startingLine": 42
+        }
+      },
+      {
+        "comment": "",
+        "key": "In auto",
+        "location": {
+          "startingColumn": 130,
+          "startingLine": 42
+        }
+      },
+      {
+        "comment": "",
+        "key": "Registra il percorso: strade davanti, vento, limiti e alert vocali",
+        "location": {
+          "startingColumn": 64,
+          "startingLine": 43
+        }
+      },
+      {
+        "comment": "",
+        "key": "Strade davanti, stazioni del vento e limiti di velocità",
+        "location": {
+          "startingColumn": 65,
+          "startingLine": 51
+        }
+      },
+      {
+        "comment": "",
+        "key": "Una registrazione del %@ si è interrotta (%@).",
+        "location": {
+          "startingColumn": 31,
+          "startingLine": 58
+        }
+      },
+      {
+        "comment": "",
+        "key": "Riprendi",
+        "location": {
+          "startingColumn": 36,
+          "startingLine": 60
+        }
+      },
+      {
+        "comment": "",
+        "key": "Salva",
+        "location": {
+          "startingColumn": 36,
+          "startingLine": 61
+        }
+      },
+      {
+        "comment": "",
+        "key": "Scarta",
+        "location": {
+          "startingColumn": 36,
+          "startingLine": 62
+        }
+      },
+      {
+        "comment": "",
+        "key": "Meteo e strade lungo un percorso",
+        "location": {
+          "startingColumn": 31,
+          "startingLine": 84
+        }
+      },
+      {
+        "comment": "",
+        "key": "Consumo %@ l/100 km",
+        "location": {
+          "startingColumn": 29,
+          "startingLine": 97
+        }
+      },
+      {
+        "comment": "",
+        "key": "Limite velocità %lld km/h",
+        "location": {
+          "startingColumn": 29,
+          "startingLine": 107
+        }
+      },
+      {
+        "comment": "",
+        "key": "Avviso se superi il limite",
+        "location": {
+          "startingColumn": 28,
+          "startingLine": 108
+        }
+      },
+      {
+        "comment": "",
+        "key": "Avvisi vocali",
+        "location": {
+          "startingColumn": 28,
+          "startingLine": 109
+        }
+      },
+      {
+        "comment": "",
+        "key": "Contachilometri auto",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 90
+        }
+      },
+      {
+        "comment": "",
+        "key": "km",
+        "location": {
+          "startingColumn": 35,
+          "startingLine": 92
+        }
+      },
+      {
+        "comment": "",
+        "key": "Prezzo carburante (ISK/l)",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 100
+        }
+      },
+      {
+        "comment": "",
+        "key": "ISK",
+        "location": {
+          "startingColumn": 35,
+          "startingLine": 102
+        }
+      },
+      {
+        "comment": "",
+        "key": "Auto e chilometraggio",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 111
+        }
+      },
+      {
+        "comment": "",
+        "key": "Inserisci i km al ritiro dell'auto: si aggiornano a ogni percorso. Limiti: 90 km/h asfalto, 80 sterrato, 50 centri abitati.",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 113
+        }
+      },
+      {
+        "comment": "",
+        "key": "Termina e salva",
+        "location": {
+          "startingColumn": 24,
+          "startingLine": 123
+        }
+      },
+      {
+        "comment": "",
+        "key": "Scarta percorso",
+        "location": {
+          "startingColumn": 24,
+          "startingLine": 124
+        }
+      },
+      {
+        "comment": "",
+        "key": "Continua",
+        "location": {
+          "startingColumn": 24,
+          "startingLine": 125
+        }
+      },
+      {
+        "comment": "",
+        "key": "REGISTRA IL PERCORSO",
+        "location": {
+          "startingColumn": 18,
+          "startingLine": 138
+        }
+      },
+      {
+        "comment": "",
+        "key": "GPS, km, tempi, velocità, dislivello e consumi. Continua a schermo bloccato.",
+        "location": {
+          "startingColumn": 18,
+          "startingLine": 139
+        }
+      },
+      {
+        "comment": "",
+        "key": "Accesso alla posizione negato: attivalo in Impostazioni › Norður.",
+        "location": {
+          "startingColumn": 23,
+          "startingLine": 160
+        }
+      },
+      {
+        "comment": "",
+        "key": "AVVIA REGISTRAZIONE",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 148
+        }
+      },
+      {
+        "comment": "",
+        "key": "→",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 150
+        }
+      },
+      {
+        "comment": "",
+        "key": "Nessun percorso ancora",
+        "location": {
+          "startingColumn": 75,
+          "startingLine": 169
+        }
+      },
+      {
+        "comment": "",
+        "key": "Avvia la registrazione quando parti, o importa un'attività da Salute o da un file GPX.",
+        "location": {
+          "startingColumn": 55,
+          "startingLine": 170
+        }
+      },
+      {
+        "comment": "",
+        "key": "Totale",
+        "location": {
+          "startingColumn": 53,
+          "startingLine": 173
+        }
+      },
+      {
+        "comment": "",
+        "key": "Alla guida",
+        "location": {
+          "startingColumn": 53,
+          "startingLine": 174
+        }
+      },
+      {
+        "comment": "",
+        "key": "Percorsi",
+        "location": {
+          "startingColumn": 53,
+          "startingLine": 175
+        }
+      },
+      {
+        "comment": "",
+        "key": "Giorno",
+        "location": {
+          "startingColumn": 61,
+          "startingLine": 180
+        }
+      },
+      {
+        "comment": "",
+        "key": "km",
+        "location": {
+          "startingColumn": 105,
+          "startingLine": 180
+        }
+      },
+      {
+        "comment": "",
+        "key": "Storico percorsi",
+        "location": {
+          "startingColumn": 18,
+          "startingLine": 207
+        }
+      },
+      {
+        "comment": "",
+        "key": "Registrazione",
+        "location": {
+          "startingColumn": 73,
+          "startingLine": 282
+        }
+      },
+      {
+        "comment": "",
+        "key": "GPS ±%lld m",
+        "location": {
+          "startingColumn": 34,
+          "startingLine": 230
+        }
+      },
+      {
+        "comment": "",
+        "key": "In pausa",
+        "location": {
+          "startingColumn": 72,
+          "startingLine": 226
+        }
+      },
+      {
+        "comment": "",
+        "key": "Registrazione",
+        "location": {
+          "startingColumn": 104,
+          "startingLine": 226
+        }
+      },
+      {
+        "comment": "",
+        "key": "Distanza",
+        "location": {
+          "startingColumn": 34,
+          "startingLine": 235
+        }
+      },
+      {
+        "comment": "",
+        "key": "Tempo %@",
+        "location": {
+          "startingColumn": 34,
+          "startingLine": 241
+        }
+      },
+      {
+        "comment": "",
+        "key": "km",
+        "location": {
+          "startingColumn": 38,
+          "startingLine": 239
+        }
+      },
+      {
+        "comment": "",
+        "key": "Velocità max",
+        "location": {
+          "startingColumn": 61,
+          "startingLine": 251
+        }
+      },
+      {
+        "comment": "",
+        "key": "drive.average",
+        "location": {
+          "startingColumn": 61,
+          "startingLine": 252
+        },
+        "value": "Media"
+      },
+      {
+        "comment": "",
+        "key": "Quota",
+        "location": {
+          "startingColumn": 61,
+          "startingLine": 253
+        }
+      },
+      {
+        "comment": "",
+        "key": "In marcia",
+        "location": {
+          "startingColumn": 61,
+          "startingLine": 256
+        }
+      },
+      {
+        "comment": "",
+        "key": "Salita",
+        "location": {
+          "startingColumn": 61,
+          "startingLine": 257
+        }
+      },
+      {
+        "comment": "",
+        "key": "Soste",
+        "location": {
+          "startingColumn": 61,
+          "startingLine": 258
+        }
+      },
+      {
+        "comment": "",
+        "key": "Km auto",
+        "location": {
+          "startingColumn": 61,
+          "startingLine": 261
+        }
+      },
+      {
+        "comment": "",
+        "key": "Litri",
+        "location": {
+          "startingColumn": 61,
+          "startingLine": 262
+        }
+      },
+      {
+        "comment": "",
+        "key": "Costo",
+        "location": {
+          "startingColumn": 61,
+          "startingLine": 263
+        }
+      },
+      {
+        "comment": "",
+        "key": "ISK",
+        "location": {
+          "startingColumn": 156,
+          "startingLine": 263
+        }
+      },
+      {
+        "comment": "",
+        "key": "Distributore più vicino: %@ a %@",
+        "location": {
+          "startingColumn": 23,
+          "startingLine": 294
+        }
+      },
+      {
+        "comment": "",
+        "key": "Riprendi",
+        "location": {
+          "startingColumn": 73,
+          "startingLine": 274
+        }
+      },
+      {
+        "comment": "",
+        "key": "Pausa",
+        "location": {
+          "startingColumn": 72,
+          "startingLine": 277
+        }
+      },
+      {
+        "comment": "",
+        "key": "<30",
+        "location": {
+          "startingColumn": 35,
+          "startingLine": 341
+        }
+      },
+      {
+        "comment": "",
+        "key": "30–60",
+        "location": {
+          "startingColumn": 42,
+          "startingLine": 341
+        }
+      },
+      {
+        "comment": "",
+        "key": "60–80",
+        "location": {
+          "startingColumn": 53,
+          "startingLine": 341
+        }
+      },
+      {
+        "comment": "",
+        "key": "80–95",
+        "location": {
+          "startingColumn": 64,
+          "startingLine": 341
+        }
+      },
+      {
+        "comment": "",
+        "key": ">95",
+        "location": {
+          "startingColumn": 75,
+          "startingLine": 341
+        }
+      },
+      {
+        "comment": "",
+        "key": "media %lld · max %lld bpm",
+        "location": {
+          "startingColumn": 83,
+          "startingLine": 361
+        }
+      },
+      {
+        "comment": "",
+        "key": "%@ · max %lld km/h",
+        "location": {
+          "startingColumn": 80,
+          "startingLine": 367
+        }
+      },
+      {
+        "comment": "",
+        "key": "Distanza",
+        "location": {
+          "startingColumn": 32,
+          "startingLine": 350
+        }
+      },
+      {
+        "comment": "",
+        "key": "Durata totale",
+        "location": {
+          "startingColumn": 32,
+          "startingLine": 351
+        }
+      },
+      {
+        "comment": "",
+        "key": "In movimento",
+        "location": {
+          "startingColumn": 32,
+          "startingLine": 352
+        }
+      },
+      {
+        "comment": "",
+        "key": "Velocità media",
+        "location": {
+          "startingColumn": 32,
+          "startingLine": 353
+        }
+      },
+      {
+        "comment": "",
+        "key": "Media in movimento",
+        "location": {
+          "startingColumn": 32,
+          "startingLine": 354
+        }
+      },
+      {
+        "comment": "",
+        "key": "Velocità massima",
+        "location": {
+          "startingColumn": 32,
+          "startingLine": 355
+        }
+      },
+      {
+        "comment": "",
+        "key": "Dislivello",
+        "location": {
+          "startingColumn": 32,
+          "startingLine": 356
+        }
+      },
+      {
+        "comment": "",
+        "key": "Quota",
+        "location": {
+          "startingColumn": 36,
+          "startingLine": 358
+        }
+      },
+      {
+        "comment": "",
+        "key": "Frequenza cardiaca",
+        "location": {
+          "startingColumn": 36,
+          "startingLine": 361
+        }
+      },
+      {
+        "comment": "",
+        "key": "Energia attiva",
+        "location": {
+          "startingColumn": 67,
+          "startingLine": 363
+        }
+      },
+      {
+        "comment": "",
+        "key": "Origine",
+        "location": {
+          "startingColumn": 65,
+          "startingLine": 364
+        }
+      },
+      {
+        "comment": "",
+        "key": "Soste (>2 min)",
+        "location": {
+          "startingColumn": 53,
+          "startingLine": 365
+        }
+      },
+      {
+        "comment": "",
+        "key": "Oltre il limite",
+        "location": {
+          "startingColumn": 36,
+          "startingLine": 367
+        }
+      },
+      {
+        "comment": "",
+        "key": "Contachilometri",
+        "location": {
+          "startingColumn": 36,
+          "startingLine": 370
+        }
+      },
+      {
+        "comment": "",
+        "key": "Carburante stimato",
+        "location": {
+          "startingColumn": 53,
+          "startingLine": 372
+        }
+      },
+      {
+        "comment": "",
+        "key": "Inizio",
+        "location": {
+          "startingColumn": 32,
+          "startingLine": 373
+        }
+      },
+      {
+        "comment": "",
+        "key": "Fine",
+        "location": {
+          "startingColumn": 59,
+          "startingLine": 374
+        }
+      },
+      {
+        "comment": "",
+        "key": "Riepilogo",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 375
+        }
+      },
+      {
+        "comment": "",
+        "key": "Velocità e quota",
+        "location": {
+          "startingColumn": 34,
+          "startingLine": 381
+        }
+      },
+      {
+        "comment": "",
+        "key": "Nome",
+        "location": {
+          "startingColumn": 27,
+          "startingLine": 385
+        }
+      },
+      {
+        "comment": "",
+        "key": "Note",
+        "location": {
+          "startingColumn": 27,
+          "startingLine": 386
+        }
+      },
+      {
+        "comment": "",
+        "key": "Salva modifiche",
+        "location": {
+          "startingColumn": 24,
+          "startingLine": 387
+        }
+      },
+      {
+        "comment": "",
+        "key": "Dettagli",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 393
+        }
+      },
+      {
+        "comment": "",
+        "key": "Elimina percorso",
+        "location": {
+          "startingColumn": 24,
+          "startingLine": 409
+        }
+      },
+      {
+        "comment": "",
+        "key": "Condividi su Instagram: immagine e video 3D",
+        "location": {
+          "startingColumn": 31,
+          "startingLine": 398
+        }
+      },
+      {
+        "comment": "",
+        "key": "Esporta GPX",
+        "location": {
+          "startingColumn": 53,
+          "startingLine": 403
+        }
+      },
+      {
+        "comment": "",
+        "key": "Rifai il percorso con Apple Mappe",
+        "location": {
+          "startingColumn": 76,
+          "startingLine": 406
+        }
+      },
+      {
+        "comment": "",
+        "key": "Rifai il percorso con Google Maps",
+        "location": {
+          "startingColumn": 80,
+          "startingLine": 407
+        }
+      },
+      {
+        "comment": "",
+        "key": "Partenza",
+        "location": {
+          "startingColumn": 42,
+          "startingLine": 474
+        }
+      },
+      {
+        "comment": "",
+        "key": "Arrivo",
+        "location": {
+          "startingColumn": 42,
+          "startingLine": 477
+        }
+      },
+      {
+        "comment": "",
+        "key": "km",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 517
+        }
+      },
+      {
+        "comment": "",
+        "key": "km/h",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 518
+        }
+      },
+      {
+        "comment": "",
+        "key": "Quota (scalata)",
+        "location": {
+          "startingColumn": 83,
+          "startingLine": 510
+        }
+      },
+      {
+        "comment": "",
+        "key": "km",
+        "location": {
+          "startingColumn": 40,
+          "startingLine": 510
+        }
+      },
+      {
+        "comment": "",
+        "key": "km",
+        "location": {
+          "startingColumn": 36,
+          "startingLine": 513
+        }
+      },
+      {
+        "comment": "",
+        "key": "km/h",
+        "location": {
+          "startingColumn": 61,
+          "startingLine": 513
+        }
+      }
+    ]
+  },
+  "version": 1
+}

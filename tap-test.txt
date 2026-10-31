@@ -1,0 +1,11 @@
+FAIL wind: button not found
+FAIL gust: button not found
+FAIL precipitation: button not found
+FAIL snow: button not found
+FAIL cloud: button not found
+FAIL temperature: button not found
+FAIL aurora: button not found
+FAIL radar: button not found
+FAIL none: button not found
+FAIL LIVELLI + button not found
+10 FAILURES

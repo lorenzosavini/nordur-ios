@@ -1,0 +1,112 @@
+{
+  "source": "/Users/runner/work/nordur-ios/nordur-ios/Shared/Services/Astro.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Luna nuova",
+        "location": {
+          "startingColumn": 48,
+          "startingLine": 103
+        }
+      },
+      {
+        "comment": "",
+        "key": "Falce crescente",
+        "location": {
+          "startingColumn": 59,
+          "startingLine": 104
+        }
+      },
+      {
+        "comment": "",
+        "key": "Falce calante",
+        "location": {
+          "startingColumn": 98,
+          "startingLine": 104
+        }
+      },
+      {
+        "comment": "",
+        "key": "Primo quarto",
+        "location": {
+          "startingColumn": 59,
+          "startingLine": 105
+        }
+      },
+      {
+        "comment": "",
+        "key": "Ultimo quarto",
+        "location": {
+          "startingColumn": 95,
+          "startingLine": 105
+        }
+      },
+      {
+        "comment": "",
+        "key": "Gibbosa crescente",
+        "location": {
+          "startingColumn": 59,
+          "startingLine": 106
+        }
+      },
+      {
+        "comment": "",
+        "key": "Gibbosa calante",
+        "location": {
+          "startingColumn": 100,
+          "startingLine": 106
+        }
+      },
+      {
+        "comment": "",
+        "key": "Luna piena",
+        "location": {
+          "startingColumn": 43,
+          "startingLine": 107
+        }
+      },
+      {
+        "comment": "",
+        "key": "Giorno",
+        "location": {
+          "startingColumn": 49,
+          "startingLine": 130
+        }
+      },
+      {
+        "comment": "",
+        "key": "Crepuscolo civile",
+        "location": {
+          "startingColumn": 51,
+          "startingLine": 131
+        }
+      },
+      {
+        "comment": "",
+        "key": "Crepuscolo nautico",
+        "location": {
+          "startingColumn": 54,
+          "startingLine": 132
+        }
+      },
+      {
+        "comment": "",
+        "key": "Crepuscolo astronomico",
+        "location": {
+          "startingColumn": 58,
+          "startingLine": 133
+        }
+      },
+      {
+        "comment": "",
+        "key": "Notte astronomica",
+        "location": {
+          "startingColumn": 51,
+          "startingLine": 134
+        }
+      }
+    ]
+  },
+  "version": 1
+}

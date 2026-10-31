@@ -1,0 +1,1025 @@
+{
+  "source": "/Users/runner/work/nordur-ios/nordur-ios/Nordur/Views/TodayView.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Vento",
+        "location": {
+          "startingColumn": 50,
+          "startingLine": 81
+        }
+      },
+      {
+        "comment": "",
+        "key": "Strade",
+        "location": {
+          "startingColumn": 51,
+          "startingLine": 82
+        }
+      },
+      {
+        "comment": "",
+        "key": "Webcam",
+        "location": {
+          "startingColumn": 53,
+          "startingLine": 83
+        }
+      },
+      {
+        "comment": "",
+        "key": "Terra e mare",
+        "location": {
+          "startingColumn": 50,
+          "startingLine": 84
+        }
+      },
+      {
+        "comment": "",
+        "key": "SafeTravel",
+        "location": {
+          "startingColumn": 50,
+          "startingLine": 85
+        }
+      },
+      {
+        "comment": "",
+        "key": "Luce",
+        "location": {
+          "startingColumn": 51,
+          "startingLine": 86
+        }
+      },
+      {
+        "comment": "",
+        "key": "Dettagli",
+        "location": {
+          "startingColumn": 64,
+          "startingLine": 104
+        }
+      },
+      {
+        "comment": "",
+        "key": "Strade, chiusure e stazioni Vegagerðin",
+        "location": {
+          "startingColumn": 104,
+          "startingLine": 127
+        }
+      },
+      {
+        "comment": "",
+        "key": "Le webcam stradali",
+        "location": {
+          "startingColumn": 106,
+          "startingLine": 129
+        }
+      },
+      {
+        "comment": "",
+        "key": "Terremoti, distributori, voli KEF e traghetti",
+        "location": {
+          "startingColumn": 83,
+          "startingLine": 131
+        }
+      },
+      {
+        "comment": "",
+        "key": "Gli avvisi SafeTravel",
+        "location": {
+          "startingColumn": 103,
+          "startingLine": 134
+        }
+      },
+      {
+        "comment": "",
+        "key": "Nessun avviso SafeTravel in questo momento.",
+        "location": {
+          "startingColumn": 18,
+          "startingLine": 821
+        }
+      },
+      {
+        "comment": "",
+        "key": "Esplora",
+        "location": {
+          "startingColumn": 51,
+          "startingLine": 148
+        }
+      },
+      {
+        "comment": "",
+        "key": "Da vedere",
+        "location": {
+          "startingColumn": 68,
+          "startingLine": 151
+        }
+      },
+      {
+        "comment": "",
+        "key": "Cascate, belvedere, sorgenti calde vicino a te",
+        "location": {
+          "startingColumn": 56,
+          "startingLine": 152
+        }
+      },
+      {
+        "comment": "",
+        "key": "Strade",
+        "location": {
+          "startingColumn": 69,
+          "startingLine": 155
+        }
+      },
+      {
+        "comment": "",
+        "key": "%lld tratti chiusi · %lld difficili",
+        "location": {
+          "startingColumn": 34,
+          "startingLine": 179
+        }
+      },
+      {
+        "comment": "",
+        "key": "Condizioni e notizie Vegagerðin",
+        "location": {
+          "startingColumn": 80,
+          "startingLine": 176
+        }
+      },
+      {
+        "comment": "",
+        "key": "Solo in Islanda, per ora",
+        "location": {
+          "startingColumn": 63,
+          "startingLine": 175
+        }
+      },
+      {
+        "comment": "",
+        "key": "Vulcani e terremoti",
+        "location": {
+          "startingColumn": 71,
+          "startingLine": 158
+        }
+      },
+      {
+        "comment": "",
+        "key": "%lld scosse nelle ultime 24 h",
+        "location": {
+          "startingColumn": 74,
+          "startingLine": 159
+        }
+      },
+      {
+        "comment": "",
+        "key": "Solo in Islanda, per ora",
+        "location": {
+          "startingColumn": 153,
+          "startingLine": 159
+        }
+      },
+      {
+        "comment": "",
+        "key": "Webcam",
+        "location": {
+          "startingColumn": 69,
+          "startingLine": 162
+        }
+      },
+      {
+        "comment": "",
+        "key": "Le strade come sono adesso",
+        "location": {
+          "startingColumn": 106,
+          "startingLine": 162
+        }
+      },
+      {
+        "comment": "",
+        "key": "%@ verso le %@",
+        "location": {
+          "startingColumn": 34,
+          "startingLine": 171
+        }
+      },
+      {
+        "comment": "",
+        "key": "Previsione per stanotte",
+        "location": {
+          "startingColumn": 82,
+          "startingLine": 170
+        }
+      },
+      {
+        "comment": "",
+        "key": "Previsioni ora per ora",
+        "location": {
+          "startingColumn": 91,
+          "startingLine": 183
+        }
+      },
+      {
+        "comment": "",
+        "key": "NORÐUR",
+        "location": {
+          "startingColumn": 18,
+          "startingLine": 193
+        }
+      },
+      {
+        "comment": "",
+        "key": "Impostazioni",
+        "location": {
+          "startingColumn": 37,
+          "startingLine": 208
+        }
+      },
+      {
+        "comment": "",
+        "key": "Allerte",
+        "location": {
+          "startingColumn": 33,
+          "startingLine": 212
+        }
+      },
+      {
+        "comment": "",
+        "key": "SOS 112",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 198
+        }
+      },
+      {
+        "comment": "",
+        "key": "Nessuna criticità nelle prossime 12 ore",
+        "location": {
+          "startingColumn": 48,
+          "startingLine": 228
+        }
+      },
+      {
+        "comment": "",
+        "key": "Guida: %@ · raffiche fino a %@",
+        "location": {
+          "startingColumn": 47,
+          "startingLine": 229
+        }
+      },
+      {
+        "comment": "",
+        "key": "STATO",
+        "location": {
+          "startingColumn": 50,
+          "startingLine": 233
+        }
+      },
+      {
+        "comment": "",
+        "key": "ATTENZIONE",
+        "location": {
+          "startingColumn": 79,
+          "startingLine": 233
+        }
+      },
+      {
+        "comment": "",
+        "key": "Vento",
+        "location": {
+          "startingColumn": 54,
+          "startingLine": 274
+        }
+      },
+      {
+        "comment": "",
+        "key": "da %@",
+        "location": {
+          "startingColumn": 95,
+          "startingLine": 275
+        }
+      },
+      {
+        "comment": "",
+        "key": "Raffiche",
+        "location": {
+          "startingColumn": 54,
+          "startingLine": 276
+        }
+      },
+      {
+        "comment": "",
+        "key": "Precip.",
+        "location": {
+          "startingColumn": 54,
+          "startingLine": 278
+        }
+      },
+      {
+        "comment": "",
+        "key": "Nuvole",
+        "location": {
+          "startingColumn": 54,
+          "startingLine": 279
+        }
+      },
+      {
+        "comment": "",
+        "key": "Pressione",
+        "location": {
+          "startingColumn": 54,
+          "startingLine": 280
+        }
+      },
+      {
+        "comment": "",
+        "key": "Umidità",
+        "location": {
+          "startingColumn": 54,
+          "startingLine": 281
+        }
+      },
+      {
+        "comment": "",
+        "key": "PERCEPITA",
+        "location": {
+          "startingColumn": 52,
+          "startingLine": 266
+        }
+      },
+      {
+        "comment": "",
+        "key": "MIN / MAX",
+        "location": {
+          "startingColumn": 52,
+          "startingLine": 267
+        }
+      },
+      {
+        "comment": "",
+        "key": "PIOGGIA OGGI",
+        "location": {
+          "startingColumn": 52,
+          "startingLine": 268
+        }
+      },
+      {
+        "comment": "",
+        "key": "Prossime ore",
+        "location": {
+          "startingColumn": 68,
+          "startingLine": 315
+        }
+      },
+      {
+        "comment": "",
+        "key": "ORA LOCALE",
+        "location": {
+          "startingColumn": 113,
+          "startingLine": 315
+        }
+      },
+      {
+        "comment": "",
+        "key": "Vento",
+        "location": {
+          "startingColumn": 55,
+          "startingLine": 326
+        }
+      },
+      {
+        "comment": "",
+        "key": "Sopra %@ le portiere si aprono a fatica e i mezzi alti rischiano di ribaltarsi: tieni la portiera con due mani.",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 341
+        }
+      },
+      {
+        "comment": "",
+        "key": "%@ RAFFICHE",
+        "location": {
+          "startingColumn": 38,
+          "startingLine": 334
+        }
+      },
+      {
+        "comment": "",
+        "key": "DA %@",
+        "location": {
+          "startingColumn": 38,
+          "startingLine": 335
+        }
+      },
+      {
+        "comment": "",
+        "key": "Allerte",
+        "location": {
+          "startingColumn": 64,
+          "startingLine": 352
+        }
+      },
+      {
+        "comment": "",
+        "key": "%lld IN ISLANDA",
+        "location": {
+          "startingColumn": 72,
+          "startingLine": 353
+        }
+      },
+      {
+        "comment": "",
+        "key": "Le allerte meteo ufficiali (IMO)",
+        "location": {
+          "startingColumn": 57,
+          "startingLine": 368
+        }
+      },
+      {
+        "comment": "",
+        "key": "REC",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 358
+        }
+      },
+      {
+        "comment": "",
+        "key": "%@ KM",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 360
+        }
+      },
+      {
+        "comment": "",
+        "key": "%lld KM/H",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 361
+        }
+      },
+      {
+        "comment": "",
+        "key": "Nessuna allerta IMO per questa zona",
+        "location": {
+          "startingColumn": 34,
+          "startingLine": 374
+        }
+      },
+      {
+        "comment": "",
+        "key": "%@ · fino alle %@",
+        "location": {
+          "startingColumn": 42,
+          "startingLine": 386
+        }
+      },
+      {
+        "comment": "",
+        "key": "IN CORSO",
+        "location": {
+          "startingColumn": 85,
+          "startingLine": 382
+        }
+      },
+      {
+        "comment": "",
+        "key": "DALLE %@",
+        "location": {
+          "startingColumn": 117,
+          "startingLine": 382
+        }
+      },
+      {
+        "comment": "",
+        "key": "ULTIMA NOTIFICA · %@",
+        "location": {
+          "startingColumn": 34,
+          "startingLine": 402
+        }
+      },
+      {
+        "comment": "",
+        "key": "→",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 420
+        }
+      },
+      {
+        "comment": "",
+        "key": "Guida e aurora",
+        "location": {
+          "startingColumn": 64,
+          "startingLine": 433
+        }
+      },
+      {
+        "comment": "",
+        "key": "GUIDA · 12 H",
+        "location": {
+          "startingColumn": 18,
+          "startingLine": 447
+        }
+      },
+      {
+        "comment": "",
+        "key": "RAFF. MAX",
+        "location": {
+          "startingColumn": 43,
+          "startingLine": 452
+        }
+      },
+      {
+        "comment": "",
+        "key": "MINIMA",
+        "location": {
+          "startingColumn": 43,
+          "startingLine": 453
+        }
+      },
+      {
+        "comment": "",
+        "key": "NEVE",
+        "location": {
+          "startingColumn": 43,
+          "startingLine": 454
+        }
+      },
+      {
+        "comment": "",
+        "key": "AURORA · STANOTTE",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 463
+        }
+      },
+      {
+        "comment": "",
+        "key": "NESSUNA ORA DI BUIO",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 479
+        }
+      },
+      {
+        "comment": "",
+        "key": "VERSO LE %@ · %@",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 476
+        }
+      },
+      {
+        "comment": "",
+        "key": "PREVISIONE COMPLETA →",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 482
+        }
+      },
+      {
+        "comment": "",
+        "key": "Strade",
+        "location": {
+          "startingColumn": 55,
+          "startingLine": 505
+        }
+      },
+      {
+        "comment": "",
+        "key": "TUTTE →",
+        "location": {
+          "startingColumn": 94,
+          "startingLine": 505
+        }
+      },
+      {
+        "comment": "",
+        "key": "Vegagerðin",
+        "location": {
+          "startingColumn": 139,
+          "startingLine": 546
+        }
+      },
+      {
+        "comment": "",
+        "key": "PERCORRIBILI",
+        "location": {
+          "startingColumn": 66,
+          "startingLine": 511
+        }
+      },
+      {
+        "comment": "",
+        "key": "NEVE / GHIACCIO",
+        "location": {
+          "startingColumn": 80,
+          "startingLine": 513
+        }
+      },
+      {
+        "comment": "",
+        "key": "CHIUSI",
+        "location": {
+          "startingColumn": 66,
+          "startingLine": 515
+        }
+      },
+      {
+        "comment": "",
+        "key": "STAZIONE",
+        "location": {
+          "startingColumn": 34,
+          "startingLine": 521
+        }
+      },
+      {
+        "comment": "",
+        "key": "VENTO/RAFF",
+        "location": {
+          "startingColumn": 34,
+          "startingLine": 522
+        }
+      },
+      {
+        "comment": "",
+        "key": "ASFALTO",
+        "location": {
+          "startingColumn": 34,
+          "startingLine": 523
+        }
+      },
+      {
+        "comment": "",
+        "key": "%@/%@",
+        "location": {
+          "startingColumn": 38,
+          "startingLine": 534
+        }
+      },
+      {
+        "comment": "",
+        "key": "%lld KM",
+        "location": {
+          "startingColumn": 42,
+          "startingLine": 531
+        }
+      },
+      {
+        "comment": "",
+        "key": "%lld",
+        "location": {
+          "startingColumn": 18,
+          "startingLine": 559
+        }
+      },
+      {
+        "comment": "",
+        "key": "Webcam vicine",
+        "location": {
+          "startingColumn": 59,
+          "startingLine": 573
+        }
+      },
+      {
+        "comment": "",
+        "key": "TUTTE →",
+        "location": {
+          "startingColumn": 105,
+          "startingLine": 573
+        }
+      },
+      {
+        "comment": "",
+        "key": "Nessuna webcam entro 60 km: vedi tutte le webcam stradali",
+        "location": {
+          "startingColumn": 23,
+          "startingLine": 587
+        }
+      },
+      {
+        "comment": "",
+        "key": "Terra, mare, servizi",
+        "location": {
+          "startingColumn": 51,
+          "startingLine": 598
+        }
+      },
+      {
+        "comment": "",
+        "key": "MARE · ONDE",
+        "location": {
+          "startingColumn": 32,
+          "startingLine": 663
+        }
+      },
+      {
+        "comment": "",
+        "key": "CARBURANTE",
+        "location": {
+          "startingColumn": 32,
+          "startingLine": 681
+        }
+      },
+      {
+        "comment": "",
+        "key": "TERREMOTI · 24 H",
+        "location": {
+          "startingColumn": 36,
+          "startingLine": 636
+        }
+      },
+      {
+        "comment": "",
+        "key": "MAX M%@ %@",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 644
+        }
+      },
+      {
+        "comment": "",
+        "key": "%lld",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 639
+        }
+      },
+      {
+        "comment": "",
+        "key": "SCOSSE",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 640
+        }
+      },
+      {
+        "comment": "",
+        "key": "ACQUA %@",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 673
+        }
+      },
+      {
+        "comment": "",
+        "key": "Non disponibile per questa località",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 675
+        }
+      },
+      {
+        "comment": "",
+        "key": "M · %@ S",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 667
+        }
+      },
+      {
+        "comment": "",
+        "key": "Spiagge",
+        "location": {
+          "startingColumn": 79,
+          "startingLine": 670
+        }
+      },
+      {
+        "comment": "",
+        "key": "Barca",
+        "location": {
+          "startingColumn": 77,
+          "startingLine": 671
+        }
+      },
+      {
+        "comment": "",
+        "key": "95: %@ KR/L",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 693
+        }
+      },
+      {
+        "comment": "",
+        "key": "RICARICA EV %@ KM",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 703
+        }
+      },
+      {
+        "comment": "",
+        "key": "Download in corso",
+        "location": {
+          "startingColumn": 69,
+          "startingLine": 706
+        }
+      },
+      {
+        "comment": "",
+        "key": "Non disponibile",
+        "location": {
+          "startingColumn": 110,
+          "startingLine": 706
+        }
+      },
+      {
+        "comment": "",
+        "key": "KM",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 686
+        }
+      },
+      {
+        "comment": "",
+        "key": "CONFRONTA PREZZI ›",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 697
+        }
+      },
+      {
+        "comment": "",
+        "key": "Da non perdere: %@, %@ km",
+        "location": {
+          "startingColumn": 44,
+          "startingLine": 735
+        }
+      },
+      {
+        "comment": "",
+        "key": "DA VEDERE · ENTRO 60 KM",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 719
+        }
+      },
+      {
+        "comment": "",
+        "key": "%lld",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 724
+        }
+      },
+      {
+        "comment": "",
+        "key": "LUOGHI",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 725
+        }
+      },
+      {
+        "comment": "",
+        "key": "Aperto adesso: %@, %@ km",
+        "location": {
+          "startingColumn": 48,
+          "startingLine": 772
+        }
+      },
+      {
+        "comment": "",
+        "key": "Download in corso",
+        "location": {
+          "startingColumn": 74,
+          "startingLine": 776
+        }
+      },
+      {
+        "comment": "",
+        "key": "Non disponibile",
+        "location": {
+          "startingColumn": 115,
+          "startingLine": 776
+        }
+      },
+      {
+        "comment": "",
+        "key": "SPESA · SUPERMERCATI",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 758
+        }
+      },
+      {
+        "comment": "",
+        "key": "%@ KM",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 766
+        }
+      },
+      {
+        "comment": "",
+        "key": "VOLI E TRAGHETTI",
+        "location": {
+          "startingColumn": 36,
+          "startingLine": 790
+        }
+      },
+      {
+        "comment": "",
+        "key": "KEF",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 797
+        }
+      },
+      {
+        "comment": "",
+        "key": "Arrivi e partenze live, Herjólfur",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 798
+        }
+      },
+      {
+        "comment": "",
+        "key": "SafeTravel",
+        "location": {
+          "startingColumn": 55,
+          "startingLine": 811
+        }
+      },
+      {
+        "comment": "",
+        "key": "Luce",
+        "location": {
+          "startingColumn": 55,
+          "startingLine": 840
+        }
+      },
+      {
+        "comment": "",
+        "key": "ALBA %@",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 843
+        }
+      },
+      {
+        "comment": "",
+        "key": "TRAMONTO %@",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 845
+        }
+      },
+      {
+        "comment": "",
+        "key": "ORA",
+        "location": {
+          "startingColumn": 41,
+          "startingLine": 865
+        }
+      },
+      {
+        "comment": "",
+        "key": "CIELO",
+        "location": {
+          "startingColumn": 74,
+          "startingLine": 865
+        }
+      },
+      {
+        "comment": "",
+        "key": "VENTO",
+        "location": {
+          "startingColumn": 130,
+          "startingLine": 865
+        }
+      },
+      {
+        "comment": "",
+        "key": "RAFF.",
+        "location": {
+          "startingColumn": 165,
+          "startingLine": 865
+        }
+      },
+      {
+        "comment": "",
+        "key": "DIR",
+        "location": {
+          "startingColumn": 200,
+          "startingLine": 865
+        }
+      },
+      {
+        "comment": "",
+        "key": "now.short",
+        "location": {
+          "startingColumn": 65,
+          "startingLine": 872
+        },
+        "value": "ORA"
+      }
+    ]
+  },
+  "version": 1
+}

@@ -1,0 +1,264 @@
+{
+  "source": "/Users/runner/work/nordur-ios/nordur-ios/Nordur/Views/Paywall.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "NORÐUR PRO",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 18
+        }
+      },
+      {
+        "comment": "",
+        "key": "%@ fa parte di Pro",
+        "location": {
+          "startingColumn": 49,
+          "startingLine": 22
+        }
+      },
+      {
+        "comment": "",
+        "key": "Sblocca tutto Norður",
+        "location": {
+          "startingColumn": 74,
+          "startingLine": 19
+        }
+      },
+      {
+        "comment": "",
+        "key": "Un solo acquisto per tutte le funzioni qui sotto. Avvisi meteo e strade, chiusure, terremoti e numeri di emergenza restano sempre gratuiti.",
+        "location": {
+          "startingColumn": 73,
+          "startingLine": 25
+        }
+      },
+      {
+        "comment": "",
+        "key": "Con Pro",
+        "location": {
+          "startingColumn": 34,
+          "startingLine": 38
+        }
+      },
+      {
+        "comment": "",
+        "key": "Gli acquisti non sono ancora disponibili.",
+        "location": {
+          "startingColumn": 76,
+          "startingLine": 45
+        }
+      },
+      {
+        "comment": "",
+        "key": "Caricamento dei prezzi dall'App Store…",
+        "location": {
+          "startingColumn": 141,
+          "startingLine": 45
+        }
+      },
+      {
+        "comment": "",
+        "key": "Pro è attivo su questo iPhone",
+        "location": {
+          "startingColumn": 27,
+          "startingLine": 43
+        }
+      },
+      {
+        "comment": "",
+        "key": "Ogni anno",
+        "location": {
+          "startingColumn": 64,
+          "startingLine": 100
+        }
+      },
+      {
+        "comment": "",
+        "key": "Ogni %lld anni",
+        "location": {
+          "startingColumn": 97,
+          "startingLine": 100
+        }
+      },
+      {
+        "comment": "",
+        "key": "Ogni mese",
+        "location": {
+          "startingColumn": 65,
+          "startingLine": 101
+        }
+      },
+      {
+        "comment": "",
+        "key": "Ogni %lld mesi",
+        "location": {
+          "startingColumn": 98,
+          "startingLine": 101
+        }
+      },
+      {
+        "comment": "",
+        "key": "Ogni settimana",
+        "location": {
+          "startingColumn": 46,
+          "startingLine": 102
+        }
+      },
+      {
+        "comment": "",
+        "key": "Ogni giorno",
+        "location": {
+          "startingColumn": 45,
+          "startingLine": 103
+        }
+      },
+      {
+        "comment": "",
+        "key": "Acquisto unico, per sempre",
+        "location": {
+          "startingColumn": 71,
+          "startingLine": 97
+        }
+      },
+      {
+        "comment": "",
+        "key": "Acquista",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 67
+        }
+      },
+      {
+        "comment": "",
+        "key": "Il pagamento è addebitato sull'Apple ID. Gli abbonamenti si rinnovano da soli se non disattivati almeno 24 ore prima della scadenza, da Impostazioni › Apple ID › Abbonamenti.",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 69
+        }
+      },
+      {
+        "comment": "",
+        "key": "Termini d'uso",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 71
+        }
+      },
+      {
+        "comment": "",
+        "key": "Privacy",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 72
+        }
+      },
+      {
+        "comment": "",
+        "key": "Ripristina acquisti",
+        "location": {
+          "startingColumn": 74,
+          "startingLine": 78
+        }
+      },
+      {
+        "comment": "",
+        "key": "Riscatta un codice",
+        "location": {
+          "startingColumn": 60,
+          "startingLine": 80
+        }
+      },
+      {
+        "comment": "",
+        "key": "Chiudi",
+        "location": {
+          "startingColumn": 79,
+          "startingLine": 88
+        }
+      },
+      {
+        "comment": "",
+        "key": "Non disponibile al momento.",
+        "location": {
+          "startingColumn": 98,
+          "startingLine": 120
+        }
+      },
+      {
+        "comment": "",
+        "key": "PRO",
+        "location": {
+          "startingColumn": 18,
+          "startingLine": 133
+        }
+      },
+      {
+        "comment": "",
+        "key": "Richiede Pro",
+        "location": {
+          "startingColumn": 42,
+          "startingLine": 136
+        }
+      },
+      {
+        "comment": "",
+        "key": "Pro attivo fino al %@",
+        "location": {
+          "startingColumn": 70,
+          "startingLine": 148
+        }
+      },
+      {
+        "comment": "",
+        "key": "Pro attivo",
+        "location": {
+          "startingColumn": 130,
+          "startingLine": 148
+        }
+      },
+      {
+        "comment": "",
+        "key": "Il tuo acquisto",
+        "location": {
+          "startingColumn": 59,
+          "startingLine": 152
+        }
+      },
+      {
+        "comment": "",
+        "key": "Passa a Pro",
+        "location": {
+          "startingColumn": 98,
+          "startingLine": 152
+        }
+      },
+      {
+        "comment": "",
+        "key": "Norður Pro",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 154
+        }
+      },
+      {
+        "comment": "",
+        "key": "Chiudi",
+        "location": {
+          "startingColumn": 42,
+          "startingLine": 176
+        }
+      },
+      {
+        "comment": "",
+        "key": "Apri",
+        "location": {
+          "startingColumn": 47,
+          "startingLine": 170
+        }
+      }
+    ]
+  },
+  "version": 1
+}

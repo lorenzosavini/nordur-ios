@@ -1,0 +1,200 @@
+{
+  "source": "/Users/runner/work/nordur-ios/nordur-ios/Nordur/Views/OfflineView.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Pacchetto offline",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 78
+        }
+      },
+      {
+        "comment": "",
+        "key": "Scarica i dati prima di entrare in zone senza copertura (Highlands, fiordi occidentali, parte dell'Est).",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 15
+        }
+      },
+      {
+        "comment": "",
+        "key": "Allerte, strade, terremoti, aurora, SafeTravel…",
+        "location": {
+          "startingColumn": 38,
+          "startingLine": 100
+        }
+      },
+      {
+        "comment": "",
+        "key": "Webcam e distributori…",
+        "location": {
+          "startingColumn": 38,
+          "startingLine": 102
+        }
+      },
+      {
+        "comment": "",
+        "key": "Previsioni per la posizione…",
+        "location": {
+          "startingColumn": 38,
+          "startingLine": 104
+        }
+      },
+      {
+        "comment": "",
+        "key": "Previsioni per %lld tappe del viaggio…",
+        "location": {
+          "startingColumn": 38,
+          "startingLine": 106
+        }
+      },
+      {
+        "comment": "",
+        "key": "Voli e traghetti…",
+        "location": {
+          "startingColumn": 38,
+          "startingLine": 108
+        }
+      },
+      {
+        "comment": "",
+        "key": "Completato",
+        "location": {
+          "startingColumn": 55,
+          "startingLine": 111
+        }
+      },
+      {
+        "comment": "",
+        "key": "Non riuscito: %@",
+        "location": {
+          "startingColumn": 89,
+          "startingLine": 111
+        }
+      },
+      {
+        "comment": "",
+        "key": "Scarica tutto per l'uso offline",
+        "location": {
+          "startingColumn": 31,
+          "startingLine": 21
+        }
+      },
+      {
+        "comment": "",
+        "key": "Dati dell'app",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 30
+        }
+      },
+      {
+        "comment": "",
+        "key": "Apple Mappe: foto profilo › Mappe offline › Scarica nuova mappa › Islanda.",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 34
+        }
+      },
+      {
+        "comment": "",
+        "key": "Apri Apple Mappe",
+        "location": {
+          "startingColumn": 52,
+          "startingLine": 37
+        }
+      },
+      {
+        "comment": "",
+        "key": "Apple Mappe",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 40
+        }
+      },
+      {
+        "comment": "",
+        "key": "Google Maps: foto profilo › Mappe offline › Seleziona la tua mappa, adatta il riquadro e tocca Scarica. Un riquadro copre circa un terzo dell'Islanda: apri le zone qui sotto una alla volta e scaricale.",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 44
+        }
+      },
+      {
+        "comment": "",
+        "key": "Tappa: %@",
+        "location": {
+          "startingColumn": 49,
+          "startingLine": 54
+        }
+      },
+      {
+        "comment": "",
+        "key": "Google Maps",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 58
+        }
+      },
+      {
+        "comment": "",
+        "key": "Google non permette ad altre app di scaricare le sue mappe: Norður apre Google Maps sulla zona giusta e il download lo avvii tu. Le mappe offline di Google scadono dopo un anno se non le aggiorni.",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 60
+        }
+      },
+      {
+        "comment": "",
+        "key": "OpenStreetMap",
+        "location": {
+          "startingColumn": 102,
+          "startingLine": 71
+        }
+      },
+      {
+        "comment": "",
+        "key": "Carburante",
+        "location": {
+          "startingColumn": 36,
+          "startingLine": 66
+        }
+      },
+      {
+        "comment": "",
+        "key": "Colonnine di ricarica",
+        "location": {
+          "startingColumn": 36,
+          "startingLine": 67
+        }
+      },
+      {
+        "comment": "",
+        "key": "Supermercati e negozi",
+        "location": {
+          "startingColumn": 40,
+          "startingLine": 69
+        }
+      },
+      {
+        "comment": "",
+        "key": "Non ancora scaricati",
+        "location": {
+          "startingColumn": 81,
+          "startingLine": 73
+        }
+      },
+      {
+        "comment": "",
+        "key": "Distributori salvati sul telefono",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 75
+        }
+      }
+    ]
+  },
+  "version": 1
+}

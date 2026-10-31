@@ -1,0 +1,100 @@
+{
+  "/Users/runner/work/nordur-ios/nordur-ios/NordurWidgets/ConditionsWidget.swift" : {
+    "const-values" : "/Users/runner/work/nordur-ios/nordur-ios/build/Nordur.build/Debug-iphonesimulator/NordurWidgets.build/Objects-normal/arm64/ConditionsWidget.swiftconstvalues",
+    "dependencies" : "/Users/runner/work/nordur-ios/nordur-ios/build/Nordur.build/Debug-iphonesimulator/NordurWidgets.build/Objects-normal/arm64/ConditionsWidget.d",
+    "diagnostics" : "/Users/runner/work/nordur-ios/nordur-ios/build/Nordur.build/Debug-iphonesimulator/NordurWidgets.build/Objects-normal/arm64/ConditionsWidget.dia",
+    "object" : "/Users/runner/work/nordur-ios/nordur-ios/build/Nordur.build/Debug-iphonesimulator/NordurWidgets.build/Objects-normal/arm64/ConditionsWidget.o",
+    "swift-dependencies" : "/Users/runner/work/nordur-ios/nordur-ios/build/Nordur.build/Debug-iphonesimulator/NordurWidgets.build/Objects-normal/arm64/ConditionsWidget.swiftdeps"
+  },
+  "/Users/runner/work/nordur-ios/nordur-ios/NordurWidgets/DriveLiveActivity.swift" : {
+    "const-values" : "/Users/runner/work/nordur-ios/nordur-ios/build/Nordur.build/Debug-iphonesimulator/NordurWidgets.build/Objects-normal/arm64/DriveLiveActivity.swiftconstvalues",
+    "dependencies" : "/Users/runner/work/nordur-ios/nordur-ios/build/Nordur.build/Debug-iphonesimulator/NordurWidgets.build/Objects-normal/arm64/DriveLiveActivity.d",
+    "diagnostics" : "/Users/runner/work/nordur-ios/nordur-ios/build/Nordur.build/Debug-iphonesimulator/NordurWidgets.build/Objects-normal/arm64/DriveLiveActivity.dia",
+    "object" : "/Users/runner/work/nordur-ios/nordur-ios/build/Nordur.build/Debug-iphonesimulator/NordurWidgets.build/Objects-normal/arm64/DriveLiveActivity.o",
+    "swift-dependencies" : "/Users/runner/work/nordur-ios/nordur-ios/build/Nordur.build/Debug-iphonesimulator/NordurWidgets.build/Objects-normal/arm64/DriveLiveActivity.swiftdeps"
+  },
+  "/Users/runner/work/nordur-ios/nordur-ios/NordurWidgets/NordurWidgetsBundle.swift" : {
+    "const-values" : "/Users/runner/work/nordur-ios/nordur-ios/build/Nordur.build/Debug-iphonesimulator/NordurWidgets.build/Objects-normal/arm64/NordurWidgetsBundle.swiftconstvalues",
+    "dependencies" : "/Users/runner/work/nordur-ios/nordur-ios/build/Nordur.build/Debug-iphonesimulator/NordurWidgets.build/Objects-normal/arm64/NordurWidgetsBundle.d",
+    "diagnostics" : "/Users/runner/work/nordur-ios/nordur-ios/build/Nordur.build/Debug-iphonesimulator/NordurWidgets.build/Objects-normal/arm64/NordurWidgetsBundle.dia",
+    "object" : "/Users/runner/work/nordur-ios/nordur-ios/build/Nordur.build/Debug-iphonesimulator/NordurWidgets.build/Objects-normal/arm64/NordurWidgetsBundle.o",
+    "swift-dependencies" : "/Users/runner/work/nordur-ios/nordur-ios/build/Nordur.build/Debug-iphonesimulator/NordurWidgets.build/Objects-normal/arm64/NordurWidgetsBundle.swiftdeps"
+  },
+  "/Users/runner/work/nordur-ios/nordur-ios/Shared/Models/Trip.swift" : {
+    "const-values" : "/Users/runner/work/nordur-ios/nordur-ios/build/Nordur.build/Debug-iphonesimulator/NordurWidgets.build/Objects-normal/arm64/Trip.swiftconstvalues",
+    "dependencies" : "/Users/runner/work/nordur-ios/nordur-ios/build/Nordur.build/Debug-iphonesimulator/NordurWidgets.build/Objects-normal/arm64/Trip.d",
+    "diagnostics" : "/Users/runner/work/nordur-ios/nordur-ios/build/Nordur.build/Debug-iphonesimulator/NordurWidgets.build/Objects-normal/arm64/Trip.dia",
+    "object" : "/Users/runner/work/nordur-ios/nordur-ios/build/Nordur.build/Debug-iphonesimulator/NordurWidgets.build/Objects-normal/arm64/Trip.o",
+    "swift-dependencies" : "/Users/runner/work/nordur-ios/nordur-ios/build/Nordur.build/Debug-iphonesimulator/NordurWidgets.build/Objects-normal/arm64/Trip.swiftdeps"
+  },
+  "/Users/runner/work/nordur-ios/nordur-ios/Shared/Models/TripFile.swift" : {
+    "const-values" : "/Users/runner/work/nordur-ios/nordur-ios/build/Nordur.build/Debug-iphonesimulator/NordurWidgets.build/Objects-normal/arm64/TripFile.swiftconstvalues",
+    "dependencies" : "/Users/runner/work/nordur-ios/nordur-ios/build/Nordur.build/Debug-iphonesimulator/NordurWidgets.build/Objects-normal/arm64/TripFile.d",
+    "diagnostics" : "/Users/runner/work/nordur-ios/nordur-ios/build/Nordur.build/Debug-iphonesimulator/NordurWidgets.build/Objects-normal/arm64/TripFile.dia",
+    "object" : "/Users/runner/work/nordur-ios/nordur-ios/build/Nordur.build/Debug-iphonesimulator/NordurWidgets.build/Objects-normal/arm64/TripFile.o",
+    "swift-dependencies" : "/Users/runner/work/nordur-ios/nordur-ios/build/Nordur.build/Debug-iphonesimulator/NordurWidgets.build/Objects-normal/arm64/TripFile.swiftdeps"
+  },
+  "/Users/runner/work/nordur-ios/nordur-ios/Shared/Models/TripLegAlerts.swift" : {
+    "const-values" : "/Users/runner/work/nordur-ios/nordur-ios/build/Nordur.build/Debug-iphonesimulator/NordurWidgets.build/Objects-normal/arm64/TripLegAlerts.swiftconstvalues",
+    "dependencies" : "/Users/runner/work/nordur-ios/nordur-ios/build/Nordur.build/Debug-iphonesimulator/NordurWidgets.build/Objects-normal/arm64/TripLegAlerts.d",
+    "diagnostics" : "/Users/runner/work/nordur-ios/nordur-ios/build/Nordur.build/Debug-iphonesimulator/NordurWidgets.build/Objects-normal/arm64/TripLegAlerts.dia",
+    "object" : "/Users/runner/work/nordur-ios/nordur-ios/build/Nordur.build/Debug-iphonesimulator/NordurWidgets.build/Objects-normal/arm64/TripLegAlerts.o",
+    "swift-dependencies" : "/Users/runner/work/nordur-ios/nordur-ios/build/Nordur.build/Debug-iphonesimulator/NordurWidgets.build/Objects-normal/arm64/TripLegAlerts.swiftdeps"
+  },
+  "/Users/runner/work/nordur-ios/nordur-ios/Shared/Services/Astro.swift" : {
+    "const-values" : "/Users/runner/work/nordur-ios/nordur-ios/build/Nordur.build/Debug-iphonesimulator/NordurWidgets.build/Objects-normal/arm64/Astro.swiftconstvalues",
+    "dependencies" : "/Users/runner/work/nordur-ios/nordur-ios/build/Nordur.build/Debug-iphonesimulator/NordurWidgets.build/Objects-normal/arm64/Astro.d",
+    "diagnostics" : "/Users/runner/work/nordur-ios/nordur-ios/build/Nordur.build/Debug-iphonesimulator/NordurWidgets.build/Objects-normal/arm64/Astro.dia",
+    "object" : "/Users/runner/work/nordur-ios/nordur-ios/build/Nordur.build/Debug-iphonesimulator/NordurWidgets.build/Objects-normal/arm64/Astro.o",
+    "swift-dependencies" : "/Users/runner/work/nordur-ios/nordur-ios/build/Nordur.build/Debug-iphonesimulator/NordurWidgets.build/Objects-normal/arm64/Astro.swiftdeps"
+  },
+  "/Users/runner/work/nordur-ios/nordur-ios/Shared/Services/Aurora.swift" : {
+    "const-values" : "/Users/runner/work/nordur-ios/nordur-ios/build/Nordur.build/Debug-iphonesimulator/NordurWidgets.build/Objects-normal/arm64/Aurora.swiftconstvalues",
+    "dependencies" : "/Users/runner/work/nordur-ios/nordur-ios/build/Nordur.build/Debug-iphonesimulator/NordurWidgets.build/Objects-normal/arm64/Aurora.d",
+    "diagnostics" : "/Users/runner/work/nordur-ios/nordur-ios/build/Nordur.build/Debug-iphonesimulator/NordurWidgets.build/Objects-normal/arm64/Aurora.dia",
+    "object" : "/Users/runner/work/nordur-ios/nordur-ios/build/Nordur.build/Debug-iphonesimulator/NordurWidgets.build/Objects-normal/arm64/Aurora.o",
+    "swift-dependencies" : "/Users/runner/work/nordur-ios/nordur-ios/build/Nordur.build/Debug-iphonesimulator/NordurWidgets.build/Objects-normal/arm64/Aurora.swiftdeps"
+  },
+  "/Users/runner/work/nordur-ios/nordur-ios/Shared/Services/AuroraConfirm.swift" : {
+    "const-values" : "/Users/runner/work/nordur-ios/nordur-ios/build/Nordur.build/Debug-iphonesimulator/NordurWidgets.build/Objects-normal/arm64/AuroraConfirm.swiftconstvalues",
+    "dependencies" : "/Users/runner/work/nordur-ios/nordur-ios/build/Nordur.build/Debug-iphonesimulator/NordurWidgets.build/Objects-normal/arm64/AuroraConfirm.d",
+    "diagnostics" : "/Users/runner/work/nordur-ios/nordur-ios/build/Nordur.build/Debug-iphonesimulator/NordurWidgets.build/Objects-normal/arm64/AuroraConfirm.dia",
+    "object" : "/Users/runner/work/nordur-ios/nordur-ios/build/Nordur.build/Debug-iphonesimulator/NordurWidgets.build/Objects-normal/arm64/AuroraConfirm.o",
+    "swift-dependencies" : "/Users/runner/work/nordur-ios/nordur-ios/build/Nordur.build/Debug-iphonesimulator/NordurWidgets.build/Objects-normal/arm64/AuroraConfirm.swiftdeps"
+  },
+  "/Users/runner/work/nordur-ios/nordur-ios/Shared/Services/AuroraEngine.swift" : {
+    "const-values" : "/Users/runner/work/nordur-ios/nordur-ios/build/Nordur.build/Debug-iphonesimulator/NordurWidgets.build/Objects-normal/arm64/AuroraEngine.swiftconstvalues",
+    "dependencies" : "/Users/runner/work/nordur-ios/nordur-ios/build/Nordur.build/Debug-iphonesimulator/NordurWidgets.build/Objects-normal/arm64/AuroraEngine.d",
+    "diagnostics" : "/Users/runner/work/nordur-ios/nordur-ios/build/Nordur.build/Debug-iphonesimulator/NordurWidgets.build/Objects-normal/arm64/AuroraEngine.dia",
+    "object" : "/Users/runner/work/nordur-ios/nordur-ios/build/Nordur.build/Debug-iphonesimulator/NordurWidgets.build/Objects-normal/arm64/AuroraEngine.o",
+    "swift-dependencies" : "/Users/runner/work/nordur-ios/nordur-ios/build/Nordur.build/Debug-iphonesimulator/NordurWidgets.build/Objects-normal/arm64/AuroraEngine.swiftdeps"
+  },
+  "/Users/runner/work/nordur-ios/nordur-ios/Shared/Services/AuroraSites.swift" : {
+    "const-values" : "/Users/runner/work/nordur-ios/nordur-ios/build/Nordur.build/Debug-iphonesimulator/NordurWidgets.build/Objects-normal/arm64/AuroraSites.swiftconstvalues",
+    "dependencies" : "/Users/runner/work/nordur-ios/nordur-ios/build/Nordur.build/Debug-iphonesimulator/NordurWidgets.build/Objects-normal/arm64/AuroraSites.d",
+    "diagnostics" : "/Users/runner/work/nordur-ios/nordur-ios/build/Nordur.build/Debug-iphonesimulator/NordurWidgets.build/Objects-normal/arm64/AuroraSites.dia",
+    "object" : "/Users/runner/work/nordur-ios/nordur-ios/build/Nordur.build/Debug-iphonesimulator/NordurWidgets.build/Objects-normal/arm64/AuroraSites.o",
+    "swift-dependencies" : "/Users/runner/work/nordur-ios/nordur-ios/build/Nordur.build/Debug-iphonesimulator/NordurWidgets.build/Objects-normal/arm64/AuroraSites.swiftdeps"
+  },
+  "/Users/runner/work/nordur-ios/nordur-ios/Shared/Services/AuroraState.swift" : {
+    "const-values" : "/Users/runner/work/nordur-ios/nordur-ios/build/Nordur.build/Debug-iphonesimulator/NordurWidgets.build/Objects-normal/arm64/AuroraState.swiftconstvalues",
+    "dependencies" : "/Users/runner/work/nordur-ios/nordur-ios/build/Nordur.build/Debug-iphonesimulator/NordurWidgets.build/Objects-normal/arm64/AuroraState.d",
+    "diagnostics" : "/Users/runner/work/nordur-ios/nordur-ios/build/Nordur.build/Debug-iphonesimulator/NordurWidgets.build/Objects-normal/arm64/AuroraState.dia",
+    "object" : "/Users/runner/work/nordur-ios/nordur-ios/build/Nordur.build/Debug-iphonesimulator/NordurWidgets.build/Objects-normal/arm64/AuroraState.o",
+    "swift-dependencies" : "/Users/runner/work/nordur-ios/nordur-ios/build/Nordur.build/Debug-iphonesimulator/NordurWidgets.build/Objects-normal/arm64/AuroraState.swiftdeps"
+  },
+  "/Users/runner/work/nordur-ios/nordur-ios/Shared/Services/AuroraVerdict.swift" : {
+    "const-values" : "/Users/runner/work/nordur-ios/nordur-ios/build/Nordur.build/Debug-iphonesimulator/NordurWidgets.build/Objects-normal/arm64/AuroraVerdict.swiftconstvalues",
+    "dependencies" : "/Users/runner/work/nordur-ios/nordur-ios/build/Nordur.build/Debug-iphonesimulator/NordurWidgets.build/Objects-normal/arm64/AuroraVerdict.d",
+    "diagnostics" : "/Users/runner/work/nordur-ios/nordur-ios/build/Nordur.build/Debug-iphonesimulator/NordurWidgets.build/Objects-normal/arm64/AuroraVerdict.dia",
+    "object" : "/Users/runner/work/nordur-ios/nordur-ios/build/Nordur.build/Debug-iphonesimulator/NordurWidgets.build/Objects-normal/arm64/AuroraVerdict.o",
+    "swift-dependencies" : "/Users/runner/work/nordur-ios/nordur-ios/build/Nordur.build/Debug-iphonesimulator/NordurWidgets.build/Objects-normal/arm64/AuroraVerdict.swiftdeps"
+  },
+  "/Users/runner/work/nordur-ios/nordur-ios/Shared/Services/FuelPrices.swift" : {
+    "const-values" : "/Users/runner/work/nordur-ios/nordur-ios/build/Nordur.build/Debug-iphonesimulator/NordurWidgets.build/Objects-normal/arm64/FuelPrices.swiftconstvalues",
+    "dependencies" : "/Users/runner/work/nordur-ios/nordur-ios/build/Nordur.build/Debug-iphonesimulator/NordurWidgets.build/Objects-normal/arm64/FuelPrices.d",
+    "diagnostics" : "/Users/runner/work/nordur-ios/nordur-ios/build/Nordur.build/Debug-iphonesimulator/NordurWidgets.build/Objects-normal/arm64/FuelPrices.dia",
+    "object" : "/Users/runner/work/nordur-ios/nordur-ios/build/Nordur.build/Debug-iphonesimulator/NordurWidgets.build/Objects-normal/arm64/FuelPrices.o",
+    "swift-dependencies" : "/Users/runner/work/nordur-ios/nordur-ios/build/Nordur.build/Debug-iphonesimulator/NordurWidgets.build/Objects-normal/arm64/FuelPrices.swiftdeps"
+  }
+}

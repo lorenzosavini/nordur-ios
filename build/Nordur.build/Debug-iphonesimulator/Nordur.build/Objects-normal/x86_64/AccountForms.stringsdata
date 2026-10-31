@@ -1,0 +1,512 @@
+{
+  "source": "/Users/runner/work/nordur-ios/nordur-ios/Nordur/Views/AccountForms.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Recupera",
+        "location": {
+          "startingColumn": 47,
+          "startingLine": 11
+        }
+      },
+      {
+        "comment": "",
+        "key": "Password",
+        "location": {
+          "startingColumn": 48,
+          "startingLine": 12
+        }
+      },
+      {
+        "comment": "",
+        "key": "Codice",
+        "location": {
+          "startingColumn": 50,
+          "startingLine": 13
+        }
+      },
+      {
+        "comment": "",
+        "key": "Elimina",
+        "location": {
+          "startingColumn": 48,
+          "startingLine": 14
+        }
+      },
+      {
+        "comment": "",
+        "key": "Password dimenticata",
+        "location": {
+          "startingColumn": 47,
+          "startingLine": 20
+        }
+      },
+      {
+        "comment": "",
+        "key": "Cambia password",
+        "location": {
+          "startingColumn": 48,
+          "startingLine": 21
+        }
+      },
+      {
+        "comment": "",
+        "key": "Nuovo codice di recupero",
+        "location": {
+          "startingColumn": 50,
+          "startingLine": 22
+        }
+      },
+      {
+        "comment": "",
+        "key": "Elimina account",
+        "location": {
+          "startingColumn": 48,
+          "startingLine": 23
+        }
+      },
+      {
+        "comment": "",
+        "key": "EMAIL",
+        "location": {
+          "startingColumn": 49,
+          "startingLine": 50
+        }
+      },
+      {
+        "comment": "",
+        "key": "Il codice di recupero ti è stato mostrato quando hai creato l'account. Dopo l'uso ne riceverai uno nuovo.",
+        "location": {
+          "startingColumn": 59,
+          "startingLine": 52
+        }
+      },
+      {
+        "comment": "",
+        "key": "CODICE DI RECUPERO",
+        "location": {
+          "startingColumn": 53,
+          "startingLine": 53
+        }
+      },
+      {
+        "comment": "",
+        "key": "NUOVA PASSWORD",
+        "location": {
+          "startingColumn": 53,
+          "startingLine": 54
+        }
+      },
+      {
+        "comment": "",
+        "key": "IMPOSTA LA NUOVA PASSWORD",
+        "location": {
+          "startingColumn": 55,
+          "startingLine": 55
+        }
+      },
+      {
+        "comment": "",
+        "key": "Ti mandiamo per email un codice di 6 cifre, valido 15 minuti.",
+        "location": {
+          "startingColumn": 59,
+          "startingLine": 60
+        }
+      },
+      {
+        "comment": "",
+        "key": "INVIA IL CODICE",
+        "location": {
+          "startingColumn": 55,
+          "startingLine": 61
+        }
+      },
+      {
+        "comment": "",
+        "key": "CODICE DALL'EMAIL",
+        "location": {
+          "startingColumn": 53,
+          "startingLine": 68
+        }
+      },
+      {
+        "comment": "",
+        "key": "NUOVA PASSWORD",
+        "location": {
+          "startingColumn": 53,
+          "startingLine": 72
+        }
+      },
+      {
+        "comment": "",
+        "key": "IMPOSTA LA NUOVA PASSWORD",
+        "location": {
+          "startingColumn": 55,
+          "startingLine": 73
+        }
+      },
+      {
+        "comment": "",
+        "key": "INVIA UN NUOVO CODICE",
+        "location": {
+          "startingColumn": 57,
+          "startingLine": 77
+        }
+      },
+      {
+        "comment": "",
+        "key": "USA IL CODICE VIA EMAIL",
+        "location": {
+          "startingColumn": 71,
+          "startingLine": 82
+        }
+      },
+      {
+        "comment": "",
+        "key": "HO IL CODICE DI RECUPERO",
+        "location": {
+          "startingColumn": 118,
+          "startingLine": 82
+        }
+      },
+      {
+        "comment": "",
+        "key": "PASSWORD ATTUALE",
+        "location": {
+          "startingColumn": 49,
+          "startingLine": 88
+        }
+      },
+      {
+        "comment": "",
+        "key": "NUOVA PASSWORD",
+        "location": {
+          "startingColumn": 49,
+          "startingLine": 89
+        }
+      },
+      {
+        "comment": "",
+        "key": "CAMBIA PASSWORD",
+        "location": {
+          "startingColumn": 51,
+          "startingLine": 90
+        }
+      },
+      {
+        "comment": "",
+        "key": "Il nuovo codice sostituisce quello precedente, che smette di funzionare.",
+        "location": {
+          "startingColumn": 55,
+          "startingLine": 95
+        }
+      },
+      {
+        "comment": "",
+        "key": "PASSWORD",
+        "location": {
+          "startingColumn": 49,
+          "startingLine": 96
+        }
+      },
+      {
+        "comment": "",
+        "key": "GENERA NUOVO CODICE",
+        "location": {
+          "startingColumn": 51,
+          "startingLine": 97
+        }
+      },
+      {
+        "comment": "",
+        "key": "L'account, il backup online e i tuoi avvistamenti vengono eliminati in modo definitivo. I dati sul telefono restano. Scrivi ELIMINA per confermare.",
+        "location": {
+          "startingColumn": 55,
+          "startingLine": 102
+        }
+      },
+      {
+        "comment": "",
+        "key": "PASSWORD",
+        "location": {
+          "startingColumn": 49,
+          "startingLine": 103
+        }
+      },
+      {
+        "comment": "",
+        "key": "CONFERMA",
+        "location": {
+          "startingColumn": 49,
+          "startingLine": 104
+        }
+      },
+      {
+        "comment": "",
+        "key": "ELIMINA ACCOUNT",
+        "location": {
+          "startingColumn": 51,
+          "startingLine": 105
+        }
+      },
+      {
+        "comment": "",
+        "key": "",
+        "location": {
+          "startingColumn": 71,
+          "startingLine": 50
+        }
+      },
+      {
+        "comment": "",
+        "key": "XXXX-XXXX-XXXX-XXXX",
+        "location": {
+          "startingColumn": 118,
+          "startingLine": 53
+        }
+      },
+      {
+        "comment": "",
+        "key": "",
+        "location": {
+          "startingColumn": 88,
+          "startingLine": 53
+        }
+      },
+      {
+        "comment": "",
+        "key": "Almeno 8 caratteri",
+        "location": {
+          "startingColumn": 115,
+          "startingLine": 54
+        }
+      },
+      {
+        "comment": "",
+        "key": "",
+        "location": {
+          "startingColumn": 86,
+          "startingLine": 54
+        }
+      },
+      {
+        "comment": "",
+        "key": "Password aggiornata, accesso eseguito.",
+        "location": {
+          "startingColumn": 58,
+          "startingLine": 57
+        }
+      },
+      {
+        "comment": "",
+        "key": "Se esiste un account con questa email, il codice è in arrivo. Controlla anche la posta indesiderata.",
+        "location": {
+          "startingColumn": 58,
+          "startingLine": 65
+        }
+      },
+      {
+        "comment": "",
+        "key": "000000",
+        "location": {
+          "startingColumn": 73,
+          "startingLine": 69
+        }
+      },
+      {
+        "comment": "",
+        "key": "",
+        "location": {
+          "startingColumn": 43,
+          "startingLine": 69
+        }
+      },
+      {
+        "comment": "",
+        "key": "Almeno 8 caratteri",
+        "location": {
+          "startingColumn": 115,
+          "startingLine": 72
+        }
+      },
+      {
+        "comment": "",
+        "key": "",
+        "location": {
+          "startingColumn": 86,
+          "startingLine": 72
+        }
+      },
+      {
+        "comment": "",
+        "key": "Password aggiornata, accesso eseguito.",
+        "location": {
+          "startingColumn": 58,
+          "startingLine": 75
+        }
+      },
+      {
+        "comment": "",
+        "key": "Nuovo codice inviato.",
+        "location": {
+          "startingColumn": 58,
+          "startingLine": 79
+        }
+      },
+      {
+        "comment": "",
+        "key": "",
+        "location": {
+          "startingColumn": 84,
+          "startingLine": 88
+        }
+      },
+      {
+        "comment": "",
+        "key": "Almeno 8 caratteri",
+        "location": {
+          "startingColumn": 111,
+          "startingLine": 89
+        }
+      },
+      {
+        "comment": "",
+        "key": "",
+        "location": {
+          "startingColumn": 82,
+          "startingLine": 89
+        }
+      },
+      {
+        "comment": "",
+        "key": "Password cambiata.",
+        "location": {
+          "startingColumn": 54,
+          "startingLine": 92
+        }
+      },
+      {
+        "comment": "",
+        "key": "",
+        "location": {
+          "startingColumn": 76,
+          "startingLine": 96
+        }
+      },
+      {
+        "comment": "",
+        "key": "",
+        "location": {
+          "startingColumn": 76,
+          "startingLine": 103
+        }
+      },
+      {
+        "comment": "",
+        "key": "ELIMINA",
+        "location": {
+          "startingColumn": 111,
+          "startingLine": 104
+        }
+      },
+      {
+        "comment": "",
+        "key": "",
+        "location": {
+          "startingColumn": 74,
+          "startingLine": 104
+        }
+      },
+      {
+        "comment": "",
+        "key": "ELIMINA",
+        "location": {
+          "startingColumn": 133,
+          "startingLine": 105
+        }
+      },
+      {
+        "comment": "",
+        "key": "Account eliminato.",
+        "location": {
+          "startingColumn": 54,
+          "startingLine": 107
+        }
+      },
+      {
+        "comment": "",
+        "key": "Chiudi",
+        "location": {
+          "startingColumn": 77,
+          "startingLine": 115
+        }
+      },
+      {
+        "comment": "",
+        "key": "→",
+        "location": {
+          "startingColumn": 80,
+          "startingLine": 177
+        }
+      },
+      {
+        "comment": "",
+        "key": "Codice",
+        "location": {
+          "startingColumn": 51,
+          "startingLine": 198
+        }
+      },
+      {
+        "comment": "",
+        "key": "Codice di recupero",
+        "location": {
+          "startingColumn": 90,
+          "startingLine": 198
+        }
+      },
+      {
+        "comment": "",
+        "key": "Conservalo in un posto sicuro (ad esempio in un gestore di password). Serve a reimpostare la password se l'email con il codice non ti arriva; Norður non può recuperarlo.",
+        "location": {
+          "startingColumn": 18,
+          "startingLine": 199
+        }
+      },
+      {
+        "comment": "",
+        "key": "COPIATO",
+        "location": {
+          "startingColumn": 49,
+          "startingLine": 213
+        }
+      },
+      {
+        "comment": "",
+        "key": "COPIA",
+        "location": {
+          "startingColumn": 80,
+          "startingLine": 213
+        }
+      },
+      {
+        "comment": "",
+        "key": "L'HO SALVATO",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 220
+        }
+      },
+      {
+        "comment": "",
+        "key": "→",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 222
+        }
+      }
+    ]
+  },
+  "version": 1
+}

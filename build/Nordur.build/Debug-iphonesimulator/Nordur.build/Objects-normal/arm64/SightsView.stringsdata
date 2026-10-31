@@ -1,0 +1,200 @@
+{
+  "source": "/Users/runner/work/nordur-ios/nordur-ios/Nordur/Views/SightsView.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Cascata, grotta, nome…",
+        "location": {
+          "startingColumn": 61,
+          "startingLine": 95
+        }
+      },
+      {
+        "comment": "",
+        "key": "Da vedere",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 93
+        }
+      },
+      {
+        "comment": "",
+        "key": "Chiudi",
+        "location": {
+          "startingColumn": 88,
+          "startingLine": 22
+        }
+      },
+      {
+        "comment": "",
+        "key": "Da vedere vicino a %@",
+        "location": {
+          "startingColumn": 69,
+          "startingLine": 44
+        }
+      },
+      {
+        "comment": "",
+        "key": "Solo i più famosi",
+        "location": {
+          "startingColumn": 24,
+          "startingLine": 66
+        }
+      },
+      {
+        "comment": "",
+        "key": "Tutto",
+        "location": {
+          "startingColumn": 48,
+          "startingLine": 60
+        }
+      },
+      {
+        "comment": "",
+        "key": "Niente da mostrare",
+        "location": {
+          "startingColumn": 79,
+          "startingLine": 70
+        }
+      },
+      {
+        "comment": "",
+        "key": "Prova a togliere i filtri.",
+        "location": {
+          "startingColumn": 59,
+          "startingLine": 71
+        }
+      },
+      {
+        "comment": "",
+        "key": "%lld luoghi entro %lld km",
+        "location": {
+          "startingColumn": 40,
+          "startingLine": 80
+        }
+      },
+      {
+        "comment": "",
+        "key": "TOP: i luoghi principali scelti dall'app, con tempi di visita e avvertenze. Gli altri vengono da OpenStreetMap (cascate, belvedere, sorgenti calde, grotte, musei, piscine…).",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 83
+        }
+      },
+      {
+        "comment": "",
+        "key": "OpenStreetMap non ancora scaricato: %@",
+        "location": {
+          "startingColumn": 48,
+          "startingLine": 85
+        }
+      },
+      {
+        "comment": "",
+        "key": "OpenStreetMap",
+        "location": {
+          "startingColumn": 110,
+          "startingLine": 87
+        }
+      },
+      {
+        "comment": "",
+        "key": "%@ · ~%@",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 178
+        }
+      },
+      {
+        "comment": "",
+        "key": "TOP",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 170
+        }
+      },
+      {
+        "comment": "",
+        "key": "%@ km",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 175
+        }
+      },
+      {
+        "comment": "",
+        "key": "Da vedere",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 254
+        }
+      },
+      {
+        "comment": "",
+        "key": "%lld km in linea d'aria da %@ · visita ~%@",
+        "location": {
+          "startingColumn": 49,
+          "startingLine": 212
+        }
+      },
+      {
+        "comment": "",
+        "key": "Aggiungi una tappa al viaggio per mettere questo luogo nel programma.",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 227
+        }
+      },
+      {
+        "comment": "",
+        "key": "Aggiunto a %@: trovi giorno e ora nella tappa",
+        "location": {
+          "startingColumn": 53,
+          "startingLine": 244
+        }
+      },
+      {
+        "comment": "",
+        "key": "%@ · %@ · %lld km",
+        "location": {
+          "startingColumn": 40,
+          "startingLine": 231
+        }
+      },
+      {
+        "comment": "",
+        "key": "Aggiungi al viaggio",
+        "location": {
+          "startingColumn": 53,
+          "startingLine": 236
+        }
+      },
+      {
+        "comment": "",
+        "key": "Aggiungi alla tappa più vicina: %@",
+        "location": {
+          "startingColumn": 57,
+          "startingLine": 240
+        }
+      },
+      {
+        "comment": "",
+        "key": "Viaggio",
+        "location": {
+          "startingColumn": 34,
+          "startingLine": 248
+        }
+      },
+      {
+        "comment": "",
+        "key": "Chiudi",
+        "location": {
+          "startingColumn": 77,
+          "startingLine": 256
+        }
+      }
+    ]
+  },
+  "version": 1
+}

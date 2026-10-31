@@ -1,0 +1,200 @@
+{
+  "source": "/Users/runner/work/nordur-ios/nordur-ios/Shared/Services/Weather.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Sereno",
+        "location": {
+          "startingColumn": 44,
+          "startingLine": 441
+        }
+      },
+      {
+        "comment": "",
+        "key": "Poco nuvoloso",
+        "location": {
+          "startingColumn": 90,
+          "startingLine": 441
+        }
+      },
+      {
+        "comment": "",
+        "key": "Nuvoloso",
+        "location": {
+          "startingColumn": 136,
+          "startingLine": 441
+        }
+      },
+      {
+        "comment": "",
+        "key": "Coperto",
+        "location": {
+          "startingColumn": 179,
+          "startingLine": 441
+        }
+      },
+      {
+        "comment": "",
+        "key": "Pioggia debole",
+        "location": {
+          "startingColumn": 45,
+          "startingLine": 442
+        }
+      },
+      {
+        "comment": "",
+        "key": "Pioggia",
+        "location": {
+          "startingColumn": 90,
+          "startingLine": 442
+        }
+      },
+      {
+        "comment": "",
+        "key": "Pioggia forte",
+        "location": {
+          "startingColumn": 134,
+          "startingLine": 442
+        }
+      },
+      {
+        "comment": "",
+        "key": "Pioviggine",
+        "location": {
+          "startingColumn": 181,
+          "startingLine": 442
+        }
+      },
+      {
+        "comment": "",
+        "key": "Nevischio debole",
+        "location": {
+          "startingColumn": 46,
+          "startingLine": 443
+        }
+      },
+      {
+        "comment": "",
+        "key": "Nevischio",
+        "location": {
+          "startingColumn": 94,
+          "startingLine": 443
+        }
+      },
+      {
+        "comment": "",
+        "key": "Neve debole",
+        "location": {
+          "startingColumn": 140,
+          "startingLine": 443
+        }
+      },
+      {
+        "comment": "",
+        "key": "Neve",
+        "location": {
+          "startingColumn": 182,
+          "startingLine": 443
+        }
+      },
+      {
+        "comment": "",
+        "key": "Neve forte",
+        "location": {
+          "startingColumn": 45,
+          "startingLine": 444
+        }
+      },
+      {
+        "comment": "",
+        "key": "Rovesci",
+        "location": {
+          "startingColumn": 94,
+          "startingLine": 444
+        }
+      },
+      {
+        "comment": "",
+        "key": "Rovesci deboli",
+        "location": {
+          "startingColumn": 146,
+          "startingLine": 444
+        }
+      },
+      {
+        "comment": "",
+        "key": "Rovesci di nevischio",
+        "location": {
+          "startingColumn": 48,
+          "startingLine": 445
+        }
+      },
+      {
+        "comment": "",
+        "key": "Rovesci di neve",
+        "location": {
+          "startingColumn": 107,
+          "startingLine": 445
+        }
+      },
+      {
+        "comment": "",
+        "key": "Rovesci di neve deboli",
+        "location": {
+          "startingColumn": 167,
+          "startingLine": 445
+        }
+      },
+      {
+        "comment": "",
+        "key": "Nebbia",
+        "location": {
+          "startingColumn": 38,
+          "startingLine": 446
+        }
+      },
+      {
+        "comment": "",
+        "key": "Polvere",
+        "location": {
+          "startingColumn": 75,
+          "startingLine": 446
+        }
+      },
+      {
+        "comment": "",
+        "key": "Temporale",
+        "location": {
+          "startingColumn": 116,
+          "startingLine": 446
+        }
+      },
+      {
+        "comment": "",
+        "key": "Pioggia gelata",
+        "location": {
+          "startingColumn": 165,
+          "startingLine": 446
+        }
+      },
+      {
+        "comment": "",
+        "key": "Pioviggine debole",
+        "location": {
+          "startingColumn": 48,
+          "startingLine": 447
+        }
+      },
+      {
+        "comment": "",
+        "key": "Pioviggine gelata",
+        "location": {
+          "startingColumn": 108,
+          "startingLine": 447
+        }
+      }
+    ]
+  },
+  "version": 1
+}

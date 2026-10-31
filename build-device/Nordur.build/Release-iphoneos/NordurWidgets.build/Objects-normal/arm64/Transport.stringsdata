@@ -1,0 +1,96 @@
+{
+  "source": "/Users/runner/work/nordur-ios/nordur-ios/Shared/Services/Transport.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Partito%@",
+        "location": {
+          "startingColumn": 54,
+          "startingLine": 27
+        }
+      },
+      {
+        "comment": "",
+        "key": "Atterrato · bagagli al nastro %@",
+        "location": {
+          "startingColumn": 47,
+          "startingLine": 28
+        }
+      },
+      {
+        "comment": "",
+        "key": "Atterrato%@",
+        "location": {
+          "startingColumn": 61,
+          "startingLine": 29
+        }
+      },
+      {
+        "comment": "",
+        "key": "Previsto%@",
+        "location": {
+          "startingColumn": 47,
+          "startingLine": 30
+        }
+      },
+      {
+        "comment": "",
+        "key": "Imbarco in corso",
+        "location": {
+          "startingColumn": 54,
+          "startingLine": 31
+        }
+      },
+      {
+        "comment": "",
+        "key": "Gate aperto",
+        "location": {
+          "startingColumn": 47,
+          "startingLine": 32
+        }
+      },
+      {
+        "comment": "",
+        "key": "Gate chiuso",
+        "location": {
+          "startingColumn": 54,
+          "startingLine": 33
+        }
+      },
+      {
+        "comment": "",
+        "key": "In ritardo%@",
+        "location": {
+          "startingColumn": 54,
+          "startingLine": 34
+        }
+      },
+      {
+        "comment": "",
+        "key": "Cancellato",
+        "location": {
+          "startingColumn": 61,
+          "startingLine": 35
+        }
+      },
+      {
+        "comment": "",
+        "key": "Dirottato",
+        "location": {
+          "startingColumn": 47,
+          "startingLine": 36
+        }
+      },
+      {
+        "comment": "",
+        "key": "In orario",
+        "location": {
+          "startingColumn": 57,
+          "startingLine": 37
+        }
+      }
+    ]
+  },
+  "version": 1
+}

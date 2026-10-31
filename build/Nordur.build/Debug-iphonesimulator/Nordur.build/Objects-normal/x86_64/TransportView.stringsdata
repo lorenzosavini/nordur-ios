@@ -1,0 +1,216 @@
+{
+  "source": "/Users/runner/work/nordur-ios/nordur-ios/Nordur/Views/TransportView.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Volo, città o compagnia",
+        "location": {
+          "startingColumn": 61,
+          "startingLine": 91
+        }
+      },
+      {
+        "comment": "",
+        "key": "Voli e traghetti",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 90
+        }
+      },
+      {
+        "comment": "",
+        "key": "Voli KEF e traghetto Herjólfur",
+        "location": {
+          "startingColumn": 67,
+          "startingLine": 31
+        }
+      },
+      {
+        "comment": "",
+        "key": "Herjólfur – orari e prenotazioni",
+        "location": {
+          "startingColumn": 50,
+          "startingLine": 54
+        }
+      },
+      {
+        "comment": "",
+        "key": "Landeyjahöfn / Þorlákshöfn ↔ Vestmannaeyjar",
+        "location": {
+          "startingColumn": 118,
+          "startingLine": 54
+        }
+      },
+      {
+        "comment": "",
+        "key": "Baldur (Sæferðir)",
+        "location": {
+          "startingColumn": 50,
+          "startingLine": 55
+        }
+      },
+      {
+        "comment": "",
+        "key": "Stykkishólmur – Flatey – Brjánslækur",
+        "location": {
+          "startingColumn": 102,
+          "startingLine": 55
+        }
+      },
+      {
+        "comment": "",
+        "key": "Smyril Line",
+        "location": {
+          "startingColumn": 50,
+          "startingLine": 56
+        }
+      },
+      {
+        "comment": "",
+        "key": "Seyðisfjörður – Fær Øer – Danimarca",
+        "location": {
+          "startingColumn": 94,
+          "startingLine": 56
+        }
+      },
+      {
+        "comment": "",
+        "key": "Herjólfur: nessun avviso, orario regolare",
+        "location": {
+          "startingColumn": 31,
+          "startingLine": 43
+        }
+      },
+      {
+        "comment": "",
+        "key": "Avvisami se cambia l'avviso Herjólfur",
+        "location": {
+          "startingColumn": 24,
+          "startingLine": 46
+        }
+      },
+      {
+        "comment": "",
+        "key": "Herjólfur – Vestmannaeyjar",
+        "location": {
+          "startingColumn": 35,
+          "startingLine": 38
+        }
+      },
+      {
+        "comment": "",
+        "key": "Traghetti",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 58
+        }
+      },
+      {
+        "comment": "",
+        "key": "Direzione",
+        "location": {
+          "startingColumn": 24,
+          "startingLine": 62
+        }
+      },
+      {
+        "comment": "",
+        "key": "Mostra anche i voli già passati",
+        "location": {
+          "startingColumn": 24,
+          "startingLine": 66
+        }
+      },
+      {
+        "comment": "",
+        "key": "Aeroporto di Keflavík (oggi)",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 78
+        }
+      },
+      {
+        "comment": "",
+        "key": "Con la stella ricevi una notifica a ogni cambio di stato, orario o gate.",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 80
+        }
+      },
+      {
+        "comment": "",
+        "key": "Voli interni (Reykjavík RKV, Akureyri…)",
+        "location": {
+          "startingColumn": 50,
+          "startingLine": 84
+        }
+      },
+      {
+        "comment": "",
+        "key": "Isavia",
+        "location": {
+          "startingColumn": 125,
+          "startingLine": 84
+        }
+      },
+      {
+        "comment": "",
+        "key": "Flybus / Airport Direct",
+        "location": {
+          "startingColumn": 50,
+          "startingLine": 85
+        }
+      },
+      {
+        "comment": "",
+        "key": "Navette KEF ↔ Reykjavík",
+        "location": {
+          "startingColumn": 106,
+          "startingLine": 85
+        }
+      },
+      {
+        "comment": "",
+        "key": "Strætó",
+        "location": {
+          "startingColumn": 50,
+          "startingLine": 86
+        }
+      },
+      {
+        "comment": "",
+        "key": "Bus urbani e di lunga distanza",
+        "location": {
+          "startingColumn": 91,
+          "startingLine": 86
+        }
+      },
+      {
+        "comment": "",
+        "key": "Altri collegamenti",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 87
+        }
+      },
+      {
+        "comment": "",
+        "key": "%@ %@ (%@)",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 111
+        }
+      },
+      {
+        "comment": "",
+        "key": "Gate %@",
+        "location": {
+          "startingColumn": 86,
+          "startingLine": 114
+        }
+      }
+    ]
+  },
+  "version": 1
+}

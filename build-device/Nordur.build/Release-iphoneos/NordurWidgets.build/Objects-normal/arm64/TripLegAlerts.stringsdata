@@ -1,0 +1,208 @@
+{
+  "source": "/Users/runner/work/nordur-ios/nordur-ios/Shared/Models/TripLegAlerts.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Vento sul viaggio %@, %@",
+        "location": {
+          "startingColumn": 46,
+          "startingLine": 78
+        }
+      },
+      {
+        "comment": "",
+        "key": "Raffiche previste fino a %@ verso le %@ lungo il percorso. %@",
+        "location": {
+          "startingColumn": 45,
+          "startingLine": 79
+        }
+      },
+      {
+        "comment": "",
+        "key": "Meteo sul viaggio %@, %@: %@",
+        "location": {
+          "startingColumn": 46,
+          "startingLine": 86
+        }
+      },
+      {
+        "comment": "",
+        "key": "%@ sul percorso %@: %@",
+        "location": {
+          "startingColumn": 50,
+          "startingLine": 105
+        }
+      },
+      {
+        "comment": "",
+        "key": "Viaggio di %@. Aggiornato %@. Fonte: Vegagerðin (umferdin.is), informazioni 1777.",
+        "location": {
+          "startingColumn": 49,
+          "startingLine": 106
+        }
+      },
+      {
+        "comment": "",
+        "key": "Raffiche di %@ adesso sul percorso di oggi",
+        "location": {
+          "startingColumn": 50,
+          "startingLine": 119
+        }
+      },
+      {
+        "comment": "",
+        "key": "Stazione %@, sul viaggio %@. Vento medio %@ %@. %@",
+        "location": {
+          "startingColumn": 49,
+          "startingLine": 120
+        }
+      },
+      {
+        "comment": "",
+        "key": "Nelle prossime ore a %@: %@",
+        "location": {
+          "startingColumn": 42,
+          "startingLine": 132
+        }
+      },
+      {
+        "comment": "",
+        "key": "Raffiche fino a %@ nelle prossime ore a %@",
+        "location": {
+          "startingColumn": 42,
+          "startingLine": 140
+        }
+      },
+      {
+        "comment": "",
+        "key": "Previste verso le %@. %@",
+        "location": {
+          "startingColumn": 41,
+          "startingLine": 141
+        }
+      },
+      {
+        "comment": "",
+        "key": "pioggia forte",
+        "location": {
+          "startingColumn": 44,
+          "startingLine": 211
+        }
+      },
+      {
+        "comment": "",
+        "key": "Fino a %@ mm/h verso le %@, %lld mm in tutto.",
+        "location": {
+          "startingColumn": 46,
+          "startingLine": 212
+        }
+      },
+      {
+        "comment": "",
+        "key": "neve",
+        "location": {
+          "startingColumn": 44,
+          "startingLine": 217
+        }
+      },
+      {
+        "comment": "",
+        "key": "Circa %lld cm di neve fresca.",
+        "location": {
+          "startingColumn": 46,
+          "startingLine": 218
+        }
+      },
+      {
+        "comment": "",
+        "key": "rischio ghiaccio",
+        "location": {
+          "startingColumn": 44,
+          "startingLine": 223
+        }
+      },
+      {
+        "comment": "",
+        "key": "Pioggia con temperature intorno a 0 °C dalle %@: strade e passerelle possono gelare.",
+        "location": {
+          "startingColumn": 46,
+          "startingLine": 224
+        }
+      },
+      {
+        "comment": "",
+        "key": " Previsione lungo il percorso, verifica su vedur.is e umferdin.is.",
+        "location": {
+          "startingColumn": 104,
+          "startingLine": 229
+        }
+      },
+      {
+        "comment": "",
+        "key": "Raffiche fino a %@ verso le %@",
+        "location": {
+          "startingColumn": 48,
+          "startingLine": 161
+        }
+      },
+      {
+        "comment": "",
+        "key": "Vento debole o moderato",
+        "location": {
+          "startingColumn": 48,
+          "startingLine": 164
+        }
+      },
+      {
+        "comment": "",
+        "key": "Nessuna strada chiusa sul percorso",
+        "location": {
+          "startingColumn": 52,
+          "startingLine": 179
+        }
+      },
+      {
+        "comment": "",
+        "key": "Strade chiuse o pericolose sul percorso: %@",
+        "location": {
+          "startingColumn": 52,
+          "startingLine": 181
+        }
+      },
+      {
+        "comment": "",
+        "key": "%@: %@",
+        "location": {
+          "startingColumn": 44,
+          "startingLine": 192
+        }
+      },
+      {
+        "comment": "",
+        "key": "Stanotte aurora: condizioni %@ verso le %@",
+        "location": {
+          "startingColumn": 44,
+          "startingLine": 196
+        }
+      },
+      {
+        "comment": "",
+        "key": "Riepilogo di domani: %@",
+        "location": {
+          "startingColumn": 49,
+          "startingLine": 198
+        }
+      },
+      {
+        "comment": "",
+        "key": "Riepilogo di domani: %@",
+        "location": {
+          "startingColumn": 108,
+          "startingLine": 198
+        }
+      }
+    ]
+  },
+  "version": 1
+}

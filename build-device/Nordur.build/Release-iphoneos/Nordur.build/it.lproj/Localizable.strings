@@ -1,0 +1,342 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>%@ RAFFICHE</key>
+	<string>%@ RAFFICHE</string>
+	<key>%@ verso le %@</key>
+	<string>%@ verso le %@</string>
+	<key>%@ · PERICOLO</key>
+	<string>%@ · PERICOLO</string>
+	<key>%@ · Wikimedia Commons</key>
+	<string>%@ · Wikimedia Commons</string>
+	<key>%@ · vento %@, raffiche %@</key>
+	<string>%@ · vento %@, raffiche %@</string>
+	<key>%@: per ora solo in Islanda, per la tua zona non ci sono dati. Meteo, mare, qualità dell'aria e aurora restano attivi.</key>
+	<string>%@: per ora solo in Islanda, per la tua zona non ci sono dati. Meteo, mare, qualità dell'aria e aurora restano attivi.</string>
+	<key>%@: per ora solo in Islanda. Qui sotto vedi i dati dell'Islanda, non della tua zona.</key>
+	<string>%@: per ora solo in Islanda. Qui sotto vedi i dati dell'Islanda, non della tua zona.</string>
+	<key>%lld avvistamenti entro %lld km negli ultimi %lld min (%lld a occhio nudo).</key>
+	<string>%lld avvistamenti entro %lld km negli ultimi %lld min (%lld a occhio nudo).</string>
+	<key>%lld km da %@</key>
+	<string>%lld km da %@</string>
+	<key>%lld km in linea d'aria da %@</key>
+	<string>%lld km in linea d'aria da %@</string>
+	<key>%lld osservatori con cielo sereno non la vedono.</key>
+	<string>%lld osservatori con cielo sereno non la vedono.</string>
+	<key>%lld scosse nelle ultime 24 h</key>
+	<string>%lld scosse nelle ultime 24 h</string>
+	<key>%lld scosse nelle ultime 24 ore</key>
+	<string>%lld scosse nelle ultime 24 ore</string>
+	<key>%lld tratti chiusi · %lld difficili</key>
+	<string>%lld tratti chiusi · %lld difficili</string>
+	<key>%lld tratti · ordinati per distanza da %@</key>
+	<string>%lld tratti · ordinati per distanza da %@</string>
+	<key>A occhio nudo</key>
+	<string>A occhio nudo</string>
+	<key>AGGIUNGI TAPPA</key>
+	<string>AGGIUNGI TAPPA</string>
+	<key>AURORA VISTA</key>
+	<string>AURORA VISTA</string>
+	<key>Accedi o crea un account</key>
+	<string>Accedi o crea un account</string>
+	<key>Allerta IMO completa</key>
+	<string>Allerta IMO completa</string>
+	<key>App</key>
+	<string>App</string>
+	<key>Aspetto</key>
+	<string>Aspetto</string>
+	<key>Attività, cielo qui e conferme della community</key>
+	<string>Attività, cielo qui e conferme della community</string>
+	<key>Aurora confermata dalla community</key>
+	<string>Aurora confermata dalla community</string>
+	<key>Aurora in corso: confermata da %lld persone vicino a te</key>
+	<string>Aurora in corso: confermata da %lld persone vicino a te</string>
+	<key>Aurora segnalata a %lld km da te</key>
+	<string>Aurora segnalata a %lld km da te</string>
+	<key>Aurora segnalata vicino a te</key>
+	<string>Aurora segnalata vicino a te</string>
+	<key>Aurora vista</key>
+	<string>Aurora vista</string>
+	<key>Avvisi ufficiali per chi viaggia</key>
+	<string>Avvisi ufficiali per chi viaggia</string>
+	<key>Avvistamenti aurora (community)</key>
+	<string>Avvistamenti aurora (community)</string>
+	<key>Cerca nelle allerte</key>
+	<string>Cerca nelle allerte</string>
+	<key>Cerca una città, un hotel, una cascata…</key>
+	<string>Cerca una città, un hotel, una cascata…</string>
+	<key>Che strada è</key>
+	<string>Che strada è</string>
+	<key>Cielo</key>
+	<string>Cielo</string>
+	<key>Classifica per indice di osservabilità (euristico): attività prevista × cielo sereno × buio × Luna × luci artificiali (NASA Black Marble) × orizzonte del terreno. Non considera sicurezza e percorribilità delle strade: controlla sempre lo stato delle strade prima di muoverti di notte.</key>
+	<string>Classifica per indice di osservabilità (euristico): attività prevista × cielo sereno × buio × Luna × luci artificiali (NASA Black Marble) × orizzonte del terreno. Non considera sicurezza e percorribilità delle strade: controlla sempre lo stato delle strade prima di muoverti di notte.</string>
+	<key>Condividi</key>
+	<string>Condividi</string>
+	<key>Condizioni</key>
+	<string>Condizioni</string>
+	<key>Condizioni e notizie Vegagerðin</key>
+	<string>Condizioni e notizie Vegagerðin</string>
+	<key>Condizioni, chiusure, lavori e notizie in tempo reale</key>
+	<string>Condizioni, chiusure, lavori e notizie in tempo reale</string>
+	<key>Conferme dalla community</key>
+	<string>Conferme dalla community</string>
+	<key>Coordinate</key>
+	<string>Coordinate</string>
+	<key>Crediti foto</key>
+	<string>Crediti foto</string>
+	<key>Critici</key>
+	<string>Critici</string>
+	<key>Dati aggiornati</key>
+	<string>Dati aggiornati</string>
+	<key>Distanza da te ora</key>
+	<string>Distanza da te ora</string>
+	<key>Dove</key>
+	<string>Dove</string>
+	<key>Dove vai?</key>
+	<string>Dove vai?</string>
+	<key>Elimina dallo storico</key>
+	<string>Elimina dallo storico</string>
+	<key>Eliminare questa tappa?</key>
+	<string>Eliminare questa tappa?</string>
+	<key>Esempio: 15 m/s = %lld km/h = %lld nodi. Le soglie degli avvisi restano le stesse, cambia solo come vengono mostrate.</key>
+	<string>Esempio: 15 m/s = %lld km/h = %lld nodi. Le soglie degli avvisi restano le stesse, cambia solo come vengono mostrate.</string>
+	<key>Esplora</key>
+	<string>Esplora</string>
+	<key>FUORI COPERTURA</key>
+	<string>FUORI COPERTURA</string>
+	<key>Fino al %@</key>
+	<string>Fino al %@</string>
+	<key>Fonte: Vegagerðin (umferdin.is). In caso di dubbio prevalgono le informazioni ufficiali.</key>
+	<string>Fonte: Vegagerðin (umferdin.is). In caso di dubbio prevalgono le informazioni ufficiali.</string>
+	<key>Foto: %@</key>
+	<string>Foto: %@</string>
+	<key>Fuori copertura: la mappa meteo e le strade coprono solo l'Islanda</key>
+	<string>Fuori copertura: la mappa meteo e le strade coprono solo l'Islanda</string>
+	<key>Fuori da questi orari la strada non viene controllata né pulita: le condizioni possono peggiorare senza aggiornamenti.</key>
+	<string>Fuori da questi orari la strada non viene controllata né pulita: le condizioni possono peggiorare senza aggiornamenti.</string>
+	<key>Ghiaccio a tratti</key>
+	<string>Ghiaccio a tratti</string>
+	<key>Gli avvisi SafeTravel</key>
+	<string>Gli avvisi SafeTravel</string>
+	<key>Ieri</key>
+	<string>Ieri</string>
+	<key>Il modello indica attività debole qui.</key>
+	<string>Il modello indica attività debole qui.</string>
+	<key>Il modello indica attività forte qui.</key>
+	<string>Il modello indica attività forte qui.</string>
+	<key>Il modello indica attività moderata qui.</key>
+	<string>Il modello indica attività moderata qui.</string>
+	<key>Il più vicino a %lld km, l'ultimo %@.</key>
+	<string>Il più vicino a %lld km, l'ultimo %@.</string>
+	<key>Il testo è quello inviato al momento dell'allerta. Per la situazione attuale apri i dati aggiornati.</key>
+	<string>Il testo è quello inviato al momento dell'allerta. Per la situazione attuale apri i dati aggiornati.</string>
+	<key>Il tuo viaggio</key>
+	<string>Il tuo viaggio</string>
+	<key>In auto</key>
+	<string>In auto</string>
+	<key>In parte nuvoloso</key>
+	<string>In parte nuvoloso</string>
+	<key>Indicazioni in Mappe</key>
+	<string>Indicazioni in Mappe</string>
+	<key>Info, SOS, fonti e crediti</key>
+	<string>Info, SOS, fonti e crediti</string>
+	<key>Informazione</key>
+	<string>Informazione</string>
+	<key>Informazioni</key>
+	<string>Informazioni</string>
+	<key>Kirkjufell · Snæfellsnes</key>
+	<string>Kirkjufell · Snæfellsnes</string>
+	<key>L'assenza di segnalazioni non indica assenza di aurora.</key>
+	<string>L'assenza di segnalazioni non indica assenza di aurora.</string>
+	<key>L'indice di osservabilità è una stima euristica trasparente, non una probabilità: moltiplica attività prevista (OVATION entro la sua validità, poi Kp e posizione dell'ovale su latitudine geomagnetica), cielo sereno per strati, buio (altezza del Sole), Luna (fase e altezza) e le luci artificiali misurate dal satellite VIIRS (NASA Black Marble, media annuale) pesate con la distanza, e l'orizzonte del terreno. Le percentuali di probabilità richiedono un modello calibrato su osservazioni reali: le segnalazioni degli utenti servono a costruirlo.</key>
+	<string>L'indice di osservabilità è una stima euristica trasparente, non una probabilità: moltiplica attività prevista (OVATION entro la sua validità, poi Kp e posizione dell'ovale su latitudine geomagnetica), cielo sereno per strati, buio (altezza del Sole), Luna (fase e altezza) e le luci artificiali misurate dal satellite VIIRS (NASA Black Marble, media annuale) pesate con la distanza, e l'orizzonte del terreno. Le percentuali di probabilità richiedono un modello calibrato su osservazioni reali: le segnalazioni degli utenti servono a costruirlo.</string>
+	<key>LA VEDO</key>
+	<string>LA VEDO</string>
+	<key>Lavori e pericoli</key>
+	<string>Lavori e pericoli</string>
+	<key>Lavori e pericoli (%lld)</key>
+	<string>Lavori e pericoli (%lld)</string>
+	<key>Le allerte meteo ufficiali (IMO)</key>
+	<string>Le allerte meteo ufficiali (IMO)</string>
+	<key>Le condizioni sono peggiorate rispetto alla rilevazione precedente.</key>
+	<string>Le condizioni sono peggiorate rispetto alla rilevazione precedente.</string>
+	<key>Le segnalazioni superano il modello: può essere un'attività locale non prevista.</key>
+	<string>Le segnalazioni superano il modello: può essere un'attività locale non prevista.</string>
+	<key>Le strade come sono adesso</key>
+	<string>Le strade come sono adesso</string>
+	<key>Le webcam stradali</key>
+	<string>Le webcam stradali</string>
+	<key>Letta</key>
+	<string>Letta</string>
+	<key>Limitazioni</key>
+	<string>Limitazioni</string>
+	<key>Livello</key>
+	<string>Livello</string>
+	<key>Luoghi principali d'Islanda o qualsiasi indirizzo</key>
+	<string>Luoghi principali d'Islanda o qualsiasi indirizzo</string>
+	<key>MAX %@</key>
+	<string>MAX %@</string>
+	<key>MET Norway · ECMWF</key>
+	<string>MET Norway · ECMWF</string>
+	<key>MET Norway · Open-Meteo</key>
+	<string>MET Norway · Open-Meteo</string>
+	<key>Mappa dell'ovale e avvistamenti</key>
+	<string>Mappa dell'ovale e avvistamenti</string>
+	<key>Mappa meteo dell'Islanda</key>
+	<string>Mappa meteo dell'Islanda</string>
+	<key>Meteo IMO</key>
+	<string>Meteo IMO</string>
+	<key>Mostra legenda</key>
+	<string>Mostra legenda</string>
+	<key>NON LA VEDO</key>
+	<string>NON LA VEDO</string>
+	<key>NON VISTA</key>
+	<string>NON VISTA</string>
+	<key>Nascondi legenda</key>
+	<string>Nascondi legenda</string>
+	<key>Nessun avviso SafeTravel in questo momento.</key>
+	<string>Nessun avviso SafeTravel in questo momento.</string>
+	<key>Nessuna aurora</key>
+	<string>Nessuna aurora</string>
+	<key>Nessuna notizia sulle strade</key>
+	<string>Nessuna notizia sulle strade</string>
+	<key>Nessuna segnalazione recente</key>
+	<string>Nessuna segnalazione recente</string>
+	<key>Nessuna webcam entro 60 km: vedi tutte le webcam stradali</key>
+	<string>Nessuna webcam entro 60 km: vedi tutte le webcam stradali</string>
+	<key>Niente aurora · cielo coperto</key>
+	<string>Niente aurora · cielo coperto</string>
+	<key>Niente aurora · cielo in parte nuvoloso</key>
+	<string>Niente aurora · cielo in parte nuvoloso</string>
+	<key>Niente aurora · cielo sereno</key>
+	<string>Niente aurora · cielo sereno</string>
+	<key>Non più valida dalle</key>
+	<string>Non più valida dalle</string>
+	<key>Notizie</key>
+	<string>Notizie</string>
+	<key>Notizie in tempo reale</key>
+	<string>Notizie in tempo reale</string>
+	<key>Notizie strade (umferdin.is)</key>
+	<string>Notizie strade (umferdin.is)</string>
+	<key>PARTENZA</key>
+	<string>PARTENZA</string>
+	<key>PEGGIORATA</key>
+	<string>PEGGIORATA</string>
+	<key>Per ogni tappa: meteo, allerte, strade e aurora</key>
+	<string>Per ogni tappa: meteo, allerte, strade e aurora</string>
+	<key>Pericolo</key>
+	<string>Pericolo</string>
+	<key>Previsione a breve termine non disponibile: serve il vento solare aggiornato.</key>
+	<string>Previsione a breve termine non disponibile: serve il vento solare aggiornato.</string>
+	<key>Previsione per stanotte</key>
+	<string>Previsione per stanotte</string>
+	<key>Previsioni ora per ora</key>
+	<string>Previsioni ora per ora</string>
+	<key>Quando i due modelli differiscono di %@ o più il valore MET è evidenziato: in quel caso considera lo scenario peggiore.</key>
+	<string>Quando i due modelli differiscono di %@ o più il valore MET è evidenziato: in quel caso considera lo scenario peggiore.</string>
+	<key>Qui ora il cielo è in gran parte coperto.</key>
+	<string>Qui ora il cielo è in gran parte coperto.</string>
+	<key>Qui ora il cielo è sereno al %lld%%.</key>
+	<string>Qui ora il cielo è sereno al %lld%%.</string>
+	<key>Raffiche da %@</key>
+	<string>Raffiche da %@</string>
+	<key>Registra il percorso: strade davanti, vento, limiti e alert vocali</key>
+	<string>Registra il percorso: strade davanti, vento, limiti e alert vocali</string>
+	<key>Ricevuta</key>
+	<string>Ricevuta</string>
+	<key>Ring Road · Hringvegur</key>
+	<string>Ring Road · Hringvegur</string>
+	<key>SALVA MODIFICHE</key>
+	<string>SALVA MODIFICHE</string>
+	<key>SCEGLI</key>
+	<string>SCEGLI</string>
+	<key>SEGNALAZIONI ULTIME 3 H</key>
+	<string>SEGNALAZIONI ULTIME 3 H</string>
+	<key>SOLO DI PASSAGGIO</key>
+	<string>SOLO DI PASSAGGIO</string>
+	<key>SafeTravel.is</key>
+	<string>SafeTravel.is</string>
+	<key>Schermo</key>
+	<string>Schermo</string>
+	<key>Scivolosa / neve</key>
+	<string>Scivolosa / neve</string>
+	<key>Segnalazioni anonime degli utenti Norður (ultime 3 ore, posizione arrotondata). Pesano di più quelle vicine, recenti e a occhio nudo; «non la vedo» conta solo con cielo sereno. Restano separate dal modello: se non coincidono, lo vedi scritto.</key>
+	<string>Segnalazioni anonime degli utenti Norður (ultime 3 ore, posizione arrotondata). Pesano di più quelle vicine, recenti e a occhio nudo; «non la vedo» conta solo con cielo sereno. Restano separate dal modello: se non coincidono, lo vedi scritto.</string>
+	<key>Servizio invernale (sgombero neve)</key>
+	<string>Servizio invernale (sgombero neve)</string>
+	<key>Solo da leggere (%lld)</key>
+	<string>Solo da leggere (%lld)</string>
+	<key>Solo in Islanda, per ora</key>
+	<string>Solo in Islanda, per ora</string>
+	<key>Solo in foto</key>
+	<string>Solo in foto</string>
+	<key>Sopra %@ le portiere si aprono a fatica e i mezzi alti rischiano di ribaltarsi: tieni la portiera con due mani.</key>
+	<string>Sopra %@ le portiere si aprono a fatica e i mezzi alti rischiano di ribaltarsi: tieni la portiera con due mani.</string>
+	<key>Stazioni</key>
+	<string>Stazioni</string>
+	<key>Stazioni meteo stradali vicine</key>
+	<string>Stazioni meteo stradali vicine</string>
+	<key>Strade davanti, stazioni del vento e limiti di velocità</key>
+	<string>Strade davanti, stazioni del vento e limiti di velocità</string>
+	<key>Strade e condizioni Vegagerðin</key>
+	<string>Strade e condizioni Vegagerðin</string>
+	<key>Strade e notizie</key>
+	<string>Strade e notizie</string>
+	<key>Strade e stazioni</key>
+	<string>Strade e stazioni</string>
+	<key>Strade, chiusure e stazioni Vegagerðin</key>
+	<string>Strade, chiusure e stazioni Vegagerðin</string>
+	<key>Strade: chiusure, lavori e pericoli</key>
+	<string>Strade: chiusure, lavori e pericoli</string>
+	<key>Strade: condizioni Vegagerðin. Tocca una strada per i dettagli.</key>
+	<string>Strade: condizioni Vegagerðin. Tocca una strada per i dettagli.</string>
+	<key>Tappa</key>
+	<string>Tappa</string>
+	<key>Tappe, meteo e strade lungo il percorso</key>
+	<string>Tappe, meteo e strade lungo il percorso</string>
+	<key>Terra e mare</key>
+	<string>Terra e mare</string>
+	<key>Terremoti, distributori, voli KEF e traghetti</key>
+	<string>Terremoti, distributori, voli KEF e traghetti</string>
+	<key>Testi originali di Vegagerðin (in inglese), aggiornati ogni 5 minuti.</key>
+	<string>Testi originali di Vegagerðin (in inglese), aggiornati ogni 5 minuti.</string>
+	<key>Tratto %@ · %@</key>
+	<string>Tratto %@ · %@</string>
+	<key>Tutte le allerte IMO</key>
+	<string>Tutte le allerte IMO</string>
+	<key>ULTIMI %lld MIN</key>
+	<string>ULTIMI %lld MIN</string>
+	<key>Una segnalazione da verificare</key>
+	<string>Una segnalazione da verificare</string>
+	<key>Unità di misura</key>
+	<string>Unità di misura</string>
+	<key>Valida fino alle</key>
+	<string>Valida fino alle</string>
+	<key>Velocità</key>
+	<string>Velocità</string>
+	<key>Vento, pioggia, neve, radar, strade</key>
+	<string>Vento, pioggia, neve, radar, strade</string>
+	<key>Veðurstofa Íslands · MET Norway · Open-Meteo</key>
+	<string>Veðurstofa Íslands · MET Norway · Open-Meteo</string>
+	<key>Voli</key>
+	<string>Voli</string>
+	<key>Voli KEF e traghetto Herjólfur</key>
+	<string>Voli KEF e traghetto Herjólfur</string>
+	<key>Vulcani e terremoti</key>
+	<string>Vulcani e terremoti</string>
+	<key>debole</key>
+	<string>debole</string>
+	<key>drive.average</key>
+	<string>Media</string>
+	<key>forte</key>
+	<string>forte</string>
+	<key>moderata</key>
+	<string>moderata</string>
+	<key>nodi</key>
+	<string>nodi</string>
+	<key>now.short</key>
+	<string>ORA</string>
+</dict>
+</plist>

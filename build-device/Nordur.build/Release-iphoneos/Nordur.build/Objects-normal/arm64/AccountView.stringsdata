@@ -1,0 +1,456 @@
+{
+  "source": "/Users/runner/work/nordur-ios/nordur-ios/Nordur/Views/AccountView.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Eliminare i dati salvati online?",
+        "location": {
+          "startingColumn": 33,
+          "startingLine": 37
+        }
+      },
+      {
+        "comment": "",
+        "key": "Account",
+        "location": {
+          "startingColumn": 59,
+          "startingLine": 19
+        }
+      },
+      {
+        "comment": "",
+        "key": "Backup attivo",
+        "location": {
+          "startingColumn": 120,
+          "startingLine": 19
+        }
+      },
+      {
+        "comment": "",
+        "key": "Backup dei tuoi dati",
+        "location": {
+          "startingColumn": 157,
+          "startingLine": 19
+        }
+      },
+      {
+        "comment": "",
+        "key": "Fine",
+        "location": {
+          "startingColumn": 70,
+          "startingLine": 28
+        }
+      },
+      {
+        "comment": "",
+        "key": "Elimina dati online",
+        "location": {
+          "startingColumn": 24,
+          "startingLine": 38
+        }
+      },
+      {
+        "comment": "",
+        "key": "Dati online eliminati. Quelli sul telefono restano.",
+        "location": {
+          "startingColumn": 90,
+          "startingLine": 39
+        }
+      },
+      {
+        "comment": "",
+        "key": "Viaggio, percorsi e impostazioni restano sul telefono.",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 42
+        }
+      },
+      {
+        "comment": "",
+        "key": "EMAIL",
+        "location": {
+          "startingColumn": 37,
+          "startingLine": 57
+        }
+      },
+      {
+        "comment": "",
+        "key": "PASSWORD",
+        "location": {
+          "startingColumn": 37,
+          "startingLine": 64
+        }
+      },
+      {
+        "comment": "",
+        "key": "Accedi",
+        "location": {
+          "startingColumn": 46,
+          "startingLine": 52
+        }
+      },
+      {
+        "comment": "",
+        "key": "Crea account",
+        "location": {
+          "startingColumn": 46,
+          "startingLine": 53
+        }
+      },
+      {
+        "comment": "",
+        "key": "nome@esempio.it",
+        "location": {
+          "startingColumn": 58,
+          "startingLine": 58
+        }
+      },
+      {
+        "comment": "",
+        "key": "",
+        "location": {
+          "startingColumn": 27,
+          "startingLine": 58
+        }
+      },
+      {
+        "comment": "",
+        "key": "Almeno 8 caratteri",
+        "location": {
+          "startingColumn": 92,
+          "startingLine": 65
+        }
+      },
+      {
+        "comment": "",
+        "key": "Password",
+        "location": {
+          "startingColumn": 134,
+          "startingLine": 65
+        }
+      },
+      {
+        "comment": "",
+        "key": "",
+        "location": {
+          "startingColumn": 29,
+          "startingLine": 65
+        }
+      },
+      {
+        "comment": "",
+        "key": "Accesso eseguito: %lld elementi ripristinati.",
+        "location": {
+          "startingColumn": 61,
+          "startingLine": 73
+        }
+      },
+      {
+        "comment": "",
+        "key": "Accesso eseguito. Da ora i dati vengono salvati online.",
+        "location": {
+          "startingColumn": 137,
+          "startingLine": 73
+        }
+      },
+      {
+        "comment": "",
+        "key": "CREA ACCOUNT",
+        "location": {
+          "startingColumn": 55,
+          "startingLine": 77
+        }
+      },
+      {
+        "comment": "",
+        "key": "ACCEDI",
+        "location": {
+          "startingColumn": 91,
+          "startingLine": 77
+        }
+      },
+      {
+        "comment": "",
+        "key": "→",
+        "location": {
+          "startingColumn": 84,
+          "startingLine": 79
+        }
+      },
+      {
+        "comment": "",
+        "key": "PASSWORD DIMENTICATA?",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 92
+        }
+      },
+      {
+        "comment": "",
+        "key": "Account",
+        "location": {
+          "startingColumn": 50,
+          "startingLine": 127
+        }
+      },
+      {
+        "comment": "",
+        "key": "Ultimo backup",
+        "location": {
+          "startingColumn": 50,
+          "startingLine": 128
+        }
+      },
+      {
+        "comment": "",
+        "key": "Esegui backup ora",
+        "location": {
+          "startingColumn": 41,
+          "startingLine": 136
+        }
+      },
+      {
+        "comment": "",
+        "key": "In corso…",
+        "location": {
+          "startingColumn": 69,
+          "startingLine": 137
+        }
+      },
+      {
+        "comment": "",
+        "key": "Automatico: %@ · cambialo in Impostazioni",
+        "location": {
+          "startingColumn": 104,
+          "startingLine": 137
+        }
+      },
+      {
+        "comment": "",
+        "key": "Ripristina dal backup",
+        "location": {
+          "startingColumn": 41,
+          "startingLine": 140
+        }
+      },
+      {
+        "comment": "",
+        "key": "Scarica i dati salvati sul telefono",
+        "location": {
+          "startingColumn": 93,
+          "startingLine": 140
+        }
+      },
+      {
+        "comment": "",
+        "key": "Esci dall'account",
+        "location": {
+          "startingColumn": 41,
+          "startingLine": 143
+        }
+      },
+      {
+        "comment": "",
+        "key": "I dati restano sul telefono",
+        "location": {
+          "startingColumn": 89,
+          "startingLine": 143
+        }
+      },
+      {
+        "comment": "",
+        "key": "Cambia password",
+        "location": {
+          "startingColumn": 41,
+          "startingLine": 147
+        }
+      },
+      {
+        "comment": "",
+        "key": "Nuovo codice di recupero",
+        "location": {
+          "startingColumn": 41,
+          "startingLine": 148
+        }
+      },
+      {
+        "comment": "",
+        "key": "Serve per reimpostare la password",
+        "location": {
+          "startingColumn": 96,
+          "startingLine": 148
+        }
+      },
+      {
+        "comment": "",
+        "key": "Elimina dati online",
+        "location": {
+          "startingColumn": 41,
+          "startingLine": 149
+        }
+      },
+      {
+        "comment": "",
+        "key": "L'account resta attivo",
+        "location": {
+          "startingColumn": 91,
+          "startingLine": 149
+        }
+      },
+      {
+        "comment": "",
+        "key": "Elimina account",
+        "location": {
+          "startingColumn": 41,
+          "startingLine": 150
+        }
+      },
+      {
+        "comment": "",
+        "key": "Account, backup e avvistamenti, in modo definitivo",
+        "location": {
+          "startingColumn": 87,
+          "startingLine": 150
+        }
+      },
+      {
+        "comment": "",
+        "key": "Backup completato.",
+        "location": {
+          "startingColumn": 97,
+          "startingLine": 138
+        }
+      },
+      {
+        "comment": "",
+        "key": "%lld elementi ripristinati.",
+        "location": {
+          "startingColumn": 93,
+          "startingLine": 141
+        }
+      },
+      {
+        "comment": "",
+        "key": "Il telefono era già aggiornato.",
+        "location": {
+          "startingColumn": 144,
+          "startingLine": 141
+        }
+      },
+      {
+        "comment": "",
+        "key": "→",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 163
+        }
+      },
+      {
+        "comment": "",
+        "key": "Cosa viene salvato",
+        "location": {
+          "startingColumn": 51,
+          "startingLine": 178
+        }
+      },
+      {
+        "comment": "",
+        "key": "Ti scriviamo per email a ogni evento dell'account: creazione, nuovo accesso, cambio o reimpostazione della password, nuovo codice di recupero, eliminazione.",
+        "location": {
+          "startingColumn": 18,
+          "startingLine": 185
+        }
+      },
+      {
+        "comment": "",
+        "key": "I dati sono cifrati (AES-256) prima di essere salvati. Dopo aver reinstallato l'app basta accedere con la stessa email: tutto torna com'era. Il backup parte da solo quando chiudi l'app e ogni 5 minuti mentre la usi.",
+        "location": {
+          "startingColumn": 18,
+          "startingLine": 187
+        }
+      },
+      {
+        "comment": "",
+        "key": "Informativa sulla privacy",
+        "location": {
+          "startingColumn": 46,
+          "startingLine": 189
+        }
+      },
+      {
+        "comment": "",
+        "key": "Quali dati usa Norður e come",
+        "location": {
+          "startingColumn": 104,
+          "startingLine": 189
+        }
+      },
+      {
+        "comment": "",
+        "key": "Viaggio",
+        "location": {
+          "startingColumn": 40,
+          "startingLine": 180
+        }
+      },
+      {
+        "comment": "",
+        "key": "tappe, date e note",
+        "location": {
+          "startingColumn": 70,
+          "startingLine": 180
+        }
+      },
+      {
+        "comment": "",
+        "key": "Percorsi in auto",
+        "location": {
+          "startingColumn": 40,
+          "startingLine": 181
+        }
+      },
+      {
+        "comment": "",
+        "key": "tracce GPS, km, velocità, consumi, contachilometri",
+        "location": {
+          "startingColumn": 79,
+          "startingLine": 181
+        }
+      },
+      {
+        "comment": "",
+        "key": "Allerte",
+        "location": {
+          "startingColumn": 40,
+          "startingLine": 182
+        }
+      },
+      {
+        "comment": "",
+        "key": "storico delle notifiche ricevute",
+        "location": {
+          "startingColumn": 70,
+          "startingLine": 182
+        }
+      },
+      {
+        "comment": "",
+        "key": "Impostazioni",
+        "location": {
+          "startingColumn": 40,
+          "startingLine": 183
+        }
+      },
+      {
+        "comment": "",
+        "key": "soglie di allerta, guida, aspetto, località scelta, livelli mappa",
+        "location": {
+          "startingColumn": 75,
+          "startingLine": 183
+        }
+      }
+    ]
+  },
+  "version": 1
+}

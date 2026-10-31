@@ -1,0 +1,128 @@
+{
+  "source": "/Users/runner/work/nordur-ios/nordur-ios/Nordur/State/Entitlements.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Notifiche aurora",
+        "location": {
+          "startingColumn": 54,
+          "startingLine": 30
+        }
+      },
+      {
+        "comment": "",
+        "key": "Bussola dell'aurora",
+        "location": {
+          "startingColumn": 54,
+          "startingLine": 31
+        }
+      },
+      {
+        "comment": "",
+        "key": "Mappa dell'ovale e avvistamenti",
+        "location": {
+          "startingColumn": 52,
+          "startingLine": 32
+        }
+      },
+      {
+        "comment": "",
+        "key": "Inviare avvistamenti",
+        "location": {
+          "startingColumn": 54,
+          "startingLine": 33
+        }
+      },
+      {
+        "comment": "",
+        "key": "Mappa meteo a strati",
+        "location": {
+          "startingColumn": 52,
+          "startingLine": 34
+        }
+      },
+      {
+        "comment": "",
+        "key": "Webcam stradali",
+        "location": {
+          "startingColumn": 49,
+          "startingLine": 35
+        }
+      },
+      {
+        "comment": "",
+        "key": "Pianificatore di viaggio",
+        "location": {
+          "startingColumn": 53,
+          "startingLine": 36
+        }
+      },
+      {
+        "comment": "",
+        "key": "Viaggi condivisi e di gruppo",
+        "location": {
+          "startingColumn": 52,
+          "startingLine": 37
+        }
+      },
+      {
+        "comment": "",
+        "key": "Import ed export GPX / KML",
+        "location": {
+          "startingColumn": 51,
+          "startingLine": 38
+        }
+      },
+      {
+        "comment": "",
+        "key": "Registrazione dei percorsi in auto",
+        "location": {
+          "startingColumn": 53,
+          "startingLine": 39
+        }
+      },
+      {
+        "comment": "",
+        "key": "Volo 3D e video del percorso",
+        "location": {
+          "startingColumn": 55,
+          "startingLine": 40
+        }
+      },
+      {
+        "comment": "",
+        "key": "Import da Apple Salute / Garmin",
+        "location": {
+          "startingColumn": 53,
+          "startingLine": 41
+        }
+      },
+      {
+        "comment": "",
+        "key": "Pacchetto offline",
+        "location": {
+          "startingColumn": 49,
+          "startingLine": 42
+        }
+      },
+      {
+        "comment": "",
+        "key": "Backup sul cloud",
+        "location": {
+          "startingColumn": 48,
+          "startingLine": 43
+        }
+      },
+      {
+        "comment": "",
+        "key": "Convertitore valute",
+        "location": {
+          "startingColumn": 59,
+          "startingLine": 44
+        }
+      }
+    ]
+  },
+  "version": 1
+}

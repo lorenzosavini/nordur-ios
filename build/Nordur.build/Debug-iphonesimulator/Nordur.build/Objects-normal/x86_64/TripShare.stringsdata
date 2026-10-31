@@ -1,0 +1,496 @@
+{
+  "source": "/Users/runner/work/nordur-ios/nordur-ios/Nordur/Views/TripShare.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Il mio viaggio in Islanda",
+        "location": {
+          "startingColumn": 50,
+          "startingLine": 11
+        }
+      },
+      {
+        "comment": "",
+        "key": "Condividi il viaggio",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 75
+        }
+      },
+      {
+        "comment": "",
+        "key": "Nome del viaggio",
+        "location": {
+          "startingColumn": 31,
+          "startingLine": 24
+        }
+      },
+      {
+        "comment": "",
+        "key": "Viaggio",
+        "location": {
+          "startingColumn": 34,
+          "startingLine": 26
+        }
+      },
+      {
+        "comment": "",
+        "key": "%lld tappe, %lld attrazioni, %lld giorni.",
+        "location": {
+          "startingColumn": 44,
+          "startingLine": 27
+        }
+      },
+      {
+        "comment": "",
+        "key": "Scrivi un'email con il viaggio",
+        "location": {
+          "startingColumn": 35,
+          "startingLine": 35
+        }
+      },
+      {
+        "comment": "",
+        "key": "Allegato: il viaggio in GPX, da aprire con Norður.",
+        "location": {
+          "startingColumn": 38,
+          "startingLine": 126
+        }
+      },
+      {
+        "comment": "",
+        "key": "Altre app (WhatsApp, Messaggi, File…)",
+        "location": {
+          "startingColumn": 35,
+          "startingLine": 40
+        }
+      },
+      {
+        "comment": "",
+        "key": "Invia una copia via email",
+        "location": {
+          "startingColumn": 34,
+          "startingLine": 43
+        }
+      },
+      {
+        "comment": "",
+        "key": "Nel testo il programma giorno per giorno; allegato il file GPX con tappe e attrazioni. Chi ha Norður tocca il file e lo importa nel suo Viaggio; gli altri lo aprono con Google Maps, Komoot o un'app GPS.",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 44
+        }
+      },
+      {
+        "comment": "",
+        "key": "Email del destinatario",
+        "location": {
+          "startingColumn": 35,
+          "startingLine": 49
+        }
+      },
+      {
+        "comment": "",
+        "key": "Inviato: gli arriva anche un'email di avviso.",
+        "location": {
+          "startingColumn": 52,
+          "startingLine": 94
+        }
+      },
+      {
+        "comment": "",
+        "key": "Inviato: lo trova in Viaggio › Ricevuti.",
+        "location": {
+          "startingColumn": 52,
+          "startingLine": 95
+        }
+      },
+      {
+        "comment": "",
+        "key": "Invia a questo utente Norður",
+        "location": {
+          "startingColumn": 39,
+          "startingLine": 56
+        }
+      },
+      {
+        "comment": "",
+        "key": "Accedi per inviarlo a un altro utente",
+        "location": {
+          "startingColumn": 35,
+          "startingLine": 63
+        }
+      },
+      {
+        "comment": "",
+        "key": "Invia una copia a un utente Norður",
+        "location": {
+          "startingColumn": 34,
+          "startingLine": 70
+        }
+      },
+      {
+        "comment": "",
+        "key": "Una copia separata: gli compare in Viaggio › Ricevuti. Le modifiche non si sincronizzano: per quello usa «Modificatelo insieme» qui sopra.",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 71
+        }
+      },
+      {
+        "comment": "",
+        "key": "Chiudi",
+        "location": {
+          "startingColumn": 77,
+          "startingLine": 77
+        }
+      },
+      {
+        "comment": "",
+        "key": "In allegato il viaggio in GPX: aprilo con Norður per importarlo, o con Google Maps / un'app GPS.",
+        "location": {
+          "startingColumn": 42,
+          "startingLine": 138
+        }
+      },
+      {
+        "comment": "",
+        "key": "Rientro",
+        "location": {
+          "startingColumn": 46,
+          "startingLine": 112
+        }
+      },
+      {
+        "comment": "",
+        "key": "Notte: %@",
+        "location": {
+          "startingColumn": 67,
+          "startingLine": 114
+        }
+      },
+      {
+        "comment": "",
+        "key": "Giorno %lld · %@",
+        "location": {
+          "startingColumn": 39,
+          "startingLine": 115
+        }
+      },
+      {
+        "comment": "",
+        "key": "Accedi per vedere i viaggi condivisi con te",
+        "location": {
+          "startingColumn": 64,
+          "startingLine": 191
+        }
+      },
+      {
+        "comment": "",
+        "key": "I viaggi arrivano all'indirizzo email del tuo account Norður: accedi con quello a cui te li hanno mandati.",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 193
+        }
+      },
+      {
+        "comment": "",
+        "key": "Nessun invito. Quando qualcuno ti invita a modificare insieme un viaggio, compare qui.",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 199
+        }
+      },
+      {
+        "comment": "",
+        "key": "PARTECIPA",
+        "location": {
+          "startingColumn": 38,
+          "startingLine": 212
+        }
+      },
+      {
+        "comment": "",
+        "key": "Da modificare insieme · di %@ · %lld tappe",
+        "location": {
+          "startingColumn": 60,
+          "startingLine": 208
+        }
+      },
+      {
+        "comment": "",
+        "key": "Inviti a modificare insieme",
+        "location": {
+          "startingColumn": 34,
+          "startingLine": 218
+        }
+      },
+      {
+        "comment": "",
+        "key": "Nessuna copia ricevuta.",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 223
+        }
+      },
+      {
+        "comment": "",
+        "key": "APRI",
+        "location": {
+          "startingColumn": 38,
+          "startingLine": 235
+        }
+      },
+      {
+        "comment": "",
+        "key": "Da %@ · %lld tappe",
+        "location": {
+          "startingColumn": 60,
+          "startingLine": 231
+        }
+      },
+      {
+        "comment": "",
+        "key": "Copie ricevute",
+        "location": {
+          "startingColumn": 34,
+          "startingLine": 240
+        }
+      },
+      {
+        "comment": "",
+        "key": "Partecipa",
+        "location": {
+          "startingColumn": 63,
+          "startingLine": 247
+        }
+      },
+      {
+        "comment": "",
+        "key": "Partecipa (sostituisce il viaggio sul telefono)",
+        "location": {
+          "startingColumn": 96,
+          "startingLine": 247
+        }
+      },
+      {
+        "comment": "",
+        "key": "Da qui in poi le modifiche di ognuno arrivano a tutti.",
+        "location": {
+          "startingColumn": 27,
+          "startingLine": 260
+        }
+      },
+      {
+        "comment": "",
+        "key": "Importa come mio viaggio",
+        "location": {
+          "startingColumn": 63,
+          "startingLine": 263
+        }
+      },
+      {
+        "comment": "",
+        "key": "Sostituisci il mio viaggio",
+        "location": {
+          "startingColumn": 111,
+          "startingLine": 263
+        }
+      },
+      {
+        "comment": "",
+        "key": "Aggiungi dopo il mio viaggio",
+        "location": {
+          "startingColumn": 28,
+          "startingLine": 267
+        }
+      },
+      {
+        "comment": "",
+        "key": "Elimina",
+        "location": {
+          "startingColumn": 24,
+          "startingLine": 269
+        }
+      },
+      {
+        "comment": "",
+        "key": "Condiviso da %@",
+        "location": {
+          "startingColumn": 45,
+          "startingLine": 271
+        }
+      },
+      {
+        "comment": "",
+        "key": "Viaggi ricevuti",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 291
+        }
+      },
+      {
+        "comment": "",
+        "key": "Chiudi",
+        "location": {
+          "startingColumn": 77,
+          "startingLine": 293
+        }
+      },
+      {
+        "comment": "",
+        "key": "Smettere di modificare insieme?",
+        "location": {
+          "startingColumn": 29,
+          "startingLine": 348
+        }
+      },
+      {
+        "comment": "",
+        "key": "Email della persona da invitare",
+        "location": {
+          "startingColumn": 27,
+          "startingLine": 322
+        }
+      },
+      {
+        "comment": "",
+        "key": "%@ (tu)",
+        "location": {
+          "startingColumn": 71,
+          "startingLine": 315
+        }
+      },
+      {
+        "comment": "",
+        "key": "Invito inviato, anche per email.",
+        "location": {
+          "startingColumn": 52,
+          "startingLine": 361
+        }
+      },
+      {
+        "comment": "",
+        "key": "Invito inviato: lo trova in Viaggio › Ricevuti.",
+        "location": {
+          "startingColumn": 108,
+          "startingLine": 361
+        }
+      },
+      {
+        "comment": "",
+        "key": "Modificatelo insieme",
+        "location": {
+          "startingColumn": 70,
+          "startingLine": 327
+        }
+      },
+      {
+        "comment": "",
+        "key": "Invita anche questa persona",
+        "location": {
+          "startingColumn": 114,
+          "startingLine": 327
+        }
+      },
+      {
+        "comment": "",
+        "key": "Smetti di modificare insieme",
+        "location": {
+          "startingColumn": 31,
+          "startingLine": 335
+        }
+      },
+      {
+        "comment": "",
+        "key": "Accedi per modificarlo insieme",
+        "location": {
+          "startingColumn": 60,
+          "startingLine": 339
+        }
+      },
+      {
+        "comment": "",
+        "key": "Modificatelo insieme",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 345
+        }
+      },
+      {
+        "comment": "",
+        "key": "Le persone invitate lo trovano in Viaggio › Ricevuti e partecipano: da quel momento tappe, attrazioni, orari e note cambiati da uno arrivano a tutti in pochi secondi. Se due persone cambiano cose diverse restano entrambe le modifiche; sulla stessa cosa vale la più recente.",
+        "location": {
+          "startingColumn": 18,
+          "startingLine": 346
+        }
+      },
+      {
+        "comment": "",
+        "key": "Smetti",
+        "location": {
+          "startingColumn": 20,
+          "startingLine": 349
+        }
+      },
+      {
+        "comment": "",
+        "key": "Il viaggio resta sul tuo telefono com'è adesso; gli altri continuano con il loro.",
+        "location": {
+          "startingColumn": 27,
+          "startingLine": 350
+        }
+      },
+      {
+        "comment": "",
+        "key": "Il nostro viaggio in Islanda",
+        "location": {
+          "startingColumn": 104,
+          "startingLine": 358
+        }
+      },
+      {
+        "comment": "",
+        "key": "Condiviso: in attesa che gli invitati partecipino",
+        "location": {
+          "startingColumn": 58,
+          "startingLine": 381
+        }
+      },
+      {
+        "comment": "",
+        "key": "Insieme a %@",
+        "location": {
+          "startingColumn": 58,
+          "startingLine": 382
+        }
+      },
+      {
+        "comment": "",
+        "key": "Sincronizzazione…",
+        "location": {
+          "startingColumn": 67,
+          "startingLine": 386
+        }
+      },
+      {
+        "comment": "",
+        "key": "Non sincronizzato: %@",
+        "location": {
+          "startingColumn": 69,
+          "startingLine": 387
+        }
+      },
+      {
+        "comment": "",
+        "key": "Aggiornato %@",
+        "location": {
+          "startingColumn": 71,
+          "startingLine": 388
+        }
+      }
+    ]
+  },
+  "version": 1
+}

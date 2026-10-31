@@ -1,0 +1,40 @@
+{
+  "source": "/Users/runner/work/nordur-ios/nordur-ios/Shared/Services/Shops.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Supermercato",
+        "location": {
+          "startingColumn": 57,
+          "startingLine": 16
+        }
+      },
+      {
+        "comment": "",
+        "key": "Minimarket",
+        "location": {
+          "startingColumn": 57,
+          "startingLine": 17
+        }
+      },
+      {
+        "comment": "",
+        "key": "Centro commerciale",
+        "location": {
+          "startingColumn": 50,
+          "startingLine": 18
+        }
+      },
+      {
+        "comment": "",
+        "key": "Vínbúðin (alcolici)",
+        "location": {
+          "startingColumn": 53,
+          "startingLine": 19
+        }
+      }
+    ]
+  },
+  "version": 1
+}

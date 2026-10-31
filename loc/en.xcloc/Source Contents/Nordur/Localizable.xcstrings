@@ -1,0 +1,5912 @@
+{
+  "sourceLanguage" : "it",
+  "strings" : {
+    "" : {
+      "shouldTranslate" : false
+    },
+    " · %lld km da %@" : {
+
+    },
+    " · ~%lld° SULL'ORIZZONTE" : {
+
+    },
+    " · allerta" : {
+      "extractionState" : "stale"
+    },
+    " · ancora disponibile: %lld MB" : {
+
+    },
+    " · automatico" : {
+
+    },
+    " · emessa %@" : {
+
+    },
+    " · gate %@" : {
+
+    },
+    " · neve " : {
+
+    },
+    " (previsione)" : {
+
+    },
+    " Arriva a terra tra ~%lld min." : {
+
+    },
+    " Guarda verso %@." : {
+
+    },
+    " Guarda verso nord." : {
+
+    },
+    " Previsione lungo il percorso, verifica su vedur.is e umferdin.is." : {
+
+    },
+    "-5" : {
+      "shouldTranslate" : false
+    },
+    "–" : {
+      "shouldTranslate" : false
+    },
+    "—" : {
+      "shouldTranslate" : false
+    },
+    "…entro %lld km" : {
+
+    },
+    "· %@" : {
+      "shouldTranslate" : false
+    },
+    "· dalle %@" : {
+
+    },
+    "· in corso fino alle %@" : {
+
+    },
+    "· terminata" : {
+
+    },
+    "(ora islandese)" : {
+
+    },
+    "%@ – %@" : {
+      "shouldTranslate" : false
+    },
+    "%@ · %@" : {
+      "shouldTranslate" : false
+    },
+    "%@ · %@ · %@ fino alle %@" : {
+
+    },
+    "%@ · %@ · %lld km" : {
+
+    },
+    "%@ · %@ km" : {
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$@ · %2$@ km"
+          }
+        }
+      }
+    },
+    "%@ · %@%@" : {
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$@ · %2$@%3$@"
+          }
+        }
+      }
+    },
+    "%@ · %lld" : {
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$@ · %2$lld"
+          }
+        }
+      }
+    },
+    "%@ · %lld %@" : {
+      "shouldTranslate" : false
+    },
+    "%@ · %lld MIN FA" : {
+
+    },
+    "%@ · ~%@" : {
+
+    },
+    "%@ · ARRIVO %@ ±%lld H" : {
+
+    },
+    "%@ · di passaggio" : {
+
+    },
+    "%@ · fino alle %@" : {
+
+    },
+    "%@ · max %lld km/h" : {
+
+    },
+    "%@ · PERICOLO" : {
+      "extractionState" : "manual"
+    },
+    "%@ · prof. %@%@" : {
+
+    },
+    "%@ · raff. %@%@" : {
+      "extractionState" : "stale"
+    },
+    "%@ · vento %@, raffiche %@" : {
+      "extractionState" : "manual"
+    },
+    "%@ · Wikimedia Commons" : {
+      "extractionState" : "manual"
+    },
+    "%@ (%@)" : {
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$@ (%2$@)"
+          }
+        }
+      }
+    },
+    "%@ (tu)" : {
+
+    },
+    "%@ / %@" : {
+      "shouldTranslate" : false
+    },
+    "%@ %@" : {
+      "shouldTranslate" : false
+    },
+    "%@ %@ · %@ kr/l · %@ km" : {
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$@ %2$@ · %3$@ kr/l · %4$@ km"
+          }
+        }
+      }
+    },
+    "%@ %@ (%@)" : {
+      "shouldTranslate" : false
+    },
+    "%@ %lld" : {
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$@ %2$lld"
+          }
+        }
+      }
+    },
+    "%@ → %@" : {
+      "shouldTranslate" : false
+    },
+    "%@ → %@ · %lld notti" : {
+
+    },
+    "%@ a %lld km: %@" : {
+
+    },
+    "%@ fa parte di Pro" : {
+
+    },
+    "%@ km" : {
+
+    },
+    "%@ KM" : {
+
+    },
+    "%@ km da %@" : {
+
+    },
+    "%@ kr" : {
+
+    },
+    "%@ kr/l" : {
+
+    },
+    "%@ RAFFICHE" : {
+      "extractionState" : "manual"
+    },
+    "%@ sul percorso %@: %@" : {
+
+    },
+    "%@ verso le %@" : {
+      "extractionState" : "manual"
+    },
+    "%@ vicino a %@" : {
+
+    },
+    "%@–%@" : {
+      "shouldTranslate" : false
+    },
+    "%@, %@" : {
+      "shouldTranslate" : false
+    },
+    "%@, profondità %@%@" : {
+
+    },
+    "%@: %@" : {
+
+    },
+    "%@: errore medio NOAA %@, combinato %@ (n = %lld)" : {
+
+    },
+    "%@: per ora solo in Islanda, per la tua zona non ci sono dati. Meteo, mare, qualità dell'aria e aurora restano attivi." : {
+      "extractionState" : "manual"
+    },
+    "%@: per ora solo in Islanda. Qui sotto vedi i dati dell'Islanda, non della tua zona." : {
+      "extractionState" : "manual"
+    },
+    "%@. Affidabilità %@: ricontrolla più tardi." : {
+
+    },
+    "%@/%@" : {
+      "shouldTranslate" : false
+    },
+    "%@%@" : {
+      "shouldTranslate" : false
+    },
+    "%lld" : {
+      "shouldTranslate" : false
+    },
+    "%lld allerte IMO" : {
+
+    },
+    "%lld ATTIVI" : {
+
+    },
+    "%lld attività in Salute" : {
+
+    },
+    "%lld attrazioni · ~%lld km · ~%@ di guida + %@ di visita" : {
+
+    },
+    "%lld avvistamenti entro %lld km negli ultimi %lld min (%lld a occhio nudo)." : {
+      "extractionState" : "manual"
+    },
+    "%lld chiuse" : {
+
+    },
+    "%lld difficili" : {
+
+    },
+    "%lld elementi ripristinati." : {
+
+    },
+    "%lld GW" : {
+
+    },
+    "%lld IN ISLANDA" : {
+
+    },
+    "%lld km" : {
+
+    },
+    "%lld KM" : {
+
+    },
+    "%lld km · %lld immagini" : {
+
+    },
+    "%lld km da %@" : {
+      "extractionState" : "manual"
+    },
+    "%lld km in linea d'aria da %@" : {
+      "extractionState" : "manual"
+    },
+    "%lld km in linea d'aria da %@ · visita ~%@" : {
+
+    },
+    "%lld km/h" : {
+      "extractionState" : "stale"
+    },
+    "%lld KM/H" : {
+
+    },
+    "%lld luoghi entro %lld km" : {
+
+    },
+    "%lld luoghi: %lld tappe e %lld attrazioni." : {
+
+    },
+    "%lld m" : {
+      "shouldTranslate" : false
+    },
+    "%lld min" : {
+
+    },
+    "%lld NOTTI" : {
+
+    },
+    "%lld nT" : {
+
+    },
+    "%lld osservatori con cielo sereno non la vedono." : {
+      "extractionState" : "manual"
+    },
+    "%lld scosse – ultime 48 ore" : {
+
+    },
+    "%lld scosse nelle ultime 24 h" : {
+      "extractionState" : "manual"
+    },
+    "%lld scosse nelle ultime 24 ore" : {
+      "extractionState" : "manual"
+    },
+    "%lld segnalazioni entro 150 km (%lld a occhio nudo)." : {
+      "extractionState" : "stale"
+    },
+    "%lld stazioni · raffica max %@" : {
+
+    },
+    "%lld tappe" : {
+
+    },
+    "%lld tappe, %lld attrazioni, %lld giorni." : {
+
+    },
+    "%lld tracce importate." : {
+
+    },
+    "%lld tratti · ordinati per distanza da %@" : {
+      "extractionState" : "manual"
+    },
+    "%lld tratti chiusi · %lld difficili" : {
+      "extractionState" : "manual"
+    },
+    "%lld tratti con problemi" : {
+
+    },
+    "%lld%@" : {
+      "shouldTranslate" : false
+    },
+    "%lld%%" : {
+      "shouldTranslate" : false
+    },
+    "• %@: %@" : {
+
+    },
+    "• Con vento forte apri la portiera tenendola con due mani: il vento può strapparla (danno non coperto dall'assicurazione)." : {
+
+    },
+    "• Fai rifornimento appena puoi nell'Est e nei fiordi occidentali: i distributori sono distanti." : {
+
+    },
+    "• Fuoristrada vietato per legge. Le strade F richiedono un 4x4 e i guadi non sono coperti dall'assicurazione." : {
+
+    },
+    "• In inverno le giornate sono brevi: pianifica le tratte nelle ore di luce." : {
+
+    },
+    "• Ponti a una corsia: ha la precedenza chi arriva prima." : {
+
+    },
+    "→" : {
+      "shouldTranslate" : false
+    },
+    "↗" : {
+      "shouldTranslate" : false
+    },
+    "+" : {
+      "shouldTranslate" : false
+    },
+    "±%lld min" : {
+
+    },
+    "<30" : {
+      "shouldTranslate" : false
+    },
+    ">95" : {
+      "shouldTranslate" : false
+    },
+    "~%lld km · ~%@" : {
+
+    },
+    "~%lld km in linea d'aria" : {
+
+    },
+    "≈ %lld min" : {
+
+    },
+    "■ STOP" : {
+
+    },
+    "0" : {
+      "shouldTranslate" : false
+    },
+    "000000" : {
+
+    },
+    "0%" : {
+      "shouldTranslate" : false
+    },
+    "1 %@ = %@" : {
+
+    },
+    "1 NOTTE" : {
+
+    },
+    "1.000 kr ≈ %@" : {
+
+    },
+    "3 GIORNI" : {
+      "extractionState" : "stale"
+    },
+    "3 ore" : {
+
+    },
+    "4 = MOLTO FAVOREVOLE" : {
+
+    },
+    "10 giorni" : {
+
+    },
+    "21:12, profondità 4,1 km · 28 km da Vík" : {
+
+    },
+    "24 h" : {
+      "shouldTranslate" : false
+    },
+    "24 ORE" : {
+      "extractionState" : "stale"
+    },
+    "25" : {
+      "shouldTranslate" : false
+    },
+    "25 M/S · PERICOLO" : {
+      "extractionState" : "stale"
+    },
+    "27 GIORNI" : {
+      "extractionState" : "stale"
+    },
+    "30–60" : {
+      "shouldTranslate" : false
+    },
+    "60 ore" : {
+
+    },
+    "60–80" : {
+      "shouldTranslate" : false
+    },
+    "80–95" : {
+      "shouldTranslate" : false
+    },
+    "85+ · VALORE OVATION" : {
+
+    },
+    "95: %@ KR/L" : {
+
+    },
+    "100%" : {
+      "shouldTranslate" : false
+    },
+    "112.is – Centrale emergenze" : {
+
+    },
+    "a" : {
+      "shouldTranslate" : false
+    },
+    "A" : {
+
+    },
+    "A %@" : {
+
+    },
+    "a %lld km da te" : {
+
+    },
+    "A %lld km da te. Vento medio %@ %@. %@" : {
+
+    },
+    "A 12 km da te. Fonte: Vegagerðin (umferdin.is), informazioni 1777." : {
+
+    },
+    "A L1 alle %@: velocità +%lld km/s, densità ×%@. Rilevamento automatico: l'attività potrebbe aumentare nella prossima ora." : {
+
+    },
+    "A occhio nudo" : {
+      "extractionState" : "manual"
+    },
+    "A ogni modifica" : {
+
+    },
+    "A piedi / trekking" : {
+
+    },
+    "A un altro utente Norður" : {
+      "extractionState" : "stale"
+    },
+    "Abbassa il telefono di %lld°" : {
+
+    },
+    "Accedi" : {
+
+    },
+    "ACCEDI" : {
+
+    },
+    "Accedi al tuo account" : {
+
+    },
+    "Accedi o crea un account" : {
+      "extractionState" : "manual"
+    },
+    "Accedi per attivare il backup" : {
+
+    },
+    "Accedi per inviare un avvistamento" : {
+      "extractionState" : "stale"
+    },
+    "Accedi per inviarlo a un altro utente" : {
+
+    },
+    "Accedi per modificarlo insieme" : {
+
+    },
+    "ACCEDI PER SEGNALARE" : {
+
+    },
+    "Accedi per vedere i viaggi condivisi con te" : {
+
+    },
+    "accesso a memoria non valida" : {
+
+    },
+    "Accesso a memoria non valida (%@)." : {
+
+    },
+    "Accesso alla posizione negato: attivalo in Impostazioni › Norður." : {
+
+    },
+    "Accesso eseguito: %lld elementi ripristinati." : {
+
+    },
+    "Accesso eseguito. Da ora i dati vengono salvati online." : {
+
+    },
+    "Account" : {
+
+    },
+    "ACCOUNT" : {
+      "extractionState" : "stale"
+    },
+    "Account e backup" : {
+
+    },
+    "Account eliminato" : {
+      "extractionState" : "stale"
+    },
+    "Account eliminato." : {
+
+    },
+    "Account, backup e avvistamenti, in modo definitivo" : {
+
+    },
+    "Acqua" : {
+
+    },
+    "ACQUA %@" : {
+
+    },
+    "Acquista" : {
+
+    },
+    "Acquisto unico, per sempre" : {
+
+    },
+    "adesso" : {
+
+    },
+    "Adesso" : {
+
+    },
+    "Adesso lì non c'è nessuna allerta. Ti avviso quando ne arriva una nuova o se peggiora." : {
+
+    },
+    "Adesso nessuna allerta" : {
+
+    },
+    "Adesso qui: %@" : {
+
+    },
+    "Adesso: %@" : {
+
+    },
+    "Aereo" : {
+
+    },
+    "Aeroporto di Keflavík (oggi)" : {
+
+    },
+    "AFFIDABILITÀ" : {
+
+    },
+    "agg. %@" : {
+
+    },
+    "AGG. %@" : {
+      "extractionState" : "stale"
+    },
+    "Aggiorna ora" : {
+
+    },
+    "AGGIORNATO" : {
+
+    },
+    "Aggiornato %@" : {
+
+    },
+    "Aggiungi" : {
+
+    },
+    "Aggiungi %@" : {
+
+    },
+    "Aggiungi al viaggio" : {
+
+    },
+    "Aggiungi alla tappa più vicina: %@" : {
+
+    },
+    "Aggiungi attrazione" : {
+
+    },
+    "Aggiungi attrazioni da vedere" : {
+      "extractionState" : "stale"
+    },
+    "Aggiungi dopo il mio viaggio" : {
+
+    },
+    "Aggiungi in coda" : {
+
+    },
+    "AGGIUNGI LA PRIMA TAPPA" : {
+
+    },
+    "Aggiungi tappa" : {
+
+    },
+    "AGGIUNGI TAPPA" : {
+      "extractionState" : "manual"
+    },
+    "Aggiungi un'altra attrazione" : {
+      "extractionState" : "stale"
+    },
+    "Aggiungi un'attrazione" : {
+
+    },
+    "Aggiungi un'attrazione a questo giorno" : {
+
+    },
+    "Aggiungi una tappa al viaggio per mettere questo luogo nel programma." : {
+
+    },
+    "Aggiunto a %@: trovi giorno e ora nella tappa" : {
+
+    },
+    "al %@" : {
+
+    },
+    "ALBA %@" : {
+
+    },
+    "Alla guida" : {
+
+    },
+    "Allarga la distanza: fuori dalle città i distributori sono pochi." : {
+
+    },
+    "Allegato: il viaggio in GPX, da aprire con Norður." : {
+
+    },
+    "Allerta arancione" : {
+
+    },
+    "Allerta arancione: tempesta da sud-est" : {
+
+    },
+    "Allerta gialla" : {
+
+    },
+    "Allerta IMO" : {
+
+    },
+    "Allerta IMO completa" : {
+      "extractionState" : "manual"
+    },
+    "Allerta meteo" : {
+
+    },
+    "Allerta meteo arancione o rossa" : {
+
+    },
+    "Allerta meteo gialla" : {
+
+    },
+    "Allerta rossa" : {
+
+    },
+    "Allerte" : {
+
+    },
+    "Allerte e notifiche" : {
+
+    },
+    "Allerte IMO" : {
+      "extractionState" : "stale"
+    },
+    "Allerte IMO sul percorso all'ora del passaggio" : {
+
+    },
+    "Allerte IMO, vento, pioggia forte, neve, ghiaccio e strade vengono controllati dove sei davvero, alle tappe del viaggio nei giorni in cui ci sarai e lungo i tragitti tra una tappa e l'altra fino a dopodomani. Durante una registrazione di guida anche la strada davanti a te." : {
+
+    },
+    "Allerte in base a dove ti trovi, anche ad app chiusa" : {
+
+    },
+    "Allerte meteo" : {
+
+    },
+    "Allerte meteo IMO" : {
+
+    },
+    "Allerte meteo IMO, strade chiuse, terremoti" : {
+
+    },
+    "Allerte su vedur.is" : {
+
+    },
+    "Allerte, strade, terremoti, aurora, SafeTravel…" : {
+
+    },
+    "Allontanati dalle luci della città, verso un posto buio con l'orizzonte libero a nord." : {
+
+    },
+    "Almeno 8 caratteri" : {
+
+    },
+    "Alta" : {
+
+    },
+    "altra chiusura anomala" : {
+
+    },
+    "Altre app (WhatsApp, Messaggi, File…)" : {
+
+    },
+    "Altri collegamenti" : {
+
+    },
+    "Alza il telefono di %lld°" : {
+
+    },
+    "Anche il luogo scelto a mano" : {
+      "extractionState" : "stale"
+    },
+    "Animali sulla strada" : {
+
+    },
+    "Animazione particelle vento" : {
+
+    },
+    "Annulla" : {
+
+    },
+    "Aperto · chiude alle %@" : {
+
+    },
+    "Aperto 24 ore" : {
+
+    },
+    "Aperto adesso: %@, %@ km" : {
+
+    },
+    "App" : {
+      "extractionState" : "manual"
+    },
+    "Apple Mappe" : {
+
+    },
+    "Apple Mappe: foto profilo › Mappe offline › Scarica nuova mappa › Islanda." : {
+
+    },
+    "Apri" : {
+
+    },
+    "APRI" : {
+
+    },
+    "Apri Apple Mappe" : {
+
+    },
+    "Apri Impostazioni" : {
+
+    },
+    "Apri su umferdin.is" : {
+
+    },
+    "Arco di roccia" : {
+
+    },
+    "Area di Reykjavík" : {
+      "extractionState" : "stale"
+    },
+    "Area geotermica" : {
+
+    },
+    "Aria e gas vulcanici" : {
+
+    },
+    "Arrampicata" : {
+
+    },
+    "Arresto forzato (SIGABRT): il sistema o una libreria ha fermato l'app." : {
+
+    },
+    "Arrivi" : {
+      "extractionState" : "stale"
+    },
+    "Arrivi e partenze live, Herjólfur" : {
+
+    },
+    "Arrivo" : {
+
+    },
+    "Arrivo a %@" : {
+
+    },
+    "Arrivo a terra" : {
+
+    },
+    "Arrivo di materiale di CME previsto sulla Terra: %@ (barre arancioni). L'intensità dipenderà dal Bz all'arrivo, misurabile solo ~1 ora prima a L1." : {
+
+    },
+    "Arrivo: %@" : {
+
+    },
+    "asciutto" : {
+
+    },
+    "ASFALTO" : {
+
+    },
+    "asfalto %@" : {
+
+    },
+    "Aspetto" : {
+      "extractionState" : "manual"
+    },
+    "Aspetto: %@" : {
+
+    },
+    "Assente qui" : {
+
+    },
+    "Attendi un minuto prima di chiedere un nuovo codice" : {
+      "extractionState" : "stale"
+    },
+    "Attenzione" : {
+
+    },
+    "ATTENZIONE" : {
+
+    },
+    "Atterrato · bagagli al nastro %@" : {
+
+    },
+    "Atterrato%@" : {
+
+    },
+    "Attiva" : {
+
+    },
+    "Attiva le notifiche" : {
+
+    },
+    "Attiva: ultimo controllo alle %@" : {
+
+    },
+    "Attività" : {
+
+    },
+    "ATTIVITÀ" : {
+
+    },
+    "Attività in aumento nella prossima ora" : {
+
+    },
+    "Attività in calo nella prossima ora" : {
+
+    },
+    "Attività prevista debole" : {
+
+    },
+    "Attività prevista debole (Kp %@)" : {
+
+    },
+    "Attività prevista debole nelle prossime ore." : {
+
+    },
+    "Attività stabile nella prossima ora" : {
+
+    },
+    "Attività, cielo qui e conferme della community" : {
+      "extractionState" : "manual"
+    },
+    "Attività, osservabilità, affidabilità" : {
+
+    },
+    "Attività: quanta aurora c'è sopra di te secondo i modelli (OVATION nella prima ora, poi Kp e posizione dell'ovale). Osservabilità: se qui la puoi vedere, combinando l'attività con nuvole, buio, Luna, luci artificiali e orizzonte. Affidabilità: quanto sono recenti e concordi i dati. È una stima, non una probabilità." : {
+
+    },
+    "Attrazione" : {
+
+    },
+    "ATTRAZIONI" : {
+
+    },
+    "Attrazioni (OpenStreetMap)" : {
+      "extractionState" : "stale"
+    },
+    "Attrazioni di oggi finite" : {
+
+    },
+    "Attrazioni e luoghi da vedere" : {
+
+    },
+    "Aurora" : {
+
+    },
+    "AURORA" : {
+
+    },
+    "AURORA · STANOTTE" : {
+
+    },
+    "Aurora (NOAA/GFZ/NASA)" : {
+      "extractionState" : "stale"
+    },
+    "AURORA ADESSO · QUI" : {
+
+    },
+    "Aurora adesso: %@" : {
+
+    },
+    "Aurora animata sullo sfondo" : {
+
+    },
+    "Aurora attiva: allontanati dalle luci" : {
+
+    },
+    "Aurora boreale" : {
+
+    },
+    "Aurora confermata dalla community" : {
+      "extractionState" : "manual"
+    },
+    "Aurora in corso: confermata da %lld persone vicino a te" : {
+      "extractionState" : "manual"
+    },
+    "Aurora in tempo reale" : {
+
+    },
+    "Aurora live" : {
+
+    },
+    "Aurora segnalata a %lld km da te" : {
+      "extractionState" : "manual"
+    },
+    "Aurora segnalata vicino a te" : {
+      "extractionState" : "manual"
+    },
+    "Aurora sopra di te: guarda in alto" : {
+
+    },
+    "Aurora stanotte" : {
+      "extractionState" : "stale"
+    },
+    "Aurora stanotte: %@" : {
+
+    },
+    "Aurora vista" : {
+      "extractionState" : "manual"
+    },
+    "AURORA VISTA" : {
+      "extractionState" : "manual"
+    },
+    "Aurora: %@%@" : {
+      "extractionState" : "stale"
+    },
+    "Aurora: avvisa da" : {
+
+    },
+    "Aurora: esci adesso" : {
+
+    },
+    "Aurora: fonti scientifiche" : {
+
+    },
+    "Aurora: preparati, stanotte" : {
+
+    },
+    "Auto" : {
+
+    },
+    "AUTO" : {
+
+    },
+    "Auto e chilometraggio" : {
+
+    },
+    "Automatico" : {
+
+    },
+    "Automatico: %@ · cambialo in Impostazioni" : {
+
+    },
+    "Avvia la registrazione quando parti, o importa un'attività da Salute o da un file GPX." : {
+
+    },
+    "Avvia navigazione in Apple Mappe" : {
+
+    },
+    "Avvia navigazione in Google Maps" : {
+
+    },
+    "Avvia navigazione in Mappe" : {
+      "extractionState" : "stale"
+    },
+    "AVVIA REGISTRAZIONE" : {
+
+    },
+    "Avvisami se cambia l'avviso Herjólfur" : {
+
+    },
+    "Avvisi di Norður" : {
+
+    },
+    "Avvisi e mappa delle condizioni" : {
+
+    },
+    "Avvisi NOAA" : {
+
+    },
+    "Avvisi NOAA e CME NASA da Kp %@" : {
+
+    },
+    "Avvisi SafeTravel" : {
+
+    },
+    "Avvisi ufficiali per chi viaggia" : {
+      "extractionState" : "manual"
+    },
+    "Avvisi vocali" : {
+
+    },
+    "Avvisi vocali durante la guida" : {
+
+    },
+    "Avviso" : {
+
+    },
+    "Avviso se superi il limite" : {
+
+    },
+    "Avvistamenti" : {
+      "extractionState" : "stale"
+    },
+    "Avvistamenti aurora (community)" : {
+      "extractionState" : "manual"
+    },
+    "Avvistamento" : {
+
+    },
+    "Avvistamento già registrato per questa zona" : {
+      "extractionState" : "stale"
+    },
+    "b" : {
+      "shouldTranslate" : false
+    },
+    "Backend non raggiungibile: Kp dalla previsione NOAA diretta." : {
+
+    },
+    "Backup" : {
+
+    },
+    "Backup attivo" : {
+
+    },
+    "Backup automatico" : {
+
+    },
+    "Backup completato." : {
+
+    },
+    "Backup dei tuoi dati" : {
+
+    },
+    "Backup sul cloud" : {
+
+    },
+    "Bagni termali" : {
+
+    },
+    "Baldur (Sæferðir)" : {
+
+    },
+    "Barca" : {
+
+    },
+    "Barca: %@" : {
+
+    },
+    "Bassa" : {
+
+    },
+    "BCE" : {
+
+    },
+    "Belvedere" : {
+
+    },
+    "Benzina 95" : {
+
+    },
+    "Bici" : {
+
+    },
+    "Bitume affiorante: scivoloso" : {
+
+    },
+    "Blika.is" : {
+
+    },
+    "Blocco (rapporto iOS)" : {
+
+    },
+    "Bónus, Krónan e Nettó sono i supermercati più economici; i minimarket e i negozi dei distributori (N1, Olís, Orkan) costano di più ma sono spesso aperti fino a tardi." : {
+
+    },
+    "Bónus, Krónan, città…" : {
+
+    },
+    "BRILLAMENTI M/X 3 GIORNI: %@" : {
+
+    },
+    "Buche sulla strada" : {
+
+    },
+    "Bufera di neve" : {
+
+    },
+    "buio" : {
+
+    },
+    "BUIO" : {
+
+    },
+    "Buio e cielo in gran parte sereno" : {
+
+    },
+    "Buio, cielo in gran parte sereno e attività sufficiente" : {
+
+    },
+    "BUIO: ore con il Sole sotto −12° (crepuscolo nautico o più scuro). LUNA: illuminazione a mezzanotte locale." : {
+
+    },
+    "Buono" : {
+
+    },
+    "Bus" : {
+
+    },
+    "Bus urbani e di lunga distanza" : {
+
+    },
+    "Bussola dell'aurora" : {
+
+    },
+    "Bz" : {
+
+    },
+    "BZ" : {
+      "extractionState" : "stale"
+    },
+    "BZ GSM, ULTIME 3 ORE · LINEA VERDE −5 NT" : {
+
+    },
+    "Bz min / max 60'" : {
+
+    },
+    "Bz negativo persistente: %@ nT da %lld min" : {
+
+    },
+    "Bz sud continuo" : {
+
+    },
+    "Bz verso nord: attività stabile e debole nella prossima ora" : {
+
+    },
+    "Bz verso sud in arrivo intorno alle %@: l'attività può aumentare" : {
+
+    },
+    "Caduta massi" : {
+
+    },
+    "Calcolato %@ · dati strade %@" : {
+
+    },
+    "Calcolo percorso e previsioni…" : {
+
+    },
+    "Cambi in arrivo…" : {
+
+    },
+    "Cambi non disponibili" : {
+
+    },
+    "CAMBIA" : {
+
+    },
+    "Cambia password" : {
+
+    },
+    "CAMBIA PASSWORD" : {
+
+    },
+    "Cambiamenti rilevati (%lld)" : {
+
+    },
+    "Cambio del %@ (%@), indicativo: banche e carte applicano commissioni." : {
+
+    },
+    "Cambio valuta" : {
+      "extractionState" : "stale"
+    },
+    "Camminata" : {
+
+    },
+    "CAMPO" : {
+
+    },
+    "Campo attivo" : {
+
+    },
+    "Campo calmo" : {
+
+    },
+    "Campo disturbato: aurora probabile" : {
+
+    },
+    "CAMS via Open-Meteo" : {
+
+    },
+    "Cancellato" : {
+
+    },
+    "Canyon" : {
+
+    },
+    "Capitale" : {
+
+    },
+    "Carburante" : {
+
+    },
+    "CARBURANTE" : {
+
+    },
+    "Carburante stimato" : {
+
+    },
+    "Caricamento" : {
+
+    },
+    "Caricamento dei prezzi dall'App Store…" : {
+
+    },
+    "Carico la griglia meteo…" : {
+
+    },
+    "Cascata" : {
+
+    },
+    "Cascata, grotta, nome…" : {
+
+    },
+    "Cascata, spiaggia, ghiacciaio…" : {
+
+    },
+    "Cascate, belvedere, sorgenti calde vicino a te" : {
+
+    },
+    "Centro commerciale" : {
+
+    },
+    "Cerca nelle allerte" : {
+      "extractionState" : "manual"
+    },
+    "Cerca strada o località" : {
+      "extractionState" : "stale"
+    },
+    "Cerca strada, numero o località" : {
+
+    },
+    "Cerca un altro luogo" : {
+
+    },
+    "Cerca un luogo nel mondo" : {
+
+    },
+    "Cerca una città, un hotel, una cascata…" : {
+      "extractionState" : "manual"
+    },
+    "Cerca valuta o codice" : {
+
+    },
+    "Cerca webcam o strada" : {
+
+    },
+    "Certezza" : {
+
+    },
+    "Chat con il 112 e informazioni per i viaggiatori" : {
+
+    },
+    "Che strada è" : {
+      "extractionState" : "manual"
+    },
+    "Chiama il 1777" : {
+
+    },
+    "Chiaro" : {
+
+    },
+    "Chiudi" : {
+
+    },
+    "CHIUDI" : {
+
+    },
+    "Chiudi ora" : {
+
+    },
+    "Chiusa" : {
+
+    },
+    "Chiusa al traffico" : {
+
+    },
+    "Chiusa mentre era aperta, senza crash, blocchi o avvisi di memoria." : {
+
+    },
+    "CHIUSI" : {
+
+    },
+    "Chiuso" : {
+
+    },
+    "Chiuso · apre %@" : {
+
+    },
+    "Chiuso · apre alle %@" : {
+
+    },
+    "chiusura anomala" : {
+
+    },
+    "Chiusura inattesa" : {
+
+    },
+    "Chiusure (%lld)" : {
+
+    },
+    "Chiusure del giorno (rapporto iOS)" : {
+
+    },
+    "Chiusure normali con l'app aperta: %lld" : {
+
+    },
+    "Chiusure, condizioni, webcam" : {
+
+    },
+    "Cielo" : {
+      "extractionState" : "manual"
+    },
+    "CIELO" : {
+
+    },
+    "CIELO (IMO)" : {
+
+    },
+    "Cielo ancora chiaro (crepuscolo civile)" : {
+
+    },
+    "Cielo coperto" : {
+
+    },
+    "Cielo coperto: anche con l'aurora non si vedrebbe." : {
+
+    },
+    "Cielo illuminato dalle luci vicine" : {
+
+    },
+    "Cielo molto illuminato dalle luci della città" : {
+
+    },
+    "Cielo sereno senza aurora, secondo gli osservatori" : {
+
+    },
+    "Circa %lld cm di neve fresca." : {
+
+    },
+    "Città e monumenti" : {
+
+    },
+    "Classe di osservabilità dell’aurora stanotte: attività prevista, nuvole, buio e Luna." : {
+      "extractionState" : "stale"
+    },
+    "Classe di servizio Vegagerðin" : {
+
+    },
+    "Classifica in caricamento" : {
+
+    },
+    "Classifica per indice di osservabilità (euristico): attività prevista × cielo sereno × buio × Luna × luci artificiali (NASA Black Marble) × orizzonte del terreno. Non considera sicurezza e percorribilità delle strade: controlla sempre lo stato delle strade prima di muoverti di notte." : {
+      "extractionState" : "manual"
+    },
+    "Classifica per indice di osservabilità (euristico): attività prevista × cielo sereno × buio × Luna × vicinanza a centri abitati. Non considera ostacoli locali dell'orizzonte né sicurezza e percorribilità delle strade: controlla sempre lo stato delle strade prima di muoverti di notte." : {
+      "extractionState" : "stale"
+    },
+    "CME" : {
+
+    },
+    "CME DI STRISCIO" : {
+
+    },
+    "CME di striscio in arrivo" : {
+
+    },
+    "CME DIRETTA" : {
+
+    },
+    "Codice" : {
+
+    },
+    "CODICE DALL'EMAIL" : {
+
+    },
+    "Codice di recupero" : {
+
+    },
+    "CODICE DI RECUPERO" : {
+
+    },
+    "Codice errato" : {
+      "extractionState" : "stale"
+    },
+    "Codice scaduto o non valido: chiedine uno nuovo" : {
+      "extractionState" : "stale"
+    },
+    "Colonnine di ricarica" : {
+
+    },
+    "Combinato, blocco attuale" : {
+
+    },
+    "Come ci arrivi" : {
+
+    },
+    "Come funziona" : {
+
+    },
+    "Come il telefono" : {
+
+    },
+    "Come si calcola" : {
+
+    },
+    "COMMUNITY" : {
+
+    },
+    "Completato" : {
+
+    },
+    "Con Kp %@ l'ovale resta lontano" : {
+
+    },
+    "Con l'app aperta: %@" : {
+
+    },
+    "Con l'app chiusa iOS la sveglia solo di rado, soprattutto di notte. Con la sorveglianza attiva l'aurora (attività adesso, Bz, allerte NOAA) viene controllata ogni 3 minuti per il luogo scelto, o per la tappa del viaggio di stanotte: l'app resta attiva in background con la posizione a bassa precisione (vedi l'indicatore blu) e consuma un po' più batteria. «Di notte» si accende al tramonto e si spegne all'alba." : {
+
+    },
+    "Con la stella ricevi una notifica a ogni cambio di stato, orario o gate." : {
+
+    },
+    "Con mare grosso i traghetti possono essere cancellati." : {
+
+    },
+    "Con Pro" : {
+
+    },
+    "Con sconto %@ kr" : {
+
+    },
+    "Con sconto %@ kr%@" : {
+
+    },
+    "Condividi" : {
+      "extractionState" : "manual"
+    },
+    "CONDIVIDI" : {
+
+    },
+    "Condividi il percorso" : {
+
+    },
+    "Condividi il viaggio" : {
+
+    },
+    "Condividi il video 3D" : {
+
+    },
+    "Condividi l'immagine" : {
+
+    },
+    "Condividi su Instagram: immagine e video 3D" : {
+
+    },
+    "Condiviso da %@" : {
+
+    },
+    "Condiviso: in attesa che gli invitati partecipino" : {
+
+    },
+    "Condizioni" : {
+      "extractionState" : "manual"
+    },
+    "Condizioni %@ per l'aurora, adesso" : {
+
+    },
+    "Condizioni buone per l'aurora, adesso" : {
+
+    },
+    "Condizioni delle strade" : {
+
+    },
+    "Condizioni e notizie Vegagerðin" : {
+      "extractionState" : "manual"
+    },
+    "Condizioni Norður" : {
+      "extractionState" : "stale"
+    },
+    "Condizioni sconosciute fuori dall'orario di servizio" : {
+
+    },
+    "Condizioni sfavorevoli nelle prossime 12 ore." : {
+
+    },
+    "Condizioni stradali difficili" : {
+
+    },
+    "Condizioni, chiusure, lavori e notizie in tempo reale" : {
+      "extractionState" : "manual"
+    },
+    "CONFERMA" : {
+
+    },
+    "Conferme dalla community" : {
+      "extractionState" : "manual"
+    },
+    "Confronta i prezzi nei dintorni" : {
+
+    },
+    "CONFRONTA PREZZI ›" : {
+
+    },
+    "Confronto ufficiale IMO" : {
+
+    },
+    "Consenti la fotocamera in Impostazioni › Norður per usare il mirino." : {
+
+    },
+    "Conservalo in un posto sicuro (ad esempio in un gestore di password). È l'unico modo per reimpostare la password: non viene inviata nessuna email e Norður non può recuperarlo." : {
+      "extractionState" : "stale"
+    },
+    "Conservalo in un posto sicuro (ad esempio in un gestore di password). Serve a reimpostare la password se l'email con il codice non ti arriva; Norður non può recuperarlo." : {
+
+    },
+    "Consigli e tappa" : {
+
+    },
+    "Consigli per guidare in Islanda" : {
+
+    },
+    "Consigliati per questa tappa" : {
+
+    },
+    "Consulenza sanitaria non urgente" : {
+
+    },
+    "Consumo %@ l/100 km" : {
+
+    },
+    "Contachilometri" : {
+
+    },
+    "Contachilometri %@" : {
+      "extractionState" : "stale"
+    },
+    "Contachilometri auto" : {
+
+    },
+    "Continua" : {
+
+    },
+    "Controlla ora" : {
+
+    },
+    "Convertitore valute" : {
+
+    },
+    "Coordinate" : {
+      "extractionState" : "manual"
+    },
+    "Coperto" : {
+
+    },
+    "COPERTURA NUVOLOSA TOTALE, ORA %@ · OPEN-METEO" : {
+
+    },
+    "COPIA" : {
+
+    },
+    "copia del %@" : {
+
+    },
+    "copia salvata" : {
+
+    },
+    "Copia tutto" : {
+
+    },
+    "COPIATO" : {
+
+    },
+    "Copie ricevute" : {
+
+    },
+    "Corona islandese" : {
+
+    },
+    "Corsa" : {
+
+    },
+    "Cosa monitorare" : {
+
+    },
+    "Cosa significano i colori" : {
+
+    },
+    "Cosa viene salvato" : {
+
+    },
+    "Costa sud: Seljalandsfoss → Vík" : {
+
+    },
+    "Costo" : {
+
+    },
+    "Crash" : {
+
+    },
+    "Crash (rapporto iOS)" : {
+
+    },
+    "Crash (segnale %d)." : {
+
+    },
+    "Crash registrato da iOS" : {
+
+    },
+    "Crea account" : {
+
+    },
+    "CREA ACCOUNT" : {
+
+    },
+    "Crea il video 3D (8 s)" : {
+      "extractionState" : "stale"
+    },
+    "Crea il volo 3D sul percorso" : {
+
+    },
+    "Crea tappe e attrazioni con Google My Maps, gpx.studio, Komoot o un altro programma ed esportale in GPX o KML." : {
+
+    },
+    "Creato con Norður" : {
+
+    },
+    "Crediti foto" : {
+      "extractionState" : "manual"
+    },
+    "Creo il video…" : {
+
+    },
+    "Crepuscolo astronomico" : {
+
+    },
+    "Crepuscolo civile" : {
+
+    },
+    "Crepuscolo nautico" : {
+
+    },
+    "Crepuscolo nautico: solo aurore intense" : {
+
+    },
+    "Critici" : {
+      "extractionState" : "manual"
+    },
+    "D" : {
+
+    },
+    "D'inverno le strade dei fiordi occidentali chiudono spesso." : {
+
+    },
+    "Da" : {
+
+    },
+    "da %@" : {
+
+    },
+    "DA %@" : {
+
+    },
+    "Da %@ · %lld tappe" : {
+
+    },
+    "Da modificare insieme · di %@ · %lld tappe" : {
+
+    },
+    "Da non perdere: %@, %@ km" : {
+
+    },
+    "Da qui in poi le modifiche di ognuno arrivano a tutti." : {
+
+    },
+    "Da Salute" : {
+
+    },
+    "Da Salute: Garmin, Apple Watch, Strava…" : {
+
+    },
+    "Da sola di notte nella scheda Aurora" : {
+
+    },
+    "Da un file GPX" : {
+
+    },
+    "Da vedere" : {
+
+    },
+    "DA VEDERE · ENTRO 60 KM" : {
+
+    },
+    "Da vedere vicino a %@" : {
+
+    },
+    "Da Wikipedia: %@" : {
+
+    },
+    "Dal %@" : {
+
+    },
+    "Dal menu di condivisione: Instagram (storia o post), WhatsApp, oppure «Salva immagine/video» nelle Foto. Il terreno in 3D e il satellite sono di Apple Mappe." : {
+      "extractionState" : "stale"
+    },
+    "dalle %@" : {
+
+    },
+    "DALLE %@" : {
+
+    },
+    "Date di apertura – solo 4x4, guadi" : {
+
+    },
+    "Dati aggiornati" : {
+      "extractionState" : "manual"
+    },
+    "Dati attuali: ricontrolla prima di partire." : {
+
+    },
+    "Dati dell'app" : {
+
+    },
+    "dati di %@" : {
+
+    },
+    "Dati insufficienti" : {
+
+    },
+    "Dati online eliminati. Quelli sul telefono restano." : {
+
+    },
+    "debole" : {
+      "extractionState" : "manual"
+    },
+    "Debole" : {
+
+    },
+    "Dentro %@: cielo illuminato" : {
+      "extractionState" : "stale"
+    },
+    "Descrizione (IMO)" : {
+
+    },
+    "Dettagli" : {
+
+    },
+    "Di giorno l'ovale si trova sul lato notturno della Terra." : {
+
+    },
+    "Di notte" : {
+
+    },
+    "DI PASSAGGIO" : {
+
+    },
+    "Diesel" : {
+
+    },
+    "difficile" : {
+
+    },
+    "Difficile" : {
+
+    },
+    "DIR" : {
+
+    },
+    "Direzione" : {
+
+    },
+    "Direzione %@ %@° · altezza %lld°" : {
+
+    },
+    "Dirottato" : {
+
+    },
+    "Dislivello" : {
+
+    },
+    "DISLIVELLO" : {
+
+    },
+    "Dispersione del gas vulcanico: vedur.is." : {
+
+    },
+    "Dispersione SO₂ durante le eruzioni" : {
+
+    },
+    "Disponibile durante la registrazione di un percorso." : {
+
+    },
+    "Distanza" : {
+
+    },
+    "DISTANZA" : {
+
+    },
+    "Distanza da te ora" : {
+      "extractionState" : "manual"
+    },
+    "Distributore" : {
+
+    },
+    "Distributore più vicino: %@ a %@" : {
+
+    },
+    "Distributori" : {
+
+    },
+    "Distributori e ricarica" : {
+
+    },
+    "Distributori salvati sul telefono" : {
+
+    },
+    "Distributori sul percorso (%lld)" : {
+
+    },
+    "Divieto di transito" : {
+
+    },
+    "Dove" : {
+      "extractionState" : "manual"
+    },
+    "Dove guardare: mirino con la fotocamera" : {
+
+    },
+    "Dove vai?" : {
+      "extractionState" : "manual"
+    },
+    "Download in corso" : {
+
+    },
+    "drive.average" : {
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Media"
+          }
+        }
+      }
+    },
+    "Durata" : {
+
+    },
+    "Durata totale" : {
+
+    },
+    "E" : {
+      "shouldTranslate" : false
+    },
+    "È ancora chiaro: il buio arriva verso le %@." : {
+
+    },
+    "È giorno" : {
+
+    },
+    "Eccezione: %@" : {
+
+    },
+    "ECONOMICO" : {
+
+    },
+    "Elimina" : {
+
+    },
+    "ELIMINA" : {
+
+    },
+    "Elimina account" : {
+
+    },
+    "ELIMINA ACCOUNT" : {
+
+    },
+    "Elimina dallo storico" : {
+      "extractionState" : "manual"
+    },
+    "Elimina dati online" : {
+
+    },
+    "Elimina percorso" : {
+
+    },
+    "Elimina tappa" : {
+
+    },
+    "Eliminare i dati salvati online?" : {
+
+    },
+    "Eliminare questa tappa?" : {
+      "extractionState" : "manual"
+    },
+    "EMAIL" : {
+
+    },
+    "Email del destinatario" : {
+
+    },
+    "Email della persona da invitare" : {
+
+    },
+    "Email non valida" : {
+      "extractionState" : "stale"
+    },
+    "Email o codice di recupero errati" : {
+      "extractionState" : "stale"
+    },
+    "Email o password errate" : {
+      "extractionState" : "stale"
+    },
+    "Emergenza: 112" : {
+
+    },
+    "Emesso %@" : {
+
+    },
+    "ENE" : {
+
+    },
+    "Energia attiva" : {
+
+    },
+    "Entro %lld km" : {
+
+    },
+    "Entro 60 km da %@" : {
+
+    },
+    "Equitazione" : {
+
+    },
+    "ERR" : {
+
+    },
+    "errore" : {
+
+    },
+    "Errore %lld" : {
+
+    },
+    "Errore aritmetico (SIGFPE)." : {
+
+    },
+    "Errore del server" : {
+      "extractionState" : "stale"
+    },
+    "Errore nel codice Swift (SIGTRAP): un valore mancante o un indice fuori dai limiti." : {
+
+    },
+    "Errori (%lld)" : {
+
+    },
+    "Es. FI204" : {
+
+    },
+    "Esci adesso" : {
+
+    },
+    "Esci da schermo intero" : {
+
+    },
+    "Esci dall'account" : {
+
+    },
+    "Escursione" : {
+
+    },
+    "Escursione in barca" : {
+
+    },
+    "ESE" : {
+
+    },
+    "Esegui backup ora" : {
+
+    },
+    "Esempio: 15 m/s = %lld km/h = %lld nodi. Le soglie degli avvisi restano le stesse, cambia solo come vengono mostrate." : {
+      "extractionState" : "manual"
+    },
+    "Esiste già un account con questa email" : {
+      "extractionState" : "stale"
+    },
+    "Esplora" : {
+      "extractionState" : "manual"
+    },
+    "ESPORTA" : {
+      "extractionState" : "stale"
+    },
+    "Esporta GPX" : {
+
+    },
+    "Espulsione di massa coronale in arrivo" : {
+
+    },
+    "Est" : {
+
+    },
+    "Est e Sud-Est (Egilsstaðir, Höfn, Jökulsárlón)" : {
+      "extractionState" : "stale"
+    },
+    "Estremamente scivolosa" : {
+
+    },
+    "Euro" : {
+      "extractionState" : "stale"
+    },
+    "Evacuazioni e zone chiuse" : {
+
+    },
+    "Evento" : {
+
+    },
+    "Falce calante" : {
+
+    },
+    "Falce crescente" : {
+
+    },
+    "Fare la spesa" : {
+
+    },
+    "Favorevole" : {
+
+    },
+    "file bloccato" : {
+
+    },
+    "Fine" : {
+
+    },
+    "Finestra %@ per l'aurora verso le %@" : {
+
+    },
+    "FINESTRA MIGLIORE 24 H" : {
+
+    },
+    "Fino a %@ mm/h verso le %@, %lld mm in tutto." : {
+
+    },
+    "Fino a %lld luoghi seguiti anche senza metterli nel viaggio: ricevi le allerte meteo IMO, le strade chiuse e i terremoti vicini. Vento, raffiche e aurora restano per dove sei davvero e per le tappe del viaggio." : {
+
+    },
+    "Fino a %lld valute. Tocca per togliere o aggiungere." : {
+
+    },
+    "Fino al %@" : {
+      "extractionState" : "manual"
+    },
+    "Fino al %@." : {
+
+    },
+    "Fiordi occidentali" : {
+
+    },
+    "Fiordi occidentali e Snæfellsnes" : {
+      "extractionState" : "stale"
+    },
+    "Fiordi orientali" : {
+
+    },
+    "Flybus / Airport Direct" : {
+
+    },
+    "FONTE" : {
+
+    },
+    "Fonte: Vegagerðin (umferdin.is). In caso di dubbio prevalgono le informazioni ufficiali." : {
+      "extractionState" : "manual"
+    },
+    "Fonti e stato" : {
+      "extractionState" : "stale"
+    },
+    "Fonti e stato dei dati" : {
+
+    },
+    "Fonti, stato dei dati e metodo" : {
+
+    },
+    "Formato" : {
+
+    },
+    "forte" : {
+      "extractionState" : "manual"
+    },
+    "Forte" : {
+
+    },
+    "Foto: %@" : {
+      "extractionState" : "manual"
+    },
+    "Frequenza cardiaca" : {
+
+    },
+    "Fulmini" : {
+
+    },
+    "Fuori città molti distributori sono solo self-service: si paga alla colonnina con carta e PIN (o carta prepagata N1/Olís). Fai il pieno prima delle tratte lunghe." : {
+
+    },
+    "FUORI COPERTURA" : {
+      "extractionState" : "manual"
+    },
+    "Fuori copertura: la mappa meteo e le strade coprono solo l'Islanda" : {
+      "extractionState" : "manual"
+    },
+    "Fuori da questi orari la strada non viene controllata né pulita: le condizioni possono peggiorare senza aggiornamenti." : {
+      "extractionState" : "manual"
+    },
+    "Fuori dalla griglia meteo dell'Islanda." : {
+
+    },
+    "Fuori dalle città i negozi sono pochi e chiudono presto: fai scorta prima delle tappe lunghe. Orari da OpenStreetMap, verifica nei giorni festivi." : {
+
+    },
+    "Garmin: in Garmin Connect › Altro › Impostazioni › App collegate › Salute di Apple attiva la condivisione. Garmin passa a Salute tempo, distanza, calorie e frequenza cardiaca ma non il tracciato GPS: per il percorso, su connect.garmin.com apri l'attività › ingranaggio › Esporta in GPX e apri il file con Norður. Funziona anche da File, Mail o dal menu Condividi di Strava, Komoot e altre app." : {
+
+    },
+    "Gate %@" : {
+
+    },
+    "Gate aperto" : {
+
+    },
+    "Gate chiuso" : {
+
+    },
+    "Gelo" : {
+
+    },
+    "GENERA NUOVO CODICE" : {
+
+    },
+    "Geyser" : {
+
+    },
+    "Geysir e Strokkur" : {
+      "extractionState" : "stale"
+    },
+    "Ghiacciaio" : {
+
+    },
+    "Ghiacciaio e laguna" : {
+
+    },
+    "Ghiaccio" : {
+
+    },
+    "Ghiaccio a tratti" : {
+      "extractionState" : "manual"
+    },
+    "Giallo: la fonte non ha risposto e si usa la sua ultima copia buona. Rosso: non risponde e non c'è una copia; il problema è della fonte, e il resto (Kp, previsioni) viene comunque da NOAA." : {
+
+    },
+    "Giallo: possibili disagi.\nArancione: impatti significativi, valuta di rimandare.\nRosso: evento estremo, non metterti in viaggio." : {
+
+    },
+    "Gibbosa calante" : {
+
+    },
+    "Gibbosa crescente" : {
+
+    },
+    "Giornata libera" : {
+
+    },
+    "Giorni" : {
+
+    },
+    "Giorni e orari sono in ora islandese (un'ora indietro rispetto all'Italia in inverno). Il meteo e la luce vengono calcolati per l'ora di arrivo." : {
+
+    },
+    "Giorno" : {
+
+    },
+    "GIORNO" : {
+
+    },
+    "Giorno %lld · %@" : {
+
+    },
+    "Giorno della partenza: nessuna attrazione" : {
+
+    },
+    "Gira a destra di %lld°" : {
+
+    },
+    "Gira a sinistra di %lld°" : {
+
+    },
+    "Gli acquisti non sono ancora disponibili." : {
+
+    },
+    "Gli avvisi SafeTravel" : {
+      "extractionState" : "manual"
+    },
+    "Golden Circle" : {
+
+    },
+    "Google Maps" : {
+
+    },
+    "Google Maps: foto profilo › Mappe offline › Seleziona la tua mappa, adatta il riquadro e tocca Scarica. Un riquadro copre circa un terzo dell'Islanda: apri le zone qui sotto una alla volta e scaricale." : {
+
+    },
+    "Google non permette ad altre app di scaricare le sue mappe: Norður apre Google Maps sulla zona giusta e il download lo avvii tu. Le mappe offline di Google scadono dopo un anno se non le aggiorni." : {
+
+    },
+    "GPS · posizione attuale" : {
+
+    },
+    "GPS ±%lld m" : {
+
+    },
+    "GPS, km, tempi, velocità, dislivello e consumi. Continua a schermo bloccato." : {
+
+    },
+    "Granuli di neve" : {
+
+    },
+    "Gravità" : {
+
+    },
+    "Groenlandia, il più vicino all'Islanda in tempo reale" : {
+
+    },
+    "Grotta" : {
+
+    },
+    "Guarda qui: sopra di te" : {
+
+    },
+    "Guarda qui!" : {
+
+    },
+    "GUARDA VERSO %@ (%lld°)%@" : {
+
+    },
+    "Guardia medica 1700" : {
+
+    },
+    "Guida" : {
+
+    },
+    "GUIDA" : {
+
+    },
+    "GUIDA · 12 H" : {
+
+    },
+    "Guida difficile" : {
+
+    },
+    "Guida e aurora" : {
+
+    },
+    "Guida impegnativa, raffiche forti vicino alle montagne. Evita camper e auto alte." : {
+
+    },
+    "Guida: %@ · raffiche fino a %@" : {
+
+    },
+    "Herjólfur" : {
+
+    },
+    "Herjólfur – nuovo avviso" : {
+
+    },
+    "Herjólfur – orari e prenotazioni" : {
+
+    },
+    "Herjólfur – Vestmannaeyjar" : {
+
+    },
+    "Herjólfur: nessun avviso, orario regolare" : {
+
+    },
+    "Highlands – solo strade F" : {
+
+    },
+    "HO IL CODICE DI RECUPERO" : {
+
+    },
+    "HO VISTO L'AURORA" : {
+      "extractionState" : "stale"
+    },
+    "HP30" : {
+      "extractionState" : "stale"
+    },
+    "Hp30 GFZ" : {
+
+    },
+    "Hp30 GFZ Potsdam" : {
+
+    },
+    "Hraunfossar e Barnafoss" : {
+      "extractionState" : "stale"
+    },
+    "Hringvegur (Ring Road): strada nazionale principale" : {
+
+    },
+    "I dati restano sul telefono" : {
+
+    },
+    "I dati sono cifrati (AES-256) prima di essere salvati. Dopo aver reinstallato l'app basta accedere con la stessa email: tutto torna com'era. Il backup parte da solo quando chiudi l'app e ogni 5 minuti mentre la usi." : {
+
+    },
+    "I modelli meteo non concordano sulle nuvole" : {
+
+    },
+    "I viaggi arrivano all'indirizzo email del tuo account Norður: accedi con quello a cui te li hanno mandati." : {
+
+    },
+    "Icelandair, Norlandair, Mýflug" : {
+
+    },
+    "Ieri" : {
+      "extractionState" : "manual"
+    },
+    "Il campo interplanetario è orientato a sud: favorisce l'attività geomagnetica.%@ Non garantisce un'aurora visibile." : {
+
+    },
+    "Il codice di recupero ti è stato mostrato quando hai creato l'account. Dopo l'uso ne riceverai uno nuovo." : {
+
+    },
+    "Il file non contiene una traccia GPX leggibile" : {
+
+    },
+    "Il Kp misura da 0 a 9 il disturbo del campo magnetico terrestre su blocchi di 3 ore. Quello misurato (GFZ Potsdam, NOAA) arriva dopo la fine del blocco; quello previsto viene da NOAA. In Islanda l'aurora è spesso visibile già con Kp 2-3 se il cielo è buio e sereno." : {
+
+    },
+    "Il meteo e la luce vengono calcolati per l'ora di arrivo." : {
+      "extractionState" : "stale"
+    },
+    "Il mio viaggio in Islanda" : {
+
+    },
+    "Il modello indica attività debole qui." : {
+      "extractionState" : "manual"
+    },
+    "Il modello indica attività forte qui." : {
+      "extractionState" : "manual"
+    },
+    "Il modello indica attività moderata qui." : {
+      "extractionState" : "manual"
+    },
+    "Il modello non prevede l'arrivo di materiale di CME sulla Terra fino al %@. ENLIL prevede velocità e densità, non il Bz: da solo non può dire quanto sarà forte una tempesta." : {
+
+    },
+    "Il modello prevede attività ma gli osservatori non la vedono: potrebbe essere ancora debole o coperta dalla luce." : {
+
+    },
+    "Il modello WSA-ENLIL di NOAA prevede l'arrivo di materiale di CME sulla Terra (picco ~%lld km/s). Intensità non prevedibile prima dell'arrivo." : {
+
+    },
+    "Il momento migliore verso le %@" : {
+
+    },
+    "Il nostro viaggio in Islanda" : {
+
+    },
+    "Il nuovo codice sostituisce quello precedente, che smette di funzionare." : {
+
+    },
+    "Il pagamento è addebitato sull'Apple ID. Gli abbonamenti si rinnovano da soli se non disattivati almeno 24 ore prima della scadenza, da Impostazioni › Apple ID › Abbonamenti." : {
+
+    },
+    "Il passo Fjarðarheiði chiude spesso con la neve." : {
+
+    },
+    "IL PIÙ ECONOMICO" : {
+
+    },
+    "Il più economico entro 30 km" : {
+
+    },
+    "Il più vicino a %lld km, l'ultimo %@." : {
+      "extractionState" : "manual"
+    },
+    "Il registro resta sul telefono e parte solo se lo invii tu. I rapporti di iOS («rapporto iOS») arrivano a un avvio successivo, a volte il giorno dopo." : {
+
+    },
+    "Il satellite a L1, 1,5 milioni di km verso il Sole, misura il vento solare circa 30-60 minuti prima che arrivi alla Terra. Conta soprattutto il Bz: quando è negativo (verso sud) per decine di minuti, l'aurora si accende. La velocità alta la rende più forte." : {
+
+    },
+    "Il sentiero dietro la cascata è chiuso e ghiacciato in inverno." : {
+
+    },
+    "Il server ha risposto con errore %lld" : {
+
+    },
+    "Il telefono era già aggiornato." : {
+
+    },
+    "Il testo è quello inviato al momento dell'allerta. Per la situazione attuale apri i dati aggiornati." : {
+      "extractionState" : "manual"
+    },
+    "Il tuo acquisto" : {
+
+    },
+    "Il tuo viaggio" : {
+      "extractionState" : "manual"
+    },
+    "Il tuo viaggio di domani, in breve" : {
+
+    },
+    "Il vento misurato ora da %@ a %@ mila km arriva alla Terra tra circa %lld ± %lld minuti (ritardo piatto X/Vx). La risposta di magnetosfera e ionosfera richiede poi da alcuni minuti a decine di minuti: non è l'orario di comparsa dell'aurora." : {
+
+    },
+    "Il vento solare che raggiungerà la Terra nei prossimi minuti è già stato misurato dal satellite in L1, a 1,5 milioni di km: ogni misura è spostata del suo tempo di viaggio. Kp atteso = Kp attuale corretto con la variazione dell'accoppiamento di Newell del vento in arrivo; finché è valido, la geometria usa OVATION. L'aurora risponde con un ritardo che va da alcuni minuti a 20–30 minuti. Oltre l'ultimo dato misurato (–) resta il Kp attuale." : {
+
+    },
+    "Il vento solare in arrivo è favorevole (Bz %@ nT da %lld min%@). Verso le %@ qui sarà buio e sereno al %lld%%." : {
+
+    },
+    "Il viaggio di oggi · giorno %lld" : {
+
+    },
+    "Il viaggio gli compare in Viaggio › Ricevuti, con l'accesso fatto con quell'indirizzo; se non ha ancora un account, lo trova appena lo crea." : {
+      "extractionState" : "stale"
+    },
+    "Il viaggio resta sul tuo telefono com'è adesso; gli altri continuano con il loro." : {
+
+    },
+    "Il video vola sul terreno in 3D lungo il percorso, con le soste dove ti sei fermato; ci vogliono uno o due minuti per crearlo. Dal menu di condivisione: Instagram (storia o post), WhatsApp, oppure «Salva immagine/video» nelle Foto. Terreno 3D e satellite di Apple Mappe." : {
+
+    },
+    "Imbarco in corso" : {
+
+    },
+    "Immagine non disponibile" : {
+      "extractionState" : "stale"
+    },
+    "Immagini Vegagerðin, aggiornate ogni pochi minuti." : {
+
+    },
+    "IMO M/S" : {
+      "extractionState" : "stale"
+    },
+    "Import da Apple Salute / Garmin" : {
+
+    },
+    "Import ed export GPX / KML" : {
+
+    },
+    "Importa" : {
+
+    },
+    "IMPORTA" : {
+
+    },
+    "Importa attività" : {
+
+    },
+    "Importa come mio viaggio" : {
+
+    },
+    "Importa un viaggio da file GPX o KML" : {
+
+    },
+    "Importa viaggio" : {
+
+    },
+    "Importazione non riuscita" : {
+
+    },
+    "Importo" : {
+
+    },
+    "IMPOSTA LA NUOVA PASSWORD" : {
+
+    },
+    "Impostazioni" : {
+
+    },
+    "Impostazioni allerte" : {
+
+    },
+    "Impraticabile" : {
+
+    },
+    "Impraticabile / chiusa" : {
+
+    },
+    "In allegato il viaggio in GPX: aprilo con Norður per importarlo, o con Google Maps / un'app GPS." : {
+
+    },
+    "In arrivo" : {
+
+    },
+    "In auto" : {
+      "extractionState" : "manual"
+    },
+    "In background (di solito normali): %@" : {
+
+    },
+    "In breve" : {
+
+    },
+    "in corso" : {
+
+    },
+    "IN CORSO" : {
+
+    },
+    "in corso…" : {
+
+    },
+    "In corso…" : {
+
+    },
+    "In Islanda le colonnine veloci sono soprattutto di ON, Ísorka e N1: serve spesso l'app o la tessera dell'operatore." : {
+
+    },
+    "In Islanda le multe per eccesso di velocità sono molto alte. Su sterrato il limite è 80 km/h, nei centri abitati 50." : {
+
+    },
+    "In marcia" : {
+
+    },
+    "In movimento" : {
+
+    },
+    "In orario" : {
+
+    },
+    "In parte nuvoloso" : {
+      "extractionState" : "manual"
+    },
+    "In pausa" : {
+
+    },
+    "In ritardo%@" : {
+
+    },
+    "In uso %lld MB, ancora disponibili %lld MB" : {
+
+    },
+    "In viaggio" : {
+
+    },
+    "Includi allerte gialle" : {
+
+    },
+    "INDICAZIONE PRELIMINARE" : {
+
+    },
+    "Indicazioni" : {
+
+    },
+    "Indicazioni con Apple Mappe" : {
+
+    },
+    "Indicazioni con Google Maps" : {
+
+    },
+    "Indicazioni in Google Maps" : {
+      "extractionState" : "stale"
+    },
+    "Indicazioni in Mappe" : {
+      "extractionState" : "manual"
+    },
+    "Indice EU" : {
+
+    },
+    "Indice Kp" : {
+
+    },
+    "Indirizzo non valido" : {
+
+    },
+    "Info & SOS" : {
+
+    },
+    "Info stradali, strade F nelle Highlands" : {
+
+    },
+    "Info, SOS, fonti e crediti" : {
+      "extractionState" : "manual"
+    },
+    "Informativa sulla privacy" : {
+
+    },
+    "Informazione" : {
+      "extractionState" : "manual"
+    },
+    "Informazioni" : {
+      "extractionState" : "manual"
+    },
+    "Informazioni stradali (8–16, inverno anche 6:30–22)" : {
+
+    },
+    "Inizio" : {
+
+    },
+    "Inserisci i km al ritiro dell'auto: si aggiornano a ogni percorso. Limiti: 90 km/h asfalto, 80 sterrato, 50 centri abitati." : {
+
+    },
+    "Insieme a %@" : {
+
+    },
+    "Intensità" : {
+
+    },
+    "Inverti" : {
+
+    },
+    "INVIA" : {
+
+    },
+    "Invia a questo utente Norður" : {
+
+    },
+    "INVIA IL CODICE" : {
+
+    },
+    "Invia il registro" : {
+
+    },
+    "INVIA UN NUOVO CODICE" : {
+
+    },
+    "Invia una copia a un utente Norður" : {
+
+    },
+    "Invia una copia via email" : {
+
+    },
+    "Invia una notifica di prova" : {
+
+    },
+    "Inviare avvistamenti" : {
+
+    },
+    "Inviato: gli arriva anche un'email di avviso." : {
+
+    },
+    "Inviato: lo trova in Viaggio › Ricevuti." : {
+
+    },
+    "Invio dell'email non riuscito: riprova o usa il codice di recupero" : {
+      "extractionState" : "stale"
+    },
+    "Invio email non attivo: usa il codice di recupero" : {
+      "extractionState" : "stale"
+    },
+    "Invita anche questa persona" : {
+
+    },
+    "Inviti" : {
+      "extractionState" : "stale"
+    },
+    "Inviti a modificare insieme" : {
+
+    },
+    "Invito inviato, anche per email." : {
+
+    },
+    "Invito inviato: lo trova in Viaggio › Ricevuti." : {
+
+    },
+    "iOS aveva avvisato di memoria quasi finita alle %@, poco prima della chiusura." : {
+
+    },
+    "iOS ha avvisato: memoria quasi finita" : {
+
+    },
+    "Isavia" : {
+
+    },
+    "Isavia KEF" : {
+
+    },
+    "ISK" : {
+
+    },
+    "Islanda" : {
+
+    },
+    "Islanda – luoghi principali" : {
+
+    },
+    "Islanda: aurora, meteo, strade" : {
+
+    },
+    "Isole Westman" : {
+
+    },
+    "istruzione non valida" : {
+
+    },
+    "Istruzione non valida (SIGILL)." : {
+
+    },
+    "Itinerario" : {
+
+    },
+    "Kayak e canoa" : {
+
+    },
+    "KEF" : {
+
+    },
+    "Keflavík – arrivi e partenze" : {
+
+    },
+    "Kirkjufell · Snæfellsnes" : {
+      "extractionState" : "manual"
+    },
+    "km" : {
+
+    },
+    "KM" : {
+
+    },
+    "km %lld" : {
+
+    },
+    "Km auto" : {
+
+    },
+    "km/h" : {
+
+    },
+    "km/s" : {
+
+    },
+    "Kp" : {
+
+    },
+    "KP" : {
+
+    },
+    "Kp %@" : {
+
+    },
+    "Kp → ovale" : {
+      "extractionState" : "stale"
+    },
+    "Kp a blocchi di 3 ore" : {
+
+    },
+    "Kp atteso da NASA %@–%@" : {
+
+    },
+    "Kp da vento (Newell)" : {
+
+    },
+    "Kp GFZ Potsdam" : {
+
+    },
+    "KP MAX" : {
+
+    },
+    "Kp previsto NOAA" : {
+
+    },
+    "Kp stimato NOAA (1 min)" : {
+
+    },
+    "L'account resta attivo" : {
+
+    },
+    "L'account, il backup online e i tuoi avvistamenti vengono eliminati in modo definitivo. I dati sul telefono restano. Scrivi ELIMINA per confermare." : {
+
+    },
+    "L'app non ha visto la causa: niente errori nel codice, schermo che rispondeva, memoria nella norma. Di solito è iOS che chiude l'app (per esempio per liberare memoria per un'altra app o la fotocamera), oppure l'app è stata chiusa dal multitasking mentre era aperta. Se è un crash, il «rapporto iOS» arriva a un avvio successivo." : {
+
+    },
+    "L'app non rispondeva da %lld s quando si è chiusa: iOS chiude un'app ferma troppo a lungo (watchdog). Il punto del codice arriva con il «Blocco (rapporto iOS)», di solito il giorno dopo." : {
+
+    },
+    "L'app si è chiusa mentre era aperta, senza un errore del codice." : {
+      "extractionState" : "stale"
+    },
+    "L'assenza di segnalazioni non indica assenza di aurora." : {
+      "extractionState" : "manual"
+    },
+    "L'aurora ha il suo suono, gli altri avvisi uno diverso per tipo: capisci cos'è senza guardare. Tocca per ascoltarli. Con il telefono in silenzioso non suonano." : {
+
+    },
+    "L'HO SALVATO" : {
+
+    },
+    "L'indice di osservabilità è una stima euristica trasparente, non una probabilità: moltiplica attività prevista (OVATION entro la sua validità, poi Kp e posizione dell'ovale su latitudine geomagnetica), cielo sereno per strati, buio (altezza del Sole), Luna (fase e altezza) e le luci artificiali misurate dal satellite VIIRS (NASA Black Marble, media annuale) pesate con la distanza, e l'orizzonte del terreno. Le percentuali di probabilità richiedono un modello calibrato su osservazioni reali: le segnalazioni degli utenti servono a costruirlo." : {
+      "extractionState" : "manual"
+    },
+    "L'indice di osservabilità è una stima euristica trasparente, non una probabilità: moltiplica attività prevista (OVATION entro la sua validità, poi Kp e posizione dell'ovale su latitudine geomagnetica), cielo sereno per strati, buio (altezza del Sole), Luna (fase e altezza) e un indicatore di inquinamento luminoso basato sulla distanza dai centri principali. Le percentuali di probabilità richiedono un modello calibrato su osservazioni reali: le segnalazioni degli utenti servono a costruirlo." : {
+      "extractionState" : "stale"
+    },
+    "L'ora migliore: %@. Ti avviso quando è il momento: tieni attiva la sorveglianza aurora." : {
+
+    },
+    "La fotocamera vede l'aurora debole meglio dell'occhio: se non vedi niente, prova una foto in modalità Notte verso il mirino." : {
+
+    },
+    "La lingua cambia alla prossima apertura. Chiudi l'app ora e riaprila dalla schermata Home." : {
+
+    },
+    "La nuova lingua si vede quando riapri l'app. Le notizie e gli avvisi delle fonti islandesi restano nella lingua in cui li pubblicano, con la traduzione dove c'è." : {
+
+    },
+    "La nuova password deve avere almeno 8 caratteri" : {
+      "extractionState" : "stale"
+    },
+    "La password deve avere almeno 8 caratteri" : {
+      "extractionState" : "stale"
+    },
+    "La strada 862 d'inverno può essere chiusa." : {
+
+    },
+    "La strada davanti a te" : {
+
+    },
+    "la tua posizione" : {
+
+    },
+    "LA TUA ZONA" : {
+
+    },
+    "LA VEDO" : {
+      "extractionState" : "manual"
+    },
+    "Laguna glaciale" : {
+
+    },
+    "Landeyjahöfn / Þorlákshöfn ↔ Vestmannaeyjar" : {
+
+    },
+    "Lavori e pericoli" : {
+      "extractionState" : "manual"
+    },
+    "Lavori e pericoli (%lld)" : {
+      "extractionState" : "manual"
+    },
+    "Lavori stradali" : {
+
+    },
+    "Le allerte IMO e i terremoti vengono controllati per la tua posizione e per le tappe del viaggio dei prossimi 3 giorni." : {
+      "extractionState" : "stale"
+    },
+    "Le allerte meteo ufficiali (IMO)" : {
+      "extractionState" : "manual"
+    },
+    "Le attrazioni della tappa si spostano con lei (%@ g)" : {
+
+    },
+    "Le condizioni sono peggiorate rispetto alla rilevazione precedente." : {
+      "extractionState" : "manual"
+    },
+    "Le notifiche funzionano." : {
+
+    },
+    "Le persone invitate lo trovano in Viaggio › Ricevuti e partecipano: da quel momento tappe, attrazioni, orari e note cambiati da uno arrivano a tutti in pochi secondi. Se due persone cambiano cose diverse restano entrambe le modifiche; sulla stessa cosa vale la più recente." : {
+
+    },
+    "Le segnalazioni restano separate da previsioni e misure: servono a verificare e calibrare il modello." : {
+      "extractionState" : "stale"
+    },
+    "Le segnalazioni superano il modello: può essere un'attività locale non prevista." : {
+      "extractionState" : "manual"
+    },
+    "Le strade come sono adesso" : {
+      "extractionState" : "manual"
+    },
+    "Le tappe sono i posti dove dormi; ogni attrazione va sotto la tappa del suo giorno o la più vicina. Puoi cambiare tutto anche dopo." : {
+
+    },
+    "Le uscite per le balene dipendono dal mare." : {
+
+    },
+    "Le webcam stradali" : {
+      "extractionState" : "manual"
+    },
+    "Leggi su Wikipedia" : {
+
+    },
+    "Letta" : {
+      "extractionState" : "manual"
+    },
+    "Lettura %@" : {
+
+    },
+    "Lieve inquinamento luminoso" : {
+
+    },
+    "Limitazioni" : {
+      "extractionState" : "manual"
+    },
+    "Limite di carico: %@" : {
+      "extractionState" : "stale"
+    },
+    "limite di memoria" : {
+
+    },
+    "Limite di peso" : {
+
+    },
+    "Limite di velocità (in guida)" : {
+
+    },
+    "Limite velocità %lld km/h" : {
+
+    },
+    "Limiti di peso" : {
+
+    },
+    "Lingua" : {
+
+    },
+    "Litri" : {
+
+    },
+    "LIVE" : {
+      "extractionState" : "stale"
+    },
+    "LIVELLI +" : {
+
+    },
+    "Livelli di allerta aviazione e pericolo" : {
+
+    },
+    "Livello" : {
+      "extractionState" : "manual"
+    },
+    "Lo schermo diventa rosso scuro su nero: la luce bianca e blu fa perdere l'adattamento degli occhi al buio (servono 20-30 minuti per recuperarlo), il rosso no. Abbassa anche la luminosità del telefono." : {
+      "extractionState" : "stale"
+    },
+    "Lo schermo diventa rosso scuro su nero: la luce bianca e blu fa perdere l'adattamento degli occhi al buio (servono 20-30 minuti per recuperarlo), il rosso no. Abbassa anche la luminosità del telefono.\n\nAurora animata: quando l'aurora è possibile dove sei, in alto compaiono le sue tende, più evidenti quanto più sono buone le probabilità; spariscono quando non ce n'è." : {
+
+    },
+    "Lo schermo non ha risposto per %@ s" : {
+
+    },
+    "Lo stesso errore ripetuto entro 10 minuti viene contato (×N) invece di ripetuto. Molti errori di rete sono normali senza campo: l'app mostra l'ultima copia salvata." : {
+
+    },
+    "Località aurora" : {
+      "extractionState" : "stale"
+    },
+    "Località migliori · 12 h" : {
+
+    },
+    "Località scelta" : {
+
+    },
+    "Luce" : {
+
+    },
+    "Luce %@–%@" : {
+
+    },
+    "Luce %@–%@: l'ultima visita finisce al buio" : {
+
+    },
+    "LUCE DEL GIORNO" : {
+
+    },
+    "LUNA" : {
+
+    },
+    "Luna illuminata al %lld%% sopra l'orizzonte" : {
+
+    },
+    "Luna nuova" : {
+
+    },
+    "Luna piena" : {
+
+    },
+    "LUOGHI" : {
+
+    },
+    "Luoghi nel file" : {
+
+    },
+    "Luoghi principali d'Islanda o qualsiasi indirizzo" : {
+      "extractionState" : "manual"
+    },
+    "Luoghi seguiti" : {
+
+    },
+    "Luogo" : {
+
+    },
+    "M · %@ S" : {
+      "shouldTranslate" : false
+    },
+    "M/S" : {
+      "shouldTranslate" : false
+    },
+    "M/S RAFFICHE" : {
+      "extractionState" : "stale"
+    },
+    "M%@" : {
+      "shouldTranslate" : false
+    },
+    "M1+" : {
+      "shouldTranslate" : false
+    },
+    "M2+" : {
+      "shouldTranslate" : false
+    },
+    "M3+" : {
+      "shouldTranslate" : false
+    },
+    "Magnetometro %@" : {
+
+    },
+    "Magnetometro Narsarsuaq" : {
+
+    },
+    "Magnitudo minima" : {
+
+    },
+    "mai" : {
+
+    },
+    "Mancano %@ · circa %@" : {
+
+    },
+    "Mappa" : {
+
+    },
+    "Mappa a schermo intero" : {
+
+    },
+    "MAPPA DELL'OVALE" : {
+
+    },
+    "Mappa dell'ovale e avvistamenti" : {
+      "extractionState" : "manual"
+    },
+    "Mappa di base" : {
+      "extractionState" : "stale"
+    },
+    "Mappa di N1 / Orkan / Olís" : {
+
+    },
+    "Mappa meteo" : {
+      "extractionState" : "stale"
+    },
+    "Mappa meteo a strati" : {
+
+    },
+    "Mappa meteo dell'Islanda" : {
+      "extractionState" : "manual"
+    },
+    "Mappa ufficiale di strade, chiusure e webcam" : {
+
+    },
+    "Mappa ufficiale di Vegagerðin" : {
+
+    },
+    "Mappa ufficiale in tempo reale" : {
+
+    },
+    "Mare" : {
+
+    },
+    "MARE · ONDE" : {
+
+    },
+    "Mare ora: onde %@" : {
+
+    },
+    "Mareggiata" : {
+
+    },
+    "MAX %@" : {
+      "extractionState" : "manual"
+    },
+    "MAX %@ M/S" : {
+      "extractionState" : "stale"
+    },
+    "Max 48 h" : {
+
+    },
+    "MAX M%@ %@" : {
+
+    },
+    "Media" : {
+
+    },
+    "MEDIA" : {
+
+    },
+    "media %lld" : {
+      "extractionState" : "stale"
+    },
+    "media %lld · max %lld bpm" : {
+
+    },
+    "media %lld km/h" : {
+      "extractionState" : "stale"
+    },
+    "Media in movimento" : {
+
+    },
+    "Meglio verso le %@" : {
+      "extractionState" : "stale"
+    },
+    "memoria esaurita" : {
+
+    },
+    "Memoria esaurita: iOS l'ha chiusa." : {
+
+    },
+    "memoria liberata da iOS" : {
+
+    },
+    "Memoria usata: %lld MB" : {
+
+    },
+    "MET M/S" : {
+      "extractionState" : "stale"
+    },
+    "MET Norway · ECMWF" : {
+      "extractionState" : "manual"
+    },
+    "MET Norway · MEPS 2,5 km" : {
+
+    },
+    "MET Norway · Open-Meteo" : {
+      "extractionState" : "manual"
+    },
+    "Meteo" : {
+
+    },
+    "Meteo disponibile circa 10 giorni prima" : {
+
+    },
+    "Meteo e allerte" : {
+
+    },
+    "Meteo e strade lungo un percorso" : {
+
+    },
+    "Meteo IMO" : {
+      "extractionState" : "manual"
+    },
+    "METEO MET NORWAY" : {
+
+    },
+    "Meteo previsto quando passi" : {
+
+    },
+    "Meteo sul viaggio %@, %@: %@" : {
+
+    },
+    "Meteo, strade e webcam lungo il percorso" : {
+
+    },
+    "Meteo, vulcani e terremoti: tutto tranquillo" : {
+
+    },
+    "Meteogramma · 48 h" : {
+
+    },
+    "Metodo" : {
+      "extractionState" : "stale"
+    },
+    "Metodo dell'aurora" : {
+
+    },
+    "Mezzo" : {
+      "extractionState" : "stale"
+    },
+    "MIN · MAX · RAFF · MM" : {
+
+    },
+    "MIN / MAX" : {
+
+    },
+    "MINIMA" : {
+
+    },
+    "Minimarket" : {
+
+    },
+    "MISURATO ≠ PREVISTO" : {
+
+    },
+    "MISURATO FINO A +%lld MIN" : {
+
+    },
+    "mm" : {
+
+    },
+    "mm · km" : {
+      "shouldTranslate" : false
+    },
+    "Modelli a confronto, vento e raffiche" : {
+
+    },
+    "Modello nordico gestito con Veðurstofa Íslands, lo stesso di yr.no. Dopo %@ e per le raffiche: ECMWF/ICON via Open-Meteo." : {
+
+    },
+    "moderata" : {
+      "extractionState" : "manual"
+    },
+    "Moderata" : {
+
+    },
+    "Moderatamente favorevole" : {
+
+    },
+    "Modifica" : {
+
+    },
+    "Modifica tappa" : {
+
+    },
+    "Modificatelo insieme" : {
+
+    },
+    "Molto bassa sull'orizzonte" : {
+
+    },
+    "Molto favorevole" : {
+
+    },
+    "Molto sfavorevole" : {
+
+    },
+    "Mostra" : {
+
+    },
+    "Mostra anche i voli già passati" : {
+
+    },
+    "Mostra legenda" : {
+      "extractionState" : "manual"
+    },
+    "Mostra meteo e strade sul percorso" : {
+
+    },
+    "Mostrate accanto alle corone" : {
+
+    },
+    "Muovi il telefono in un otto per tarare la bussola…" : {
+
+    },
+    "Museo" : {
+
+    },
+    "N" : {
+      "shouldTranslate" : false
+    },
+    "NASA (WSA-ENLIL) prevede l'arrivo verso %@ ±7 h, %@. L'effetto dipende dal Bz all'arrivo." : {
+
+    },
+    "NASA DONKI" : {
+
+    },
+    "NASA DONKI (Goddard CCMC) non risponde: CME e tempeste NASA non sono incluse finché il servizio non torna disponibile. Restano attivi ENLIL di NOAA e gli avvisi NOAA." : {
+
+    },
+    "Nascondi legenda" : {
+      "extractionState" : "manual"
+    },
+    "Natura e animali" : {
+
+    },
+    "Navette aeroporto ↔ Reykjavík" : {
+
+    },
+    "Navette KEF ↔ Reykjavík" : {
+
+    },
+    "NE" : {
+
+    },
+    "Nebbia" : {
+
+    },
+    "Nel file non ci sono punti (waypoint o segnaposti). Se è un KMZ di Google My Maps, esportalo come KML." : {
+
+    },
+    "Nel testo il programma giorno per giorno; allegato il file GPX con tappe e attrazioni. Chi ha Norður tocca il file e lo importa nel suo Viaggio; gli altri lo aprono con Google Maps, Komoot o un'app GPS." : {
+
+    },
+    "Nelle prossime ore a %@: %@" : {
+
+    },
+    "Nelle ultime 48 ore non ci sono terremoti di questa magnitudo. Prova «Tutte»." : {
+
+    },
+    "Nessun avviso SafeTravel in questo momento." : {
+      "extractionState" : "manual"
+    },
+    "Nessun cambio per questa valuta." : {
+
+    },
+    "Nessun errore registrato" : {
+
+    },
+    "Nessun invito. Quando qualcuno ti invita a modificare insieme un viaggio, compare qui." : {
+
+    },
+    "Nessun luogo seguito. Scegli un luogo in alto nella schermata Oggi e tocca la campanella." : {
+
+    },
+    "Nessun negozio trovato" : {
+
+    },
+    "Nessun percorso ancora" : {
+
+    },
+    "Nessun percorso registrato." : {
+      "extractionState" : "stale"
+    },
+    "Nessun percorso stradale trovato tra questi luoghi." : {
+
+    },
+    "Nessun pernottamento: rientro" : {
+
+    },
+    "Nessun prezzo in questa zona" : {
+
+    },
+    "Nessun prezzo pubblicato per questo distributore." : {
+
+    },
+    "Nessun problema segnalato" : {
+
+    },
+    "Nessun risultato" : {
+
+    },
+    "Nessun servizio" : {
+
+    },
+    "Nessun servizio invernale" : {
+
+    },
+    "Nessun suggerimento qui vicino." : {
+
+    },
+    "Nessun supermercato entro 80 km: fai scorta prima" : {
+
+    },
+    "Nessuna allerta" : {
+
+    },
+    "Nessuna allerta IMO per questa zona" : {
+
+    },
+    "Nessuna allerta IMO qui" : {
+
+    },
+    "Nessuna allerta meteo attiva" : {
+
+    },
+    "Nessuna attività negli ultimi 4 mesi" : {
+
+    },
+    "Nessuna attrazione: apri la tappa per i consigli" : {
+
+    },
+    "Nessuna aurora" : {
+      "extractionState" : "manual"
+    },
+    "Nessuna chiusura registrata" : {
+
+    },
+    "Nessuna CME diretta verso la Terra nelle simulazioni NASA degli ultimi 10 giorni." : {
+
+    },
+    "Nessuna copia ricevuta." : {
+
+    },
+    "Nessuna copia salvata sul telefono" : {
+
+    },
+    "Nessuna criticità nelle prossime 12 ore" : {
+
+    },
+    "Nessuna destinazione" : {
+
+    },
+    "Nessuna notizia sulle strade" : {
+      "extractionState" : "manual"
+    },
+    "NESSUNA ORA DI BUIO" : {
+
+    },
+    "Nessuna ora di buio nei prossimi 3 giorni." : {
+
+    },
+    "Nessuna previsione geomagnetica per quest'ora" : {
+
+    },
+    "Nessuna scossa con questo filtro" : {
+
+    },
+    "Nessuna segnalazione entro 150 km. L'assenza di segnalazioni non indica assenza di aurora." : {
+      "extractionState" : "stale"
+    },
+    "Nessuna segnalazione recente" : {
+      "extractionState" : "manual"
+    },
+    "Nessuna stazione stradale davanti a te nel raggio controllato." : {
+
+    },
+    "Nessuna strada chiusa sul percorso" : {
+
+    },
+    "NESSUNA TAPPA" : {
+
+    },
+    "Nessuna webcam entro 60 km: vedi tutte le webcam stradali" : {
+      "extractionState" : "manual"
+    },
+    "Nessuna webcam trovata" : {
+
+    },
+    "Nessuno" : {
+
+    },
+    "NESSUNO ATTIVO" : {
+
+    },
+    "neve" : {
+
+    },
+    "Neve" : {
+
+    },
+    "NEVE" : {
+
+    },
+    "NEVE / GHIACCIO" : {
+
+    },
+    "Neve accumulata" : {
+      "extractionState" : "stale"
+    },
+    "Neve bagnata" : {
+
+    },
+    "Neve debole" : {
+
+    },
+    "Neve forte" : {
+
+    },
+    "Neve soffiata dal vento" : {
+
+    },
+    "Neve sulla carreggiata" : {
+
+    },
+    "Nevicata" : {
+
+    },
+    "Nevischio" : {
+
+    },
+    "Nevischio debole" : {
+
+    },
+    "Niente aurora · cielo coperto" : {
+      "extractionState" : "manual"
+    },
+    "Niente aurora · cielo in parte nuvoloso" : {
+      "extractionState" : "manual"
+    },
+    "Niente aurora · cielo sereno" : {
+      "extractionState" : "manual"
+    },
+    "Niente buio stanotte" : {
+      "extractionState" : "stale"
+    },
+    "Niente da mostrare" : {
+
+    },
+    "NNE" : {
+
+    },
+    "NNO" : {
+
+    },
+    "NO" : {
+
+    },
+    "NOAA" : {
+
+    },
+    "NOAA · GFZ · NASA · MET Norway" : {
+
+    },
+    "NOAA pubblica ogni settimana il Kp massimo atteso per giorno, basato sulla rotazione solare di 27 giorni (ricorrenza dei buchi coronali). Non esiste una previsione affidabile di aurora o nuvole a queste distanze: qui trovi attività attesa, ore di buio e Luna. Il dettaglio aumenta avvicinandosi alla data." : {
+
+    },
+    "NOAA SWPC" : {
+
+    },
+    "NOAA: attività geomagnetica Kp %lld" : {
+
+    },
+    "nodi" : {
+      "extractionState" : "manual"
+    },
+    "Nome" : {
+
+    },
+    "Nome del viaggio" : {
+
+    },
+    "nome@esempio.it" : {
+
+    },
+    "Non adesso" : {
+
+    },
+    "NON AGGIORNATO · %@" : {
+
+    },
+    "non ancora caricato" : {
+
+    },
+    "Non ancora scaricati" : {
+
+    },
+    "Non disponibile" : {
+
+    },
+    "NON DISPONIBILE" : {
+
+    },
+    "Non disponibile al momento." : {
+
+    },
+    "Non disponibile per questa località" : {
+
+    },
+    "Non è stato possibile leggere Salute: %@. Controlla in Impostazioni › Salute › Accesso ai dati e dispositivi › Norður." : {
+
+    },
+    "NON LA VEDO" : {
+      "extractionState" : "manual"
+    },
+    "Non mantenuta in questo periodo" : {
+
+    },
+    "Non più valida dalle" : {
+      "extractionState" : "manual"
+    },
+    "Non prevista nel cielo visibile" : {
+
+    },
+    "non risponde" : {
+
+    },
+    "Non riuscito: %@" : {
+
+    },
+    "Non seguire più %@" : {
+
+    },
+    "Non sincronizzato: %@" : {
+
+    },
+    "NON VISTA" : {
+      "extractionState" : "manual"
+    },
+    "Nord" : {
+
+    },
+    "Nord – whale watching" : {
+
+    },
+    "Nord (Akureyri, Mývatn, Húsavík)" : {
+      "extractionState" : "stale"
+    },
+    "Nord-est" : {
+
+    },
+    "NORÐUR" : {
+
+    },
+    "Norður · in viaggio" : {
+      "extractionState" : "stale"
+    },
+    "Norður %@" : {
+
+    },
+    "Norður legge da Salute solo le attività che importi; non scrive nulla." : {
+
+    },
+    "Norður Pro" : {
+
+    },
+    "NORÐUR PRO" : {
+
+    },
+    "Norður: registro errori" : {
+
+    },
+    "Note" : {
+
+    },
+    "Note (biglietti, parcheggio, orari…)" : {
+
+    },
+    "Notifica di prova" : {
+
+    },
+    "Notifiche attive" : {
+
+    },
+    "Notifiche aurora" : {
+
+    },
+    "Notifiche disattivate" : {
+
+    },
+    "Notizie" : {
+      "extractionState" : "manual"
+    },
+    "Notizie in tempo reale" : {
+      "extractionState" : "manual"
+    },
+    "Notizie strade (umferdin.is)" : {
+      "extractionState" : "manual"
+    },
+    "NOTTE" : {
+
+    },
+    "Notte astronomica" : {
+
+    },
+    "NOTTE ON" : {
+
+    },
+    "Notte: %@" : {
+
+    },
+    "Notti" : {
+
+    },
+    "NOTTI" : {
+
+    },
+    "Notti silenziose" : {
+
+    },
+    "Notti: %lld" : {
+
+    },
+    "now.short" : {
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ORA"
+          }
+        }
+      }
+    },
+    "nT" : {
+
+    },
+    "Numero alternativo: 599-0112" : {
+
+    },
+    "Nuoto" : {
+
+    },
+    "Nuova attrazione" : {
+
+    },
+    "NUOVA PASSWORD" : {
+
+    },
+    "Nuova password con il codice di recupero" : {
+      "extractionState" : "stale"
+    },
+    "Nuova tappa" : {
+
+    },
+    "Nuovo codice di recupero" : {
+
+    },
+    "Nuovo codice inviato." : {
+
+    },
+    "Nuvole" : {
+
+    },
+    "NUVOLE" : {
+
+    },
+    "NUVOLE ORA" : {
+      "extractionState" : "stale"
+    },
+    "nuvole ora %lld%%" : {
+
+    },
+    "Nuvole: copertura efficace dagli strati bassi, medi e alti (le alte contano la metà). Buio: N = notte astronomica, A/NA = crepuscolo astronomico/nautico, C = civile, G = giorno. Dopo i ~90 minuti di validità di OVATION l'attività deriva dal Kp previsto e dalla posizione dell'ovale." : {
+
+    },
+    "Nuvolosità %lld%% (stima per strati)" : {
+
+    },
+    "NUVOLOSITÀ IN CARICAMENTO" : {
+
+    },
+    "Nuvolosità non disponibile" : {
+
+    },
+    "Nuvoloso" : {
+
+    },
+    "O" : {
+
+    },
+    "OFFLINE" : {
+
+    },
+    "OFFLINE · DATI DELLE %@" : {
+
+    },
+    "OFFLINE · NESSUN DATO SALVATO" : {
+
+    },
+    "Oggi" : {
+
+    },
+    "OGGI" : {
+
+    },
+    "Ogni %lld anni" : {
+
+    },
+    "Ogni %lld mesi" : {
+
+    },
+    "Ogni 15 minuti" : {
+
+    },
+    "Ogni anno" : {
+
+    },
+    "Ogni giorno" : {
+
+    },
+    "Ogni mese" : {
+
+    },
+    "Ogni ora" : {
+
+    },
+    "Ogni previsione Kp viene confrontata con il Kp misurato poi da GFZ Potsdam: l'errore medio dice quanto ci si può fidare a ogni orizzonte." : {
+
+    },
+    "Ogni settimana" : {
+
+    },
+    "Ogni volta che ti sposti di circa 2 km l'app controlla allerte, strade, vento e terremoti intorno a te, anche se non stai registrando un percorso. Serve l'accesso alla posizione «Sempre»." : {
+
+    },
+    "OK" : {
+
+    },
+    "Oltre 7 giorni la previsione è indicativa." : {
+
+    },
+    "Oltre il limite" : {
+
+    },
+    "Onda lunga" : {
+      "extractionState" : "stale"
+    },
+    "Onde" : {
+
+    },
+    "Onde anomale: stai lontano dall'acqua, mai di spalle al mare." : {
+
+    },
+    "Onde forti: non salire sui blocchi di ghiaccio vicino all'acqua." : {
+
+    },
+    "Onde forti: stai lontano dalla riva." : {
+
+    },
+    "ONO" : {
+
+    },
+    "Open-Meteo" : {
+
+    },
+    "Open-Meteo Marine" : {
+
+    },
+    "OpenStreetMap" : {
+
+    },
+    "OpenStreetMap non ancora scaricato: %@" : {
+
+    },
+    "Ora" : {
+
+    },
+    "ORA" : {
+
+    },
+    "Ora di arrivo" : {
+
+    },
+    "ORA LOCALE" : {
+
+    },
+    "Ora lungo il tragitto:" : {
+
+    },
+    "ORA MIGLIORE PER NOTTE" : {
+
+    },
+    "Ora per ora" : {
+
+    },
+    "Ora segui %@" : {
+
+    },
+    "Orari (OpenStreetMap)" : {
+
+    },
+    "Orari non indicati" : {
+
+    },
+    "Orari non indicati (spesso self-service 24 h con carta)" : {
+
+    },
+    "Orario %@%@" : {
+
+    },
+    "Ordina" : {
+
+    },
+    "Ordinate per distanza da %@" : {
+
+    },
+    "Origine" : {
+
+    },
+    "Orizzonte del terreno non disponibile: considerato libero" : {
+
+    },
+    "OSO" : {
+
+    },
+    "OSSERVABILITÀ" : {
+
+    },
+    "Osservabilità %@: attività in corso e cielo %lld%% sereno." : {
+
+    },
+    "OSSERVABILITÀ QUI" : {
+
+    },
+    "OSSERVATO · STIMATO · PREVISTO" : {
+
+    },
+    "OV %lld" : {
+
+    },
+    "Ovale adesso" : {
+
+    },
+    "Ovale aurorale" : {
+      "extractionState" : "stale"
+    },
+    "Ovale aurorale sulla mappa" : {
+
+    },
+    "Ovale OVATION" : {
+
+    },
+    "OVALE OVATION" : {
+      "extractionState" : "stale"
+    },
+    "Ovale OVATION previsto per le %@ · Kp %@" : {
+
+    },
+    "OVATION %lld · %@" : {
+
+    },
+    "OVATION %lld nel tuo cielo" : {
+
+    },
+    "OVATION 32 nel tuo cielo, cielo sereno al 80%. Guarda verso nord." : {
+
+    },
+    "OVATION non disponibile o fuori validità: l'attività è stimata dal Kp." : {
+
+    },
+    "OVATION non prevede aurora nel tuo cielo" : {
+
+    },
+    "OVATION Prime" : {
+
+    },
+    "OVATION Prime (NOAA) calcola dalle misure del vento solare dove cade l'aurora nei prossimi 30-90 minuti, in percentuale su una griglia. Oltre quell'orizzonte l'app passa al Kp previsto e alla latitudine geomagnetica." : {
+
+    },
+    "OVATION Prime (NOAA) stima l'aurora per l'orario indicato a partire dal vento solare misurato a L1. Il valore è una grandezza del modello (NOAA la descrive come probabilità di aurora visibile), non la probabilità che tu la veda: nuvole, buio e Luna sono valutati a parte. La direzione considera aurore a ~110 km di quota e la curvatura terrestre." : {
+
+    },
+    "Ovest" : {
+
+    },
+    "P nPa" : {
+
+    },
+    "Pacchetto offline" : {
+
+    },
+    "Paesaggio e belvedere" : {
+
+    },
+    "Partecipa" : {
+
+    },
+    "PARTECIPA" : {
+
+    },
+    "Partecipa (sostituisce il viaggio sul telefono)" : {
+
+    },
+    "Partenza" : {
+
+    },
+    "PARTENZA" : {
+      "extractionState" : "manual"
+    },
+    "Partenza alle" : {
+
+    },
+    "Partenze" : {
+      "extractionState" : "stale"
+    },
+    "Partito%@" : {
+
+    },
+    "Parzialmente nuvoloso" : {
+
+    },
+    "Passa a Pro" : {
+
+    },
+    "PASSO" : {
+
+    },
+    "Password" : {
+
+    },
+    "PASSWORD" : {
+
+    },
+    "Password aggiornata, accesso eseguito." : {
+
+    },
+    "PASSWORD ATTUALE" : {
+
+    },
+    "Password cambiata." : {
+
+    },
+    "Password dimenticata" : {
+
+    },
+    "PASSWORD DIMENTICATA?" : {
+
+    },
+    "PASSWORD DIMENTICATA? USA IL CODICE DI RECUPERO" : {
+      "extractionState" : "stale"
+    },
+    "Password errata" : {
+      "extractionState" : "stale"
+    },
+    "Pausa" : {
+
+    },
+    "Pedaggio" : {
+
+    },
+    "PEGGIORATA" : {
+      "extractionState" : "manual"
+    },
+    "peggiorata: %@" : {
+
+    },
+    "Penisola di Reykjanes" : {
+
+    },
+    "Penisola di Tröllaskagi" : {
+
+    },
+    "Per ogni tappa: meteo del giorno, allerte, mare e strade lungo il tragitto." : {
+
+    },
+    "Per ogni tappa: meteo, allerte, strade e aurora" : {
+      "extractionState" : "manual"
+    },
+    "PERCEPITA" : {
+
+    },
+    "Percorribile" : {
+
+    },
+    "PERCORRIBILI" : {
+
+    },
+    "Percorribili nel raggio di 60 km" : {
+
+    },
+    "Percorribilità difficile" : {
+
+    },
+    "Percorsi" : {
+
+    },
+    "Percorsi e strade" : {
+
+    },
+    "Percorsi in auto" : {
+
+    },
+    "Percorso" : {
+
+    },
+    "Pericolo" : {
+      "extractionState" : "manual"
+    },
+    "Pericoloso" : {
+
+    },
+    "Periodo" : {
+
+    },
+    "Pianifica percorso" : {
+
+    },
+    "Pianificatore di viaggio" : {
+
+    },
+    "Pioggia" : {
+
+    },
+    "pioggia %@ mm" : {
+
+    },
+    "Pioggia con temperature intorno a 0 °C dalle %@: strade e passerelle possono gelare." : {
+
+    },
+    "Pioggia debole" : {
+
+    },
+    "pioggia forte" : {
+
+    },
+    "Pioggia forte" : {
+
+    },
+    "Pioggia gelata" : {
+
+    },
+    "PIOGGIA OGGI" : {
+
+    },
+    "Pioggia, distanze" : {
+
+    },
+    "Pioviggine" : {
+
+    },
+    "Pioviggine debole" : {
+
+    },
+    "Pioviggine gelata" : {
+
+    },
+    "Piscina e bagni termali" : {
+
+    },
+    "Più buio vicino: %@, %lld km." : {
+
+    },
+    "Più economico" : {
+
+    },
+    "Più tardi" : {
+
+    },
+    "Più vicino" : {
+
+    },
+    "Poco nuvoloso" : {
+
+    },
+    "Polizia, ambulanza, vigili del fuoco, soccorso alpino" : {
+
+    },
+    "Polvere" : {
+
+    },
+    "Ponte tra i continenti" : {
+      "extractionState" : "stale"
+    },
+    "Porto per Vestmannaeyjar" : {
+
+    },
+    "Posizione arrotondata a ~1 km. Una segnalazione ogni 20 minuti. Le segnalazioni sono anonime per gli altri utenti." : {
+
+    },
+    "Posizione attuale" : {
+
+    },
+    "Posizione impostata" : {
+
+    },
+    "Posizione non valida" : {
+      "extractionState" : "stale"
+    },
+    "Possibile arrivo di una CME verso %@" : {
+
+    },
+    "POSSIBILE SHOCK INTERPLANETARIO · %@" : {
+
+    },
+    "Possibile shock nel vento solare" : {
+
+    },
+    "Post 4:5" : {
+
+    },
+    "Potenza emisferica" : {
+
+    },
+    "POTENZA EMISFERICA (OVATION)" : {
+
+    },
+    "Precip." : {
+
+    },
+    "PRECIPITAZIONI" : {
+
+    },
+    "Prenotazioni, orari, telefono alloggio…" : {
+
+    },
+    "Preparati: probabile tra ~%lld min" : {
+
+    },
+    "Preparo la mappa 3D…" : {
+
+    },
+    "Pressione" : {
+
+    },
+    "Pressione vs 1 h fa" : {
+
+    },
+    "Previsione 45 giorni" : {
+
+    },
+    "Previsione a breve termine non disponibile: serve il vento solare aggiornato." : {
+      "extractionState" : "manual"
+    },
+    "PREVISIONE COMPLETA →" : {
+
+    },
+    "Previsione gas vulcanici" : {
+
+    },
+    "Previsione Kp non aggiornata" : {
+
+    },
+    "Previsione NOAA, blocco attuale" : {
+
+    },
+    "Previsione non disponibile" : {
+
+    },
+    "PREVISIONE ORA PER ORA, VENTO SOLARE, MAPPA →" : {
+
+    },
+    "Previsione OVATION valida per le %@ (circa 30–90 minuti dopo la misura del vento solare a L1): non vale per le ore e i giorni successivi. La scala mostra il valore del modello OVATION, non nuvolosità né probabilità di osservazione. Kp previsto per il blocco attuale %@." : {
+
+    },
+    "Previsione per stanotte" : {
+      "extractionState" : "manual"
+    },
+    "Previsione per stazione di Veðurstofa Íslands%@" : {
+
+    },
+    "Previsioni" : {
+
+    },
+    "Previsioni · 10 giorni" : {
+
+    },
+    "Previsioni disponibili circa 10 giorni prima (mancano %lld giorni)." : {
+
+    },
+    "Previsioni islandesi dettagliate" : {
+
+    },
+    "Previsioni norvegesi (MET Norway)" : {
+
+    },
+    "Previsioni ora per ora" : {
+      "extractionState" : "manual"
+    },
+    "Previsioni per %lld tappe del viaggio…" : {
+
+    },
+    "Previsioni per la posizione…" : {
+
+    },
+    "Previsioni, allerte, mappe del vento" : {
+
+    },
+    "Previste verso le %@. %@" : {
+
+    },
+    "Previsto%@" : {
+
+    },
+    "Prezzi adesso" : {
+
+    },
+    "Prezzi carburante" : {
+
+    },
+    "Prezzi di" : {
+
+    },
+    "Prezzi di %@ %@" : {
+
+    },
+    "Prezzi in arrivo…" : {
+
+    },
+    "Prezzi in corone anche in" : {
+
+    },
+    "Prezzi non disponibili" : {
+
+    },
+    "Prezzo alla pompa self-service al litro. «Con sconto»: con la carta o l'app della compagnia. Cambio del %@ (%@)." : {
+
+    },
+    "Prezzo carburante (ISK/l)" : {
+
+    },
+    "Prima" : {
+
+    },
+    "Primo giorno" : {
+
+    },
+    "Primo quarto" : {
+
+    },
+    "Privacy" : {
+
+    },
+    "PRO" : {
+
+    },
+    "Pro attivo" : {
+
+    },
+    "Pro attivo fino al %@" : {
+
+    },
+    "Pro è attivo su questo iPhone" : {
+
+    },
+    "produttore ufficiale · %@" : {
+
+    },
+    "Proiezione di ghiaia" : {
+
+    },
+    "Prossima alle %@" : {
+
+    },
+    "Prossime 12 ore" : {
+
+    },
+    "Prossime ore" : {
+
+    },
+    "Prossimi 60 minuti" : {
+
+    },
+    "Protezione Civile (Almannavarnir)" : {
+
+    },
+    "Prova a togliere \"Solo aperti adesso\"." : {
+
+    },
+    "Prova a togliere i filtri." : {
+
+    },
+    "Prova con il nome di una strada o di un passo." : {
+
+    },
+    "provvisoria, magnetometri a terra" : {
+
+    },
+    "Punteggio 0–100: attività geomagnetica × cielo sereno nelle ore di buio." : {
+      "extractionState" : "stale"
+    },
+    "PUNTI: LOCALITÀ DI RIFERIMENTO, COLORATE PER OSSERVABILITÀ MIGLIORE NELLE PROSSIME 12 H (STIMA EURISTICA, NON PROBABILITÀ). GRIGI PICCOLI: TAPPE DEL VIAGGIO." : {
+
+    },
+    "Puoi inviare un avvistamento ogni 20 minuti" : {
+      "extractionState" : "stale"
+    },
+    "Quali dati usa Norður e come" : {
+
+    },
+    "Qualità dell'aria" : {
+      "extractionState" : "stale"
+    },
+    "Quando" : {
+
+    },
+    "quando apri la sezione" : {
+
+    },
+    "Quando avvisare" : {
+
+    },
+    "Quando i due modelli differiscono di %@ o più il valore MET è evidenziato: in quel caso considera lo scenario peggiore." : {
+      "extractionState" : "manual"
+    },
+    "Quando i due modelli differiscono di 4 m/s o più il valore MET è evidenziato: in quel caso considera lo scenario peggiore." : {
+      "extractionState" : "stale"
+    },
+    "Questa installazione di Norður non ha il permesso di Salute: Sideloadly lo toglie quando firma con un Apple ID gratuito. Installa l'app con Xcode per usare Salute, oppure importa le attività da file GPX (per Garmin: connect.garmin.com › attività › ingranaggio › Esporta in GPX)." : {
+
+    },
+    "Questa traccia è già nello storico" : {
+
+    },
+    "qui" : {
+
+    },
+    "Qui" : {
+      "extractionState" : "stale"
+    },
+    "Qui compaiono le allerte inviate." : {
+
+    },
+    "Qui finiscono le fonti che non rispondono, i dati non leggibili, i backup e le sincronizzazioni non riuscite, il GPS." : {
+
+    },
+    "Qui ora il cielo è in gran parte coperto." : {
+      "extractionState" : "manual"
+    },
+    "Qui ora il cielo è sereno al %lld%%." : {
+      "extractionState" : "manual"
+    },
+    "Quota" : {
+
+    },
+    "Quota (scalata)" : {
+
+    },
+    "Radar" : {
+
+    },
+    "Radar RainViewer, ultime 2 ore. Copertura parziale." : {
+
+    },
+    "RAFF." : {
+
+    },
+    "raff. %@" : {
+
+    },
+    "RAFF. MAX" : {
+
+    },
+    "Raffica max 12 h: %@" : {
+      "extractionState" : "stale"
+    },
+    "Raffiche" : {
+
+    },
+    "Raffiche %@ a %@ tra %lld km (%lld min)" : {
+
+    },
+    "Raffiche da %@" : {
+      "extractionState" : "manual"
+    },
+    "Raffiche da %lld m/s" : {
+      "extractionState" : "stale"
+    },
+    "Raffiche di %@ a %@" : {
+
+    },
+    "Raffiche di %@ adesso sul percorso di oggi" : {
+
+    },
+    "raffiche fino a %@" : {
+
+    },
+    "Raffiche fino a %@ nelle prossime ore a %@" : {
+
+    },
+    "Raffiche fino a %@ verso le %@" : {
+
+    },
+    "Raffiche fino a 22 m/s verso le 14 · Nessuna strada chiusa sul percorso · Stanotte aurora: condizioni buone verso le 23" : {
+
+    },
+    "Raffiche forti vicino a te" : {
+
+    },
+    "Raffiche improvvise" : {
+
+    },
+    "Raffiche previste fino a %@ verso le %@ lungo il percorso. %@" : {
+
+    },
+    "Rates By Exchange Rate API" : {
+      "shouldTranslate" : false
+    },
+    "REC" : {
+
+    },
+    "Recupera" : {
+
+    },
+    "REGISTRA IL PERCORSO" : {
+
+    },
+    "Registra il percorso: strade davanti, vento, limiti e alert vocali" : {
+      "extractionState" : "manual"
+    },
+    "Registra il piano di viaggio" : {
+
+    },
+    "Registrazione" : {
+
+    },
+    "Registrazione dei percorsi in auto" : {
+
+    },
+    "Registrazione in corso" : {
+
+    },
+    "Registro errori" : {
+
+    },
+    "Restavano solo %lld MB prima del limite che iOS concede all'app." : {
+
+    },
+    "Resto dell'Islanda" : {
+
+    },
+    "Reykjanes – zona vulcanica attiva" : {
+
+    },
+    "Reykjavík e lunga distanza" : {
+
+    },
+    "Reynisfjara e spiagge del sud: onde anomale senza preavviso. Resta lontano dalla battigia." : {
+
+    },
+    "Riapri l'app" : {
+
+    },
+    "Ricarica" : {
+
+    },
+    "Ricarica auto elettriche" : {
+
+    },
+    "Ricarica EV" : {
+
+    },
+    "RICARICA EV %@ KM" : {
+
+    },
+    "Ricevuta" : {
+      "extractionState" : "manual"
+    },
+    "Ricevuti" : {
+      "extractionState" : "stale"
+    },
+    "RICEVUTI" : {
+
+    },
+    "Richiede Pro" : {
+
+    },
+    "Rientro" : {
+
+    },
+    "Riepilogo" : {
+
+    },
+    "Riepilogo di domani: %@" : {
+
+    },
+    "Riepilogo di domani: Vík → Höfn" : {
+
+    },
+    "Riepilogo serale del viaggio" : {
+
+    },
+    "Rifai il percorso con Apple Mappe" : {
+
+    },
+    "Rifai il percorso con Google Maps" : {
+
+    },
+    "Rilievi verso nord-ovest: orizzonte a %lld°" : {
+
+    },
+    "Rimuovi destinazione" : {
+
+    },
+    "Ring Road · Hringvegur" : {
+      "extractionState" : "manual"
+    },
+    "Riprendi" : {
+
+    },
+    "Ripristina acquisti" : {
+
+    },
+    "Ripristina dal backup" : {
+
+    },
+    "Riprova" : {
+
+    },
+    "Riscatta un codice" : {
+
+    },
+    "rischio ghiaccio" : {
+
+    },
+    "Risultati" : {
+
+    },
+    "Road.is – Vegagerðin" : {
+
+    },
+    "Rovesci" : {
+
+    },
+    "Rovesci deboli" : {
+
+    },
+    "Rovesci di neve" : {
+
+    },
+    "Rovesci di neve deboli" : {
+
+    },
+    "Rovesci di nevischio" : {
+
+    },
+    "Rovesci violenti" : {
+
+    },
+    "s" : {
+      "shouldTranslate" : false
+    },
+    "S" : {
+      "shouldTranslate" : false
+    },
+    "Sabbia sollevata dal vento" : {
+
+    },
+    "SafeTravel" : {
+
+    },
+    "SafeTravel – condizioni" : {
+
+    },
+    "SafeTravel – i soccorsi sapranno dove cercarti" : {
+
+    },
+    "SafeTravel: %@" : {
+
+    },
+    "SafeTravel.is" : {
+      "extractionState" : "manual"
+    },
+    "Salita" : {
+
+    },
+    "Salto di velocità +%lld km/s, densità ×%@, campo ×%@. Rilevamento automatico, non confermato." : {
+
+    },
+    "Salute non disponibile" : {
+
+    },
+    "Salva" : {
+
+    },
+    "Salva modifiche" : {
+
+    },
+    "SALVA MODIFICHE" : {
+      "extractionState" : "manual"
+    },
+    "Sblocca tutto Norður" : {
+
+    },
+    "SCADUTO" : {
+
+    },
+    "scala Kp su 30 minuti" : {
+
+    },
+    "Scale NOAA" : {
+
+    },
+    "Scambia con %@" : {
+
+    },
+    "Scarica i dati prima di entrare in zone senza copertura (Highlands, fiordi occidentali, parte dell'Est)." : {
+
+    },
+    "Scarica i dati salvati sul telefono" : {
+
+    },
+    "Scarica tutto per l'uso offline" : {
+
+    },
+    "Scarta" : {
+
+    },
+    "Scarta percorso" : {
+
+    },
+    "SCEGLI" : {
+      "extractionState" : "manual"
+    },
+    "Scegli destinazione" : {
+
+    },
+    "Scegli il luogo da mostrare nel widget." : {
+      "extractionState" : "stale"
+    },
+    "Scegli un luogo" : {
+
+    },
+    "Scegli un luogo…" : {
+      "extractionState" : "stale"
+    },
+    "Scegli…" : {
+
+    },
+    "Schermata: %@" : {
+
+    },
+    "Schermo" : {
+      "extractionState" : "manual"
+    },
+    "schermo bloccato (watchdog)" : {
+
+    },
+    "Schermo bloccato per %@" : {
+
+    },
+    "Schermo bloccato: iOS l'ha chiusa." : {
+
+    },
+    "Sci" : {
+
+    },
+    "Sci di fondo" : {
+
+    },
+    "Scivolosa / neve" : {
+      "extractionState" : "manual"
+    },
+    "Sconosciuto" : {
+
+    },
+    "Sconsigliato mettersi in viaggio. Controlla umferdin.is e safetravel.is." : {
+
+    },
+    "SCOSSE" : {
+
+    },
+    "Scrivi un'email con il viaggio" : {
+
+    },
+    "Scuro" : {
+
+    },
+    "SE" : {
+
+    },
+    "Se esiste un account con questa email, il codice è in arrivo. Controlla anche la posta indesiderata." : {
+
+    },
+    "Se il 112 non si connette (spegnimento reti 2G/3G)" : {
+
+    },
+    "Se l'app si chiude da sola, qui trovi quando, dove e perché." : {
+
+    },
+    "Se usi Garmin, attiva in Garmin Connect la condivisione con Salute e sincronizza l'orologio. Poi torna qui." : {
+
+    },
+    "Segna tutte come lette" : {
+
+    },
+    "Segnalazione registrata. Grazie." : {
+
+    },
+    "Segnalazioni anonime degli utenti Norður (ultime 3 ore, posizione arrotondata). Pesano di più quelle vicine, recenti e a occhio nudo; «non la vedo» conta solo con cielo sereno. Restano separate dal modello: se non coincidono, lo vedi scritto." : {
+      "extractionState" : "manual"
+    },
+    "SEGNALAZIONI ULTIME 3 H" : {
+      "extractionState" : "manual"
+    },
+    "Segui %@ per le allerte" : {
+
+    },
+    "Segui al massimo %lld luoghi" : {
+
+    },
+    "Sempre" : {
+
+    },
+    "Senza destinazione: stazioni nella direzione di marcia, entro 60 km." : {
+
+    },
+    "Sereno" : {
+
+    },
+    "Serve l'accesso alla posizione «Sempre»: Impostazioni › Norður › Posizione." : {
+
+    },
+    "Serve per reimpostare la password" : {
+
+    },
+    "Servizio invernale (sgombero neve)" : {
+      "extractionState" : "manual"
+    },
+    "Sessione non valida, accedi di nuovo" : {
+      "extractionState" : "stale"
+    },
+    "Sessione scaduta, accedi di nuovo" : {
+      "extractionState" : "stale"
+    },
+    "Seyðisfjörður – Fær Øer – Danimarca" : {
+
+    },
+    "Sfavorevole" : {
+
+    },
+    "Sgombero neve in corso" : {
+
+    },
+    "Sicurezza" : {
+
+    },
+    "Sincronizzazione…" : {
+
+    },
+    "Skaftafell e Svartifoss" : {
+      "extractionState" : "stale"
+    },
+    "Smettere di modificare insieme?" : {
+
+    },
+    "Smetti" : {
+
+    },
+    "Smetti di modificare insieme" : {
+
+    },
+    "Smyril Line" : {
+
+    },
+    "Snæfellsnes" : {
+
+    },
+    "Snowboard" : {
+
+    },
+    "SO" : {
+
+    },
+    "Soglie" : {
+
+    },
+    "soglie di allerta, guida, aspetto, località scelta, livelli mappa" : {
+
+    },
+    "Solo a mano" : {
+
+    },
+    "Solo aperti adesso" : {
+
+    },
+    "Solo corone" : {
+
+    },
+    "Solo d'estate, con un 4×4 su strade F con guadi." : {
+
+    },
+    "Solo da leggere (%lld)" : {
+      "extractionState" : "manual"
+    },
+    "SOLO DI PASSAGGIO" : {
+      "extractionState" : "manual"
+    },
+    "Solo i più famosi" : {
+
+    },
+    "Solo in foto" : {
+      "extractionState" : "manual"
+    },
+    "Solo in Islanda, per ora" : {
+      "extractionState" : "manual"
+    },
+    "Solo veicoli 4x4 da montagna" : {
+
+    },
+    "Sopra %@ le portiere si aprono a fatica e i mezzi alti rischiano di ribaltarsi: tieni la portiera con due mani." : {
+      "extractionState" : "manual"
+    },
+    "Sopra 25 m/s le portiere si aprono a fatica e i mezzi alti rischiano di ribaltarsi: tieni la portiera con due mani." : {
+      "extractionState" : "stale"
+    },
+    "Sopra di te o quasi" : {
+
+    },
+    "Sorgente calda" : {
+
+    },
+    "Sorveglianza aurora" : {
+
+    },
+    "SOS 112" : {
+
+    },
+    "Soste" : {
+
+    },
+    "Soste (>2 min)" : {
+
+    },
+    "Sostituisci il mio viaggio" : {
+
+    },
+    "Sostituiscilo" : {
+
+    },
+    "Spenta" : {
+
+    },
+    "Spesa" : {
+
+    },
+    "SPESA · SUPERMERCATI" : {
+
+    },
+    "Spesa e negozi" : {
+
+    },
+    "Spesa: %@, %@ km" : {
+
+    },
+    "Spiagge" : {
+
+    },
+    "Spiagge: %@" : {
+
+    },
+    "Spiaggia" : {
+
+    },
+    "Spiaggia nera – onde anomale" : {
+
+    },
+    "Sposta" : {
+
+    },
+    "Sposta a %@" : {
+
+    },
+    "Sposta a un altro giorno" : {
+
+    },
+    "Sposta anche le %lld tappe successive" : {
+
+    },
+    "Sposta in un'altra tappa" : {
+
+    },
+    "Sposta la giornata" : {
+
+    },
+    "SSE" : {
+
+    },
+    "SSO" : {
+
+    },
+    "Stai guardando il cielo a nord e non vedi l'aurora? Dicci com'è il cielo: con cielo sereno la tua segnalazione aiuta gli altri a non uscire per niente." : {
+
+    },
+    "Stanotte aurora: condizioni %@ verso le %@" : {
+
+    },
+    "Stanotte, verso le %@" : {
+
+    },
+    "STATO" : {
+
+    },
+    "Stato del volo: Voli e traghetti." : {
+
+    },
+    "Stato delle fonti" : {
+
+    },
+    "Stato delle fonti non disponibile" : {
+
+    },
+    "Stato sconosciuto" : {
+
+    },
+    "STAZIONE" : {
+
+    },
+    "Stazione %@ (%lld km): %@ / raff. %@, asfalto %@" : {
+
+    },
+    "Stazione %@, sul viaggio %@. Vento medio %@ %@. %@" : {
+
+    },
+    "Stazione %lld" : {
+
+    },
+    "Stazioni" : {
+      "extractionState" : "manual"
+    },
+    "Stazioni meteo stradali" : {
+      "extractionState" : "stale"
+    },
+    "Stazioni meteo stradali vicine" : {
+      "extractionState" : "manual"
+    },
+    "Stazioni stradali (raffiche)" : {
+
+    },
+    "Stazioni stradali lungo il percorso (%lld)" : {
+
+    },
+    "Stima euristica: %@, cielo sereno al %lld%%.%@ Non è garanzia di aurora visibile." : {
+
+    },
+    "Stima NOAA (1 min)" : {
+
+    },
+    "Stokksnes e Vestrahorn" : {
+      "extractionState" : "stale"
+    },
+    "Storia 9:16" : {
+
+    },
+    "Storico allerte" : {
+
+    },
+    "storico delle notifiche ricevute" : {
+
+    },
+    "Storico percorsi" : {
+
+    },
+    "Strada %@" : {
+
+    },
+    "Strada chiusa con vento forte e in primavera per la nidificazione." : {
+
+    },
+    "Strada chiusa: Hringvegur (1) a Mýrdalssandur" : {
+
+    },
+    "Strada davanti: %@" : {
+
+    },
+    "Strada dissestata" : {
+
+    },
+    "Strada F di montagna: solo 4x4, guadi senza ponti, aperta in genere da giugno a settembre" : {
+
+    },
+    "Strada locale" : {
+
+    },
+    "Strada principale (stofnvegur)" : {
+
+    },
+    "Strada regionale o di collegamento (tengivegur)" : {
+
+    },
+    "Strada scivolosa" : {
+
+    },
+    "Strada vicina: %@ · %@" : {
+
+    },
+    "strade" : {
+
+    },
+    "Strade" : {
+
+    },
+    "Strade chiuse entro %lld km" : {
+
+    },
+    "Strade chiuse o impraticabili" : {
+
+    },
+    "Strade chiuse o pericolose sul percorso: %@" : {
+
+    },
+    "Strade davanti, stazioni del vento e limiti di velocità" : {
+      "extractionState" : "manual"
+    },
+    "Strade e condizioni Vegagerðin" : {
+      "extractionState" : "manual"
+    },
+    "Strade e notizie" : {
+      "extractionState" : "manual"
+    },
+    "Strade e stazioni" : {
+      "extractionState" : "manual"
+    },
+    "Strade F (Highlands)" : {
+
+    },
+    "Strade vicine" : {
+
+    },
+    "Strade, chiusure e stazioni Vegagerðin" : {
+      "extractionState" : "manual"
+    },
+    "Strade: chiusure, lavori e pericoli" : {
+      "extractionState" : "manual"
+    },
+    "Strade: condizioni Vegagerðin. Tocca una strada per i dettagli." : {
+      "extractionState" : "manual"
+    },
+    "Strade: problemi adesso" : {
+
+    },
+    "Strætó" : {
+
+    },
+    "Strætó – bus di linea" : {
+
+    },
+    "Strumenti" : {
+
+    },
+    "Stykkishólmur – Flatey – Brjánslækur" : {
+
+    },
+    "Su questo dispositivo Salute non è disponibile." : {
+
+    },
+    "Sud" : {
+
+    },
+    "Sud e Ovest (Reykjavík, Golden Circle, Vík)" : {
+      "extractionState" : "stale"
+    },
+    "Sud-est" : {
+
+    },
+    "Sul ghiacciaio solo con una guida." : {
+
+    },
+    "Sull'Islanda adesso il valore massimo è %lld: troppo basso per essere colorato (la scala parte da 4). Il colore compare quando l'ovale si allarga verso sud." : {
+
+    },
+    "SULLA STRADA" : {
+
+    },
+    "Sulla strada davanti: %@" : {
+
+    },
+    "Suoni" : {
+
+    },
+    "Suoni Norður per ogni tipo di avviso" : {
+
+    },
+    "Supermercati e negozi" : {
+
+    },
+    "Supermercati vicino alla tappa" : {
+
+    },
+    "Supermercato" : {
+
+    },
+    "Svuota" : {
+
+    },
+    "Swell" : {
+
+    },
+    "t" : {
+
+    },
+    "Tappa" : {
+      "extractionState" : "manual"
+    },
+    "TAPPA" : {
+
+    },
+    "TAPPA %lld DI %lld" : {
+
+    },
+    "Tappa del viaggio" : {
+
+    },
+    "Tappa passata." : {
+
+    },
+    "Tappa: %@" : {
+
+    },
+    "Tappe" : {
+
+    },
+    "TAPPE" : {
+
+    },
+    "tappe, date e note" : {
+
+    },
+    "Tappe, meteo e strade lungo il percorso" : {
+      "extractionState" : "manual"
+    },
+    "Temp." : {
+
+    },
+    "Temperatura" : {
+
+    },
+    "TEMPERATURA" : {
+
+    },
+    "Temperatura, vento, raffiche e allerte IMO per un luogo." : {
+      "extractionState" : "stale"
+    },
+    "Tempesta" : {
+
+    },
+    "Tempesta magnetica" : {
+
+    },
+    "TEMPI DEL GIORNO" : {
+
+    },
+    "TEMPO" : {
+
+    },
+    "Tempo %@" : {
+
+    },
+    "tempo in background scaduto" : {
+
+    },
+    "TEMPO REALE · DIVERSO DAL KP" : {
+
+    },
+    "Temporale" : {
+
+    },
+    "Temporale con grandine" : {
+
+    },
+    "Temporali" : {
+
+    },
+    "Temporali (CAPE)" : {
+      "extractionState" : "stale"
+    },
+    "Tendenza 27 giorni" : {
+
+    },
+    "Tendenza a 27 giorni non disponibile" : {
+
+    },
+    "Termina e salva" : {
+
+    },
+    "Terminare la registrazione?" : {
+
+    },
+    "Terminate" : {
+
+    },
+    "termine del modello" : {
+
+    },
+    "Termini d'uso" : {
+
+    },
+    "Terra e mare" : {
+      "extractionState" : "manual"
+    },
+    "Terra, mare, servizi" : {
+
+    },
+    "Terremoti" : {
+
+    },
+    "TERREMOTI · 24 H" : {
+
+    },
+    "Terremoti 48 h" : {
+
+    },
+    "Terremoti da M%@" : {
+
+    },
+    "Terremoti e vulcani" : {
+
+    },
+    "Terremoti, distributori, voli KEF e traghetti" : {
+      "extractionState" : "manual"
+    },
+    "Terremoto M%@ – %@" : {
+
+    },
+    "Terremoto M3,8 – Mýrdalsjökull" : {
+
+    },
+    "Testi originali di Vegagerðin (in inglese), aggiornati ogni 5 minuti." : {
+      "extractionState" : "manual"
+    },
+    "Ti mandiamo per email un codice di 6 cifre, valido 15 minuti." : {
+
+    },
+    "Ti scriviamo per email a ogni evento dell'account: creazione, nuovo accesso, cambio o reimpostazione della password, nuovo codice di recupero, eliminazione." : {
+
+    },
+    "Tieni premuta un'attrazione per spostarla a un altro giorno o a un'altra tappa." : {
+
+    },
+    "Tocca la mappa per i valori in un punto" : {
+
+    },
+    "Tocca un numero per aprire la tappa." : {
+
+    },
+    "Togli" : {
+
+    },
+    "Togli dal viaggio" : {
+
+    },
+    "Togliere questa attrazione dal viaggio?" : {
+
+    },
+    "Togline uno in Allerte › Impostazioni allerte › Luoghi seguiti." : {
+
+    },
+    "TOP" : {
+
+    },
+    "TOP: i luoghi principali scelti dall'app, con tempi di visita e avvertenze. Gli altri vengono da OpenStreetMap (cascate, belvedere, sorgenti calde, grotte, musei, piscine…)." : {
+
+    },
+    "Totale" : {
+
+    },
+    "Tra %lld km (%lld min): %@ – %@" : {
+
+    },
+    "Tra %lld km: %@, raffiche %@" : {
+
+    },
+    "tracce GPS, km, velocità, consumi, contachilometri" : {
+
+    },
+    "Traccia GPX" : {
+
+    },
+    "Traghetti" : {
+
+    },
+    "Traghetto" : {
+
+    },
+    "Traghetto Herjólfur" : {
+
+    },
+    "Traghetto per Vestmannaeyjar" : {
+
+    },
+    "Traghetto Seyðisfjörður – Fær Øer – Danimarca" : {
+
+    },
+    "Traghetto Stykkishólmur – Brjánslækur" : {
+
+    },
+    "TRAMONTO %@" : {
+
+    },
+    "Tratti critici" : {
+      "extractionState" : "stale"
+    },
+    "Tratti ghiacciati" : {
+
+    },
+    "Tratto %@ · %@" : {
+      "extractionState" : "manual"
+    },
+    "Tratto %@. Aggiornato %@. Fonte: Vegagerðin (umferdin.is), informazioni 1777." : {
+
+    },
+    "Tratto %lld" : {
+
+    },
+    "Tratto vicino a %@, a %lld km da te. Verifica su umferdin.is o chiama il 1777." : {
+
+    },
+    "troppo uso del processore" : {
+
+    },
+    "Trova l'aurora con la fotocamera" : {
+
+    },
+    "Tutte" : {
+
+    },
+    "TUTTE →" : {
+
+    },
+    "Tutte le allerte IMO" : {
+      "extractionState" : "manual"
+    },
+    "Tutte le valute" : {
+
+    },
+    "Tutti" : {
+
+    },
+    "Tutto" : {
+
+    },
+    "Tutto quello che c'è da vedere, sulla mappa" : {
+
+    },
+    "Ufficiale" : {
+
+    },
+    "ULTIMA COPIA SALVATA" : {
+
+    },
+    "ULTIMA NOTIFICA · %@" : {
+
+    },
+    "ULTIME 3 ORE" : {
+      "extractionState" : "stale"
+    },
+    "ULTIMI %lld MIN" : {
+      "extractionState" : "manual"
+    },
+    "Ultimo aggiornamento" : {
+
+    },
+    "Ultimo backup" : {
+
+    },
+    "Ultimo controllo %@" : {
+
+    },
+    "Ultimo quarto" : {
+
+    },
+    "Ultimo segnale di vita: %@" : {
+
+    },
+    "Umferdin.is" : {
+
+    },
+    "Umferdin.is – mappa strade in tempo reale" : {
+
+    },
+    "Umidità" : {
+
+    },
+    "Un solo acquisto per tutte le funzioni qui sotto. Avvisi meteo e strade, chiusure, terremoti e numeri di emergenza restano sempre gratuiti." : {
+
+    },
+    "Una CME non garantisce un'aurora: l'effetto dipende dall'orientamento del suo campo magnetico, noto solo all'arrivo." : {
+
+    },
+    "Una copia separata: gli compare in Viaggio › Ricevuti. Le modifiche non si sincronizzano: per quello usa «Modificatelo insieme» qui sopra." : {
+
+    },
+    "Una notifica arriva quando un'allerta è nuova, peggiora o inizia prima; se resta uguale si aggiorna solo nell'elenco. Un luogo che stai solo guardando compare nelle schermate ma non manda notifiche, a meno che tu non lo segua con la campanella. Il riepilogo arriva la sera prima di ogni giorno di viaggio (dalle 19:30, ora islandese): il tragitto, vento, pioggia, strade chiuse, allerte e aurora. Di notte (22:30–7:00) solo il pericolo suona; l'arancione arriva senza suono, il resto in silenzio nel Centro notifiche." : {
+
+    },
+    "Una registrazione del %@ si è interrotta (%@)." : {
+
+    },
+    "Una segnalazione da verificare" : {
+      "extractionState" : "manual"
+    },
+    "Una volta al giorno" : {
+
+    },
+    "Unità di misura" : {
+      "extractionState" : "manual"
+    },
+    "USA IL CODICE VIA EMAIL" : {
+
+    },
+    "Usa la mia posizione" : {
+
+    },
+    "Valanghe" : {
+
+    },
+    "Valida fino alle" : {
+      "extractionState" : "manual"
+    },
+    "VALIDO %@" : {
+
+    },
+    "valido fino a %@" : {
+
+    },
+    "Valore massimo sull'Islanda adesso: %lld." : {
+
+    },
+    "VALORE OVATION NEL TUO CIELO" : {
+
+    },
+    "Valutazione complessiva" : {
+
+    },
+    "Valute" : {
+
+    },
+    "Variazione del campo orizzontale nell'ultima ora: sotto 50 nT calmo, da 150 nT aurora probabile sopra l'Islanda, oltre 400 nT tempesta." : {
+
+    },
+    "Vatnajökull" : {
+
+    },
+    "VEDO L'AURORA" : {
+
+    },
+    "Vedur.is – Meteo ufficiale islandese" : {
+
+    },
+    "Vedur.is – Terremoti" : {
+
+    },
+    "Vedur.is – Vulcani e mappa dei pericoli" : {
+
+    },
+    "Veðurstofa Íslands" : {
+
+    },
+    "Veðurstofa Íslands · MET Norway · Open-Meteo" : {
+      "extractionState" : "manual"
+    },
+    "Veðurstofa Íslands (vedur.is), Vegagerðin (umferdin.is), Open-Meteo, NOAA Space Weather Prediction Center, SafeTravel.is. L'app aggrega dati pubblici: in caso di dubbio prevalgono le fonti ufficiali." : {
+
+    },
+    "Vegagerðin" : {
+
+    },
+    "Vegagerðin · umferdin.is" : {
+
+    },
+    "Velocità" : {
+      "extractionState" : "manual"
+    },
+    "Velocità %lld km/h – limite %lld" : {
+
+    },
+    "Velocità e quota" : {
+
+    },
+    "Velocità in guida" : {
+
+    },
+    "Velocità massima" : {
+
+    },
+    "Velocità max" : {
+
+    },
+    "Velocità media" : {
+
+    },
+    "Vento" : {
+
+    },
+    "VENTO" : {
+
+    },
+    "VENTO · RAFFICHE" : {
+
+    },
+    "Vento %@ · raff. %@" : {
+      "extractionState" : "stale"
+    },
+    "vento %@ raff. %@" : {
+      "extractionState" : "stale"
+    },
+    "Vento debole o moderato" : {
+
+    },
+    "Vento e raffiche" : {
+
+    },
+    "Vento forte sulla spiaggia: onde pericolose, valuta di saltarla" : {
+
+    },
+    "Vento forte sulla strada davanti" : {
+
+    },
+    "Vento gestibile." : {
+
+    },
+    "vento medio" : {
+
+    },
+    "Vento solare" : {
+      "extractionState" : "stale"
+    },
+    "Vento solare a L1" : {
+
+    },
+    "Vento solare e Bz" : {
+
+    },
+    "Vento solare non aggiornato" : {
+
+    },
+    "Vento solare non disponibile." : {
+
+    },
+    "Vento solare previsto · WSA-ENLIL NOAA" : {
+
+    },
+    "Vento solare RTSW" : {
+
+    },
+    "Vento sostenuto: tieni salde le portiere dell'auto aprendole." : {
+
+    },
+    "Vento sul viaggio %@, %@" : {
+
+    },
+    "Vento, pioggia, neve, radar, strade" : {
+      "extractionState" : "manual"
+    },
+    "VENTO/RAFF" : {
+
+    },
+    "Verde: aggiornato. Giallo: copia salvata sul telefono (senza rete o fonte lenta). Rosso: ultimo tentativo fallito." : {
+
+    },
+    "Verde: tra i più economici d'Islanda adesso; rosso: tra i più cari. «+N kr» è quanto costa in più al litro del più economico della lista." : {
+
+    },
+    "Verifica delle previsioni Kp" : {
+
+    },
+    "VERIFICA DELLE PREVISIONI KP" : {
+      "extractionState" : "stale"
+    },
+    "Verso %@" : {
+
+    },
+    "Verso %@ · ~%lld km in linea d'aria" : {
+
+    },
+    "Verso la tappa %lld: %@" : {
+
+    },
+    "verso le %@" : {
+
+    },
+    "VERSO LE %@ · %@" : {
+
+    },
+    "Via email, a chiunque" : {
+      "extractionState" : "stale"
+    },
+    "Viaggi condivisi e di gruppo" : {
+
+    },
+    "Viaggi ricevuti" : {
+
+    },
+    "Viaggio" : {
+
+    },
+    "Viaggio attuale" : {
+
+    },
+    "Viaggio del %@" : {
+
+    },
+    "Viaggio di %@. Aggiornato %@. Fonte: Vegagerðin (umferdin.is), informazioni 1777." : {
+
+    },
+    "Viaggio e percorso" : {
+
+    },
+    "Viaggio, percorsi e impostazioni restano sul telefono." : {
+
+    },
+    "Viaggio, percorsi registrati, allerte e impostazioni vanno sul tuo account, cifrati. Con «a ogni modifica» il backup parte entro mezzo minuto da ogni cambiamento e invia solo ciò che è cambiato; uscendo dall'app viene sempre salvato l'ultimo stato (tranne con «una volta al giorno» e «solo a mano»)." : {
+
+    },
+    "vicino a %@" : {
+
+    },
+    "Vicino a %@" : {
+
+    },
+    "Vicino a %@ e lungo la strada da %@. Il + li aggiunge al programma dopo l'ultima attrazione." : {
+
+    },
+    "Vicino a %@. Il + li aggiunge al programma dopo l'ultima attrazione." : {
+
+    },
+    "vicino alla tappa %@" : {
+      "extractionState" : "stale"
+    },
+    "Vík · Suðurland · dalle 14:00 fino alle 23:00. Raffiche fino a 35 m/s sotto Eyjafjöll." : {
+
+    },
+    "Vínbúðin (alcolici)" : {
+
+    },
+    "Vino, birra forte e superalcolici si comprano solo da Vínbúðin, con orari ridotti (spesso chiusa la domenica). Nei supermercati c'è solo birra leggera." : {
+
+    },
+    "Visibile a occhio nudo" : {
+
+    },
+    "Visibile in foto" : {
+
+    },
+    "VISIBILE ORA" : {
+
+    },
+    "Visibile verso l'orizzonte" : {
+
+    },
+    "Visibilità" : {
+      "extractionState" : "stale"
+    },
+    "Visione notturna (rosso)" : {
+
+    },
+    "Visione notturna rossa" : {
+
+    },
+    "Visita: %@" : {
+
+    },
+    "Vista" : {
+
+    },
+    "Vista polare NOAA, ultime 3 ore" : {
+
+    },
+    "Voli" : {
+      "extractionState" : "manual"
+    },
+    "Voli e traghetti" : {
+
+    },
+    "VOLI E TRAGHETTI" : {
+
+    },
+    "Voli e traghetti…" : {
+
+    },
+    "Voli interni" : {
+
+    },
+    "Voli interni (Reykjavík RKV, Akureyri…)" : {
+
+    },
+    "Voli KEF" : {
+      "extractionState" : "stale"
+    },
+    "Voli KEF e traghetti" : {
+
+    },
+    "Voli KEF e traghetto Herjólfur" : {
+      "extractionState" : "manual"
+    },
+    "Voli seguiti" : {
+
+    },
+    "Voli seguiti (KEF)" : {
+
+    },
+    "Voli, bus e traghetti" : {
+
+    },
+    "Volo 3D e video del percorso" : {
+
+    },
+    "Volo, città o compagnia" : {
+
+    },
+    "Vulcani e terremoti" : {
+      "extractionState" : "manual"
+    },
+    "Vulcani ed eruzioni" : {
+
+    },
+    "Vulcano" : {
+
+    },
+    "watchdog" : {
+
+    },
+    "Webcam" : {
+
+    },
+    "Webcam %@" : {
+
+    },
+    "Webcam %lld" : {
+
+    },
+    "Webcam e distributori…" : {
+
+    },
+    "Webcam lungo il percorso" : {
+
+    },
+    "Webcam stradali" : {
+
+    },
+    "Webcam stradali (%lld siti)" : {
+
+    },
+    "Webcam vicine" : {
+
+    },
+    "wind" : {
+
+    },
+    "Windy" : {
+
+    },
+    "WINDY ↗" : {
+      "extractionState" : "stale"
+    },
+    "WSA-ENLIL NOAA" : {
+
+    },
+    "XXXX-XXXX-XXXX-XXXX" : {
+
+    },
+    "Zone di pericolo e chiusure: IMO e Protezione Civile." : {
+
+    }
+  },
+  "version" : "1.0"
+}

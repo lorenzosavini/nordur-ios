@@ -1,0 +1,96 @@
+{
+  "source": "/Users/runner/work/nordur-ios/nordur-ios/Nordur/Views/WebcamsView.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Cerca webcam o strada",
+        "location": {
+          "startingColumn": 61,
+          "startingLine": 53
+        }
+      },
+      {
+        "comment": "",
+        "key": "Webcam stradali",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 51
+        }
+      },
+      {
+        "comment": "",
+        "key": "Vegagerðin",
+        "location": {
+          "startingColumn": 104,
+          "startingLine": 25
+        }
+      },
+      {
+        "comment": "",
+        "key": "Nessuna webcam trovata",
+        "location": {
+          "startingColumn": 76,
+          "startingLine": 31
+        }
+      },
+      {
+        "comment": "",
+        "key": "Prova con il nome di una strada o di un passo.",
+        "location": {
+          "startingColumn": 77,
+          "startingLine": 32
+        }
+      },
+      {
+        "comment": "",
+        "key": "Vegagerðin",
+        "location": {
+          "startingColumn": 69,
+          "startingLine": 16
+        }
+      },
+      {
+        "comment": "",
+        "key": "Webcam stradali",
+        "location": {
+          "startingColumn": 110,
+          "startingLine": 16
+        }
+      },
+      {
+        "comment": "",
+        "key": "Le strade come sono adesso",
+        "location": {
+          "startingColumn": 158,
+          "startingLine": 16
+        }
+      },
+      {
+        "comment": "",
+        "key": "Le webcam stradali",
+        "location": {
+          "startingColumn": 67,
+          "startingLine": 21
+        }
+      },
+      {
+        "comment": "",
+        "key": "%lld km · %lld immagini",
+        "location": {
+          "startingColumn": 34,
+          "startingLine": 43
+        }
+      },
+      {
+        "comment": "",
+        "key": "Immagini Vegagerðin, aggiornate ogni pochi minuti.",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 103
+        }
+      }
+    ]
+  },
+  "version": 1
+}

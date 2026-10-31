@@ -1,0 +1,240 @@
+{
+  "source": "/Users/runner/work/nordur-ios/nordur-ios/Nordur/Views/QuakesView.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Terremoti e vulcani",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 87
+        }
+      },
+      {
+        "comment": "",
+        "key": "Veðurstofa Íslands",
+        "location": {
+          "startingColumn": 71,
+          "startingLine": 15
+        }
+      },
+      {
+        "comment": "",
+        "key": "Vulcani e terremoti",
+        "location": {
+          "startingColumn": 121,
+          "startingLine": 15
+        }
+      },
+      {
+        "comment": "",
+        "key": "%lld scosse nelle ultime 24 ore",
+        "location": {
+          "startingColumn": 173,
+          "startingLine": 15
+        }
+      },
+      {
+        "comment": "",
+        "key": "Terremoti e vulcani",
+        "location": {
+          "startingColumn": 67,
+          "startingLine": 20
+        }
+      },
+      {
+        "comment": "",
+        "key": "Terremoti",
+        "location": {
+          "startingColumn": 69,
+          "startingLine": 24
+        }
+      },
+      {
+        "comment": "",
+        "key": "Veðurstofa Íslands",
+        "location": {
+          "startingColumn": 108,
+          "startingLine": 47
+        }
+      },
+      {
+        "comment": "",
+        "key": "Magnitudo minima",
+        "location": {
+          "startingColumn": 24,
+          "startingLine": 39
+        }
+      },
+      {
+        "comment": "",
+        "key": "Tutte",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 40
+        }
+      },
+      {
+        "comment": "",
+        "key": "M1+",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 41
+        }
+      },
+      {
+        "comment": "",
+        "key": "M2+",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 42
+        }
+      },
+      {
+        "comment": "",
+        "key": "M3+",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 43
+        }
+      },
+      {
+        "comment": "",
+        "key": "Nessuna scossa con questo filtro",
+        "location": {
+          "startingColumn": 83,
+          "startingLine": 56
+        }
+      },
+      {
+        "comment": "",
+        "key": "Nelle ultime 48 ore non ci sono terremoti di questa magnitudo. Prova «Tutte».",
+        "location": {
+          "startingColumn": 59,
+          "startingLine": 57
+        }
+      },
+      {
+        "comment": "",
+        "key": "M%@",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 61
+        }
+      },
+      {
+        "comment": "",
+        "key": "%lld km",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 71
+        }
+      },
+      {
+        "comment": "",
+        "key": " · automatico",
+        "location": {
+          "startingColumn": 178,
+          "startingLine": 67
+        }
+      },
+      {
+        "comment": "",
+        "key": "%@ · prof. %@%@",
+        "location": {
+          "startingColumn": 34,
+          "startingLine": 67
+        }
+      },
+      {
+        "comment": "",
+        "key": "%lld scosse – ultime 48 ore",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 75
+        }
+      },
+      {
+        "comment": "",
+        "key": "Zone di pericolo e chiusure: IMO e Protezione Civile.",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 78
+        }
+      },
+      {
+        "comment": "",
+        "key": "Vedur.is – Terremoti",
+        "location": {
+          "startingColumn": 50,
+          "startingLine": 80
+        }
+      },
+      {
+        "comment": "",
+        "key": "Mappa ufficiale in tempo reale",
+        "location": {
+          "startingColumn": 105,
+          "startingLine": 80
+        }
+      },
+      {
+        "comment": "",
+        "key": "Vedur.is – Vulcani e mappa dei pericoli",
+        "location": {
+          "startingColumn": 50,
+          "startingLine": 81
+        }
+      },
+      {
+        "comment": "",
+        "key": "Livelli di allerta aviazione e pericolo",
+        "location": {
+          "startingColumn": 124,
+          "startingLine": 81
+        }
+      },
+      {
+        "comment": "",
+        "key": "Previsione gas vulcanici",
+        "location": {
+          "startingColumn": 50,
+          "startingLine": 82
+        }
+      },
+      {
+        "comment": "",
+        "key": "Dispersione SO₂ durante le eruzioni",
+        "location": {
+          "startingColumn": 107,
+          "startingLine": 82
+        }
+      },
+      {
+        "comment": "",
+        "key": "Protezione Civile (Almannavarnir)",
+        "location": {
+          "startingColumn": 50,
+          "startingLine": 83
+        }
+      },
+      {
+        "comment": "",
+        "key": "Evacuazioni e zone chiuse",
+        "location": {
+          "startingColumn": 116,
+          "startingLine": 83
+        }
+      },
+      {
+        "comment": "",
+        "key": "Vulcani ed eruzioni",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 84
+        }
+      }
+    ]
+  },
+  "version": 1
+}

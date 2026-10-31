@@ -1,0 +1,40 @@
+{
+  "source": "/Users/runner/work/nordur-ios/nordur-ios/Shared/Services/FuelPrices.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "BCE",
+        "location": {
+          "startingColumn": 46,
+          "startingLine": 107
+        }
+      },
+      {
+        "comment": "",
+        "key": "Benzina 95",
+        "location": {
+          "startingColumn": 61,
+          "startingLine": 27
+        }
+      },
+      {
+        "comment": "",
+        "key": "Diesel",
+        "location": {
+          "startingColumn": 95,
+          "startingLine": 27
+        }
+      },
+      {
+        "comment": "",
+        "key": "Solo corone",
+        "location": {
+          "startingColumn": 59,
+          "startingLine": 160
+        }
+      }
+    ]
+  },
+  "version": 1
+}

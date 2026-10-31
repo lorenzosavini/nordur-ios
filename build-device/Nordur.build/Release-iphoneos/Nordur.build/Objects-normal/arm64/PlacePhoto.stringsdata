@@ -1,0 +1,16 @@
+{
+  "source": "/Users/runner/work/nordur-ios/nordur-ios/Nordur/State/PlacePhoto.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Foto: %@",
+        "location": {
+          "startingColumn": 41,
+          "startingLine": 19
+        }
+      }
+    ]
+  },
+  "version": 1
+}

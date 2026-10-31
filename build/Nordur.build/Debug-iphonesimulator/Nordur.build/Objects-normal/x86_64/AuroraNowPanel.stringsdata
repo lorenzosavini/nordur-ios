@@ -1,0 +1,56 @@
+{
+  "source": "/Users/runner/work/nordur-ios/nordur-ios/Nordur/Views/AuroraNowPanel.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "PREVISIONE ORA PER ORA, VENTO SOLARE, MAPPA →",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 64
+        }
+      },
+      {
+        "comment": "",
+        "key": "AURORA ADESSO · QUI",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 26
+        }
+      },
+      {
+        "comment": "",
+        "key": "VISIBILE ORA",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 29
+        }
+      },
+      {
+        "comment": "",
+        "key": "KP",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 47
+        }
+      },
+      {
+        "comment": "",
+        "key": "CAMPO",
+        "location": {
+          "startingColumn": 46,
+          "startingLine": 57
+        }
+      },
+      {
+        "comment": "",
+        "key": "Dove guardare: mirino con la fotocamera",
+        "location": {
+          "startingColumn": 27,
+          "startingLine": 161
+        }
+      }
+    ]
+  },
+  "version": 1
+}
