@@ -1,0 +1,5 @@
+ring-road: ok 34 s
+golden-circle: ok 46 s
+glacier-lagoon: ok 21 s
+snaefellsnes: ok 22 s
+westfjords: ok 19 s
