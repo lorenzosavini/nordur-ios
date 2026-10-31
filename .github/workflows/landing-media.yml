@@ -8,6 +8,9 @@ on:
       langs:
         description: "Languages, comma separated"
         default: "it,en,de,fr,es"
+      set:
+        description: "site (the website's media) or post (every screen, for social posts)"
+        default: "site"
 
 permissions:
   contents: write
@@ -38,7 +41,7 @@ jobs:
           idb_companion --udid "$UDID" > /tmp/idb.log 2>&1 &
           sleep 5
           idb connect localhost 10882 || idb connect "$UDID" || true
-          python3 tools/ci/landing_media.py "$UDID" media "${{ github.event.inputs.langs || 'it,en,de,fr,es' }}"
+          python3 tools/ci/landing_media.py "$UDID" media "${{ github.event.inputs.langs || 'it,en,de,fr,es' }}" "${{ github.event.inputs.set || 'site' }}"
           du -sh media/*
       - name: Publish to branch landing-media
         env:
@@ -48,4 +51,6 @@ jobs:
           git init -q -b landing-media
           git add -A
           git -c user.name=nordur-ci -c user.email=ci@users.noreply.github.com commit -qm "Landing media for ${GITHUB_SHA}"
-          git push -qf "https://x-access-token:${TOKEN}@github.com/${GITHUB_REPOSITORY}.git" HEAD:landing-media
+          # The post set goes to its own branch: the website's media stay as they are.
+          BRANCH=landing-media; [ "${{ github.event.inputs.set }}" = "post" ] && BRANCH=post-media
+          git push -qf "https://x-access-token:${TOKEN}@github.com/${GITHUB_REPOSITORY}.git" HEAD:$BRANCH

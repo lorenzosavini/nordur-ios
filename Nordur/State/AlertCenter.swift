@@ -231,6 +231,33 @@ final class AlertCenter: NSObject {
     /// The place watched for "where you are": the place chosen by hand when there
     /// is one (a pin in Iceland while the phone is elsewhere), otherwise the GPS;
     /// and with the GPS outside Iceland, the trip stop of tonight if there is one.
+    /// CI only (screenshots of the notifications): one alert of each kind, as they arrive.
+    func demoNotifications() {
+        guard UserDefaults.standard.bool(forKey: "ciDemoTrip") else { return }
+        let now = Date()
+        let samples: [AlertEvent] = [
+            AlertEvent(id: "demo:w", date: now, category: .weatherWarning, severity: Risk.warning.rawValue,
+                       title: String(localized: "Allerta arancione: tempesta da sud-est"),
+                       body: String(localized: "Vík · Suðurland · dalle 14:00 fino alle 23:00. Raffiche fino a 35 m/s sotto Eyjafjöll."),
+                       expires: now.addingTimeInterval(9 * 3600)),
+            AlertEvent(id: "demo:r", date: now.addingTimeInterval(-60), category: .road, severity: Risk.danger.rawValue,
+                       title: String(localized: "Strada chiusa: Hringvegur (1) a Mýrdalssandur"),
+                       body: String(localized: "A 12 km da te. Fonte: Vegagerðin (umferdin.is), informazioni 1777.")),
+            AlertEvent(id: "demo:a", date: now.addingTimeInterval(-120), category: .aurora, severity: Risk.caution.rawValue,
+                       title: String(localized: "Condizioni buone per l'aurora, adesso"),
+                       body: String(localized: "OVATION 32 nel tuo cielo, cielo sereno al 80%. Guarda verso nord."),
+                       expires: now.addingTimeInterval(90 * 60)),
+            AlertEvent(id: "demo:s", date: now.addingTimeInterval(-180), category: .summary, severity: Risk.caution.rawValue,
+                       title: String(localized: "Riepilogo di domani: Vík → Höfn"),
+                       body: String(localized: "Raffiche fino a 22 m/s verso le 14 · Nessuna strada chiusa sul percorso · Stanotte aurora: condizioni buone verso le 23"),
+                       expires: now.addingTimeInterval(36 * 3600)),
+            AlertEvent(id: "demo:q", date: now.addingTimeInterval(-240), category: .quake, severity: Risk.warning.rawValue,
+                       title: String(localized: "Terremoto M3,8 – Mýrdalsjökull"),
+                       body: String(localized: "21:12, profondità 4,1 km · 28 km da Vík")),
+        ]
+        for event in samples.reversed() { fired[event.id] = nil; record(event, notify: true, speak: false) }
+    }
+
     /// The bell next to a place: followed for notifications, or no more.
     func toggleFollow(_ place: Place) {
         var next = settings

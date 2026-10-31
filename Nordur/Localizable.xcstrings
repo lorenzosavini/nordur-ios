@@ -52852,6 +52852,286 @@
           }
         }
       }
+    },
+    "Allerta arancione: tempesta da sud-est" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Orange warning: south-easterly storm"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Orange Warnung: Sturm aus Südost"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vigilance orange : tempête de sud-est"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aviso naranja: temporal del sureste"
+          }
+        }
+      }
+    },
+    "Vík · Suðurland · dalle 14:00 fino alle 23:00. Raffiche fino a 35 m/s sotto Eyjafjöll." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vík · Suðurland · from 14:00 until 23:00. Gusts up to 35 m/s below Eyjafjöll."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vík · Suðurland · von 14:00 bis 23:00. Böen bis 35 m/s unter den Eyjafjöll."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vík · Suðurland · de 14 h à 23 h. Rafales jusqu'à 35 m/s sous l'Eyjafjöll."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vík · Suðurland · de 14:00 a 23:00. Rachas de hasta 35 m/s bajo el Eyjafjöll."
+          }
+        }
+      }
+    },
+    "Strada chiusa: Hringvegur (1) a Mýrdalssandur" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Road closed: Hringvegur (1) at Mýrdalssandur"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Straße gesperrt: Hringvegur (1) am Mýrdalssandur"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Route fermée : Hringvegur (1) à Mýrdalssandur"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Carretera cerrada: Hringvegur (1) en Mýrdalssandur"
+          }
+        }
+      }
+    },
+    "A 12 km da te. Fonte: Vegagerðin (umferdin.is), informazioni 1777." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "12 km from you. Source: Vegagerðin (umferdin.is), information 1777."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "12 km von dir. Quelle: Vegagerðin (umferdin.is), Auskunft 1777."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "À 12 km de vous. Source : Vegagerðin (umferdin.is), informations 1777."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A 12 km de ti. Fuente: Vegagerðin (umferdin.is), información 1777."
+          }
+        }
+      }
+    },
+    "Condizioni buone per l'aurora, adesso" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Good conditions for the aurora, right now"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gute Bedingungen für Polarlicht, jetzt"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bonnes conditions pour les aurores, maintenant"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Buenas condiciones para la aurora, ahora"
+          }
+        }
+      }
+    },
+    "OVATION 32 nel tuo cielo, cielo sereno al 80%. Guarda verso nord." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "OVATION 32 in your sky, 80% clear. Look north."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "OVATION 32 an deinem Himmel, 80 % klar. Schau nach Norden."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "OVATION 32 dans votre ciel, dégagé à 80 %. Regardez vers le nord."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "OVATION 32 en tu cielo, despejado al 80 %. Mira hacia el norte."
+          }
+        }
+      }
+    },
+    "Riepilogo di domani: Vík → Höfn" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tomorrow's summary: Vík → Höfn"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Übersicht für morgen: Vík → Höfn"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Résumé de demain : Vík → Höfn"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Resumen de mañana: Vík → Höfn"
+          }
+        }
+      }
+    },
+    "Raffiche fino a 22 m/s verso le 14 · Nessuna strada chiusa sul percorso · Stanotte aurora: condizioni buone verso le 23" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gusts up to 22 m/s around 14:00 · No closed roads on the way · Aurora tonight: good conditions around 23:00"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Böen bis 22 m/s gegen 14 Uhr · Keine gesperrten Straßen · Polarlicht heute Nacht: gute Bedingungen gegen 23 Uhr"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rafales jusqu'à 22 m/s vers 14 h · Aucune route fermée · Aurore cette nuit : bonnes conditions vers 23 h"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rachas de hasta 22 m/s hacia las 14 · Ninguna carretera cerrada · Aurora esta noche: buenas condiciones hacia las 23"
+          }
+        }
+      }
+    },
+    "Terremoto M3,8 – Mýrdalsjökull" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Earthquake M3.8 – Mýrdalsjökull"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Erdbeben M3,8 – Mýrdalsjökull"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Séisme M3,8 – Mýrdalsjökull"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Terremoto M3,8 – Mýrdalsjökull"
+          }
+        }
+      }
+    },
+    "21:12, profondità 4,1 km · 28 km da Vík" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "21:12, depth 4.1 km · 28 km from Vík"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "21:12, Tiefe 4,1 km · 28 km von Vík"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "21 h 12, profondeur 4,1 km · 28 km de Vík"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "21:12, profundidad 4,1 km · 28 km de Vík"
+          }
+        }
+      }
     }
   },
   "version" : "1.0"

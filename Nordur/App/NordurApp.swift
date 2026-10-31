@@ -114,6 +114,7 @@ struct RootView: View {
 
     enum CIScreen: String, Identifiable {
         case alerts, alertSettings, info, quakes, roads, transport, webcams, warnings, offline, stop, settings, sights, sources
+        case shops, fuel, stopDetail, suggestions, sight, currency, share
         var id: String { rawValue }
     }
 
@@ -223,6 +224,9 @@ struct RootView: View {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 2) { model.showSettings = true }
             case "night":
                 nightVision.toggle()
+            case "notify.demo":
+                // Real notifications, as they look on the lock screen (sounds, colours, pictures).
+                AlertCenter.shared.demoNotifications()
             case "drive.demo":
                 DispatchQueue.main.asyncAfter(deadline: .now() + 2) { openedTrack = DriveStore.shared.drives.first }
             case let c where c.hasPrefix("screen."):
@@ -253,6 +257,17 @@ struct RootView: View {
                 case .settings: SettingsView()
                 case .sights: SightsView()
                 case .sources: DataSourcesView()
+                case .shops: ShopsView()
+                case .fuel: FuelListView()
+                case .stopDetail:
+                    if let stop = trip.stops.first(where: { !$0.visits.isEmpty }) ?? trip.stops.first { StopDetailView(stopID: stop.id, fallback: stop) }
+                case .suggestions:
+                    if let stop = trip.stops.first(where: { !$0.visits.isEmpty }) ?? trip.stops.first { AttractionPicker(stop: stop) { _, _, _ in } }
+                case .sight:
+                    if let sight = Attraction.catalog.first(where: { $0.name == "Skógafoss" }) ?? Attraction.catalog.first { SightDetail(sight: sight, from: model.activePlace) }
+                case .currency: CurrencyConverterView()
+                case .share:
+                    if let first = DriveStore.shared.drives.first, let session = DriveStore.shared.load(first.id) { RouteShareSheet(session: session) }
                 }
             }
         }
@@ -270,7 +285,9 @@ struct RootView: View {
             await alerts.refreshPermissionState()
             await Account.shared.restoreAfterReinstall()
             // CI launches pass -initialTab: no permission sheet over the screenshots there.
-            if UserDefaults.standard.string(forKey: "initialTab") == nil, UserDefaults.standard.string(forKey: "ciScreen") == nil,
+            // CI screenshots of the notifications (`-ciAskNotifications YES`): the permission is asked there too.
+            if (UserDefaults.standard.string(forKey: "initialTab") == nil && UserDefaults.standard.string(forKey: "ciScreen") == nil)
+                || UserDefaults.standard.bool(forKey: "ciAskNotifications"),
                await UNUserNotificationCenter.current().notificationSettings().authorizationStatus == .notDetermined {
                 await alerts.requestNotificationPermission()
             }

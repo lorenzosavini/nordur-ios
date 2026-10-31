@@ -9,7 +9,7 @@ enum CIRemote {
                            "settings", "dismiss", "night",
                            "screen.sights", "screen.roads", "screen.quakes", "screen.webcams", "screen.sources",
                            "trip.share", "trip.inbox", "trip.drive", "trip.mode.days", "trip.mode.stops", "trip.mode.map",
-                           "aurora.mode.live", "aurora.mode.day", "aurora.mode.three", "drive.demo", "drive.share"]
+                           "aurora.mode.live", "aurora.mode.day", "aurora.mode.three", "drive.demo", "drive.share", "notify.demo"]
     static let notification = Notification.Name("nordur.ci.command")
     private static var listening = false
 
