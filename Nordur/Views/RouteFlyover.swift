@@ -308,7 +308,13 @@ enum RouteFlyover {
         let doneIdx = idx.filter { cum[$0] <= drawn }
         var done = doneIdx.map(at)
         var climb = 0.0, descent = 0.0
-        if doneIdx.count > 1 { for k in 1..<doneIdx.count { let d = alts[doneIdx[k]] - alts[doneIdx[k - 1]]; if d > 0 { climb += d } else { descent -= d } } }
+        // Same rule as the drive stats (every point, 3 m hysteresis), so the profile and the summary card agree.
+        if var anchor = raw.first {
+            for i in 1..<raw.count where cum[i] <= drawn {
+                let d = raw[i] - anchor
+                if d >= 3 { climb += d; anchor = raw[i] } else if d <= -3 { descent -= d; anchor = raw[i] }
+            }
+        }
         let headAlt: Double = {
             guard let j = cum.firstIndex(where: { $0 >= drawn }), j > 0 else { return alts.last! }
             let f = (drawn - cum[j - 1]) / max(cum[j] - cum[j - 1], 0.001)
