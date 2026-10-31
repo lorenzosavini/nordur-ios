@@ -548,7 +548,7 @@ enum RouteTerrain3D {
         let image = UIGraphicsImageRenderer(size: format.size, format: { let f = UIGraphicsImageRendererFormat(); f.scale = 1; return f }()).image { r in
             picture.draw(in: CGRect(origin: .zero, size: format.size))
             RouteCard.overlay(r.cgContext, size: format.size, stats: stats, progress: 1)
-            RouteFlyover.profile(r.cgContext, points: profilePoints, cum: world.cum, progress: 1, size: format.size, figures: stats.figures.count)
+            RouteFlyover.profile(r.cgContext, points: profilePoints, cum: world.cum, progress: 1, size: format.size, figures: stats.figures.count, gain: stats.gain, loss: stats.loss)
         }
         let url = FileManager.default.temporaryDirectory.appendingPathComponent("Nordur-\(format.rawValue).jpg")
         try image.jpegData(compressionQuality: 0.92)?.write(to: url, options: .atomic)
@@ -599,7 +599,7 @@ enum RouteTerrain3D {
                 UIGraphicsPushContext(ctx)
                 picture.draw(in: CGRect(origin: .zero, size: size))
                 RouteCard.overlay(ctx, size: size, stats: stats, progress: max(progress, 0.001))
-                RouteFlyover.profile(ctx, points: profilePoints, cum: world.cum, progress: progress, size: size, figures: stats.figures.count)
+                RouteFlyover.profile(ctx, points: profilePoints, cum: world.cum, progress: progress, size: size, figures: stats.figures.count, gain: stats.gain, loss: stats.loss)
                 UIGraphicsPopContext()
             }
             CVPixelBufferUnlockBaseAddress(buffer, [])

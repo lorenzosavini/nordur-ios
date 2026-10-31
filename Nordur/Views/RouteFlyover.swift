@@ -262,14 +262,14 @@ enum RouteFlyover {
             RouteCard.dot(ctx, screen(head), color: .white, ring: true)
         }
         RouteCard.overlay(ctx, size: size, stats: stats, progress: max(shot.progress, 0.001))
-        profile(ctx, points: points, cum: cum, progress: shot.progress, size: size, figures: stats.figures.count)
+        profile(ctx, points: points, cum: cum, progress: shot.progress, size: size, figures: stats.figures.count, gain: stats.gain, loss: stats.loss)
     }
 
     /// The climbs and descents: the altitude along the route as a filled
     /// profile above the title, done in orange up to where the line is, the
     /// rest grey, with the current altitude and the metres climbed and
     /// descended so far.
-    static func profile(_ ctx: CGContext, points: [TrackPoint], cum: [Double], progress: Double, size: CGSize, figures: Int) {
+    static func profile(_ ctx: CGContext, points: [TrackPoint], cum: [Double], progress: Double, size: CGSize, figures: Int, gain: Double? = nil, loss: Double? = nil) {
         let raw = points.compactMap(\.alt)
         guard raw.count == points.count, cum.last! > 0 else { return }
         // GPS altitude is noisy: a running mean over a few fixes.
@@ -307,14 +307,19 @@ enum RouteFlyover {
         let drawn = progress * cum.last!
         let doneIdx = idx.filter { cum[$0] <= drawn }
         var done = doneIdx.map(at)
-        var climb = 0.0, descent = 0.0
-        // Same rule as the drive stats (every point, 3 m hysteresis), so the profile and the summary card agree.
+        var climb = 0.0, descent = 0.0, totalClimb = 0.0, totalDescent = 0.0
+        // 3 m hysteresis like the drive stats; then scaled so the profile ends exactly on the card's totals
+        // (the stats skip low-accuracy fixes, so a raw recount can differ).
         if var anchor = raw.first {
-            for i in 1..<raw.count where cum[i] <= drawn {
+            for i in 1..<raw.count {
                 let d = raw[i] - anchor
-                if d >= 3 { climb += d; anchor = raw[i] } else if d <= -3 { descent -= d; anchor = raw[i] }
+                let isDone = cum[i] <= drawn
+                if d >= 3 { totalClimb += d; if isDone { climb += d }; anchor = raw[i] }
+                else if d <= -3 { totalDescent -= d; if isDone { descent -= d }; anchor = raw[i] }
             }
         }
+        if let gain, totalClimb > 0 { climb *= gain / totalClimb }
+        if let loss, totalDescent > 0 { descent *= loss / totalDescent }
         let headAlt: Double = {
             guard let j = cum.firstIndex(where: { $0 >= drawn }), j > 0 else { return alts.last! }
             let f = (drawn - cum[j - 1]) / max(cum[j] - cum[j - 1], 0.001)

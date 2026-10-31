@@ -18,6 +18,9 @@ enum RouteCard {
         let title: String
         let date: String
         let figures: [(label: String, value: String)]
+        /// Total climb and descent, so the elevation profile ends on the card's figure.
+        var gain: Double? = nil
+        var loss: Double? = nil
     }
 
     static func stats(_ s: DriveSession) -> Stats {
@@ -33,7 +36,7 @@ enum RouteCard {
             let pace = s.durationSeconds() / 60 / max(s.stats.km, 0.01)
             figures.append((String(localized: "PASSO"), String(format: "%d:%02d /km", Int(pace), Int((pace - floor(pace)) * 60))))
         }
-        return Stats(title: s.name, date: Fmt.day(s.start, in: .iceland), figures: figures)
+        return Stats(title: s.name, date: Fmt.day(s.start, in: .iceland), figures: figures, gain: s.stats.elevationGain, loss: s.stats.elevationLoss)
     }
 
     // MARK: Map
