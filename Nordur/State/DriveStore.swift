@@ -22,7 +22,8 @@ final class DriveStore {
                 let route = UserDefaults.standard.string(forKey: "ciFlyoverGPX")
                 let session: DriveSession
                 if let route {
-                    do { session = try importGPX(docs.appendingPathComponent(route + ".gpx")) } catch {
+                    // A road trip: the card shows the average speed, not a walking pace.
+                    do { var drive = try importGPX(docs.appendingPathComponent(route + ".gpx")); drive.activity = nil; session = drive } catch {
                         try? "error import \(error)".write(to: docs.appendingPathComponent("flyover-\(route).txt"), atomically: true, encoding: .utf8)
                         return
                     }
