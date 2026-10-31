@@ -17,19 +17,32 @@ final class DriveStore {
         if UserDefaults.standard.bool(forKey: "ciFlyover") {
             Task { @MainActor in
                 try? await Task.sleep(nanoseconds: 8_000_000_000)
-                guard let first = drives.first, let session = load(first.id) else { return }
                 let docs = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
+                // `-ciFlyoverGPX ring-road`: a route copied into Documents (tools/ci/routes) instead of the demo drive.
+                let route = UserDefaults.standard.string(forKey: "ciFlyoverGPX")
+                let session: DriveSession
+                if let route {
+                    do { session = try importGPX(docs.appendingPathComponent(route + ".gpx")) } catch {
+                        try? "error import \(error)".write(to: docs.appendingPathComponent("flyover-\(route).txt"), atomically: true, encoding: .utf8)
+                        return
+                    }
+                } else if let first = drives.first, let demo = load(first.id) {
+                    session = demo
+                } else { return }
                 let began = Date()
-                if let image = try? await RouteTerrain3D.image(session, format: .story) {
+                if route == nil, let image = try? await RouteTerrain3D.image(session, format: .story) {
                     try? FileManager.default.copyItem(at: image, to: docs.appendingPathComponent("flyover.jpg"))
                 }
                 do {
                     // The 3D engine directly, so a failure shows in the result instead of the fallback.
                     let video = try await RouteTerrain3D.video(session, format: .story) { _ in }
-                    try? FileManager.default.copyItem(at: video, to: docs.appendingPathComponent("flyover.mp4"))
-                    try? "ok \(Int(Date().timeIntervalSince(began))) s".write(to: docs.appendingPathComponent("flyover.txt"), atomically: true, encoding: .utf8)
+                    let stem = route.map { "flyover-\($0)" } ?? "flyover"
+                    try? FileManager.default.removeItem(at: docs.appendingPathComponent(stem + ".mp4"))
+                    try? FileManager.default.copyItem(at: video, to: docs.appendingPathComponent(stem + ".mp4"))
+                    try? "ok \(Int(Date().timeIntervalSince(began))) s".write(to: docs.appendingPathComponent(stem + ".txt"), atomically: true, encoding: .utf8)
                 } catch {
-                    try? "error \(error)".write(to: docs.appendingPathComponent("flyover.txt"), atomically: true, encoding: .utf8)
+                    let stem = route.map { "flyover-\($0)" } ?? "flyover"
+                    try? "error \(error)".write(to: docs.appendingPathComponent(stem + ".txt"), atomically: true, encoding: .utf8)
                 }
             }
         }
