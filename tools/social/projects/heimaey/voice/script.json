@@ -1,0 +1,14 @@
+[
+ {"id": "hook", "say": "1973. A volcano erupts right next to a town. So they fight it with seawater.", "show": "1973. A volcano erupts right next to a town. So they fight it with seawater."},
+ {"id": "night", "say": "Just before two a.m., on Hay-ma-ay, a fishing island off south Iceland, the ground splits open.", "show": "Just before 2 a.m., on Heimaey, a fishing island off south Iceland, the ground splits open."},
+ {"id": "fleet", "say": "A storm had kept the fishing fleet in port. Within six hours, almost all fifty-three hundred people are safe on the mainland.", "show": "A storm had kept the fishing fleet in port. Within six hours, almost all 5,300 people are safe on the mainland."},
+ {"id": "threat", "say": "But the lava is heading for the harbour. The island's lifeline.", "show": "But the lava is heading for the harbour. The island's lifeline."},
+ {"id": "plan", "say": "So they pump the ocean onto it.", "show": "So they pump the ocean onto it."},
+ {"id": "pumps", "say": "Fire hoses. A pump ship. Then big pumps from the U.S., with pipes laid across the moving lava.", "show": "Fire hoses. A pump ship. Then big pumps from the U.S., with pipes laid across the moving lava."},
+ {"id": "months", "say": "Five months, around the clock. Over six million cubic metres of seawater.", "show": "Five months, around the clock. Over 6 million cubic metres of seawater."},
+ {"id": "works", "say": "And it works. The lava stops, just short of the harbour mouth.", "show": "And it works. The lava stops, just short of the harbour mouth."},
+ {"id": "twist", "say": "About three hundred buildings were lost. But the new lava now shields the harbour, and the island grew by twenty percent.", "show": "About 300 buildings were lost. But the new lava now shields the harbour, and the island grew by 20%."},
+ {"id": "today", "say": "The new volcano is Eldfell. Fire Mountain. And a house dug out of the ash is now the museum Eld-hay-mar.", "show": "The new volcano is Eldfell. Fire Mountain. And a house dug out of the ash is now the museum Eldheimar."},
+ {"id": "app", "say": "In Iceland, the ground can still split open overnight. Nordur sends you volcano and earthquake alerts.", "show": "In Iceland, the ground can still split open overnight. Norður sends you volcano and earthquake alerts."},
+ {"id": "cta", "say": "Join the waitlist at nordur dot info.", "show": "Join the waitlist at nordur.info"}
+]
