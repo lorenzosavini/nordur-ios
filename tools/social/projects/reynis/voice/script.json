@@ -1,0 +1,72 @@
+[
+ {
+  "id": "hook",
+  "say": "This beach has killed at least six people since 2007.",
+  "show": "This beach has killed at least six people since 2007."
+ },
+ {
+  "id": "place",
+  "say": "It's Reynisfjara, near Veek. Black sand, basalt columns, and waves that don't play fair.",
+  "show": "It's Reynisfjara, near Vík. Black sand, basalt columns, and waves that don't play fair."
+ },
+ {
+  "id": "sneak",
+  "say": "They're called sneaker waves. Most stop here. Then one surges far up the beach, without warning.",
+  "show": "They're called sneaker waves. Most stop here. Then one surges far up the beach, without warning."
+ },
+ {
+  "id": "pull",
+  "say": "The water is freezing, the backwash is brutal, and people have been swept out to sea.",
+  "show": "The water is freezing, the backwash is brutal, and people have been swept out to sea."
+ },
+ {
+  "id": "lights",
+  "say": "Since 2022, there are warning lights. Yellow: stay out of the yellow zone. Red: don't go past the light.",
+  "show": "Since 2022, there are warning lights. Yellow: stay out of the yellow zone. Red: don't go past the light."
+ },
+ {
+  "id": "rule",
+  "say": "And the golden rule: never turn your back on the ocean.",
+  "show": "And the golden rule: never turn your back on the ocean."
+ },
+ {
+  "id": "turn",
+  "say": "Four more mistakes tourists make in Iceland.",
+  "show": "Four more mistakes tourists make in Iceland."
+ },
+ {
+  "id": "door",
+  "say": "One. Opening your car door in strong wind. A gust can bend it back, and many rentals won't cover that.",
+  "show": "One. Opening your car door in strong wind. A gust can bend it back, and many rentals won't cover that."
+ },
+ {
+  "id": "froad",
+  "say": "Two. A two wheel drive on an F road. By law, you need a four by four, and most open only in summer.",
+  "show": "Two. A 2WD on an F-road. By law, you need a 4x4, and most open only in summer."
+ },
+ {
+  "id": "sheep",
+  "say": "Three. Sheep roam free all summer. See one by the road? Slow down. Its lamb may be on the other side.",
+  "show": "Three. Sheep roam free all summer. See one by the road? Slow down. Its lamb may be on the other side."
+ },
+ {
+  "id": "stop",
+  "say": "Four. Stopping on the Ring Road for a photo. Use a pull-off, never the road.",
+  "show": "Four. Stopping on the Ring Road for a photo. Use a pull-off, never the road."
+ },
+ {
+  "id": "app",
+  "say": "Nordur puts weather warnings, gusts near you, wave height, road conditions and SafeTravel alerts in one app.",
+  "show": "Norður puts weather warnings, gusts near you, wave height, road conditions and SafeTravel alerts in one app."
+ },
+ {
+  "id": "end",
+  "say": "Check it before you go. Because this beach...",
+  "show": "Check it before you go. Because this beach…"
+ },
+ {
+  "id": "cta",
+  "say": "Join the waitlist at nordur dot info.",
+  "show": "Join the waitlist at nordur.info"
+ }
+]
