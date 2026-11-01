@@ -57,13 +57,37 @@ class Clip:
         self.cap.set(cv2.CAP_PROP_POS_FRAMES, i); ok, f = self.cap.read()
         if not ok: return self.last[1]
         f = cv2.cvtColor(f, cv2.COLOR_BGR2RGB).astype(np.float32); self.last = (i, f); return f
-def prep_clip():
-    src, dst = os.path.join(V, "v_lava.webm"), os.path.join(V, "lava_portrait.mp4")
-    if os.path.exists(src) and not os.path.exists(dst):   # 1280×720 → centred 405×720 portrait crop, 9 s, all-intra
-        subprocess.run(["ffmpeg", "-v", "error", "-y", "-ss", "14", "-i", src, "-t", "9", "-an", "-vf", "crop=405:720:560:0,scale=540:960:flags=lanczos",
-                        "-c:v", "libx264", "-g", "1", "-crf", "14", dst])
+def prep_clip(src, dst, crop, ss=0, dur=None):
+    """Portrait all-intra proxy of a Commons clip (cheap random seeks)."""
+    src, dst = os.path.join(V, src), os.path.join(V, dst)
+    if os.path.exists(src) and not os.path.exists(dst):
+        subprocess.run(["ffmpeg", "-v", "error", "-y", "-ss", str(ss), "-i", src] + (["-t", str(dur)] if dur else []) +
+                       ["-an", "-vf", crop + ",scale=540:960:flags=lanczos", "-c:v", "libx264", "-g", "1", "-crf", "15", dst])
     return Clip(dst)
-LAVA = prep_clip()
+LAVA = prep_clip("v_lava.webm", "lava_full.mp4", "crop=405:720:560:0")          # whole 64 s, segments picked per shot
+WAVES = prep_clip("v_waves.webm", "waves.mp4", "crop=608:1080:1180:0")
+def footage(clip, src_t, z=1.06, fy=0.5, dark=1.0):
+    f = clip.at(src_t); return mk.cover(f, W, H, z, 0.5, fy) * dark if f is not None else mk.lava_field(src_t)
+def fullbleed(k, t, t0, fi, cy=760, scale=1.18, sepia=0.2, push=0.03, dark=0.55):
+    """Low-res landscape archive photo shown full-bleed: blurred self as the full-screen base, the sharp frame
+    at full width on top (no card), soft-edged, archive film look, slow push-in."""
+    a = photo(k); img = blurbg(k, dark)
+    if a is None: return img
+    lt = max(0, t - t0); ih, iw = a.shape[:2]; w = int(W * (scale + push * lt)); h = int(w * ih / iw)
+    key = ("fb", k, w)
+    if key not in _CARD:
+        sh = cv2.resize(a, (w, h), interpolation=cv2.INTER_CUBIC); _CARD.clear() if len(_CARD) > 40 else None
+        _CARD[key] = np.clip(sh + (sh - cv2.GaussianBlur(sh, (0, 0), 2.2)) * 0.6, 0, 255)
+    ph = mk.archive(_CARD[key], t, fi, sepia, hash(k) % 97)
+    x0 = (w - W) // 2; ph = ph[:, x0:x0 + W]; y0 = int(cy - h / 2)
+    e = np.minimum(1, np.minimum(np.arange(h) / 60, (h - 1 - np.arange(h)) / 60))[:, None, None].astype(np.float32)
+    ya, yb = max(0, y0), min(H, y0 + h); img[ya:yb] = img[ya:yb] * (1 - e[ya - y0:yb - y0]) + ph[ya - y0:yb - y0] * e[ya - y0:yb - y0]
+    return img
+def fullcover(k, t, t0, fi, dur=3.5, horizon=0.5, z0=1.04, z1=1.14, pan=50, fx=0.5, fy=0.5, arch=False, dark=1.0):
+    a = photo(k)
+    if a is None: return mk.lava_field(t)
+    if arch: a = mk.archive(a, t, fi, 0.2, hash(k) % 97)
+    return mk.parallax(a, t - t0, dur, horizon, 0.14, z0, z1, 0.08, pan, fx, fy) * dark
 _ICON = {}
 def icon(name, size, col=(255, 255, 255)):
     key = (name, size, col)
@@ -213,49 +237,39 @@ def ev(t, kind, g=0.0): EV.append((t, kind, g))
 
 # ——— shots ———
 def s_title(t, fi):
-    img = bg_lava(t, 0.75)
-    wl = mk.water_field(t)
-    img = mk.light_leak(img, t, ACC, 0.25)
+    img = footage(LAVA, 30 + t * 0.8, 1.1, dark=0.55)                                   # real lava as the base, type on top
+    img = EMB.apply(img, t, 0.6)
     rise(img, "IN 1973 THEY FOUGHT", 520, t, -1, 96, TEXT)
     tex_text(img, "A VOLCANO", 250, 720, mk.lava_field(t * 1.5, 1.4) * 1.1 + 40, t, base=ACC)
     rise(img, "WITH", 900, t, -1, 96, TEXT)
-    tex_text(img, "SEAWATER", 250, 1080, wl * 1.2 + 30, t, base=BLUE)
+    tex_text(img, "SEAWATER", 250, 1080, mk.water_field(t) * 1.2 + 30, t, base=BLUE)
+    credit(img, CRED.get("v_lava", "").replace("Lava footage: ", "Footage: "))
     return img
 def s_erupt(t, fi):
-    t0 = SH_T["erupt"]; img = blurbg("simkin", 0.42); img = ASH.apply(img, t, 0.8)
-    archive_card(img, "simkin", t, fi, 1000, W / 2, 800, t0, 99, "pop", -1.5, 0.15)
-    slam(img, "RIGHT NEXT TO A TOWN", 330, t, wt("hook", "right") , 110, TEXT)
+    t0 = SH_T["erupt"]; img = fullbleed("simkin", t, t0, fi, 800, 1.35, 0.12, 0.05, 0.55)
+    img = ASH.apply(img, t, 0.6)
+    slam(img, "RIGHT NEXT TO A TOWN", 330, t, wt("hook", "right"), 110, TEXT)
+    if t > wt("hook", "So") - 0.1:
+        slam(img, "SO THEY FOUGHT IT", 1090, t, wt("hook", "So") - 0.05, 90, TEXT)
+        slam(img, "WITH SEAWATER", 1190, t, wt("hook", "seawater") - 0.05, 120, BLUE)
     credit(img, "Heimaey, 1973 · " + CRED.get("simkin", ""))
-    return img
-def s_vs(t, fi):
-    yy = np.linspace(0, 1, H, dtype=np.float32)[:, None]; xx = np.linspace(0, 1, W, dtype=np.float32)[None, :]
-    lt = t - SH_T["vs"]; edge = 0.5 + 0.06 * np.sin(xx * 9 + t * 3) - 0.12 * (xx - 0.5) + 0.04 * math.sin(t * 2)
-    m = np.clip((yy - edge) * 60, 0, 1)[..., None]
-    lava, water = mk.lava_field(t, 1.2), mk.water_field(t)
-    img = lava * (1 - m) + water * m
-    seam = np.exp(-np.abs(yy - edge) * 160)[..., None]; img = np.minimum(255, img + seam * np.array((255, 245, 230), np.float32) * 0.9)
-    img = mk.Particles.apply(EMB, img, t, 0.6)
-    slam(img, "FIRE", 560, t, SH_T["vs"] + 0.02, 230, ACC)
-    slam(img, "vs", 960, t, SH_T["vs"] + 0.3, 110, TEXT)
-    slam(img, "SEAWATER", 1240, t, wt("hook", "seawater") - 0.05, 210, BLUE)
     return img
 def s_clock(t, fi):
     t0 = SH_T["clock"]; lt = t - t0
-    img = np.zeros((H, W, 3), np.float32) + np.array((6, 9, 16), np.float32)
-    img = img + mk.water_field(t * 0.4) * 0.18; img = ASH2.apply(img, t, 0.5); img = mk.scanlines(img, t, 6, 0.12)
-    rise(img, "23 JANUARY 1973", 470, t, t0 + 0.1, 92, DIM, font="cond")
-    tb = wt("night", "before"); m = min(59, 52 + int(max(0, t - t0) * 2.2))
-    L = tlayer(f"01:{m:02d}", 300, ACC if (fi // 8) % 2 else (255, 140, 90), "mono", 10)
-    mk.over(img, L, W / 2, 740, 1 + 0.02 * math.sin(lt * 6), 0, min(1, lt / 0.2))
+    img = footage(LAVA, 2 + lt * 0.5, 1.25, 0.45, 0.32)                                 # night-time glow behind the clock
+    img = mk.scanlines(img, t, 6, 0.10)
+    rise(img, "23 JANUARY 1973", 470, t, t0 + 0.1, 92, DIM)
+    m = min(59, 52 + int(max(0, lt) * 2.2))
+    mk.over(img, tlayer(f"01:{m:02d}", 300, ACC, "mono", 10), W / 2, 740, 1 + 0.02 * math.sin(lt * 6), 0, min(1, lt / 0.2))
     rise(img, "A.M.", 930, t, t0 + 0.2, 70, TEXT, font="mono")
     chip(img, "Heimaey · Westman Islands, South Iceland", 70, 1060, t, wt("night", "Heimaey") - 0.1, 99, ACC, "volcano", 30)
+    credit(img, "Illustrative footage: Iceland, 2021 · J. St. John · CC BY 2.0")
     return img
 def s_fissure(t, fi):
     t0 = SH_T["fissure"]; ts = wt("night", "splits")
-    src = mk.speed_map(t, [(t0 - 1, 0.45), (ts - 0.1, 1.8), (ts + 0.6, 0.9)]) + 1.0
-    f = LAVA.at(src)
-    img = mk.cover(f, W, H, 1.06 + 0.04 * (t - t0)) if f is not None else mk.lava_field(t, 1.5)
-    img = mk.light_leak(img, t, ACC, 0.25, 2)
+    src = 15 + mk.speed_map(t, [(t0 - 1, 0.45), (ts - 0.1, 1.8), (ts + 0.6, 0.9)])
+    img = footage(LAVA, src, 1.06 + 0.04 * (t - t0))
+    img = mk.light_leak(img, t, ACC, 0.2, 2)
     slam(img, "THE GROUND", 520, t, ts - 0.05, 170, TEXT)
     slam(img, "SPLITS OPEN", 700, t, ts + 0.12, 190, ACC)
     credit(img, "Illustrative footage: Iceland, 2021 · J. St. John · CC BY 2.0")
@@ -263,155 +277,125 @@ def s_fissure(t, fi):
 def s_harbour(t, fi):
     t0 = SH_T["harbour"]; a = photo("twovol"); lt = t - t0
     img = mk.cover(a, W, H, 1.05 + 0.03 * lt, 0.75 - 0.06 * lt, 0.5) if a is not None else bg_water(t)
-    img = img * np.array((0.55, 0.62, 0.78), np.float32)                               # storm grade
-    img = img + mk.stripes(t, (200, 220, 255), 34, 3, -72, 900, 0.22)                 # driving rain
+    img = img * np.array((0.62, 0.68, 0.82), np.float32) + mk.stripes(t, (200, 220, 255), 34, 3, -72, 900, 0.16)
     slam(img, "THE FLEET WAS", 470, t, wt("fleet", "fishing") - 0.15, 120, TEXT)
     slam(img, "IN PORT", 620, t, wt("fleet", "port") - 0.05, 190, BLUE)
     chip(img, "A storm kept the boats home", 70, 1080, t, t0 + 0.15, 99, BLUE, "cloud", 32)
     credit(img, "Heimaey harbour today · " + CRED.get("twovol", ""))
     return img
-BOATS = [(0.0, 0.62, 1.0), (0.18, 0.7, 0.8), (0.33, 0.58, 0.9), (0.5, 0.76, 1.1), (0.66, 0.64, 0.85), (0.8, 0.72, 0.95), (0.92, 0.6, 0.8)]
-def boat(img, x, y, s, t, ph):
-    pts = np.array([(-90, 0), (90, 0), (60, 34), (-70, 34)], np.float32) * s
-    cab = np.array([(-30, 0), (30, 0), (30, -40), (-30, -40)], np.float32) * s
-    bob = 6 * math.sin(t * 3 + ph); r = 3 * math.sin(t * 2.2 + ph)
-    M = cv2.getRotationMatrix2D((0, 0), r, 1)[:, :2]
-    for poly, col in ((pts, (235, 238, 242)), (cab, (255, 90, 31))):
-        p = (poly @ M.T + np.array([x, y + bob])).astype(np.int32); cv2.fillPoly(img, [p], col, cv2.LINE_AA)
-    cv2.line(img, (int(x), int(y + bob - 40 * s)), (int(x - 6), int(y + bob - 100 * s)), (235, 238, 242), max(2, int(4 * s)), cv2.LINE_AA)
 def s_evac(t, fi):
     t0 = SH_T["evac"]; lt = t - t0
-    img = bg_water(t, 0.55)
-    for i, (x0, yf, s) in enumerate(BOATS):                                          # the fleet sails out, wave lines scroll
-        x = (x0 * 1300 + lt * 160 * (1 + 0.15 * i)) % 1400 - 160; boat(img, x, H * yf, s * 0.9, t, i)
-    for j in range(6):
-        y = int(H * 0.56 + j * 70); xs = np.arange(0, W + 20, 20); ys = y + 10 * np.sin(xs / 60 + t * 4 + j)
-        cv2.polylines(img, [np.stack([xs, ys], 1).astype(np.int32)], False, (120, 170, 255), 2, cv2.LINE_AA)
-    tw = wt("fleet", "Within"); ts = wt("fleet", "safe")
-    k = mk.ease((t - wt("fleet", "5,300") + 0.3) / 1.0); n = int(5300 * k)
+    img = fullbleed("after", t, t0, fi, 760, 1.3, 0.12, 0.04, 0.5)                    # 1973 harbour full of boats
+    tw = wt("fleet", "Within"); ts = wt("fleet", "safe"); t5 = wt("fleet", "5,300")
     if t >= tw - 0.1:
-        r = 120; cx, cy = W / 2, 470; prog = min(1, (t - tw) / 1.3)                    # 6-hour ring fills
+        r = 110; cx, cy = W / 2, 330; prog = min(1, (t - tw) / 1.3)
         cv2.circle(img, (int(cx), int(cy)), r, (40, 50, 70), 16, cv2.LINE_AA)
         cv2.ellipse(img, (int(cx), int(cy)), (r, r), -90, 0, 360 * prog, ACC, 16, cv2.LINE_AA)
-        mk.over(img, tlayer(f"{max(1, int(6 * prog))}h", 110, TEXT), cx, cy + 8, 1, 0, 1)
-        rise(img, "6 HOURS", 680, t, tw, 110, TEXT)
-    if t >= wt("fleet", "5,300") - 0.3:
-        L = tlayer(f"{n:,}", 220, GREEN if t > ts else TEXT); mk.over(img, L, W / 2, 900, 1, 0, 1)
-        rise(img, "PEOPLE SAFE" if t > ts else "PEOPLE", 1080, t, wt("fleet", "5,300"), 80, GREEN if t > ts else DIM)
+        mk.over(img, tlayer(f"{max(1, int(6 * prog))}h", 100, TEXT), cx, cy + 8, 1, 0, 1)
+    if t >= t5 - 0.6:
+        n = int(5300 * mk.ease((t - t5 + 0.6) / 0.6))
+        mk.over(img, tlayer(f"{n:,}", 200, GREEN if t > ts else TEXT), W / 2, 1080, 1, 0, 1)
+        rise(img, "PEOPLE SAFE" if t > ts else "PEOPLE", 1220, t, t5 - 0.6, 70, GREEN if t > ts else DIM)
+    credit(img, "Heimaey harbour, 1973 · " + CRED.get("after", ""), 1240)
     return img
 def s_street(t, fi):
-    t0 = SH_T["street"]; img = bg_lava(t, 0.55, 1.3)
-    img = img + mk.stripes(t, RED, 60, 14, -30, 120, 0.10)
-    archive_card(img, "street", t, fi, 940, W / 2, 760, t0, 99, "right", 1.2, 0.2)
+    t0 = SH_T["street"]; img = fullbleed("street", t, t0, fi, 760, 1.4, 0.2, 0.05, 0.5)
+    img = img * np.array((1.0, 0.86, 0.8), np.float32)
     slam(img, "LAVA IS COMING", 330, t, t0 + 0.05, 130, ACC)
-    stamp(img, "HARBOUR AT RISK", W / 2, 1110, t, wt("threat", "harbour"), RED, 84)
+    stamp(img, "HARBOUR AT RISK", W / 2, 1120, t, wt("threat", "harbour"), RED, 84)
     credit(img, "Lava enters a Heimaey street, 1973 · " + CRED.get("street", ""))
     return img
 def s_ocean(t, fi):
-    t0 = SH_T["ocean"]; img = bg_water(t * 1.6, 1.0)
-    img = mk.light_leak(img, t, BLUE, 0.3, 4)
+    t0 = SH_T["ocean"]; img = footage(WAVES, 1 + (t - t0) * 0.8, 1.08, dark=0.75)
     slam(img, "PUMP", 520, t, wt("plan", "pump") - 0.05, 230, TEXT)
     tex_text(img, "THE OCEAN", 230, 760, mk.water_field(t * 2 + 3) * 1.3 + 40, t, wt("plan", "ocean") - 0.15, base=BLUE)
     slam(img, "ONTO THE LAVA", 990, t, wt("plan", "onto") - 0.05, 130, ACC)
+    credit(img, "Icelandic coast · " + CRED.get("v_waves", ""))
     return img
 def s_ship(t, fi):
-    t0 = SH_T["ship"]; img = blurbg("ship", 0.4)
-    fog = mk.steam_field(t, 5)[..., None]; img = img * (1 - fog * 0.35) + 200 * fog * 0.35
-    archive_card(img, "ship", t, fi, 920, W / 2, 900, t0, 99, "drop", -2, 0.15)
+    t0 = SH_T["ship"]; img = fullbleed("ship", t, t0, fi, 800, 1.35, 0.12, 0.05, 0.5)
     chip(img, "FIRE HOSES", 70, 300, t, wt("pumps", "Fire") - 0.1, 99, BLUE, "droplet", 38)
     chip(img, "A PUMP SHIP", 70, 410, t, wt("pumps", "pump") - 0.1, 99, BLUE, "droplet", 38)
-    credit(img, "Ship spraying seawater onto the lava · " + CRED.get("ship", ""))
+    credit(img, "Ship spraying seawater onto the lava, 1973 · " + CRED.get("ship", ""))
     return img
 def s_pumps(t, fi):
-    t0 = SH_T["pumps"]; img = blurbg("town73", 0.38)
-    archive_card(img, "town73", t, fi, 1010, W / 2, 820, t0, 99, "pop", 1.0, 0.12)
+    t0 = SH_T["pumps"]; img = fullbleed("town73", t, t0, fi, 800, 1.45, 0.1, 0.05, 0.5)
     slam(img, "BIG PUMPS", 330, t, wt("pumps", "big") - 0.05, 150, TEXT)
-    chip(img, "Leased from the United States", 70, 1110, t, wt("pumps", "U.S.") - 0.2, 99, ACC, "world", 32)
+    chip(img, "Leased from the United States", 70, 1120, t, wt("pumps", "U.S.") - 0.2, 99, ACC, "world", 32)
     credit(img, "Pumps on the pier, 1973 · " + CRED.get("town73", ""))
     return img
 def s_steam(t, fi):
-    t0 = SH_T["steam"]; img = bg_lava(t, 0.5, 1.2, False)
-    archive_card(img, "steam", t, fi, 900, W / 2, 800, t0, 99, "left", -1.2, 0.15)
-    fog = mk.steam_field(t * 1.5, 7)[..., None]; img = img * (1 - fog * 0.45) + 235 * fog * 0.45
+    t0 = SH_T["steam"]; img = fullbleed("steam", t, t0, fi, 800, 1.3, 0.12, 0.05, 0.5)
     slam(img, "PIPES ACROSS", 300, t, wt("pumps", "pipes") - 0.05, 120, TEXT)
     slam(img, "MOVING LAVA", 440, t, wt("pumps", "moving") - 0.05, 150, ACC)
-    credit(img, "Steam over the cooled lava · " + CRED.get("steam", ""))
+    credit(img, "Steam over water-cooled lava, 1973 · " + CRED.get("steam", ""))
     return img
 def s_data(t, fi):
-    t0 = SH_T["data"]; img = bg_water(t, 0.7); img = mk.scanlines(img, t, 8, 0.08)
-    to = wt("months", "Over")
-    # 1) five months timeline with the NASA thermal image
-    if t < to + 0.3:
-        archive_card(img, "thermo", t, fi, 420, W - 290, 760, t0, to + 0.3, "right", 2, 0.0, maxh=650)
-        rise(img, "5 MONTHS", 380, t, t0 + 0.05, 150, TEXT, t1=to + 0.3, cx=380)
-        rise(img, "24/7", 560, t, wt("months", "around") - 0.1, 150, ACC, t1=to + 0.3, cx=380)
-        x0, x1, y = 110, 610, 760; prog = mk.ease((t - t0) / 1.6)
+    t0 = SH_T["data"]; to = wt("months", "Over")
+    if t < to + 0.3:                                                                    # NASA thermal image of the cooled flow, full screen
+        img = footage(LAVA, 20 + (t - t0) * 0.6, 1.2, 0.6, 0.5)
+        rise(img, "5 MONTHS", 380, t, t0 + 0.05, 160, TEXT, t1=to + 0.3)
+        rise(img, "AROUND THE CLOCK", 540, t, wt("months", "around") - 0.1, 100, ACC, t1=to + 0.3)
+        x0, x1, y = 190, 890, 700; prog = mk.ease((t - t0) / 1.6)
         cv2.line(img, (x0, y), (x1, y), (60, 80, 110), 12, cv2.LINE_AA); cv2.line(img, (x0, y), (int(x0 + (x1 - x0) * prog), y), BLUE, 12, cv2.LINE_AA)
-        mk.over(img, tlayer("6 FEB", 40, DIM, "mono", 4), x0 + 50, y + 55, 1, 0, 1); mk.over(img, tlayer("10 JUL", 40, DIM, "mono", 4), x1 - 50, y + 55, 1, 0, 1)
-        credit(img, CRED.get("thermo", ""))
+        mk.over(img, tlayer("6 FEB", 40, TEXT, "mono", 4), x0 + 50, y + 55, 1, 0, 1); mk.over(img, tlayer("10 JUL", 40, TEXT, "mono", 4), x1 - 50, y + 55, 1, 0, 1)
+        credit(img, "Illustrative footage: Iceland, 2021 · J. St. John · CC BY 2.0")
     else:
-        k = mk.ease((t - to) / 1.5); n = int(6_000_000 * k)
+        img = footage(WAVES, 5 + (t - to) * 0.6, 1.3, 0.6, 0.5)
+        k = mk.ease((t - to) / 1.2); n = int(6_000_000 * k)
+        rise(img, "MORE THAN", 520, t, to, 80, TEXT)
         tex_text(img, f"{n:,}", 200, 700, mk.water_field(t * 2 + 5) * 1.3 + 50, t, to, track=2, base=BLUE)
         slam(img, "CUBIC METRES", 880, t, to + 0.2, 110, TEXT)
         slam(img, "OF SEAWATER", 1010, t, to + 0.45, 110, BLUE)
-        rise(img, "MORE THAN", 520, t, to, 80, DIM)
+        credit(img, "Icelandic coast · " + CRED.get("v_waves", ""))
     return img
 def s_after(t, fi):
-    t0 = SH_T["after"]; img = blurbg("after", 0.4)
-    archive_card(img, "after", t, fi, 1000, W / 2, 780, t0, 99, "pop", -1, 0.15)
+    t0 = SH_T["after"]; img = fullcover("thermo", t, t0, fi, 3.6, 0.5, 1.02, 1.12, 30, 0.5, 0.45, True, 0.75)
     slam(img, "IT WORKED", 340, t, wt("works", "works") - 0.05, 190, GREEN)
     stamp(img, "THE HARBOUR SURVIVED", W / 2, 1110, t, wt("works", "short"), GREEN, 70, 6)
-    credit(img, "Town and harbour after the eruption, 1973 · " + CRED.get("after", ""))
+    chip(img, "NASA thermal image: cooled lava beside the harbour", 50, 1180, t, wt("works", "lava") - 0.1, 99, GREEN, None, 26)
+    credit(img, CRED.get("thermo", ""), 1290)
     return img
 def s_fired(t, fi):
-    t0 = SH_T["fired"]; a = photo("fired"); lt = t - t0
-    img = mk.parallax(mk.archive(a, t, fi, 0.25), lt, 3.0, 0.55, 0.15, 1.06, 1.16, 0.06, 40, 0.5, 0.4) if a is not None else bg_lava(t)
-    img = img * 0.8
-    k = mk.ease((t - t0 - 0.1) / 1.0); slam(img, "~300", 420, t, t0 + 0.05, 260, ACC)
+    t0 = SH_T["fired"]; lt = t - t0
+    img = fullcover("fired", t, t0, fi, 3.0, 0.55, 1.06, 1.16, 40, 0.5, 0.4, True, 0.8)
+    slam(img, "~300", 420, t, t0 + 0.05, 260, ACC)
     rise(img, "BUILDINGS LOST", 610, t, t0 + 0.25, 120, TEXT)
-    archive_card(img, "buried", t, fi, 380, 300, 960, wt("twist", "lost") + 0.2, 99, "drop", -6, 0.2)
-    chip(img, "+ 60–70 homes buried by ash", 480, 1070, t, wt("twist", "lost") + 0.4, 99, DIM, None, 28)
     credit(img, "A house set alight by lava, 1973 · " + CRED.get("fired", ""))
     return img
+def s_ash(t, fi):
+    t0 = SH_T["ash"]; img = fullcover("ash74", t, t0, fi, 2.5, 0.5, 1.05, 1.15, -50, 0.5, 0.5, True, 0.8)
+    archive_card(img, "buried", t, fi, 400, 300, 1000, t0 + 0.05, 99, "drop", -6, 0.2)
+    chip(img, "+ 60–70 homes buried by ash", 480, 1090, t, t0 + 0.2, 99, DIM, None, 28)
+    rise(img, "~300 BUILDINGS LOST", 380, t, t0 - 1, 110, TEXT)
+    credit(img, "1974 · Christian Bickel · CC BY-SA 2.0 de  |  inset: USGS 1973 · PD")
+    return img
 def s_shield(t, fi):
-    t0 = SH_T["shield"]; a = photo("harbour"); lt = t - t0
-    img = mk.parallax(a, lt, 3.0, 0.42, 0.12, 1.05, 1.15, 0.08, 50, 0.45, 0.5) if a is not None else bg_water(t)
-    img = img * 0.85
-    slam(img, "NEW LAVA = BREAKWATER", 400, t, wt("twist", "shields") - 0.1, 120, TEXT)
-    chip(img, "The new lava now shelters the harbour", 70, 1080, t, wt("twist", "harbour") - 0.1, 99, GREEN, "ripple", 30)
+    t0 = SH_T["shield"]; img = fullcover("harbour", t, t0, fi, 3.0, 0.45, 1.05, 1.15, 60, 0.35, 0.5, False, 0.85)
+    slam(img, "NEW LAVA = BREAKWATER", 400, t, wt("twist", "shields") - 0.1, 110, TEXT)
+    chip(img, "The 1973 lava now shelters the harbour", 70, 1080, t, wt("twist", "harbour") - 0.1, 99, GREEN, "ripple", 30)
     credit(img, "Heimaey harbour and the 1973 lava today · " + CRED.get("harbour", ""))
     return img
 def s_grow(t, fi):
-    t0 = SH_T["grow"]; img = bg_lava(t, 0.45)
+    t0 = SH_T["grow"]; img = footage(LAVA, 45 + (t - t0) * 0.7, 1.1, dark=0.55)
     tg = wt("twist", "grew"); k = mk.ease((t - tg) / 1.0)
-    # abstract island: old outline + new land rim growing ≈ +20 % area (radius × √1.2)
-    c = (W // 2, 780); R = 210
-    ang = np.linspace(0, 2 * np.pi, 120); rr = R * (1 + 0.12 * np.sin(3 * ang + 1) + 0.07 * np.sin(5 * ang))
-    grow = 1 + (math.sqrt(1.2) - 1) * k * (0.5 + 0.5 * np.cos(ang - 0.3)) * 1.9          # growth on the east side
-    pn = np.stack([c[0] + rr * grow * np.cos(ang), c[1] + rr * grow * np.sin(ang) * 1.1], 1).astype(np.int32)
-    po = np.stack([c[0] + rr * np.cos(ang), c[1] + rr * np.sin(ang) * 1.1], 1).astype(np.int32)
-    cv2.fillPoly(img, [pn], ACC, cv2.LINE_AA); cv2.fillPoly(img, [po], (34, 40, 46), cv2.LINE_AA)
-    cv2.polylines(img, [po], True, (200, 205, 210), 3, cv2.LINE_AA)
-    tex_text(img, f"+{int(round(20 * k))}%", 260, 1130, mk.lava_field(t * 1.5, 1.5) * 1.2 + 40, t, tg - 0.1, track=2, base=ACC)
-    rise(img, "THE ISLAND GREW", 380, t, t0 + 0.05, 110, TEXT)
-    chip(img, "new land", 640, 600, t, tg + 0.3, 99, ACC, None, 28)
+    rise(img, "THE ISLAND GREW", 520, t, t0 + 0.05, 120, TEXT)
+    tex_text(img, f"+{int(round(20 * k))}%", 330, 820, mk.lava_field(t * 1.5, 1.5) * 1.2 + 40, t, tg - 0.1, track=2, base=ACC)
+    rise(img, "NEW LAND FROM THE LAVA", 1060, t, tg + 0.2, 70, DIM)
+    credit(img, "Illustrative footage: Iceland, 2021 · J. St. John · CC BY 2.0")
     return img
 def s_eldfell(t, fi):
-    t0 = SH_T["eldfell"]; a = photo("view"); lt = t - t0
-    img = mk.parallax(a, lt, 3.2, 0.5, 0.14, 1.04, 1.16, 0.10, 70, 0.5, 0.5) * 0.8 if a is not None else bg_lava(t)
+    t0 = SH_T["eldfell"]; img = fullcover("view", t, t0, fi, 3.2, 0.5, 1.04, 1.16, 70, 0.5, 0.5, False, 0.8)
     tex_text(img, "ELDFELL", 250, 470, mk.lava_field(t * 1.5, 1.4) * 1.1 + 40, t, wt("today", "Eldfell") - 0.1, track=6, base=ACC)
     slam(img, "= FIRE MOUNTAIN", 660, t, wt("today", "Fire") - 0.05, 120, TEXT)
     credit(img, "View from Eldfell's summit · " + CRED.get("view", ""))
     return img
 def s_museum(t, fi):
-    t0 = SH_T["museum"]; a = photo("museum"); lt = t - t0
-    img = mk.parallax(a, lt, 3.5, 0.45, 0.14, 1.04, 1.14, 0.08, -60, 0.5, 0.55) if a is not None else bg_lava(t)
-    img = img * 0.82
-    archive_card(img, "ash74", t, fi, 430, 290, 600, t0 + 0.2, wt("today", "Eldheimar") + 0.1, "drop", 7, 0.3)
-    rise(img, "BURIED IN 1973", 400, t, t0 + 0.3, 70, DIM, t1=wt("today", "Eldheimar") + 0.1, cx=700)
+    t0 = SH_T["museum"]; img = fullcover("museum", t, t0, fi, 3.5, 0.45, 1.04, 1.14, -60, 0.5, 0.55, False, 0.85)
     slam(img, "ELDHEIMAR", 440, t, wt("today", "Eldheimar") - 0.05, 200, TEXT)
+    rise(img, "A HOUSE DUG OUT OF THE ASH", 300, t, t0 + 0.2, 70, TEXT, t1=wt("today", "Eldheimar"))
     chip(img, "Eruption museum · opened 2014", 70, 1080, t, wt("today", "Eldheimar") + 0.3, 99, ACC, "home", 30)
-    credit(img, "Eldheimar, house under the tephra · " + CRED.get("museum", "") + "  |  inset: " + CRED.get("ash74", ""))
+    credit(img, "Eldheimar museum below Eldfell · " + CRED.get("museum", ""))
     return img
 def phone(img, t, cx, cy, notes):
     """Minimal phone with notification cards sliding in (UI demo, no real event data)."""
@@ -435,7 +419,7 @@ def phone(img, t, cx, cy, notes):
             A = np.asarray(L, np.float32); _TL[key] = np.dstack([A[..., :3], A[..., 3:] / 255])
         mk.over(img, _TL[key], cx, y0 + 230 + i * 200 - 120 * (1 - k), 0.9 + 0.1 * k, 0, min(1, (t - tt) / 0.2))
 def s_app(t, fi):
-    t0 = SH_T["app"]; img = bg_lava(t, 0.7)
+    t0 = SH_T["app"]; img = footage(LAVA, 52 + (t - t0) * 0.8, 1.1, dark=0.6)
     tn = wt("app", "Norður")
     if t < tn - 0.1:
         slam(img, "THE GROUND CAN", 560, t, t0 + 0.05, 130, TEXT)
@@ -447,40 +431,36 @@ def s_app(t, fi):
                                                                 (wt("app", "earthquake") - 0.05, "Earthquake alert", "Felt quakes nearby", BLUE, "ripple")])
     return img
 def s_cta(t, fi):
-    lt = t - st("cta"); img = bg_lava(t, 0.8)
+    lt = t - st("cta"); img = footage(LAVA, 30 + t * 0.8, 1.1, dark=0.55)      # same footage as frame 0 → seamless loop
     return img
 
-SHOTS = [("title", 0, s_title), ("erupt", wt("hook", "erupts") - 0.1, s_erupt), ("vs", wt("hook", "So") - 0.05, s_vs),
+SHOTS = [("title", 0, s_title), ("erupt", wt("hook", "erupts") - 0.1, s_erupt),
          ("clock", st("night") - 0.05, s_clock), ("fissure", wt("night", "ground") - 0.25, s_fissure), ("harbour", st("fleet") - 0.1, s_harbour),
          ("evac", wt("fleet", "Within") - 0.6, s_evac), ("street", st("threat") - 0.1, s_street), ("ocean", st("plan") - 0.05, s_ocean),
          ("ship", st("pumps") - 0.1, s_ship), ("pumps", wt("pumps", "Then") - 0.05, s_pumps), ("steam", wt("pumps", "pipes") - 0.15, s_steam),
-         ("data", st("months") - 0.1, s_data), ("after", st("works") - 0.1, s_after), ("fired", st("twist") - 0.1, s_fired),
+         ("data", st("months") - 0.1, s_data), ("after", st("works") - 0.1, s_after), ("fired", st("twist") - 0.1, s_fired), ("ash", wt("twist", "buildings") + 0.1, s_ash),
          ("shield", wt("twist", "But") - 0.05, s_shield), ("grow", wt("twist", "island") - 0.3, s_grow), ("eldfell", st("today") - 0.1, s_eldfell),
          ("museum", wt("today", "And") - 0.05, s_museum), ("app", st("app") - 0.1, s_app), ("cta", st("cta") - 0.2, s_cta)]
 SH_T = {n: s for n, s, _ in SHOTS}
 # transition INTO each shot: (kind, duration)
-TR = {"erupt": ("crack", 0.5), "vs": ("steam", 0.45), "clock": ("whip", 0.36), "fissure": ("crack", 0.55), "harbour": ("whip", 0.36),
+TR = {"erupt": ("crack", 0.5), "clock": ("whip", 0.36), "fissure": ("crack", 0.55), "harbour": ("whip", 0.36),
       "evac": ("zoom", 0.4), "street": ("lava", 0.5), "ocean": ("steam", 0.45), "ship": ("whipv", 0.4), "pumps": ("whip", 0.34),
-      "steam": ("whipl", 0.34), "data": ("circle", 0.45), "after": ("zoom", 0.4), "fired": ("lava", 0.5), "shield": ("whip", 0.36),
+      "steam": ("whipl", 0.34), "data": ("circle", 0.45), "after": ("zoom", 0.4), "fired": ("lava", 0.5), "ash": ("whipv", 0.36), "shield": ("whip", 0.36),
       "grow": ("zoom", 0.4), "eldfell": ("whipv", 0.4), "museum": ("circle", 0.45), "app": ("crack", 0.55), "cta": ("crack", 0.6)}
 TRF = {"crack": lambda a, b, k, i: mk.crack_wipe(a, b, k, i), "steam": lambda a, b, k, i: mk.steam_flash(a, b, k, i),
        "whip": lambda a, b, k, i: mk.whip(a, b, k, 1), "whipl": lambda a, b, k, i: mk.whip(a, b, k, -1), "whipv": lambda a, b, k, i: mk.whip_v(a, b, k),
        "zoom": lambda a, b, k, i: mk.zoom_cut(a, b, k), "lava": lambda a, b, k, i: mk.lava_wipe(a, b, k, i), "circle": lambda a, b, k, i: mk.circle_wipe(a, b, k, W / 2, 800)}
-SFX_OF = {"crack": [(-0.05, "impact", -2), (-0.1, "rumble", -3)], "steam": [(-0.25, "splash", -5), (-0.1, "sizzle", -8)], "whip": [(-0.3, "whoosh", -4)],
-          "whipl": [(-0.3, "whoosh", -4)], "whipv": [(-0.3, "whoosh", -4)], "zoom": [(-0.28, "whoosh", -6), (0.0, "thud", -6)],
-          "lava": [(-0.25, "rumble", -2), (0.0, "thud", -4)], "circle": [(-0.3, "whoosh", -7)]}
-for name, s, _ in SHOTS:
-    if name in TR:
-        for dt, kind, g in SFX_OF[TR[name][0]]: ev(s + dt, kind, g)
-# extra hits on slammed words / stamps (shake + impact), risers before the big hooks, sizzle under the pumping
-for tt in (wt("night", "splits"), wt("threat", "harbour"), wt("works", "works"), st("twist") - 0.05, wt("twist", "grew"), wt("today", "Eldfell")):
-    ev(tt, "impact", -5)
-for tt in (wt("hook", "So"), st("plan"), st("works"), wt("twist", "island"), st("app")):
-    ev(tt - 1.4, "riser", -12)
-ev(st("pumps"), "sizzle_long", -12); ev(st("months"), "sizzle_long", -16)
-for tt in (wt("app", "Norður") + 0.35, wt("app", "earthquake") - 0.05): ev(tt, "ping", -10)
-for k in range(8): ev(SH_T["clock"] + 0.05 + k / 2.2, "tick", -18)
-ev(0.0, "rumble_long", -6)
+# Sound design is deliberately sparse: effects only on the main transitions and on the hooks, well under the voice.
+SFX_OF = {"crack": [(-0.05, "impact", -6)], "steam": [(-0.25, "splash", -8)], "lava": [(-0.25, "rumble", -6)]}
+for name, s_, _ in SHOTS:
+    if name in TR and TR[name][0] in SFX_OF and name in ("fissure", "ocean", "street", "fired", "app", "cta"):
+        for dt, kind, g in SFX_OF[TR[name][0]]: ev(s_ + dt, kind, g)
+for name in ("harbour", "eldfell"): ev(SH_T[name] - 0.3, "whoosh", -10)                 # two soft whooshes on chapter-level cuts
+for tt in (wt("threat", "harbour"), wt("works", "works"), wt("twist", "grew")): ev(tt, "impact", -9)   # hooks
+for tt in (st("plan"), st("works")): ev(tt - 1.4, "riser", -16)
+ev(st("pumps") + 0.2, "sizzle_long", -18)
+for tt in (wt("app", "Norður") + 0.35, wt("app", "earthquake") - 0.05): ev(tt, "ping", -14)
+ev(0.0, "rumble_long", -10)
 
 def shake_amp(t):
     a = 0.0
@@ -538,7 +518,7 @@ def frame(fi):
     if t < st("cta") - 0.2: captions(d, t)
     else:
         rk.cta(im, mk.ease((t - st("cta")) / 0.5), P, "Volcano and earthquake alerts, weather, roads and the stories behind every place.",
-               "Photos: USGS, NASA, Smithsonian (public domain) · Óskar Elías Björnsson (CC BY 2.0) · Christian Bickel (CC BY-SA 2.0 de) · Szilas (PD) · bekassine (CC BY-SA 2.0) · Diego Delso (CC BY-SA 4.0) · footage: James St. John (CC BY 2.0) · AI voice · music & sfx: Norður")
+               "Photos: USGS, NASA, Smithsonian (public domain) · Óskar Elías Björnsson (CC BY 2.0) · Christian Bickel (CC BY-SA 2.0 de) · Szilas (PD) · Jasmin Engelhart (CC BY-SA 2.0) · Diego Delso (CC BY-SA 4.0) · footage: James St. John (CC BY 2.0), Alexander Grebenkov (CC BY 3.0) · AI voice · music & sfx: Norður")
     return im.convert("RGB")
 
 # ——— sound design ———
@@ -555,7 +535,12 @@ def build_audio(path_out):
         if kind not in cache or kind == "whoosh": cache[kind] = lib[kind]() if kind != "whoosh" else sx.whoosh(0.55, True, 100 + i)
         fx_.add(cache[kind], tt, g)
     music = sx.music_bed(TOTAL + 1, 96)
-    mix, stats = sx.master(voice, music[:n], fx_.x[:n], music_db=-19, sfx_db=-8)
+    sfx = fx_.x[:n]; vp = np.abs(voice).max(); win = int(0.05 * sx.SR)
+    sp = np.sqrt(np.convolve(sfx ** 2, np.ones(win) / win, "same")).max() * 1.414          # short-term SFX peak
+    vpk = np.sqrt(np.convolve(voice ** 2, np.ones(win) / win, "same")).max() * 1.414
+    sfx_db = min(0.0, 20 * np.log10(vpk / (sp + 1e-9)) - 12)                                 # SFX ≥ 12 dB under the voice
+    mix, stats = sx.master(voice, music[:n], sfx, music_db=-18, sfx_db=sfx_db, duck_db=-14)
+    stats["sfx_gain_db"] = round(float(sfx_db), 1)
     mix = mix[:int(TOTAL * sx.SR)]
     sf.write(path_out, np.stack([mix, mix], 1), sx.SR, subtype="PCM_16")
     return stats

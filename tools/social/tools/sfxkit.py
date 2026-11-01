@@ -127,11 +127,11 @@ def duck_env(voice, depth_db=-10, att=0.05, rel=0.35):
     for i, v in enumerate(o): k = ka if v > s else kr; s = k * s + (1 - k) * v; gg[i] = s
     g = np.repeat(gg, step)[: len(on)]
     return (10 ** (depth_db * g / 20)).astype(np.float32)
-def master(voice, music, sfx, music_db=-17, sfx_db=-4, peak_db=-1.0, drive=1.2):
+def master(voice, music, sfx, music_db=-17, sfx_db=-4, peak_db=-1.0, drive=1.2, duck_db=-10):
     """voice + ducked music + sfx → soft-limited stereo-ready mono, peak-normalised. Returns (mix, stats)."""
     n = max(len(voice), len(music), len(sfx)); pad = lambda a: np.pad(a, (0, n - len(a)))
     v, m, s = pad(voice), pad(music), pad(sfx)
-    m = m * 10 ** (music_db / 20) * duck_env(v); s = s * 10 ** (sfx_db / 20) * (0.55 + 0.45 * duck_env(v, -8))
+    m = m * 10 ** (music_db / 20) * duck_env(v, duck_db); s = s * 10 ** (sfx_db / 20) * duck_env(v, -6)
     y = v + m + s
     y = y / (np.percentile(np.abs(v), 99.9) + 1e-9)             # voice peaks ≈ 1 before the limiter
     y = np.tanh(y * drive) / np.tanh(drive)                     # soft limiter: loud but never hard-clipped

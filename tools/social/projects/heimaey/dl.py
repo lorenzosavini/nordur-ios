@@ -20,7 +20,8 @@ F = [  # key, Commons file, original width, on-screen credit
  ("harbour", "Puerto de Vestmannaeyjar, Heimaey, Islas Vestman, Suðurland, Islandia, 2014-08-17, DD 007.JPG", 5419, "Photo: Diego Delso · CC BY-SA 4.0"),
 ]
 V = [("v_lava", "Basaltic lava flow eruption (early morning, 23 March 2021) (Geldingadalur Valley, Iceland) 3.webm", "720p.vp9.webm",
-      "Lava footage: Geldingadalur 2021, James St. John · CC BY 2.0")]
+      "Lava footage: Geldingadalur 2021, James St. John · CC BY 2.0"),
+     ("v_waves", "Ocean waves at Lækjavik beach, Iceland.webm", "1080p.vp9.webm", "Footage: Alexander Grebenkov · CC BY 3.0")]
 def path(n):
     name = n.replace(" ", "_"); h = hashlib.md5(name.encode()).hexdigest(); return h, urllib.parse.quote(name)
 def get(urls, out):
