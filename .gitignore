@@ -6,3 +6,4 @@ ipa/
 demo/
 __pycache__/
 site/api/config.php
+tools/social/geo/
