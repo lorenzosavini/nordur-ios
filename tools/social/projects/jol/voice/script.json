@@ -1,0 +1,15 @@
+[
+ {"id": "hook", "say": "In Iceland, Christmas comes with thirteen trolls. And a cat that eats people.", "show": "In Iceland, Christmas comes with 13 trolls. And a cat that eats people."},
+ {"id": "lads", "say": "They're called the Yule Lads. From December twelfth, a new one arrives every night.", "show": "They're called the Yule Lads. From December 12th, a new one arrives every night."},
+ {"id": "names", "say": "Each one has a speciality. Spoon Licker. Door Slammer. Skyr Gobbler. Sausage Swiper. Window Peeper.", "show": "Each one has a speciality. Spoon Licker. Door Slammer. Skyr Gobbler. Sausage Swiper. Window Peeper."},
+ {"id": "last", "say": "The last one, Candle Beggar, comes on Christmas Eve. Then they leave, one by one, until January sixth.", "show": "The last one, Candle Beggar, comes on Christmas Eve. Then they leave, one by one, until January 6th."},
+ {"id": "shoe", "say": "Kids leave a shoe on the windowsill. Good kids get a small gift. Bad kids get a rotten potato.", "show": "Kids leave a shoe on the windowsill. Good kids get a small gift. Bad kids get a rotten potato."},
+ {"id": "mom", "say": "And that's the nice part. Their mother is Greela, an ogress who cooks naughty children in a stew.", "show": "And that's the nice part. Their mother is Grýla, an ogress who cooks naughty children in a stew."},
+ {"id": "dad", "say": "Their father, Leppaloothi, is lazy and mostly stays home.", "show": "Their father, Leppalúði, is lazy and mostly stays home."},
+ {"id": "cave", "say": "Home is a cave in Dimmuborgir, a lava field near Lake Meevatn.", "show": "Home is a cave in Dimmuborgir, a lava field near Lake Mývatn."},
+ {"id": "cat", "say": "And then there's the Yule Cat. If you don't get new clothes before Christmas, it eats you.", "show": "And then there's the Yule Cat. If you don't get new clothes before Christmas, it eats you."},
+ {"id": "statue", "say": "Since twenty eighteen, a five metre Yule Cat glows over central Reykjavik.", "show": "Since 2018, a 5-metre Yule Cat glows over central Reykjavík."},
+ {"id": "poem", "say": "And the thirteen names? They were fixed by a poem from nineteen thirty-two, by Yohannes oor Kertlum.", "show": "And the 13 names? They were fixed by a poem from 1932, by Jóhannes úr Kötlum."},
+ {"id": "end", "say": "So this December, wear something new. Just in case.", "show": "So this December, wear something new. Just in case."},
+ {"id": "cta", "say": "Northur. Your guide to Iceland. Join the waitlist at nordur dot info.", "show": "Norður. Your guide to Iceland. Join the waitlist at nordur.info"}
+]

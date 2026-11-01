@@ -17,13 +17,16 @@ Fonts: `site/landing/fonts` (Barlow Condensed, IBM Plex). Logo: generate with th
 - `tools/fx.py` – overlay system: photo cards/polaroids that enter (pop, drop, spin, left/right/up, zoom) and exit (fade, slide, shrink), stamps, grain.
 - `tools/geo.py` + `tools/paper.py` – Mapzen Terrarium DEM tiles (AWS, public) → stylised dark "paper-cut" relief (no Google/Apple maps).
 - `tools/rift3.py` – reel "This crack is tearing Iceland in two" (final, delivered).
-- `tools/vik_reel.py` – reel "Columbus wasn't first" (Leif Erikson). Needs media in `<work>/vik/` (see `projects/vikings/dl.py`, `dl2.py`), voice timeline in `<work>/vik/voice/`.
+- `tools/vik_reel.py` – reel "Columbus wasn't first" (Leif Erikson). Needs media in `<work>/vik/` (see `projects/vikings/dl.py`, `dl2.py`), `natl.png` (N. Atlantic paper map: `geo.dem(-72,40,18,73.5,5)` → `paper.papercut` ×2, rift3 DARK palette), voice timeline in `<work>/vik/voice/`.
+- `tools/jol_reel.py` – reel "Iceland's Christmas is terrifying" (13 Yule Lads, Grýla, Leppalúði, Yule Cat). Media in `<work>/jol/` (`projects/jol/dl.py`), `ice.png` (Iceland paper map, `geo.dem(-25,63.2,-13,66.7,7)`), voice in `<work>/jol/voice/`. Characters are original drawings (the 1932 illustrations are under copyright).
+- Run any reel as `python tools/<reel>.py <work> site/landing/fonts <out_dir> [frame numbers…]`: with frame numbers it only saves those test PNGs (fast), without it renders the mp4.
 - `tools/wind_reel.py`, `quake_reel.py`, `sun_reel.py`, `quiz_reel.py` – data-driven animated reels.
 - `tools/carousels_v3.py`, `posts_v2.py`, `lore.py`, `plib.py`, `deco.py` – carousels/posts (1080×1350).
+- Wikimedia from cloud IPs: originals usually get HTTP 429; standard thumbnail widths (1280/1920px) and transcodes go through after a few retries. Go slowly (~30 s per file). For long videos fetch only the needed seconds with `ffmpeg -ss … -i <transcode url> -t …` (see `projects/vikings/dl2.py`).
 - `tools/commons_dl2.py` – downloads Commons thumbnails via upload.wikimedia.org (the API is rate-limited from cloud IPs: query it with WebFetch, download with this script slowly).
 
 ## Voice
-`projects/*/voice/narrate.py` + `script.json` → `narration.wav` + `timeline.json` (Kokoro voice `am_michael`, en-US). Paths to the model are relative: adjust.
+`projects/*/narrate.py <avatar_dir> <out_dir>` + `voice/script.json` → `narration.wav` + `timeline.json` (Kokoro voice `am_michael`, speed 1.02, en-US). `say` can respell Icelandic names for the TTS (e.g. "Greela" for Grýla); captions use `show`.
 
 ## House rules (from the owner)
 - English content; dark app palette: BG #07090C, accent #FF5A1F, aurora #3DE0A8, blue #78AAFF.

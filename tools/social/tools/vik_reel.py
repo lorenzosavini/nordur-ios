@@ -20,9 +20,12 @@ def img(k):
 # ——— map ———
 Z = 5; LON0, LAT0, LON1, LAT1 = -72, 40, 18, 73.5
 MAP = np.asarray(Image.open(os.path.join(V, "natl.png")).convert("RGB")).astype(np.float32); MS = 2.0
+SEAC = (6.0, 10.0, 16.0)
+_yy, _xx = np.mgrid[0:MAP.shape[0], 0:MAP.shape[1]]                      # fade the map edges into the sea: no hard cut on Greenland
+_dd = np.minimum(np.minimum(_xx, MAP.shape[1] - 1 - _xx), np.minimum(_yy, MAP.shape[0] - 1 - _yy)).astype(np.float32)
+_f = np.clip(_dd / 260, 0, 1)[..., None] ** 1.5; MAP = MAP * _f + np.array(SEAC, np.float32) * (1 - _f); del _yy, _xx, _dd, _f
 MX0, MY0 = geo.lonlat_to_px(LON0, LAT1, Z)
 def mpx(lon, lat): x, y = geo.lonlat_to_px(lon, lat, Z); return (x - MX0) * MS, (y - MY0) * MS
-SEAC = (6.0, 10.0, 16.0)
 def cam(cx, cy, zoom):
     return np.float32([[zoom, 0, W / 2 - cx * zoom], [0, zoom, H / 2 - cy * zoom]])
 def mapview(lon, lat, zoom):
@@ -62,6 +65,7 @@ def ship_icon():
         _ship = s
     return _ship
 def map_label(im, M, name, lon, lat, a=1.0, col=TEXT, dot=True, dy=-56, size=40):
+    if a <= 0.01: return
     x, y = tp(M, lon, lat); d = ImageDraw.Draw(im, "RGBA")
     if dot:
         d.ellipse((x - 11, y - 11, x + 11, y + 11), fill=ACC + (int(255 * a),), outline=(255, 255, 255, int(255 * a)), width=3)
@@ -82,7 +86,7 @@ class Clip:
     def at(self, t): return self.f[min(int(t * FPS), len(self.f) - 1)] if self.f else None
 VF = f"scale=-2:{H},crop={W}:{H}"
 CL = {"ice": Clip(os.path.join(V, "v_ice.webm"), 4, 300, VF), "svea": Clip(os.path.join(V, "v_svea.webm"), 20, 240, VF),
-      "old": Clip(os.path.join(V, "v_viking1928.webm"), 300, 200, f"scale=-2:{H},crop={W}:{H},eq=saturation=0:contrast=1.15")}
+      "old": Clip(os.path.join(V, "v_viking1928.mp4"), 1.0, 200, f"scale=-2:{H},crop={W}:{H},eq=saturation=0:contrast=1.15")}
 # ——— helpers ———
 def kenburns(src, t, dur, z0=1.08, z1=1.2, fy=0.5, fx_=0.5, grade=None):
     k = fx.ease_out(t / dur) if dur else 1; z = z0 + (z1 - z0) * k
@@ -111,8 +115,8 @@ def big_number(im, text, y, t, t0, size=230, col=TEXT):
     f = COND(int(size * (0.7 + 0.3 * k))); d = ImageDraw.Draw(im); tw = d.textlength(text, font=f)
     d.text(((W - tw) / 2, y + (1 - k) * 40), text, font=f, fill=col, stroke_width=10, stroke_fill=(10, 10, 12))
 # timeline bar 1000 → 1492
-def timeline(im, t, a=1.0, mark1021=False, gap=False):
-    d = ImageDraw.Draw(im, "RGBA"); x0, x1, y = 110, W - 110, 1130
+def timeline(im, t, a=1.0, mark1021=False, gap=False, y=1130):
+    d = ImageDraw.Draw(im, "RGBA"); x0, x1 = 110, W - 110
     yr = lambda Y: x0 + (Y - 950) / (1550 - 950) * (x1 - x0)
     d.rounded_rectangle((x0, y - 5, x1, y + 5), 5, fill=(255, 255, 255, int(90 * a)))
     for Y in range(1000, 1551, 100):
@@ -185,16 +189,16 @@ def frame(fi):
             im.alpha_composite(L, (int(W / 2 - L.width / 2), int(820 - L.height / 2)))
             if t < 2.6: shake = 10 * (1 - (t - 2.2) / 0.4)
     # ——— 2 · first: map Iceland → America, timeline 1000 vs 1492 ———
-    elif t < st("father"):
+    elif t < st("name"):
         lt = t - st("first"); k = fx.ease_out(lt / 3)
-        a, M = mapview(lerp(-25, -38, k), lerp(63, 57, k), lerp(0.9, 0.5, k))
+        a, M = mapview(lerp(-25, -40, k), lerp(63, 58, k), lerp(0.9, 0.42, k))
         im = Image.fromarray(a.astype(np.uint8)).convert("RGBA"); graticule(im, M)
         dd = ImageDraw.Draw(im, "RGBA")
         pts = route_pts(M, STOPS[1][1:], STOPS[3][1:], bend=0.12); dashed(dd, pts, fx.ease_out(lt / 2.5), ACC + (255,))
         map_label(im, M, "ICELAND", -18.5, 64.9, dot=False, dy=-30, size=58)
-        flag_is(im, *[int(v) for v in tp(M, -24.5, 66.2)], 80)
-        if lt > 1.6: map_label(im, M, "America", -60, 50, fx.ease_out((lt - 1.6) / 0.4))
-        timeline(im, t, fx.ease_out((lt - 0.6) / 0.4))
+        fx_, fy_ = tp(M, -18.5, 64.9); flag_is(im, int(fx_ - 40), int(fy_ + 40), 80)
+        if lt > 1.6: map_label(im, M, "America", -61, 54.5, fx.ease_out((lt - 1.6) / 0.4))
+        timeline(im, t, fx.ease_out((lt - 0.6) / 0.4), y=470)
     # ——— 3 · name: Krohg painting ———
     elif t < st("father"):
         lt = t - st("name"); src = img("krohg"); im = kenburns(src, lt, 2.2, 1.0, 1.12, fy=0.4, fx_=0.35)
@@ -222,7 +226,7 @@ def frame(fi):
             sx, sy = pts[min(len(pts) - 1, int(fx.ease_out(lt / 2.2) * (len(pts) - 1)))]; s = ship_icon(); im.alpha_composite(s, (int(sx - 60), int(sy - 80)))
         map_label(im, M, "Iceland", -18.6, 64.9, dot=False, dy=-24, size=42)
         if lt > 2.2:
-            kk = fx.back((lt - 2.2) / 0.45); f = COND(int(130 * kk) + 1); x, y = tp(M, -42, 70)
+            kk = fx.back((lt - 2.2) / 0.45); f = COND(int(130 * kk) + 1); x, y = W / 2, 380
             dd.text((x - dd.textlength("GREENLAND", font=f) / 2, y), "GREENLAND", font=f, fill=TEXT, stroke_width=8, stroke_fill=(0, 0, 0))
         fr = CL["ice"].at(max(0, lt - 3.6))
         if fr is not None and lt > 3.6:
@@ -260,9 +264,9 @@ def frame(fi):
             credit(im, CRED.get("flatey", "Flateyjarbók"), 1060)
         if lt > 2.9:
             k = fx.back((lt - 2.9) / 0.5); f = COND(int(170 * k) + 1); d = ImageDraw.Draw(im)
-            tx = "VÍNLAND"; d.text((W - 80 - d.textlength(tx, font=f), 420), tx, font=f, fill=GREEN, stroke_width=9, stroke_fill=(0, 0, 0))
+            tx = "VÍNLAND"; d.text((W - 80 - d.textlength(tx, font=f), 225), tx, font=f, fill=GREEN, stroke_width=9, stroke_fill=(0, 0, 0))
             if lt > 4.6:
-                f2 = COND(80); d.text((W - 80 - d.textlength("= WINE LAND", font=f2), 600), "= WINE LAND", font=f2, fill=TEXT, stroke_width=6, stroke_fill=(0, 0, 0))
+                f2 = COND(80); d.text((W - 80 - d.textlength("= WINE LAND", font=f2), 405), "= WINE LAND", font=f2, fill=TEXT, stroke_width=6, stroke_fill=(0, 0, 0))
         chip_anim(im, "Saga of the Greenlanders · written ~1200", 70, 1150, t, st("vinland") + 0.6, st("myth"), BLUE)
         if fr is not None: credit(im, "Footage: Sailing Svea · CC BY 3.0", 1290)
     # ——— 7 · myth: old film (1928), LEGEND? stamp ———
@@ -277,10 +281,14 @@ def frame(fi):
     # ——— 8 · found: map zoom to Newfoundland, satellite card, longhouse polaroid ———
     elif t < st("date"):
         lt = t - st("found"); k = fx.ease_out(lt / 2.6)
-        a, M = mapview(lerp(-40, -55.5, k), lerp(58, 51.6, k), lerp(0.5, 3.0, k))
+        a, M = mapview(lerp(-40, -55.5, k), lerp(58, 51.6, k), lerp(0.5, 2.2, k))
         im = Image.fromarray(a.astype(np.uint8)).convert("RGBA"); graticule(im, M)
         map_label(im, M, "L'Anse aux Meadows", -55.53, 51.6, fx.ease_out((lt - 1.8) / 0.4), dy=-70, size=46)
-        if lt < 2.6: map_label(im, M, "NEWFOUNDLAND, CANADA", -56.5, 49.2, 1 - fx.ease_out((lt - 1.6) / 0.4), dot=False, size=40)
+        if lt > 0.8: chip_anim(im, "Newfoundland, Canada", 70, 1180, t, st("found") + 0.8, st("found") + 2.6, BLUE)
+        sat = C("aster", 380, 380, "polaroid", "Seen from space")
+        if sat:
+            fx.place(im, sat.rotate(-4, resample=Image.BICUBIC, expand=True), W - 250, 700, t, st("found") + 0.9, st("found") + 2.7, "right", "right", 0.4, 0.3)
+            if 0.9 < lt < 2.7: credit(im, CRED.get("aster", ""), 1290)
         c = C("longhouse", 600, 400, "polaroid", "Rebuilt Norse longhouse")
         if c: fx.place(im, c.rotate(3, resample=Image.BICUBIC, expand=True), W / 2, 980, t, st("found") + 2.6, st("date") + 0.2, "drop", "down", 0.5, 0.3, rot_in=15)
         if c and lt > 2.6: credit(im, CRED.get("longhouse", ""), 1290)
@@ -289,40 +297,41 @@ def frame(fi):
     elif t < st("storm"):
         lt = t - st("date"); src = img("longhouse") or img("krohg")
         im = blurbg(src, 0.35); d = ImageDraw.Draw(im, "RGBA")
-        cx, cy = W / 2, 820; n = 29 + 1
+        cx, cy = W / 2, 860; n = 29 + 1
         k = fx.ease_out(lt / 3.0)
         for i in range(int(n * k)):
-            r = 40 + i * 11; col = (190, 140, 90, 255) if i % 2 else (150, 100, 60, 255)
+            r = 40 + i * 9; col = (190, 140, 90, 255) if i % 2 else (150, 100, 60, 255)
             d.ellipse((cx - r * 1.05, cy - r, cx + r * 1.05, cy + r), outline=col, width=6)
         d.text((80, 230), "NATURE · 2021", font=MONO(30), fill=DIM)
         if lt > 3.4: big_number(im, "1021", 280, t, st("date") + 3.4, 230, GREEN)
-        chip_anim(im, "Wood cut with metal tools", 70, 1150, t, st("date") + 1.2, st("storm"), ACC)
+        chip_anim(im, "Wood cut with metal tools", 70, 1200, t, st("date") + 1.2, st("storm"), ACC)
     # ——— 10 · storm: sun flare + ring highlighted ———
     elif t < st("gap"):
         lt = t - st("storm"); im = Image.new("RGBA", (W, H), (7, 9, 12, 255)); d = ImageDraw.Draw(im, "RGBA")
-        cx, cy = W / 2, 860
+        cx, cy = W / 2, 880
         for i in range(30):
-            r = 40 + i * 11; hl = (i == 1)
+            r = 40 + i * 9; hl = (i == 1)
             d.ellipse((cx - r * 1.05, cy - r, cx + r * 1.05, cy + r), outline=(255, 90, 31, 255) if hl else ((120, 90, 60, 200) if i % 2 else (90, 66, 44, 200)), width=10 if hl else 6)
         sun = Image.new("RGBA", (W, H), (0, 0, 0, 0)); ds = ImageDraw.Draw(sun); pulse = 1 + 0.08 * math.sin(lt * 8)
-        ds.ellipse((W / 2 - 150 * pulse, 260 - 150 * pulse, W / 2 + 150 * pulse, 260 + 150 * pulse), fill=(255, 200, 80, 255))
+        ds.ellipse((W / 2 - 115 * pulse, 345 - 115 * pulse, W / 2 + 115 * pulse, 345 + 115 * pulse), fill=(255, 200, 80, 255))
         im.alpha_composite(sun.filter(ImageFilter.GaussianBlur(40))); im.alpha_composite(sun.filter(ImageFilter.GaussianBlur(6)))
         if lt > 0.8:
-            yy = 260 + (cy - 52 - 260) * fx.ease_out((lt - 0.8) / 0.8); d.line((W / 2, 410, W / 2, yy), fill=(255, 200, 80, 220), width=8)
-        chip_anim(im, "Solar storm of 993 → radiocarbon spike", 70, 1150, t, st("storm") + 0.5, st("gap"), ACC)
-        chip_anim(im, "+29 rings → cut in 1021", 70, 1240, t, st("storm") + 1.6, st("gap"), GREEN)
+            yy = 470 + (cy - 50 - 470) * fx.ease_out((lt - 0.8) / 0.8); d.line((W / 2, 470, W / 2, yy), fill=(255, 200, 80, 220), width=8)
+        chip_anim(im, "Solar storm of 993 → radiocarbon spike", 70, 1192, t, st("storm") + 0.5, st("gap"), ACC)
+        chip_anim(im, "+29 rings → cut in 1021", 70, 1272, t, st("storm") + 1.6, st("gap"), GREEN)
     # ——— 11 · gap: timeline 1021 → 1492 grows, 471 ———
     elif t < st("end"):
-        lt = t - st("gap"); src = img("krohg")
+        lt = t - st("gap"); src = img("reenact") or img("krohg")
         im = blurbg(src, 0.3); timeline(im, t, 1.0, True, (lt - 0.3) / 1.6)
         big_number(im, "471 YEARS", 520, t, st("gap") + 0.8, 200, ACC)
+        if img("reenact"): credit(im, "L'Anse aux Meadows · " + CRED.get("reenact", ""), 1290)
         if lt > 2.0:
             k = fx.ease_out((lt - 2.0) / 0.2); s = 2 - k; L = STAMP_REAL.resize((int(STAMP_REAL.width * s), int(STAMP_REAL.height * s)))
             im.alpha_composite(L, (int(W / 2 - L.width / 2), int(860 - L.height / 2)))
     # ——— 12 · end: Leif statue in Reykjavík ———
     elif t < st("cta"):
         lt = t - st("end"); src = img("statue")
-        im = kenburns(src, lt, 5.5, 1.05, 1.18, fy=0.3) if src else Image.new("RGBA", (W, H), (7, 9, 12, 255))
+        im = kenburns(src, lt, 5.5, 1.02, 1.14, fy=0.2, fx_=0.88) if src else Image.new("RGBA", (W, H), (7, 9, 12, 255))
         im.alpha_composite(Image.new("RGBA", (W, H), (7, 9, 12, 70)))
         if src: credit(im, "Leif Erikson statue, Reykjavík · " + CRED.get("statue", ""))
         chip_anim(im, "Gift from the USA, 1930", 70, 300, t, st("end") + 1.0, st("cta"), BLUE)

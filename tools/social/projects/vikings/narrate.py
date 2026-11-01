@@ -1,7 +1,9 @@
-import json, numpy as np, soundfile as sf
+"""voice/script.json → narration.wav + timeline.json (Kokoro am_michael). Usage: python narrate.py <avatar_dir> [out_dir]"""
+import json, sys, os, numpy as np, soundfile as sf
 from kokoro_onnx import Kokoro
-k = Kokoro("../../avatar/kokoro-v1.0.onnx", "../../avatar/voices-v1.0.bin")
-lines = json.load(open("script.json")); out = []; t = 0.35; sr = 24000
+AV = sys.argv[1] if len(sys.argv) > 1 else "../../avatar"; OUT = sys.argv[2] if len(sys.argv) > 2 else "."
+k = Kokoro(os.path.join(AV, "kokoro-v1.0.onnx"), os.path.join(AV, "voices-v1.0.bin"))
+lines = json.load(open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "voice", "script.json"))); out = []; t = 0.35; sr = 24000
 audio = [np.zeros(int(0.35 * sr), np.float32)]
 for i, l in enumerate(lines):
     s, sr = k.create(l["say"], voice="am_michael", speed=1.02, lang="en-us")
@@ -12,5 +14,5 @@ for i, l in enumerate(lines):
     gap = {"hook": 0.3, "name": 0.5, "green": 0.45, "myth": 0.45, "date": 0.5, "storm": 0.3, "gap": 0.6, "end": 0.5}.get(l["id"], 0.3)
     audio.append(np.zeros(int(gap * sr), np.float32)); t += gap
 a = np.concatenate(audio); a = a / max(1e-6, np.abs(a).max()) * 0.92
-sf.write("narration.wav", a, sr); json.dump(out, open("timeline.json", "w"), indent=1)
+sf.write(os.path.join(OUT, "narration.wav"), a, sr); json.dump(out, open(os.path.join(OUT, "timeline.json"), "w"), indent=1, ensure_ascii=False)
 print(round(t, 2)); [print(round(o["start"], 2), round(o["dur"], 2), o["show"][:40]) for o in out]

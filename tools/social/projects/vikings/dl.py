@@ -15,7 +15,8 @@ for k,n,w,cr in F:
     meta[k]=cr
     if os.path.exists(k+".img") and os.path.getsize(k+".img")>1000: continue
     name=n.replace(" ","_"); h=hashlib.md5(name.encode()).hexdigest(); q=urllib.parse.quote(name)
-    url=f"https://upload.wikimedia.org/wikipedia/commons/thumb/{h[0]}/{h[:2]}/{q}/1920px-{q}" if w>1920 else f"https://upload.wikimedia.org/wikipedia/commons/{h[0]}/{h[:2]}/{q}"
+    url=(f"https://upload.wikimedia.org/wikipedia/commons/thumb/{h[0]}/{h[:2]}/{q}/{1920 if w > 1920 else 1280}px-{q}" if w > 1280   # originals get 429'd from cloud IPs: use standard thumb sizes
+           else f"https://upload.wikimedia.org/wikipedia/commons/{h[0]}/{h[:2]}/{q}")
     if url.endswith(".png") and w>1920: url+=".png"
     for t in range(8):
         try: d=urllib.request.urlopen(urllib.request.Request(url,headers=UA),timeout=120).read(); open(k+".img","wb").write(d); print("ok",k,len(d),flush=True); break

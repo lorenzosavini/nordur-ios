@@ -42,9 +42,9 @@ def cta(im, k, P, line, credit):
     im.alpha_composite(Image.new("RGBA", (W, H), (6, 9, 13, int(228 * k))))
     if k > 0.2:
         lg = _logo["l"]; im.alpha_composite(lg, ((W - lg.width) // 2, 640))
-        block(im, line, 820, 78)
-        shadow_text(im, "JOIN THE WAITLIST", 1060, MONO(44), ACCENT)
-        shadow_text(im, "nordur.info", 1120, COND(150))
+        y = block(im, line, 820, 78) + 40                        # tagline may wrap to 3 lines: stack below it
+        shadow_text(im, "JOIN THE WAITLIST", y, MONO(44), ACCENT)
+        shadow_text(im, "nordur.info", y + 60, COND(150))
         d = ImageDraw.Draw(im)
         for i, ln in enumerate(wrap(d, credit, MONO(20), 960)): shadow_text(im, ln, 1460 + i * 28, MONO(20), DIM)
 def writer(path):
@@ -53,10 +53,8 @@ def writer(path):
 def run(frame, total, out_path, test):
     n = int(total * FPS)
     if test:
-        want = set(int(x) for x in test)
-        for fi in range(max(want) + 1):
-            im = frame(fi)
-            if fi in want: im.save(out_path.replace(".mp4", f"-test-{fi}.png"))
+        for fi in sorted(set(int(x) for x in test)):          # frames are stateless: render only the ones asked for
+            frame(fi).save(out_path.replace(".mp4", f"-test-{fi}.png"))
         return
     pr = writer(out_path)
     for fi in range(n): pr.stdin.write(frame(fi).tobytes())
