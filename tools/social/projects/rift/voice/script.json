@@ -1,0 +1,15 @@
+[
+ {"id": "hook", "say": "This crack is tearing Iceland in two.", "show": "This crack is tearing Iceland in two."},
+ {"id": "swim", "say": "And people swim in it.", "show": "And people swim in it."},
+ {"id": "ridge", "say": "Iceland sits on the Mid-Atlantic Ridge: the seam where two of Earth's tectonic plates meet.", "show": "Iceland sits on the Mid-Atlantic Ridge: the seam where two of Earth's tectonic plates meet."},
+ {"id": "deep", "say": "Almost everywhere else, that seam lies on the ocean floor, kilometres below the waves. Iceland is where it rises out of the sea.", "show": "Almost everywhere else, that seam lies on the ocean floor, kilometres below the waves. Iceland is where it rises out of the sea."},
+ {"id": "plates", "say": "To the west, the North American plate. To the east, the Eurasian plate.", "show": "To the west, the North American plate. To the east, the Eurasian plate."},
+ {"id": "rate", "say": "And they're pulling apart. About two centimetres, every single year.", "show": "And they're pulling apart. About two centimetres, every single year."},
+ {"id": "wait", "say": "Doesn't sound like much? Watch what it does.", "show": "Doesn't sound like much? Watch what it does."},
+ {"id": "thing", "say": "At Thingvellir, the ground has split into long cracks you can walk through.", "show": "At Þingvellir, the ground has split into long cracks you can walk through."},
+ {"id": "silfra", "say": "One of them, Silfra, filled with glacier water that seeps through lava for decades. It's so clear that divers can see more than a hundred metres.", "show": "One of them, Silfra, filled with glacier water that seeps through lava for decades. It's so clear that divers can see more than 100 metres."},
+ {"id": "opens", "say": "But sometimes, the crack doesn't just stretch. It opens.", "show": "But sometimes, the crack doesn't just stretch. It opens."},
+ {"id": "erupt", "say": "Since twenty twenty-one, the Reykjanes peninsula has erupted again and again, lava pouring out of fissures in the ground.", "show": "Since 2021, the Reykjanes peninsula has erupted again and again, lava pouring out of fissures in the ground."},
+ {"id": "look", "say": "So next time you're in Iceland, look down. You're standing where two continents are pulling apart.", "show": "So next time you're in Iceland, look down. You're standing where two continents are pulling apart."},
+ {"id": "cta", "say": "Northur keeps an eye on the ground, the roads and the sky for you. Join the waitlist at nordur dot info.", "show": "Norður keeps an eye on the ground, the roads and the sky for you. Join the waitlist at nordur.info"}
+]

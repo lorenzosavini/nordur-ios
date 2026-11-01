@@ -1,0 +1,100 @@
+[
+ {
+  "start": 0.35,
+  "dur": 3.794791666666667,
+  "id": "hook",
+  "say": "Christopher Columbus was not the first European in America.",
+  "show": "Christopher Columbus was not the first European in America."
+ },
+ {
+  "start": 4.444791666666666,
+  "dur": 4.799375,
+  "id": "first",
+  "say": "Almost five hundred years earlier, a Viking born in Iceland got there first.",
+  "show": "Almost 500 years earlier, a Viking born in Iceland got there first."
+ },
+ {
+  "start": 9.544166666666667,
+  "dur": 1.6422083333333333,
+  "id": "name",
+  "say": "His name was Leif Erikson.",
+  "show": "His name was Leif Erikson."
+ },
+ {
+  "start": 11.686375,
+  "dur": 4.900875,
+  "id": "father",
+  "say": "His father, Erik the Red, had been thrown out of Iceland for killing several men.",
+  "show": "His father, Erik the Red, had been thrown out of Iceland for killing several men."
+ },
+ {
+  "start": 16.88725,
+  "dur": 8.679208333333333,
+  "id": "green",
+  "say": "So he sailed west, found a huge frozen land, and called it Greenland. On purpose. A nice name would make people want to move there.",
+  "show": "So he sailed west, found a huge frozen land, and called it Greenland. On purpose. A nice name would make people want to move there."
+ },
+ {
+  "start": 26.016458333333336,
+  "dur": 4.080041666666666,
+  "id": "voyage",
+  "say": "Around the year one thousand, his son Leif sailed even further west.",
+  "show": "Around the year 1000, his son Leif sailed even further west."
+ },
+ {
+  "start": 30.396500000000003,
+  "dur": 6.359083333333333,
+  "id": "vinland",
+  "say": "In the sagas, they find forests and wild grapes. So Leif calls the place Vinland. Wine land.",
+  "show": "In the sagas, they find forests and wild grapes. So Leif calls the place Vinland. Wine land."
+ },
+ {
+  "start": 37.05558333333333,
+  "dur": 3.3095833333333333,
+  "id": "myth",
+  "say": "For centuries, most people thought it was just a legend.",
+  "show": "For centuries, most people thought it was just a legend."
+ },
+ {
+  "start": 40.81516666666667,
+  "dur": 4.897166666666666,
+  "id": "found",
+  "say": "Then, in nineteen sixty, Viking ruins were found in Newfoundland, Canada.",
+  "show": "Then, in 1960, Viking ruins were found in Newfoundland, Canada."
+ },
+ {
+  "start": 46.01233333333333,
+  "dur": 6.11275,
+  "id": "date",
+  "say": "And in twenty twenty-one, scientists found the exact year the Vikings cut wood there. Ten twenty-one.",
+  "show": "And in 2021, scientists found the exact year the Vikings cut wood there. 1021."
+ },
+ {
+  "start": 52.62508333333333,
+  "dur": 4.068708333333333,
+  "id": "storm",
+  "say": "The clue? A giant solar storm, frozen inside the tree rings.",
+  "show": "The clue? A giant solar storm, frozen inside the tree rings."
+ },
+ {
+  "start": 56.99379166666666,
+  "dur": 3.525375,
+  "id": "gap",
+  "say": "That's four hundred and seventy-one years before Columbus.",
+  "show": "That's 471 years before Columbus."
+ },
+ {
+  "start": 61.11916666666666,
+  "dur": 5.511583333333333,
+  "id": "end",
+  "say": "So next time someone says Columbus discovered America, you know where to send them. Iceland.",
+  "show": "So next time someone says Columbus discovered America, you know where to send them. Iceland."
+ },
+ {
+  "start": 67.13074999999999,
+  "dur": 4.870166666666667,
+  "id": "cta",
+  "say": "Northur. Your guide to Iceland. Join the waitlist at nordur dot info.",
+  "show": "Nor\u00f0ur. Your guide to Iceland. Join the waitlist at nordur.info"
+ }
+]
