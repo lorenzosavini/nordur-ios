@@ -41,6 +41,19 @@ def vid_frames():
 def vid(ts):
     fr = vid_frames(); i = min(len(fr) - 1, max(0, int(ts * 25)))
     return cv2.resize(fr[i], (W, H), interpolation=cv2.INTER_CUBIC).astype(np.float32)
+_CL = {}
+def clip(key, ts, start, dur, xshift=0.0):
+    """Frame of a real clip (only the needed seconds are decoded), cropped to 9:16 (xshift = fraction of width from centre)."""
+    if (key, start) not in _CL:
+        cap = cv2.VideoCapture(os.path.join(V, key + ".mp4")); fps = cap.get(cv2.CAP_PROP_FPS) or 25; cap.set(cv2.CAP_PROP_POS_MSEC, start * 1000); fr = []
+        for _ in range(int(dur * fps) + 1):
+            ok, f = cap.read()
+            if not ok: break
+            h, w = f.shape[:2]; cw = int(h * W / H); x0 = int(min(w - cw, max(0, (w - cw) / 2 + xshift * w)))
+            fr.append(cv2.cvtColor(f[:, x0:x0 + cw], cv2.COLOR_BGR2RGB))
+        _CL[(key, start)] = (fr, fps)
+    fr, fps = _CL[(key, start)]; i = min(len(fr) - 1, max(0, int(ts * fps)))
+    return cv2.resize(fr[i], (W, H), interpolation=cv2.INTER_CUBIC).astype(np.float32)
 def ramp(lt, slow=0.35, fast=2.2, tsw=1.2, d=0.4):
     """Source time for a speed ramp: slow-mo until tsw, then ramps to fast over d s."""
     if lt < tsw: return lt * slow
@@ -221,9 +234,9 @@ def s_place(t):
         hx = rx.basalt(t * 1.5, ACC); m = rx.ease((lb - 0.15) / 0.5)            # hex pattern dissolves into the real columns
         a = hx * (1 - m) + (ph * 0.9 + hx * 0.25) * m; im = to_pil(a)
         put(im, T("BASALT COLUMNS", 130), W / 2, 1060, t, tb); credit(im, "Basalt columns · " + CRED.get("basalt", "")); return im
-    lw = t - tw; a = photo("winter", lw, 2.0, (1.0, 1.18), (0, 0.08), 90); a = rx.shake(a, int(t * 30), 8 * max(0, 1 - lw * 2))
+    lw = t - tw; a = clip("v_over", ramp(lw, 0.6, 1.4, 0.9), 77, 6, -0.27); a = rx.shake(a, int(t * 30), 8 * max(0, 1 - lw * 2))   # real footage: waves hitting Reynisdrangar
     im = to_pil(a * 0.9); put(im, T("DON'T PLAY FAIR", 140, ACC), W / 2, 1060, t, wt("place", "play") - 0.05, None, "slam", 0.2)
-    credit(im, "Winter waves, Reynisfjara · " + CRED.get("winter", "")); return im
+    credit(im, "Reynisdrangar · " + CRED.get("v_over", "")); return im
 LMOST, LSURGE, PERSON = 1180, 470, 700
 def runup(lt, tsurge):
     """Water line (px) over time: small waves to LMOST, then a sneaker wave to LSURGE."""
@@ -236,6 +249,9 @@ def runup(lt, tsurge):
     return LSURGE + (base - 120 - LSURGE) * rx.ease((k - 1.6) / 2.4) if k > 1.6 else LSURGE
 def s_sneak(t):
     lt = t - st("sneak"); tsg = wt("sneak", "surges") - st("sneak") - 0.15
+    if t < wt("sneak", "Most") - 0.1:                                       # real footage first: a wave washing up the black sand
+        im = to_pil(clip("v_over", lt * 0.8, 20.6, 3.5, 0.12) * 0.85)
+        put(im, T("SNEAKER WAVES", 130), W / 2, 330, t, st("sneak")); credit(im, "Black sand beach, South Iceland · " + CRED.get("v_over", "")); return im
     sandA = rx.sand(t, 0, dark=1.0); y = runup(lt, tsg)
     m, f = rx.wave_mask(t, y, 22, 110); wet = np.clip((np.arange(H)[:, None] - y + 90) / 90, 0, 1)[..., None] * 0.35
     a = sandA * (1 - wet) + rx.sea(t) * m[..., None] + sandA * (1 - m[..., None]) * 0 + f[..., None] * 240
@@ -293,13 +309,17 @@ def s_lights(t):
 def s_rule(t):
     lt = t - st("rule"); a = photo("warning", lt, 3.2, (1.25, 1.05), (0, 0.04), 20); im = to_pil(a * 0.55)
     put(im, T("NEVER", 230, ACC), W / 2, 420, t, wt("rule", "never") - 0.05, None, "slam", 0.18); kick(t, wt("rule", "never"), 14)
+    if t >= wt("rule", "turn") - 0.1:                                      # real footage: waves at the Reynisdrangar sea stacks
+        im = to_pil(clip("v_over", (t - wt("rule", "turn")) * 0.8, 84, 3, 0.22) * 0.6); put(im, T("NEVER", 230, ACC), W / 2, 420, t, -1)
+        put(im, T("TURN YOUR BACK", 130), W / 2, 640, t, -1); put(im, T("ON THE OCEAN", 130), W / 2, 790, t, wt("rule", "ocean") - 0.1, None, "up")
+        credit(im, "Reynisdrangar · " + CRED.get("v_over", "")); return im
     put(im, T("TURN YOUR BACK", 130), W / 2, 640, t, wt("rule", "turn") - 0.05, None, "up"); put(im, T("ON THE OCEAN", 130), W / 2, 790, t, wt("rule", "ocean") - 0.1, None, "up")
     credit(im, "Warning sign, Reynisfjara · " + CRED.get("warning", "")); return im
 def s_turn(t):
-    lt = t - st("turn"); a = photo("lowsun", lt, 2.8, (1.0, 1.2), (0, 0), 60) * 0.45 + rx.sand(t, 260) * 0.4
+    lt = t - st("turn"); a = clip("v_waves", lt, 0.5, 3.5, 0.15) * 0.5 + rx.sand(t, 260) * 0.4
     im = to_pil(a); tf = wt("turn", "Four") - 0.05
     put(im, T("4", 640, ACC, 16), W / 2, 760, t, tf, None, "slam", 0.18); kick(t, tf + 0.05, 20)
-    put(im, T("MORE MISTAKES", 130), W / 2, 1110, t, wt("turn", "mistakes") - 0.1, None, "up"); credit(im, "Reynisfjara · " + CRED.get("lowsun", "")); return im
+    put(im, T("MORE MISTAKES", 130), W / 2, 1110, t, wt("turn", "mistakes") - 0.1, None, "up"); credit(im, "Lækjavík beach, Iceland · " + CRED.get("v_waves", "")); return im
 def s_door(t):
     lt = t - st("door"); tg = wt("door", "gust") - 0.05; tr = wt("door", "rentals") - 0.15
     if t < tr:

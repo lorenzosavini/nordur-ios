@@ -17,7 +17,10 @@ F = [("waves", "Waves crashing on rocks at Reynisfjara beach (16469631985).jpg",
      ("sheep", "Sheep crossing road in eastern Iceland, July 2019.jpg", 3568, "Photo: Alexander Grebenkov · CC BY 3.0"),
      ("ring", "Route 1 in Mýrdalshreppur municipality, Iceland, 20240720 0909 2856.jpg", 5728, "Photo: Jakub Hałun · CC BY 4.0"),
      ("ring2", "View of Route 1 and Reynisfjall mountain in Mýrdalshreppur municipality, Iceland, 20240719 1945 2815.jpg", 5296, "Photo: Jakub Hałun · CC BY 4.0")]
-VID = [("v_windy", "Windy day at Reynisfjara beach in Iceland.webm", "Video: Alexander Grebenkov · CC BY 3.0")]
+VID = [("v_windy", "Windy day at Reynisfjara beach in Iceland.webm", "Video: Alexander Grebenkov · CC BY 3.0"),
+       ("v_waves", "Ocean waves at Lækjavik beach, Iceland.webm", "Video: Alexander Grebenkov · CC BY 3.0"),
+       ("v_dyr", "Dyrhólaey 22 Juni 2010.ogv", "Video: Hedwig Storch · CC BY-SA 3.0"),
+       ("v_over", "Iceland-overview-video.ogv", "Video: Raphael Frei, Ryan Little, Andrew Lih · CC BY 4.0")]
 def path(n):
     name = n.replace(" ", "_"); h = hashlib.md5(name.encode()).hexdigest(); return h, urllib.parse.quote(name)
 meta = json.load(open("credits.json")) if os.path.exists("credits.json") else {}
@@ -25,10 +28,10 @@ for k, n, cr in VID:
     meta[k] = cr
     if os.path.exists(k + ".mp4") and os.path.getsize(k + ".mp4") > 100000: continue
     h, q = path(n)
-    for mode in ("1080p.vp9.webm", "720p.vp9.webm", "720p.webm"):
+    for mode in ("1080p.vp9.webm", "720p.vp9.webm", "720p.webm", "480p.vp9.webm", "480p.webm"):
         url = f"https://upload.wikimedia.org/wikipedia/commons/transcoded/{h[0]}/{h[:2]}/{q}/{q}.{mode}"
         for t in range(4):
-            r = subprocess.run(["ffmpeg", "-v", "error", "-y", "-user_agent", UA["User-Agent"], "-i", url, "-t", "40", "-an", "-c:v", "libx264", "-crf", "14", k + ".mp4"])
+            r = subprocess.run(["ffmpeg", "-v", "error", "-y", "-user_agent", UA["User-Agent"], "-i", url, "-t", "240", "-an", "-c:v", "libx264", "-crf", "14", k + ".mp4"])
             if r.returncode == 0 and os.path.getsize(k + ".mp4") > 100000: print("ok", k, mode, flush=True); break
             print("err", k, mode, flush=True); time.sleep(40)
         if os.path.exists(k + ".mp4") and os.path.getsize(k + ".mp4") > 100000: break
