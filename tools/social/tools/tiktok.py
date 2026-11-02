@@ -52,19 +52,35 @@ def cover(img, w=W, h=H, focus=(0.5, 0.5)):
     return im.crop((x, y, x + w, y + h))
 class Photo:
     """Still photo as a full-screen 'clip' with a slow Ken Burns push (zoom from z0 to z1 over dur)."""
-    def __init__(self, path, focus=(0.5, 0.5), over=1.25, z=(1.0, 1.08), dur=2.0, drift=(0.0, 0.0)):
-        self.base = cover(Image.open(path), int(W * over), int(H * over), focus); self.over = over; self.z = z; self.dur = dur; self.drift = drift
+    def __init__(self, path, focus=(0.5, 0.5), over=1.25, z=(1.0, 1.08), dur=2.0, drift=(0.0, 0.0), size=(W, H)):
+        self.size = size; self.base = cover(Image.open(path), int(size[0] * over), int(size[1] * over), focus); self.over = over; self.z = z; self.dur = dur; self.drift = drift
     def frame(self, lt, zoom=1.0):
         k = smooth(lt / self.dur) if self.dur else 0; z = (self.z[0] + (self.z[1] - self.z[0]) * k) * zoom
         bw, bh = self.base.size; cw, ch = bw / self.over / z, bh / self.over / z      # crop size in base pixels
         cx = bw / 2 + self.drift[0] * bw * k; cy = bh / 2 + self.drift[1] * bh * k
         x0 = clamp(cx - cw / 2, 0, bw - cw); y0 = clamp(cy - ch / 2, 0, bh - ch)
-        return self.base.resize((W, H), Image.BICUBIC, box=(x0, y0, x0 + cw, y0 + ch))
+        return self.base.resize(self.size, Image.BICUBIC, box=(x0, y0, x0 + cw, y0 + ch))
+class PhotoCard:
+    """Photo shown whole as a rounded card over a blurred, darkened copy of itself (for text-heavy images like plaques)."""
+    def __init__(self, path, width=900, cy=0.56, dur=2.0, z=(1.0, 1.05)):
+        img = Image.open(path).convert("RGB"); self.dur, self.z = dur, z
+        self.bg = ImageEnhance_brightness(cover(img).filter(ImageFilter.GaussianBlur(28)), 0.55)
+        c = ImageOps.contain(img, (width, int(H * 0.55)), Image.LANCZOS)
+        m = Image.new("L", c.size, 0); ImageDraw.Draw(m).rounded_rectangle((0, 0, c.width - 1, c.height - 1), 28, fill=255)
+        self.card = Image.new("RGBA", c.size, (0, 0, 0, 0)); self.card.paste(c, (0, 0), m); self.card = sticker(self.card, border=10)
+        self.cy = cy
+    def frame(self, lt, zoom=1.0):
+        im = self.bg.copy().convert("RGBA"); k = smooth(lt / self.dur); s = (self.z[0] + (self.z[1] - self.z[0]) * k) * zoom
+        L = self.card.resize((int(self.card.width * s), int(self.card.height * s)), Image.BICUBIC)
+        im.alpha_composite(L, (int((W - L.width) / 2), int(H * self.cy - L.height / 2))); return im.convert("RGB")
+def ImageEnhance_brightness(img, k):
+    from PIL import ImageEnhance
+    return ImageEnhance.Brightness(img).enhance(k)
 class Video:
     """A slice of a real clip: decodes only [start, start+dur], crops to 9:16 (xshift = fraction of width off-centre).
     frame(lt) returns a PIL RGB frame at clip-local time lt (speed multiplies source time; loops if loop=True)."""
-    def __init__(self, path, start=0.0, dur=3.0, xshift=0.0, speed=1.0, loop=False, fit="cover"):
-        self.path, self.start, self.dur, self.xshift, self.speed, self.loop, self.fit = path, start, dur, xshift, speed, loop, fit
+    def __init__(self, path, start=0.0, dur=3.0, xshift=0.0, speed=1.0, loop=False, fit="cover", size=(W, H)):
+        self.path, self.start, self.dur, self.xshift, self.speed, self.loop, self.fit, self.size = path, start, dur, xshift, speed, loop, fit, size
         self._fr = None
     def _load(self):
         cap = cv2.VideoCapture(self.path); self.fps = cap.get(cv2.CAP_PROP_FPS) or 25.0
@@ -73,8 +89,8 @@ class Video:
             ok, f = cap.read()
             if not ok: break
             h, w = f.shape[:2]
-            if self.fit == "cover" and w / h > W / H:
-                cw = int(h * W / H); x0 = int(clamp((w - cw) / 2 + self.xshift * w, 0, w - cw)); f = f[:, x0:x0 + cw]
+            if self.fit == "cover" and w / h > self.size[0] / self.size[1]:
+                cw = int(h * self.size[0] / self.size[1]); x0 = int(clamp((w - cw) / 2 + self.xshift * w, 0, w - cw)); f = f[:, x0:x0 + cw]
             fr.append(cv2.cvtColor(f, cv2.COLOR_BGR2RGB))
         self._fr = fr or [np.zeros((H, W, 3), np.uint8)]
     def frame(self, lt, zoom=1.0):
@@ -88,8 +104,8 @@ class Video:
             bg[y:y + nh] = fg; f = bg; h, w = H, W
         if zoom > 1.001:
             cw, ch = w / zoom, h / zoom; x0, y0 = (w - cw) / 2, (h - ch) / 2
-            return Image.fromarray(f).resize((W, H), Image.BICUBIC, box=(x0, y0, x0 + cw, y0 + ch))
-        return Image.fromarray(cv2.resize(f, (W, H), interpolation=cv2.INTER_CUBIC))
+            return Image.fromarray(f).resize(self.size, Image.BICUBIC, box=(x0, y0, x0 + cw, y0 + ch))
+        return Image.fromarray(cv2.resize(f, self.size, interpolation=cv2.INTER_CUBIC))
 
 # ——— beat helpers ———
 def punch(t, cuts, amount=0.06, dur=0.35):
@@ -179,11 +195,12 @@ def words(im, text, t, t0, step=None, y=0.5, size=120, max_lines=None, **kw):
     if t < t0: return
     shown = " ".join(ws[:min(len(ws), n)])
     caption(im, shown, t, t0=t0 + (min(len(ws), n) - 1) * step if n <= len(ws) else t0 - 1, y=y, size=size, anim="none" if n > len(ws) else "pop", tin=0.12, **kw)
-def credit(im, text, t, t0, t1, corner="bl", size=24):
+def credit(im, text, t, t0, t1, corner="bl", size=24, y=None):
     """Small licence credit in a corner (shown 1–2 s per source)."""
     if t < t0 or t >= t1: return
     f = font(size, "IBMPlexSans-Medium"); d = ImageDraw.Draw(im); tw = d.textlength(text, font=f)
-    x = 34 if corner[1] == "l" else W - 34 - tw; y = H - 230 if corner[0] == "b" else 150    # stay clear of TikTok's UI
+    x = 34 if corner[1] == "l" else W - 34 - tw
+    y = (H - 230 if corner[0] == "b" else 150) if y is None else y                        # stay clear of TikTok's UI
     a = clamp(min(t - t0, t1 - t) / 0.15)
     lay = Image.new("RGBA", im.size, (0, 0, 0, 0)); dl = ImageDraw.Draw(lay)
     dl.rounded_rectangle((x - 12, y - 6, x + tw + 12, y + size + 10), 10, fill=(0, 0, 0, int(120 * a)))

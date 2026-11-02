@@ -21,8 +21,8 @@ def ph(k): return os.path.join(M, k + ".img")
 def src(k, **kw):
     """Media key → Photo or Video (kwargs: focus/z/drift for photos, start/dur/xshift/speed for videos)."""
     if k.startswith("v_"):
-        return tk.Video(mp(k), **{a: b for a, b in kw.items() if a in ("start", "dur", "xshift", "speed", "loop", "fit")})
-    return tk.Photo(ph(k), **{a: b for a, b in kw.items() if a in ("focus", "z", "dur", "drift", "over")})
+        return tk.Video(mp(k), **{a: b for a, b in kw.items() if a in ("start", "dur", "xshift", "speed", "loop", "fit", "size")})
+    return tk.Photo(ph(k), **{a: b for a, b in kw.items() if a in ("focus", "z", "dur", "drift", "over", "size")})
 def chip(im, text, t, t0, t1, icon_name=None, y=0.80, col=tk.INK, bg=(255, 255, 255)):
     """Small label chip (time / place) with an optional icon, bottom-centre."""
     if t < t0 or t >= t1: return
@@ -49,9 +49,9 @@ def grade(img, kind):
 def v1():
     TOTAL = 13.0; SEG = 2.0                                   # 4 beats per weather
     segs = [("p_ring", "1:00 PM", "sun", None, dict(focus=(0.5, 0.55), z=(1.0, 1.1))),
-            ("p_drive", "2:00 PM", "cloud", "rain", dict(focus=(0.5, 0.5), z=(1.04, 1.12))),
+            ("p_rain", "2:00 PM", "cloud", "rain", dict(focus=(0.3, 0.5), z=(1.04, 1.12))),
             ("v_windy", "3:00 PM", "wind", None, dict(start=0.5, dur=2.2, xshift=0.05)),
-            ("p_blizzard", "4:00 PM", "snowflake", "snow", dict(focus=(0.42, 0.5), z=(1.0, 1.1))),
+            ("p_drive", "4:00 PM", "snowflake", "snow", dict(focus=(0.5, 0.5), z=(1.0, 1.1))),
             ("p_ring2", "5:00 PM", "sun", None, dict(focus=(0.5, 0.5), z=(1.0, 1.06), dur=5.0))]
     S = [src(k, dur=kw.pop("dur", SEG), **kw) for k, _, _, _, kw in segs]
     cuts = [i * SEG for i in range(5)]
@@ -62,14 +62,14 @@ def v1():
         im = tk.canvas(S[i].frame(lt, tk.punch(t, cuts[1:], 0.07, 0.3)), tk.shake(t, cuts[1:4], 12, 0.2))
         if fx and lt < SEG: particles(im, t, fx, 420 if fx == "rain" else 300, seed=i)
         tk.flash(im, t, cuts[1:], 0.1, strength=0.6)
-        tk.caption(im, "POV: ONE afternoon in Iceland", t, 0.0, 10.0, y=0.17, size=104, anim="pop")
+        tk.caption(im, "POV: ONE afternoon\nin Iceland", t, 0.0, 10.0, y=0.17, size=112, anim="pop")
         if t < 10.0:                                           # clock + weather chip
             tk.caption(im, f"{clock}  ·  {words_[ic]}", t, cuts[i], cuts[i] + SEG, y=0.78, size=66, fill=tk.INK, box=(255, 255, 255), anim="pop", tin=0.18, name="IBMPlexSans-SemiBold")
         if 10.0 <= t < 12.0:
             tk.caption(im, "“If you don’t like the weather, wait five minutes.”", t, 10.0, 12.0, y=0.36, size=96, anim="pop", width=900)
             tk.caption(im, "— old Icelandic saying", t, 10.5, 12.0, y=0.50, size=56, anim="up", name="IBMPlexSans-SemiBold")
         if t >= 12.0: tk.caption(im, "Norður checks it for you", t, 12.0, y=0.40, size=110, anim="slam", tin=0.18)
-        credits = [(0.1, "p_ring"), (2.1, "p_drive"), (4.1, "v_windy"), (6.1, "p_blizzard"), (8.1, "p_ring2")]
+        credits = [(0.1, "p_ring"), (2.1, "p_rain"), (4.1, "v_windy"), (6.1, "p_drive"), (8.1, "p_ring2")]
         for c0, ck in credits: tk.credit(im, cr(ck), t, c0, c0 + 1.8)
         tk.endcard(im, t, TOTAL, APPICON, dim=0.25, y=0.80)
         return im
@@ -78,10 +78,10 @@ def v1():
 # ————————————————————————— 3 · TELL ME YOU'RE IN ICELAND —————————————————————————
 def v3():
     TOTAL = 9.0
-    segs = [("p_hotspring", "hot spring + snow", dict(focus=(0.5, 0.55), z=(1.0, 1.12), dur=2.0)),
-            ("v_horses", "the horses", dict(start=0.2, dur=1.1, xshift=-0.12)),
+    segs = [("p_hotspring", "hot spring + snow", dict(focus=(0.5, 0.3), z=(1.0, 1.12), dur=2.0)),
+            ("v_horses", "the horses", dict(start=0.2, dur=1.1, xshift=0.17)),
             ("p_midnight", "the sun at midnight", dict(focus=(0.55, 0.5), z=(1.05, 1.15), dur=1.0)),
-            ("p_sheep", "rush hour", dict(focus=(0.5, 0.55), z=(1.02, 1.12), dur=1.0)),
+            ("p_sheep2", "the locals", dict(focus=(0.55, 0.5), z=(1.02, 1.12), dur=1.0)),
             ("v_windy", "black sand beach", dict(start=3.0, dur=1.1, xshift=0.04)),
             ("v_strokkur", "a geyser on schedule", dict(start=2.6, dur=1.1, xshift=-0.012)),
             ("v_hotdog", "the hot dog stand", dict(start=1.0, dur=2.1, xshift=0.05))]
@@ -103,12 +103,11 @@ def v5():
     """Top half = expectation, bottom half = reality; reality slams in one beat later."""
     TOTAL = 12.0
     pairs = [(("v_aurora2", dict(start=0.0, dur=4.0, xshift=0.1)), ("v_aurora", dict(start=1.0, dur=4.0)), "Northern lights", "you see a faint glow behind clouds"),
-             (("v_skoga", dict(start=0.0, dur=4.0, xshift=0.0)), ("p_skogacrowd", dict(focus=(0.5, 0.6), z=(1.0, 1.1), dur=4.0)), "Skógafoss", "you + everyone else + spray"),
-             (("v_godafoss", dict(start=0.0, dur=3.0)), ("p_misty", dict(focus=(0.5, 0.5), z=(1.0, 1.08), dur=3.0)), "That viewpoint", "fog. just fog.")]
-    S = [(src(a[0], **dict(a[1])), src(b[0], **dict(b[1]))) for a, b, _, _ in pairs]; cuts = [0.0, 4.0, 8.0]
+             (("v_selja", dict(start=0.0, dur=4.0)), ("p_skogacrowd", dict(focus=(0.5, 0.6), z=(1.0, 1.1), dur=4.0)), "Waterfall day", "you, soaked by the spray"),
+             (("v_godafoss", dict(start=0.0, dur=3.0)), ("p_blizzard", dict(focus=(0.45, 0.5), z=(1.0, 1.08), dur=3.0)), "Winter waterfall trip", "the drive there")]
     HH = H // 2
-    def half(img):                                             # cover-crop a full 9:16 frame into a 1080×960 band
-        return img.resize((W, int(img.height * W / img.width)), Image.BILINEAR).crop((0, (H - HH) // 2, W, (H - HH) // 2 + HH)) if img.size != (W, HH) else img
+    S = [(src(a[0], size=(W, HH), **dict(a[1])), src(b[0], size=(W, HH), **dict(b[1]))) for a, b, _, _ in pairs]; cuts = [0.0, 4.0, 8.0]
+    def half(img): return img
     def frame(fi):
         t = fi / FPS; i, lt = tk.segment(t, cuts); (a, b), (pa, pb, place_, joke) = S[i], pairs[i]
         im = Image.new("RGBA", (W, H), tk.INK + (255,))
@@ -125,12 +124,12 @@ def v5():
         if lt >= B * 2:
             tk.caption(im, "REALITY", t, cuts[i] + B * 2, cuts[i] + 4, y=0.57, size=92, anim="slam", tin=0.15)
             tk.caption(im, joke, t, cuts[i] + B * 3, cuts[i] + 4, y=0.92, size=56, fill=tk.INK, box=(255, 255, 255), anim="up", width=980, name="IBMPlexSans-SemiBold")
-        tk.credit(im, cr(pa[0]), t, cuts[i] + 0.1, cuts[i] + 1.4, corner="tr")
+        tk.credit(im, cr(pa[0]), t, cuts[i] + 0.1, cuts[i] + 1.4, corner="br", y=HH - 50)
         tk.credit(im, cr(pb[0]), t, cuts[i] + 1.1, cuts[i] + 2.6, corner="bl")
         if t >= 10.0:
             im.alpha_composite(Image.new("RGBA", (W, H), (0, 0, 0, int(170 * tk.clamp((t - 10.0) / 0.2)))))
             tk.caption(im, "Check before you go", t, 10.0, y=0.40, size=120, anim="slam", tin=0.18)
-            tk.caption(im, "→ Norður", t, 10.4, y=0.50, size=120, fill=tk.AURORA, anim="pop")
+            tk.caption(im, "with Norður", t, 10.4, y=0.50, size=120, fill=tk.AURORA, anim="pop")
         tk.endcard(im, t, TOTAL, APPICON, dim=0.0, y=0.80)
         return im
     return frame, TOTAL, "5-expectation-vs-reality.mp4"
@@ -138,12 +137,15 @@ def v5():
 # ————————————————————————— 6 · THINGS THAT JUST MAKE SENSE —————————————————————————
 def v6():
     TOTAL = 15.0
-    facts = [("v_lagoon", "Swimming outside at −5 °C", "geothermal water, all year round", dict(start=0.0, dur=2.6)),
-             ("p_winsun", "The sun rises at 11:20 a.m.", "Reykjavík, late December", dict(focus=(0.5, 0.5), z=(1.0, 1.1), dur=2.6)),
-             ("p_galga", "Moving a 70-tonne “elf church” rock for a new road", "Gálgahraun lava field, 2015", dict(focus=(0.5, 0.5), z=(1.0, 1.1), dur=2.6)),
-             ("p_beer", "Beer was banned until 1989", "strong beer, 1915 – 1 March 1989", dict(focus=(0.5, 0.5), z=(1.0, 1.1), dur=2.6)),
-             ("p_ok", "A glacier had a funeral", "Okjökull, 18 August 2019", dict(focus=(0.5, 0.5), z=(1.0, 1.1), dur=2.6))]
+    facts = [("v_lagoon", "Swimming outside\nat −5 °C", "geothermal water, all year round", dict(start=0.0, dur=2.6)),
+             ("p_sunrise", "The sun rises\nat 11:20 a.m.", "Reykjavík, late December", dict(focus=(0.5, 0.5), z=(1.0, 1.1), dur=2.6)),
+             ("p_galga", "Moving a 70-tonne\n“elf church” rock\nfor a new road", "Gálgahraun lava field, 2015", dict(focus=(0.5, 0.5), z=(1.0, 1.1), dur=2.6)),
+             ("p_beer", "Beer was banned\nuntil 1989", "strong beer, 1915 – 1 March 1989", dict(focus=(0.5, 0.5), z=(1.0, 1.1), dur=2.6)),
+             ("p_ok", "A glacier\nhad a funeral", "Okjökull, 18 August 2019", dict(focus=(0.5, 0.5), z=(1.0, 1.1), dur=2.6))]
     S = [src(k, **kw) for k, _, _, kw in facts]; cuts = [0.0, 1.5, 4.0, 6.5, 9.0, 11.5, 14.0]
+    S[4] = tk.PhotoCard(ph("p_ok"), width=900, cy=0.53, dur=3.5)
+    g = np.clip(1 - np.arange(H) / (H * 0.45), 0, 1) ** 1.4 * 200 + 40                 # dark top gradient + light overall dim
+    TOPSHADE = Image.fromarray(np.dstack([np.zeros((H, W, 3), np.uint8), np.repeat(g.astype(np.uint8)[:, None], W, 1)]), "RGBA")
     def frame(fi):
         t = fi / FPS; i, lt = tk.segment(t, cuts); j = max(0, min(4, i - 1))
         base = S[0].frame(t, 1.15) if i == 0 else S[j].frame(lt if i <= 5 else lt + 2.5, tk.punch(t, cuts[1:6], 0.07, 0.3))
@@ -153,13 +155,12 @@ def v6():
             tk.caption(im, "Things that just make sense in Iceland", t, 0.0, 1.5, y=0.40, size=128, anim="pop", width=900)
             return im
         k, line, note, _ = facts[j]; t0 = cuts[min(i, 5)]
+        im.alpha_composite(TOPSHADE)
         if i <= 5:
             tk.caption(im, f"{j + 1}/5", t, t0, t0 + 2.5, y=0.09, size=60, anim="none", name="IBMPlexSans-SemiBold")
             tk.caption(im, line, t, t0, t0 + 2.5, y=0.22, size=110, anim="slam", tin=0.16, width=900)
             tk.caption(im, note, t, t0 + 0.6, t0 + 2.5, y=0.78, size=54, fill=tk.INK, box=(255, 255, 255), anim="up", width=960, name="IBMPlexSans-SemiBold")
             tk.credit(im, cr(k), t, t0 + 0.1, t0 + 1.9)
-        else:
-            tk.caption(im, "Iceland makes sense.", t, 14.0, y=0.35, size=110, anim="pop")
         tk.endcard(im, t, TOTAL, APPICON, dim=0.3, y=0.80)
         return im
     return frame, TOTAL, "6-things-that-make-sense-in-iceland.mp4"
