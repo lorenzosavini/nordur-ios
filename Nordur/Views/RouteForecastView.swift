@@ -65,7 +65,11 @@ struct RouteForecastView: View {
     var body: some View {
         List {
             if loading && plan == nil {
-                HStack { ProgressView(); Text("Calcolo percorso e previsioni…") }
+                VStack(alignment: .leading, spacing: 10) {
+                    Text("Calcolo percorso e previsioni…").font(.app(.caption)).foregroundStyle(Theme.dim)
+                    SkeletonBlock(lines: 4)
+                }
+                .padding(.vertical, 6)
             }
             if let error { ErrorNote(message: error) }
             if let plan { content(plan) }

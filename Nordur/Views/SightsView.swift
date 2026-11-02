@@ -67,8 +67,12 @@ struct SightsView: View {
             }
             Section {
                 if near.isEmpty {
-                    EmptyState(symbol: "binoculars", title: String(localized: "Niente da mostrare"),
-                               message: String(localized: "Prova a togliere i filtri."))
+                    EmptyState(symbol: "binoculars", title: String(localized: "Nessun risultato"),
+                               message: String(localized: "Nessun luogo corrisponde ai filtri in questa zona."),
+                               actionTitle: String(localized: "Togli i filtri")) {
+                        kind = nil
+                        topOnly = false
+                    }
                 } else {
                     ForEach(Array(near.prefix(150))) { item in
                         Button { selected = item.sight } label: { SightRow(sight: item.sight, km: item.km) }

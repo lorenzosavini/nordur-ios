@@ -91,6 +91,7 @@ struct RootView: View {
     @Environment(TripStore.self) private var trip
     @Environment(AlertCenter.self) private var alerts
     @Environment(DriveRecorder.self) private var recorder
+    @Environment(\.colorScheme) private var colorScheme
     // `-initialTab drive` as launch argument opens a given tab (used by the CI screenshots).
     @State private var tab = Tab(rawValue: UserDefaults.standard.string(forKey: "initialTab") ?? "") ?? .today
 
@@ -138,7 +139,6 @@ struct RootView: View {
             }
         }
         .overlay { AmbientAurora() }
-        .overlay(alignment: .top) { OfflineBanner() }
         .nightVision(nightVision || (nightAuto && tab == .aurora && NightVision.auto(at: model.activePlace.coordinate)))
         .overlay {
             if launching {
@@ -147,7 +147,12 @@ struct RootView: View {
                     .zIndex(10)
             }
         }
-        .animation(.snappy, value: Connectivity.shared.isOnline)
+        .onChange(of: Connectivity.shared.isOnline, initial: true) {
+            OfflineBannerWindow.update(model: model, online: Connectivity.shared.isOnline, scheme: colorScheme)
+        }
+        .onChange(of: colorScheme) {
+            OfflineBannerWindow.update(model: model, online: Connectivity.shared.isOnline, scheme: colorScheme)
+        }
         .onChange(of: Connectivity.shared.reconnections) {
             // Back online: everything is reloaded at once, without waiting for the next poll.
             Task {
@@ -157,7 +162,7 @@ struct RootView: View {
                 await alerts.check()
             }
         }
-        .sensoryFeedback(.selection, trigger: tab)
+        .sensoryFeedback(.selection, trigger: tab) { _, _ in Haptics.enabled }
         .onChange(of: tab) {
             if tab != .map { model.immersiveMap = false }
             CrashLog.note(screen: tab.rawValue)

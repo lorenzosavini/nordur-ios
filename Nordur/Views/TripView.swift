@@ -289,7 +289,7 @@ struct StopSummary: View {
             } else if forecast != nil {
                 Text(daysUntilText).font(.app(.caption)).foregroundStyle(.secondary)
             } else {
-                ProgressView().controlSize(.small)
+                SkeletonBlock(lines: 2, height: 9, showsFigure: false).frame(maxWidth: 220, alignment: .leading)
             }
 
             if stop.transport.caresAboutSea, let marine = trip.marine(for: stop), marine.hasData {
@@ -667,6 +667,7 @@ struct StopEditor: View {
         stop.transport = transport
         stop.notes = notes
         trip.upsert(stop, shiftingLater: shiftLater && laterStops > 0)
+        Haptics.result(true)
         dismiss()
     }
 }

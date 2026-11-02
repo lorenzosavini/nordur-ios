@@ -907,7 +907,8 @@ struct CoverageNote: View {
 // MARK: - Loading placeholders, empty states, haptics
 
 /// Grey blocks in the shape of the content while it loads (instead of a spinner
-/// on an empty page), with a slow shimmer; static when Reduce Motion is on.
+/// on an empty page), with a light sweeping across them; static when Reduce
+/// Motion is on.
 struct SkeletonBlock: View {
     var lines = 3
     var height: CGFloat = 12
@@ -916,6 +917,25 @@ struct SkeletonBlock: View {
     @State private var phase = false
 
     var body: some View {
+        bars
+            .overlay {
+                if !reduceMotion {
+                    GeometryReader { geo in
+                        LinearGradient(colors: [.clear, Theme.text.opacity(0.10), .clear], startPoint: .leading, endPoint: .trailing)
+                            .frame(width: max(geo.size.width * 0.5, 60))
+                            .offset(x: phase ? geo.size.width : -max(geo.size.width * 0.5, 60))
+                    }
+                    .mask { bars }
+                    .allowsHitTesting(false)
+                }
+            }
+            .animation(reduceMotion ? nil : .linear(duration: 1.3).repeatForever(autoreverses: false), value: phase)
+            .onAppear { phase = true }
+            .accessibilityElement(children: .ignore)
+            .accessibilityLabel(Text("Caricamento"))
+    }
+
+    private var bars: some View {
         VStack(alignment: .leading, spacing: 10) {
             if showsFigure {
                 HStack(spacing: 10) {
@@ -926,11 +946,6 @@ struct SkeletonBlock: View {
                 bar(height: height).frame(maxWidth: i == lines - 1 ? 180 : .infinity, alignment: .leading)
             }
         }
-        .opacity(reduceMotion ? 0.7 : (phase ? 0.45 : 0.9))
-        .animation(reduceMotion ? nil : .easeInOut(duration: 0.9).repeatForever(autoreverses: true), value: phase)
-        .onAppear { phase = true }
-        .accessibilityElement(children: .ignore)
-        .accessibilityLabel(Text("Caricamento"))
     }
 
     private func bar(height: CGFloat) -> some View {
@@ -954,62 +969,139 @@ struct EmptyState: View {
     let symbol: String
     let title: String
     var message: String?
+    var actionTitle: String?
+    var action: (() -> Void)?
+
+    init(symbol: String, title: String, message: String? = nil, actionTitle: String? = nil, action: (() -> Void)? = nil) {
+        self.symbol = symbol
+        self.title = title
+        self.message = message
+        self.actionTitle = actionTitle
+        self.action = action
+    }
 
     var body: some View {
         VStack(spacing: 10) {
             Image(systemName: symbol)
                 .font(.system(size: 30, weight: .semibold))
                 .foregroundStyle(Theme.accent)
+                .accessibilityHidden(true)
             Text(title.loc).font(.app(.headline)).foregroundStyle(Theme.text).multilineTextAlignment(.center)
             if let message {
                 Text(message.loc).font(.app(.caption)).foregroundStyle(Theme.dim).multilineTextAlignment(.center)
                     .fixedSize(horizontal: false, vertical: true)
             }
+            if let actionTitle, let action {
+                Button {
+                    Haptics.tap()
+                    action()
+                } label: {
+                    Text(actionTitle.loc.uppercased())
+                        .font(.mono(11.5, .semibold)).tracking(0.8)
+                        .foregroundStyle(Theme.onAccent)
+                        .padding(.horizontal, 16).frame(minHeight: 40)
+                        .background(Theme.accent)
+                }
+                .buttonStyle(.plain)
+                .padding(.top, 4)
+            }
         }
         .frame(maxWidth: .infinity)
         .padding(.vertical, 22)
-        .accessibilityElement(children: .combine)
     }
 }
 
 /// Short vibrations for actions (taps on switches, success or failure).
+/// Off with Settings › Screen › Vibrations; the system switch (Settings ›
+/// Sounds & Haptics › System Haptics) silences them too, as for every app.
 @MainActor
 enum Haptics {
-    static func tap() { UIImpactFeedbackGenerator(style: .light).impactOccurred() }
-    static func select() { UISelectionFeedbackGenerator().selectionChanged() }
+    nonisolated static let key = "haptics"
+
+    nonisolated static var enabled: Bool { UserDefaults.standard.object(forKey: key) as? Bool ?? true }
+
+    static func tap() { guard enabled else { return }; UIImpactFeedbackGenerator(style: .light).impactOccurred() }
+    /// A firmer knock for actions that start or stop something (recording a drive).
+    static func impact() { guard enabled else { return }; UIImpactFeedbackGenerator(style: .medium).impactOccurred() }
+    static func select() { guard enabled else { return }; UISelectionFeedbackGenerator().selectionChanged() }
     static func result(_ success: Bool) {
+        guard enabled else { return }
         UINotificationFeedbackGenerator().notificationOccurred(success ? .success : .error)
     }
-    static func warning() { UINotificationFeedbackGenerator().notificationOccurred(.warning) }
+    static func warning() { guard enabled else { return }; UINotificationFeedbackGenerator().notificationOccurred(.warning) }
 }
 
 // MARK: - Offline strip
 
 /// One strip at the top when the phone has no connection: what is shown comes
-/// from the copies saved on the phone, and from when.
+/// from the copies saved on the phone, and from when. It lives in a window of
+/// its own above the app (`OfflineBannerWindow`), so it reads the same on every
+/// tab and on every sheet opened over them.
 struct OfflineBanner: View {
     @Environment(AppModel.self) private var model
     private var connectivity: Connectivity { .shared }
 
     var body: some View {
-        if !connectivity.isOnline {
-            HStack(spacing: 8) {
-                Image(systemName: "wifi.slash").font(.system(size: 11, weight: .bold))
-                Text(label).font(.mono(10, .semibold)).tracking(0.5).lineLimit(1).minimumScaleFactor(0.8)
+        VStack {
+            if !connectivity.isOnline {
+                HStack(spacing: 8) {
+                    Image(systemName: "wifi.slash").font(.system(size: 11, weight: .bold))
+                    Text(label).font(.mono(10, .semibold)).tracking(0.5).lineLimit(1).minimumScaleFactor(0.7)
+                }
+                .foregroundStyle(Theme.onAccent)
+                .padding(.horizontal, 12).padding(.vertical, 6)
+                .background(Theme.warning, in: Capsule())
+                .padding(.top, 2)
+                .transition(.move(edge: .top).combined(with: .opacity))
+                .accessibilityElement(children: .combine)
+                .accessibilityAddTraits(.isStaticText)
             }
-            .foregroundStyle(Theme.onAccent)
-            .padding(.horizontal, 12).padding(.vertical, 6)
-            .background(Theme.warning, in: Capsule())
-            .padding(.top, 2)
-            .transition(.move(edge: .top).combined(with: .opacity))
-            .accessibilityElement(children: .combine)
+            Spacer(minLength: 0)
         }
+        .animation(.snappy, value: connectivity.isOnline)
     }
 
+    /// The oldest of the copies the main screens rely on: nothing shown is older than that.
     private var label: String {
         let dates = [model.forecast?.date, model.warnings?.date, model.roads?.date].compactMap { $0 }
-        guard let oldest = dates.min() else { return String(localized: "OFFLINE · NESSUN DATO SALVATO") }
-        return String(localized: "OFFLINE · DATI DELLE \(Fmt.time(oldest))")
+        guard let oldest = dates.min() else { return String(localized: "SEI OFFLINE · NESSUN DATO SALVATO") }
+        if Calendar.current.isDateInToday(oldest) {
+            return String(localized: "SEI OFFLINE · DATI DELLE \(Fmt.time(oldest))")
+        }
+        return String(localized: "SEI OFFLINE · DATI DEL \(Fmt.dayTime(oldest, in: .current))")
+    }
+}
+
+/// Window over the whole app that only draws the offline strip: sheets cover
+/// the root view, not this. It exists only while offline, never takes touches,
+/// and follows the app's light/dark choice so the status bar keeps its colours.
+@MainActor
+enum OfflineBannerWindow {
+    private static var window: UIWindow?
+
+    static func update(model: AppModel, online: Bool, scheme: ColorScheme) {
+        if online {
+            window?.isHidden = true
+            return
+        }
+        if window == nil,
+           let scene = UIApplication.shared.connectedScenes.compactMap({ $0 as? UIWindowScene }).first {
+            let host = UIHostingController(rootView: OfflineBanner().environment(model))
+            host.view.backgroundColor = .clear
+            let overlay = PassthroughWindow(windowScene: scene)
+            overlay.rootViewController = host
+            overlay.windowLevel = .normal + 1
+            overlay.backgroundColor = .clear
+            overlay.isUserInteractionEnabled = false
+            window = overlay
+        }
+        window?.overrideUserInterfaceStyle = scheme == .dark ? .dark : .light
+        window?.isHidden = false
+        window?.rootViewController?.setNeedsStatusBarAppearanceUpdate()
+    }
+
+    private final class PassthroughWindow: UIWindow {
+        override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? { nil }
     }
 }
 

@@ -45,7 +45,8 @@ struct FuelListView: View {
                         if let error = model.errors[.fuelPrices] { ErrorNote(message: error) } else { SkeletonRows(count: 5) }
                     } else if near.isEmpty {
                         EmptyState(symbol: "fuelpump", title: String(localized: "Nessun prezzo in questa zona"),
-                                   message: String(localized: "Allarga la distanza: fuori dalle città i distributori sono pochi."))
+                                   message: String(localized: "Allarga la distanza: fuori dalle città i distributori sono pochi."),
+                                   actionTitle: radiusKm < 200 ? String(localized: "Cerca entro 200 km") : nil) { radiusKm = 200 }
                     } else {
                         ForEach(near, id: \.price.id) { item in
                             Button {

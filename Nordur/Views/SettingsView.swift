@@ -13,6 +13,7 @@ struct SettingsView: View {
     @AppStorage(AmbientAurora.key) private var ambientAurora = true
     @AppStorage(CurrencyDisplay.key) private var currency = CurrencyDisplay.both.rawValue
     @AppStorage(TempUnit.key) private var tempUnit = TempUnit.celsius.rawValue
+    @AppStorage(Haptics.key) private var haptics = true
 
     var body: some View {
         NavigationStack {
@@ -67,8 +68,14 @@ struct SettingsView: View {
                     Toggle(isOn: $ambientAurora) {
                         Label("Aurora animata sullo sfondo", systemImage: "sparkles")
                     }
+                    Toggle(isOn: $haptics) {
+                        Label("Vibrazioni sulle azioni", systemImage: "iphone.radiowaves.left.and.right")
+                    }
                 } header: { Text("Schermo").pinnedHeader() } footer: {
-                    Text("Lo schermo diventa rosso scuro su nero: la luce bianca e blu fa perdere l'adattamento degli occhi al buio (servono 20-30 minuti per recuperarlo), il rosso no. Abbassa anche la luminosità del telefono.\n\nAurora animata: quando l'aurora è possibile dove sei, in alto compaiono le sue tende, più evidenti quanto più sono buone le probabilità; spariscono quando non ce n'è.")
+                    VStack(alignment: .leading, spacing: 8) {
+                        Text("Lo schermo diventa rosso scuro su nero: la luce bianca e blu fa perdere l'adattamento degli occhi al buio (servono 20-30 minuti per recuperarlo), il rosso no. Abbassa anche la luminosità del telefono.\n\nAurora animata: quando l'aurora è possibile dove sei, in alto compaiono le sue tende, più evidenti quanto più sono buone le probabilità; spariscono quando non ce n'è.")
+                        Text("Vibrazioni: un tocco leggero quando salvi, avvii o fermi la guida, segnali l'aurora o segui un luogo. Si spengono anche con Impostazioni › Suoni e feedback aptico › Feedback aptico di sistema.")
+                    }
                 }
 
                 ProSettingsSection()

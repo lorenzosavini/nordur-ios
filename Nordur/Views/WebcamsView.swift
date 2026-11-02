@@ -29,7 +29,8 @@ struct WebcamsView: View {
                 SkeletonRows()
             } else if sites.isEmpty {
                 EmptyState(symbol: "video.slash", title: String(localized: "Nessuna webcam trovata"),
-                           message: query.isEmpty ? nil : String(localized: "Prova con il nome di una strada o di un passo."))
+                           message: query.isEmpty ? nil : String(localized: "Prova con il nome di una strada o di un passo."),
+                           actionTitle: query.isEmpty ? nil : String(localized: "Cancella la ricerca")) { query = "" }
             }
             ForEach(sites) { site in
                 NavigationLink {

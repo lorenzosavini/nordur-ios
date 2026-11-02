@@ -68,7 +68,8 @@ struct ShopsView: View {
                     if let error = model.errors[.shops] { ErrorNote(message: error) } else { SkeletonRows(count: 5) }
                 } else if shown.isEmpty {
                     EmptyState(symbol: "cart", title: String(localized: "Nessun negozio trovato"),
-                               message: openNow ? String(localized: "Prova a togliere \"Solo aperti adesso\".") : nil)
+                               message: openNow ? String(localized: "Prova a togliere \"Solo aperti adesso\".") : nil,
+                               actionTitle: openNow ? String(localized: "Mostra anche i chiusi") : nil) { openNow = false }
                 } else {
                     ForEach(Array(shown)) { item in
                         Button { selected = item.shop } label: { ShopRow(shop: item.shop, km: item.km, now: now) }

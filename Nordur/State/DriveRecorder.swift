@@ -20,6 +20,16 @@ final class DriveRecorder: NSObject {
     private(set) var recoverable: DriveSession?
     /// Edited directly by the UI; persisted with `saveSettings()`.
     var settings = DriveSettings.load()
+    /// Battery saver while recording (docs/BATTERIA.md). On by itself in Low Power Mode.
+    var batterySaver = UserDefaults.standard.bool(forKey: DriveRecorder.saverKey) {
+        didSet {
+            UserDefaults.standard.set(batterySaver, forKey: Self.saverKey)
+            applyLocationProfile()
+        }
+    }
+    nonisolated static let saverKey = "drive.batterySaver"
+    /// The saver as it applies now: chosen in the app, or Low Power Mode on the phone.
+    var savingBattery: Bool { batterySaver || ProcessInfo.processInfo.isLowPowerModeEnabled }
 
     @ObservationIgnored private let manager = CLLocationManager()
     @ObservationIgnored private var backgroundSession: CLBackgroundActivitySession?
@@ -28,6 +38,9 @@ final class DriveRecorder: NSObject {
     @ObservationIgnored private var lastSave = Date.distantPast
     @ObservationIgnored private var lastActivityUpdate = Date.distantPast
     @ObservationIgnored private var lastAlertCheck = Date.distantPast
+    @ObservationIgnored private var lastRoadWatch = Date.distantPast
+    @ObservationIgnored private var lastActivityState: DriveActivityAttributes.ContentState?
+    @ObservationIgnored private var lastAlertKey: String?
     @ObservationIgnored private var lastSpeedWarning = Date.distantPast
     @ObservationIgnored private var speedingSince: Date?
 
@@ -35,12 +48,31 @@ final class DriveRecorder: NSObject {
         super.init()
         manager.delegate = self
         manager.activityType = .automotiveNavigation
-        manager.desiredAccuracy = kCLLocationAccuracyBestForNavigation
-        manager.distanceFilter = 5
         manager.pausesLocationUpdatesAutomatically = false
+        applyLocationProfile()
         authorization = manager.authorizationStatus
         recoverable = DriveStore.loadInProgress()
+        // Low Power Mode switched on or off during a drive: the profile follows at once.
+        NotificationCenter.default.addObserver(forName: .NSProcessInfoPowerStateDidChange, object: nil, queue: .main) { _ in
+            Task { @MainActor in DriveRecorder.shared.applyLocationProfile() }
+        }
     }
+
+    /// GPS settings (docs/BATTERIA.md). `Best` rather than `BestForNavigation`:
+    /// the latter fuses extra sensors and is meant for a phone on the charger,
+    /// while the track needs no better than a few metres. The distance filter
+    /// stays at 5 m in both modes: fixes while standing still are what tells a
+    /// stop from driving time (DriveMath), and closer fixes are not stored anyway.
+    func applyLocationProfile() {
+        manager.desiredAccuracy = savingBattery ? kCLLocationAccuracyNearestTenMeters : kCLLocationAccuracyBest
+        manager.distanceFilter = 5
+    }
+
+    /// Minimum seconds between two Live Activity updates, between two saves of
+    /// the drive in progress and between two road-ahead recomputations.
+    private var activityInterval: TimeInterval { savingBattery ? 90 : 30 }
+    private var saveInterval: TimeInterval { savingBattery ? 60 : 30 }
+    private var roadWatchInterval: TimeInterval { savingBattery ? 60 : 20 }
 
     var isRecording: Bool { session != nil }
 
@@ -176,13 +208,16 @@ final class DriveRecorder: NSObject {
         LocationManager.lastKnown = point.coordinate
 
         let now = Date()
-        if now.timeIntervalSince(lastSave) > 20 {
+        if now.timeIntervalSince(lastSave) > saveInterval {
             lastSave = now
             DriveStore.saveInProgress(current)
         }
         updateLiveActivity(force: false)
         checkSpeed(point, now: now)
-        Task { await RoadWatch.shared.refresh(position: point.coordinate, course: point.course, speedKmh: point.kmh) }
+        if now.timeIntervalSince(lastRoadWatch) >= roadWatchInterval {
+            lastRoadWatch = now
+            Task { await RoadWatch.shared.refresh(position: point.coordinate, course: point.course, speedKmh: point.kmh) }
+        }
         if now.timeIntervalSince(lastAlertCheck) > 5 * 60 {
             lastAlertCheck = now
             Task {
@@ -242,11 +277,31 @@ final class DriveRecorder: NSObject {
         activity = try? Activity.request(attributes: attributes, content: .init(state: state, staleDate: Date().addingTimeInterval(600)))
     }
 
+    /// Parsimonious updates (docs/BATTERIA.md): a new alert goes out at once;
+    /// otherwise at most every 30 s (90 s with the saver), and only when what
+    /// the Lock Screen shows has changed. The elapsed time runs by itself there.
     private func updateLiveActivity(force: Bool) {
         let now = Date()
-        guard let activity, force || now.timeIntervalSince(lastActivityUpdate) > 10, let state = liveState() else { return }
+        guard let activity else { return }
+        let key = alertKey()
+        let alertChanged = key != lastAlertKey
+        guard force || alertChanged || now.timeIntervalSince(lastActivityUpdate) >= activityInterval,
+              let state = liveState() else { return }
+        if !force, !alertChanged, let last = lastActivityState,
+           abs(state.km - last.km) < 0.1, abs(state.speedKmh - last.speedKmh) < 3 {
+            return
+        }
         lastActivityUpdate = now
-        Task { await activity.update(.init(state: state, staleDate: now.addingTimeInterval(600))) }
+        lastActivityState = state
+        lastAlertKey = key
+        Task { await activity.update(.init(state: state, staleDate: now.addingTimeInterval(15 * 60))) }
+    }
+
+    /// Identity of the alert shown, without the distances that change every kilometre.
+    private func alertKey() -> String? {
+        if let hazard = RoadWatch.shared.nextHazard { return "h\(hazard.station.id)-\(hazard.risk.rawValue)" }
+        if let alert = AlertCenter.shared.latest, Date().timeIntervalSince(alert.date) < 3 * 3600 { return alert.id }
+        return nil
     }
 
     private func endLiveActivity(_ finished: DriveSession) {

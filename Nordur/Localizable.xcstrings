@@ -53132,6 +53132,454 @@
           }
         }
       }
+    },
+    "SEI OFFLINE · NESSUN DATO SALVATO" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "YOU'RE OFFLINE · NO SAVED DATA"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "OFFLINE · KEINE GESPEICHERTEN DATEN"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "HORS LIGNE · AUCUNE DONNÉE ENREGISTRÉE"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SIN CONEXIÓN · NINGÚN DATO GUARDADO"
+          }
+        }
+      }
+    },
+    "SEI OFFLINE · DATI DELLE %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "YOU'RE OFFLINE · DATA FROM %@"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "OFFLINE · DATEN VON %@"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "HORS LIGNE · DONNÉES DE %@"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SIN CONEXIÓN · DATOS DE LAS %@"
+          }
+        }
+      }
+    },
+    "SEI OFFLINE · DATI DEL %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "YOU'RE OFFLINE · DATA FROM %@"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "OFFLINE · DATEN VOM %@"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "HORS LIGNE · DONNÉES DU %@"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SIN CONEXIÓN · DATOS DEL %@"
+          }
+        }
+      }
+    },
+    "Vibrazioni sulle azioni" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Haptics on actions"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vibration bei Aktionen"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vibrations sur les actions"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vibración en las acciones"
+          }
+        }
+      }
+    },
+    "Vibrazioni: un tocco leggero quando salvi, avvii o fermi la guida, segnali l'aurora o segui un luogo. Si spengono anche con Impostazioni › Suoni e feedback aptico › Feedback aptico di sistema." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Haptics: a light tap when you save, start or stop a drive, report the aurora or follow a place. System Haptics in Settings › Sounds & Haptics turns them off too."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vibration: ein leichtes Tippen beim Speichern, beim Starten oder Beenden einer Fahrt, beim Melden von Polarlichtern oder beim Folgen eines Ortes. Auch über Einstellungen › Töne & Haptik › Systemhaptik abschaltbar."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vibrations : un léger retour quand vous enregistrez, démarrez ou arrêtez un trajet, signalez une aurore ou suivez un lieu. Le réglage Retour haptique système (Réglages › Sons et vibrations) les coupe aussi."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vibración: un toque ligero al guardar, iniciar o detener un trayecto, avisar de una aurora o seguir un lugar. También se desactiva en Ajustes › Sonidos y vibraciones › Vibración del sistema."
+          }
+        }
+      }
+    },
+    "Qui compaiono le allerte inviate: allerte IMO, raffiche, strade chiuse, aurora. Per ora è tutto tranquillo." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Alerts sent appear here: IMO warnings, gusts, closed roads, aurora. All quiet for now."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hier erscheinen gesendete Warnungen: IMO-Warnungen, Böen, gesperrte Straßen, Polarlicht. Im Moment ist alles ruhig."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Les alertes envoyées apparaissent ici : alertes IMO, rafales, routes fermées, aurores. Tout est calme pour l'instant."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aquí aparecen los avisos enviados: avisos IMO, rachas, carreteras cortadas, auroras. Por ahora todo está tranquilo."
+          }
+        }
+      }
+    },
+    "Nessuna allerta corrisponde ai filtri scelti." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No alert matches the chosen filters."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Keine Warnung entspricht den gewählten Filtern."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aucune alerte ne correspond aux filtres choisis."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ningún aviso coincide con los filtros elegidos."
+          }
+        }
+      }
+    },
+    "Mostra tutte" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Show all"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Alle anzeigen"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tout afficher"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mostrar todos"
+          }
+        }
+      }
+    },
+    "Nessun luogo corrisponde ai filtri in questa zona." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No place in this area matches the filters."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kein Ort in dieser Gegend entspricht den Filtern."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aucun lieu de cette zone ne correspond aux filtres."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ningún lugar de esta zona coincide con los filtros."
+          }
+        }
+      }
+    },
+    "Togli i filtri" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Clear filters"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Filter entfernen"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Effacer les filtres"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Quitar filtros"
+          }
+        }
+      }
+    },
+    "Cerca entro 200 km" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Search within 200 km"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Im Umkreis von 200 km suchen"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Chercher dans un rayon de 200 km"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Buscar a menos de 200 km"
+          }
+        }
+      }
+    },
+    "Mostra anche i chiusi" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Show closed ones too"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Auch geschlossene anzeigen"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Afficher aussi les fermés"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mostrar también los cerrados"
+          }
+        }
+      }
+    },
+    "Cancella la ricerca" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Clear search"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Suche löschen"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Effacer la recherche"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Borrar la búsqueda"
+          }
+        }
+      }
+    },
+    "Risparmio batteria in guida" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Battery saver while driving"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Akkusparmodus beim Fahren"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Économie de batterie en conduite"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ahorro de batería al conducir"
+          }
+        }
+      }
+    },
+    "Attivo ora: il telefono è in Risparmio energetico" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "On now: the phone is in Low Power Mode"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jetzt aktiv: Das iPhone ist im Stromsparmodus"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Actif : l'iPhone est en mode Économie d'énergie"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Activo: el iPhone está en modo de bajo consumo"
+          }
+        }
+      }
+    },
+    "Risparmio batteria: GPS meno preciso (circa 10 m), Live Activity aggiornata ogni 90 s invece di 30, strada davanti ricalcolata ogni minuto. Le allerte arrivano comunque subito. Si attiva da solo con il Risparmio energetico dell'iPhone." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Battery saver: less precise GPS (about 10 m), Live Activity updated every 90 s instead of 30, road ahead recomputed every minute. Alerts still arrive at once. Turns on by itself in the iPhone's Low Power Mode."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Akkusparmodus: weniger genaues GPS (etwa 10 m), Live-Aktivität alle 90 s statt alle 30 s aktualisiert, Straße voraus jede Minute neu berechnet. Warnungen kommen trotzdem sofort. Schaltet sich im Stromsparmodus des iPhone automatisch ein."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Économie de batterie : GPS moins précis (environ 10 m), Activité en direct mise à jour toutes les 90 s au lieu de 30, route devant recalculée chaque minute. Les alertes arrivent quand même tout de suite. S'active seule en mode Économie d'énergie de l'iPhone."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ahorro de batería: GPS menos preciso (unos 10 m), Actividad en vivo actualizada cada 90 s en lugar de 30, carretera por delante recalculada cada minuto. Los avisos siguen llegando al instante. Se activa solo con el modo de bajo consumo del iPhone."
+          }
+        }
+      }
     }
   },
   "version" : "1.0"

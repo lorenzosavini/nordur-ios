@@ -107,10 +107,21 @@ struct DriveView: View {
                     Stepper("Limite velocità \(Int(recorder.settings.speedLimit)) km/h", value: $recorder.settings.speedLimit, in: 50...130, step: 10)
                     Toggle("Avviso se superi il limite", isOn: $recorder.settings.speedAlerts)
                     Toggle("Avvisi vocali", isOn: $recorder.settings.spokenAlerts)
+                    Toggle(isOn: $recorder.batterySaver) {
+                        VStack(alignment: .leading, spacing: 2) {
+                            Text("Risparmio batteria in guida")
+                            if ProcessInfo.processInfo.isLowPowerModeEnabled && !recorder.batterySaver {
+                                Text("Attivo ora: il telefono è in Risparmio energetico").font(.app(.caption2)).foregroundStyle(Theme.dim)
+                            }
+                        }
+                    }
                 } header: {
                     Text("Auto e chilometraggio").eyebrow().pinnedHeader().pinnedHeader().pinnedHeader()
                 } footer: {
-                    Text("Inserisci i km al ritiro dell'auto: si aggiornano a ogni percorso. Limiti: 90 km/h asfalto, 80 sterrato, 50 centri abitati.")
+                    VStack(alignment: .leading, spacing: 8) {
+                        Text("Inserisci i km al ritiro dell'auto: si aggiornano a ogni percorso. Limiti: 90 km/h asfalto, 80 sterrato, 50 centri abitati.")
+                        Text("Risparmio batteria: GPS meno preciso (circa 10 m), Live Activity aggiornata ogni 90 s invece di 30, strada davanti ricalcolata ogni minuto. Le allerte arrivano comunque subito. Si attiva da solo con il Risparmio energetico dell'iPhone.")
+                    }
                 }
                 .onChange(of: recorder.settings) { _, _ in recorder.saveSettings() }
 
@@ -121,7 +132,7 @@ struct DriveView: View {
             .toolbar(.hidden, for: .navigationBar)
             .confirmationDialog("Terminare la registrazione?", isPresented: $confirmStop, titleVisibility: .visible) {
                 Button("Termina e salva") { lastFinished = recorder.stop(); Haptics.result(true) }
-                Button("Scarta percorso", role: .destructive) { recorder.discard() }
+                Button("Scarta percorso", role: .destructive) { recorder.discard(); Haptics.warning() }
                 Button("Continua", role: .cancel) {}
             }
             .sheet(item: $lastFinished) { finished in
@@ -141,7 +152,7 @@ struct DriveView: View {
             Button {
                 guard Entitlements.shared.check(.driveRecord) else { return }
                 recorder.start()
-                Haptics.tap()
+                Haptics.impact()
             } label: {
                 HStack(spacing: 10) {
                     Circle().fill(.white).frame(width: 10, height: 10)
@@ -271,10 +282,10 @@ struct LiveDrivePanel: View {
                     nearbyFuel
                     HStack {
                         if recorder.isPaused {
-                            Button { recorder.resume() } label: { Label("Riprendi", systemImage: "play.fill").frame(maxWidth: .infinity) }
+                            Button { recorder.resume(); Haptics.impact() } label: { Label("Riprendi", systemImage: "play.fill").frame(maxWidth: .infinity) }
                                 .buttonStyle(.borderedProminent)
                         } else {
-                            Button { recorder.pause() } label: { Label("Pausa", systemImage: "pause.fill").frame(maxWidth: .infinity) }
+                            Button { recorder.pause(); Haptics.impact() } label: { Label("Pausa", systemImage: "pause.fill").frame(maxWidth: .infinity) }
                                 .buttonStyle(.bordered)
                         }
                     }

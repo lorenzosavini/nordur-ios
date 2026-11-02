@@ -83,10 +83,17 @@ struct AlertsView: View {
 
             if shown.isEmpty {
                 if alerts.events.isEmpty {
-                    ContentUnavailableView("Nessuna allerta", systemImage: "checkmark.seal",
-                                           description: Text("Qui compaiono le allerte inviate."))
+                    EmptyState(symbol: "checkmark.seal", title: String(localized: "Nessuna allerta"),
+                               message: String(localized: "Qui compaiono le allerte inviate: allerte IMO, raffiche, strade chiuse, aurora. Per ora è tutto tranquillo."),
+                               actionTitle: String(localized: "Controlla ora")) { Task { await alerts.check() } }
                 } else {
-                    ContentUnavailableView.search(text: query)
+                    EmptyState(symbol: "magnifyingglass", title: String(localized: "Nessun risultato"),
+                               message: String(localized: "Nessuna allerta corrisponde ai filtri scelti."),
+                               actionTitle: String(localized: "Mostra tutte")) {
+                        query = ""
+                        filter = nil
+                        onlyUnread = false
+                    }
                 }
             }
 

@@ -178,7 +178,7 @@ jobs:
           done
           # Largest accessibility text size: nothing may be cut off or overlap.
           xcrun simctl ui "$UDID" content_size accessibility-large || true
-          for tab in today drive; do
+          for tab in today drive weather trip map; do
             xcrun simctl launch "$UDID" it.lorenzosavini.nordur -initialTab "$tab" -appearance light -AppleLanguages "(it)" -AppleLocale it_IT
             sleep 20
             xcrun simctl io "$UDID" screenshot "shots/$tab-largetext.png"
