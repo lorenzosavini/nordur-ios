@@ -92,7 +92,6 @@ struct RootView: View {
     @Environment(TripStore.self) private var trip
     @Environment(AlertCenter.self) private var alerts
     @Environment(DriveRecorder.self) private var recorder
-    @Environment(\.colorScheme) private var colorScheme
     // `-initialTab drive` as launch argument opens a given tab (used by the CI screenshots).
     @State private var tab = Tab(rawValue: UserDefaults.standard.string(forKey: "initialTab") ?? "") ?? .today
 
@@ -148,12 +147,7 @@ struct RootView: View {
                     .zIndex(10)
             }
         }
-        .onChange(of: Connectivity.shared.isOnline, initial: true) {
-            OfflineBannerWindow.update(model: model, online: Connectivity.shared.isOnline, scheme: colorScheme)
-        }
-        .onChange(of: colorScheme) {
-            OfflineBannerWindow.update(model: model, online: Connectivity.shared.isOnline, scheme: colorScheme)
-        }
+        .modifier(RootSync(model: model, trip: trip))
         .onChange(of: Connectivity.shared.reconnections) {
             // Back online: everything is reloaded at once, without waiting for the next poll.
             Task {
@@ -169,38 +163,11 @@ struct RootView: View {
             CrashLog.note(screen: tab.rawValue)
         }
         .ignoresSafeArea(.keyboard, edges: .bottom)
-        .onOpenURL { url in
-            // Widgets and the Live Activity: nordur://stop/<id>, nordur://drive.
-            if url.scheme == "nordur" {
-                if url.host == "stop", let id = UUID(uuidString: url.lastPathComponent) { model.requestedStop = id }
-                tab = .trip
-                return
-            }
-            guard url.isFileURL, ["gpx", "kml"].contains(url.pathExtension.lowercased()) else { return }
-            // Waypoints or placemarks: a trip planned elsewhere; a recorded track: a drive.
-            if TripImportFile.isTrip(url) {
-                do {
-                    model.pendingTripImport = try TripImportFile.read(url)
-                    tab = .trip
-                } catch {
-                    importError = error.localizedDescription
-                }
-                return
-            }
-            do {
-                openedTrack = try DriveStore.shared.importGPX(url)
-                tab = .trip
-                Haptics.result(true)
-            } catch {
-                importError = error.localizedDescription
-                Haptics.result(false)
-            }
-        }
+        .onOpenURL { url in open(url) }
         .sheet(item: $openedTrack) { track in NavigationStack { DriveDetailView(drive: track) } }
         .alert("Importazione non riuscita", isPresented: Binding(get: { importError != nil }, set: { if !$0 { importError = nil } })) {
             Button("OK", role: .cancel) {}
         } message: { Text(importError ?? "") }
-        .onChange(of: trip.stops, initial: true) { WidgetSync.update(trip: trip, model: model) }
         .onChange(of: model.requestedTab) {
             if let raw = model.requestedTab, let target = Tab(rawValue: raw) { tab = target }
             model.requestedTab = nil
@@ -349,6 +316,54 @@ struct RootView: View {
                 if inboxTick % 4 == 0 { await trip.refreshInbox() }
             }
         }
+    }
+
+    /// Files opened with Norður (GPX/KML) and the links of the widgets and the Live Activity.
+    private func open(_ url: URL) {
+        // Widgets and the Live Activity: nordur://stop/<id>, nordur://drive.
+        if url.scheme == "nordur" {
+            if url.host == "stop", let id = UUID(uuidString: url.lastPathComponent) { model.requestedStop = id }
+            tab = .trip
+            return
+        }
+        guard url.isFileURL, ["gpx", "kml"].contains(url.pathExtension.lowercased()) else { return }
+        // Waypoints or placemarks: a trip planned elsewhere; a recorded track: a drive.
+        if TripImportFile.isTrip(url) {
+            do {
+                model.pendingTripImport = try TripImportFile.read(url)
+                tab = .trip
+            } catch {
+                importError = error.localizedDescription
+            }
+            return
+        }
+        do {
+            openedTrack = try DriveStore.shared.importGPX(url)
+            tab = .trip
+            Haptics.result(true)
+        } catch {
+            importError = error.localizedDescription
+            Haptics.result(false)
+        }
+    }
+}
+
+/// Keeps the offline strip and the "Tappa di oggi" widget in step with the app
+/// (kept apart from RootView's body, which is already long for the type checker).
+private struct RootSync: ViewModifier {
+    let model: AppModel
+    let trip: TripStore
+    @Environment(\.colorScheme) private var colorScheme
+
+    func body(content: Content) -> some View {
+        content
+            .onChange(of: Connectivity.shared.isOnline, initial: true) { banner() }
+            .onChange(of: colorScheme) { banner() }
+            .onChange(of: trip.stops, initial: true) { WidgetSync.update(trip: trip, model: model) }
+    }
+
+    private func banner() {
+        OfflineBannerWindow.update(model: model, online: Connectivity.shared.isOnline, scheme: colorScheme)
     }
 }
 
