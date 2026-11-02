@@ -16,7 +16,8 @@ concurrency:
 jobs:
   build:
     runs-on: macos-latest
-    timeout-minutes: 50
+    # Build ~8 min, tap and scroll test ~27, screenshots ~20: 50 was cutting every run short.
+    timeout-minutes: 85
     steps:
       - uses: actions/checkout@v4
 
