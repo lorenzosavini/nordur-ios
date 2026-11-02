@@ -37,6 +37,19 @@ LAYERS = {
         "min": 200,
     },
 }
+# Pools and hot springs: read by the app straight from the osm-data branch
+# (Shared/Services/Baths.swift, same filters as its Overpass fallback).
+LAYERS["baths"] = {
+    "filters": [
+        'nwr["leisure"="swimming_pool"]["name"]["access"!~"^(private|no|customers)$"]',
+        'nwr["leisure"="sports_centre"]["sport"~"swimming"]',
+        'nwr["amenity"="public_bath"]',
+        'nwr["natural"="hot_spring"]["name"]',
+    ],
+    "keep": ["leisure", "amenity", "natural", "sport", "access", "name", "name:en", "opening_hours", "fee",
+             "website", "contact:website", "wikidata", "wikipedia"],
+    "min": 40,
+}
 UA = "nordur-osm-data (github.com/lorenzosavini/nordur-ios)"
 
 

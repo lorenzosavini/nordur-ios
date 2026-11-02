@@ -614,6 +614,10 @@ struct TodayView: View {
                 sightsCell
                 Rule()
                 shopsCell
+                if Entitlements.shared.shows(.baths) {
+                    Rule()
+                    bathsCell
+                }
             }
             .overlay(alignment: .top) { Rule() }
             .overlay(alignment: .bottom) { Rule() }
@@ -783,6 +787,52 @@ struct TodayView: View {
         }
         .buttonStyle(.plain)
         .accessibilityIdentifier("today.shops")
+    }
+
+    /// The nearest public pool and whether it is open (only when OSM has the hours).
+    private var bathsCell: some View {
+        NavigationLink { BathsView() } label: {
+            let now = Date()
+            let c = model.activePlace.coordinate
+            let near = Baths.nearest(model.baths?.value ?? [], to: c, within: 80)
+            let pool = near.first { $0.bath.kind == .pool }
+            let spring = near.first { $0.bath.kind == .natural }
+            VStack(alignment: .leading, spacing: 6) {
+                HStack {
+                    Text("PISCINE E SORGENTI CALDE").font(.mono(9.5)).foregroundStyle(Theme.faint)
+                    Spacer()
+                    ProLock(feature: .baths)
+                    Image(systemName: "chevron.right").font(.system(size: 11, weight: .semibold)).foregroundStyle(Theme.faint)
+                }
+                if let pool {
+                    HStack(alignment: .firstTextBaseline, spacing: 8) {
+                        KindIcon(name: Bath.Kind.pool.imageName, size: 34)
+                        Text(pool.bath.name).font(.app(.headline)).foregroundStyle(Theme.text).lineLimit(1)
+                        Text("\(Fmt.number(pool.km, decimals: pool.km < 10 ? 1 : 0)) KM").font(.mono(10.5, .semibold)).foregroundStyle(Theme.dim)
+                    }
+                    if let status = pool.bath.status(at: now) {
+                        Text(status.text).font(.app(.caption, .semibold)).foregroundStyle(status.open ? Theme.aurora : Theme.danger)
+                    }
+                    if let spring {
+                        Text(String(localized: "Sorgente naturale: \(spring.bath.name), \(Fmt.number(spring.km, decimals: spring.km < 10 ? 1 : 0)) km"))
+                            .font(.app(.caption)).foregroundStyle(Theme.dim).lineLimit(1)
+                    }
+                } else if let spring {
+                    Text(String(localized: "Sorgente naturale: \(spring.bath.name), \(Fmt.number(spring.km, decimals: spring.km < 10 ? 1 : 0)) km"))
+                        .font(.app(.caption, .semibold)).foregroundStyle(Theme.text).lineLimit(1)
+                } else {
+                    Text(model.baths == nil ? (model.errors[.baths] == nil ? String(localized: "Download in corso") : String(localized: "Non disponibile"))
+                                            : String(localized: "Nessuna entro 80 km"))
+                        .font(.app(.caption)).foregroundStyle(Theme.faint)
+                }
+            }
+            .padding(12)
+            .frame(maxWidth: .infinity, alignment: .topLeading)
+            .contentShape(Rectangle())
+        }
+        .buttonStyle(.plain)
+        .accessibilityIdentifier("today.baths")
+        .task { await model.loadBaths() }
     }
 
     private var transportCell: some View {

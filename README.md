@@ -12,6 +12,7 @@ App iOS (SwiftUI, iOS 17+) per viaggiare in Islanda: meteo, allerte ufficiali, s
 - **Allerte**: allerte IMO, raffiche vicine, strade chiuse, terremoti, SafeTravel, aurora, voli seguiti, Herjólfur, velocità. Controlli ogni 5 minuti ad app aperta o in guida, in background con posizione «Sempre».
 - **Widget**: condizioni, aurora (piccolo, medio, schermata di blocco) e «Tappa di oggi» (da → a, km, quando partire per arrivare con la luce, allerte sul percorso; un tocco apre la tappa). La tappa arriva al widget tramite l'App Group `group.it.lorenzosavini.nordur`: con un'installazione senza App Group (es. `Nordur-senza-Salute.ipa`) il widget chiede di aprire l'app.
 - **Live Activity in guida**: km, velocità, prossima tappa con km rimanenti e arrivo previsto, prossimo distributore, allerta vento/strada più rilevante; schermata di blocco e Dynamic Island. Aggiornamenti parsimoniosi: vedi [docs/BATTERIA.md](docs/BATTERIA.md).
+- **Piscine e sorgenti calde** (Oggi › Terra, mare, servizi, e da *Da vedere*): piscine pubbliche, bagni termali e sorgenti naturali da OpenStreetMap su mappa e in lista per distanza, filtro piscine/sorgenti, «aperto ora» solo dove OSM ha l'orario, foto, indicazioni, aggiunta al viaggio, avviso di sicurezza sulle sorgenti naturali. Nessun prezzo o affollamento inventato. Funzione `explore.baths` configurabile dal pannello admin.
 - **Offline**: ultima copia di ogni fonte in cache; distributori e colonnine salvati sul telefono.
 
 ## Fonti

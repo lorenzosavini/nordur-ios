@@ -23,6 +23,7 @@ final class AppModel {
         case rates = "Cambio valuta"
         case shops = "Supermercati e negozi"
         case sights = "Attrazioni (OpenStreetMap)"
+        case baths = "Piscine e sorgenti calde (OpenStreetMap)"
         case flights = "Voli KEF"
         case ferry = "Herjólfur"
         case grid = "Mappa meteo"
@@ -82,6 +83,9 @@ final class AppModel {
     var rates: Fetched<ExchangeRates>?
     var shops: Fetched<[Shop]>?
     @ObservationIgnored private var shopsTask: Task<Void, Never>?
+    /// Public pools, geothermal baths and natural hot springs (OpenStreetMap).
+    var baths: Fetched<[Bath]>?
+    @ObservationIgnored private var bathsTask: Task<Void, Never>?
     /// Places to visit: the app's own list, plus OpenStreetMap once downloaded.
     private(set) var spots: [Attraction] = Attraction.catalog
     var sights: Fetched<[Attraction]>?
@@ -352,6 +356,7 @@ final class AppModel {
         }
         await loadShops(force: force)
         await loadSights(force: force)
+        await loadBaths(force: force)
         await loadFuelPrices(force: force)
     }
 
@@ -401,6 +406,20 @@ final class AppModel {
             shopsTask = nil
         }
         shopsTask = task
+        await task.value
+    }
+
+    func loadBaths(force: Bool = false) async {
+        guard baths == nil || force else { return }
+        if let bathsTask, !force { return await bathsTask.value }
+        let task = Task { @MainActor in
+            let result = await attempt { try await Baths.all(maxAge: force ? 0 : 30 * 24 * 3600) }
+            apply(result, .baths) { self.baths = $0 }
+            // Their Wikidata and Wikipedia links make the photo search exact, as for the sights.
+            if let baths { PlacePhotoService.shared.addHints(baths.value.filter(\.notable).map(\.attraction)) }
+            bathsTask = nil
+        }
+        bathsTask = task
         await task.value
     }
 
@@ -626,6 +645,7 @@ extension AppModel {
         case .rates: return f(rates)
         case .shops: return f(shops)
         case .sights: return f(sights)
+        case .baths: return f(baths)
         case .flights: return f(flights)
         case .ferry: return f(ferry)
         case .grid: return f(weatherGrid)

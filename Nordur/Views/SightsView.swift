@@ -64,6 +64,11 @@ struct SightsView: View {
                     }
                 }
                 Toggle("Solo i più famosi", isOn: $topOnly).tint(Theme.accent)
+                if Entitlements.shared.shows(.baths), kind == nil || kind == .bath {
+                    NavigationLink { BathsView(center: place) } label: {
+                        HStack { Label("Piscine e sorgenti calde: orari, aperte ora", systemImage: "figure.pool.swim"); Spacer(); ProLock(feature: .baths) }
+                    }
+                }
             }
             Section {
                 if near.isEmpty {

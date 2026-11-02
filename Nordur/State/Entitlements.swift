@@ -22,6 +22,7 @@ enum Feature: String, CaseIterable, Identifiable {
     case offline
     case backup
     case currencyConverter = "currency.converter"
+    case baths = "explore.baths"
 
     var id: String { rawValue }
 
@@ -42,6 +43,7 @@ enum Feature: String, CaseIterable, Identifiable {
         case .offline: return String(localized: "Pacchetto offline")
         case .backup: return String(localized: "Backup sul cloud")
         case .currencyConverter: return String(localized: "Convertitore valute")
+        case .baths: return String(localized: "Piscine e sorgenti calde")
         }
     }
 
@@ -62,6 +64,7 @@ enum Feature: String, CaseIterable, Identifiable {
         case .offline: return "arrow.down.circle"
         case .backup: return "icloud.and.arrow.up"
         case .currencyConverter: return "arrow.left.arrow.right.circle"
+        case .baths: return "figure.pool.swim"
         }
     }
 }

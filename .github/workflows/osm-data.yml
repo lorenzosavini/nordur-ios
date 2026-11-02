@@ -1,6 +1,6 @@
 name: OSM data
 
-# Shops and places to see from OpenStreetMap, downloaded without the time limit
+# Shops, places to see, pools and hot springs from OpenStreetMap, downloaded without the time limit
 # of a serverless function and published on the osm-data branch, where
 # nordur-api and the app read them.
 on:
@@ -36,6 +36,6 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git checkout -q -b osm-data
-          git add shops.json sights.json
+          git add shops.json sights.json baths.json
           git commit -q -m "OSM data $(date -u +%Y-%m-%dT%H:%MZ)"
           git push -q -f "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" osm-data

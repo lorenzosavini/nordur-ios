@@ -53636,6 +53636,762 @@
           }
         }
       }
+    },
+    "Piscine e sorgenti calde (OpenStreetMap)" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pools and hot springs (OpenStreetMap)"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Schwimmbäder und heiße Quellen (OpenStreetMap)"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Piscines et sources chaudes (OpenStreetMap)"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Piscinas y fuentes termales (OpenStreetMap)"
+          }
+        }
+      }
+    },
+    "Piscine e sorgenti calde" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pools and hot springs"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Schwimmbäder und heiße Quellen"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Piscines et sources chaudes"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Piscinas y fuentes termales"
+          }
+        }
+      }
+    },
+    "Piscina pubblica" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Public pool"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Öffentliches Schwimmbad"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Piscine publique"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Piscina pública"
+          }
+        }
+      }
+    },
+    "Sorgente naturale" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Natural spring"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Natürliche Quelle"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Source naturelle"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fuente natural"
+          }
+        }
+      }
+    },
+    "Piscine pubbliche" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Public pools"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Öffentliche Schwimmbäder"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Piscines publiques"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Piscinas públicas"
+          }
+        }
+      }
+    },
+    "Sorgenti naturali" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Natural springs"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Natürliche Quellen"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sources naturelles"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fuentes naturales"
+          }
+        }
+      }
+    },
+    "Piscina" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Swimming pool"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Schwimmbad"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Piscine"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Piscina"
+          }
+        }
+      }
+    },
+    "Centro sportivo con piscina" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sports centre with pool"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sportzentrum mit Schwimmbad"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Centre sportif avec piscine"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Centro deportivo con piscina"
+          }
+        }
+      }
+    },
+    "Acqua che può essere bollente: entra solo dove è sicuro e resta sui sentieri." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Water can be scalding: only get in where it is safe and stay on the paths."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Das Wasser kann kochend heiß sein: nur dort hinein, wo es sicher ist, und auf den Wegen bleiben."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "L'eau peut être brûlante : n'entrez que là où c'est sûr et restez sur les sentiers."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "El agua puede estar hirviendo: entra solo donde sea seguro y quédate en los senderos."
+          }
+        }
+      }
+    },
+    "Nelle aree geotermiche l'acqua può superare i 90 °C a pochi metri da una pozza tiepida, e il terreno vicino può cedere. Prova la temperatura prima di entrare, resta sui sentieri e dietro le corde, non lasciare i bambini da soli. D'inverno i sentieri sono spesso ghiacciati." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "In geothermal areas the water can exceed 90 °C a few metres from a lukewarm pool, and the ground nearby can give way. Test the temperature before getting in, stay on the paths and behind the ropes, and never leave children alone. In winter the paths are often icy."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "In Geothermalgebieten kann das Wasser wenige Meter neben einem lauwarmen Becken über 90 °C heiß sein, und der Boden kann nachgeben. Prüfe die Temperatur vor dem Hineingehen, bleib auf den Wegen und hinter den Absperrungen, lass Kinder nie allein. Im Winter sind die Wege oft vereist."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dans les zones géothermiques, l'eau peut dépasser 90 °C à quelques mètres d'un bassin tiède, et le sol peut céder. Testez la température avant d'entrer, restez sur les sentiers et derrière les cordes, ne laissez jamais les enfants seuls. En hiver, les sentiers sont souvent verglacés."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "En las zonas geotérmicas el agua puede superar los 90 °C a pocos metros de una poza tibia, y el suelo puede ceder. Comprueba la temperatura antes de entrar, quédate en los senderos y detrás de las cuerdas y no dejes solos a los niños. En invierno los senderos suelen estar helados."
+          }
+        }
+      }
+    },
+    "Piscine e sorgenti vicino a %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pools and springs near %@"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Schwimmbäder und Quellen bei %@"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Piscines et sources près de %@"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Piscinas y fuentes cerca de %@"
+          }
+        }
+      }
+    },
+    "Solo aperte adesso (dove l'orario è noto)" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Open now only (where hours are known)"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nur jetzt geöffnet (wo die Zeiten bekannt sind)"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ouvertes maintenant (si l'horaire est connu)"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Solo abiertas ahora (donde se conoce el horario)"
+          }
+        }
+      }
+    },
+    "Nessuna con orari noti aperta adesso in questa zona." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "None with known hours is open now in this area."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Keine mit bekannten Öffnungszeiten hat hier gerade geöffnet."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aucune avec un horaire connu n'est ouverte maintenant dans cette zone."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ninguna con horario conocido está abierta ahora en esta zona."
+          }
+        }
+      }
+    },
+    "Nessuna piscina o sorgente in questa zona con questi filtri." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No pool or spring in this area with these filters."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kein Schwimmbad und keine Quelle in dieser Gegend mit diesen Filtern."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aucune piscine ni source dans cette zone avec ces filtres."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ninguna piscina o fuente en esta zona con estos filtros."
+          }
+        }
+      }
+    },
+    "Mostra anche le chiuse" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Show closed ones too"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Auch geschlossene anzeigen"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Afficher aussi les fermées"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mostrar también las cerradas"
+          }
+        }
+      }
+    },
+    "Cerca entro 300 km" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Search within 300 km"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Im Umkreis von 300 km suchen"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Chercher dans un rayon de 300 km"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Buscar a menos de 300 km"
+          }
+        }
+      }
+    },
+    "%lld entro %lld km da %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$lld within %2$lld km of %3$@"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$lld im Umkreis von %2$lld km um %3$@"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$lld à moins de %2$lld km de %3$@"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$lld a menos de %2$lld km de %3$@"
+          }
+        }
+      }
+    },
+    "Le piscine comunali (sundlaug) sono il modo islandese di stare al caldo: doccia senza costume prima di entrare, è obbligatoria. Orari e ingresso a pagamento solo quando sono indicati su OpenStreetMap: verifica sul sito del posto, soprattutto nei festivi." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Municipal pools (sundlaug) are how Icelanders keep warm: showering without a swimsuit before going in is mandatory. Hours and paid entry only when OpenStreetMap lists them: check the place's website, especially on holidays."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Die städtischen Schwimmbäder (sundlaug) sind die isländische Art, sich aufzuwärmen: Duschen ohne Badekleidung vor dem Baden ist Pflicht. Öffnungszeiten und Eintritt nur, wenn OpenStreetMap sie angibt: auf der Website prüfen, besonders an Feiertagen."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Les piscines municipales (sundlaug) sont la façon islandaise de se réchauffer : la douche sans maillot avant d'entrer est obligatoire. Horaires et entrée payante seulement s'ils figurent sur OpenStreetMap : vérifiez sur le site du lieu, surtout les jours fériés."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Las piscinas municipales (sundlaug) son la forma islandesa de entrar en calor: ducharse sin bañador antes de entrar es obligatorio. Horarios y entrada de pago solo cuando figuran en OpenStreetMap: compruébalo en la web del lugar, sobre todo en festivos."
+          }
+        }
+      }
+    },
+    "Nome, es. Laugardalslaug" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Name, e.g. Laugardalslaug"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Name, z. B. Laugardalslaug"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nom, p. ex. Laugardalslaug"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nombre, p. ej. Laugardalslaug"
+          }
+        }
+      }
+    },
+    "%@ km in linea d'aria da %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ km as the crow flies from %2$@"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ km Luftlinie von %2$@"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ km à vol d'oiseau de %2$@"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ km en línea recta desde %2$@"
+          }
+        }
+      }
+    },
+    "Ingresso a pagamento" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Paid entry"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Eintritt kostenpflichtig"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Entrée payante"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Entrada de pago"
+          }
+        }
+      }
+    },
+    "Ingresso libero" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Free entry"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Eintritt frei"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Entrée libre"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Entrada libre"
+          }
+        }
+      }
+    },
+    "Sito del posto" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Website"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Website"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Site web"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sitio web"
+          }
+        }
+      }
+    },
+    "PISCINE E SORGENTI CALDE" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "POOLS AND HOT SPRINGS"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SCHWIMMBÄDER UND HEISSE QUELLEN"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "PISCINES ET SOURCES CHAUDES"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "PISCINAS Y FUENTES TERMALES"
+          }
+        }
+      }
+    },
+    "Sorgente naturale: %@, %@ km" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Natural spring: %1$@, %2$@ km"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Natürliche Quelle: %1$@, %2$@ km"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Source naturelle : %1$@, %2$@ km"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fuente natural: %1$@, %2$@ km"
+          }
+        }
+      }
+    },
+    "Nessuna entro 80 km" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "None within 80 km"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Keine im Umkreis von 80 km"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aucune à moins de 80 km"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ninguna a menos de 80 km"
+          }
+        }
+      }
+    },
+    "Piscine e sorgenti calde: orari, aperte ora" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pools and hot springs: hours, open now"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Schwimmbäder und heiße Quellen: Zeiten, jetzt geöffnet"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Piscines et sources chaudes : horaires, ouvertes maintenant"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Piscinas y fuentes termales: horarios, abiertas ahora"
+          }
+        }
+      }
     }
   },
   "version" : "1.0"
