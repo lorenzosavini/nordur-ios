@@ -373,6 +373,7 @@
 				TARGETED_DEVICE_FAMILY = "1,2";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = "Norður";
+				CODE_SIGN_ENTITLEMENTS = NordurWidgets.entitlements;
 				INFOPLIST_FILE = "NordurWidgets-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -397,6 +398,7 @@
 				TARGETED_DEVICE_FAMILY = "1,2";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = "Norður";
+				CODE_SIGN_ENTITLEMENTS = NordurWidgets.entitlements;
 				INFOPLIST_FILE = "NordurWidgets-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

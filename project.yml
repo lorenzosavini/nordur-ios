@@ -42,6 +42,7 @@ targets:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: it.lorenzosavini.nordur.widgets
         INFOPLIST_FILE: NordurWidgets-Info.plist
+        CODE_SIGN_ENTITLEMENTS: NordurWidgets.entitlements
         GENERATE_INFOPLIST_FILE: YES
         INFOPLIST_KEY_CFBundleDisplayName: Norður
         SKIP_INSTALL: YES

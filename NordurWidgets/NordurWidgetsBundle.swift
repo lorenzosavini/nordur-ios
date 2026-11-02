@@ -6,6 +6,7 @@ struct NordurWidgetsBundle: WidgetBundle {
     var body: some Widget {
         ConditionsWidget()
         AuroraWidget()
+        TripTodayWidget()
         DriveLiveActivity()
     }
 }

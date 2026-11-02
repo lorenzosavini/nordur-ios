@@ -10,7 +10,8 @@ App iOS (SwiftUI, iOS 17+) per viaggiare in Islanda: meteo, allerte ufficiali, s
 - **Guida**: registrazione GPS con km, tempi, velocità, dislivello, soste, contachilometri, consumo stimato; storico ed export GPX; Live Activity. Durante la guida, stazioni e tratti sulla strada davanti (lungo il percorso se è impostata una destinazione), aggiornati ogni 5 minuti, con avvisi vocali e notifiche.
 - **Viaggio**: tappe con data e mezzo; meteo e allerte per ogni tappa; per le tratte in auto, previsione lungo il percorso all'ora di passaggio.
 - **Allerte**: allerte IMO, raffiche vicine, strade chiuse, terremoti, SafeTravel, aurora, voli seguiti, Herjólfur, velocità. Controlli ogni 5 minuti ad app aperta o in guida, in background con posizione «Sempre».
-- **Widget**: condizioni e aurora, anche sulla schermata di blocco.
+- **Widget**: condizioni, aurora (piccolo, medio, schermata di blocco) e «Tappa di oggi» (da → a, km, quando partire per arrivare con la luce, allerte sul percorso; un tocco apre la tappa). La tappa arriva al widget tramite l'App Group `group.it.lorenzosavini.nordur`: con un'installazione senza App Group (es. `Nordur-senza-Salute.ipa`) il widget chiede di aprire l'app.
+- **Live Activity in guida**: km, velocità, prossima tappa con km rimanenti e arrivo previsto, prossimo distributore, allerta vento/strada più rilevante; schermata di blocco e Dynamic Island. Aggiornamenti parsimoniosi: vedi [docs/BATTERIA.md](docs/BATTERIA.md).
 - **Offline**: ultima copia di ogni fonte in cache; distributori e colonnine salvati sul telefono.
 
 ## Fonti

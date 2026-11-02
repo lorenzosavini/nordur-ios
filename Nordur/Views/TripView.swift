@@ -215,6 +215,13 @@ struct TripView: View {
                 }
             }
             .sheet(item: $importFile) { file in TripImportSheet(file: file) }
+            .onChange(of: model.requestedStop, initial: true) {
+                // From the "Tappa di oggi" widget.
+                if let id = model.requestedStop {
+                    mapStop = trip.stops.first { $0.id == id }
+                    model.requestedStop = nil
+                }
+            }
             .onChange(of: model.pendingTripImport?.id) {
                 if let file = model.pendingTripImport {
                     importFile = file

@@ -15,6 +15,13 @@ struct DriveActivityAttributes: ActivityAttributes {
         var alertTitle: String?
         var alertSeverity: Int
         var updated: Date
+        /// Next stop: the destination set in the drive screen, or today's trip stop.
+        var nextStopName: String?
+        var remainingKm: Double?
+        var eta: Date?
+        /// Next fuel station on the route (or roughly ahead), straight-line distance.
+        var fuelName: String?
+        var fuelKm: Double?
     }
 
     var name: String

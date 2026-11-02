@@ -92,7 +92,10 @@ jobs:
           zip -qry Nordur-senza-Salute.ipa Payload
           # Ad-hoc signature carrying the app's entitlements (HealthKit), so Sideloadly/AltStore
           # ask for them when they re-sign with the user's Apple ID. Nested code is signed first.
-          find Payload/Nordur.app -depth \( -name "*.appex" -o -name "*.framework" -o -name "*.dylib" \) -print0 | xargs -0 -I{} codesign --force --sign - --timestamp=none "{}"
+          find Payload/Nordur.app -depth \( -name "*.framework" -o -name "*.dylib" \) -print0 | xargs -0 -I{} codesign --force --sign - --timestamp=none "{}"
+          # The widget carries the App Group too (today's trip stop is shared through it).
+          for x in Payload/Nordur.app/PlugIns/*.appex; do codesign --force --sign - --timestamp=none --entitlements NordurWidgets.entitlements "$x"; done
+          codesign -d --entitlements - Payload/Nordur.app/PlugIns/*.appex 2>&1 | grep -i application-groups
           codesign --force --sign - --timestamp=none --entitlements Nordur.entitlements Payload/Nordur.app
           codesign -d --entitlements - Payload/Nordur.app 2>&1 | grep -i healthkit
           rm -f Nordur.ipa && zip -qry Nordur.ipa Payload

@@ -26,6 +26,17 @@
 	<string>Con l'accesso «Sempre» Norður controlla allerte meteo, raffiche e strade chiuse vicino a te anche quando l'app è chiusa, e continua a registrare il percorso a schermo bloccato.</string>
 	<key>NSHealthShareUsageDescription</key>
 	<string>Norður legge da Salute le attività che scegli di importare (ad esempio da Garmin Connect o Apple Watch): percorso GPS, distanza, durata, quota e frequenza cardiaca. Non scrive nulla in Salute.</string>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleURLName</key>
+			<string>it.lorenzosavini.nordur</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>nordur</string>
+			</array>
+		</dict>
+	</array>
 	<key>CFBundleDocumentTypes</key>
 	<array>
 		<dict>

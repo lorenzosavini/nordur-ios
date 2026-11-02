@@ -46,6 +46,7 @@ struct NordurApp: App {
             switch phase {
             case .background:
                 CrashLog.phase("background")
+                WidgetSync.update(trip: trip, model: model)
                 AlertCenter.scheduleBackgroundRefresh()
                 AuroraWatch.shared.update()
                 Task { await Account.shared.syncIfDue(leavingApp: true) }
@@ -169,6 +170,12 @@ struct RootView: View {
         }
         .ignoresSafeArea(.keyboard, edges: .bottom)
         .onOpenURL { url in
+            // Widgets and the Live Activity: nordur://stop/<id>, nordur://drive.
+            if url.scheme == "nordur" {
+                if url.host == "stop", let id = UUID(uuidString: url.lastPathComponent) { model.requestedStop = id }
+                tab = .trip
+                return
+            }
             guard url.isFileURL, ["gpx", "kml"].contains(url.pathExtension.lowercased()) else { return }
             // Waypoints or placemarks: a trip planned elsewhere; a recorded track: a drive.
             if TripImportFile.isTrip(url) {
@@ -193,6 +200,7 @@ struct RootView: View {
         .alert("Importazione non riuscita", isPresented: Binding(get: { importError != nil }, set: { if !$0 { importError = nil } })) {
             Button("OK", role: .cancel) {}
         } message: { Text(importError ?? "") }
+        .onChange(of: trip.stops, initial: true) { WidgetSync.update(trip: trip, model: model) }
         .onChange(of: model.requestedTab) {
             if let raw = model.requestedTab, let target = Tab(rawValue: raw) { tab = target }
             model.requestedTab = nil
@@ -322,6 +330,8 @@ struct RootView: View {
                 await model.refreshPlaceIfOld()
                 await Entitlements.shared.loadConfig()
                 await alerts.check()
+                // Warnings, roads and forecasts may have changed: the widget follows.
+                WidgetSync.update(trip: trip, model: model)
             }
         }
         .task {

@@ -35,6 +35,8 @@ final class AppModel {
     let location = LocationManager()
     /// A screen asks the root view to switch tab ("map", "weather", "trip"…).
     var requestedTab: String?
+    /// A trip stop to open (the "Tappa di oggi" widget, nordur://stop/<id>).
+    var requestedStop: UUID?
     /// A GPX/KML trip opened from another app, waiting for the Trip tab to show it.
     var pendingTripImport: TripImportFile?
     var showSettings = false

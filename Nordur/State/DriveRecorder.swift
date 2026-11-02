@@ -258,6 +258,9 @@ final class DriveRecorder: NSObject {
             if let bad = h.segments.first(where: { ($0.risk ?? .ok) >= .warning }) { text += " · " + bad.conditionItalian }
             hazardText = text
         }
+        let position = s.points.last?.coordinate
+        let next = position.flatMap { DriveAhead.nextStop(from: $0, averageKmh: s.stats.averageKmh(totalSeconds: elapsed)) }
+        let fuel = position.flatMap { DriveAhead.nextFuel(from: $0, course: s.points.last?.course) }
         return .init(
             km: s.stats.km,
             elapsedSeconds: elapsed,
@@ -267,7 +270,12 @@ final class DriveRecorder: NSObject {
             paused: isPaused,
             alertTitle: hazardText ?? alert?.title,
             alertSeverity: hazard?.risk.rawValue ?? alert?.severity ?? 0,
-            updated: Date()
+            updated: Date(),
+            nextStopName: next?.name,
+            remainingKm: next?.km,
+            eta: next?.eta,
+            fuelName: fuel?.name,
+            fuelKm: fuel?.km
         )
     }
 
@@ -288,7 +296,8 @@ final class DriveRecorder: NSObject {
         guard force || alertChanged || now.timeIntervalSince(lastActivityUpdate) >= activityInterval,
               let state = liveState() else { return }
         if !force, !alertChanged, let last = lastActivityState,
-           abs(state.km - last.km) < 0.1, abs(state.speedKmh - last.speedKmh) < 3 {
+           abs(state.km - last.km) < 0.1, abs(state.speedKmh - last.speedKmh) < 3,
+           state.nextStopName == last.nextStopName, state.fuelName == last.fuelName {
             return
         }
         lastActivityUpdate = now

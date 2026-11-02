@@ -269,9 +269,66 @@ struct ConditionsWidget: Widget {
 // MARK: - Aurora widget
 
 struct AuroraWidgetView: View {
+    @Environment(\.widgetFamily) private var family
     let entry: ConditionsEntry
 
     var body: some View {
+        switch family {
+        case .accessoryRectangular: rectangular
+        case .systemMedium: medium
+        default: small
+        }
+    }
+
+    private func hint(_ cls: ObservabilityClass) -> String {
+        switch cls {
+        case .veryPoor, .poor: return String(localized: "Poche probabilità: attività debole, nuvole o troppa luce.")
+        case .moderate: return String(localized: "Possibile: guarda verso nord nelle ore più buie, lontano dalle luci.")
+        case .good, .excellent: return String(localized: "Buone probabilità: cerca un posto buio con il cielo libero a nord.")
+        }
+    }
+
+    private var auroraClass: ObservabilityClass? { entry.auroraScore.flatMap(ObservabilityClass.init(rawValue:)) }
+
+    private var rectangular: some View {
+        VStack(alignment: .leading, spacing: 1) {
+            Label("Aurora", systemImage: "moon.stars.fill").font(.app(.caption2, .semibold))
+            if let cls = auroraClass, let raw = entry.auroraScore {
+                Text(cls.label).font(.app(.headline)).lineLimit(1).minimumScaleFactor(0.7).widgetAccentable()
+                Gauge(value: Double(raw), in: 0...4) { Text("") }
+                    .gaugeStyle(.accessoryLinearCapacity)
+                if let time = entry.auroraTime {
+                    Text("Meglio verso le \(Fmt.time(time, in: entry.zone))").font(.app(.caption2)).lineLimit(1)
+                }
+            } else {
+                Text("Niente buio stanotte").font(.app(.caption2))
+            }
+        }
+    }
+
+    private var medium: some View {
+        HStack(alignment: .top, spacing: 14) {
+            small.frame(maxWidth: .infinity, alignment: .leading)
+            VStack(alignment: .leading, spacing: 6) {
+                if let cls = auroraClass {
+                    Text(hint(cls)).font(.app(.caption2)).foregroundStyle(.secondary).lineLimit(4)
+                }
+                Label("Vento \(Fmt.ms(entry.wind)) · raff. \(Fmt.ms(entry.gust))", systemImage: "wind")
+                    .font(.app(.caption2))
+                    .foregroundStyle(entry.windRisk == .ok ? Color.secondary : entry.windRisk.color)
+                if let warning = entry.warning {
+                    HStack(spacing: 4) {
+                        Circle().fill(warning.color.color).frame(width: 7, height: 7)
+                        Text(warning.headline).font(.app(.caption2)).lineLimit(2)
+                    }
+                }
+                Spacer(minLength: 0)
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
+        }
+    }
+
+    private var small: some View {
         VStack(alignment: .leading, spacing: 6) {
             Label("Aurora", systemImage: "moon.stars.fill").font(.app(.caption, .semibold)).foregroundStyle(.secondary)
             if let raw = entry.auroraScore, let cls = ObservabilityClass(rawValue: raw) {
@@ -298,6 +355,6 @@ struct AuroraWidget: Widget {
         }
         .configurationDisplayName(String(localized: "Aurora stanotte"))
         .description(String(localized: "Classe di osservabilità dell’aurora stanotte: attività prevista, nuvole, buio e Luna."))
-        .supportedFamilies([.systemSmall])
+        .supportedFamilies([.systemSmall, .systemMedium, .accessoryRectangular])
     }
 }
