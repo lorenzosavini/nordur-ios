@@ -334,13 +334,13 @@ do {
 
         // Blend on an hourly grid: 13:00 exact, the 3-hour step spread over its hours.
         let t13 = Int(hours[0].date.timeIntervalSince1970), t12 = t13 - 3600
-        let t1300 = Int(hours[2].date.timeIntervalSince1970), t1400 = t1300 + 3600, t1500 = t1300 + 3 * 3600
-        let blend = IMOBlend.values(at: [t12, t13, t1300, t1400, t1500, t1500 + 3600], steps: hours)
+        let t1200 = Int(hours[2].date.timeIntervalSince1970), t1300 = t1200 + 3600, t1500 = t1200 + 3 * 3600
+        let blend = IMOBlend.values(at: [t12, t13, t1200, t1300, t1500, t1500 + 3600], steps: hours)
         check(blend[t13]?.temperature == 8 && blend[t13]?.wind == 5 && blend[t13]?.precipitation == 0.2, "IMO blend: exact step")
         check(blend[t12]?.temperature == 8, "IMO blend: the hour before the first step")
         check(blend[t1500 + 3600] == nil, "IMO blend: nothing past the horizon")
-        let mid = blend[t1400]
-        check(abs((mid?.temperature ?? 0) - 4) < 0.01 && mid?.code == 63 && abs((mid?.precipitation ?? 0) - 0.5) < 0.001,
+        let mid = blend[t1300]
+        check(abs((mid?.temperature ?? 0) - 5) < 0.01 && mid?.direction == 202.5 && mid?.code == 63 && abs((mid?.precipitation ?? 0) - 0.5) < 0.001,
               "IMO blend: between 3-hour steps", "\(String(describing: mid))")
     }
 
