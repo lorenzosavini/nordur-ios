@@ -51,6 +51,8 @@ final class AppModel {
     var forecast: Fetched<Forecast>?
     /// Official IMO forecast for the nearest station (nil when none within 60 km).
     var stationForecast: Fetched<StationForecast>?
+    /// The latest IMO measurement near the place ("Adesso": wind, measured gust, temperature).
+    var observation: Fetched<IMOObservation>?
     var marine: Fetched<Marine>?
     var air: Fetched<AirQuality>?
     var warnings: Fetched<[WeatherWarning]>?
@@ -184,6 +186,7 @@ final class AppModel {
         if let loaded = loadedPlaceKey, loaded != key {
             forecast = nil
             stationForecast = nil
+            observation = nil
             marine = nil
             air = nil
             // A place seen before shows its saved forecast at once, while the new one loads.
@@ -210,12 +213,18 @@ final class AppModel {
         async let f = attempt { try await WeatherService.forecast(c) }
         async let m = attempt { try await OpenMeteo.marine(c) }
         async let a = attempt { try await OpenMeteo.airQuality(c) }
-        async let s = attempt { try await IMOForecast.forecast(near: c) }
-        let (rf, rm, ra, rs) = await (f, m, a, s)
+        async let o = attempt { try await IMOForecast.observation(near: c) }
+        let (rf, rm, ra, ro) = await (f, m, a, o)
         // The user may have switched place meanwhile.
         guard c == activePlace.coordinate else { return }
-        if case .success(let station) = rs { stationForecast = station }
+        if case .success(let measured) = ro { observation = measured }
         apply(rf, .forecast) { self.forecast = $0 }
+        // The IMO station the forecast uses, for the comparison table (already in the phone's cache).
+        if case .success(let fetched) = rf, fetched.value.official != nil {
+            if let station = try? await IMOForecast.forecast(near: c, elevation: fetched.value.elevation) { stationForecast = station }
+        } else if case .success = rf {
+            stationForecast = nil
+        }
         apply(rm, .marine) { self.marine = $0 }
         apply(ra, .air) { self.air = $0 }
         recomputeAurora()

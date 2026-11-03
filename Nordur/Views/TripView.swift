@@ -294,6 +294,9 @@ struct StopSummary: View {
                     Label("\(Fmt.time(day.sunrise, in: zone))–\(Fmt.time(day.sunset, in: zone))", systemImage: "sun.horizon")
                 }
                 .font(.app(.caption2)).foregroundStyle(.secondary)
+                if let forecast {
+                    Text(String(localized: "Fonte: \(forecast.source(at: day.date))")).font(.mono(9)).foregroundStyle(Theme.faint)
+                }
             } else if forecast != nil {
                 Text(daysUntilText).font(.app(.caption)).foregroundStyle(.secondary)
             } else {

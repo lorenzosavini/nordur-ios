@@ -14,6 +14,8 @@ struct RouteSample: Identifiable {
 struct RouteWaypointWeather: Identifiable {
     let sample: RouteSample
     let hour: HourPoint?
+    /// The IMO station whose forecast this point uses; nil when it is the models'.
+    var station: String?
     var id: Int { sample.index }
 
     var risk: Risk {
@@ -65,11 +67,22 @@ enum RouteWeather {
             ])
             let key = "route_" + stableHash(chunk.map { $0.coordinate.key }.joined())
             let fetched = try await HTTP.get(url, cacheKey: key)
-            let forecasts = try decodeMany(fetched.value)
+            var forecasts = try decodeMany(fetched.value)
+            // Veðurstofa Íslands first, at every point with a fitting station (as for the places).
+            let official = await IMOForecast.forecasts(stationIDs: IMOForecast.stationIDs(near: chunk.map(\.coordinate)))
+            if !official.isEmpty {
+                for (n, sample) in zip(forecasts.indices, chunk) {
+                    if let station = IMOForecast.choose(official, at: sample.coordinate, elevation: forecasts[n].elevation) {
+                        forecasts[n] = WeatherService.official(forecasts[n], station)
+                    }
+                }
+            }
             for (sample, forecast) in zip(chunk, forecasts) {
                 let hour = forecast.hours.min { abs($0.date.timeIntervalSince(sample.eta)) < abs($1.date.timeIntervalSince(sample.eta)) }
                 let usable = hour.flatMap { abs($0.date.timeIntervalSince(sample.eta)) <= 2 * 3600 ? $0 : nil }
-                results.append(RouteWaypointWeather(sample: sample, hour: usable))
+                var waypoint = RouteWaypointWeather(sample: sample, hour: usable)
+                if let official = forecast.official, let h = usable, official.covers(h.date) { waypoint.station = official.station.name }
+                results.append(waypoint)
             }
         }
         return results

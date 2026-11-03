@@ -56968,6 +56968,622 @@
           }
         }
       }
+    },
+    "ADESSO, MISURATO · %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "NOW, MEASURED · %@"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "JETZT, GEMESSEN · %@"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "MAINTENANT, MESURÉ · %@"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "AHORA, MEDIDO · %@"
+          }
+        }
+      }
+    },
+    "aria" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "air"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Luft"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "air"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "aire"
+          }
+        }
+      }
+    },
+    "vento" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "wind"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wind"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "vent"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "viento"
+          }
+        }
+      }
+    },
+    "vento da %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "wind from %@"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wind aus %@"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "vent de %@"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "viento del %@"
+          }
+        }
+      }
+    },
+    "raffica misurata" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "measured gust"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "gemessene Böe"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "rafale mesurée"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "racha medida"
+          }
+        }
+      }
+    },
+    "Veðurstofa Íslands · stazione a %lld km, misura delle %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Veðurstofa Íslands · station %1$lld km away, measured at %2$@"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Veðurstofa Íslands · Station in %1$lld km, gemessen um %2$@"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Veðurstofa Íslands · station à %1$lld km, mesure de %2$@"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Veðurstofa Íslands · estación a %1$lld km, medición de las %2$@"
+          }
+        }
+      }
+    },
+    "Previsione ufficiale per la stazione %@ (%lld km), emessa alle %@." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Official forecast for the %1$@ station (%2$lld km), issued %3$@."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Offizielle Vorhersage für die Station %1$@ (%2$lld km), ausgegeben %3$@."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Prévision officielle pour la station %1$@ (%2$lld km), émise %3$@."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Previsión oficial para la estación %1$@ (%2$lld km), emitida %3$@."
+          }
+        }
+      }
+    },
+    "Previsione ufficiale per la stazione %@ (%lld km)." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Official forecast for the %1$@ station (%2$lld km)."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Offizielle Vorhersage für die Station %1$@ (%2$lld km)."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Prévision officielle pour la station %1$@ (%2$lld km)."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Previsión oficial para la estación %1$@ (%2$lld km)."
+          }
+        }
+      }
+    },
+    "Da Veðurstofa Íslands fino a %@: temperatura, vento medio e direzione, cielo, nuvolosità e pioggia. Raffiche, probabilità di pioggia e nuvole a strati da MET Norway e Open-Meteo; dopo quell'ora, solo i modelli." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "From Veðurstofa Íslands until %@: temperature, mean wind and direction, sky, cloud cover and precipitation. Gusts, chance of rain and cloud layers from MET Norway and Open-Meteo; after that time, the models only."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Von Veðurstofa Íslands bis %@: Temperatur, mittlerer Wind und Richtung, Himmel, Bewölkung und Niederschlag. Böen, Regenwahrscheinlichkeit und Wolkenschichten von MET Norway und Open-Meteo; danach nur die Modelle."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "De Veðurstofa Íslands jusqu'à %@ : température, vent moyen et direction, ciel, nébulosité et précipitations. Rafales, probabilité de pluie et couches nuageuses de MET Norway et Open-Meteo ; ensuite, seulement les modèles."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "De Veðurstofa Íslands hasta %@: temperatura, viento medio y dirección, cielo, nubosidad y precipitación. Rachas, probabilidad de lluvia y capas de nubes de MET Norway y Open-Meteo; después, solo los modelos."
+          }
+        }
+      }
+    },
+    "Giorni fino a %@: Veðurstofa Íslands, stazione %@. Dopo: MET Norway e Open-Meteo." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Days until %1$@: Veðurstofa Íslands, %2$@ station. After that: MET Norway and Open-Meteo."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tage bis %1$@: Veðurstofa Íslands, Station %2$@. Danach: MET Norway und Open-Meteo."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jours jusqu'à %1$@ : Veðurstofa Íslands, station %2$@. Ensuite : MET Norway et Open-Meteo."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Días hasta %1$@: Veðurstofa Íslands, estación %2$@. Después: MET Norway y Open-Meteo."
+          }
+        }
+      }
+    },
+    "Nessuna stazione Veðurstofa Íslands vicina e alla stessa quota di questo luogo: previsione dei modelli." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No Veðurstofa Íslands station close to this place and at its height: model forecast."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Keine Station von Veðurstofa Íslands in der Nähe und auf gleicher Höhe: Modellvorhersage."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aucune station Veðurstofa Íslands proche et à la même altitude : prévision des modèles."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ninguna estación de Veðurstofa Íslands cercana y a la misma altitud: previsión de los modelos."
+          }
+        }
+      }
+    },
+    "IMO e modello a confronto" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "IMO and model compared"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "IMO und Modell im Vergleich"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "IMO et modèle comparés"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "IMO y modelo comparados"
+          }
+        }
+      }
+    },
+    "L'app usa la previsione IMO. Quando il modello MET differisce di %@ o più il suo valore è evidenziato: in quel caso considera lo scenario peggiore." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The app uses the IMO forecast. When the MET model differs by %@ or more its value is highlighted: then consider the worse case."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Die App verwendet die IMO-Vorhersage. Weicht das MET-Modell um %@ oder mehr ab, wird sein Wert hervorgehoben: dann vom ungünstigeren Fall ausgehen."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "L'app utilise la prévision IMO. Quand le modèle MET diffère de %@ ou plus, sa valeur est mise en évidence : envisage alors le pire scénario."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La app usa la previsión IMO. Cuando el modelo MET difiere %@ o más, su valor se resalta: considera entonces el peor escenario."
+          }
+        }
+      }
+    },
+    "Fonte: %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Source: %@"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Quelle: %@"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Source : %@"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fuente: %@"
+          }
+        }
+      }
+    },
+    "IMO · %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "IMO · %@"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "IMO · %@"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "IMO · %@"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "IMO · %@"
+          }
+        }
+      }
+    },
+    "Modelli" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Models"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Modelle"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Modèles"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Modelos"
+          }
+        }
+      }
+    },
+    "Dove c'è una stazione Veðurstofa Íslands vicina e alla stessa quota, temperatura, vento medio e cielo sono la sua previsione ufficiale; raffiche e il resto dai modelli (MET Norway, Open-Meteo)." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Where a Veðurstofa Íslands station is close and at the same height, temperature, mean wind and sky are its official forecast; gusts and the rest from the models (MET Norway, Open-Meteo)."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wo eine Station von Veðurstofa Íslands nah und auf gleicher Höhe liegt, sind Temperatur, mittlerer Wind und Himmel ihre offizielle Vorhersage; Böen und der Rest aus den Modellen (MET Norway, Open-Meteo)."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Là où une station Veðurstofa Íslands est proche et à la même altitude, température, vent moyen et ciel sont sa prévision officielle ; rafales et le reste des modèles (MET Norway, Open-Meteo)."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Donde hay una estación de Veðurstofa Íslands cercana y a la misma altitud, temperatura, viento medio y cielo son su previsión oficial; rachas y el resto de los modelos (MET Norway, Open-Meteo)."
+          }
+        }
+      }
+    },
+    "Mulinelli di polvere" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dust devils"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Staubteufel"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tourbillons de poussière"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Remolinos de polvo"
+          }
+        }
+      }
+    },
+    "Tempesta di polvere" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dust storm"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Staubsturm"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tempête de poussière"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tormenta de polvo"
+          }
+        }
+      }
+    },
+    "Neve sollevata dal vento" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Blowing snow"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Schneetreiben"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Chasse-neige"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ventisca"
+          }
+        }
+      }
+    },
+    "Grandine" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hail"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hagel"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Grêle"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Granizo"
+          }
+        }
+      }
+    },
+    "Temporale debole" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Light thunderstorm"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Leichtes Gewitter"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Orage faible"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tormenta débil"
+          }
+        }
+      }
     }
   },
   "version" : "1.0"

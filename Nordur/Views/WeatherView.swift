@@ -22,9 +22,17 @@ struct WeatherView: View {
                             let forecast = fetched.value
                             let next48 = forecast.upcomingHours(48)
                             sourceBlock(forecast, fetched: fetched)
+                            if let observation = model.observation?.value {
+                                IMOObservationBlock(observation: observation)
+                            }
                             meteogram(next48)
                             stationComparison(forecast)
                             dailyTable(forecast.days, zone: forecast.timeZone)
+                            if let official = forecast.official {
+                                Text(String(localized: "Giorni fino a \(Fmt.dayTime(official.until, in: .iceland)): Veðurstofa Íslands, stazione \(official.station.name). Dopo: MET Norway e Open-Meteo."))
+                                    .font(.app(.caption)).foregroundStyle(Theme.dim)
+                                    .fixedSize(horizontal: false, vertical: true)
+                            }
                         } else if let error = model.errors[.forecast] {
                             ErrorNote(message: error)
                         } else {
@@ -50,10 +58,23 @@ struct WeatherView: View {
         return VStack(alignment: .leading, spacing: 6) {
             HStack(alignment: .firstTextBaseline, spacing: 10) {
                 Text("FONTE").font(.mono(9.5)).foregroundStyle(Theme.faint).frame(width: 52, alignment: .leading)
-                Text(primary == "MET Norway" ? (Coverage.meps(Coordinate(lat: forecast.latitude, lon: forecast.longitude)) ? String(localized: "MET Norway · MEPS 2,5 km") : String(localized: "MET Norway · ECMWF")) : primary)
+                Text(forecast.official != nil ? forecast.sourceLine
+                     : primary == "MET Norway" ? (Coverage.meps(Coordinate(lat: forecast.latitude, lon: forecast.longitude)) ? String(localized: "MET Norway · MEPS 2,5 km") : String(localized: "MET Norway · ECMWF")) : primary)
                     .font(.mono(11, .semibold)).foregroundStyle(Theme.text)
             }
-            if primary == "MET Norway", Coverage.meps(Coordinate(lat: forecast.latitude, lon: forecast.longitude)) {
+            if forecast.official != nil {
+                HStack(alignment: .firstTextBaseline, spacing: 10) {
+                    Text("").frame(width: 52)
+                    ForecastSourceNote(forecast: forecast)
+                }
+            } else if model.inIceland {
+                HStack(alignment: .firstTextBaseline, spacing: 10) {
+                    Text("").frame(width: 52)
+                    Text("Nessuna stazione Veðurstofa Íslands vicina e alla stessa quota di questo luogo: previsione dei modelli.")
+                        .font(.app(.caption)).foregroundStyle(Theme.dim)
+                }
+            }
+            if forecast.official == nil, primary == "MET Norway", Coverage.meps(Coordinate(lat: forecast.latitude, lon: forecast.longitude)) {
                 HStack(alignment: .firstTextBaseline, spacing: 10) {
                     Text("").frame(width: 52)
                     Text("Modello nordico gestito con Veðurstofa Íslands, lo stesso di yr.no. Dopo \(forecast.primaryUntil.map { Fmt.dayTime($0, in: forecast.timeZone) } ?? String(localized: "60 ore")) e per le raffiche: ECMWF/ICON via Open-Meteo.")
@@ -209,9 +230,13 @@ struct WeatherView: View {
             let station = fetched.value
             let now = Date()
             let rows = station.hours.filter { $0.date.addingTimeInterval(3600) > now }.prefix(12)
-            let metByHour = Dictionary(forecast.hours.map { (Int($0.date.timeIntervalSince1970 / 3600), $0) }, uniquingKeysWith: { a, _ in a })
+            // The models' own values (before IMO replaced them in the forecast).
+            let modelT: [Int: Double] = forecast.official?.modelTemperature
+                ?? Dictionary(forecast.hours.compactMap { h in h.temperature.map { (Int(h.date.timeIntervalSince1970), $0) } }, uniquingKeysWith: { a, _ in a })
+            let modelW: [Int: Double] = forecast.official?.modelWind
+                ?? Dictionary(forecast.hours.compactMap { h in h.wind.map { (Int(h.date.timeIntervalSince1970), $0) } }, uniquingKeysWith: { a, _ in a })
             VStack(alignment: .leading, spacing: 12) {
-                SectionLabel(index: "02", title: String(localized: "Confronto ufficiale IMO"), trailing: "\(Int(station.distanceKm)) KM")
+                SectionLabel(index: "02", title: String(localized: "IMO e modello a confronto"), trailing: "\(Int(station.distanceKm)) KM")
                 VStack(alignment: .leading, spacing: 3) {
                     Text(station.station.name.uppercased()).font(.display(24, .bold)).foregroundStyle(Theme.text)
                     Text("Previsione per stazione di Veðurstofa Íslands\(station.issued.map { String(localized: " · emessa \(Fmt.dayTime($0, in: .iceland))") } ?? "")")
@@ -229,15 +254,16 @@ struct WeatherView: View {
                     .padding(.bottom, 6)
                     Rule()
                     ForEach(Array(rows)) { hour in
-                        let met = metByHour[Int(hour.date.timeIntervalSince1970 / 3600)]
-                        let diff = abs((hour.wind ?? 0) - (met?.wind ?? hour.wind ?? 0))
+                        let key = Int(hour.date.timeIntervalSince1970)
+                        let metT = modelT[key], metW = modelW[key]
+                        let diff = abs((hour.wind ?? 0) - (metW ?? hour.wind ?? 0))
                         HStack(spacing: 0) {
                             Text(Fmt.hour(hour.date, in: .iceland)).font(.mono(10.5, .medium)).foregroundStyle(Theme.dim)
                                 .frame(width: 40, alignment: .leading)
                             num(Fmt.degrees(hour.temperature), 52, Theme.text)
-                            num(Fmt.degrees(met?.temperature), 52, Theme.dim)
+                            num(Fmt.degrees(metT), 52, Theme.dim)
                             num(Fmt.wind(hour.wind), 58, (hour.wind ?? 0) >= 15 ? Theme.warning : Theme.text)
-                            num(Fmt.wind(met?.wind), 58, diff >= 4 ? Theme.accent : Theme.dim)
+                            num(Fmt.wind(metW), 58, diff >= 4 ? Theme.accent : Theme.dim)
                             Text("\(hour.direction) · \(hour.text)").font(.app(.caption)).foregroundStyle(Theme.dim)
                                 .lineLimit(1).minimumScaleFactor(0.8)
                                 .frame(maxWidth: .infinity, alignment: .leading).padding(.leading, 10)
@@ -246,7 +272,7 @@ struct WeatherView: View {
                         Rule()
                     }
                 }
-                Text("Quando i due modelli differiscono di \(Fmt.ms(4)) o più il valore MET è evidenziato: in quel caso considera lo scenario peggiore.")
+                Text("L'app usa la previsione IMO. Quando il modello MET differisce di \(Fmt.ms(4)) o più il suo valore è evidenziato: in quel caso considera lo scenario peggiore.")
                     .font(.app(.caption)).foregroundStyle(Theme.dim)
                 FreshnessLabel(date: fetched.date, isStale: fetched.isStale, source: "vedur.is")
             }

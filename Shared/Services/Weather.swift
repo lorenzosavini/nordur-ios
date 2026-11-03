@@ -7,28 +7,113 @@ import Foundation
 // yr.no and the Nordic forecasting centres. Open-Meteo fills what MET does not
 // publish for Iceland (gusts, CAPE, visibility) and the days after MET's range,
 // and is the fallback if MET is unreachable.
-// Cross-check: the official hourly station forecast of Veðurstofa Íslands.
+//
+// On top of the models, in Iceland: the official station forecast of Veðurstofa
+// Íslands (IMO) is the PRIMARY source wherever a station fits the place
+// (IMOForecast.candidates): for its whole horizon (about 9–10 days) it gives the
+// temperature, mean wind and direction, the weather, cloud cover and
+// precipitation. The models only fill what IMO does not give (gusts, chance of
+// rain, cloud layers, visibility, snow), the hours after its horizon, and the
+// places with no fitting station. docs/IMO.md.
 
 enum WeatherService {
     static func forecast(_ c: Coordinate) async throws -> Fetched<Forecast> {
         async let met = attempt { try await METNorway.forecast(c) }
         async let om = attempt { try await OpenMeteo.forecast(c) }
+        async let imo = attempt { try await IMOForecast.forecasts(near: c) }
         let (metResult, omResult) = await (met, om)
 
+        let models: Fetched<Forecast>
         switch (metResult, omResult) {
         case (.success(let m), .success(let o)):
-            // MET Norway carries the forecast here; Open-Meteo only fills the hours and
+            // MET Norway carries the models' part; Open-Meteo only fills the hours and
             // fields MET lacks. An Open-Meteo refusal (frequent on mobile networks, many
             // phones behind one address) no longer marks a fresh MET forecast as an old copy.
-            return Fetched(value: merge(met: m.value, base: o.value, at: c),
-                           date: m.date, isStale: m.isStale)
+            var merged = merge(met: m.value, base: o.value, at: c)
+            merged.elevation = o.value.elevation
+            models = Fetched(value: merged, date: m.date, isStale: m.isStale)
         case (.success(let m), .failure):
-            return Fetched(value: metOnly(m.value, at: c), date: m.date, isStale: m.isStale)
+            models = Fetched(value: metOnly(m.value, at: c), date: m.date, isStale: m.isStale)
         case (.failure, .success(let o)):
-            return o
+            models = o
         case (.failure(let e), .failure):
             throw e
         }
+
+        // IMO first wherever a station fits; the models alone otherwise (or if vedur.is fails).
+        let imoResult = await imo
+        if case .success(let fetched) = imoResult, let stations = fetched?.value,
+           let station = IMOForecast.choose(stations, near: c, elevation: models.value.elevation) {
+            return Fetched(value: official(models.value, station), date: models.date, isStale: models.isStale)
+        }
+        return models
+    }
+
+    // MARK: IMO over the models
+
+    /// The models' forecast with the IMO station values in the hours IMO covers:
+    /// temperature (the felt temperature moved by the same amount), mean wind and
+    /// direction, weather, cloud cover and precipitation. A model gust lower than
+    /// the IMO mean wind is raised to it. Days are summed again from the hours.
+    static func official(_ f: Forecast, _ s: StationForecast) -> Forecast {
+        guard let h = f.hourly, let until = s.until else { return f }
+        let blend = IMOBlend.values(at: h.time, steps: s.hours)
+        guard !blend.isEmpty else { return f }
+        let n = h.time.count
+        var temp = h.temperature_2m ?? Array(repeating: nil, count: n)
+        var apparent = h.apparent_temperature ?? Array(repeating: nil, count: n)
+        var precip = h.precipitation ?? Array(repeating: nil, count: n)
+        var code = h.weather_code ?? Array(repeating: nil, count: n)
+        var cloud = h.cloud_cover ?? Array(repeating: nil, count: n)
+        var wind = h.wind_speed_10m ?? Array(repeating: nil, count: n)
+        var dir = h.wind_direction_10m ?? Array(repeating: nil, count: n)
+        var gust = h.wind_gusts_10m ?? Array(repeating: nil, count: n)
+        var modelTemperature: [Int: Double] = [:], modelWind: [Int: Double] = [:]
+
+        for (i, t) in h.time.enumerated() {
+            guard let v = blend[t] else { continue }
+            if let x = temp[i] { modelTemperature[t] = x }
+            if let x = wind[i] { modelWind[t] = x }
+            if let value = v.temperature {
+                if let felt = apparent[i], let old = temp[i] { apparent[i] = felt + (value - old) }
+                temp[i] = value
+            }
+            if let value = v.wind { wind[i] = value }
+            if let value = v.direction { dir[i] = value }
+            if let value = v.code { code[i] = value }
+            if let value = v.cloud { cloud[i] = value }
+            if let value = v.precipitation { precip[i] = value }
+            if let w = wind[i], let g = gust[i], g < w { gust[i] = w }
+        }
+
+        let hourly = Forecast.Hourly(
+            time: h.time, temperature_2m: temp, apparent_temperature: apparent, precipitation_probability: h.precipitation_probability,
+            precipitation: precip, snowfall: h.snowfall, weather_code: code, cloud_cover: cloud, visibility: h.visibility,
+            wind_speed_10m: wind, wind_direction_10m: dir, wind_gusts_10m: gust, cape: h.cape, is_day: h.is_day,
+            cloud_cover_low: h.cloud_cover_low, cloud_cover_mid: h.cloud_cover_mid,
+            cloud_cover_high: h.cloud_cover_high, fog_area_fraction: h.fog_area_fraction)
+
+        // "Now": the IMO hour nearest to now, when IMO covers it.
+        var current = f.current
+        let now = Date().timeIntervalSince1970
+        if let o = f.current, let i = h.time.firstIndex(where: { abs(TimeInterval($0) - now) <= 1800 }), blend[h.time[i]] != nil {
+            current = Forecast.Current(
+                time: o.time, temperature_2m: temp[i] ?? o.temperature_2m, apparent_temperature: apparent[i] ?? o.apparent_temperature,
+                relative_humidity_2m: o.relative_humidity_2m, precipitation: precip[i] ?? o.precipitation, snowfall: o.snowfall,
+                weather_code: code[i] ?? o.weather_code, cloud_cover: cloud[i] ?? o.cloud_cover, pressure_msl: o.pressure_msl,
+                wind_speed_10m: wind[i] ?? o.wind_speed_10m, wind_direction_10m: dir[i] ?? o.wind_direction_10m,
+                wind_gusts_10m: max(o.wind_gusts_10m ?? 0, wind[i] ?? 0), is_day: o.is_day)
+        }
+
+        var out = Forecast(latitude: f.latitude, longitude: f.longitude, timezone: f.timezone,
+                           utc_offset_seconds: f.utc_offset_seconds, current: current, hourly: hourly, daily: nil)
+        out.daily = recomputedDaily(base: f.daily, from: out)
+        out.elevation = f.elevation
+        out.primaryUntil = f.primaryUntil
+        out.sources = [IMOForecast.sourceName] + f.sources.filter { $0 != IMOForecast.sourceName }
+        out.official = OfficialForecast(station: s.station, distanceKm: s.distanceKm, issued: s.issued, until: until, link: s.link,
+                                        modelTemperature: modelTemperature, modelWind: modelWind)
+        return out
     }
 
     // MARK: Merge
@@ -370,82 +455,94 @@ enum Solar {
     }
 }
 
-// MARK: - Official IMO station forecast
+// MARK: - Official IMO station forecast and observations (network)
+// Parsing, the choice of station and the blend are in IMOWeather.swift.
 
-struct StationForecast {
-    struct Station: Decodable, Hashable {
-        let id: Int
-        let name: String
-        let lat: Double
-        let lon: Double
-        var coordinate: Coordinate { Coordinate(lat: lat, lon: lon) }
-    }
-
-    struct Hour: Identifiable {
-        var id: Date { date }
-        let date: Date
-        let wind: Double?
-        let direction: String
-        let temperature: Double?
-        let text: String
-    }
-
-    let station: Station
-    let distanceKm: Double
-    let issued: Date?
-    let hours: [Hour]
-}
-
-enum IMOForecast {
-    static let stations: [StationForecast.Station] = {
-        guard let url = Bundle.main.url(forResource: "imo-stations", withExtension: "json"),
-              let data = try? Data(contentsOf: url) else { return [] }
-        return (try? JSONDecoder().decode([StationForecast.Station].self, from: data)) ?? []
-    }()
-
-    static func nearest(to c: Coordinate) -> (StationForecast.Station, Double)? {
-        stations.map { ($0, Geo.distanceKm(c, $0.coordinate)) }.min { $0.1 < $1.1 }
-    }
-
-    static func forecast(near c: Coordinate) async throws -> Fetched<StationForecast>? {
-        guard let (station, km) = nearest(to: c), km <= 60 else { return nil }
-        let url = try HTTP.url("https://xmlweather.vedur.is/", [
-            "op_w": "xml", "type": "forec", "lang": "en", "view": "xml", "ids": String(station.id),
-        ])
-        let fetched = try await HTTP.get(url, cacheKey: "imo_forec_\(station.id)")
-        return fetched.map { parse(String(decoding: $0, as: UTF8.self), station: station, km: km) }
-    }
-
-    static func parse(_ xml: String, station: StationForecast.Station, km: Double) -> StationForecast {
-        let formatter = DateFormatter()
-        formatter.locale = Locale(identifier: "en_US_POSIX")
-        formatter.timeZone = TimeZone(identifier: "Atlantic/Reykjavik")
-        formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-        func tag(_ name: String, in text: Substring) -> String? {
-            guard let open = text.range(of: "<\(name)>"), let close = text.range(of: "</\(name)>", range: open.upperBound..<text.endIndex) else { return nil }
-            return String(text[open.upperBound..<close.lowerBound]).trimmingCharacters(in: .whitespaces)
+extension IMOForecast {
+    /// One answer of xmlweather.vedur.is, kept on the phone for `fresh` seconds (the
+    /// service asks not to poll often); the saved copy when offline.
+    private static func xml(type: String, ids: [Int], params: String, extra: [String: String] = [:], fresh: TimeInterval) async throws -> Fetched<String> {
+        let list = ids.map(String.init).joined(separator: ";")
+        let key = "imo_\(type)_v2_\(list)"
+        if let cached = DiskCache.read(key), Date().timeIntervalSince(cached.date) < fresh {
+            return Fetched(value: String(decoding: cached.data, as: UTF8.self), date: cached.date, isStale: false)
         }
-        var hours: [StationForecast.Hour] = []
-        for block in xml.components(separatedBy: "<forecast>").dropFirst() {
-            let body = Substring(block)
-            guard let time = tag("ftime", in: body).flatMap(formatter.date(from:)) else { continue }
-            hours.append(.init(date: time, wind: tag("F", in: body).flatMap(Double.init), direction: tag("D", in: body) ?? "",
-                               temperature: tag("T", in: body).flatMap(Double.init), text: translate(tag("W", in: body) ?? "")))
-        }
-        let issued = tag("atime", in: Substring(xml)).flatMap(formatter.date(from:))
-        return StationForecast(station: station, distanceKm: km, issued: issued, hours: hours)
+        var query = ["op_w": "xml", "type": type, "lang": "en", "view": "xml", "ids": list, "params": params]
+        for (k, v) in extra { query[k] = v }
+        let url = try HTTP.url("https://xmlweather.vedur.is/", query)
+        return try await HTTP.get(url, cacheKey: key).map { String(decoding: $0, as: UTF8.self) }
     }
 
-    static func translate(_ text: String) -> String {
-        let table: [String: String] = [
-            "clear sky": String(localized: "Sereno"), "partly cloudy": String(localized: "Poco nuvoloso"), "cloudy": String(localized: "Nuvoloso"), "overcast": String(localized: "Coperto"),
-            "light rain": String(localized: "Pioggia debole"), "rain": String(localized: "Pioggia"), "heavy rain": String(localized: "Pioggia forte"), "drizzle": String(localized: "Pioviggine"),
-            "light sleet": String(localized: "Nevischio debole"), "sleet": String(localized: "Nevischio"), "light snow": String(localized: "Neve debole"), "snow": String(localized: "Neve"),
-            "heavy snow": String(localized: "Neve forte"), "rain showers": String(localized: "Rovesci"), "light rain showers": String(localized: "Rovesci deboli"),
-            "sleet showers": String(localized: "Rovesci di nevischio"), "snow showers": String(localized: "Rovesci di neve"), "light snow showers": String(localized: "Rovesci di neve deboli"),
-            "fog": String(localized: "Nebbia"), "dust": String(localized: "Polvere"), "thunder": String(localized: "Temporale"), "freezing rain": String(localized: "Pioggia gelata"),
-            "light drizzle": String(localized: "Pioviggine debole"), "freezing drizzle": String(localized: "Pioviggine gelata"),
-        ]
-        return table[text.lowercased()] ?? text
+    private static let byID: [Int: StationForecast.Station] = Dictionary(stations.map { ($0.id, $0) }, uniquingKeysWith: { a, _ in a })
+
+    /// The forecasts of the three stations nearest a place (one request), the best
+    /// chosen afterwards when the place's height is known. Nil when none is close.
+    static func forecasts(near c: Coordinate) async throws -> Fetched<[StationForecast]>? {
+        // Up to 35 km away: the height decides afterwards.
+        let pool = stations.map { ($0, Geo.distanceKm(c, $0.coordinate)) }.filter { $0.1 <= 35 }.sorted { $0.1 < $1.1 }.prefix(3)
+        guard !pool.isEmpty else { return nil }
+        let km = Dictionary(pool.map { ($0.0.id, $0.1) }, uniquingKeysWith: { a, _ in a })
+        let answer = try await xml(type: "forec", ids: pool.map { $0.0.id }, params: "F;D;T;W;N;R;TD", fresh: 20 * 60)
+        let parsed = parseForecasts(answer.value).compactMap { raw -> StationForecast? in
+            guard let station = byID[raw.id], let distance = km[raw.id], !raw.hours.isEmpty else { return nil }
+            return StationForecast(station: station, distanceKm: distance, issued: raw.issued, hours: raw.hours, link: raw.link)
+        }
+        return Fetched(value: parsed, date: answer.date, isStale: answer.isStale)
+    }
+
+    /// The forecasts of many stations (points along a route), 20 to a request.
+    static func forecasts(stationIDs ids: [Int]) async -> [StationForecast] {
+        var out: [StationForecast] = []
+        let unique = Array(Set(ids)).sorted()
+        for start in stride(from: 0, to: unique.count, by: 20) {
+            let chunk = Array(unique[start..<min(start + 20, unique.count)])
+            guard let answer = try? await xml(type: "forec", ids: chunk, params: "F;D;T;W;N;R;TD", fresh: 20 * 60) else { continue }
+            for raw in parseForecasts(answer.value) {
+                guard let station = byID[raw.id], !raw.hours.isEmpty else { continue }
+                out.append(StationForecast(station: station, distanceKm: 0, issued: raw.issued, hours: raw.hours, link: raw.link))
+            }
+        }
+        return out
+    }
+
+    /// The stations that may be needed for a set of points (three nearest of each, within 35 km).
+    static func stationIDs(near points: [Coordinate]) -> [Int] {
+        var ids = Set<Int>()
+        for c in points {
+            for s in stations.map({ ($0, Geo.distanceKm(c, $0.coordinate)) }).filter({ $0.1 <= 35 }).sorted(by: { $0.1 < $1.1 }).prefix(3) {
+                ids.insert(s.0.id)
+            }
+        }
+        return ids.sorted()
+    }
+
+    /// For a point: the fitting station among fetched forecasts, with its distance.
+    static func choose(_ forecasts: [StationForecast], at c: Coordinate, elevation: Double?) -> StationForecast? {
+        let near = forecasts.filter { Geo.distanceKm(c, $0.station.coordinate) <= 35 }
+        guard let best = choose(near, near: c, elevation: elevation) else { return nil }
+        return StationForecast(station: best.station, distanceKm: Geo.distanceKm(c, best.station.coordinate),
+                               issued: best.issued, hours: best.hours, link: best.link)
+    }
+
+    /// The forecast of the best station for a place (Weather tab's comparison table).
+    static func forecast(near c: Coordinate, elevation: Double? = nil) async throws -> Fetched<StationForecast>? {
+        guard let all = try await forecasts(near: c) else { return nil }
+        guard let best = choose(all.value, near: c, elevation: elevation) else { return nil }
+        return Fetched(value: best, date: all.date, isStale: all.isStale)
+    }
+
+    /// The latest observation among the stations nearest the place (one request): the
+    /// nearest with a measurement of the last two hours.
+    static func observation(near c: Coordinate) async throws -> Fetched<IMOObservation>? {
+        let pool = stations.map { ($0, Geo.distanceKm(c, $0.coordinate)) }.filter { $0.1 <= 30 }.sorted { $0.1 < $1.1 }.prefix(3)
+        guard !pool.isEmpty else { return nil }
+        let km = Dictionary(pool.map { ($0.0.id, $0.1) }, uniquingKeysWith: { a, _ in a })
+        let answer = try await xml(type: "obs", ids: pool.map { $0.0.id }, params: "F;FG;D;T;W;RH;P;R",
+                                   extra: ["time": "1h", "anytime": "1"], fresh: 10 * 60)
+        let observations = parseObservations(answer.value, distances: km)
+            .filter { Date().timeIntervalSince($0.time) < 2 * 3600 && ($0.wind != nil || $0.temperature != nil) }
+            .sorted { $0.distanceKm < $1.distanceKm }
+        guard let first = observations.first else { return nil }
+        return Fetched(value: first, date: answer.date, isStale: answer.isStale)
     }
 }

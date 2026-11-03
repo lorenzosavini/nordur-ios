@@ -164,6 +164,8 @@ struct RouteForecastView: View {
                             Text("\(Fmt.temp(h.temperature)) · \(info.text)").font(.app(.caption))
                             Text("vento \(Fmt.ms(h.wind)) raff. \(Fmt.ms(h.gust))" + snowText(h.snowfall))
                                 .font(.app(.caption2)).foregroundStyle(h.windRisk.color == .green ? Color.secondary : h.windRisk.color)
+                            Text(w.station.map { String(localized: "IMO · \($0)") } ?? String(localized: "Modelli"))
+                                .font(.mono(9)).foregroundStyle(Theme.faint)
                         }
                         Spacer()
                         RiskBadge(risk: w.risk)
@@ -172,7 +174,9 @@ struct RouteForecastView: View {
                     }
                 }
             }
-        } header: { Text("Meteo previsto quando passi").pinnedHeader() }
+        } header: { Text("Meteo previsto quando passi").pinnedHeader() } footer: {
+            Text("Dove c'è una stazione Veðurstofa Íslands vicina e alla stessa quota, temperatura, vento medio e cielo sono la sua previsione ufficiale; raffiche e il resto dai modelli (MET Norway, Open-Meteo).")
+        }
 
         if !plan.problemSegments.isEmpty {
             Section {

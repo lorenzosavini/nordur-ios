@@ -285,7 +285,10 @@ struct TodayView: View {
                 ], columns: 3)
                 .overlay(alignment: .top) { Rule() }
                 .overlay(alignment: .bottom) { Rule() }
-                FreshnessLabel(date: fetched.date, isStale: fetched.isStale, source: fetched.value.sources.joined(separator: " + "))
+                if let observation = model.observation?.value {
+                    IMOObservationBlock(observation: observation)
+                }
+                FreshnessLabel(date: fetched.date, isStale: fetched.isStale, source: fetched.value.sourceLine)
             }
         } else if let error = model.errors[.forecast] {
             ErrorNote(message: error)
@@ -317,6 +320,8 @@ struct TodayView: View {
             VStack(alignment: .leading, spacing: 12) {
                 SectionLabel(index: "02", title: String(localized: "Prossime ore"), trailing: String(localized: "ORA LOCALE"))
                 HourTable(hours: hours, zone: forecast.timeZone)
+                Text(String(localized: "Fonte: \(hours.first.map { forecast.source(at: $0.date) } ?? forecast.sourceLine)"))
+                    .font(.mono(9.5)).foregroundStyle(Theme.faint)
             }
         }
     }

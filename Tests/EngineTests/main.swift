@@ -311,6 +311,59 @@ do {
     check(AlertLifecycle.phase(starts: nil, expires: nil, noticed: now.addingTimeInterval(-25 * 3600), now: now) == .ended, "a day old without end")
 }
 
+// MARK: IMO station forecast and observations (xmlweather.vedur.is, real answers of 2026-11-03)
+
+do {
+    let forecastXML = """
+    <?xml version="1.0" encoding="UTF-8"?>
+    <forecasts><station id="1"  valid="1"><name>Reykjavík</name><atime>2026-11-03 12:00:00</atime><err></err><link><![CDATA[http://en.vedur.is/weather/forecasts/areas/reykjavik/#group=100&station=1]]></link><forecast><ftime>2026-11-03 13:00:00</ftime><F>5</F><D>WSW</D><T>8</T><W>Light rain</W><N>100</N><R>0.2</R><TD>7</TD></forecast><forecast><ftime>2026-11-03 14:00:00</ftime><F>6</F><D>WSW</D><T>8</T><W>Overcast</W><N>100</N><R>0.0</R><TD>4</TD></forecast><forecast><ftime>2026-11-06 12:00:00</ftime><F>2</F><D>SSW</D><T>6</T><W>Cloudy</W><N>80</N><R>0.0</R><TD>2</TD></forecast><forecast><ftime>2026-11-06 15:00:00</ftime><F>2</F><D>SE</D><T>3</T><W>Rain</W><N>100</N><R>1.5</R><TD>3</TD></forecast></station><station id="495" valid="0"><name>Grímsstaðir</name><atime></atime><err>Gögn ekki aðgengileg í augnablikinu</err><link></link></station></forecasts>
+    """
+    let parsed = IMOForecast.parseForecasts(forecastXML)
+    check(parsed.count == 1 && parsed[0].id == 1 && parsed[0].name == "Reykjavík", "IMO forecast: valid stations only", "\(parsed.map(\.id))")
+    let hours = parsed.first?.hours ?? []
+    check(hours.count == 4, "IMO forecast: four steps", "\(hours.count)")
+    if hours.count == 4 {
+        check(hours[0].wind == 5 && hours[0].temperature == 8 && hours[0].cloud == 100 && hours[0].precipitation == 0.2 && hours[0].dewPoint == 7,
+              "IMO forecast: F T N R TD")
+        check(hours[0].degrees == 247.5 && hours[0].code == 61 && hours[1].code == 3, "IMO forecast: direction and weather code")
+        check(hours[3].stepHours == 3 && hours[1].stepHours == 1, "IMO forecast: step length", "\(hours.map(\.stepHours))")
+        check(parsed[0].link?.hasPrefix("http://en.vedur.is/") == true, "IMO forecast: link without CDATA")
+        let iceland = TimeZone(identifier: "Atlantic/Reykjavik")!
+        var cal = Calendar(identifier: .gregorian); cal.timeZone = iceland
+        check(cal.component(.hour, from: hours[0].date) == 13, "IMO forecast: Iceland time")
+
+        // Blend on an hourly grid: 13:00 exact, the 3-hour step spread over its hours.
+        let t13 = Int(hours[0].date.timeIntervalSince1970), t12 = t13 - 3600
+        let t1300 = Int(hours[2].date.timeIntervalSince1970), t1400 = t1300 + 3600, t1500 = t1300 + 3 * 3600
+        let blend = IMOBlend.values(at: [t12, t13, t1300, t1400, t1500, t1500 + 3600], steps: hours)
+        check(blend[t13]?.temperature == 8 && blend[t13]?.wind == 5 && blend[t13]?.precipitation == 0.2, "IMO blend: exact step")
+        check(blend[t12]?.temperature == 8, "IMO blend: the hour before the first step")
+        check(blend[t1500 + 3600] == nil, "IMO blend: nothing past the horizon")
+        let mid = blend[t1400]
+        check(abs((mid?.temperature ?? 0) - 4) < 0.01 && mid?.code == 63 && abs((mid?.precipitation ?? 0) - 0.5) < 0.001,
+              "IMO blend: between 3-hour steps", "\(String(describing: mid))")
+    }
+
+    let observationXML = """
+    <?xml version="1.0" encoding="UTF-8"?>
+    <observations><station id="1"  valid="1"><name>Reykjavík</name><time>2026-11-03 14:00:00</time><err></err><link><![CDATA[http://en.vedur.is/weather/observations/areas/reykjavik/#group=100&station=1]]></link><F>7</F><FX>7</FX><FG>10</FG><D>WSW</D><T>7,1</T><W></W><V></V><N></N><P>1021</P><RH>79</RH><R>0.0</R><TD>3.7</TD></station></observations>
+    """
+    let observations = IMOForecast.parseObservations(observationXML, distances: [1: 2.5])
+    let o = observations.first
+    check(o?.wind == 7 && o?.gust == 10 && o?.temperature == 7.1 && o?.pressure == 1021 && o?.text == nil && o?.distanceKm == 2.5,
+          "IMO observation: F FG T (decimal comma) P", "\(String(describing: o))")
+
+    // Which station may stand for a place: near and at a similar height.
+    let coast = StationForecast.Station(id: 1, name: "Coast", lat: 64.0, lon: -21.0, elev: 10)
+    let hill = StationForecast.Station(id: 2, name: "Hill", lat: 64.1, lon: -21.0, elev: 450)
+    let far = StationForecast.Station(id: 3, name: "Far", lat: 64.4, lon: -21.0, elev: 20)
+    let place = Coordinate(lat: 64.05, lon: -21.0)
+    check(IMOForecast.candidates(near: place, elevation: 20, in: [coast, hill, far]).map { $0.0.id } == [1], "IMO station: same height wins, far excluded")
+    check(IMOForecast.candidates(near: place, elevation: 470, in: [coast, hill, far]).map { $0.0.id } == [2], "IMO station: highland place takes the hill station")
+    check(IMOForecast.candidates(near: place, elevation: nil, in: [coast, hill, far]).count == 2, "IMO station: without height, distance only")
+    check(IMOForecast.degrees("VSV") == 247.5 && IMOForecast.degrees("Calm") == nil, "IMO direction: Icelandic and calm")
+}
+
 print(failures == 0 ? "ALL ENGINE TESTS PASSED" : "\(failures) FAILURES")
 exit(failures == 0 ? 0 : 1)
 

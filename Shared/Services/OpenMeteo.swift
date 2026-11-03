@@ -16,9 +16,13 @@ struct Forecast: Decodable {
     var sources: [String] = ["Open-Meteo"]
     /// Last hour covered by the primary (MET Norway) model.
     var primaryUntil: Date?
+    /// Height of the forecast point (m, Open-Meteo's terrain), to pick a fitting IMO station.
+    var elevation: Double? = nil
+    /// The official IMO station forecast laid over the models, when a station fits the place.
+    var official: OfficialForecast? = nil
 
     enum CodingKeys: String, CodingKey {
-        case latitude, longitude, timezone, utc_offset_seconds, current, hourly, daily
+        case latitude, longitude, timezone, utc_offset_seconds, current, hourly, daily, elevation
     }
 
     struct Current: Decodable {
