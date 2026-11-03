@@ -306,6 +306,19 @@ struct RootView: View {
             }
         }
         .task {
+            // Veðurstofa Íslands: what it publishes is followed every minute (one small
+            // request to nordur-api); forecasts, measurements, texts and map are fetched
+            // again exactly when they change.
+            while !Task.isCancelled {
+                try? await Task.sleep(nanoseconds: 60 * 1_000_000_000)
+                guard UIApplication.shared.applicationState == .active else { continue }
+                if await model.followIMO() {
+                    await alerts.check()
+                    WidgetSync.update(trip: trip, model: model)
+                }
+            }
+        }
+        .task {
             // The backup at the frequency chosen in Settings (checked every 30 s).
             var inboxTick = 0
             while !Task.isCancelled {

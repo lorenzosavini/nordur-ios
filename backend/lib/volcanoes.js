@@ -8,7 +8,10 @@ import { fetchWithRetry } from "./fetch.js";
 import { readObject, writeObject } from "./core.js";
 
 const BASE = "https://api.vedur.is/volcanoes";
-const TTL = 30 * 60e3;
+// Codes can change at any moment: checked every 5 minutes. The weekly report (1 MB) hourly.
+const TTL = 5 * 60e3;
+const WEEKLY_TTL = 60 * 60e3;
+let weekly = null; // { at, value }
 const CACHE = "public/volcanoes.bin";
 let memory = null; // { at, body }
 
@@ -51,13 +54,19 @@ export function combine(volcanoes, weekly) {
 }
 
 async function load() {
+  const weeklyDue = !weekly || Date.now() - weekly.at > WEEKLY_TTL;
   const [v, w] = await Promise.all([
     fetchWithRetry(`${BASE}/volcanoes`, { timeout: 20000, retries: 1 }).then((r) => r.json()),
-    fetchWithRetry(`${BASE}/vwr`, { timeout: 30000, retries: 1 }).then((r) => r.json()).catch(() => null),
+    weeklyDue ? fetchWithRetry(`${BASE}/vwr`, { timeout: 30000, retries: 1 }).then((r) => r.json()).catch(() => null) : null,
   ]);
   const volcanoes = slimVolcanoes(v);
   if (!volcanoes.length) throw new Error("api.vedur.is: nessun vulcano");
-  return combine(volcanoes, latestWeekly(w));
+  if (weeklyDue) {
+    const latest = latestWeekly(w);
+    if (latest) weekly = { at: Date.now(), value: latest };
+  }
+  return combine(volcanoes, weekly?.value ?? (memory?.body && { date: memory.body.reportDate, notes: memory.body.reportNotes,
+    lines: Object.fromEntries(memory.body.volcanoes.filter((x) => x.report).map((x) => [x.code, x.report])) }));
 }
 
 export async function volcanoesHandler(res, send) {
@@ -74,6 +83,6 @@ export async function volcanoesHandler(res, send) {
       return send(res, 200, stored.body);
     }
   }
-  res.setHeader("Cache-Control", "public, s-maxage=900, stale-while-revalidate=3600");
+  res.setHeader("Cache-Control", "public, s-maxage=120, stale-while-revalidate=300");
   return send(res, 200, memory.body);
 }

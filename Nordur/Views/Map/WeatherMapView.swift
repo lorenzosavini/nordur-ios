@@ -79,7 +79,7 @@ final class ArrowAnnotation: NSObject, MKAnnotation {
 
 /// Any point of interest drawn on the map.
 final class PoiAnnotation: NSObject, MKAnnotation {
-    enum Kind: String { case place, station, webcam, quake, fuel, charger, shop, sight, topSight, stop, visit, roadSection, roadHazard, sighting, noSighting }
+    enum Kind: String { case place, station, imo, webcam, quake, fuel, charger, shop, sight, topSight, stop, visit, roadSection, roadHazard, sighting, noSighting }
     let kind: Kind
     let key: String
     let coordinate: CLLocationCoordinate2D
@@ -348,11 +348,12 @@ struct WeatherMapView: UIViewRepresentable {
             }
             guard let poi = annotation as? PoiAnnotation else { return nil }
             switch poi.kind {
-            case .station, .quake:
+            case .station, .quake, .imo:
                 let view = mapView.dequeueReusableAnnotationView(withIdentifier: "dot", for: poi)
                 view.image = Self.dot(color: poi.color, text: poi.text, size: poi.size)
                 view.canShowCallout = false
-                view.displayPriority = poi.kind == .station ? .defaultHigh : .required
+                // IMO stations are many (≈240): MapKit drops the ones that would overlap.
+                view.displayPriority = poi.kind == .station ? .defaultHigh : poi.kind == .imo ? .defaultLow : .required
                 return view
             default:
                 let view = mapView.dequeueReusableAnnotationView(withIdentifier: "marker", for: poi) as! MKMarkerAnnotationView
@@ -393,6 +394,7 @@ struct WeatherMapView: UIViewRepresentable {
             case .stop: return "flag.fill"
             case .visit: return "binoculars.fill"
             case .station: return "road.lanes"
+            case .imo: return "sensor.fill"
             case .quake: return "waveform.path.ecg"
             case .roadSection: return "exclamationmark.triangle.fill"
             case .roadHazard: return "cone.fill"

@@ -128,6 +128,16 @@ struct WeatherGrid {
     /// fields[layer][hour][row * lons.count + col]
     let fields: [WeatherLayer: [[Double]]]
     let windDirection: [[Double]]
+    /// Corrected with Veðurstofa Íslands (nordur-api): version, IMO issue time,
+    /// time of the measurements used for the current hour, how many stations.
+    var version: String? = nil
+    var imoIssued: Date? = nil
+    var imoMeasured: Date? = nil
+    var imoStationCount = 0
+    /// IMO's own values at its stations, aligned with `times` (map markers).
+    var stations: [GridStation] = []
+
+    var isCorrected: Bool { imoStationCount > 0 }
 
     static let south = 63.1, north = 66.8, west = -24.7, east = -13.3
 
@@ -176,7 +186,36 @@ struct WeatherGrid {
     }
 }
 
+/// An IMO station on the map: its forecast at each grid hour, its latest measurement.
+struct GridStation: Decodable, Identifiable {
+    struct Measurement: Decodable {
+        let time: String
+        let wind: Double?
+        let gust: Double?
+        let dir: Double?
+        let temp: Double?
+        var date: Date? { DateParse.iso(time) }
+    }
+    let id: Int
+    let name: String
+    let lat: Double
+    let lon: Double
+    let wind: [Double?]
+    let dir: [Double?]
+    let temp: [Double?]
+    let obs: Measurement?
+    var coordinate: Coordinate { Coordinate(lat: lat, lon: lon) }
+}
+
 enum WeatherGridService {
+    private struct CorrectedGrid: Decodable {
+        struct IMO: Decodable { let issued: String?; let measured: String?; let stations: Int? }
+        let version: String
+        let imo: IMO?
+        let forecasts: [Forecast?]
+        let stations: [GridStation]?
+    }
+
     static let latStep = 0.3, lonStep = 0.6
 
     static func iceland() async throws -> Fetched<WeatherGrid> {
@@ -185,8 +224,26 @@ enum WeatherGridService {
         var points: [Coordinate] = []
         for lat in lats { for lon in lons { points.append(Coordinate(lat: lat, lon: lon)) } }
 
-        // nordur-api serves the same grid, fetched once per hour for everyone: Open-Meteo
-        // counts each of the 260 points as a call per IP, which shared networks exhaust.
+        // nordur-api: the grid corrected with Veðurstofa Íslands (forecast of every station,
+        // 10-minute measurements for the current hour), rebuilt when IMO publishes; the
+        // version in the address gives each publication its own copy on the CDN.
+        let version = IMOLive.current?.grid
+        var query = "v=2"
+        if let version, let escaped = version.addingPercentEncoding(withAllowedCharacters: .alphanumerics) { query += "&ver=\(escaped)" }
+        if let url = URL(string: "https://nordur-api.vercel.app/api/grid?\(query)"),
+           let fetched = try? await HTTP.get(url, cacheKey: "grid_iceland_v2"),
+           let decoded = try? JSONDecoder().decode(CorrectedGrid.self, from: fetched.value), decoded.forecasts.count == points.count {
+            var grid = build(lats: lats, lons: lons, forecasts: decoded.forecasts)
+            grid.version = decoded.version
+            grid.imoIssued = decoded.imo?.issued.flatMap { DateParse.iso($0) }
+            grid.imoMeasured = decoded.imo?.measured.flatMap { DateParse.iso($0) }
+            grid.imoStationCount = decoded.imo?.stations ?? 0
+            grid.stations = decoded.stations ?? []
+            return Fetched(value: grid, date: fetched.date, isStale: fetched.isStale)
+        }
+
+        // Older server: the bare Open-Meteo grid, fetched once per hour for everyone (Open-Meteo
+        // counts each of the 260 points as a call per IP, which shared networks exhaust).
         if let url = URL(string: "https://nordur-api.vercel.app/api/grid"),
            let fetched = try? await HTTP.get(url, cacheKey: "grid_iceland_api"), !fetched.isStale,
            let decoded = try? RouteWeather.decodeMany(fetched.value), decoded.count == points.count {

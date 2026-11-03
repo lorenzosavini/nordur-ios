@@ -59124,6 +59124,230 @@
           }
         }
       }
+    },
+    "Stazioni Veðurstofa Íslands" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Veðurstofa Íslands stations"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Stationen von Veðurstofa Íslands"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Stations de Veðurstofa Íslands"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Estaciones de Veðurstofa Íslands"
+          }
+        }
+      }
+    },
+    "Modelli corretti con Veðurstofa Íslands" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Models corrected with Veðurstofa Íslands"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Modelle, korrigiert mit Veðurstofa Íslands"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Modèles corrigés avec Veðurstofa Íslands"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Modelos corregidos con Veðurstofa Íslands"
+          }
+        }
+      }
+    },
+    "%lld stazioni IMO: misure delle %@, poi previsione emessa alle %@. Lontano dalle stazioni: modello Open-Meteo." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$lld IMO stations: measurements of %2$@, then the forecast issued at %3$@. Away from the stations: Open-Meteo model."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$lld IMO-Stationen: Messungen von %2$@, danach die Vorhersage von %3$@. Fern der Stationen: Open-Meteo-Modell."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$lld stations IMO : mesures de %2$@, puis prévision émise à %3$@. Loin des stations : modèle Open-Meteo."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$lld estaciones IMO: mediciones de las %2$@, luego la previsión emitida a las %3$@. Lejos de las estaciones: modelo Open-Meteo."
+          }
+        }
+      }
+    },
+    "%lld stazioni IMO: previsione emessa alle %@. Lontano dalle stazioni: modello Open-Meteo." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$lld IMO stations: forecast issued at %2$@. Away from the stations: Open-Meteo model."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$lld IMO-Stationen: Vorhersage von %2$@. Fern der Stationen: Open-Meteo-Modell."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$lld stations IMO : prévision émise à %2$@. Loin des stations : modèle Open-Meteo."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$lld estaciones IMO: previsión emitida a las %2$@. Lejos de las estaciones: modelo Open-Meteo."
+          }
+        }
+      }
+    },
+    "Veðurstofa Íslands · %@ (%lld km), misurato alle %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Veðurstofa Íslands · %1$@ (%2$lld km), measured at %3$@"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Veðurstofa Íslands · %1$@ (%2$lld km), gemessen um %3$@"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Veðurstofa Íslands · %1$@ (%2$lld km), mesuré à %3$@"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Veðurstofa Íslands · %1$@ (%2$lld km), medido a las %3$@"
+          }
+        }
+      }
+    },
+    "Veðurstofa Íslands · %@ (%lld km), previsione" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Veðurstofa Íslands · %1$@ (%2$lld km), forecast"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Veðurstofa Íslands · %1$@ (%2$lld km), Vorhersage"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Veðurstofa Íslands · %1$@ (%2$lld km), prévision"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Veðurstofa Íslands · %1$@ (%2$lld km), previsión"
+          }
+        }
+      }
+    },
+    "vento %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "wind %@"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wind %@"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "vent %@"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "viento %@"
+          }
+        }
+      }
+    },
+    "raffica %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "gust %@"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Böe %@"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "rafale %@"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "racha %@"
+          }
+        }
+      }
     }
   },
   "version" : "1.0"

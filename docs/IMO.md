@@ -122,3 +122,54 @@ Oltre a previsioni per stazione, allerte (CAP) e terremoti, l'app ora usa:
 - **Dispersione dei gas (`api.vedur.is/dispersion`):** le simulazioni pubbliche sono scenari tecnici, senza una previsione per località utilizzabile in automatico. Resta il link alla previsione dei gas vulcanici.
 - **Ghiacciai (`/glaciers`), GIS, EPOS, Meteoalarm:** dati scientifici (bilancio di massa, fronti glaciali, sismologia grezza) o un doppione delle allerte CAP già mostrate.
 - **Dati storici (`/rodeo`, medie mensili e annuali):** non servono a chi viaggia.
+
+## Aggiornamento a ogni pubblicazione e mappa corretta (Parte 7)
+
+### Quanto spesso pubblica IMO (verificato il 3/11/2026)
+
+- **Previsioni per stazione:** circa ogni 3 ore, qualche ora dopo l'ora di analisi. Alle 19:44 l'ultima era quella delle 15:00, che combina i modelli `ig` (15:00) ed `ecm-is` (12:00).
+- **Testi:** più volte al giorno, ognuno a orari suoi.
+- **Osservazioni:** ogni ora, più le misure ogni 10 minuti delle stazioni automatiche, disponibili circa 4 minuti dopo.
+
+### Come l'app segue i cambiamenti
+
+1. nordur-api `/api/live` controlla al massimo una volta al minuto, per tutti gli utenti, quattro dati di vedur.is con richieste minime:
+   - ora di emissione delle previsioni per stazione;
+   - ora dell'ultima osservazione oraria;
+   - ora dell'ultima misura a 10 minuti;
+   - un'impronta delle ore di scrittura dei testi.
+
+   Restituisce questi dati e la versione della griglia della mappa.
+2. Con l'app aperta, ogni minuto l'app legge `/api/live` (`AppModel.followIMO`) e ricarica solo ciò che è cambiato:
+   - nuova emissione → previsione del luogo;
+   - nuova misura → blocco «Adesso»;
+   - nuovi testi → previsioni dei meteorologi;
+   - nuova griglia → mappa.
+
+   Dopo una ricarica aggiorna anche avvisi e widget.
+3. Ogni risposta salvata sul telefono ricorda con quale emissione è stata scaricata (`IMOLive.useCached`).
+   - Finché vedur.is non pubblica niente di nuovo, si usa la copia salvata, fino a 6 ore.
+   - Appena pubblica, la copia viene scartata.
+   - Se `/api/live` non risponde, valgono i tempi di prima: 20 minuti per le previsioni, 10 per le osservazioni, 30 per i testi.
+4. **Vulcani:** codici controllati ogni 5 minuti sul server, bollettino settimanale ogni ora.
+
+### Mappa: modelli corretti con le stazioni IMO
+
+vedur.is non pubblica la griglia del suo modello in formato aperto. La mappa resta quindi la griglia Open-Meteo (0,3° × 0,6°, 48 ore), ma corretta sul server (`backend/lib/blend.js`) ogni volta che cambia una delle sue fonti:
+
+- **Previsione:** per ogni ora e ogni stazione IMO si calcola la differenza tra IMO e il modello in quel punto, per vento medio, direzione, temperatura, nuvolosità e pioggia.
+- **Diffusione:** la differenza si applica ai punti della griglia rappresentati dalla stazione:
+  - peso pieno fino a 20 km, nullo oltre 40;
+  - peso pieno fino a 100 m di dislivello, nullo oltre 300;
+  - più stazioni vicine si mediano.
+- **Ora attuale:** si usano le misure degli ultimi 10 minuti (vento, raffica, direzione, temperatura), non più vecchie di 30 minuti. Nelle 3 ore successive sfumano nella previsione.
+- **Raffiche:** quelle del modello, corrette con la raffica misurata per l'ora attuale e mai sotto il vento medio corretto (stessa regola della sezione Meteo).
+- **Neve:** solo modello.
+- **Limiti di sicurezza:**
+  - differenze limitate (temperatura ±6 °C, vento ±8 m/s, raffica ±10 m/s, nuvole ±60%, pioggia ±3 mm/h);
+  - il vento corretto resta almeno il 40% di quello del modello, così una stazione riparata non calma un'intera cella di 30 km.
+- **Sulla mappa:**
+  - i punti delle stazioni IMO mostrano il loro valore all'ora scelta: misurato adesso, previsto dopo;
+  - toccando la mappa, la scheda mostra la stazione IMO più vicina entro 25 km;
+  - la fonte compare come «Modelli corretti con Veðurstofa Íslands», con l'ora delle misure e dell'emissione.
+- **Test:** `backend/test/blend.test.mjs`. Il 3/11/2026 alle 19:52 la correzione ha usato 244 stazioni e modificato 173 dei 260 punti.

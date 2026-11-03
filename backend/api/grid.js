@@ -1,3 +1,6 @@
+// GET /api/grid?v=2 -> the map grid corrected with Veðurstofa Íslands (lib/blend.js):
+//   { version, generated, base, imo: { issued, measured, stations }, forecasts, stations }
+// GET /api/live -> what IMO published last (stamps), checked at most once a minute.
 // GET /api/grid -> 48-hour forecast on the Iceland map grid (13 x 20 points,
 // 0.3° x 0.6°): temperature, precipitation, snow, cloud, wind, gusts, direction.
 //
@@ -11,6 +14,10 @@
 // (latitude-major), so the app decodes it exactly like a direct response.
 import { fetchJSON } from "../lib/fetch.js";
 import { send, readObject, writeObject } from "../lib/core.js";
+import { STATIONS, fetchStamps, fetchAllForecasts, fetchAllAWS, imoTime } from "../lib/imo.js";
+
+const iso = (seconds) => (Number.isFinite(seconds) ? new Date(seconds * 1000).toISOString() : null);
+import { correctGrid } from "../lib/blend.js";
 
 // Same grid as WeatherGrid / WeatherGridService in the app.
 const SOUTH = 63.1, NORTH = 66.8, WEST = -24.7, EAST = -13.3, LAT_STEP = 0.3, LON_STEP = 0.6;
@@ -53,7 +60,8 @@ async function fetchGrid() {
   return forecasts;
 }
 
-export default async function handler(req, res) {
+/** The Open-Meteo grid, refreshed hourly (its models update about once an hour). */
+async function baseGrid() {
   if (!memory || Date.now() - memory.at > TTL) {
     try {
       memory = { at: Date.now(), body: await fetchGrid() };
@@ -61,15 +69,85 @@ export default async function handler(req, res) {
     } catch (e) {
       console.error("grid", e.message);
       const stored = memory || (await readObject(CACHE).catch(() => null));
-      if (!stored) return send(res, 502, { error: "Open-Meteo non raggiungibile" });
-      memory = stored;
-      // Serve the last good grid, but let the CDN retry soon.
-      res.setHeader("Cache-Control", "public, s-maxage=300");
-      res.setHeader("X-Grid-Generated", new Date(memory.at).toISOString());
-      return send(res, 200, memory.body);
+      if (!stored) throw new Error("Open-Meteo non raggiungibile");
+      memory = { ...stored, failed: true };
     }
   }
-  res.setHeader("Cache-Control", "public, s-maxage=3600, stale-while-revalidate=1800");
+  return memory;
+}
+
+// MARK: What IMO published last, and the grid corrected with it (lib/blend.js)
+
+const STAMPS_TTL = 60e3;
+const IMO_CACHE = "public/imo-forecasts.bin";
+let stamps = null;     // { at, value }
+let imoForecasts = null; // { issued, map }
+let measurements = null; // { stamp, map }
+let corrected = null;  // { version, body }
+
+async function liveStamps() {
+  if (stamps && Date.now() - stamps.at < STAMPS_TTL) return stamps.value;
+  const value = await fetchStamps().catch(() => ({}));
+  // A part that failed keeps its last known value.
+  const merged = Object.fromEntries(["forecast", "obsHour", "obs10", "texts"].map((k) => [k, value[k] ?? stamps?.value?.[k] ?? null]));
+  stamps = { at: Date.now(), value: merged };
+  return merged;
+}
+
+const gridVersion = (baseAt, issued, measured) => `${Math.round((baseAt || 0) / 1000)}.${issued || "-"}.${measured || "-"}`.replace(/[^0-9A-Za-z.-]/g, "");
+
+async function correctedGrid() {
+  const base = await baseGrid();
+  const st = await liveStamps();
+  if (st.forecast && imoForecasts?.issued !== st.forecast) {
+    const stored = await readObject(IMO_CACHE).catch(() => null);
+    if (stored?.issued === st.forecast) {
+      imoForecasts = { issued: stored.issued, map: new Map(stored.list.map((f) => [f.id, f])) };
+    } else {
+      try {
+        const map = await fetchAllForecasts();
+        if (map.size) {
+          imoForecasts = { issued: st.forecast, map };
+          await writeObject(IMO_CACHE, { issued: st.forecast, list: [...map.values()] }, { ttl: 2 * 86400 }).catch(() => {});
+        }
+      } catch (e) { console.error("imo forecasts", e.message); }
+    }
+  }
+  if (st.obs10 && measurements?.stamp !== st.obs10) {
+    try { measurements = { stamp: st.obs10, map: await fetchAllAWS() }; } catch (e) { console.error("imo aws", e.message); }
+  }
+  const version = gridVersion(base.at, imoForecasts?.issued, measurements?.stamp);
+  if (corrected?.version === version) return corrected;
+  const lats = steps(SOUTH, NORTH, LAT_STEP), lons = steps(WEST, EAST, LON_STEP);
+  const r = correctGrid(base.body, lats, lons, STATIONS, imoForecasts?.map || new Map(), measurements?.map || new Map(), Math.round(Date.now() / 1000));
+  corrected = { version, body: {
+    version,
+    generated: new Date().toISOString(),
+    base: new Date(base.at).toISOString(),
+    imo: { issued: iso(imoTime(imoForecasts?.issued)), measured: iso(measurements?.stamp ? Date.parse(measurements.stamp.slice(0, 19) + "Z") / 1000 : null), stations: r.used },
+    forecasts: r.forecasts,
+    stations: r.stations,
+  } };
+  return corrected;
+}
+
+export default async function handler(req, res) {
+  const params = new URL(req.url, "http://x").searchParams;
+  // /api/live: what IMO published last; the app fetches again only what changed.
+  if (params.get("live")) {
+    const st = await liveStamps();
+    res.setHeader("Cache-Control", "public, s-maxage=60, stale-while-revalidate=60");
+    return send(res, 200, { ...st, grid: gridVersion(memory?.at, st.forecast, st.obs10), checked: new Date(stamps.at).toISOString() });
+  }
+  let grid;
+  try {
+    grid = await correctedGrid();
+  } catch (e) {
+    return send(res, 502, { error: e.message });
+  }
   res.setHeader("X-Grid-Generated", new Date(memory.at).toISOString());
-  return send(res, 200, memory.body);
+  // A request naming its version gets a URL of its own: it can stay on the CDN.
+  res.setHeader("Cache-Control", memory.failed ? "public, s-maxage=120" : params.get("ver") ? "public, s-maxage=900" : "public, s-maxage=60, stale-while-revalidate=60");
+  // v=2: the corrected grid with its sources and the IMO station values; older apps get the bare array.
+  return send(res, 200, params.get("v") === "2" ? grid.body : grid.body.forecasts);
 }

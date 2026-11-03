@@ -470,14 +470,19 @@ extension IMOForecast {
     private static func xml(type: String, ids: [Int], params: String, extra: [String: String] = [:], fresh: TimeInterval) async throws -> Fetched<String> {
         let list = ids.map(String.init).joined(separator: ";")
         let key = "imo_\(type)_v2_\(list)"
-        if let cached = DiskCache.read(key), Date().timeIntervalSince(cached.date) < fresh {
+        // Fetched again exactly when IMO publishes something new (IMOLive), else by age.
+        if let cached = DiskCache.read(key),
+           IMOLive.useCached(key: key, type: type, age: Date().timeIntervalSince(cached.date), fresh: fresh) {
             return Fetched(value: String(decoding: cached.data, as: UTF8.self), date: cached.date, isStale: false)
         }
+        let stamp = IMOLive.stamp(for: type)
         var query = ["op_w": "xml", "type": type, "lang": "en", "view": "xml", "ids": list]
         if !params.isEmpty { query["params"] = params }
         for (k, v) in extra { query[k] = v }
         let url = try HTTP.url("https://xmlweather.vedur.is/", query)
-        return try await HTTP.get(url, cacheKey: key).map { String(decoding: $0, as: UTF8.self) }
+        let fetched = try await HTTP.get(url, cacheKey: key)
+        if !fetched.isStale, !HTTP.cacheOnly { IMOLive.store(stamp, for: key) }
+        return fetched.map { String(decoding: $0, as: UTF8.self) }
     }
 
     private static let byID: [Int: StationForecast.Station] = Dictionary(stations.map { ($0.id, $0) }, uniquingKeysWith: { a, _ in a })
@@ -579,12 +584,16 @@ extension IMOForecast {
     /// The latest 10-minute measurements of these stations (automatic ones only; others are simply absent).
     private static func tenMinute(ids: [Int]) async -> Fetched<Data>? {
         let key = "imo_aws10_v1_" + ids.map(String.init).joined(separator: "_")
-        if let cached = DiskCache.read(key), Date().timeIntervalSince(cached.date) < 5 * 60 {
+        if let cached = DiskCache.read(key),
+           IMOLive.useCached(key: key, type: "obs", age: Date().timeIntervalSince(cached.date), fresh: 5 * 60) {
             return Fetched(value: cached.data, date: cached.date, isStale: false)
         }
+        let stamp = IMOLive.stamp(for: "obs")
         let query = ids.map { "station_id=\($0)" }.joined(separator: "&")
         guard let url = URL(string: "https://api.vedur.is/weather/observations/aws/10min/latest?\(query)") else { return nil }
-        return try? await HTTP.get(url, cacheKey: key)
+        guard let fetched = try? await HTTP.get(url, cacheKey: key) else { return nil }
+        if !fetched.isStale, !HTTP.cacheOnly { IMOLive.store(stamp, for: key) }
+        return fetched
     }
 
     /// The forecasters' written forecasts (country, capital area, regions, next days,

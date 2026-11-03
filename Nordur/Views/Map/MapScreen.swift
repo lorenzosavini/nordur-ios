@@ -27,6 +27,7 @@ struct MapScreen: View {
     @State private var selectedFuel: FuelStation?
     @AppStorage("map.trip") private var showTrip = true
     @AppStorage("map.particles") private var showParticles = true
+    @AppStorage("map.imoStations") private var showIMOStations = true
 
     @State private var hour: Double = -1
     @State private var radarIndex: Double = -1
@@ -146,6 +147,7 @@ struct MapScreen: View {
                     Toggle("Allerte meteo IMO", systemImage: "exclamationmark.triangle", isOn: $showWarnings)
                     Toggle("Strade: chiusure, lavori e pericoli", systemImage: "exclamationmark.triangle", isOn: $showRoadInfo)
                     Toggle("Stazioni stradali (raffiche)", systemImage: "road.lanes", isOn: $showRoads)
+                    Toggle("Stazioni Veðurstofa Íslands", systemImage: "sensor.fill", isOn: $showIMOStations)
                     Toggle("Webcam", systemImage: "video", isOn: $showWebcams)
                     Toggle("Terremoti 48 h", systemImage: "waveform.path.ecg", isOn: $showQuakes)
                     Toggle("Distributori", systemImage: "fuelpump", isOn: $showFuel)
@@ -314,7 +316,12 @@ struct MapScreen: View {
                 Button("Adesso") { hour = -1; playing = false }.font(.app(.caption))
             }
             if let fetched = model.weatherGrid, !model.immersiveMap {
-                FreshnessLabel(date: fetched.date, isStale: fetched.isStale, source: String(localized: "Open-Meteo"))
+                FreshnessLabel(date: fetched.date, isStale: fetched.isStale,
+                               source: fetched.value.isCorrected ? String(localized: "Modelli corretti con Veðurstofa Íslands") : String(localized: "Open-Meteo"))
+                if fetched.value.isCorrected {
+                    Text(gridSourceLine(fetched.value)).font(.app(.caption2)).foregroundStyle(.secondary)
+                        .fixedSize(horizontal: false, vertical: true)
+                }
             }
         } else if layer.isForecast {
             HStack {
@@ -359,6 +366,15 @@ struct MapScreen: View {
             for lon in stride(from: -25.0, through: -13.0, by: 0.5) { peak = max(peak, ovation.interpolated(lat: lat, lon: lon)) }
         }
         return peak
+    }
+
+    /// Which IMO data the map uses at the hour shown.
+    private func gridSourceLine(_ grid: WeatherGrid) -> String {
+        let issued = grid.imoIssued.map { Fmt.dayTime($0, in: .iceland) } ?? "—"
+        if hourIndex == grid.currentHourIndex, let measured = grid.imoMeasured {
+            return String(localized: "\(grid.imoStationCount) stazioni IMO: misure delle \(Fmt.time(measured, in: .iceland)), poi previsione emessa alle \(issued). Lontano dalle stazioni: modello Open-Meteo.")
+        }
+        return String(localized: "\(grid.imoStationCount) stazioni IMO: previsione emessa alle \(issued). Lontano dalle stazioni: modello Open-Meteo.")
     }
 
     // MARK: Raster
@@ -460,6 +476,26 @@ struct MapScreen: View {
 
         var pois: [PoiAnnotation] = []
         var poisKey = ""
+        // IMO stations with their own value at the hour shown (measured now, else forecast).
+        if showIMOStations, [.wind, .gust, .temperature].contains(layer), let grid, !grid.stations.isEmpty {
+            let h = hourIndex
+            let now = h == grid.currentHourIndex
+            for station in grid.stations {
+                let value: Double?
+                switch layer {
+                case .gust: value = now ? station.obs?.gust : nil
+                case .temperature: value = station.temp.indices.contains(h) ? station.temp[h] : nil
+                default: value = station.wind.indices.contains(h) ? station.wind[h] : nil
+                }
+                guard let value else { continue }
+                let color: UIColor = layer == .temperature ? UIColor(Theme.text.opacity(0.85))
+                    : UIColor(Risk.wind(mean: layer == .wind ? value : nil, gust: layer == .gust ? value : nil).color)
+                pois.append(PoiAnnotation(kind: .imo, key: "im\(station.id)", coordinate: station.coordinate.clCoordinate,
+                                          title: station.name, color: color,
+                                          text: layer == .temperature ? "\(Int(value.rounded()))°" : "\(Int(value.rounded()))", size: 20))
+            }
+            poisKey += "imo\(layer.rawValue)\(h)\(grid.version ?? "")"
+        }
         if showRoads, let network = model.roads?.value {
             for station in network.stations where !station.isOutdated {
                 guard let coord = station.coordinate, station.Vindhvida != nil || station.Vindhradi != nil else { continue }
@@ -623,6 +659,8 @@ struct MapScreen: View {
         case .roadSection, .roadHazard:
             let id = String(poi.key.dropFirst(2).split(separator: "|").first ?? "")
             selectedSection = model.roadInfo?.value.sections.first { $0.id == id }
+        case .imo:
+            probe = Coordinate(poi.coordinate)
         default:
             probe = Coordinate(poi.coordinate)
         }
@@ -667,6 +705,10 @@ struct ProbeCard: View {
             } else {
                 Text("Fuori dalla griglia meteo dell'Islanda.").font(.app(.caption)).foregroundStyle(.secondary)
             }
+            if let grid, let station = grid.stations.min(by: { Geo.distanceKm($0.coordinate, coordinate) < Geo.distanceKm($1.coordinate, coordinate) }),
+               Geo.distanceKm(station.coordinate, coordinate) <= 25 {
+                IMOProbeLine(station: station, grid: grid, hour: hour, distanceKm: Geo.distanceKm(station.coordinate, coordinate))
+            }
             if let ovation = model.ovation?.value {
                 Text("Aurora adesso: \(Fmt.percent(ovation.interpolated(lat: coordinate.lat, lon: coordinate.lon)))")
                     .font(.app(.caption)).foregroundStyle(.secondary)
@@ -681,6 +723,34 @@ struct ProbeCard: View {
         }
         .padding(12)
         .background(Theme.bg.opacity(0.94)).overlay(Rectangle().strokeBorder(Theme.hairline))
+    }
+}
+
+/// In the probe card: the nearest IMO station's own values at the hour shown.
+struct IMOProbeLine: View {
+    let station: GridStation
+    let grid: WeatherGrid
+    let hour: Int
+    let distanceKm: Double
+
+    var body: some View {
+        let now = hour == grid.currentHourIndex
+        let at = { (a: [Double?]) -> Double? in a.indices.contains(hour) ? a[hour] : nil }
+        let measured = now ? station.obs : nil
+        let wind = measured?.wind ?? at(station.wind)
+        let temp = measured?.temp ?? at(station.temp)
+        VStack(alignment: .leading, spacing: 2) {
+            Text(measured != nil
+                 ? String(localized: "Veðurstofa Íslands · \(station.name) (\(Int(distanceKm.rounded())) km), misurato alle \(Fmt.time(measured?.date, in: .iceland))")
+                 : String(localized: "Veðurstofa Íslands · \(station.name) (\(Int(distanceKm.rounded())) km), previsione"))
+                .font(.app(.caption2, .semibold)).foregroundStyle(.secondary)
+            HStack(spacing: 10) {
+                if let wind { Text("vento \(Fmt.ms(wind))").foregroundStyle(Risk.wind(mean: wind, gust: nil).color) }
+                if let gust = measured?.gust { Text("raffica \(Fmt.ms(gust))").foregroundStyle(Risk.wind(mean: nil, gust: gust).color) }
+                if let temp { Text(Fmt.temp(temp)) }
+            }
+            .font(.app(.caption))
+        }
     }
 }
 

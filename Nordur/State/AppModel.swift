@@ -214,7 +214,55 @@ final class AppModel {
         await refreshPlace()
     }
 
+    /// The latest IMO measurement near the place, with its Icelandic words translated.
+    private func showObservation(_ measured: Fetched<IMOObservation>?) async {
+        observation = measured
+        // State of the ground and of the sea are Icelandic words at staffed stations.
+        guard let m = measured, m.value.snowCover != nil || m.value.sea != nil else { return }
+        let words = [m.value.snowCover, m.value.sea].compactMap { $0 }
+        let map = await Translator.shared.translate(words)
+        var v = m.value
+        v.snowCover = v.snowCover.map { map[$0] ?? $0 }
+        v.sea = v.sea.map { map[$0] ?? $0 }
+        if observation?.date == m.date { observation = Fetched(value: v, date: m.date, isStale: m.isStale) }
+    }
+
+    @ObservationIgnored private var seenStamps: IMOLive.Stamps?
+
+    /// Follows what Veðurstofa Íslands publishes (nordur-api /api/live, every minute
+    /// while the app is open): a new station forecast reloads the place forecast, a
+    /// new measurement the "Now" block, new texts the written forecasts, a new
+    /// corrected grid the map. Nothing is fetched when nothing changed. Returns
+    /// whether something was reloaded (the widgets then follow).
+    @discardableResult
+    func followIMO() async -> Bool {
+        guard let now = await IMOLive.refresh() else { return false }
+        defer { seenStamps = now }
+        guard let before = seenStamps else { return false }
+        var changed = false
+        if now.forecast != before.forecast {
+            await refreshPlace()
+            changed = true
+        } else if now.obs10 != before.obs10 || now.obsHour != before.obsHour {
+            let c = activePlace.coordinate
+            if case .success(let measured) = await attempt({ try await IMOForecast.observation(near: c) }), c == activePlace.coordinate {
+                await showObservation(measured)
+            }
+            changed = true
+        }
+        if now.texts != before.texts {
+            await load(.imoTexts, { try await IMOForecast.texts() }) { self.imoTexts = $0 }
+            await localizeIMOTexts()
+        }
+        if now.grid != before.grid, weatherGrid != nil {
+            await refreshMapGrid()
+        }
+        return changed
+    }
+
     func refreshPlace() async {
+        // What IMO published last, so its data is fetched again only if it changed.
+        await IMOLive.refresh()
         let c = activePlace.coordinate
         async let f = attempt { try await WeatherService.forecast(c) }
         async let m = attempt { try await OpenMeteo.marine(c) }
@@ -223,18 +271,7 @@ final class AppModel {
         let (rf, rm, ra, ro) = await (f, m, a, o)
         // The user may have switched place meanwhile.
         guard c == activePlace.coordinate else { return }
-        if case .success(let measured) = ro {
-            observation = measured
-            // State of the ground and of the sea are Icelandic words at staffed stations.
-            if let m = measured, m.value.snowCover != nil || m.value.sea != nil {
-                let words = [m.value.snowCover, m.value.sea].compactMap { $0 }
-                let map = await Translator.shared.translate(words)
-                var v = m.value
-                v.snowCover = v.snowCover.map { map[$0] ?? $0 }
-                v.sea = v.sea.map { map[$0] ?? $0 }
-                if observation?.date == m.date { observation = Fetched(value: v, date: m.date, isStale: m.isStale) }
-            }
-        }
+        if case .success(let measured) = ro { await showObservation(measured) }
         apply(rf, .forecast) { self.forecast = $0 }
         // The IMO station the forecast uses, for the comparison table (already in the phone's cache).
         if case .success(let fetched) = rf, fetched.value.official != nil {
@@ -254,6 +291,7 @@ final class AppModel {
         lastGlobalRefresh = Date()
         async let w: Void = load(.warnings, { try await IMO.warnings() }) { self.warnings = $0 }
         async let q: Void = load(.quakes, { try await IMO.quakes() }) { self.quakes = $0 }
+        await IMOLive.refresh()
         async let it: Void = load(.imoTexts, { try await IMOForecast.texts() }) { self.imoTexts = $0 }
         async let vo: Void = load(.volcanoes, { try await IMO.volcanoes() }) { self.volcanoes = $0 }
         // The road feeds are the heaviest (Vegagerðin sends 360 KB uncompressed): every 5 minutes.
@@ -491,13 +529,18 @@ final class AppModel {
         if roadInfo == nil {
             apply(await attempt { try await RoadInfoService.load() }, .roadInfo) { self.roadInfo = $0 }
         }
-        let gridOld = weatherGrid.map { Date().timeIntervalSince($0.date) > 3600 || $0.isStale } ?? true
-        if gridOld || force {
-            let result = await attempt { try await WeatherGridService.iceland() }
-            apply(result, .grid) { self.weatherGrid = $0 }
-        }
+        await IMOLive.refresh()
+        // Fetched again when the corrected grid has a new version (IMO or the model published), else hourly.
+        let newVersion = IMOLive.current?.grid.map { $0 != weatherGrid?.value.version } ?? false
+        let gridOld = weatherGrid.map { Date().timeIntervalSince($0.date) > 3600 || $0.isStale || newVersion } ?? true
+        if gridOld || force { await refreshMapGrid() }
         let radar = await attempt { try await RainViewer.frames() }
         apply(radar, .radar) { self.radarFrames = $0 }
+    }
+
+    func refreshMapGrid() async {
+        let result = await attempt { try await WeatherGridService.iceland() }
+        apply(result, .grid) { self.weatherGrid = $0 }
     }
 
     /// Flight board and ferry notices; loaded on demand (the flight page is ~1.5 MB).
