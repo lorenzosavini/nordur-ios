@@ -7,7 +7,7 @@ enum AlertCategory: String, Codable, CaseIterable, Identifiable {
 
     var label: String {
         switch self {
-        case .weatherWarning: return String(localized: "Allerte meteo IMO")
+        case .weatherWarning: return String(localized: "Allerte meteo vedur.is")
         case .wind: return String(localized: "Raffiche forti vicino a te")
         case .road: return String(localized: "Strade chiuse o impraticabili")
         case .quake: return String(localized: "Terremoti")
@@ -25,7 +25,7 @@ enum AlertCategory: String, Codable, CaseIterable, Identifiable {
     /// Compact name for filter chips.
     var shortLabel: String {
         switch self {
-        case .weatherWarning: return String(localized: "Meteo IMO")
+        case .weatherWarning: return String(localized: "Meteo vedur.is")
         case .wind: return String(localized: "Raffiche")
         case .road: return String(localized: "Strade")
         case .quake: return String(localized: "Terremoti")

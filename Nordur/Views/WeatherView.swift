@@ -3,6 +3,7 @@ import Charts
 
 struct WeatherView: View {
     @Environment(AppModel.self) private var model
+    @State private var showComparison = false
 
     var body: some View {
         NavigationStack {
@@ -12,7 +13,7 @@ struct WeatherView: View {
                         ScreenHeader(title: String(localized: "Meteo"), subtitle: String(localized: "Previsioni · 10 giorni"), index: "02") { AppearanceButton() }
                         PlaceHeader(size: 34)
                     }
-                    HeroHeader(hero: .weather, eyebrow: model.inIceland ? String(localized: "Veðurstofa Íslands · MET Norway · Open-Meteo") : String(localized: "MET Norway · Open-Meteo"),
+                    HeroHeader(hero: .weather, eyebrow: model.forecast?.value.official != nil ? String(localized: "vedur.is") : String(localized: "Modello"),
                                title: model.forecast?.value.current.map { WeatherCode.describe($0.weather_code, isDay: $0.is_day != 0).text } ?? String(localized: "Previsioni"),
                                subtitle: model.forecast?.value.current.map { String(localized: "\(Fmt.temp($0.temperature_2m)) · vento \(Fmt.ms($0.wind_speed_10m)), raffiche \(Fmt.ms($0.wind_gusts_10m))") },
                                height: 170)
@@ -21,18 +22,21 @@ struct WeatherView: View {
                         if let fetched = model.forecast {
                             let forecast = fetched.value
                             let next48 = forecast.upcomingHours(48)
-                            sourceBlock(forecast, fetched: fetched)
+                            // In order of reliability: what is measured now, then the official
+                            // forecast (hours, days), the forecaster's words, the details, the sources.
                             if let observation = model.observation?.value {
                                 IMOObservationBlock(observation: observation)
                             }
+                            meteogram(next48, forecast: forecast)
+                            dailyTable(forecast.days, zone: forecast.timeZone, forecast: forecast)
                             IMOTextCard()
-                            meteogram(next48)
-                            stationComparison(forecast)
-                            dailyTable(forecast.days, zone: forecast.timeZone)
-                            if let official = forecast.official {
-                                Text(String(localized: "Giorni fino a \(Fmt.dayTime(official.until, in: .iceland)): Veðurstofa Íslands, stazione \(official.station.name). Dopo: MET Norway e Open-Meteo."))
-                                    .font(.app(.caption)).foregroundStyle(Theme.dim)
-                                    .fixedSize(horizontal: false, vertical: true)
+                            if model.stationForecast != nil {
+                                DisclosureGroup(isExpanded: $showComparison) {
+                                    stationComparison(forecast).padding(.top, 8)
+                                } label: {
+                                    Text("Confronto ora per ora tra vedur.is e il modello").font(.app(.subheadline, .semibold)).foregroundStyle(Theme.text)
+                                }
+                                .tint(Theme.text)
                             }
                         } else if let error = model.errors[.forecast] {
                             ErrorNote(message: error)
@@ -41,6 +45,9 @@ struct WeatherView: View {
                         }
                         seaSection
                         airSection
+                        if let fetched = model.forecast {
+                            sourceBlock(fetched.value, fetched: fetched)
+                        }
                     }
                 }
                 .padding(.horizontal, 18)
@@ -57,6 +64,7 @@ struct WeatherView: View {
     private func sourceBlock(_ forecast: Forecast, fetched: Fetched<Forecast>) -> some View {
         let primary = forecast.sources.first ?? String(localized: "Open-Meteo")
         return VStack(alignment: .leading, spacing: 6) {
+            SectionLabel(title: String(localized: "Fonti"))
             HStack(alignment: .firstTextBaseline, spacing: 10) {
                 Text("FONTE").font(.mono(9.5)).foregroundStyle(Theme.faint).frame(width: 52, alignment: .leading)
                 Text(forecast.official != nil ? forecast.sourceLine
@@ -71,20 +79,29 @@ struct WeatherView: View {
             } else if model.inIceland {
                 HStack(alignment: .firstTextBaseline, spacing: 10) {
                     Text("").frame(width: 52)
-                    Text("Nessuna stazione Veðurstofa Íslands vicina e alla stessa quota di questo luogo: previsione dei modelli.")
+                    Text("Nessuna stazione vedur.is vicina e alla stessa quota di questo luogo: previsione dei modelli.")
                         .font(.app(.caption)).foregroundStyle(Theme.dim)
                 }
             }
             if forecast.official == nil, primary == "MET Norway", Coverage.meps(Coordinate(lat: forecast.latitude, lon: forecast.longitude)) {
                 HStack(alignment: .firstTextBaseline, spacing: 10) {
                     Text("").frame(width: 52)
-                    Text("Modello nordico gestito con Veðurstofa Íslands, lo stesso di yr.no. Dopo \(forecast.primaryUntil.map { Fmt.dayTime($0, in: forecast.timeZone) } ?? String(localized: "60 ore")) e per le raffiche: ECMWF/ICON via Open-Meteo.")
+                    Text("Modello nordico gestito con vedur.is, lo stesso di yr.no. Dopo \(forecast.primaryUntil.map { Fmt.dayTime($0, in: forecast.timeZone) } ?? String(localized: "60 ore")) e per le raffiche: ECMWF/ICON via Open-Meteo.")
                         .font(.app(.caption)).foregroundStyle(Theme.dim)
                 }
             }
             HStack(alignment: .firstTextBaseline, spacing: 10) {
                 Text("").frame(width: 52)
                 FreshnessLabel(date: fetched.date, isStale: fetched.isStale)
+            }
+            NavigationLink {
+                SourcesView()
+            } label: {
+                HStack(spacing: 4) {
+                    Text("Da dove vengono i dati, sezione per sezione")
+                    Image(systemName: "chevron.right")
+                }
+                .font(.app(.caption, .semibold)).foregroundStyle(Theme.aurora)
             }
         }
         .padding(.vertical, 10)
@@ -116,7 +133,7 @@ struct WeatherView: View {
         }
     }
 
-    private func meteogram(_ hours: [HourPoint]) -> some View {
+    private func meteogram(_ hours: [HourPoint], forecast: Forecast) -> some View {
         let unit = TempUnit.current
         let temps = hours.compactMap(\.temperature).map(unit.value)
         let low = floor((temps.min() ?? 0) - 1), high = ceil((temps.max() ?? 10) + 1)
@@ -124,7 +141,8 @@ struct WeatherView: View {
         let rain = hours.compactMap(\.precipitation).reduce(0, +)
         let freezing = unit.value(0)
         return VStack(alignment: .leading, spacing: 14) {
-            SectionLabel(index: "01", title: String(localized: "Meteogramma · 48 h"))
+            SectionLabel(index: "01", title: String(localized: "Prossime 48 ore"))
+            originLine(forecast, from: hours.first?.date, to: hours.last?.date)
 
             chartHeader(String(localized: "TEMPERATURA"), "\(Fmt.temp(hours.compactMap(\.temperature).min())) / \(Fmt.temp(hours.compactMap(\.temperature).max()))")
             Chart {
@@ -237,20 +255,20 @@ struct WeatherView: View {
             let modelW: [Int: Double] = forecast.official?.modelWind
                 ?? Dictionary(forecast.hours.compactMap { h in h.wind.map { (Int(h.date.timeIntervalSince1970), $0) } }, uniquingKeysWith: { a, _ in a })
             VStack(alignment: .leading, spacing: 12) {
-                SectionLabel(index: "02", title: String(localized: "IMO e modello a confronto"), trailing: "\(Int(station.distanceKm)) KM")
+                SectionLabel(index: "02", title: String(localized: "vedur.is e modello a confronto"), trailing: "\(Int(station.distanceKm)) KM")
                 VStack(alignment: .leading, spacing: 3) {
                     Text(station.station.name.uppercased()).font(.display(24, .bold)).foregroundStyle(Theme.text)
-                    Text("Previsione per stazione di Veðurstofa Íslands\(station.issued.map { String(localized: " · emessa \(Fmt.dayTime($0, in: .iceland))") } ?? "")")
+                    Text("Previsione per stazione di vedur.is\(station.issued.map { String(localized: " · emessa \(Fmt.dayTime($0, in: .iceland))") } ?? "")")
                         .font(.app(.caption)).foregroundStyle(Theme.dim)
                 }
                 VStack(spacing: 0) {
                     HStack(spacing: 0) {
                         head(String(localized: "ORA"), 40, .leading)
-                        head("IMO \(Fmt.tempUnit)", 52)
+                        head("vedur.is \(Fmt.tempUnit)", 52)
                         head("MET \(Fmt.tempUnit)", 52)
-                        head("IMO \(Fmt.windUnit.uppercased())", 58)
+                        head("vedur.is \(Fmt.windUnit.uppercased())", 58)
                         head("MET \(Fmt.windUnit.uppercased())", 58)
-                        head(String(localized: "CIELO (IMO)"), nil, .leading).padding(.leading, 10)
+                        head(String(localized: "CIELO (VEDUR.IS)"), nil, .leading).padding(.leading, 10)
                     }
                     .padding(.bottom, 6)
                     Rule()
@@ -273,7 +291,7 @@ struct WeatherView: View {
                         Rule()
                     }
                 }
-                Text("L'app usa la previsione IMO. Quando il modello MET differisce di \(Fmt.ms(4)) o più il suo valore è evidenziato: in quel caso considera lo scenario peggiore.")
+                Text("L'app usa la previsione vedur.is. Quando il modello MET differisce di \(Fmt.ms(4)) o più il suo valore è evidenziato: in quel caso considera lo scenario peggiore.")
                     .font(.app(.caption)).foregroundStyle(Theme.dim)
                 FreshnessLabel(date: fetched.date, isStale: fetched.isStale, source: "vedur.is")
             }
@@ -292,15 +310,32 @@ struct WeatherView: View {
 
     // MARK: Daily
 
-    private func dailyTable(_ days: [DayPoint], zone: TimeZone) -> some View {
+    /// The badge for a span of time, and where the source switches from vedur.is to the model.
+    @ViewBuilder private func originLine(_ forecast: Forecast, from: Date?, to: Date?) -> some View {
+        if let from {
+            let first = forecast.origin(at: from)
+            HStack(spacing: 10) {
+                SourceBadge(origin: first, detail: first == .official ? forecast.official?.station.name : nil)
+                if first == .official, let until = forecast.official?.until, let to, until < to {
+                    Text("→").font(.mono(9)).foregroundStyle(Theme.faint)
+                    SourceBadge(origin: .model, detail: String(localized: "dalle \(Fmt.dayTime(until, in: .iceland))"))
+                }
+            }
+        }
+    }
+
+    private func dailyTable(_ days: [DayPoint], zone: TimeZone, forecast: Forecast) -> some View {
         let lows = days.compactMap(\.minTemp), highs = days.compactMap(\.maxTemp)
         let scaleMin = (lows.min() ?? 0) - 1, scaleMax = (highs.max() ?? 10) + 1
         return VStack(alignment: .leading, spacing: 10) {
             SectionLabel(index: "03", title: String(localized: "10 giorni"), trailing: String(localized: "MIN · MAX · RAFF · MM"))
+            originLine(forecast, from: days.first?.date, to: days.last.map { $0.date.addingTimeInterval(86400) })
             VStack(spacing: 0) {
                 ForEach(Array(days.enumerated()), id: \.element.id) { index, day in
                     let info = WeatherCode.describe(day.code)
                     HStack(spacing: 8) {
+                        // The day's source at a glance: blue vedur.is, grey model.
+                        Capsule().fill(forecast.origin(at: day.date.addingTimeInterval(12 * 3600)).color).frame(width: 3, height: 26)
                         VStack(alignment: .leading, spacing: 0) {
                             Text(index == 0 ? String(localized: "OGGI") : weekday(day.date, zone)).font(.mono(10.5, .semibold))
                                 .foregroundStyle(index == 0 ? Theme.accent : Theme.text)

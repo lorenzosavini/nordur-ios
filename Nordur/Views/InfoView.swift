@@ -77,6 +77,7 @@ struct InfoView: View {
                 } header: { Text("Consigli per guidare in Islanda").pinnedHeader() }
 
                 Section {
+                    NavigationLink { SourcesView() } label: { Label("Da dove vengono i dati", systemImage: "checkmark.seal") }
                     ForEach(AppModel.Source.allCases, id: \.self) { source in
                         HStack {
                             Text(source.rawValue.loc)
@@ -89,7 +90,7 @@ struct InfoView: View {
                         }
                         .font(.app(.caption))
                     }
-                    Text("Veðurstofa Íslands (vedur.is), Vegagerðin (umferdin.is), Open-Meteo, NOAA Space Weather Prediction Center, SafeTravel.is. L'app aggrega dati pubblici: in caso di dubbio prevalgono le fonti ufficiali.")
+                    Text("vedur.is, Vegagerðin (umferdin.is), Open-Meteo, NOAA Space Weather Prediction Center, SafeTravel.is. L'app aggrega dati pubblici: in caso di dubbio prevalgono le fonti ufficiali.")
                         .font(.app(.caption2)).foregroundStyle(.secondary)
                 } header: { Text("Stato delle fonti").pinnedHeader() }
 

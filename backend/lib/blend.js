@@ -11,7 +11,10 @@
 //   - snow: the model's (IMO does not forecast it).
 // Every difference is capped, so one odd station cannot paint nonsense.
 
-const FULL_KM = 20, ZERO_KM = 40;     // full weight up to 20 km, none past 40
+// vedur.is first: a station stands for the land around it up to 30 km at full
+// weight, fading to none at 60 km (always at a similar height); the model is
+// left alone only where no station reaches (inner Highlands, glaciers, open sea).
+const FULL_KM = 30, ZERO_KM = 60;
 const FULL_DH = 100, ZERO_DH = 300;   // full weight up to 100 m of height difference, none past 300
 const CAP = { T: 6, F: 8, N: 60, R: 3, G: 10 };
 const OBS_MAX_AGE = 30 * 60;          // a measurement older than 30 minutes is not "now"
@@ -55,7 +58,7 @@ const angle = (a, b) => ((((b - a) % 360) + 540) % 360) - 180; // b − a in −
  * hourly arrays, `time` in epoch seconds); lats/lons: the grid axes;
  * stations: [{ id, name, lat, lon, elev }]; imo: Map(id -> { steps }) from
  * parseForecasts; obs: Map(id -> { t, F, FG, D, T }); now: epoch seconds.
- * Returns { forecasts (corrected copies), stations (values for the map markers), used }.
+ * Returns { forecasts (corrected copies), stations (values for the map markers), used, coverage }.
  */
 export function correctGrid(forecasts, lats, lons, stations, imo, obs, now) {
   const times = forecasts.find((f) => f?.hourly?.time?.length)?.hourly.time || [];
@@ -145,5 +148,7 @@ export function correctGrid(forecasts, lats, lons, stations, imo, obs, now) {
       }
     }
   }
-  return { forecasts: out, stations: markers.filter((m) => m.wind.some((v) => v != null) || m.obs), used };
+  // How much of each grid point comes from vedur.is (0 = model only), for the map's veil.
+  const coverage = links.map((l) => Math.round(Math.min(1, l.reduce((a, [, w]) => a + w, 0)) * 100) / 100);
+  return { forecasts: out, stations: markers.filter((m) => m.wind.some((v) => v != null) || m.obs), used, coverage };
 }

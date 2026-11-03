@@ -261,7 +261,7 @@ struct ConditionsWidget: Widget {
                 .containerBackground(Theme.bg, for: .widget)
         }
         .configurationDisplayName(String(localized: "Condizioni Norður"))
-        .description(String(localized: "Temperatura, vento, raffiche e allerte IMO per un luogo."))
+        .description(String(localized: "Temperatura, vento, raffiche e allerte vedur.is per un luogo."))
         .supportedFamilies([.systemSmall, .systemMedium, .accessoryCircular, .accessoryRectangular, .accessoryInline])
     }
 }

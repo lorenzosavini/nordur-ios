@@ -104,11 +104,13 @@ struct IMOObservation: Codable, Equatable {
 
     var degrees: Double? { IMOForecast.degrees(direction) }
     var age: TimeInterval { Date().timeIntervalSince(time) }
+    /// Itself when measured within `seconds`, else nil.
+    func flatMapRecent(_ seconds: TimeInterval) -> IMOObservation? { age <= seconds ? self : nil }
 }
 
 enum IMOForecast {
-    static let attribution = "Veðurstofa Íslands (vedur.is)"
-    static let sourceName = "Veðurstofa Íslands"
+    static let attribution = "vedur.is"
+    static let sourceName = "vedur.is"
 
     static let stations: [StationForecast.Station] = {
         guard let url = Bundle.main.url(forResource: "imo-stations", withExtension: "json"),

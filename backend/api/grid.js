@@ -132,6 +132,7 @@ async function correctedGrid() {
     imo: { issued: iso(imoTime(imoForecasts?.issued)), measured: iso(measurements?.stamp ? Date.parse(measurements.stamp.slice(0, 19) + "Z") / 1000 : null), stations: r.used },
     forecasts: r.forecasts,
     stations: r.stations,
+    coverage: r.coverage,
   } };
   return corrected;
 }

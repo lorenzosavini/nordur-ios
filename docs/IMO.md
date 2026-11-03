@@ -1,4 +1,8 @@
-# Veðurstofa Íslands (IMO) come fonte principale del meteo
+# vedur.is come fonte principale del meteo
+
+> **Un solo nome.** vedur.is è il sito di Veðurstofa Íslands, l'istituto meteorologico islandese (in inglese Icelandic Met Office, IMO). Nell'app è sempre chiamato **vedur.is**.
+>
+> **Ordine di affidabilità** (un bollino su ogni dato meteo): 1. *vedur.is · misurato* (stazione, ultimi 10–60 min) → 2. *vedur.is · previsto* (stazione vicina e alla stessa quota) → 3. *Modello* (MET Norway, poi Open-Meteo), solo dove vedur.is non dà il dato. Una fonte più in basso non sostituisce mai un valore di una più in alto. In Meteo l'ordine visivo è lo stesso: Adesso (misurato), prossime 48 ore, 10 giorni (barra blu = vedur.is, grigia = modello), testo del meteorologo, confronto (a richiesta), mare, aria, fonti. Pagina «Da dove vengono i dati» in Impostazioni e Info.
 
 Verificato il 3 novembre 2026 sulla documentazione ufficiale e su risposte reali del servizio.
 
@@ -159,7 +163,7 @@ vedur.is non pubblica la griglia del suo modello in formato aperto. La mappa res
 
 - **Previsione:** per ogni ora e ogni stazione IMO si calcola la differenza tra IMO e il modello in quel punto, per vento medio, direzione, temperatura, nuvolosità e pioggia.
 - **Diffusione:** la differenza si applica ai punti della griglia rappresentati dalla stazione:
-  - peso pieno fino a 20 km, nullo oltre 40;
+  - peso pieno fino a 30 km, nullo oltre 60 (vedur.is come base: il modello resta da solo solo dove nessuna stazione arriva, zone velate sulla mappa);
   - peso pieno fino a 100 m di dislivello, nullo oltre 300;
   - più stazioni vicine si mediano.
 - **Ora attuale:** si usano le misure degli ultimi 10 minuti (vento, raffica, direzione, temperatura), non più vecchie di 30 minuti. Nelle 3 ore successive sfumano nella previsione.

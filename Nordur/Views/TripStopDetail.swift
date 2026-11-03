@@ -77,7 +77,7 @@ struct StopCard: View {
                     .font(.app(.caption))
                 }
                 if !warnings.isEmpty {
-                    Label(String(localized: "\(warnings.count) allerte IMO"), systemImage: "exclamationmark.triangle.fill")
+                    Label(String(localized: "\(warnings.count) allerte vedur.is"), systemImage: "exclamationmark.triangle.fill")
                         .font(.app(.caption, .semibold)).foregroundStyle(warnings.map(\.color).max()?.color ?? Theme.warning)
                 }
                 if !visits.isEmpty {

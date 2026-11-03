@@ -12,7 +12,7 @@ struct QuakesView: View {
     var body: some View {
         List {
             Section {
-                HeroHeader(hero: .volcano, eyebrow: String(localized: "Veðurstofa Íslands"), title: String(localized: "Vulcani e terremoti"), subtitle: String(localized: "\(model.recentQuakes24h.count) scosse nelle ultime 24 ore"))
+                HeroHeader(hero: .volcano, eyebrow: String(localized: "vedur.is"), title: String(localized: "Vulcani e terremoti"), subtitle: String(localized: "\(model.recentQuakes24h.count) scosse nelle ultime 24 ore"))
                     .heroRow()
             }
             .listSectionSeparator(.hidden)
@@ -45,7 +45,7 @@ struct QuakesView: View {
                 }
                 .pickerStyle(.segmented)
                 if let fetched = model.quakes {
-                    FreshnessLabel(date: fetched.date, isStale: fetched.isStale, source: String(localized: "Veðurstofa Íslands"))
+                    FreshnessLabel(date: fetched.date, isStale: fetched.isStale, source: String(localized: "vedur.is"))
                 }
                 ErrorNote(message: model.errors[.quakes])
             }
@@ -76,7 +76,7 @@ struct QuakesView: View {
             } header: { Text("\(filtered.count) scosse – ultime 48 ore").pinnedHeader() }
 
             Section {
-                Text("Zone di pericolo e chiusure: IMO e Protezione Civile.")
+                Text("Zone di pericolo e chiusure: vedur.is e Protezione Civile.")
                     .font(.app(.caption)).foregroundStyle(.secondary)
                 LinkRow(title: String(localized: "Vedur.is – Terremoti"), subtitle: String(localized: "Mappa ufficiale in tempo reale"), url: "https://en.vedur.is/earthquakes-and-volcanism/earthquakes/", systemImage: "waveform.path.ecg")
                 LinkRow(title: String(localized: "Vedur.is – Vulcani e mappa dei pericoli"), subtitle: String(localized: "Livelli di allerta aviazione e pericolo"), url: "https://en.vedur.is/earthquakes-and-volcanism/", systemImage: "mountain.2.fill")

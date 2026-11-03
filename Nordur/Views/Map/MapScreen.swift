@@ -144,10 +144,10 @@ struct MapScreen: View {
             .padding(.horizontal)
             HStack {
                 Menu {
-                    Toggle("Allerte meteo IMO", systemImage: "exclamationmark.triangle", isOn: $showWarnings)
+                    Toggle("Allerte meteo vedur.is", systemImage: "exclamationmark.triangle", isOn: $showWarnings)
                     Toggle("Strade: chiusure, lavori e pericoli", systemImage: "exclamationmark.triangle", isOn: $showRoadInfo)
                     Toggle("Stazioni stradali (raffiche)", systemImage: "road.lanes", isOn: $showRoads)
-                    Toggle("Stazioni Veðurstofa Íslands", systemImage: "sensor.fill", isOn: $showIMOStations)
+                    Toggle("Stazioni vedur.is", systemImage: "sensor.fill", isOn: $showIMOStations)
                     Toggle("Webcam", systemImage: "video", isOn: $showWebcams)
                     Toggle("Terremoti 48 h", systemImage: "waveform.path.ecg", isOn: $showQuakes)
                     Toggle("Distributori", systemImage: "fuelpump", isOn: $showFuel)
@@ -317,7 +317,7 @@ struct MapScreen: View {
             }
             if let fetched = model.weatherGrid, !model.immersiveMap {
                 FreshnessLabel(date: fetched.date, isStale: fetched.isStale,
-                               source: fetched.value.isCorrected ? String(localized: "Modelli corretti con Veðurstofa Íslands") : String(localized: "Open-Meteo"))
+                               source: fetched.value.isCorrected ? String(localized: "vedur.is, modello dove non ci sono stazioni") : String(localized: "Open-Meteo"))
                 if fetched.value.isCorrected {
                     Text(gridSourceLine(fetched.value)).font(.app(.caption2)).foregroundStyle(.secondary)
                         .fixedSize(horizontal: false, vertical: true)
@@ -372,9 +372,9 @@ struct MapScreen: View {
     private func gridSourceLine(_ grid: WeatherGrid) -> String {
         let issued = grid.imoIssued.map { Fmt.dayTime($0, in: .iceland) } ?? "—"
         if hourIndex == grid.currentHourIndex, let measured = grid.imoMeasured {
-            return String(localized: "\(grid.imoStationCount) stazioni IMO: misure delle \(Fmt.time(measured, in: .iceland)), poi previsione emessa alle \(issued). Lontano dalle stazioni: modello Open-Meteo.")
+            return String(localized: "\(grid.imoStationCount) stazioni vedur.is: misure delle \(Fmt.time(measured, in: .iceland)), poi previsione emessa alle \(issued). Zone velate: nessuna stazione vicina, modello Open-Meteo.")
         }
-        return String(localized: "\(grid.imoStationCount) stazioni IMO: previsione emessa alle \(issued). Lontano dalle stazioni: modello Open-Meteo.")
+        return String(localized: "\(grid.imoStationCount) stazioni vedur.is: previsione emessa alle \(issued). Zone velate: nessuna stazione vicina, modello Open-Meteo.")
     }
 
     // MARK: Raster
@@ -607,6 +607,22 @@ struct MapScreen: View {
             c.polygons = polygons
             c.polygonsKey = "w\(model.warnings?.date.timeIntervalSince1970 ?? 0)"
         }
+        // Where no vedur.is station reaches, the colours are the model's alone: a light veil says so.
+        if layer.isForecast, let grid, grid.isCorrected, grid.coverage.count == grid.lats.count * grid.lons.count {
+            let dLat = (grid.lats.count > 1 ? grid.lats[1] - grid.lats[0] : 0.3) / 2
+            let dLon = (grid.lons.count > 1 ? grid.lons[1] - grid.lons[0] : 0.6) / 2
+            for (row, lat) in grid.lats.enumerated() {
+                for (col, lon) in grid.lons.enumerated() where grid.coverage[row * grid.lons.count + col] < 0.3 {
+                    let coords = [CLLocationCoordinate2D(latitude: lat - dLat, longitude: lon - dLon), CLLocationCoordinate2D(latitude: lat - dLat, longitude: lon + dLon),
+                                  CLLocationCoordinate2D(latitude: lat + dLat, longitude: lon + dLon), CLLocationCoordinate2D(latitude: lat + dLat, longitude: lon - dLon)]
+                    let veil = TitledPolygon(coordinates: coords, count: 4)
+                    veil.fill = UIColor.white.withAlphaComponent(0.32)
+                    veil.strokeColor = .clear
+                    c.polygons.append(veil)
+                }
+            }
+            c.polygonsKey += "veil\(grid.version ?? "")"
+        }
 
         var lines: [TitledPolyline] = []
         var linesKey = ""
@@ -741,8 +757,8 @@ struct IMOProbeLine: View {
         let temp = measured?.temp ?? at(station.temp)
         VStack(alignment: .leading, spacing: 2) {
             Text(measured != nil
-                 ? String(localized: "Veðurstofa Íslands · \(station.name) (\(Int(distanceKm.rounded())) km), misurato alle \(Fmt.time(measured?.date, in: .iceland))")
-                 : String(localized: "Veðurstofa Íslands · \(station.name) (\(Int(distanceKm.rounded())) km), previsione"))
+                 ? String(localized: "vedur.is · \(station.name) (\(Int(distanceKm.rounded())) km), misurato alle \(Fmt.time(measured?.date, in: .iceland))")
+                 : String(localized: "vedur.is · \(station.name) (\(Int(distanceKm.rounded())) km), previsione"))
                 .font(.app(.caption2, .semibold)).foregroundStyle(.secondary)
             HStack(spacing: 10) {
                 if let wind { Text("vento \(Fmt.ms(wind))").foregroundStyle(Risk.wind(mean: wind, gust: nil).color) }

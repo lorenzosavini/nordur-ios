@@ -80,8 +80,8 @@ struct IMOTextFooter: View {
     var body: some View {
         let issued = text.created.map { Fmt.dayTime($0, in: .iceland) } ?? "—"
         let until = text.validTo.map { Fmt.dayTime($0, in: .iceland) }
-        Text(until.map { String(localized: "Veðurstofa Íslands · scritta alle \(issued), valida fino a \($0)") }
-             ?? String(localized: "Veðurstofa Íslands · scritta alle \(issued)"))
+        Text(until.map { String(localized: "vedur.is · scritta alle \(issued), valida fino a \($0)") }
+             ?? String(localized: "vedur.is · scritta alle \(issued)"))
             .font(.app(.caption2)).foregroundStyle(Theme.faint)
     }
 }
@@ -102,9 +102,9 @@ struct IMOTextsView: View {
             section(String(localized: "Mare (zone di pesca e navigazione)"), texts.filter { IMOTexts.seaAreas.contains($0.id) }, compact: true)
             Section {
                 if texts.isEmpty { ErrorNote(message: model.errors[.imoTexts] ?? String(localized: "Previsioni scritte non ancora caricate.")) }
-                Text("Testi scritti dai meteorologi di Veðurstofa Íslands (xmlweather.vedur.is). Le regioni e il mare sono pubblicati solo in islandese: qui sono tradotti automaticamente; i nomi dei luoghi restano originali.")
+                Text("Testi scritti dai meteorologi di vedur.is. Le regioni e il mare sono pubblicati solo in islandese: qui sono tradotti automaticamente; i nomi dei luoghi restano originali.")
                     .font(.app(.caption)).foregroundStyle(.secondary)
-                if let f = model.imoTexts { FreshnessLabel(date: f.date, isStale: f.isStale, source: String(localized: "Veðurstofa Íslands")) }
+                if let f = model.imoTexts { FreshnessLabel(date: f.date, isStale: f.isStale, source: String(localized: "vedur.is")) }
                 LinkRow(title: String(localized: "Previsioni testuali su vedur.is"), subtitle: nil, url: "https://en.vedur.is/weather/forecasts/text/")
             }
         }
@@ -197,11 +197,11 @@ struct VolcanoSection: View {
                     Text(notes).font(.app(.caption)).foregroundStyle(Theme.dim).fixedSize(horizontal: false, vertical: true)
                 }
                 if let date = status.reportDate {
-                    Text("Bollettino settimanale IMO del \(Fmt.dayTime(date, in: .iceland))").font(.app(.caption2)).foregroundStyle(Theme.faint)
+                    Text("Bollettino settimanale vedur.is del \(Fmt.dayTime(date, in: .iceland))").font(.app(.caption2)).foregroundStyle(Theme.faint)
                 }
-                FreshnessLabel(date: fetched.date, isStale: fetched.isStale, source: String(localized: "Veðurstofa Íslands"))
+                FreshnessLabel(date: fetched.date, isStale: fetched.isStale, source: String(localized: "vedur.is"))
             } header: { Text("Stato dei vulcani").pinnedHeader() } footer: {
-                Text("Livello di allerta IMO (verde → rosso) e codice colore per l'aviazione (VONA). Giallo: attività sopra il normale; arancione: attività aumentata, eruzione possibile; rosso: eruzione in corso o imminente.")
+                Text("Livello di allerta vedur.is (verde → rosso) e codice colore per l'aviazione (VONA). Giallo: attività sopra il normale; arancione: attività aumentata, eruzione possibile; rosso: eruzione in corso o imminente.")
             }
         } else if let error = model.errors[.volcanoes] {
             Section { ErrorNote(message: error) } header: { Text("Stato dei vulcani").pinnedHeader() }
@@ -215,7 +215,7 @@ struct VolcanoRow: View {
     var compact = false
 
     private func alertLine(_ level: Int) -> String {
-        var line = String(localized: "Allerta IMO: \(Volcano.colourName(level))")
+        var line = String(localized: "Allerta vedur.is: \(Volcano.colourName(level))")
         line += " – " + Volcano.levelMeaning(level)
         if let since = volcano.levelSince { line += " · " + String(localized: "dal \(Fmt.day(since))") }
         return line

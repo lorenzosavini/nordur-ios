@@ -2641,58 +2641,58 @@
         }
       }
     },
-    "Allerte IMO" : {
+    "Allerte vedur.is" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "IMO warnings"
+            "value" : "vedur.is warnings"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "IMO-Warnungen"
+            "value" : "vedur.is-Warnungen"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Alertes IMO"
+            "value" : "Alertes vedur.is"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Avisos del IMO"
+            "value" : "Avisos de vedur.is"
           }
         }
       }
     },
-    "Allerte IMO sul percorso all'ora del passaggio" : {
+    "Allerte vedur.is sul percorso all'ora del passaggio" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "IMO warnings on the route when you pass"
+            "value" : "vedur.is warnings on the route when you pass"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "IMO-Warnungen auf der Route zur Durchfahrtszeit"
+            "value" : "vedur.is-Warnungen auf der Route zur Durchfahrtszeit"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Alertes IMO sur l'itinéraire à votre passage"
+            "value" : "Alertes vedur.is sur l'itinéraire à votre passage"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Avisos del IMO en la ruta cuando pases"
+            "value" : "Avisos de vedur.is en la ruta cuando pases"
           }
         }
       }
@@ -2781,30 +2781,30 @@
         }
       }
     },
-    "Allerte meteo IMO" : {
+    "Allerte meteo vedur.is" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "IMO weather warnings"
+            "value" : "vedur.is weather warnings"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "IMO-Wetterwarnungen"
+            "value" : "vedur.is-Wetterwarnungen"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Alertes météo IMO"
+            "value" : "Alertes météo vedur.is"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Avisos meteorológicos del IMO"
+            "value" : "Avisos meteorológicos de vedur.is"
           }
         }
       }
@@ -5245,30 +5245,30 @@
         }
       }
     },
-    "CIELO (IMO)" : {
+    "CIELO (VEDUR.IS)" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "SKY (IMO)"
+            "value" : "SKY (VEDUR.IS)"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "HIMMEL (IMO)"
+            "value" : "HIMMEL (VEDUR.IS)"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "CIEL (IMO)"
+            "value" : "CIEL (VEDUR.IS)"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "CIELO (IMO)"
+            "value" : "CIELO (VEDUR.IS)"
           }
         }
       }
@@ -6872,30 +6872,30 @@
         }
       }
     },
-    "Confronto ufficiale IMO" : {
+    "Confronto ufficiale vedur.is" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Official IMO comparison"
+            "value" : "Official vedur.is comparison"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Offizieller IMO-Vergleich"
+            "value" : "Offizieller vedur.is-Vergleich"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Comparaison officielle IMO"
+            "value" : "Comparaison officielle vedur.is"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Comparación oficial del IMO"
+            "value" : "Comparación oficial de vedur.is"
           }
         }
       }
@@ -7769,30 +7769,30 @@
         }
       }
     },
-    "Descrizione (IMO)" : {
+    "Descrizione (vedur.is)" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Description (IMO)"
+            "value" : "Description (vedur.is)"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Beschreibung (IMO)"
+            "value" : "Beschreibung (vedur.is)"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Description (IMO)"
+            "value" : "Description (vedur.is)"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Descripción (IMO)"
+            "value" : "Descripción (vedur.is)"
           }
         }
       }
@@ -10659,58 +10659,58 @@
         }
       }
     },
-    "IMO M/S" : {
+    "VEDUR.IS M/S" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "IMO M/S"
+            "value" : "VEDUR.IS M/S"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "IMO M/S"
+            "value" : "VEDUR.IS M/S"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "IMO M/S"
+            "value" : "VEDUR.IS M/S"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "IMO M/S"
+            "value" : "VEDUR.IS M/S"
           }
         }
       }
     },
-    "IMO °C" : {
+    "VEDUR.IS °C" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "IMO °C"
+            "value" : "VEDUR.IS °C"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "IMO °C"
+            "value" : "VEDUR.IS °C"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "IMO °C"
+            "value" : "VEDUR.IS °C"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "IMO °C"
+            "value" : "VEDUR.IS °C"
           }
         }
       }
@@ -12958,30 +12958,30 @@
         }
       }
     },
-    "Le allerte IMO e i terremoti vengono controllati per la tua posizione e per le tappe del viaggio dei prossimi 3 giorni." : {
+    "Le allerte vedur.is e i terremoti vengono controllati per la tua posizione e per le tappe del viaggio dei prossimi 3 giorni." : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "IMO warnings and earthquakes are checked for your position and for the trip stops of the next 3 days."
+            "value" : "vedur.is warnings and earthquakes are checked for your position and for the trip stops of the next 3 days."
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "IMO-Warnungen und Erdbeben werden für deinen Standort und die Reiseetappen der nächsten 3 Tage geprüft."
+            "value" : "vedur.is-Warnungen und Erdbeben werden für deinen Standort und die Reiseetappen der nächsten 3 Tage geprüft."
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Les alertes IMO et les séismes sont vérifiés pour votre position et pour les étapes du voyage des 3 prochains jours."
+            "value" : "Les alertes vedur.is et les séismes sont vérifiés pour votre position et pour les étapes du voyage des 3 prochains jours."
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Los avisos del IMO y los terremotos se comprueban para tu posición y las etapas del viaje de los próximos 3 días."
+            "value" : "Los avisos de vedur.is y los terremotos se comprueban para tu posición y las etapas del viaje de los próximos 3 días."
           }
         }
       }
@@ -14686,30 +14686,30 @@
         }
       }
     },
-    "Modello nordico gestito con Veðurstofa Íslands, lo stesso di yr.no. Dopo %@ e per le raffiche: ECMWF/ICON via Open-Meteo." : {
+    "Modello nordico gestito con vedur.is, lo stesso di yr.no. Dopo %@ e per le raffiche: ECMWF/ICON via Open-Meteo." : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Nordic model run with Veðurstofa Íslands, the same as yr.no. After %@ and for gusts: ECMWF/ICON via Open-Meteo."
+            "value" : "Nordic model run with vedur.is, the same as yr.no. After %@ and for gusts: ECMWF/ICON via Open-Meteo."
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Nordisches Modell, betrieben mit Veðurstofa Íslands, dasselbe wie yr.no. Nach %@ und für Böen: ECMWF/ICON über Open-Meteo."
+            "value" : "Nordisches Modell, betrieben mit vedur.is, dasselbe wie yr.no. Nach %@ und für Böen: ECMWF/ICON über Open-Meteo."
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Modèle nordique exploité avec Veðurstofa Íslands, le même que yr.no. Après %@ et pour les rafales : ECMWF/ICON via Open-Meteo."
+            "value" : "Modèle nordique exploité avec vedur.is, le même que yr.no. Après %@ et pour les rafales : ECMWF/ICON via Open-Meteo."
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Modelo nórdico gestionado con Veðurstofa Íslands, el mismo de yr.no. Después de %@ y para las rachas: ECMWF/ICON vía Open-Meteo."
+            "value" : "Modelo nórdico gestionado con vedur.is, el mismo de yr.no. Después de %@ y para las rachas: ECMWF/ICON vía Open-Meteo."
           }
         }
       }
@@ -15949,30 +15949,30 @@
         }
       }
     },
-    "Nessuna allerta IMO per questa zona" : {
+    "Nessuna allerta vedur.is per questa zona" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "No IMO warnings for this area"
+            "value" : "No vedur.is warnings for this area"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Keine IMO-Warnungen für diese Gegend"
+            "value" : "Keine vedur.is-Warnungen für diese Gegend"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Aucune alerte IMO pour cette zone"
+            "value" : "Aucune alerte vedur.is pour cette zone"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Sin avisos del IMO en esta zona"
+            "value" : "Sin avisos de vedur.is en esta zona"
           }
         }
       }
@@ -20295,30 +20295,30 @@
         }
       }
     },
-    "Previsione per stazione di Veðurstofa Íslands%@" : {
+    "Previsione per stazione di vedur.is%@" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Veðurstofa Íslands station forecast%@"
+            "value" : "vedur.is station forecast%@"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Stationsvorhersage von Veðurstofa Íslands%@"
+            "value" : "Stationsvorhersage von vedur.is%@"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Prévision de la station Veðurstofa Íslands%@"
+            "value" : "Prévision de la station vedur.is%@"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Previsión de la estación de Veðurstofa Íslands%@"
+            "value" : "Previsión de la estación de vedur.is%@"
           }
         }
       }
@@ -24978,30 +24978,30 @@
         }
       }
     },
-    "Temperatura, vento, raffiche e allerte IMO per un luogo." : {
+    "Temperatura, vento, raffiche e allerte vedur.is per un luogo." : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Temperature, wind, gusts and IMO warnings for a place."
+            "value" : "Temperature, wind, gusts and vedur.is warnings for a place."
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Temperatur, Wind, Böen und IMO-Warnungen für einen Ort."
+            "value" : "Temperatur, Wind, Böen und vedur.is-Warnungen für einen Ort."
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Température, vent, rafales et alertes IMO pour un lieu."
+            "value" : "Température, vent, rafales et alertes vedur.is pour un lieu."
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Temperatura, viento, rachas y avisos del IMO para un lugar."
+            "value" : "Temperatura, viento, rachas y avisos de vedur.is para un lugar."
           }
         }
       }
@@ -27303,58 +27303,58 @@
         }
       }
     },
-    "Veðurstofa Íslands" : {
+    "vedur.is" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Veðurstofa Íslands"
+            "value" : "vedur.is"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Veðurstofa Íslands"
+            "value" : "vedur.is"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Veðurstofa Íslands"
+            "value" : "vedur.is"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Veðurstofa Íslands"
+            "value" : "vedur.is"
           }
         }
       }
     },
-    "Veðurstofa Íslands (vedur.is), Vegagerðin (umferdin.is), Open-Meteo, NOAA Space Weather Prediction Center, SafeTravel.is. L'app aggrega dati pubblici: in caso di dubbio prevalgono le fonti ufficiali." : {
+    "vedur.is, Vegagerðin (umferdin.is), Open-Meteo, NOAA Space Weather Prediction Center, SafeTravel.is. L'app aggrega dati pubblici: in caso di dubbio prevalgono le fonti ufficiali." : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Veðurstofa Íslands (vedur.is), Vegagerðin (umferdin.is), Open-Meteo, NOAA Space Weather Prediction Center, SafeTravel.is. The app aggregates public data: when in doubt, the official sources prevail."
+            "value" : "vedur.is, Vegagerðin (umferdin.is), Open-Meteo, NOAA Space Weather Prediction Center, SafeTravel.is. The app aggregates public data: when in doubt, the official sources prevail."
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Veðurstofa Íslands (vedur.is), Vegagerðin (umferdin.is), Open-Meteo, NOAA Space Weather Prediction Center, SafeTravel.is. Die App bündelt öffentliche Daten: Im Zweifel gelten die offiziellen Quellen."
+            "value" : "vedur.is, Vegagerðin (umferdin.is), Open-Meteo, NOAA Space Weather Prediction Center, SafeTravel.is. Die App bündelt öffentliche Daten: Im Zweifel gelten die offiziellen Quellen."
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Veðurstofa Íslands (vedur.is), Vegagerðin (umferdin.is), Open-Meteo, NOAA Space Weather Prediction Center, SafeTravel.is. L'app agrège des données publiques : en cas de doute, les sources officielles prévalent."
+            "value" : "vedur.is, Vegagerðin (umferdin.is), Open-Meteo, NOAA Space Weather Prediction Center, SafeTravel.is. L'app agrège des données publiques : en cas de doute, les sources officielles prévalent."
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Veðurstofa Íslands (vedur.is), Vegagerðin (umferdin.is), Open-Meteo, NOAA Space Weather Prediction Center, SafeTravel.is. La app agrega datos públicos: en caso de duda, prevalecen las fuentes oficiales."
+            "value" : "vedur.is, Vegagerðin (umferdin.is), Open-Meteo, NOAA Space Weather Prediction Center, SafeTravel.is. La app agrega datos públicos: en caso de duda, prevalecen las fuentes oficiales."
           }
         }
       }
@@ -28311,30 +28311,30 @@
         }
       }
     },
-    "Zone di pericolo e chiusure: IMO e Protezione Civile." : {
+    "Zone di pericolo e chiusure: vedur.is e Protezione Civile." : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Hazard zones and closures: IMO and Civil Protection."
+            "value" : "Hazard zones and closures: vedur.is and Civil Protection."
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Gefahrenzonen und Sperrungen: IMO und Zivilschutz."
+            "value" : "Gefahrenzonen und Sperrungen: vedur.is und Zivilschutz."
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Zones à risque et fermetures : IMO et Protection civile."
+            "value" : "Zones à risque et fermetures : vedur.is et Protection civile."
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Zonas de peligro y cierres: IMO y Protección Civil."
+            "value" : "Zonas de peligro y cierres: vedur.is y Protección Civil."
           }
         }
       }

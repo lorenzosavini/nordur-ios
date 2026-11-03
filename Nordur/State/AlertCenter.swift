@@ -281,7 +281,7 @@ final class AlertCenter: NSObject {
         let now = followedStatus[place.coordinate.key] ?? []
         let content = UNMutableNotificationContent()
         content.title = String(localized: "Ora segui \(place.name)")
-        content.subtitle = String(localized: "Allerte meteo IMO, strade chiuse, terremoti")
+        content.subtitle = String(localized: "Allerte meteo vedur.is, strade chiuse, terremoti")
         content.body = now.isEmpty
             ? String(localized: "Adesso lì non c'è nessuna allerta. Ti avviso quando ne arriva una nuova o se peggiora.")
             : String(localized: "Adesso: \(now.prefix(3).map(\.title).joined(separator: " · "))")

@@ -7,13 +7,13 @@ struct WarningsView: View {
     var body: some View {
         List {
             if !model.inIceland {
-                Section { CoverageNote(feature: String(localized: "Le allerte meteo ufficiali (IMO)"), showsIcelandData: true) }
+                Section { CoverageNote(feature: String(localized: "Le allerte meteo ufficiali (vedur.is)"), showsIcelandData: true) }
                     .listRowSeparator(.hidden)
             }
             let warnings = model.warnings?.value ?? []
             Section {
                 if let fetched = model.warnings {
-                    FreshnessLabel(date: fetched.date, isStale: fetched.isStale, source: String(localized: "Veðurstofa Íslands"))
+                    FreshnessLabel(date: fetched.date, isStale: fetched.isStale, source: String(localized: "vedur.is"))
                 }
                 ErrorNote(message: model.errors[.warnings])
                 if warnings.isEmpty && model.warnings != nil {
@@ -92,7 +92,7 @@ struct WarningDetail: View {
                 if let icelandic = warning.headlineIcelandic {
                     Text(icelandic).font(.app(.caption)).foregroundStyle(.secondary)
                 }
-            } header: { Text("Descrizione (IMO)").pinnedHeader() }
+            } header: { Text("Descrizione (vedur.is)").pinnedHeader() }
             Section {
                 LabeledContent("Evento", value: warning.event)
                 LabeledContent("Gravità", value: warning.severity ?? "–")

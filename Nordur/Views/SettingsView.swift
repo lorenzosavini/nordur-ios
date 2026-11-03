@@ -89,6 +89,7 @@ struct SettingsView: View {
                     if Entitlements.shared.shows(.offline) {
                         NavigationLink { OfflineView() } label: { HStack { Label("Pacchetto offline", systemImage: "arrow.down.circle"); Spacer(); ProLock(feature: .offline) } }
                     }
+                    NavigationLink { SourcesView() } label: { Label("Da dove vengono i dati", systemImage: "checkmark.seal") }
                     NavigationLink { DataSourcesView() } label: { Label("Fonti e stato dei dati", systemImage: "doc.text.magnifyingglass") }
                     NavigationLink { CrashLogView() } label: {
                         LabeledContent {

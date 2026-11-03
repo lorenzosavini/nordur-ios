@@ -254,10 +254,20 @@ struct TodayView: View {
         if let fetched = model.forecast, let current = fetched.value.current {
             let today = fetched.value.days.first
             let info = WeatherCode.describe(current.weather_code, isDay: current.is_day != 0)
+            // Most reliable first: what a vedur.is station measured in the last 75 minutes,
+            // else the forecast for now (vedur.is where it has a station, the model elsewhere).
+            let measured = model.observation?.value.flatMapRecent(75 * 60)
             VStack(alignment: .leading, spacing: 12) {
+                HStack(spacing: 10) {
+                    if let measured {
+                        SourceBadge(origin: .measured, detail: "\(measured.station) · \(Fmt.time(measured.time, in: .iceland))")
+                    } else {
+                        SourceBadge(origin: fetched.value.origin(at: Date()), detail: fetched.value.official?.station.name)
+                    }
+                }
                 HStack(alignment: .top, spacing: 16) {
                     HStack(alignment: .top, spacing: 2) {
-                        Text(Fmt.degrees(current.temperature_2m))
+                        Text(Fmt.degrees(measured?.temperature ?? current.temperature_2m))
                             .font(.metric(128, .semibold))
                             .foregroundStyle(Theme.text)
                             .padding(.top, -14)
@@ -274,19 +284,20 @@ struct TodayView: View {
                     Spacer(minLength: 0)
                 }
                 ReadingGrid(items: [
-                    Reading(label: String(localized: "Vento"), value: Fmt.wind(current.wind_speed_10m), unit: Fmt.windUnit,
-                            note: current.wind_direction_10m == nil ? nil : String(localized: "da \(Fmt.compass(current.wind_direction_10m))"), size: 28),
-                    Reading(label: String(localized: "Raffiche"), value: Fmt.wind(current.wind_gusts_10m), unit: Fmt.windUnit,
-                            tint: windTint(current.wind_gusts_10m), size: 28),
-                    Reading(label: String(localized: "Precip."), value: Fmt.number(current.precipitation, decimals: 1), unit: "mm/h", size: 28),
-                    Reading(label: String(localized: "Nuvole"), value: Fmt.number(current.cloud_cover), unit: "%", size: 28),
-                    Reading(label: String(localized: "Pressione"), value: Fmt.number(current.pressure_msl), unit: "hPa", size: 28),
-                    Reading(label: String(localized: "Umidità"), value: Fmt.number(current.relative_humidity_2m), unit: "%", size: 28),
+                    Reading(label: String(localized: "Vento"), value: Fmt.wind(measured?.wind ?? current.wind_speed_10m), unit: Fmt.windUnit,
+                            note: (measured?.degrees ?? current.wind_direction_10m) == nil ? nil : String(localized: "da \(Fmt.compass(measured?.degrees ?? current.wind_direction_10m))"), size: 28),
+                    Reading(label: String(localized: "Raffiche"), value: Fmt.wind(measured?.gust ?? current.wind_gusts_10m), unit: Fmt.windUnit,
+                            tint: windTint(measured?.gust ?? current.wind_gusts_10m), size: 28),
+                    Reading(label: String(localized: "Precip."), value: Fmt.number(measured?.precipitation ?? current.precipitation, decimals: 1), unit: "mm/h", size: 28),
+                    Reading(label: String(localized: "Nuvole"), value: Fmt.number(measured?.cloud ?? current.cloud_cover), unit: "%", size: 28),
+                    Reading(label: String(localized: "Pressione"), value: Fmt.number(measured?.pressure ?? current.pressure_msl), unit: "hPa", size: 28),
+                    Reading(label: String(localized: "Umidità"), value: Fmt.number(measured?.humidity ?? current.relative_humidity_2m), unit: "%", size: 28),
                 ], columns: 3)
                 .overlay(alignment: .top) { Rule() }
                 .overlay(alignment: .bottom) { Rule() }
-                if let observation = model.observation?.value {
-                    IMOObservationBlock(observation: observation)
+                if let measured {
+                    Text(String(localized: "Misure della stazione vedur.is \(measured.station) a \(Int(measured.distanceKm.rounded())) km. Cielo, percepita e min/max: previsione."))
+                        .font(.app(.caption2)).foregroundStyle(Theme.faint).fixedSize(horizontal: false, vertical: true)
                 }
                 FreshnessLabel(date: fetched.date, isStale: fetched.isStale, source: fetched.value.sourceLine)
             }
@@ -319,9 +330,16 @@ struct TodayView: View {
             let hours = forecast.upcomingHours(18)
             VStack(alignment: .leading, spacing: 12) {
                 SectionLabel(index: "02", title: String(localized: "Prossime ore"), trailing: String(localized: "ORA LOCALE"))
+                if let first = hours.first?.date {
+                    HStack(spacing: 10) {
+                        SourceBadge(origin: forecast.origin(at: first), detail: forecast.origin(at: first) == .official ? forecast.official?.station.name : nil)
+                        if forecast.origin(at: first) == .official, let until = forecast.official?.until, let last = hours.last?.date, until < last {
+                            Text("→").font(.mono(9)).foregroundStyle(Theme.faint)
+                            SourceBadge(origin: .model, detail: String(localized: "dalle \(Fmt.dayTime(until, in: .iceland))"))
+                        }
+                    }
+                }
                 HourTable(hours: hours, zone: forecast.timeZone)
-                Text(String(localized: "Fonte: \(hours.first.map { forecast.source(at: $0.date) } ?? forecast.sourceLine)"))
-                    .font(.mono(9.5)).foregroundStyle(Theme.faint)
             }
         }
     }
@@ -373,13 +391,13 @@ struct TodayView: View {
             }
 
             if !model.inIceland {
-                CoverageNote(feature: String(localized: "Le allerte meteo ufficiali (IMO)"))
+                CoverageNote(feature: String(localized: "Le allerte meteo ufficiali (vedur.is)"))
             } else {
             NavigationLink { WarningsView() } label: {
                 VStack(alignment: .leading, spacing: 0) {
                     if here.isEmpty {
                         row(marker: Theme.hairline) {
-                            Text("Nessuna allerta IMO per questa zona").font(.app(.subheadline)).foregroundStyle(Theme.text)
+                            Text("Nessuna allerta vedur.is per questa zona").font(.app(.subheadline)).foregroundStyle(Theme.text)
                         }
                     } else {
                         ForEach(here.prefix(3)) { warning in

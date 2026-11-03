@@ -103,9 +103,9 @@ struct AlertDetailView: View {
             NavigationLink { RoadsView() } label: { Label("Strade e stazioni", systemImage: "road.lanes") }
         case "w":
             if let warning = model.warnings?.value.first(where: { $0.identifier == key }) {
-                NavigationLink { WarningDetail(warning: warning) } label: { Label("Allerta IMO completa", systemImage: "exclamationmark.triangle") }
+                NavigationLink { WarningDetail(warning: warning) } label: { Label("Allerta vedur.is completa", systemImage: "exclamationmark.triangle") }
             }
-            NavigationLink { WarningsView() } label: { Label("Tutte le allerte IMO", systemImage: "exclamationmark.triangle") }
+            NavigationLink { WarningsView() } label: { Label("Tutte le allerte vedur.is", systemImage: "exclamationmark.triangle") }
         case "q":
             NavigationLink { QuakesView() } label: { Label("Terremoti", systemImage: "waveform.path.ecg") }
         case "s":
@@ -122,7 +122,7 @@ struct AlertDetailView: View {
             case .wind, .road, .speed:
                 NavigationLink { RoadsView() } label: { Label("Strade e stazioni", systemImage: "road.lanes") }
             case .weatherWarning:
-                NavigationLink { WarningsView() } label: { Label("Tutte le allerte IMO", systemImage: "exclamationmark.triangle") }
+                NavigationLink { WarningsView() } label: { Label("Tutte le allerte vedur.is", systemImage: "exclamationmark.triangle") }
             case .quake:
                 NavigationLink { QuakesView() } label: { Label("Terremoti", systemImage: "waveform.path.ecg") }
             case .safeTravel:

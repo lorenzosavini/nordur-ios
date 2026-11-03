@@ -7,10 +7,9 @@ struct IMOObservationBlock: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 6) {
+            Text("Adesso").font(.app(.title3, .semibold)).foregroundStyle(Theme.text)
             HStack(spacing: 6) {
-                Circle().fill(Theme.aurora).frame(width: 6, height: 6)
-                Text(String(localized: "ADESSO, MISURATO · \(observation.station.uppercased())"))
-                    .font(.mono(9.5, .semibold)).foregroundStyle(Theme.dim).lineLimit(1)
+                SourceBadge(origin: .measured, detail: observation.station)
                 Spacer(minLength: 4)
                 Text(Fmt.time(observation.time, in: .iceland)).font(.mono(9.5)).foregroundStyle(Theme.faint)
             }
@@ -42,8 +41,8 @@ struct IMOObservationBlock: View {
                 Text(text).font(.app(.caption)).foregroundStyle(Theme.dim)
             }
             Text(observation.tenMinute == true
-                 ? String(localized: "Veðurstofa Íslands · stazione a \(Int(observation.distanceKm.rounded())) km, misura delle \(Fmt.time(observation.time, in: .iceland)) (ogni 10 minuti)")
-                 : String(localized: "Veðurstofa Íslands · stazione a \(Int(observation.distanceKm.rounded())) km, misura delle \(Fmt.time(observation.time, in: .iceland))"))
+                 ? String(localized: "vedur.is · stazione a \(Int(observation.distanceKm.rounded())) km, misura delle \(Fmt.time(observation.time, in: .iceland)) (ogni 10 minuti)")
+                 : String(localized: "vedur.is · stazione a \(Int(observation.distanceKm.rounded())) km, misura delle \(Fmt.time(observation.time, in: .iceland))"))
                 .font(.app(.caption2)).foregroundStyle(Theme.faint)
         }
         .padding(.vertical, 4)
@@ -82,7 +81,7 @@ struct IMOObservationBlock: View {
 }
 
 extension Forecast {
-    /// Where the forecast comes from, in one line: "Veðurstofa Íslands · Reykjavík" or the models.
+    /// Where the forecast comes from, in one line: "vedur.is · Reykjavík" or the models.
     var sourceLine: String {
         if let official {
             return "\(IMOForecast.sourceName) · \(official.station.name)"
@@ -109,10 +108,58 @@ struct ForecastSourceNote: View {
                 Text(official.issued.map { String(localized: "Previsione ufficiale per la stazione \(official.station.name) (\(Int(official.distanceKm.rounded())) km), emessa alle \(Fmt.dayTime($0, in: .iceland)).") }
                      ?? String(localized: "Previsione ufficiale per la stazione \(official.station.name) (\(Int(official.distanceKm.rounded())) km)."))
                     .font(.app(.caption)).foregroundStyle(Theme.text)
-                Text(String(localized: "Da Veðurstofa Íslands fino a \(Fmt.dayTime(official.until, in: .iceland)): temperatura, vento medio e direzione, cielo, nuvolosità e pioggia. Raffiche, probabilità di pioggia e nuvole a strati da MET Norway e Open-Meteo; dopo quell'ora, solo i modelli."))
+                Text(String(localized: "Da vedur.is fino a \(Fmt.dayTime(official.until, in: .iceland)): temperatura, vento medio e direzione, cielo, nuvolosità e pioggia. Raffiche, probabilità di pioggia e nuvole a strati da MET Norway e Open-Meteo; dopo quell'ora, solo i modelli."))
                     .font(.app(.caption)).foregroundStyle(Theme.dim)
             }
             .fixedSize(horizontal: false, vertical: true)
         }
+    }
+}
+
+// MARK: - One badge for every weather value, by reliability
+
+/// Where a weather value comes from, most reliable first: measured by a vedur.is
+/// station, forecast by vedur.is for that station, or a model (MET Norway,
+/// Open-Meteo) where vedur.is has nothing.
+enum DataOrigin {
+    case measured, official, model
+
+    var label: String {
+        switch self {
+        case .measured: return String(localized: "vedur.is · misurato")
+        case .official: return String(localized: "vedur.is · previsto")
+        case .model: return String(localized: "Modello")
+        }
+    }
+
+    var color: Color {
+        switch self {
+        case .measured: return Color(hex: 0x2FA36B)
+        case .official: return Color(hex: 0x3D7FD1)
+        case .model: return Theme.dim
+        }
+    }
+}
+
+struct SourceBadge: View {
+    let origin: DataOrigin
+    var detail: String? = nil
+
+    var body: some View {
+        HStack(spacing: 5) {
+            Circle().fill(origin.color).frame(width: 7, height: 7)
+            Text(origin.label.uppercased()).font(.mono(9, .semibold)).foregroundStyle(origin.color)
+            if let detail {
+                Text(detail).font(.mono(9)).foregroundStyle(Theme.faint).lineLimit(1)
+            }
+        }
+        .accessibilityElement(children: .combine)
+    }
+}
+
+extension Forecast {
+    /// vedur.is forecast for the hours its station forecast covers, the models after.
+    func origin(at date: Date) -> DataOrigin {
+        official?.covers(date) == true ? .official : .model
     }
 }

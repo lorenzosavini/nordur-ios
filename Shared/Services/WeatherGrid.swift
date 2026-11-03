@@ -136,6 +136,8 @@ struct WeatherGrid {
     var imoStationCount = 0
     /// IMO's own values at its stations, aligned with `times` (map markers).
     var stations: [GridStation] = []
+    /// How much of each grid point comes from vedur.is (0 = model only), lat-major.
+    var coverage: [Double] = []
 
     var isCorrected: Bool { imoStationCount > 0 }
 
@@ -214,6 +216,7 @@ enum WeatherGridService {
         let imo: IMO?
         let forecasts: [Forecast?]
         let stations: [GridStation]?
+        let coverage: [Double]?
     }
 
     static let latStep = 0.3, lonStep = 0.6
@@ -239,6 +242,7 @@ enum WeatherGridService {
             grid.imoMeasured = decoded.imo?.measured.flatMap { DateParse.iso($0) }
             grid.imoStationCount = decoded.imo?.stations ?? 0
             grid.stations = decoded.stations ?? []
+            grid.coverage = decoded.coverage ?? []
             return Fetched(value: grid, date: fetched.date, isStale: fetched.isStale)
         }
 

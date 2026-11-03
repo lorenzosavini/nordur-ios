@@ -54,7 +54,7 @@ struct TodayBrief: View {
         let warnings = model.warningsHere
         if let worst = warnings.max(by: { $0.color < $1.color }) {
             lines.append(Line(symbol: "exclamationmark.triangle.fill", color: worst.color.color,
-                              title: warnings.count == 1 ? String(localized: "Allerta IMO") : String(localized: "\(warnings.count) allerte IMO"),
+                              title: warnings.count == 1 ? String(localized: "Allerta vedur.is") : String(localized: "\(warnings.count) allerte vedur.is"),
                               text: worst.headline, action: { model.requestedTab = "weather" }))
         }
         // Aurora tonight.
@@ -99,7 +99,7 @@ struct TodayBrief: View {
                               title: String(localized: "Strade vicine"), text: text, action: { model.requestedTab = "map" }))
         }
         if warnings.isEmpty {
-            lines.append(Line(symbol: "checkmark.shield", color: Theme.dim, title: String(localized: "Nessuna allerta IMO qui"),
+            lines.append(Line(symbol: "checkmark.shield", color: Theme.dim, title: String(localized: "Nessuna allerta vedur.is qui"),
                               text: String(localized: "Meteo, vulcani e terremoti: tutto tranquillo"), action: { model.requestedTab = "weather" }))
         }
         return lines

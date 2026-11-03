@@ -84,7 +84,7 @@ struct AlertsView: View {
             if shown.isEmpty {
                 if alerts.events.isEmpty {
                     EmptyState(symbol: "checkmark.seal", title: String(localized: "Nessuna allerta"),
-                               message: String(localized: "Qui compaiono le allerte inviate: allerte IMO, raffiche, strade chiuse, aurora. Per ora è tutto tranquillo."),
+                               message: String(localized: "Qui compaiono le allerte inviate: allerte vedur.is, raffiche, strade chiuse, aurora. Per ora è tutto tranquillo."),
                                actionTitle: String(localized: "Controlla ora")) { Task { await alerts.check() } }
                 } else {
                     EmptyState(symbol: "magnifyingglass", title: String(localized: "Nessun risultato"),
@@ -223,7 +223,7 @@ struct AlertSettingsView: View {
             } header: {
                 Text("Cosa monitorare").pinnedHeader().pinnedHeader().pinnedHeader()
             } footer: {
-                Text("Allerte IMO, vento, pioggia forte, neve, ghiaccio e strade vengono controllati dove sei davvero, alle tappe del viaggio nei giorni in cui ci sarai e lungo i tragitti tra una tappa e l'altra fino a dopodomani. Durante una registrazione di guida anche la strada davanti a te.")
+                Text("Allerte vedur.is, vento, pioggia forte, neve, ghiaccio e strade vengono controllati dove sei davvero, alle tappe del viaggio nei giorni in cui ci sarai e lungo i tragitti tra una tappa e l'altra fino a dopodomani. Durante una registrazione di guida anche la strada davanti a te.")
             }
 
             Section {
@@ -248,7 +248,7 @@ struct AlertSettingsView: View {
                     draft.followedPlaces = list
                 }
             } header: { Text("Luoghi seguiti").pinnedHeader() } footer: {
-                Text("Fino a \(AlertSettings.followLimit) luoghi seguiti anche senza metterli nel viaggio: ricevi le allerte meteo IMO, le strade chiuse e i terremoti vicini. Vento, raffiche e aurora restano per dove sei davvero e per le tappe del viaggio.")
+                Text("Fino a \(AlertSettings.followLimit) luoghi seguiti anche senza metterli nel viaggio: ricevi le allerte meteo vedur.is, le strade chiuse e i terremoti vicini. Vento, raffiche e aurora restano per dove sei davvero e per le tappe del viaggio.")
             }
 
             Section {

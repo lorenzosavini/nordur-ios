@@ -7,10 +7,10 @@ import { correctGrid, weight, bilinear } from "../lib/blend.js";
 import { parseForecasts, parseAWS, imoTime, STATIONS } from "../lib/imo.js";
 
 const t0 = imoTime("2026-11-03 16:00:00"), t1 = t0 + 3600;
-const lats = [64.0, 64.3], lons = [-22.0, -21.4];
+const lats = [64.0, 64.6], lons = [-22.0, -20.8];
 const cell = () => ({ elevation: 10, hourly: { time: [t0, t1], temperature_2m: [5, 5], wind_speed_10m: [5, 5], wind_direction_10m: [180, 180],
   cloud_cover: [50, 50], precipitation: [0, 0], wind_gusts_10m: [8, 8], snowfall: [0, 0] } });
-const grid = () => [cell(), cell(), cell(), cell()]; // (64,-22) (64,-21.4) (64.3,-22) (64.3,-21.4)
+const grid = () => [cell(), cell(), cell(), cell()]; // (64,-22) (64,-20.8) (64.6,-22) (64.6,-20.8)
 const station = { id: 1, name: "Test", lat: 64.0, lon: -22.0, elev: 10 };
 const imo = new Map([[1, { steps: [{ t: t0, F: 10, D: 225, T: 8, N: 90, R: 0.4 }, { t: t1, F: 9, D: 225, T: 8, N: 90, R: 0 }] }]]);
 
@@ -34,11 +34,11 @@ test("station bundle copied from the app", () => {
 
 test("weights: distance and height", () => {
   assert.equal(weight(0, 0), 1);
-  assert.equal(weight(20, 100), 1);
-  assert.equal(weight(30, 0), 0.5);
-  assert.equal(weight(45, 0), 0);
+  assert.equal(weight(30, 100), 1);
+  assert.equal(weight(45, 0), 0.5);
+  assert.equal(weight(61, 0), 0);
   assert.equal(weight(5, 400), 0);
-  assert.equal(bilinear([1, 3, 1, 3], lats, lons, 64.0, -21.7), 2);
+  assert.ok(Math.abs(bilinear([1, 3, 1, 3], lats, lons, 64.0, -21.4) - 2) < 1e-9);
 });
 
 test("at the station the map takes IMO's values, far away the model's", () => {
@@ -54,6 +54,8 @@ test("at the station the map takes IMO's values, far away the model's", () => {
   assert.equal(far.temperature_2m[0], 5);
   assert.equal(r.stations[0].wind[0], 10);
   assert.equal(r.used, 1);
+  assert.equal(r.coverage[0], 1);
+  assert.equal(r.coverage[3], 0);
 });
 
 test("a station at another height corrects nothing", () => {
