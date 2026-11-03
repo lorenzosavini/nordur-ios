@@ -19,17 +19,17 @@ const perClient = new Map(); // ip -> { minute, count }
 const LANG = { it: "Italian", en: "English", de: "German", fr: "French", es: "Spanish" };
 
 const CONVENTIONS = {
-  it: `Italian conventions: "allerta gialla/arancione/rossa" for IMO warning colours; "raffiche" for gusts; "strada impraticabile", "tratti ghiacciati", "strada scivolosa", "neve sulla carreggiata", "lavori stradali", "limite di peso per asse"; "tempesta geomagnetica" (G1–G5), "indice K"; times stay in 24-hour form; keep m/s, km/h, °C, mm.`,
+  it: `Italian conventions: volcano terms: "unrest" = "attività/irrequietezza vulcanica" (never "disordini"), "dike"/"magmatic dike" = "dicco magmatico" (never "diga"), "uplift" = "sollevamento del suolo", "fissure" = "fessura eruttiva", "crater row" = "allineamento di crateri"; weather: "clearing" = "schiarite", "showers" = "rovesci"; "allerta gialla/arancione/rossa" for IMO warning colours; "raffiche" for gusts; "strada impraticabile", "tratti ghiacciati", "strada scivolosa", "neve sulla carreggiata", "lavori stradali", "limite di peso per asse"; "tempesta geomagnetica" (G1–G5), "indice K"; times stay in 24-hour form; keep m/s, km/h, °C, mm.`,
   en: `British English spelling; keep the official English wording used by the Icelandic Met Office and NOAA where the source already is English.`,
-  de: `German conventions: "gelbe/orange/rote Warnung" for IMO warning colours; "Böen" for gusts; "Straße unpassierbar", "glatte Abschnitte", "Schnee auf der Fahrbahn", "Bauarbeiten", "Achslastbeschränkung"; "geomagnetischer Sturm" (G1–G5), "K-Index"; times stay in 24-hour form; keep m/s, km/h, °C, mm.`,
-  fr: `French conventions: "vigilance jaune/orange/rouge" for IMO warning colours; "rafales" for gusts; "route impraticable", "plaques de verglas", "neige sur la chaussée", "travaux", "limitation de charge par essieu"; "tempête géomagnétique" (G1–G5), "indice K"; times stay in 24-hour form; keep m/s, km/h, °C, mm.`,
-  es: `Spanish conventions: "aviso amarillo/naranja/rojo" for IMO warning colours; "rachas" for gusts; "carretera intransitable", "tramos helados", "nieve en la calzada", "obras", "limitación de peso por eje"; "tormenta geomagnética" (G1–G5), "índice K"; times stay in 24-hour form; keep m/s, km/h, °C, mm.`,
+  de: `German conventions: volcano terms: "unrest" = "vulkanische Unruhe", "dike" = "Magmagang", "uplift" = "Bodenhebung", "crater row" = "Kraterreihe"; "gelbe/orange/rote Warnung" for IMO warning colours; "Böen" for gusts; "Straße unpassierbar", "glatte Abschnitte", "Schnee auf der Fahrbahn", "Bauarbeiten", "Achslastbeschränkung"; "geomagnetischer Sturm" (G1–G5), "K-Index"; times stay in 24-hour form; keep m/s, km/h, °C, mm.`,
+  fr: `French conventions: volcano terms: "unrest" = "agitation volcanique", "dike" = "dyke magmatique", "uplift" = "soulèvement du sol", "crater row" = "alignement de cratères"; "vigilance jaune/orange/rouge" for IMO warning colours; "rafales" for gusts; "route impraticable", "plaques de verglas", "neige sur la chaussée", "travaux", "limitation de charge par essieu"; "tempête géomagnétique" (G1–G5), "indice K"; times stay in 24-hour form; keep m/s, km/h, °C, mm.`,
+  es: `Spanish conventions: volcano terms: "unrest" = "agitación volcánica", "dike" = "dique magmático", "uplift" = "levantamiento del terreno", "crater row" = "alineación de cráteres"; "aviso amarillo/naranja/rojo" for IMO warning colours; "rachas" for gusts; "carretera intransitable", "tramos helados", "nieve en la calzada", "obras", "limitación de peso por eje"; "tormenta geomagnética" (G1–G5), "índice K"; times stay in 24-hour form; keep m/s, km/h, °C, mm.`,
 };
 
 export function systemPrompt(to) {
   const lang = LANG[to];
   return `You translate short texts for Norður, an iPhone app for travellers in Iceland, into ${lang}.
-The texts come from official sources: the Icelandic Met Office (weather warnings), SafeTravel.is (travel notices),
+The texts come from official sources: the Icelandic Met Office (weather warnings, written forecasts, volcano status and weekly reports), SafeTravel.is (travel notices),
 Vegagerðin / umferdin.is (road conditions, closures, roadworks, weight limits), the Herjólfur ferry, NOAA SWPC (space weather alerts).
 They can be in English, Icelandic or ${lang} already.
 
@@ -40,7 +40,9 @@ If a text is already in ${lang}, return it unchanged.
 Answer with JSON only: {"translations": [...]} with exactly one string per input text, in the same order.`;
 }
 
-const sha = (to, text) => crypto.createHash("sha1").update(`${to}\n${text}`).digest("hex");
+// Bumped when the brief changes, so texts are translated again with it (v2: volcano and forecast glossary).
+const BRIEF_VERSION = "2";
+const sha = (to, text) => crypto.createHash("sha1").update(`${BRIEF_VERSION}\n${to}\n${text}`).digest("hex");
 
 /** Texts translated now (no cache), for the admin panel's notices. */
 export async function translateTexts(to, texts) {

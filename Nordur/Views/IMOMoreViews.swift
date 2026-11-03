@@ -158,6 +158,16 @@ extension Volcano {
         }
     }
 
+    /// What the IMO alert level means (our wording, not a machine translation).
+    static func levelMeaning(_ level: Int) -> String {
+        switch level {
+        case 3: return String(localized: "eruzione in corso o imminente")
+        case 2: return String(localized: "attività vulcanica molto aumentata")
+        case 1: return String(localized: "attività vulcanica sopra il normale")
+        default: return String(localized: "attività normale")
+        }
+    }
+
     var aviationLevel: Int { ["GREEN": 0, "YELLOW": 1, "ORANGE": 2, "RED": 3][aviation?.uppercased() ?? ""] ?? 0 }
 }
 
@@ -206,7 +216,7 @@ struct VolcanoRow: View {
 
     private func alertLine(_ level: Int) -> String {
         var line = String(localized: "Allerta IMO: \(Volcano.colourName(level))")
-        if let text = volcano.levelText { line += " – " + text }
+        line += " – " + Volcano.levelMeaning(level)
         if let since = volcano.levelSince { line += " · " + String(localized: "dal \(Fmt.day(since))") }
         return line
     }
