@@ -246,7 +246,15 @@ enum WeatherService {
             func pick<T>(_ computed: T?, _ fallback: [T?]?) -> T? { full ? (computed ?? fallback.at(i)) : (fallback.at(i) ?? computed) }
             maxT.append(pick(day.compactMap(\.temperature).max(), base?.temperature_2m_max))
             minT.append(pick(day.compactMap(\.temperature).min(), base?.temperature_2m_min))
-            sum.append(pick(day.isEmpty ? nil : day.compactMap(\.precipitation).reduce(0, +), base?.precipitation_sum))
+            // Today: the rain still to come (from this hour to midnight). The hours already gone are
+            // the model's old forecast, not what fell: adding them to vedur.is's hours gave wrong totals.
+            if calendar.isDate(start, inSameDayAs: Date()) {
+                let thisHour = Date().addingTimeInterval(-3600)
+                let rest = day.filter { $0.date > thisHour }
+                sum.append(rest.isEmpty ? nil : rest.compactMap(\.precipitation).reduce(0, +))
+            } else {
+                sum.append(pick(day.isEmpty ? nil : day.compactMap(\.precipitation).reduce(0, +), base?.precipitation_sum))
+            }
             maxW.append(pick(day.compactMap(\.wind).max(), base?.wind_speed_10m_max))
             maxG.append(pick(day.compactMap(\.gust).max(), base?.wind_gusts_10m_max))
             probs.append(pick(day.compactMap(\.precipitationProbability).max(), base?.precipitation_probability_max))

@@ -358,7 +358,7 @@ struct WeatherView: View {
                 }
             }
             .overlay(alignment: .top) { Rule() }
-            Text("Oltre 7 giorni la previsione è indicativa.").font(.app(.caption)).foregroundStyle(Theme.dim)
+            Text("Oggi: pioggia prevista da adesso a mezzanotte. Oltre 7 giorni la previsione è indicativa.").font(.app(.caption)).foregroundStyle(Theme.dim)
         }
     }
 

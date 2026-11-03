@@ -61084,6 +61084,90 @@
           }
         }
       }
+    },
+    "PIOGGIA DA ORA" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "RAIN FROM NOW"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "REGEN AB JETZT"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "PLUIE DÈS MAINTENANT"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "LLUVIA DESDE AHORA"
+          }
+        }
+      }
+    },
+    "Pioggia 1 h" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rain 1 h"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Regen 1 h"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pluie 1 h"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lluvia 1 h"
+          }
+        }
+      }
+    },
+    "Oggi: pioggia prevista da adesso a mezzanotte. Oltre 7 giorni la previsione è indicativa." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Today: rain forecast from now to midnight. Beyond 7 days the forecast is only indicative."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Heute: Regen von jetzt bis Mitternacht. Über 7 Tage hinaus ist die Vorhersage nur ein Anhaltspunkt."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aujourd'hui : pluie prévue de maintenant à minuit. Au-delà de 7 jours, la prévision est indicative."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hoy: lluvia prevista desde ahora hasta medianoche. Más allá de 7 días la previsión es orientativa."
+          }
+        }
+      }
     }
   },
   "version" : "1.0"

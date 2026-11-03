@@ -278,7 +278,7 @@ struct TodayView: View {
                             .lineLimit(2).minimumScaleFactor(0.7)
                         dataLine(String(localized: "PERCEPITA"), Fmt.temp(current.apparent_temperature))
                         dataLine(String(localized: "MIN / MAX"), "\(Fmt.temp(today?.minTemp)) / \(Fmt.temp(today?.maxTemp))")
-                        dataLine(String(localized: "PIOGGIA OGGI"), Fmt.number(today?.precipitation, decimals: 1, unit: "mm"))
+                        dataLine(String(localized: "PIOGGIA DA ORA"), Fmt.number(today?.precipitation, decimals: 1, unit: "mm"))
                     }
                     .padding(.top, 6)
                     Spacer(minLength: 0)
@@ -288,7 +288,10 @@ struct TodayView: View {
                             note: (measured?.degrees ?? current.wind_direction_10m) == nil ? nil : String(localized: "da \(Fmt.compass(measured?.degrees ?? current.wind_direction_10m))"), size: 28),
                     Reading(label: String(localized: "Raffiche"), value: Fmt.wind(measured?.gust ?? current.wind_gusts_10m), unit: Fmt.windUnit,
                             tint: windTint(measured?.gust ?? current.wind_gusts_10m), size: 28),
-                    Reading(label: String(localized: "Precip."), value: Fmt.number(measured?.precipitation ?? current.precipitation, decimals: 1), unit: "mm/h", size: 28),
+                    // Measured: the rain of the last hour (mm); forecast: the rate now (mm/h).
+                    measured?.precipitation != nil
+                        ? Reading(label: String(localized: "Pioggia 1 h"), value: Fmt.number(measured?.precipitation, decimals: 1), unit: "mm", size: 28)
+                        : Reading(label: String(localized: "Precip."), value: Fmt.number(current.precipitation, decimals: 1), unit: "mm/h", size: 28),
                     Reading(label: String(localized: "Nuvole"), value: Fmt.number(measured?.cloud ?? current.cloud_cover), unit: "%", size: 28),
                     Reading(label: String(localized: "Pressione"), value: Fmt.number(measured?.pressure ?? current.pressure_msl), unit: "hPa", size: 28),
                     Reading(label: String(localized: "Umidità"), value: Fmt.number(measured?.humidity ?? current.relative_humidity_2m), unit: "%", size: 28),
