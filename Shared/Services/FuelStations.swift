@@ -18,13 +18,19 @@ struct FuelStation: Identifiable, Hashable, Codable {
 enum FuelStations {
     private static let cacheKey = "osm_fuel_iceland"
     private static let endpoints = [
+        // nordur-api keeps a copy (refreshed from the weekly GitHub Action): fast, and
+        // it works when the public Overpass servers are busy or refuse the connection.
+        "https://nordur-api.vercel.app/api/roads?osm=fuel",
+        // The copy the GitHub Action publishes, when nordur-api is not reachable.
+        "https://raw.githubusercontent.com/lorenzosavini/nordur-ios/osm-data/fuel.json",
         "https://overpass-api.de/api/interpreter",
         "https://overpass.kumi.systems/api/interpreter",
+        "https://maps.mail.ru/osm/tools/overpass/api/interpreter",
     ]
 
     /// Uses the on-device copy when younger than `maxAge`, otherwise downloads.
     static func all(maxAge: TimeInterval = 30 * 24 * 3600) async throws -> Fetched<[FuelStation]> {
-        if let cached = DiskCache.read(cacheKey), Date().timeIntervalSince(cached.date) < maxAge,
+        if let cached = DiskCache.read(cacheKey), Date().timeIntervalSince(cached.date) < OSMCopy.maxAge(cached.data, maxAge),
            let stations = try? parse(cached.data) {
             return Fetched(value: stations, date: cached.date, isStale: false)
         }
@@ -41,7 +47,7 @@ enum FuelStations {
         var lastError: Error = HTTPError.status(0)
         for endpoint in endpoints {
             do {
-                let url = try HTTP.url(endpoint, ["data": query])
+                let url = endpoint.contains("interpreter") ? try HTTP.url(endpoint, ["data": query]) : URL(string: endpoint)!
                 let fetched = try await HTTP.get(url, cacheKey: cacheKey)
                 let stations = try parse(fetched.value)
                 if !stations.isEmpty { return Fetched(value: stations, date: fetched.date, isStale: fetched.isStale) }

@@ -113,6 +113,12 @@ const OSM_LAYERS = {
     keep: ["tourism", "natural", "waterway", "amenity", "leisure", "name", "name:en", "wikipedia", "wikidata",
       "description", "description:en", "fee", "opening_hours", "ele"],
   },
+  // Fuel stations and EV chargers: the phones read this copy, not the busy public Overpass servers.
+  fuel: {
+    cache: "public/fuel.bin", min: 100,
+    filters: ['nwr["amenity"="fuel"]', 'nwr["amenity"="charging_station"]'],
+    keep: ["amenity", "name", "brand", "operator", "opening_hours"],
+  },
 };
 const osmMemory = {}; // layer -> { at, elements }
 

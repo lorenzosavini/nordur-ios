@@ -50,6 +50,12 @@ LAYERS["baths"] = {
              "website", "contact:website", "wikidata", "wikipedia"],
     "min": 40,
 }
+# Fuel stations and EV chargers (Shared/Services/FuelStations.swift, via nordur-api).
+LAYERS["fuel"] = {
+    "filters": ['nwr["amenity"="fuel"]', 'nwr["amenity"="charging_station"]'],
+    "keep": ["amenity", "name", "brand", "operator", "opening_hours"],
+    "min": 100,
+}
 UA = "nordur-osm-data (github.com/lorenzosavini/nordur-ios)"
 
 
