@@ -1,7 +1,7 @@
 import Foundation
 
 enum AlertCategory: String, Codable, CaseIterable, Identifiable {
-    case weatherWarning, wind, road, quake, safeTravel, aurora, flight, ferry, speed, notice, summary
+    case weatherWarning, wind, road, quake, safeTravel, aurora, flight, ferry, speed, toll, notice, summary
 
     var id: String { rawValue }
 
@@ -16,6 +16,7 @@ enum AlertCategory: String, Codable, CaseIterable, Identifiable {
         case .flight: return String(localized: "Voli seguiti (KEF)")
         case .ferry: return String(localized: "Traghetto Herjólfur")
         case .speed: return String(localized: "Limite di velocità (in guida)")
+        case .toll: return String(localized: "Pedaggi e parcheggi a pagamento")
         case .notice: return String(localized: "Avvisi di Norður")
         case .summary: return String(localized: "Riepilogo serale del viaggio")
         }
@@ -33,6 +34,7 @@ enum AlertCategory: String, Codable, CaseIterable, Identifiable {
         case .flight: return String(localized: "Voli")
         case .ferry: return String(localized: "Traghetto")
         case .speed: return String(localized: "Velocità")
+        case .toll: return String(localized: "Pedaggi")
         case .notice: return "Norður"
         case .summary: return String(localized: "Riepilogo")
         }
@@ -49,6 +51,7 @@ enum AlertCategory: String, Codable, CaseIterable, Identifiable {
         case .flight: return "airplane"
         case .ferry: return "ferry.fill"
         case .speed: return "gauge.with.dots.needle.67percent"
+        case .toll: return "eurosign.circle"
         case .notice: return "megaphone"
         case .summary: return "calendar.badge.clock"
         }
@@ -124,6 +127,11 @@ struct AlertSettings: Codable, Equatable {
     var eveningSummary: Bool { eveningSummaryOff != true }
     var quietNights: Bool { quietNightsOff != true }
     var backgroundLocation = true     // position-based checks with the app closed (needs "Always")
+    /// Tolls and paid parking near you while driving (nil = on), and from how far (km, nil = 10).
+    var tollsOff: Bool?
+    var tollRadius: Double?
+    var tolls: Bool { tollsOff != true }
+    var tollRadiusKm: Double { tollRadius ?? 10 }
     var followedFlights: [String] = []
 
     private static let key = "alertSettings"
@@ -480,6 +488,7 @@ extension AlertEvent {
         case .flight: return "flight"
         case .ferry: return "ferry"
         case .speed: return "speed"
+        case .toll: return "road"
         case .notice, .summary: return "info"
         }
     }

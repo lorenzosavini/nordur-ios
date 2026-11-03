@@ -23,6 +23,7 @@ enum Feature: String, CaseIterable, Identifiable {
     case backup
     case currencyConverter = "currency.converter"
     case baths = "explore.baths"
+    case tolls = "roads.tolls"
 
     var id: String { rawValue }
 
@@ -44,6 +45,7 @@ enum Feature: String, CaseIterable, Identifiable {
         case .backup: return String(localized: "Backup sul cloud")
         case .currencyConverter: return String(localized: "Convertitore valute")
         case .baths: return String(localized: "Piscine e sorgenti calde")
+        case .tolls: return String(localized: "Pedaggi, tunnel e parcheggi")
         }
     }
 
@@ -65,6 +67,7 @@ enum Feature: String, CaseIterable, Identifiable {
         case .backup: return "icloud.and.arrow.up"
         case .currencyConverter: return "arrow.left.arrow.right.circle"
         case .baths: return "figure.pool.swim"
+        case .tolls: return "eurosign.circle"
         }
     }
 }

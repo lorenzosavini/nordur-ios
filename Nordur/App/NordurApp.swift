@@ -115,7 +115,7 @@ struct RootView: View {
 
     enum CIScreen: String, Identifiable {
         case alerts, alertSettings, info, quakes, roads, transport, webcams, warnings, offline, stop, settings, sights, sources
-        case shops, fuel, stopDetail, suggestions, sight, currency, share, baths
+        case shops, fuel, stopDetail, suggestions, sight, currency, share, baths, tolls, tripTolls
         var id: String { rawValue }
     }
 
@@ -239,6 +239,8 @@ struct RootView: View {
                 case .sources: DataSourcesView()
                 case .shops: ShopsView()
                 case .baths: BathsView()
+                case .tolls: TollsView()
+                case .tripTolls: TripTollsList()
                 case .fuel: FuelListView()
                 case .stopDetail:
                     if let stop = trip.stops.first(where: { !$0.visits.isEmpty }) ?? trip.stops.first { StopDetailView(stopID: stop.id, fallback: stop) }

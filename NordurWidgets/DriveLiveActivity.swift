@@ -40,6 +40,9 @@ struct DriveLiveActivity: Widget {
                         if let alert = state.alertTitle {
                             AlertLine(title: alert, severity: state.alertSeverity).font(.app(.caption)).lineLimit(2)
                         }
+                        if let toll = state.tollName {
+                            TollLine(name: toll, km: state.tollKm, price: state.tollPrice).font(.app(.caption2, .semibold)).lineLimit(1)
+                        }
                         if let fuel = state.fuelName, let km = state.fuelKm {
                             FuelLine(name: fuel, km: km).font(.app(.caption2)).foregroundStyle(.secondary).lineLimit(1)
                         } else if state.alertTitle == nil, let odometer = state.odometer {
@@ -86,6 +89,21 @@ struct NextStopLine: View {
             if let km { Text("· \(Fmt.number(km, decimals: km < 10 ? 1 : 0, unit: "km"))").monospacedDigit() }
             if let eta { Text("· \(Fmt.time(eta))").monospacedDigit() }
         }
+    }
+}
+
+/// The toll tunnel or road ahead: name, km, indicative price.
+struct TollLine: View {
+    let name: String
+    let km: Double?
+    let price: String?
+
+    var body: some View {
+        var parts = [name]
+        if let km { parts.append(Fmt.number(km, decimals: km < 10 ? 1 : 0, unit: "km")) }
+        if let price { parts.append("≈ " + price) }
+        return Label(parts.joined(separator: " · "), systemImage: "eurosign.circle.fill")
+            .foregroundStyle(.yellow)
     }
 }
 
@@ -140,6 +158,11 @@ struct LockScreenDriveView: View {
                 AlertLine(title: alert, severity: state.alertSeverity)
                     .font(.app(.caption))
                     .lineLimit(2)
+            }
+            if let toll = state.tollName {
+                TollLine(name: toll, km: state.tollKm, price: state.tollPrice)
+                    .font(.app(.caption, .semibold))
+                    .lineLimit(1)
             }
             if let fuel = state.fuelName, let km = state.fuelKm {
                 FuelLine(name: fuel, km: km)

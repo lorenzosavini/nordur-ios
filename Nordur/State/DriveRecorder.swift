@@ -212,6 +212,7 @@ final class DriveRecorder: NSObject {
             lastSave = now
             DriveStore.saveInProgress(current)
         }
+        TollWatch.shared.handle(point.coordinate, speedKmh: point.kmh, now: now)
         updateLiveActivity(force: false)
         checkSpeed(point, now: now)
         if now.timeIntervalSince(lastRoadWatch) >= roadWatchInterval {
@@ -261,6 +262,7 @@ final class DriveRecorder: NSObject {
         let position = s.points.last?.coordinate
         let next = position.flatMap { DriveAhead.nextStop(from: $0, averageKmh: s.stats.averageKmh(totalSeconds: elapsed)) }
         let fuel = position.flatMap { DriveAhead.nextFuel(from: $0, course: s.points.last?.course) }
+        let toll = TollWatch.shared.ahead
         return .init(
             km: s.stats.km,
             elapsedSeconds: elapsed,
@@ -275,7 +277,10 @@ final class DriveRecorder: NSObject {
             remainingKm: next?.km,
             eta: next?.eta,
             fuelName: fuel?.name,
-            fuelKm: fuel?.km
+            fuelKm: fuel?.km,
+            tollName: toll?.name,
+            tollKm: toll?.km,
+            tollPrice: toll?.price
         )
     }
 
@@ -297,7 +302,8 @@ final class DriveRecorder: NSObject {
               let state = liveState() else { return }
         if !force, !alertChanged, let last = lastActivityState,
            abs(state.km - last.km) < 0.1, abs(state.speedKmh - last.speedKmh) < 3,
-           state.nextStopName == last.nextStopName, state.fuelName == last.fuelName {
+           state.nextStopName == last.nextStopName, state.fuelName == last.fuelName,
+           state.tollName == last.tollName, abs((state.tollKm ?? 0) - (last.tollKm ?? 0)) < 1 {
             return
         }
         lastActivityUpdate = now
@@ -308,9 +314,11 @@ final class DriveRecorder: NSObject {
 
     /// Identity of the alert shown, without the distances that change every kilometre.
     private func alertKey() -> String? {
-        if let hazard = RoadWatch.shared.nextHazard { return "h\(hazard.station.id)-\(hazard.risk.rawValue)" }
-        if let alert = AlertCenter.shared.latest, Date().timeIntervalSince(alert.date) < 3 * 3600 { return alert.id }
-        return nil
+        // A toll coming into view also goes out at once.
+        let toll = TollWatch.shared.ahead.map { "t\($0.id)" } ?? ""
+        if let hazard = RoadWatch.shared.nextHazard { return "h\(hazard.station.id)-\(hazard.risk.rawValue)\(toll)" }
+        if let alert = AlertCenter.shared.latest, Date().timeIntervalSince(alert.date) < 3 * 3600 { return alert.id + toll }
+        return toll.isEmpty ? nil : toll
     }
 
     private func endLiveActivity(_ finished: DriveSession) {

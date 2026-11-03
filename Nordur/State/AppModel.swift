@@ -24,6 +24,7 @@ final class AppModel {
         case shops = "Supermercati e negozi"
         case sights = "Attrazioni (OpenStreetMap)"
         case baths = "Piscine e sorgenti calde (OpenStreetMap)"
+        case tolls = "Pedaggi e parcheggi (fonti ufficiali)"
         case flights = "Voli KEF"
         case ferry = "Herjólfur"
         case grid = "Mappa meteo"
@@ -85,6 +86,8 @@ final class AppModel {
     @ObservationIgnored private var shopsTask: Task<Void, Never>?
     /// Public pools, geothermal baths and natural hot springs (OpenStreetMap).
     var baths: Fetched<[Bath]>?
+    /// Tolls, toll tunnels and paid parking (official sources, nordur-api).
+    var tolls: Fetched<[TollEntry]>?
     @ObservationIgnored private var bathsTask: Task<Void, Never>?
     /// Places to visit: the app's own list, plus OpenStreetMap once downloaded.
     private(set) var spots: [Attraction] = Attraction.catalog
@@ -357,6 +360,7 @@ final class AppModel {
         await loadShops(force: force)
         await loadSights(force: force)
         await loadBaths(force: force)
+        await loadTolls(force: force)
         await loadFuelPrices(force: force)
     }
 
@@ -421,6 +425,14 @@ final class AppModel {
         }
         bathsTask = task
         await task.value
+    }
+
+    /// Tolls and paid parking: refreshed at most every 6 hours (a price corrected in
+    /// the admin panel arrives the same day), the copy on the phone offline.
+    func loadTolls(force: Bool = false) async {
+        if let tolls, !force, !tolls.isStale, Date().timeIntervalSince(tolls.date) < 6 * 3600 { return }
+        apply(await attempt { try await Tolls.load() }, .tolls) { self.tolls = $0 }
+        if let tolls { TollRoutes.shared.catalogChanged(tolls.value) }
     }
 
     /// Lines of the road sections for the map (static, kept a week on the phone).
@@ -646,6 +658,7 @@ extension AppModel {
         case .shops: return f(shops)
         case .sights: return f(sights)
         case .baths: return f(baths)
+        case .tolls: return f(tolls)
         case .flights: return f(flights)
         case .ferry: return f(ferry)
         case .grid: return f(weatherGrid)

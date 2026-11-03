@@ -117,6 +117,9 @@ struct LegLine: View {
             Text(byRoad ? String(localized: "~\(Int(km.rounded())) km · ~\(Fmt.duration(km / 70 * 3600))") : String(localized: "~\(Int(km.rounded())) km in linea d'aria"))
                 .font(.mono(10.5, .semibold)).foregroundStyle(Theme.dim)
             if let worst, worst > .ok { RiskBadge(risk: worst, text: String(localized: "strade")) }
+            if Entitlements.shared.shows(.tolls), !TripTolls.charges(to: to, from: from, entries: model.tolls?.value ?? []).isEmpty {
+                TollBadge()
+            }
             Spacer()
             if byRoad { Image(systemName: "chevron.right").font(.system(size: 10, weight: .semibold)).foregroundStyle(Theme.faint) }
         }

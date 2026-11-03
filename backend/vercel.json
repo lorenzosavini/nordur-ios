@@ -16,6 +16,10 @@
     {
       "source": "/api/config",
       "destination": "/api/health?config=1"
+    },
+    {
+      "source": "/api/tolls",
+      "destination": "/api/roads?tolls=1"
     }
   ],
   "crons": [

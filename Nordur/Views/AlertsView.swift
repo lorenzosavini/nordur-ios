@@ -215,7 +215,7 @@ struct AlertSettingsView: View {
     var body: some View {
         Form {
             Section {
-                ForEach(AlertCategory.allCases.filter { $0 != .notice && $0 != .summary }) { category in
+                ForEach(AlertCategory.allCases.filter { $0 != .notice && $0 != .summary && $0 != .toll }) { category in
                     Toggle(isOn: binding(for: category)) {
                         Label(category.label, systemImage: category.symbol)
                     }
@@ -303,6 +303,19 @@ struct AlertSettingsView: View {
                 Text("Suoni").pinnedHeader()
             } footer: {
                 Text("L'aurora ha il suo suono, gli altri avvisi uno diverso per tipo: capisci cos'è senza guardare. Tocca per ascoltarli. Con il telefono in silenzioso non suonano.")
+            }
+
+            Section {
+                Toggle(isOn: Binding(get: { draft.tolls }, set: { draft.tollsOff = !$0 })) {
+                    Label("Pedaggi e parcheggi a pagamento", systemImage: "eurosign.circle")
+                }
+                if draft.tolls {
+                    Stepper("Avvisa a \(Int(draft.tollRadiusKm)) km dal pedaggio", value: Binding(get: { draft.tollRadiusKm }, set: { draft.tollRadius = $0 }), in: 2...30, step: 1)
+                }
+            } header: {
+                Text("Pedaggi e parcheggi").pinnedHeader()
+            } footer: {
+                Text("In guida, o con la posizione in uso: quando ti avvicini a un tunnel o a una strada a pedaggio (costo, come pagare, alternativa), dopo il passaggio il promemoria per pagare in tempo, e all'arrivo in un parcheggio a pagamento. Prezzi indicativi da fonti ufficiali.")
             }
 
             Section {

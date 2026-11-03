@@ -80,6 +80,7 @@ struct TripView: View {
                 if !trip.stops.isEmpty {
                     Section {
                         TripOverview()
+                        TripTollsSummary()
                         if trip.shared != nil {
                             Button { sharing = true } label: { SharedStatusLine() }.buttonStyle(.plain)
                         }
@@ -375,6 +376,10 @@ struct LegSummary: View {
                 if Calendar.current.isDateInToday(to.date) || Calendar.current.isDateInTomorrow(to.date) {
                     Text("Dati attuali: ricontrolla prima di partire.").font(.app(.caption2)).foregroundStyle(.secondary)
                 }
+            }
+
+            if Entitlements.shared.shows(.tolls) {
+                TollChargeLines(charges: TripTolls.charges(to: to, from: from, entries: model.tolls?.value ?? []))
             }
 
             if to.transport == .plane {

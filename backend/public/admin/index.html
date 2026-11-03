@@ -82,6 +82,7 @@
       <button data-t="sightings">Avvistamenti</button>
       <button data-t="features">Funzioni e prezzi</button>
       <button data-t="notice">Avviso nell'app</button>
+      <button data-t="tolls">Pedaggi</button>
       <button data-t="log">Registro</button>
     </nav>
 
@@ -164,12 +165,24 @@
       </div>
     </section>
 
+    <section data-s="tolls" hidden>
+      <div class="card">
+        <h2>Pedaggi, tunnel e parcheggi a pagamento</h2>
+        <p class="dim small">Il catalogo che l'app mostra in Strade › Pedaggi e parcheggi, nelle tappe del viaggio e negli avvisi in guida. Solo fonti ufficiali (gestore o proprietario della strada o del parcheggio): ogni voce deve avere <code>source_url</code> e la data di verifica, che l'app mostra sempre con "prezzi indicativi". Senza prezzo ufficiale lascia i prezzi vuoti: l'app scrive "a pagamento, verifica sul posto".</p>
+        <p class="dim small" id="tstate"></p>
+        <div id="tlist"></div>
+        <div class="row" style="margin-top:14px"><button class="btn" id="tsave">Salva e pubblica</button><button class="btn ghost" id="tadd">Nuova voce</button><button class="btn ghost" id="treset">Ripristina la prima edizione</button><span class="dim small" id="tsaved"></span></div>
+        <p class="faint small">Classi di prezzo usate dall'app: <code>under_3_5t</code>, <code>t3_5_7_5</code>, <code>over_7_5t</code> (pedaggi, per peso) · <code>motorcycle</code>, <code>car_5</code>, <code>car_6_9</code>, <code>bus_10_19</code>, <code>bus_10_21</code>, <code>bus_20_32</code>, <code>bus_22_32</code>, <code>bus_33</code> (parcheggi, per posti). Unità: <code>trip</code>, <code>day</code>, <code>hour</code>, <code>km</code>.</p>
+      </div>
+    </section>
+
     <section data-s="log" hidden>
       <div class="card"><h2>Registro delle azioni</h2><div id="loglist"></div></div>
     </section>
   </div>
 </main>
 
+<dialog id="tdlg"><div id="tbody"></div><div class="row" style="margin-top:14px"><button class="btn" id="tapply">Applica</button><button class="btn ghost" onclick="tdlg.close()">Annulla</button><button class="btn danger" id="tdel">Elimina voce</button></div></dialog>
 <dialog id="udlg"><div id="ubody"></div><div class="row" style="margin-top:14px"><button class="btn ghost" onclick="udlg.close()">Chiudi</button></div></dialog>
 <div class="msg" id="msg"></div>
 
@@ -207,7 +220,7 @@ document.querySelectorAll("#tabs button").forEach((b) => (b.onclick = () => show
 function show(t) {
   document.querySelectorAll("#tabs button").forEach((b) => b.classList.toggle("on", b.dataset.t === t));
   document.querySelectorAll("section[data-s]").forEach((s) => (s.hidden = s.dataset.s !== t));
-  ({ overview, users: loadUsers, sightings: loadSightings, features: loadConfig, notice: loadConfig, log: loadLog })[t]?.();
+  ({ overview, users: loadUsers, sightings: loadSightings, features: loadConfig, notice: loadConfig, tolls: loadTolls, log: loadLog })[t]?.();
 }
 
 async function start() {
@@ -400,7 +413,68 @@ $("nsave").onclick = () => saveNotice(false);
 $("nclear").onclick = () => confirm("Togliere l'avviso dall'app?") && saveNotice(true);
 
 // ——— Log ———
-const ACTION = { login: "Accesso", "login-failed": "Accesso non riuscito", "pro-grant": "Pro regalato", "pro-remove": "Pro tolto", note: "Nota", block: "Account sospeso", unblock: "Account riattivato", delete: "Account cancellato", export: "Dati esportati", "sighting-delete": "Avvistamento eliminato", "sighter-ban": "Bloccato dagli avvistamenti", "sighter-unban": "Sbloccato dagli avvistamenti", "config-save": "Configurazione pubblicata", "notice-push": "Notifica inviata" };
+// MARK: Tolls
+let tolls = [], tollTypes = [], tollEditing = -1;
+const TYPE_LABEL = { toll_tunnel: "Tunnel a pedaggio", toll_road: "Strada a pedaggio", paid_parking: "Parcheggio a pagamento", info: "Informazione" };
+const today = () => new Date().toISOString().slice(0, 10);
+async function loadTolls() {
+  try {
+    const r = await call("tolls");
+    tolls = r.entries; tollTypes = r.types;
+    $("tstate").textContent = r.edited ? `Catalogo salvato dal pannello il ${when(r.updated_at)}.` : "Prima edizione (verificata a mano): non ancora modificata dal pannello.";
+    renderTolls();
+  } catch (err) { toast(err.message, true); }
+}
+function renderTolls() {
+  const age = (d) => Math.floor((Date.now() - Date.parse(d)) / 864e5);
+  $("tlist").innerHTML = `<table><tr><th>Voce</th><th class="hide-m">Tipo</th><th>Prezzo base</th><th>Verificato</th><th></th></tr>${tolls.map((e, i) => {
+    const p = e.prices?.[0];
+    const old = age(e.verified_at) > 180;
+    return `<tr><td><b>${esc(e.name)}</b><br><code>${esc(e.id)}</code></td><td class="hide-m small dim">${esc(TYPE_LABEL[e.type] || e.type)}</td>
+      <td class="small">${p ? `${esc(p.isk)} ISK / ${esc(p.unit)} <span class="faint">(${esc(p.class)})</span>` : "<span class='faint'>–</span>"}</td>
+      <td class="small" style="${old ? "color:var(--caution)" : ""}">${esc(e.verified_at)}${old ? " · da riverificare" : ""}</td>
+      <td style="white-space:nowrap"><button class="btn ghost small" data-e="${i}">Modifica</button> <button class="btn ghost small" data-v="${i}">Verificato oggi</button></td></tr>`;
+  }).join("")}</table>`;
+  $("tlist").querySelectorAll("[data-e]").forEach((b) => (b.onclick = () => editToll(Number(b.dataset.e))));
+  $("tlist").querySelectorAll("[data-v]").forEach((b) => (b.onclick = () => { tolls[Number(b.dataset.v)].verified_at = today(); renderTolls(); $("tsaved").textContent = "Modifiche non ancora pubblicate"; }));
+}
+function editToll(i) {
+  tollEditing = i;
+  const e = tolls[i];
+  $("tbody").innerHTML = `<div class="kicker">${esc(TYPE_LABEL[e.type] || e.type)}</div><h2>${esc(e.name || "Nuova voce")}</h2>
+    <p class="dim small">Modifica il JSON della voce: prezzi (<code>prices</code>), link di pagamento (<code>pay_url</code>), testi per lingua (<code>texts.it</code>, <code>texts.en</code>: summary, payment, window, penalty, rental, alternative), fonte (<code>source_url</code>) e data di verifica (<code>verified_at</code>). Coordinate: <code>lat</code>, <code>lon</code>, <code>radius_m</code> (arrivo al parcheggio), <code>points</code> (ingressi/telecamere), <code>path</code> (tratto).</p>
+    <div class="row"><div><label>Verificato il</label><input type="date" id="tver" value="${esc(e.verified_at || today())}"></div><button class="btn ghost small" id="tvtoday">Oggi</button></div>
+    <div class="field"><label>Voce (JSON)</label><textarea id="tjson" spellcheck="false" style="min-height:360px;font:12px/1.45 var(--mono)">${esc(JSON.stringify(e, null, 2))}</textarea></div>`;
+  $("tvtoday").onclick = () => ($("tver").value = today());
+  tdlg.showModal();
+}
+$("tapply").onclick = () => {
+  try {
+    const e = JSON.parse($("tjson").value);
+    e.verified_at = $("tver").value || e.verified_at;
+    tolls[tollEditing] = e;
+    tdlg.close(); renderTolls(); $("tsaved").textContent = "Modifiche non ancora pubblicate";
+  } catch (err) { toast("JSON non valido: " + err.message, true); }
+};
+$("tdel").onclick = () => {
+  if (!confirm("Eliminare questa voce dal catalogo?")) return;
+  tolls.splice(tollEditing, 1); tdlg.close(); renderTolls(); $("tsaved").textContent = "Modifiche non ancora pubblicate";
+};
+$("tadd").onclick = () => {
+  tolls.push({ id: "", type: "paid_parking", name: "", lat: 64.0, lon: -19.0, radius_m: 800, prices: [{ class: "car_5", isk: 0, unit: "day" }], pay_url: "", texts: { it: { summary: "", payment: "" }, en: { summary: "", payment: "" } }, source_name: "", source_url: "https://", verified_at: today() });
+  editToll(tolls.length - 1);
+};
+$("tsave").onclick = async () => {
+  try { const r = await call("tolls-save", { entries: tolls }); tolls = r.entries; renderTolls(); $("tsaved").textContent = "Pubblicato " + when(r.updated_at) + " · le app lo ricevono entro pochi minuti"; $("tstate").textContent = `Catalogo salvato dal pannello il ${when(r.updated_at)}.`; }
+  catch (err) { toast(err.message, true); }
+};
+$("treset").onclick = async () => {
+  if (!confirm("Tornare alla prima edizione del catalogo? Le modifiche fatte dal pannello si perdono.")) return;
+  try { const r = await call("tolls-reset"); tolls = r.entries; renderTolls(); $("tsaved").textContent = "Prima edizione ripristinata e pubblicata"; }
+  catch (err) { toast(err.message, true); }
+};
+
+const ACTION = { "tolls-save": "Pedaggi pubblicati", "tolls-reset": "Pedaggi ripristinati", login: "Accesso", "login-failed": "Accesso non riuscito", "pro-grant": "Pro regalato", "pro-remove": "Pro tolto", note: "Nota", block: "Account sospeso", unblock: "Account riattivato", delete: "Account cancellato", export: "Dati esportati", "sighting-delete": "Avvistamento eliminato", "sighter-ban": "Bloccato dagli avvistamenti", "sighter-unban": "Sbloccato dagli avvistamenti", "config-save": "Configurazione pubblicata", "notice-push": "Notifica inviata" };
 async function loadLog() {
   try {
     const r = await call("log");

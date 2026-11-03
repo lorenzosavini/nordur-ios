@@ -130,6 +130,8 @@ struct AlertDetailView: View {
             case .summary:
                 NavigationLink { RoadsView() } label: { Label("Strade e stazioni", systemImage: "road.lanes") }
                 NavigationLink { AuroraView() } label: { Label("Aurora", systemImage: "moon.stars") }
+            case .toll:
+                TollAlertLinks(event: event)
             case .notice:
                 if let url = Entitlements.shared.config.announcement?.url {
                     LinkRow(title: String(localized: "Apri"), subtitle: url, url: url, systemImage: "link")

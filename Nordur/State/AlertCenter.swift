@@ -135,6 +135,8 @@ final class AlertCenter: NSObject {
         LocationManager.lastKnown = coordinate
         isMoving = location.speed > 8
         recentreFence(on: coordinate)
+        // Tolls and paid parking around you (TollWatch), at every fix: cheap, no download.
+        TollWatch.shared.handle(coordinate, speedKmh: location.speed >= 0 ? location.speed * 3.6 : nil)
         if let last = lastPositionCheck,
            Date().timeIntervalSince(last.date) < 180,
            Geo.distanceKm(last.coordinate, coordinate) < 3 { return }

@@ -16,6 +16,7 @@ import { deleteAccount, granted, sightingTag, bannedSighterPath } from "./accoun
 import { FEATURES, readConfig, writeConfig, publicConfig, fillLanguages } from "./features.js";
 import { translateTexts } from "../api/translate.js";
 import { pushReady, pushNotice, deviceCount } from "./push.js";
+import { readTolls, writeTolls, resetTolls, TYPES as TOLL_TYPES } from "./tolls.js";
 
 const PASSWORD = process.env.ADMIN_PASSWORD || "";
 const TOTP = (process.env.ADMIN_TOTP_SECRET || "").replace(/\s/g, "").toUpperCase();
@@ -271,6 +272,26 @@ const ACTIONS = {
     if (live && live.id !== before && body.push !== false) push = await pushNotice(live);
     await log(req, "config-save", { mode: saved.mode, pro: Object.values(saved.features).filter((v) => v === "pro").length, off: Object.values(saved.features).filter((v) => v === "off").length, products: saved.products.length, announcement: saved.announcement?.id || null, pushed: push?.sent ?? null });
     return { config: saved, push };
+  },
+
+  /** Tolls, tunnels and paid parking shown in the app (lib/tolls.js). */
+  async tolls() {
+    const catalog = await readTolls();
+    return { ...catalog, types: TOLL_TYPES };
+  },
+
+  async "tolls-save"(body, req) {
+    const r = await writeTolls(body.entries);
+    if (r.error) return { error: r.error, status: 400 };
+    await log(req, "tolls-save", { entries: r.entries.length });
+    return r;
+  },
+
+  async "tolls-reset"(body, req) {
+    const r = await resetTolls();
+    if (r.error) return { error: r.error, status: 500 };
+    await log(req, "tolls-reset", { entries: r.entries.length });
+    return r;
   },
 
   async log() {

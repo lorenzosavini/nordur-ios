@@ -15,6 +15,7 @@ Variabili richieste: `APP_SECRET`, `BLOB_READ_WRITE_TOKEN`.
 
 - Pannello: `https://nordur-api.vercel.app/admin/` (utenti, Pro regalato, sospensione, cancellazione ed export GDPR, moderazione degli avvistamenti, funzioni gratis/Pro/spente, prodotti App Store, avviso nell'app, registro delle azioni).
 - Variabili: `ADMIN_PASSWORD` (almeno 12 caratteri, obbligatoria per attivarlo) e `ADMIN_TOTP_SECRET` (facoltativa, base32: con questa serve anche il codice a 6 cifre di un'app di autenticazione).
+- `GET /api/tolls` (riscritto su `/api/roads?tolls=1`): pedaggi, tunnel e parcheggi a pagamento (`lib/tolls.js`, prima edizione in `lib/tolls-data.js`, solo fonti ufficiali con `source_url` e `verified_at`); il pannello lo modifica con le azioni `tolls`, `tolls-save`, `tolls-reset`. Cache CDN 5 minuti.
 - `GET /api/health?config=1` (anche `/api/config`): la configurazione pubblica letta dall'app; `POST /api/health?admin=1` (anche `/api/admin`): le azioni del pannello.
 - `POST /api/auth {mode: "me", email}` (Bearer): Pro regalato e stato dell'account.
 - Notifiche push degli avvisi (APNs): `APNS_KEY` (contenuto del file .p8), `APNS_KEY_ID`, `APNS_TEAM_ID`, `APNS_TOPIC` (facoltativa, default `it.lorenzosavini.nordur`). I telefoni registrano il token con `POST /api/health?device=1`.

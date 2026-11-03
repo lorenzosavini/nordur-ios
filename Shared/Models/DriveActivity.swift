@@ -22,6 +22,10 @@ struct DriveActivityAttributes: ActivityAttributes {
         /// Next fuel station on the route (or roughly ahead), straight-line distance.
         var fuelName: String?
         var fuelKm: Double?
+        /// Toll tunnel or road ahead (within the distance set in the alerts), with its price.
+        var tollName: String?
+        var tollKm: Double?
+        var tollPrice: String?
     }
 
     var name: String

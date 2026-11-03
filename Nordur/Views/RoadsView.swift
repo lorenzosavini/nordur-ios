@@ -49,6 +49,10 @@ struct RoadsView: View {
 
             Section {
                 NavigationLink { WebcamsView() } label: { Label("Webcam stradali (\(model.webcams?.value.count ?? 0) siti)", systemImage: "video") }
+                if Entitlements.shared.shows(.tolls) {
+                    NavigationLink { TollsView() } label: { Label("Pedaggi, tunnel e parcheggi a pagamento", systemImage: "eurosign.circle") }
+                        .accessibilityIdentifier("roads.tolls")
+                }
             }
 
             Section {

@@ -24,6 +24,7 @@ export const FEATURES = [
   { key: "backup", label: "Backup sul cloud e nuovo iPhone", group: "App" },
   { key: "currency.converter", label: "Convertitore valute", group: "App" },
   { key: "explore.baths", label: "Piscine e sorgenti calde", group: "Esplora" },
+  { key: "roads.tolls", label: "Pedaggi, tunnel e parcheggi a pagamento", group: "Meteo e strade" },
 ];
 const KEYS = new Set(FEATURES.map((f) => f.key));
 const RULES = new Set(["free", "pro", "off"]);
