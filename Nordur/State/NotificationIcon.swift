@@ -10,6 +10,7 @@ enum NotificationIcon {
         switch category {
         case .weatherWarning: return UIColor(red: 0.96, green: 0.70, blue: 0.05, alpha: 1)
         case .wind: return UIColor(red: 0.10, green: 0.62, blue: 0.70, alpha: 1)
+        case .arrival: return UIColor(red: 0.18, green: 0.64, blue: 0.42, alpha: 1)
         case .road: return UIColor(red: 0.94, green: 0.29, blue: 0.0, alpha: 1)
         case .quake: return UIColor(red: 0.62, green: 0.20, blue: 0.12, alpha: 1)
         case .safeTravel: return UIColor(red: 0.13, green: 0.40, blue: 0.85, alpha: 1)

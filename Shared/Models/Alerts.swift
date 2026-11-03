@@ -1,7 +1,7 @@
 import Foundation
 
 enum AlertCategory: String, Codable, CaseIterable, Identifiable {
-    case weatherWarning, wind, road, quake, safeTravel, aurora, flight, ferry, speed, toll, notice, summary
+    case weatherWarning, wind, arrival, road, quake, safeTravel, aurora, flight, ferry, speed, toll, notice, summary
 
     var id: String { rawValue }
 
@@ -9,6 +9,7 @@ enum AlertCategory: String, Codable, CaseIterable, Identifiable {
         switch self {
         case .weatherWarning: return String(localized: "Allerte meteo vedur.is")
         case .wind: return String(localized: "Raffiche forti vicino a te")
+        case .arrival: return String(localized: "In arrivo a una tappa")
         case .road: return String(localized: "Strade chiuse o impraticabili")
         case .quake: return String(localized: "Terremoti")
         case .safeTravel: return String(localized: "Avvisi SafeTravel")
@@ -27,6 +28,7 @@ enum AlertCategory: String, Codable, CaseIterable, Identifiable {
         switch self {
         case .weatherWarning: return String(localized: "Meteo vedur.is")
         case .wind: return String(localized: "Raffiche")
+        case .arrival: return String(localized: "Arrivo")
         case .road: return String(localized: "Strade")
         case .quake: return String(localized: "Terremoti")
         case .safeTravel: return String(localized: "SafeTravel")
@@ -44,6 +46,7 @@ enum AlertCategory: String, Codable, CaseIterable, Identifiable {
         switch self {
         case .weatherWarning: return "exclamationmark.triangle.fill"
         case .wind: return "wind"
+        case .arrival: return "flag.checkered"
         case .road: return "road.lanes"
         case .quake: return "waveform.path.ecg"
         case .safeTravel: return "megaphone.fill"
@@ -93,7 +96,7 @@ enum AuroraWatchMode: String, CaseIterable, Identifiable {
 }
 
 struct AlertSettings: Codable, Equatable {
-    var enabled: Set<AlertCategory> = [.weatherWarning, .wind, .road, .quake, .safeTravel, .aurora, .flight, .speed]
+    var enabled: Set<AlertCategory> = [.weatherWarning, .wind, .arrival, .road, .quake, .safeTravel, .aurora, .flight, .speed]
     var includeYellow = false
     var gustThreshold = 25.0          // m/s
     var gustRadiusKm = 25.0
@@ -145,6 +148,12 @@ struct AlertSettings: Codable, Equatable {
             UserDefaults.standard.set(true, forKey: "alertSettings.v2")
             settings.save()
         }
+        // v3: the arrival at a trip stop (conditions measured there by vedur.is) is on by default.
+        if !UserDefaults.standard.bool(forKey: "alertSettings.v3") {
+            settings.enabled.insert(.arrival)
+            UserDefaults.standard.set(true, forKey: "alertSettings.v3")
+            settings.save()
+        }
         return settings
     }
 
@@ -192,7 +201,25 @@ struct AlertInput {
     /// The forecast where you are (or at the place chosen), next hours.
     var hereHours: [TripLegCheck.Hour] = []
     var herePlace = ""
+    /// vedur.is 10-minute measurements around where you are (last 30 minutes).
+    var measured: [IMOObservation] = []
+    /// Trip stops you are approaching now, with what vedur.is measures and forecasts there.
+    var arrivals: [ArrivalCheck] = []
     var now = Date()
+}
+
+/// A trip stop of today you are getting close to (2–30 km): the latest vedur.is
+/// measurement near it, its forecast for the next hours and the warnings there.
+struct ArrivalCheck {
+    let stopID: String
+    let name: String
+    let coordinate: Coordinate
+    let distanceKm: Double
+    var measured: IMOObservation?
+    /// Strongest gust and mean wind forecast for the next 3 hours, and their source.
+    var maxGust: Double?
+    var maxWind: Double?
+    var official: Bool = false
 }
 
 enum AlertEngine {
@@ -215,24 +242,71 @@ enum AlertEngine {
             }
         }
 
-        if let roads = input.roads, let current {
-            if settings.isOn(.wind) {
-                let nearby = roads.stations.compactMap { station -> (RoadStation, Double)? in
-                    guard let c = station.coordinate, !station.isOutdated, let gust = station.Vindhvida, gust >= settings.gustThreshold else { return nil }
-                    let km = Geo.distanceKm(c, current.coordinate)
-                    return km <= settings.gustRadiusKm ? (station, km) : nil
-                }.sorted { ($0.0.Vindhvida ?? 0) > ($1.0.Vindhvida ?? 0) }
-                if let first = nearby.first {
-                    let (station, km) = first
-                    // Re-arms every 3 hours while the condition persists.
-                    let bucket = Int(now.timeIntervalSince1970 / (3 * 3600))
-                    events.append(AlertEvent(
-                        id: "g:\(station.id):\(bucket)", date: now, category: .wind, severity: station.windRisk.rawValue,
-                        title: String(localized: "Raffiche di \(Fmt.ms(station.Vindhvida)) a \(station.name)"),
-                        body: String(localized: "A \(Int(km)) km da te. Vento medio \(Fmt.ms(station.Vindhradi)) \(station.windDirection). \(Risk.windAdvice(station.windRisk))"),
-                        coordinate: station.coordinate, expires: now.addingTimeInterval(3 * 3600), group: "g:\(station.id)"))
+        if let current, settings.isOn(.wind) {
+            // Measured gusts near you: Vegagerðin road stations and vedur.is weather stations;
+            // the strongest one over the threshold makes the alert.
+            struct Gust { let id: String; let name: String; let gust: Double; let mean: Double?; let direction: String; let km: Double; let coordinate: Coordinate?; let source: String; let time: Date? }
+            var gusts: [Gust] = []
+            for station in input.roads?.stations ?? [] {
+                guard let c = station.coordinate, !station.isOutdated, let gust = station.Vindhvida, gust >= settings.gustThreshold else { continue }
+                let km = Geo.distanceKm(c, current.coordinate)
+                if km <= settings.gustRadiusKm {
+                    gusts.append(Gust(id: "g:\(station.id)", name: station.name, gust: gust, mean: station.Vindhradi, direction: station.windDirection,
+                                      km: km, coordinate: c, source: "Vegagerðin", time: nil))
                 }
             }
+            for o in input.measured {
+                guard let gust = o.gust, gust >= settings.gustThreshold, now.timeIntervalSince(o.time) <= 30 * 60 else { continue }
+                let c = IMOForecast.station(o.stationID)?.coordinate
+                let km = c.map { Geo.distanceKm($0, current.coordinate) } ?? o.distanceKm
+                if km <= settings.gustRadiusKm {
+                    gusts.append(Gust(id: "gv:\(o.stationID)", name: o.station, gust: gust, mean: o.wind, direction: o.direction,
+                                      km: km, coordinate: c, source: "vedur.is", time: o.time))
+                }
+            }
+            if let first = gusts.max(by: { $0.gust < $1.gust }) {
+                let risk = Risk.wind(mean: first.mean, gust: first.gust)
+                // Re-arms every 3 hours while the condition persists.
+                let bucket = Int(now.timeIntervalSince1970 / (3 * 3600))
+                let measuredAt = first.time.map { String(localized: " Misurata da vedur.is alle \(Fmt.time($0, in: .iceland)).") } ?? String(localized: " Stazione stradale Vegagerðin.")
+                events.append(AlertEvent(
+                    id: "\(first.id):\(bucket)", date: now, category: .wind, severity: risk.rawValue,
+                    title: String(localized: "Raffiche di \(Fmt.ms(first.gust)) a \(first.name)"),
+                    body: String(localized: "A \(Int(first.km)) km da te. Vento medio \(Fmt.ms(first.mean)) \(first.direction). \(Risk.windAdvice(risk))") + measuredAt,
+                    coordinate: first.coordinate, expires: now.addingTimeInterval(3 * 3600), group: first.id))
+            }
+        }
+
+        if settings.isOn(.arrival) {
+            for a in input.arrivals {
+                var parts: [String] = []
+                var risk = Risk.ok
+                if let o = a.measured {
+                    parts.append(String(localized: "Adesso a \(o.station): vento \(Fmt.ms(o.wind)), raffica \(Fmt.ms(o.gust)), \(Fmt.temp(o.temperature)) (vedur.is, \(Fmt.time(o.time, in: .iceland)))."))
+                    risk = max(risk, Risk.wind(mean: o.wind, gust: o.gust))
+                }
+                if let g = a.maxGust {
+                    parts.append(a.official
+                        ? String(localized: "Prossime 3 ore: vento fino a \(Fmt.ms(a.maxWind)), raffiche fino a \(Fmt.ms(g)) (previsione vedur.is).")
+                        : String(localized: "Prossime 3 ore: vento fino a \(Fmt.ms(a.maxWind)), raffiche fino a \(Fmt.ms(g)) (modello)."))
+                    risk = max(risk, Risk.wind(mean: a.maxWind, gust: g))
+                }
+                let warnings = input.warnings.filter { $0.covers(a.coordinate) && $0.isRelevant(at: now) }
+                if let w = warnings.max(by: { $0.color < $1.color }) {
+                    parts.append("\(w.color.label): \(w.headline).")
+                    risk = max(risk, w.color.risk)
+                }
+                guard !parts.isEmpty else { continue }
+                let day = Int(Calendar.iceland.startOfDay(for: now).timeIntervalSince1970)
+                events.append(AlertEvent(
+                    id: "arr:\(a.stopID):\(day)", date: now, category: .arrival, severity: risk.rawValue,
+                    title: String(localized: "In arrivo a \(a.name) (\(Int(a.distanceKm.rounded())) km)"),
+                    body: parts.joined(separator: " "),
+                    coordinate: a.coordinate, expires: now.addingTimeInterval(3 * 3600), group: "arr:\(a.stopID)"))
+            }
+        }
+
+        if let roads = input.roads, let current {
             if settings.isOn(.road), input.roadInfo == nil {
                 // Fallback when umferdin.is is unavailable: segments found through nearby road stations.
                 var seen = Set<Int>()
@@ -482,6 +556,7 @@ extension AlertEvent {
         case .aurora: return prefix == "aurora-now" || prefix.hasPrefix("seen") ? "aurora_now" : "aurora_soon"
         case .weatherWarning: return risk >= .warning ? "warning_urgent" : "warning"
         case .wind: return "wind"
+        case .arrival: return risk >= .warning ? "warning" : "info"
         case .road: return "road"
         case .quake: return "quake"
         case .safeTravel: return "info"

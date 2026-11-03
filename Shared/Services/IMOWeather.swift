@@ -112,6 +112,8 @@ enum IMOForecast {
     static let attribution = "vedur.is"
     static let sourceName = "vedur.is"
 
+    static func station(_ id: Int) -> StationForecast.Station? { stations.first { $0.id == id } }
+
     static let stations: [StationForecast.Station] = {
         guard let url = Bundle.main.url(forResource: "imo-stations", withExtension: "json"),
               let data = try? Data(contentsOf: url) else { return [] }

@@ -581,6 +581,18 @@ extension IMOForecast {
         return Fetched(value: first, date: date, isStale: (hourly?.isStale ?? true) && (ten?.isStale ?? true))
     }
 
+    /// Every vedur.is station within `radiusKm` that measured in the last 30 minutes
+    /// (10-minute measurements; automatic stations only), nearest first.
+    static func measurements(near c: Coordinate, radiusKm: Double) async -> [IMOObservation] {
+        let pool = stations.map { ($0, Geo.distanceKm(c, $0.coordinate)) }.filter { $0.1 <= radiusKm }.sorted { $0.1 < $1.1 }.prefix(20)
+        guard !pool.isEmpty else { return [] }
+        let km = Dictionary(pool.map { ($0.0.id, $0.1) }, uniquingKeysWith: { a, _ in a })
+        guard let answer = await tenMinute(ids: pool.map { $0.0.id }) else { return [] }
+        return IMOAutomatic.parse(answer.value, distances: km)
+            .filter { Date().timeIntervalSince($0.time) <= 30 * 60 }
+            .sorted { $0.distanceKm < $1.distanceKm }
+    }
+
     /// The latest 10-minute measurements of these stations (automatic ones only; others are simply absent).
     private static func tenMinute(ids: [Int]) async -> Fetched<Data>? {
         let key = "imo_aws10_v1_" + ids.map(String.init).joined(separator: "_")

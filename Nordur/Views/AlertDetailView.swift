@@ -121,6 +121,9 @@ struct AlertDetailView: View {
                 NavigationLink { TransportView() } label: { Label("Voli e traghetti", systemImage: "airplane.departure") }
             case .wind, .road, .speed:
                 NavigationLink { RoadsView() } label: { Label("Strade e stazioni", systemImage: "road.lanes") }
+            case .arrival:
+                NavigationLink { WarningsView() } label: { Label("Allerte vedur.is", systemImage: "exclamationmark.triangle") }
+                NavigationLink { RoadsView() } label: { Label("Strade e stazioni", systemImage: "road.lanes") }
             case .weatherWarning:
                 NavigationLink { WarningsView() } label: { Label("Tutte le allerte vedur.is", systemImage: "exclamationmark.triangle") }
             case .quake:

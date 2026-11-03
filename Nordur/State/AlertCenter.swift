@@ -313,6 +313,8 @@ final class AlertCenter: NSObject {
         let now = Date()
         var input = AlertInput()
         input.now = now
+        // What vedur.is published last: forecasts and measurements are fetched again only when new.
+        await IMOLive.refresh()
 
         let current = position ?? model?.location.coordinate ?? LocationManager.lastKnown
         let currentPlace = alertPlace(current: current)
@@ -384,6 +386,13 @@ final class AlertCenter: NSObject {
         if settings.isOn(.wind) || settings.isOn(.weatherWarning) || settings.isOn(.road) {
             await addTravelForecast(to: &input, place: currentPlace, now: now)
         }
+        // Gusts measured by vedur.is around you (10-minute measurements), with the road stations'.
+        if settings.isOn(.wind), let currentPlace {
+            input.measured = await IMOForecast.measurements(near: currentPlace.coordinate, radiusKm: settings.gustRadiusKm)
+        }
+        if settings.isOn(.arrival), let current, Coverage.iceland(current) {
+            input.arrivals = await arrivals(at: current, now: now)
+        }
 
         if settings.isOn(.flight), !settings.followedFlights.isEmpty {
             input.flights = (try? await TransportService.kefFlights().value) ?? []
@@ -394,18 +403,41 @@ final class AlertCenter: NSObject {
         return input
     }
 
-    /// Forecasts kept 30 minutes: the watch checks every few minutes.
-    @ObservationIgnored private var forecastCache: [String: (date: Date, forecast: Forecast)] = [:]
+    /// Today's trip stops you are getting close to (2–30 km): what vedur.is measures
+    /// there now, the forecast for the next 3 hours (once per stop and day).
+    private func arrivals(at current: Coordinate, now: Date) async -> [ArrivalCheck] {
+        let calendar = Calendar.iceland
+        let today = calendar.startOfDay(for: now)
+        var out: [ArrivalCheck] = []
+        for stop in TripStore.loadFromDisk() where calendar.startOfDay(for: stop.date) == today {
+            let km = Geo.distanceKm(current, stop.place.coordinate)
+            guard km >= 2, km <= 30 else { continue }
+            var check = ArrivalCheck(stopID: stop.id.uuidString, name: stop.place.name, coordinate: stop.place.coordinate, distanceKm: km)
+            if let fetched = try? await IMOForecast.observation(near: stop.place.coordinate) { check.measured = fetched.value }
+            if let forecast = await cachedForecast(stop.place.coordinate) {
+                let next = forecast.hours.filter { $0.date >= now.addingTimeInterval(-1800) && $0.date <= now.addingTimeInterval(3 * 3600) }
+                check.maxGust = next.compactMap(\.gust).max()
+                check.maxWind = next.compactMap(\.wind).max()
+                check.official = forecast.official?.covers(now.addingTimeInterval(3600)) == true
+            }
+            out.append(check)
+        }
+        return out
+    }
+
+    /// Forecasts kept until vedur.is issues a new one (else 30 minutes): the watch checks every few minutes.
+    @ObservationIgnored private var forecastCache: [String: (date: Date, stamp: String?, forecast: Forecast)] = [:]
 
     private func cachedForecast(_ c: Coordinate) async -> Forecast? {
         let key = c.key
-        if let hit = forecastCache[key], Date().timeIntervalSince(hit.date) < 1800 { return hit.forecast }
+        let stamp = IMOLive.current?.forecast
+        if let hit = forecastCache[key], Date().timeIntervalSince(hit.date) < 1800, stamp == nil || hit.stamp == stamp { return hit.forecast }
         let fetched: Forecast
         do { fetched = try await WeatherService.forecast(c).value } catch {
             ErrorLog.record("Allerte · previsioni", error, detail: key)
             return forecastCache[key]?.forecast
         }
-        forecastCache[key] = (Date(), fetched)
+        forecastCache[key] = (Date(), stamp, fetched)
         return fetched
     }
 

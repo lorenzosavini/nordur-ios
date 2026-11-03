@@ -60832,6 +60832,202 @@
           }
         }
       }
+    },
+    "In arrivo a una tappa" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Arriving at a stop"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ankunft an einer Etappe"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Arrivée à une étape"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Llegada a una etapa"
+          }
+        }
+      }
+    },
+    " Misurata da vedur.is alle %@." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : " Measured by vedur.is at %@."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : " Von vedur.is um %@ gemessen."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : " Mesurée par vedur.is à %@."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : " Medida por vedur.is a las %@."
+          }
+        }
+      }
+    },
+    " Stazione stradale Vegagerðin." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : " Vegagerðin road station."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : " Straßenstation von Vegagerðin."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : " Station routière Vegagerðin."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : " Estación vial de Vegagerðin."
+          }
+        }
+      }
+    },
+    "Adesso a %@: vento %@, raffica %@, %@ (vedur.is, %@)." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Now at %1$@: wind %2$@, gust %3$@, %4$@ (vedur.is, %5$@)."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jetzt in %1$@: Wind %2$@, Böe %3$@, %4$@ (vedur.is, %5$@)."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Maintenant à %1$@ : vent %2$@, rafale %3$@, %4$@ (vedur.is, %5$@)."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ahora en %1$@: viento %2$@, racha %3$@, %4$@ (vedur.is, %5$@)."
+          }
+        }
+      }
+    },
+    "Prossime 3 ore: vento fino a %@, raffiche fino a %@ (previsione vedur.is)." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Next 3 hours: wind up to %1$@, gusts up to %2$@ (vedur.is forecast)."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nächste 3 Stunden: Wind bis %1$@, Böen bis %2$@ (vedur.is-Vorhersage)."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "3 prochaines heures : vent jusqu'à %1$@, rafales jusqu'à %2$@ (prévision vedur.is)."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Próximas 3 horas: viento hasta %1$@, rachas hasta %2$@ (previsión de vedur.is)."
+          }
+        }
+      }
+    },
+    "Prossime 3 ore: vento fino a %@, raffiche fino a %@ (modello)." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Next 3 hours: wind up to %1$@, gusts up to %2$@ (model)."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nächste 3 Stunden: Wind bis %1$@, Böen bis %2$@ (Modell)."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "3 prochaines heures : vent jusqu'à %1$@, rafales jusqu'à %2$@ (modèle)."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Próximas 3 horas: viento hasta %1$@, rachas hasta %2$@ (modelo)."
+          }
+        }
+      }
+    },
+    "In arrivo a %@ (%lld km)" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Arriving at %1$@ (%2$lld km)"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ankunft in %1$@ (%2$lld km)"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Arrivée à %1$@ (%2$lld km)"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Llegando a %1$@ (%2$lld km)"
+          }
+        }
+      }
     }
   },
   "version" : "1.0"
