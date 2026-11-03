@@ -137,6 +137,8 @@ struct ConditionsProvider: AppIntentTimelineProvider {
         async let forecastResult = attempt { try await WeatherService.forecast(c).value }
         async let warningsResult = attempt { try await IMO.warnings().value }
         async let stateResult = attempt { try await AuroraStateService.load().value }
+        // "Now" as in the app: what the nearest vedur.is station measured, else the forecast.
+        async let observationResult = attempt { try await IMOForecast.observation(near: c) }
         let forecast = try? await forecastResult.get()
         let warnings = ((try? await warningsResult.get()) ?? []).filter { $0.covers(c) }
         let state = try? await stateResult.get()
@@ -144,17 +146,21 @@ struct ConditionsProvider: AppIntentTimelineProvider {
         if state == nil { kp = (try? await SpaceWeather.kpForecast().value) ?? [] }
 
         let current = forecast?.current
+        let observationFetched = await observationResult
+        var observation: IMOObservation?
+        if case .success(let fetched?) = observationFetched { observation = fetched.value }
+        let now = NowConditions(forecast: forecast, observation: observation)
         let slots = AuroraEngine.forecast(AuroraInputs.make(place: c, forecast: forecast, state: state, kp: kp, ovation: nil), hours: 24)
         let best = AuroraEngine.best(slots, within: 24)
         return ConditionsEntry(
             date: Date(),
             placeName: name,
-            temperature: current?.temperature_2m,
+            temperature: now?.temperature ?? current?.temperature_2m,
             code: current?.weather_code,
             isDay: (current?.is_day ?? 1) == 1,
-            wind: current?.wind_speed_10m,
-            gust: current?.wind_gusts_10m,
-            windDirection: current?.wind_direction_10m,
+            wind: now?.wind ?? current?.wind_speed_10m,
+            gust: now?.gust ?? current?.wind_gusts_10m,
+            windDirection: now?.direction ?? current?.wind_direction_10m,
             maxGust12h: forecast?.upcomingHours(12).compactMap(\.gust).max(),
             warning: warnings.first,
             warningCount: warnings.count,

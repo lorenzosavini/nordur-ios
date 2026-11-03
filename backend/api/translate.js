@@ -79,8 +79,12 @@ const FIXES = {
     [/\bdella diga\b/gi, "del dicco"],
     [/\bla fila del cratere\b/gi, "l'allineamento di crateri"],
     [/\bfila del cratere\b/gi, "allineamento di crateri"],
-    [/\bdel Met Office islandese\b/g, "di Veðurstofa Íslands"],
-    [/\bMet Office islandese\b/g, "Veðurstofa Íslands"],
+    [/\bdel Met Office islandese\b/g, "di vedur.is"],
+    [/\bMet Office islandese\b/g, "vedur.is"],
+    // Weather: "showers" are not "docce".
+    [/\b(alcune |poche |sparse |deboli )?docce\b/gi, (m, a) => `${({ "alcune ": "alcuni ", "poche ": "pochi ", "sparse ": "sparsi ", "deboli ": "deboli " })[(a || "").toLowerCase()] || ""}rovesci`],
+    [/\bdoccia\b/gi, "rovescio"],
+    [/\bpiogge molto leggere\b/gi, "deboli piogge"],
   ],
 };
 
@@ -90,14 +94,26 @@ export function applyFixes(to, text) {
   return out;
 }
 
-/** MyMemory (free, no key): the language of the source is detected. */
+// MyMemory refuses for the rest of the day once the free allowance is used: then it
+// is not called again for an hour (the texts stay in their language meanwhile).
+let freeBlockedUntil = 0;
+/** Icelandic letters: the source language is given, not guessed (short texts were misread). */
+export const isIcelandic = (text) => /[þðæÞÐÆ]|\b(og|en|með|hiti|stig|átt|rigning|skúrir|él|snjókoma|hvass)\b/i.test(text);
+
+/** MyMemory (free, no key). */
 async function freeTranslate(to, text) {
+  if (Date.now() < freeBlockedUntil) throw new Error("MyMemory paused");
   const parts = [];
+  const from = isIcelandic(text) ? "is" : "Autodetect";
   for (const piece of chunks(text)) {
-    const url = `https://api.mymemory.translated.net/get?${new URLSearchParams({ q: piece, langpair: `Autodetect|${to}` })}`;
+    const url = `https://api.mymemory.translated.net/get?${new URLSearchParams({ q: piece, langpair: `${from}|${to}` })}`;
     const res = await fetch(url, { signal: AbortSignal.timeout(15000) });
     const json = await res.json().catch(() => null);
-    if (!res.ok || !json || json.quotaFinished || json.responseStatus !== 200) throw new Error(`MyMemory ${json?.responseStatus || res.status}`);
+    if (res.status === 403 || res.status === 429 || json?.quotaFinished || /USED ALL AVAILABLE FREE TRANSLATIONS/i.test(json?.responseData?.translatedText || "")) {
+      freeBlockedUntil = Date.now() + 3600e3;
+      throw new Error("MyMemory quota");
+    }
+    if (!res.ok || !json || json.responseStatus !== 200) throw new Error(`MyMemory ${json?.responseStatus || res.status}`);
     const detected = String(json.responseData?.detectedLanguage || "").slice(0, 2);
     parts.push(detected === to ? piece : String(json.responseData?.translatedText || piece));
   }

@@ -61168,6 +61168,34 @@
           }
         }
       }
+    },
+    "Misure della stazione vedur.is %@ a %lld km. Cielo e min/max: previsione." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Measured at vedur.is station %1$@, %2$lld km away. Sky and min/max: forecast."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Messwerte der vedur.is-Station %1$@ in %2$lld km. Himmel und Min/Max: Vorhersage."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mesures de la station vedur.is %1$@ à %2$lld km. Ciel et min/max : prévision."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mediciones de la estación vedur.is %1$@ a %2$lld km. Cielo y mín/máx: previsión."
+          }
+        }
+      }
     }
   },
   "version" : "1.0"

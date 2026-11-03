@@ -183,9 +183,9 @@ struct TodayView: View {
     }
 
     private var weatherStatus: String {
-        guard let current = model.forecast?.value.current else { return String(localized: "Previsioni ora per ora") }
-        let info = WeatherCode.describe(current.weather_code, isDay: current.is_day != 0)
-        return "\(Fmt.temp(current.temperature_2m)) · \(info.text)"
+        guard let now = model.now else { return String(localized: "Previsioni ora per ora") }
+        let info = WeatherCode.describe(now.code, isDay: now.isDay)
+        return "\(Fmt.temp(now.temperature)) · \(info.text)"
     }
 
     // MARK: Top bar
@@ -256,7 +256,8 @@ struct TodayView: View {
             let info = WeatherCode.describe(current.weather_code, isDay: current.is_day != 0)
             // Most reliable first: what a vedur.is station measured in the last 75 minutes,
             // else the forecast for now (vedur.is where it has a station, the model elsewhere).
-            let measured = model.observation?.value.flatMapRecent(75 * 60)
+            let nowValues = model.now
+            let measured = nowValues?.measured
             VStack(alignment: .leading, spacing: 12) {
                 HStack(spacing: 10) {
                     if let measured {
@@ -267,7 +268,7 @@ struct TodayView: View {
                 }
                 HStack(alignment: .top, spacing: 16) {
                     HStack(alignment: .top, spacing: 2) {
-                        Text(Fmt.degrees(measured?.temperature ?? current.temperature_2m))
+                        Text(Fmt.degrees(nowValues?.temperature ?? current.temperature_2m))
                             .font(.metric(128, .semibold))
                             .foregroundStyle(Theme.text)
                             .padding(.top, -14)
@@ -276,7 +277,7 @@ struct TodayView: View {
                     VStack(alignment: .leading, spacing: 8) {
                         Text(info.text.uppercased()).font(.display(24, .semibold)).foregroundStyle(Theme.text)
                             .lineLimit(2).minimumScaleFactor(0.7)
-                        dataLine(String(localized: "PERCEPITA"), Fmt.temp(current.apparent_temperature))
+                        dataLine(String(localized: "PERCEPITA"), Fmt.temp(nowValues?.apparent ?? current.apparent_temperature))
                         dataLine(String(localized: "MIN / MAX"), "\(Fmt.temp(today?.minTemp)) / \(Fmt.temp(today?.maxTemp))")
                         dataLine(String(localized: "PIOGGIA DA ORA"), Fmt.number(today?.precipitation, decimals: 1, unit: "mm"))
                     }
@@ -284,22 +285,22 @@ struct TodayView: View {
                     Spacer(minLength: 0)
                 }
                 ReadingGrid(items: [
-                    Reading(label: String(localized: "Vento"), value: Fmt.wind(measured?.wind ?? current.wind_speed_10m), unit: Fmt.windUnit,
-                            note: (measured?.degrees ?? current.wind_direction_10m) == nil ? nil : String(localized: "da \(Fmt.compass(measured?.degrees ?? current.wind_direction_10m))"), size: 28),
-                    Reading(label: String(localized: "Raffiche"), value: Fmt.wind(measured?.gust ?? current.wind_gusts_10m), unit: Fmt.windUnit,
-                            tint: windTint(measured?.gust ?? current.wind_gusts_10m), size: 28),
+                    Reading(label: String(localized: "Vento"), value: Fmt.wind(nowValues?.wind), unit: Fmt.windUnit,
+                            note: nowValues?.direction == nil ? nil : String(localized: "da \(Fmt.compass(nowValues?.direction))"), size: 28),
+                    Reading(label: String(localized: "Raffiche"), value: Fmt.wind(nowValues?.gust), unit: Fmt.windUnit,
+                            tint: windTint(nowValues?.gust), size: 28),
                     // Measured: the rain of the last hour (mm); forecast: the rate now (mm/h).
                     measured?.precipitation != nil
                         ? Reading(label: String(localized: "Pioggia 1 h"), value: Fmt.number(measured?.precipitation, decimals: 1), unit: "mm", size: 28)
                         : Reading(label: String(localized: "Precip."), value: Fmt.number(current.precipitation, decimals: 1), unit: "mm/h", size: 28),
-                    Reading(label: String(localized: "Nuvole"), value: Fmt.number(measured?.cloud ?? current.cloud_cover), unit: "%", size: 28),
-                    Reading(label: String(localized: "Pressione"), value: Fmt.number(measured?.pressure ?? current.pressure_msl), unit: "hPa", size: 28),
-                    Reading(label: String(localized: "Umidità"), value: Fmt.number(measured?.humidity ?? current.relative_humidity_2m), unit: "%", size: 28),
+                    Reading(label: String(localized: "Nuvole"), value: Fmt.number(nowValues?.cloud), unit: "%", size: 28),
+                    Reading(label: String(localized: "Pressione"), value: Fmt.number(nowValues?.pressure), unit: "hPa", size: 28),
+                    Reading(label: String(localized: "Umidità"), value: Fmt.number(nowValues?.humidity), unit: "%", size: 28),
                 ], columns: 3)
                 .overlay(alignment: .top) { Rule() }
                 .overlay(alignment: .bottom) { Rule() }
                 if let measured {
-                    Text(String(localized: "Misure della stazione vedur.is \(measured.station) a \(Int(measured.distanceKm.rounded())) km. Cielo, percepita e min/max: previsione."))
+                    Text(String(localized: "Misure della stazione vedur.is \(measured.station) a \(Int(measured.distanceKm.rounded())) km. Cielo e min/max: previsione."))
                         .font(.app(.caption2)).foregroundStyle(Theme.faint).fixedSize(horizontal: false, vertical: true)
                 }
                 FreshnessLabel(date: fetched.date, isStale: fetched.isStale, source: fetched.value.sourceLine)
@@ -350,21 +351,26 @@ struct TodayView: View {
     // MARK: Wind
 
     @ViewBuilder private var windSection: some View {
-        if let current = model.forecast?.value.current {
+        if let now = model.now {
             VStack(alignment: .leading, spacing: 14) {
-                SectionLabel(title: String(localized: "Vento"), trailing: Risk.wind(mean: current.wind_speed_10m, gust: current.wind_gusts_10m).label.uppercased(),
-                             trailingColor: Risk.wind(mean: current.wind_speed_10m, gust: current.wind_gusts_10m).color)
+                SectionLabel(title: String(localized: "Vento"), trailing: Risk.wind(mean: now.wind, gust: now.gust).label.uppercased(),
+                             trailingColor: Risk.wind(mean: now.wind, gust: now.gust).color)
+                if let m = now.measured {
+                    SourceBadge(origin: .measured, detail: "\(m.station) · \(Fmt.time(m.time, in: .iceland))")
+                } else if let f = model.forecast?.value {
+                    SourceBadge(origin: f.origin(at: Date()), detail: f.official?.station.name)
+                }
                 HStack(alignment: .center, spacing: 20) {
-                    WindDial(direction: current.wind_direction_10m, speed: current.wind_speed_10m, gust: current.wind_gusts_10m, size: 118)
+                    WindDial(direction: now.direction, speed: now.wind, gust: now.gust, size: 118)
                     VStack(alignment: .leading, spacing: 12) {
                         HStack(alignment: .firstTextBaseline, spacing: 6) {
-                            Text(Fmt.wind(current.wind_gusts_10m)).font(.metric(48, .bold)).foregroundStyle(windTint(current.wind_gusts_10m))
+                            Text(Fmt.wind(now.gust)).font(.metric(48, .bold)).foregroundStyle(windTint(now.gust))
                             VStack(alignment: .leading, spacing: 0) {
                                 Text("\(Fmt.windUnit.uppercased()) RAFFICHE").font(.mono(9.5)).foregroundStyle(Theme.dim)
-                                Text("DA \(Fmt.compass(current.wind_direction_10m))").font(.mono(9.5)).foregroundStyle(Theme.faint)
+                                Text("DA \(Fmt.compass(now.direction))").font(.mono(9.5)).foregroundStyle(Theme.faint)
                             }
                         }
-                        GustScale(mean: current.wind_speed_10m, gust: current.wind_gusts_10m)
+                        GustScale(mean: now.wind, gust: now.gust)
                     }
                 }
                 Text("Sopra \(Fmt.ms(25)) le portiere si aprono a fatica e i mezzi alti rischiano di ribaltarsi: tieni la portiera con due mani.")

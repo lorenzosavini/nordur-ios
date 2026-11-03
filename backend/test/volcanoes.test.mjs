@@ -37,6 +37,15 @@ test("free translations: volcano terms corrected", async () => {
   assert.equal(applyFixes("it", "Disordini vulcanici intensificati"), "Attività vulcanica molto aumentata");
   assert.equal(applyFixes("it", "che una diga magmatica si propagherà verso la fila del cratere Sundhnúkur"),
     "che un dicco magmatico si propagherà verso l'allineamento di crateri Sundhnúkur");
-  assert.equal(applyFixes("it", "La valutazione dei pericoli del Met Office islandese"), "La valutazione dei pericoli di Veðurstofa Íslands");
+  assert.equal(applyFixes("it", "La valutazione dei pericoli del Met Office islandese"), "La valutazione dei pericoli di vedur.is");
+  assert.equal(applyFixes("it", "girando a sud-ovest 5-10 con alcune docce."), "girando a sud-ovest 5-10 con alcuni rovesci.");
+  assert.equal(applyFixes("it", "qualche doccia a nord"), "qualche rovescio a nord");
   assert.equal(applyFixes("de", "unverändert"), "unverändert");
+});
+
+test("Icelandic texts are recognised", async () => {
+  const { isIcelandic } = await import("../api/translate.js");
+  assert.equal(isIcelandic("Sunnan 8-15 m/s og rigning."), true);
+  assert.equal(isIcelandic("Suðvestan 5-10 m/s"), true);
+  assert.equal(isIcelandic("Heightened volcanic unrest"), false);
 });

@@ -55,6 +55,8 @@ final class AppModel {
     var stationForecast: Fetched<StationForecast>?
     /// The latest IMO measurement near the place ("Adesso": wind, measured gust, temperature).
     var observation: Fetched<IMOObservation>?
+    /// "Now" for every screen: measured by vedur.is when recent, else the forecast.
+    var now: NowConditions? { NowConditions(forecast: forecast?.value, observation: observation?.value) }
     var marine: Fetched<Marine>?
     var air: Fetched<AirQuality>?
     var warnings: Fetched<[WeatherWarning]>?

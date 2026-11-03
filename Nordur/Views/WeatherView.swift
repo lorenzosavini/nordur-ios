@@ -14,8 +14,8 @@ struct WeatherView: View {
                         PlaceHeader(size: 34)
                     }
                     HeroHeader(hero: .weather, eyebrow: model.forecast?.value.official != nil ? String(localized: "vedur.is") : String(localized: "Modello"),
-                               title: model.forecast?.value.current.map { WeatherCode.describe($0.weather_code, isDay: $0.is_day != 0).text } ?? String(localized: "Previsioni"),
-                               subtitle: model.forecast?.value.current.map { String(localized: "\(Fmt.temp($0.temperature_2m)) · vento \(Fmt.ms($0.wind_speed_10m)), raffiche \(Fmt.ms($0.wind_gusts_10m))") },
+                               title: model.now.map { WeatherCode.describe($0.code, isDay: $0.isDay).text } ?? String(localized: "Previsioni"),
+                               subtitle: model.now.map { String(localized: "\(Fmt.temp($0.temperature)) · vento \(Fmt.ms($0.wind)), raffiche \(Fmt.ms($0.gust))") },
                                height: 170)
                         .padding(.horizontal, -18)
                     AdaptiveColumns(spacing: 30) {
