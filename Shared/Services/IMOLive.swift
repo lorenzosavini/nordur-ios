@@ -16,35 +16,42 @@ enum IMOLive {
     }
 
     private final class Box: @unchecked Sendable {
-        let lock = NSLock()
-        var stamps: Stamps?
-        var at: Date?
+        private let lock = NSLock()
+        private var stamps: Stamps?
+        private var at: Date?
+
+        /// Synchronous, so the lock is never held across an await.
+        func read() -> (stamps: Stamps?, at: Date?) {
+            lock.lock(); defer { lock.unlock() }
+            return (stamps, at)
+        }
+
+        func write(_ new: Stamps) {
+            lock.lock(); defer { lock.unlock() }
+            stamps = new
+            at = Date()
+        }
     }
     private static let box = Box()
 
     static var current: Stamps? {
-        box.lock.lock(); defer { box.lock.unlock() }
+        let (stamps, at) = box.read()
         // An answer older than 10 minutes says nothing about now.
-        guard let at = box.at, Date().timeIntervalSince(at) < 600 else { return nil }
-        return box.stamps
+        guard let at, Date().timeIntervalSince(at) < 600 else { return nil }
+        return stamps
     }
 
     /// Asks the service (at most every 50 seconds); nil when it does not answer.
     @discardableResult
     static func refresh(force: Bool = false) async -> Stamps? {
-        box.lock.lock()
-        let recent = box.at.map { Date().timeIntervalSince($0) < 50 } ?? false
-        let cached = box.stamps
-        box.lock.unlock()
+        let (cached, at) = box.read()
+        let recent = at.map { Date().timeIntervalSince($0) < 50 } ?? false
         if recent && !force { return cached }
         guard let url = URL(string: "https://nordur-api.vercel.app/api/live"),
               let (data, response) = try? await URLSession.shared.data(from: url),
               (response as? HTTPURLResponse)?.statusCode == 200,
               let stamps = try? JSONDecoder().decode(Stamps.self, from: data) else { return nil }
-        box.lock.lock()
-        box.stamps = stamps
-        box.at = Date()
-        box.lock.unlock()
+        box.write(stamps)
         return stamps
     }
 
