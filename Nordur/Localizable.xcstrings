@@ -54392,6 +54392,34 @@
           }
         }
       }
+    },
+    "Entro %lld km da %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Within %1$lld km of %2$@"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Im Umkreis von %1$lld km um %2$@"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "À moins de %1$lld km de %2$@"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A menos de %1$lld km de %2$@"
+          }
+        }
+      }
     }
   },
   "version" : "1.0"

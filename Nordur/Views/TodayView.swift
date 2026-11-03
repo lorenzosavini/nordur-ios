@@ -22,12 +22,15 @@ struct TodayView: View {
                             topBar
                             PlaceHeader(size: 44)
                         }
+                        // Fixed-width chrome: grows with Dynamic Type only up to a point,
+                        // the content below keeps growing.
+                        .dynamicTypeSize(...DynamicTypeSize.xLarge)
                         // A halo of the background colour keeps the text legible over the photo.
                         .shadow(color: Theme.bg.opacity(0.9), radius: 6)
                         .shadow(color: Theme.bg.opacity(0.6), radius: 14)
                         NoticeBanner()
                         statusBanner
-                        now
+                        now.dynamicTypeSize(...DynamicTypeSize.xxxLarge)
                     }
                     .background(alignment: .top) {
                         PlaceBackdrop()

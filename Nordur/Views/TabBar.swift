@@ -130,10 +130,15 @@ struct NordurTabBar: View {
                     .buttonStyle(.plain)
                     .accessibilityLabel(item.title)
                     .accessibilityAddTraits(selected ? .isSelected : [])
+                    .accessibilityShowsLargeContentViewer {
+                        Label(item.title, systemImage: item.symbol)
+                    }
                 }
             }
         }
         .background(Theme.bg.ignoresSafeArea(edges: .bottom))
+        // Like the system tab bar: fixed size; a long press shows the large label.
+        .dynamicTypeSize(...DynamicTypeSize.large)
     }
 }
 
@@ -159,6 +164,7 @@ struct ScreenHeader<Trailing: View>: View {
             Rule(color: Theme.rule, height: 2)
         }
         .padding(.top, 6)
+        .dynamicTypeSize(...DynamicTypeSize.xxLarge)
     }
 }
 

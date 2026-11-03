@@ -116,7 +116,8 @@ struct BathsView: View {
                     }
                 }
             } header: {
-                Text(String(localized: "\(shown.count) entro \(Int(radiusKm)) km da \(place.name)")).pinnedHeader()
+                Text(model.baths == nil ? String(localized: "Entro \(Int(radiusKm)) km da \(place.name)")
+                                        : String(localized: "\(shown.count) entro \(Int(radiusKm)) km da \(place.name)")).pinnedHeader()
             } footer: {
                 VStack(alignment: .leading, spacing: 6) {
                     Text("Le piscine comunali (sundlaug) sono il modo islandese di stare al caldo: doccia senza costume prima di entrare, è obbligatoria. Orari e ingresso a pagamento solo quando sono indicati su OpenStreetMap: verifica sul sito del posto, soprattutto nei festivi.")

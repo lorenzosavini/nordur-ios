@@ -693,6 +693,7 @@ struct HeroHeader: View {
         }
         .frame(height: height)
         .clipped()
+        .dynamicTypeSize(...DynamicTypeSize.xxLarge)
     }
 }
 
