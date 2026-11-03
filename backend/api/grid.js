@@ -62,7 +62,9 @@ async function fetchGrid() {
 
 /** The Open-Meteo grid, refreshed hourly (its models update about once an hour). */
 async function baseGrid() {
-  if (!memory || Date.now() - memory.at > TTL) {
+  // Refreshed at each new hour (Open-Meteo's models update about hourly): every server
+  // instance then agrees on the grid's version, which is named after that hour.
+  if (!memory || Date.now() - memory.at > TTL || hourOf(memory.at) !== hourOf(Date.now())) {
     try {
       memory = { at: Date.now(), body: await fetchGrid() };
       await writeObject(CACHE, memory, { ttl: 2 * 86400 }).catch((e) => console.error("grid cache", e.message));
@@ -94,7 +96,9 @@ async function liveStamps() {
   return merged;
 }
 
-const gridVersion = (baseAt, issued, measured) => `${Math.round((baseAt || 0) / 1000)}.${issued || "-"}.${measured || "-"}`.replace(/[^0-9A-Za-z.-]/g, "");
+const hourOf = (ms) => Math.floor(ms / 3600e3);
+// Same on every instance: the model's hour, IMO's issue time, the latest measurement.
+const gridVersion = (hour, issued, measured) => `${hour}.${issued || "-"}.${measured || "-"}`.replace(/[^0-9A-Za-z.-]/g, "");
 
 async function correctedGrid() {
   const base = await baseGrid();
@@ -116,7 +120,8 @@ async function correctedGrid() {
   if (st.obs10 && measurements?.stamp !== st.obs10) {
     try { measurements = { stamp: st.obs10, map: await fetchAllAWS() }; } catch (e) { console.error("imo aws", e.message); }
   }
-  const version = gridVersion(base.at, imoForecasts?.issued, measurements?.stamp);
+  // A stored copy (Open-Meteo down) keeps its own hour.
+  const version = gridVersion(hourOf(base.failed ? base.at : Date.now()), imoForecasts?.issued, measurements?.stamp);
   if (corrected?.version === version) return corrected;
   const lats = steps(SOUTH, NORTH, LAT_STEP), lons = steps(WEST, EAST, LON_STEP);
   const r = correctGrid(base.body, lats, lons, STATIONS, imoForecasts?.map || new Map(), measurements?.map || new Map(), Math.round(Date.now() / 1000));
@@ -137,7 +142,7 @@ export default async function handler(req, res) {
   if (params.get("live")) {
     const st = await liveStamps();
     res.setHeader("Cache-Control", "public, s-maxage=60, stale-while-revalidate=60");
-    return send(res, 200, { ...st, grid: gridVersion(memory?.at, st.forecast, st.obs10), checked: new Date(stamps.at).toISOString() });
+    return send(res, 200, { ...st, grid: gridVersion(hourOf(Date.now()), st.forecast, st.obs10), checked: new Date(stamps.at).toISOString() });
   }
   let grid;
   try {
