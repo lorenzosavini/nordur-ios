@@ -41,7 +41,7 @@ Answer with JSON only: {"translations": [...]} with exactly one string per input
 }
 
 // Bumped when the brief changes, so texts are translated again with it (v2: volcano and forecast glossary).
-const BRIEF_VERSION = "2";
+const BRIEF_VERSION = "3";
 const sha = (to, text) => crypto.createHash("sha1").update(`${BRIEF_VERSION}\n${to}\n${text}`).digest("hex");
 
 /** Texts translated now (no cache), for the admin panel's notices. */
@@ -69,6 +69,27 @@ export function chunks(text, size = 450) {
   return out;
 }
 
+// MyMemory ignores the brief: its usual mistakes on volcano and forecast terms
+// are corrected afterwards (only the free translations).
+const FIXES = {
+  it: [
+    [/\b[Dd]isordini vulcanici( intensificati)?/g, (m, x) => (m[0] === "D" ? "A" : "a") + (x ? "ttività vulcanica molto aumentata" : "ttività vulcanica sopra il normale")],
+    [/\b(una |la |le )?dig(a|he) magmatic(a|he)\b/gi, (m, art) => `${art ? (art.trim().toLowerCase() === "le" ? "i " : art.trim().toLowerCase() === "la" ? "il " : "un ") : ""}dicc${/he$/i.test(m) ? "hi" : "o"} magmatic${/he$/i.test(m) ? "i" : "o"}`],
+    [/\bregione della diga\b/gi, "zona del dicco"],
+    [/\bdella diga\b/gi, "del dicco"],
+    [/\bla fila del cratere\b/gi, "l'allineamento di crateri"],
+    [/\bfila del cratere\b/gi, "allineamento di crateri"],
+    [/\bdel Met Office islandese\b/g, "di Veðurstofa Íslands"],
+    [/\bMet Office islandese\b/g, "Veðurstofa Íslands"],
+  ],
+};
+
+export function applyFixes(to, text) {
+  let out = text;
+  for (const [re, by] of FIXES[to] || []) out = out.replace(re, by);
+  return out;
+}
+
 /** MyMemory (free, no key): the language of the source is detected. */
 async function freeTranslate(to, text) {
   const parts = [];
@@ -80,7 +101,7 @@ async function freeTranslate(to, text) {
     const detected = String(json.responseData?.detectedLanguage || "").slice(0, 2);
     parts.push(detected === to ? piece : String(json.responseData?.translatedText || piece));
   }
-  return parts.join(" ");
+  return applyFixes(to, parts.join(" "));
 }
 
 async function claude(to, texts) {

@@ -28,8 +28,8 @@ final class Translator {
         }
     }
 
-    /// v2: the backend's brief gained the volcano and forecast glossary.
-    private func key(_ text: String) -> String { "\(language)|v2|\(text)" }
+    /// v3: volcano and forecast terms corrected on the backend.
+    private func key(_ text: String) -> String { "\(language)|v3|\(text)" }
 
     /// The cached translation, if any.
     func cached(_ text: String) -> String? { cache[key(text)] }

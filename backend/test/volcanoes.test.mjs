@@ -31,3 +31,12 @@ test("combined answer", () => {
   assert.equal(body.volcanoes.find((v) => v.code === "KAT").report, null);
   assert.ok(JSON.stringify(body).length < 20000);
 });
+
+test("free translations: volcano terms corrected", async () => {
+  const { applyFixes } = await import("../api/translate.js");
+  assert.equal(applyFixes("it", "Disordini vulcanici intensificati"), "Attività vulcanica molto aumentata");
+  assert.equal(applyFixes("it", "che una diga magmatica si propagherà verso la fila del cratere Sundhnúkur"),
+    "che un dicco magmatico si propagherà verso l'allineamento di crateri Sundhnúkur");
+  assert.equal(applyFixes("it", "La valutazione dei pericoli del Met Office islandese"), "La valutazione dei pericoli di Veðurstofa Íslands");
+  assert.equal(applyFixes("de", "unverändert"), "unverändert");
+});
