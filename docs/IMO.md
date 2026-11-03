@@ -100,3 +100,25 @@ L'app cita sempre la fonte:
    - previsioni 20 minuti, osservazioni 10 minuti;
    - la copia salvata resta disponibile offline, come per gli altri servizi.
 6. **Test**: `Tests/EngineTests/main.swift` verifica parsing, interpolazione e scelta della stazione su campioni reali del 3/11/2026.
+
+## Tutto il resto che vedur.is pubblica (Parte 6, 3/11/2026)
+
+Oltre a previsioni per stazione, allerte (CAP) e terremoti, l'app ora usa:
+
+| Dato | Fonte | Dove nell'app | Aggiornamento |
+|---|---|---|---|
+| **Previsioni scritte dai meteorologi**: Islanda (36 ore e prossimi giorni, con la tendenza), area della capitale, le 10 regioni (30–39: Miðhálendið … Suðausturland), situazione generale, 9 zone di mare (51–59) | `xmlweather.vedur.is/?type=txt` | Meteo: il testo della regione del luogo; pagina «Previsioni dei meteorologi» con tutti i testi | 30 min |
+| **Osservazione oraria completa**: anche `FX` (vento massimo dell'ora), `TD`, e nelle stazioni con personale `W`, `V` (visibilità), `N` (nuvolosità), `SND`/`SNC` (neve e suolo), `SED` (mare) | `xmlweather.vedur.is/?type=obs` | Blocco «Adesso» in Oggi e Meteo | 10 min |
+| **Misure ogni 10 minuti** delle stazioni automatiche (vento, raffica, temperatura, umidità, rugiada, pressione) | `api.vedur.is/weather/observations/aws/10min/latest` | Blocco «Adesso» (le più recenti vincono, il resto dall'osservazione oraria) | 5 min |
+| **Umidità prevista**: dalla temperatura e dal punto di rugiada IMO (formula di Magnus) | previsione per stazione (`T`, `TD`) | «Adesso» delle previsioni | — |
+| **Stato dei vulcani**: livello di allerta IMO (VALS), codice colore per l'aviazione (VONA), dal quando, e il bollettino settimanale | `api.vedur.is/volcanoes` (`/volcanoes`, `/vwr`) tramite nordur-api `/api/volcanoes` (i bollettini sono 1 MB: il server li riduce a ~10 KB); senza server, direttamente `api.vedur.is` (solo i codici) | Vulcani e terremoti: «Stato dei vulcani» | 30 min |
+
+- **Regione del luogo:** ogni stazione di `imo-stations.json` ha il campo `area`, preso dal link ufficiale della stazione su vedur.is (`/areas/<regione>/`). Il luogo prende la regione della stazione più vicina entro 60 km.
+- **Lingua:** i testi di Islanda, prossimi giorni e situazione generale partono dalla versione inglese scritta da IMO (testi 7, 27, 42). Regioni e mare esistono solo in islandese e vengono tradotti dal servizio di traduzione di nordur-api. I nomi dei luoghi non vengono tradotti.
+
+### Cosa di vedur.is resta fuori, e perché
+
+- **`RTE` (temperatura della strada):** è sempre vuoto nelle stazioni IMO; le stazioni stradali sono di Vegagerðin e l'app le mostra già nella sezione Strade.
+- **Dispersione dei gas (`api.vedur.is/dispersion`):** le simulazioni pubbliche sono scenari tecnici, senza una previsione per località utilizzabile in automatico. Resta il link alla previsione dei gas vulcanici.
+- **Ghiacciai (`/glaciers`), GIS, EPOS, Meteoalarm:** dati scientifici (bilancio di massa, fronti glaciali, sismologia grezza) o un doppione delle allerte CAP già mostrate.
+- **Dati storici (`/rodeo`, medie mensili e annuali):** non servono a chi viaggia.

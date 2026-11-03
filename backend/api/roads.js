@@ -10,6 +10,7 @@ import { fetchWithRetry } from "../lib/fetch.js";
 import { send, readObject, writeObject } from "../lib/core.js";
 import { safeTravel } from "../lib/safetravel.js";
 import { tollsHandler } from "../lib/tolls.js";
+import { volcanoesHandler } from "../lib/volcanoes.js";
 
 const ENDPOINT = "https://umferdin.is/graphql";
 const TTL = 5 * 60e3;
@@ -235,6 +236,8 @@ export default async function handler(req, res) {
   const refresh = params.get("refresh") === "1";
   // /api/tolls: tolls, toll tunnels and paid parking (lib/tolls.js), on this function: the Hobby plan allows 12.
   if (params.get("tolls")) return tollsHandler(req, res, send);
+  // /api/volcanoes: state of the volcanoes from Veðurstofa Íslands (lib/volcanoes.js).
+  if (params.get("volcanoes")) return volcanoesHandler(res, send);
   if (params.get("source") === "safetravel") return safeTravel(res);
   if (params.get("shops")) return osm(res, "shops", refresh);
   if (params.get("osm")) {

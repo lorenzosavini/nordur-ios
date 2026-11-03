@@ -20,6 +20,10 @@
     {
       "source": "/api/tolls",
       "destination": "/api/roads?tolls=1"
+    },
+    {
+      "source": "/api/volcanoes",
+      "destination": "/api/roads?volcanoes=1"
     }
   ],
   "crons": [

@@ -97,9 +97,15 @@ enum WeatherService {
         var current = f.current
         let now = Date().timeIntervalSince1970
         if let o = f.current, let i = h.time.firstIndex(where: { abs(TimeInterval($0) - now) <= 1800 }), blend[h.time[i]] != nil {
+            // Humidity from IMO's temperature and dew point of the step nearest now.
+            let step = s.hours.min { abs($0.date.timeIntervalSince1970 - now) < abs($1.date.timeIntervalSince1970 - now) }
+            let humidity = step.flatMap { st -> Double? in
+                guard let t = st.temperature, let td = st.dewPoint else { return nil }
+                return IMOAutomatic.humidity(temperature: t, dewPoint: td)
+            }
             current = Forecast.Current(
                 time: o.time, temperature_2m: temp[i] ?? o.temperature_2m, apparent_temperature: apparent[i] ?? o.apparent_temperature,
-                relative_humidity_2m: o.relative_humidity_2m, precipitation: precip[i] ?? o.precipitation, snowfall: o.snowfall,
+                relative_humidity_2m: humidity ?? o.relative_humidity_2m, precipitation: precip[i] ?? o.precipitation, snowfall: o.snowfall,
                 weather_code: code[i] ?? o.weather_code, cloud_cover: cloud[i] ?? o.cloud_cover, pressure_msl: o.pressure_msl,
                 wind_speed_10m: wind[i] ?? o.wind_speed_10m, wind_direction_10m: dir[i] ?? o.wind_direction_10m,
                 wind_gusts_10m: max(o.wind_gusts_10m ?? 0, wind[i] ?? 0), is_day: o.is_day)
@@ -467,7 +473,8 @@ extension IMOForecast {
         if let cached = DiskCache.read(key), Date().timeIntervalSince(cached.date) < fresh {
             return Fetched(value: String(decoding: cached.data, as: UTF8.self), date: cached.date, isStale: false)
         }
-        var query = ["op_w": "xml", "type": type, "lang": "en", "view": "xml", "ids": list, "params": params]
+        var query = ["op_w": "xml", "type": type, "lang": "en", "view": "xml", "ids": list]
+        if !params.isEmpty { query["params"] = params }
         for (k, v) in extra { query[k] = v }
         let url = try HTTP.url("https://xmlweather.vedur.is/", query)
         return try await HTTP.get(url, cacheKey: key).map { String(decoding: $0, as: UTF8.self) }
@@ -531,18 +538,59 @@ extension IMOForecast {
         return Fetched(value: best, date: all.date, isStale: all.isStale)
     }
 
-    /// The latest observation among the stations nearest the place (one request): the
-    /// nearest with a measurement of the last two hours.
+    /// "Now": the latest measurement among the three stations nearest the place
+    /// (within 30 km). The hourly report of xmlweather.vedur.is (every field it has:
+    /// wind, strongest wind and gust of the hour, temperature, humidity, dew point,
+    /// pressure, rain, and at staffed stations weather, visibility, cloud, snow and
+    /// sea) joined with the 10-minute measurement of the automatic stations
+    /// (api.vedur.is), when newer. The nearest station with a reading of the last two hours.
     static func observation(near c: Coordinate) async throws -> Fetched<IMOObservation>? {
         let pool = stations.map { ($0, Geo.distanceKm(c, $0.coordinate)) }.filter { $0.1 <= 30 }.sorted { $0.1 < $1.1 }.prefix(3)
         guard !pool.isEmpty else { return nil }
         let km = Dictionary(pool.map { ($0.0.id, $0.1) }, uniquingKeysWith: { a, _ in a })
-        let answer = try await xml(type: "obs", ids: pool.map { $0.0.id }, params: "F;FG;D;T;W;RH;P;R",
-                                   extra: ["time": "1h", "anytime": "1"], fresh: 10 * 60)
-        let observations = parseObservations(answer.value, distances: km)
-            .filter { Date().timeIntervalSince($0.time) < 2 * 3600 && ($0.wind != nil || $0.temperature != nil) }
-            .sorted { $0.distanceKm < $1.distanceKm }
-        guard let first = observations.first else { return nil }
-        return Fetched(value: first, date: answer.date, isStale: answer.isStale)
+        let ids = pool.map { $0.0.id }
+        async let hourlyAnswer = xml(type: "obs", ids: ids, params: "F;FX;FG;D;T;W;V;N;P;RH;SNC;SND;SED;R;TD",
+                                     extra: ["time": "1h", "anytime": "1"], fresh: 10 * 60)
+        async let tenAnswer = tenMinute(ids: ids)
+        let hourlyResult: Result<Fetched<String>, Error>
+        do { hourlyResult = .success(try await hourlyAnswer) } catch { hourlyResult = .failure(error) }
+        let hourly = try? hourlyResult.get()
+        let ten = await tenAnswer
+        // Neither answered: the hourly service's error.
+        if hourly == nil, ten == nil { _ = try hourlyResult.get() }
+        let byHour = Dictionary((hourly.map { parseObservations($0.value, distances: km) } ?? []).map { ($0.stationID, $0) }, uniquingKeysWith: { a, _ in a })
+        let byTen = Dictionary((ten.map { IMOAutomatic.parse($0.value, distances: km) } ?? []).map { ($0.stationID, $0) }, uniquingKeysWith: { a, _ in a })
+        let merged = ids.compactMap { id -> IMOObservation? in
+            guard var o = IMOAutomatic.merge(hourly: byHour[id], tenMinute: byTen[id]) else { return nil }
+            if o.station.isEmpty { o = IMOObservation(stationID: o.stationID, station: byID[id]?.name ?? "", distanceKm: o.distanceKm, time: o.time,
+                                                      wind: o.wind, gust: o.gust, direction: o.direction, temperature: o.temperature, text: o.text,
+                                                      humidity: o.humidity, pressure: o.pressure, precipitation: o.precipitation, link: o.link,
+                                                      maxWind: o.maxWind, dewPoint: o.dewPoint, visibility: o.visibility, cloud: o.cloud,
+                                                      snowDepth: o.snowDepth, snowCover: o.snowCover, sea: o.sea, tenMinute: o.tenMinute) }
+            return o
+        }
+        .filter { Date().timeIntervalSince($0.time) < 2 * 3600 && ($0.wind != nil || $0.temperature != nil) }
+        .sorted { $0.distanceKm < $1.distanceKm }
+        guard let first = merged.first else { return nil }
+        let date = [hourly?.date, ten?.date].compactMap { $0 }.max() ?? Date()
+        return Fetched(value: first, date: date, isStale: (hourly?.isStale ?? true) && (ten?.isStale ?? true))
+    }
+
+    /// The latest 10-minute measurements of these stations (automatic ones only; others are simply absent).
+    private static func tenMinute(ids: [Int]) async -> Fetched<Data>? {
+        let key = "imo_aws10_v1_" + ids.map(String.init).joined(separator: "_")
+        if let cached = DiskCache.read(key), Date().timeIntervalSince(cached.date) < 5 * 60 {
+            return Fetched(value: cached.data, date: cached.date, isStale: false)
+        }
+        let query = ids.map { "station_id=\($0)" }.joined(separator: "&")
+        guard let url = URL(string: "https://api.vedur.is/weather/observations/aws/10min/latest?\(query)") else { return nil }
+        return try? await HTTP.get(url, cacheKey: key)
+    }
+
+    /// The forecasters' written forecasts (country, capital area, regions, next days,
+    /// synopsis, sea areas), one request, kept 30 minutes.
+    static func texts() async throws -> Fetched<[IMOText]> {
+        let answer = try await xml(type: "txt", ids: IMOTexts.ids, params: "", fresh: 30 * 60)
+        return answer.map { IMOTexts.parse($0) }
     }
 }

@@ -362,6 +362,53 @@ do {
     check(IMOForecast.candidates(near: place, elevation: 470, in: [coast, hill, far]).map { $0.0.id } == [2], "IMO station: highland place takes the hill station")
     check(IMOForecast.candidates(near: place, elevation: nil, in: [coast, hill, far]).count == 2, "IMO station: without height, distance only")
     check(IMOForecast.degrees("VSV") == 247.5 && IMOForecast.degrees("Calm") == nil, "IMO direction: Icelandic and calm")
+
+    // Every field of the hourly report (real answer, Höfn 2026-11-03 17:00, plus a staffed station's extras).
+    let fullXML = """
+    <observations><station id="5544"  valid="1"><name>Höfn í Hornafirði</name><time>2026-11-03 17:00:00</time><err></err><link><![CDATA[http://en.vedur.is/weather/observations/areas/southeast/#group=18&station=5544]]></link><F>8</F><FX>8</FX><FG>11</FG><D>SW</D><T>8.6</T><W>Light rain</W><V>25</V><N>88</N><P>1021</P><RH>95</RH><SNC>Autt</SNC><SND>3</SND><SED>Sléttur sjór</SED><R>0.0</R><TD>7.8</TD><RTE></RTE></station></observations>
+    """
+    let full = IMOForecast.parseObservations(fullXML, distances: [5544: 1]).first
+    check(full?.maxWind == 8 && full?.dewPoint == 7.8 && full?.visibility == 25 && full?.cloud == 88 && full?.snowDepth == 3
+          && full?.snowCover == "Autt" && full?.sea == "Sléttur sjór" && full?.text != nil,
+          "IMO observation: FX TD V N SND SNC SED W", "\(String(describing: full))")
+
+    // 10-minute measurements (api.vedur.is, real answer of 2026-11-03 17:40) joined with the hourly report.
+    let aws = Data(#"[{"station":5544,"name":"Höfn í Hornafirði","time":"2026-11-03T17:40:00","year":2026,"t":8.2,"tx":8.4,"tn":8.1,"rh":93,"vp":10.1,"td":7.1,"f":6.4,"fg":9.8,"d":222,"d_txt":"SW","ps":1018.0,"p":1020.6,"r":null,"t0":null}]"#.utf8)
+    let ten = IMOAutomatic.parse(aws, distances: [5544: 1]).first
+    check(ten?.wind == 6.4 && ten?.gust == 9.8 && ten?.temperature == 8.2 && ten?.tenMinute == true, "IMO 10-minute: parse", "\(String(describing: ten))")
+    let joined = IMOAutomatic.merge(hourly: full, tenMinute: ten)
+    check(joined?.wind == 6.4 && joined?.gust == 9.8 && joined?.humidity == 93 && joined?.visibility == 25 && joined?.snowDepth == 3
+          && joined?.precipitation == 0 && joined?.tenMinute == true && joined?.time == ten?.time,
+          "IMO 10-minute: newer wind and temperature, the rest from the hourly report", "\(String(describing: joined))")
+    check(IMOAutomatic.merge(hourly: full, tenMinute: nil)?.wind == 8, "IMO 10-minute: hourly alone")
+    check(abs(IMOAutomatic.humidity(temperature: 8.6, dewPoint: 7.8) - 94.7) < 0.5, "IMO humidity from dew point",
+          "\(IMOAutomatic.humidity(temperature: 8.6, dewPoint: 7.8))")
+
+    // Written forecasts (xmlweather type=txt, real answer of 2026-11-03).
+    let textXML = """
+    <?xml version="1.0" encoding="UTF-8"?>
+    <texts><text id="5"><title>Veðurhorfur á landinu næstu daga</title><creation>2026-11-03 07:37:11</creation><valid_from>2026-11-05 12:00:00</valid_from><valid_to>2026-11-10 12:00:00</valid_to><content>Á fimmtudag:<br/> Sunnan 5-13 m/s og rigning með köflum. <br/><br/>Á föstudag:<br/> Hæg suðvestlæg átt.</content></text><text id="8"><title>TextForecTitle_8</title><creation>2026-11-03 15:31:36</creation><valid_from>2026-11-03 18:00:00</valid_from><valid_to>2026-11-05 00:00:00</valid_to><content></content></text><text id="31"><title>Suðurland</title><creation>2026-11-03 15:30:55</creation><valid_from>2026-11-03 18:00:00</valid_from><valid_to>2026-11-05 00:00:00</valid_to><content>Sunnan 8-15 m/s og súld eða rigning, hvassast vestast.</content></text></texts>
+    """
+    let texts = IMOTexts.parse(textXML)
+    check(texts.map(\.id) == [5, 31], "IMO texts: empty ones dropped", "\(texts.map(\.id))")
+    check(texts.first?.content == "Á fimmtudag:\nSunnan 5-13 m/s og rigning með köflum.\n\nÁ föstudag:\nHæg suðvestlæg átt.",
+          "IMO texts: line breaks", "\(texts.first?.content ?? "")")
+    check(texts.last?.title == "Suðurland" && texts.last?.validTo != nil, "IMO texts: title and validity")
+    let south = StationForecast.Station(id: 6222, name: "Vík", lat: 63.4, lon: -19.0, elev: 30, area: 31)
+    let east = StationForecast.Station(id: 571, name: "Egilsstaðir", lat: 65.28, lon: -14.4, elev: 23, area: 37)
+    check(IMOTexts.region(near: Coordinate(lat: 63.45, lon: -19.1), stations: [south, east]) == 31
+          && IMOTexts.region(near: Coordinate(lat: 66.5, lon: -23.0), stations: [south, east]) == nil, "IMO texts: region of a place")
+
+    // Volcanoes (api.vedur.is/volcanoes, trimmed real answer).
+    let volcanoJSON = Data(#"[{"code":"REY","name":"Reykjanes","country":{"iso_code":"IS"},"zone":{"name_en":"Reykjanes Volcanic Belt"},"height":230,"geom_point":{"type":"Point","coordinates":[-22.717,63.817]},"vona":{"current":{"published_at":"2025-08-05T13:20:37.947000Z","aviation_color":{"code":"YELLOW","description_en":"Volcano is experiencing signs of elevated unrest"}}},"vals":{"current":{"published_at":"2025-10-15T16:13:52.452639Z","alert_level_info":{"level":2,"code_en":"Orange","description_en":"Heightened volcanic unrest"}}}},{"code":"BEE","name":"Beerenberg","country":{"iso_code":"NO"},"geom_point":{"type":"Point","coordinates":[-8.1,71.1]},"vona":{"current":null},"vals":{"current":null}},{"code":"KAT","name":"Katla","country":{"iso_code":"IS"},"geom_point":{"type":"Point","coordinates":[-19.117,63.633]},"vona":{"current":{"published_at":"2024-07-29T10:31:19.803000Z","aviation_color":{"code":"GREEN"}}},"vals":{"current":{"published_at":"2025-01-01T00:00:00Z","alert_level_info":{"level":0}}}}]"#.utf8)
+    let volcanoes = VolcanoParse.volcanoes(volcanoJSON)
+    check(volcanoes.map(\.code) == ["REY", "KAT"], "Volcanoes: Iceland only", "\(volcanoes.map(\.code))")
+    check(volcanoes.first?.severity == 2 && volcanoes.first?.aviation == "YELLOW" && volcanoes.first?.levelSince != nil
+          && volcanoes.last?.severity == 0, "Volcanoes: codes and dates (6-digit fractions)")
+    let status = VolcanoStatus(volcanoes: volcanoes.reversed(), reportDate: nil, reportNotes: nil, updated: nil)
+    check(status.sorted.first?.code == "REY", "Volcanoes: above green first")
+    let weekly = VolcanoParse.weekly(Data(#"[{"id":650,"published_at":"2026-10-21T09:00:00Z","entries":[],"additional_notes":""},{"id":651,"published_at":"2026-10-28T09:23:28.314083Z","entries":[{"volcano_code":"REY","vona_color_code":"YELLOW","vals_level":2,"status_text":"Ground uplift continues beneath Svartsengi."}],"additional_notes":null}]"#.utf8))
+    check(weekly?.lines["REY"] == "Ground uplift continues beneath Svartsengi." && weekly?.notes == nil && weekly?.date != nil, "Volcanoes: latest weekly report")
 }
 
 print(failures == 0 ? "ALL ENGINE TESTS PASSED" : "\(failures) FAILURES")

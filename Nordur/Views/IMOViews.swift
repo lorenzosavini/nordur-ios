@@ -27,11 +27,50 @@ struct IMOObservationBlock: View {
                     reading("\(Fmt.wind(g)) \(Fmt.windUnit)", String(localized: "raffica misurata"), g >= 20 ? Theme.warning : g >= 15 ? Theme.caution : Theme.text)
                 }
             }
-            Text(String(localized: "Veðurstofa Íslands · stazione a \(Int(observation.distanceKm.rounded())) km, misura delle \(Fmt.time(observation.time, in: .iceland))"))
+            if !details.isEmpty {
+                // Everything else the station measured: humidity, dew point, pressure, rain, visibility, cloud, snow, sea.
+                LazyVGrid(columns: [GridItem(.adaptive(minimum: 92), alignment: .leading)], alignment: .leading, spacing: 6) {
+                    ForEach(details) { d in
+                        VStack(alignment: .leading, spacing: 1) {
+                            Text(d.value).font(.metric(13, .medium)).foregroundStyle(Theme.text).monospacedDigit()
+                            Text(d.label.uppercased()).font(.mono(8)).foregroundStyle(Theme.faint).lineLimit(1)
+                        }
+                    }
+                }
+            }
+            if let text = observation.text {
+                Text(text).font(.app(.caption)).foregroundStyle(Theme.dim)
+            }
+            Text(observation.tenMinute == true
+                 ? String(localized: "Veðurstofa Íslands · stazione a \(Int(observation.distanceKm.rounded())) km, misura delle \(Fmt.time(observation.time, in: .iceland)) (ogni 10 minuti)")
+                 : String(localized: "Veðurstofa Íslands · stazione a \(Int(observation.distanceKm.rounded())) km, misura delle \(Fmt.time(observation.time, in: .iceland))"))
                 .font(.app(.caption2)).foregroundStyle(Theme.faint)
         }
         .padding(.vertical, 4)
         .accessibilityElement(children: .combine)
+    }
+
+    private struct Detail: Identifiable {
+        let label: String
+        let value: String
+        var id: String { label }
+        init(_ label: String, _ value: String) { self.label = label; self.value = value }
+    }
+
+    private var details: [Detail] {
+        let o = observation
+        var out: [Detail] = []
+        if let x = o.maxWind, x > (o.wind ?? 0) { out.append(Detail(String(localized: "vento max 1 h"), "\(Fmt.wind(x)) \(Fmt.windUnit)")) }
+        if let x = o.humidity { out.append(Detail(String(localized: "umidità"), "\(Int(x.rounded()))%")) }
+        if let x = o.dewPoint { out.append(Detail(String(localized: "punto di rugiada"), Fmt.temp(x))) }
+        if let x = o.pressure { out.append(Detail(String(localized: "pressione"), "\(Int(x.rounded())) hPa")) }
+        if let x = o.precipitation { out.append(Detail(String(localized: "pioggia 1 h"), "\(Fmt.number(x, decimals: 1)) mm")) }
+        if let x = o.visibility { out.append(Detail(String(localized: "visibilità"), "\(Fmt.number(x, decimals: x < 10 ? 1 : 0)) km")) }
+        if let x = o.cloud { out.append(Detail(String(localized: "nuvolosità"), "\(Int(x.rounded()))%")) }
+        if let x = o.snowDepth { out.append(Detail(String(localized: "neve al suolo"), "\(Int(x.rounded())) cm")) }
+        if let x = o.snowCover { out.append(Detail(String(localized: "suolo"), x)) }
+        if let x = o.sea { out.append(Detail(String(localized: "mare"), x)) }
+        return out
     }
 
     private func reading(_ value: String, _ label: String, _ color: Color) -> some View {

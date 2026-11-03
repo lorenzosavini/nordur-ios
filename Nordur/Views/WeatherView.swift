@@ -25,6 +25,7 @@ struct WeatherView: View {
                             if let observation = model.observation?.value {
                                 IMOObservationBlock(observation: observation)
                             }
+                            IMOTextCard()
                             meteogram(next48)
                             stationComparison(forecast)
                             dailyTable(forecast.days, zone: forecast.timeZone)

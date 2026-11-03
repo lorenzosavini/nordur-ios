@@ -11,6 +11,8 @@ final class AppModel {
         case air = "Qualità dell'aria"
         case warnings = "Allerte IMO"
         case quakes = "Terremoti"
+        case imoTexts = "Previsioni dei meteorologi (IMO)"
+        case volcanoes = "Vulcani (IMO)"
         case roads = "Strade"
         case roadInfo = "Notizie strade (umferdin.is)"
         case kp = "Indice Kp"
@@ -57,6 +59,10 @@ final class AppModel {
     var air: Fetched<AirQuality>?
     var warnings: Fetched<[WeatherWarning]>?
     var quakes: Fetched<[Quake]>?
+    /// The forecasters' written forecasts (country, regions, next days, synopsis, sea areas).
+    var imoTexts: Fetched<[IMOText]>?
+    /// Aviation colour code, alert level and weekly report of every volcano.
+    var volcanoes: Fetched<VolcanoStatus>?
     var roads: Fetched<RoadNetwork>?
     var roadInfo: Fetched<RoadInfo>?
     /// Lines of the road sections (static, refreshed weekly).
@@ -217,7 +223,18 @@ final class AppModel {
         let (rf, rm, ra, ro) = await (f, m, a, o)
         // The user may have switched place meanwhile.
         guard c == activePlace.coordinate else { return }
-        if case .success(let measured) = ro { observation = measured }
+        if case .success(let measured) = ro {
+            observation = measured
+            // State of the ground and of the sea are Icelandic words at staffed stations.
+            if let m = measured, m.value.snowCover != nil || m.value.sea != nil {
+                let words = [m.value.snowCover, m.value.sea].compactMap { $0 }
+                let map = await Translator.shared.translate(words)
+                var v = m.value
+                v.snowCover = v.snowCover.map { map[$0] ?? $0 }
+                v.sea = v.sea.map { map[$0] ?? $0 }
+                if observation?.date == m.date { observation = Fetched(value: v, date: m.date, isStale: m.isStale) }
+            }
+        }
         apply(rf, .forecast) { self.forecast = $0 }
         // The IMO station the forecast uses, for the comparison table (already in the phone's cache).
         if case .success(let fetched) = rf, fetched.value.official != nil {
@@ -237,6 +254,8 @@ final class AppModel {
         lastGlobalRefresh = Date()
         async let w: Void = load(.warnings, { try await IMO.warnings() }) { self.warnings = $0 }
         async let q: Void = load(.quakes, { try await IMO.quakes() }) { self.quakes = $0 }
+        async let it: Void = load(.imoTexts, { try await IMOForecast.texts() }) { self.imoTexts = $0 }
+        async let vo: Void = load(.volcanoes, { try await IMO.volcanoes() }) { self.volcanoes = $0 }
         // The road feeds are the heaviest (Vegagerðin sends 360 KB uncompressed): every 5 minutes.
         let roadsDue = force || lastRoadsRefresh.map { Date().timeIntervalSince($0) > 290 } ?? true
         if roadsDue { lastRoadsRefresh = Date() }
@@ -247,7 +266,7 @@ final class AppModel {
         // The aurora state from nordur-api carries the OVATION grid too: NOAA's own
         // file is downloaded only when the backend could not be reached.
         async let a: Void = refreshAurora()
-        _ = await (w, q, r, k, s, n, a)
+        _ = await (w, q, r, k, s, n, a, it, vo)
         if ovation == nil || ovation?.isStale == true {
             await load(.ovation, { try await SpaceWeather.ovation() }) { self.ovation = $0 }
         }
@@ -285,6 +304,8 @@ final class AppModel {
             let c = activePlace.coordinate
             async let w: Void = load(.warnings, { try await IMO.warnings() }) { self.warnings = $0 }
             async let q: Void = load(.quakes, { try await IMO.quakes() }) { self.quakes = $0 }
+            async let it: Void = load(.imoTexts, { try await IMOForecast.texts() }) { self.imoTexts = $0 }
+            async let vo: Void = load(.volcanoes, { try await IMO.volcanoes() }) { self.volcanoes = $0 }
             async let r: Void = load(.roads, { try await Roads.network() }) { self.roads = $0 }
             async let ri: Void = load(.roadInfo, { try await RoadInfoService.load() }) { self.roadInfo = $0 }
             async let k: Void = load(.kp, { try await SpaceWeather.kpForecast() }) { self.kp = $0 }
@@ -293,7 +314,7 @@ final class AppModel {
             async let m: Void = load(.marine, { try await OpenMeteo.marine(c) }) { self.marine = $0 }
             async let ai: Void = load(.air, { try await OpenMeteo.airQuality(c) }) { self.air = $0 }
             async let wc: Void = load(.webcams, { try await Webcams.sites() }) { self.webcams = $0 }
-            _ = await (w, q, r, ri, k, n, f, m, ai, wc)
+            _ = await (w, q, r, ri, k, n, f, m, ai, wc, it, vo)
         }
         recomputeAurora()
     }
@@ -308,7 +329,21 @@ final class AppModel {
         async let a: Void = localizeAurora()
         async let q: Void = localizeQuakes()
         async let c: Void = localizeWebcams()
-        _ = await (w, n, r, f, a, q, c)
+        async let it: Void = localizeIMOTexts()
+        async let vo: Void = localizeVolcanoes()
+        _ = await (w, n, r, f, a, q, c, it, vo)
+    }
+
+    private func localizeIMOTexts() async {
+        guard let t = imoTexts else { return }
+        let localized = await Translator.shared.localize(t.value)
+        if imoTexts?.date == t.date { imoTexts = Fetched(value: localized, date: t.date, isStale: t.isStale) }
+    }
+
+    private func localizeVolcanoes() async {
+        guard let v = volcanoes else { return }
+        let localized = await Translator.shared.localize(v.value)
+        if volcanoes?.date == v.date { volcanoes = Fetched(value: localized, date: v.date, isStale: v.isStale) }
     }
 
     private func localizeWebcams() async {
@@ -654,6 +689,8 @@ extension AppModel {
         case .air: return f(air)
         case .warnings: return f(warnings)
         case .quakes: return f(quakes)
+        case .imoTexts: return f(imoTexts)
+        case .volcanoes: return f(volcanoes)
         case .roads: return f(roads)
         case .roadInfo: return f(roadInfo)
         case .kp: return f(kp)

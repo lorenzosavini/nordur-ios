@@ -24,6 +24,8 @@ struct StationForecast {
         let lon: Double
         /// Height above the sea (m, terrain model at the station), to match places at a similar height.
         var elev: Double?
+        /// The IMO text-forecast region the station belongs to (30–39, 3 for the capital area).
+        var area: Int?
         var coordinate: Coordinate { Coordinate(lat: lat, lon: lon) }
     }
 
@@ -85,6 +87,20 @@ struct IMOObservation: Codable, Equatable {
     let pressure: Double?
     let precipitation: Double?
     var link: String?
+    /// Strongest 10-minute mean wind of the last hour (FX), m/s.
+    var maxWind: Double? = nil
+    var dewPoint: Double? = nil
+    /// Visibility (V), km — staffed stations only.
+    var visibility: Double? = nil
+    /// Cloud cover (N), % — staffed stations only.
+    var cloud: Double? = nil
+    /// Snow depth (SND), cm, and state of the ground (SNC), staffed stations.
+    var snowDepth: Double? = nil
+    var snowCover: String? = nil
+    /// State of the sea (SED), coastal staffed stations.
+    var sea: String? = nil
+    /// Measured every 10 minutes (api.vedur.is) rather than hourly (xmlweather).
+    var tenMinute: Bool? = nil
 
     var degrees: Double? { IMOForecast.degrees(direction) }
     var age: TimeInterval { Date().timeIntervalSince(time) }
@@ -216,8 +232,17 @@ enum IMOForecast {
                 wind: number(tag("F", in: block.body)), gust: number(tag("FG", in: block.body)), direction: tag("D", in: block.body) ?? "",
                 temperature: number(tag("T", in: block.body)), text: english.flatMap { $0.isEmpty ? nil : translate($0) },
                 humidity: number(tag("RH", in: block.body)), pressure: number(tag("P", in: block.body)),
-                precipitation: number(tag("R", in: block.body)), link: tag("link", in: block.body))
+                precipitation: number(tag("R", in: block.body)), link: tag("link", in: block.body),
+                maxWind: number(tag("FX", in: block.body)), dewPoint: number(tag("TD", in: block.body)),
+                visibility: number(tag("V", in: block.body)), cloud: number(tag("N", in: block.body)),
+                snowDepth: number(tag("SND", in: block.body)), snowCover: nonEmpty(tag("SNC", in: block.body)),
+                sea: nonEmpty(tag("SED", in: block.body)))
         }
+    }
+
+    private static func nonEmpty(_ s: String?) -> String? {
+        guard let t = s?.trimmingCharacters(in: .whitespacesAndNewlines), !t.isEmpty else { return nil }
+        return t
     }
 
     // MARK: Words

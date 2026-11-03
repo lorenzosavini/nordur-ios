@@ -165,6 +165,38 @@ extension Translator {
         }
     }
 
+    /// IMO's written forecasts in the app language. The country, next-days and
+    /// synopsis texts start from IMO's own English version; the regional and sea
+    /// texts (Icelandic only) are translated.
+    func localize(_ texts: [IMOText]) async -> [IMOText] {
+        let byID = Dictionary(texts.map { ($0.id, $0) }, uniquingKeysWith: { a, _ in a })
+        var out: [IMOText] = []
+        for t in texts where !IMOTexts.english.values.contains(t.id) {
+            var t = t
+            if let english = IMOTexts.english[t.id].flatMap({ byID[$0] }) { t.content = english.content }
+            out.append(t)
+        }
+        let wanted = language == "en" ? out.filter { IMOTexts.english[$0.id] == nil || byID[IMOTexts.english[$0.id]!] == nil } : out
+        let map = await translate(wanted.map(\.content))
+        return out.map { var t = $0; t.content = map[t.content] ?? t.content; return t }
+    }
+
+    func localize(_ status: VolcanoStatus) async -> VolcanoStatus {
+        let texts = status.volcanoes.flatMap { [$0.aviationText, $0.levelText, $0.report].compactMap { $0 } } + [status.reportNotes].compactMap { $0 }
+        let map = await translate(texts)
+        guard !map.isEmpty else { return status }
+        var status = status
+        status.volcanoes = status.volcanoes.map { v in
+            var v = v
+            v.aviationText = v.aviationText.map { map[$0] ?? $0 }
+            v.levelText = v.levelText.map { map[$0] ?? $0 }
+            v.report = v.report.map { map[$0] ?? $0 }
+            return v
+        }
+        status.reportNotes = status.reportNotes.map { map[$0] ?? $0 }
+        return status
+    }
+
     func localize(_ ferry: FerryNotice) async -> FerryNotice {
         var ferry = ferry
         ferry.text = await translate(ferry.text)

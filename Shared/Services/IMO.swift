@@ -191,6 +191,26 @@ enum IMO {
         }
     }
 
+    /// The state of Iceland's volcanoes: nordur-api (codes plus the weekly report,
+    /// from api.vedur.is/volcanoes every 30 minutes), else api.vedur.is directly
+    /// (codes only: the weekly reports are 1 MB in all).
+    static func volcanoes() async throws -> Fetched<VolcanoStatus> {
+        let decoder = JSONDecoder()
+        decoder.dateDecodingStrategy = .custom { d in
+            let raw = try d.singleValueContainer().decode(String.self)
+            guard let date = DateParse.iso(raw) else { throw DecodingError.dataCorrupted(.init(codingPath: d.codingPath, debugDescription: raw)) }
+            return date
+        }
+        if let url = URL(string: "https://nordur-api.vercel.app/api/volcanoes"),
+           let fetched = try? await HTTP.get(url, cacheKey: "imo_volcanoes_api"),
+           let status = try? decoder.decode(VolcanoStatus.self, from: fetched.value), !status.volcanoes.isEmpty {
+            return Fetched(value: status, date: fetched.date, isStale: fetched.isStale)
+        }
+        guard let url = URL(string: "https://api.vedur.is/volcanoes/volcanoes") else { throw HTTPError.invalidURL }
+        let fetched = try await HTTP.get(url, cacheKey: "imo_volcanoes")
+        return fetched.map { VolcanoStatus(volcanoes: VolcanoParse.volcanoes($0), reportDate: nil, reportNotes: nil, updated: nil) }
+    }
+
     static func quakes(hours: Int = 48) async throws -> Fetched<[Quake]> {
         let end = Date()
         let start = end.addingTimeInterval(-TimeInterval(hours) * 3600)

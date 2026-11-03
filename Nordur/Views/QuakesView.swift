@@ -20,6 +20,7 @@ struct QuakesView: View {
                 Section { CoverageNote(feature: String(localized: "Terremoti e vulcani"), showsIcelandData: true) }
                     .listRowSeparator(.hidden)
             }
+            VolcanoSection()
             Section {
                 ExpandableMap(height: 260, title: String(localized: "Terremoti")) {
                 Map(initialPosition: .region(MKCoordinateRegion(
