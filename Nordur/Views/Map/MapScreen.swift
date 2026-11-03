@@ -28,6 +28,12 @@ struct MapScreen: View {
     @AppStorage("map.trip") private var showTrip = true
     @AppStorage("map.particles") private var showParticles = true
     @AppStorage("map.imoStations") private var showIMOStations = true
+    @AppStorage("map.baths") private var showBaths = false
+    @AppStorage("map.tolls") private var showTolls = false
+    @AppStorage("map.volcanoes") private var showVolcanoes = true
+    @State private var selectedBath: Bath?
+    @State private var selectedToll: TollEntry?
+    @State private var selectedVolcano: Volcano?
 
     @State private var hour: Double = -1
     @State private var radarIndex: Double = -1
@@ -89,6 +95,21 @@ struct MapScreen: View {
             }
             .task(id: showShops) { if showShops { await model.loadShops() } }
             .task(id: showSights) { if showSights { await model.loadSights() } }
+            .task(id: showBaths) { if showBaths { await model.loadBaths() } }
+            .task(id: showTolls) { if showTolls { await model.loadTolls() } }
+            .sheet(item: $selectedBath) { bath in
+                BathDetail(bath: bath, from: model.activePlace).presentationDetents([.medium, .large])
+            }
+            .sheet(item: $selectedToll) { entry in
+                TollDetail(entry: entry).presentationDetents([.medium, .large])
+            }
+            .sheet(item: $selectedVolcano) { volcano in
+                NavigationStack {
+                    List { VolcanoRow(volcano: volcano, distanceKm: Geo.distanceKm(volcano.coordinate, model.activePlace.coordinate)) }
+                        .navigationTitle(volcano.name).navigationBarTitleDisplayMode(.inline)
+                }
+                .presentationDetents([.medium])
+            }
             .sheet(item: $selectedFuel) { station in
                 FuelDetail(station: station, from: model.activePlace).presentationDetents([.medium, .large])
             }
@@ -159,6 +180,9 @@ struct MapScreen: View {
                     Toggle("Ricarica EV", systemImage: "bolt.car", isOn: $showChargers)
                     Toggle("Supermercati e negozi", systemImage: "cart", isOn: $showShops)
                     Toggle("Attrazioni e luoghi da vedere", systemImage: "binoculars", isOn: $showSights)
+                    Toggle("Piscine e sorgenti calde", systemImage: "drop", isOn: $showBaths)
+                    Toggle("Pedaggi e parcheggi", systemImage: "eurosign.circle", isOn: $showTolls)
+                    Toggle("Vulcani (stato vedur.is)", systemImage: "mountain.2", isOn: $showVolcanoes)
                     Toggle("Viaggio e percorso", systemImage: "point.topleft.down.to.point.bottomright.curvepath", isOn: $showTrip)
                     Toggle("Animazione particelle vento", systemImage: "wind", isOn: $showParticles)
                 } label: {
@@ -564,6 +588,29 @@ struct MapScreen: View {
             }
             poisKey += "sights\(model.spots.count)"
         }
+        if showBaths {
+            for bath in model.baths?.value ?? [] {
+                pois.append(PoiAnnotation(kind: .bath, key: "b\(bath.id)", coordinate: bath.coordinate.clCoordinate, title: bath.name,
+                                          color: bath.kind == .natural ? .systemTeal : .systemCyan))
+            }
+            poisKey += "baths\(model.baths?.value.count ?? 0)"
+        }
+        if showTolls {
+            for entry in model.tolls?.value ?? [] {
+                guard let c = entry.coordinate, entry.kind != .info else { continue }
+                pois.append(PoiAnnotation(kind: .toll, key: "t\(entry.id)", coordinate: c.clCoordinate, title: entry.name,
+                                          color: entry.kind == .paidParking ? .systemBlue : .systemOrange,
+                                          glyph: entry.kind == .paidParking ? "parkingsign.circle.fill" : "eurosign.circle.fill"))
+            }
+            poisKey += "tolls\(model.tolls?.value.count ?? 0)"
+        }
+        if showVolcanoes {
+            for volcano in model.volcanoes?.value.volcanoes ?? [] {
+                pois.append(PoiAnnotation(kind: .volcano, key: "v\(volcano.code)", coordinate: volcano.coordinate.clCoordinate, title: volcano.name,
+                                          color: UIColor(volcano.color)))
+            }
+            poisKey += "volcanoes\(model.volcanoes?.date.timeIntervalSince1970 ?? 0)"
+        }
         if showShops {
             for shop in model.shops?.value ?? [] {
                 pois.append(PoiAnnotation(kind: .shop, key: "m\(shop.id)", coordinate: shop.coordinate.clCoordinate, title: shop.name,
@@ -677,6 +724,15 @@ struct MapScreen: View {
             selectedSection = model.roadInfo?.value.sections.first { $0.id == id }
         case .imo:
             probe = Coordinate(poi.coordinate)
+        case .bath:
+            let id = Int(poi.key.dropFirst()) ?? -1
+            selectedBath = model.baths?.value.first { $0.id == id }
+        case .toll:
+            let id = String(poi.key.dropFirst())
+            selectedToll = model.tolls?.value.first { $0.id == id }
+        case .volcano:
+            let code = String(poi.key.dropFirst())
+            selectedVolcano = model.volcanoes?.value.volcanoes.first { $0.code == code }
         default:
             probe = Coordinate(poi.coordinate)
         }

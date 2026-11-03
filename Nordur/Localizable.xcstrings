@@ -61196,6 +61196,34 @@
           }
         }
       }
+    },
+    "Vulcani (stato vedur.is)" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Volcanoes (vedur.is status)"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vulkane (Status vedur.is)"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Volcans (état vedur.is)"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Volcanes (estado vedur.is)"
+          }
+        }
+      }
     }
   },
   "version" : "1.0"
