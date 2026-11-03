@@ -184,6 +184,12 @@ vedur.is non pubblica la griglia del suo modello in formato aperto. La mappa res
 |---|---|
 | **Allerte meteo** (gialla/arancione/rossa) | vedur.is: dove sei, alle tappe nei giorni in cui ci sarai, nei luoghi seguiti. |
 | **Raffiche forti vicino a te** | Raffiche **misurate**: stazioni vedur.is (ogni 10 minuti, misure non più vecchie di 30 minuti) e stazioni stradali Vegagerðin, entro il raggio scelto. Vale la più forte oltre la soglia; l'avviso dice da quale rete viene. |
-| **In arrivo a una tappa** (nuovo) | Quando sei a 2–30 km da una tappa di oggi, una volta al giorno per tappa. Contiene la misura vedur.is più vicina alla tappa, vento e raffiche delle prossime 3 ore (previsione vedur.is, altrimenti modello, indicato) e l'allerta in corso lì. |
+| **In arrivo a una tappa** (nuovo) | Quando sei a 2–30 km da una tappa di oggi, una volta al giorno per tappa, sempre: la misura vedur.is più vicina alla tappa, vento e raffiche delle prossime 3 ore (previsione vedur.is, altrimenti modello, indicato) e l'allerta in corso lì; senza nessun dato, «controlla su vedur.is e umferdin.is». |
 | **Vento, pioggia, neve sui tratti del viaggio e dove sei** | Previsione per ogni punto: vedur.is dove c'è una stazione adatta, modello altrove. Le previsioni salvate dagli avvisi vengono riscaricate appena vedur.is emette una nuova previsione, altrimenti ogni 30 minuti. |
 | **Strade, terremoti, SafeTravel, aurora, voli, traghetto, pedaggi** | Vegagerðin, vedur.is, SafeTravel, NOAA/GFZ/NASA, Isavia, Herjólfur, fonti ufficiali dei pedaggi. |
+
+**Avvisi prudenti.** Nelle schermate i numeri sono quelli di vedur.is. Per decidere se avvisarti, invece, l'app guarda sia vedur.is sia il modello e usa il valore più alto. Questo vale per vento medio e pioggia; le raffiche vengono sempre dal modello e non sono mai inferiori al vento medio.
+
+- Un avviso di vento parte quando le raffiche superano la soglia scelta o quando il vento medio arriva a 20 m/s.
+- Se vedur.is e il modello differiscono di almeno 3 m/s, l'avviso riporta entrambi i valori.
+- Se vedur.is non ha dati, gli avvisi partono comunque dalla fonte successiva: modello o stazioni stradali.

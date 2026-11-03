@@ -30592,6 +30592,62 @@
           }
         }
       }
+    },
+    "Nessun dato meteo disponibile: controlla su vedur.is e umferdin.is." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No weather data available: check vedur.is and umferdin.is."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Keine Wetterdaten verfügbar: auf vedur.is und umferdin.is nachsehen."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aucune donnée météo disponible : consultez vedur.is et umferdin.is."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sin datos meteorológicos: consulta vedur.is y umferdin.is."
+          }
+        }
+      }
+    },
+    "Vento medio previsto: vedur.is %@, modello %@; per prudenza conta il più alto." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Forecast mean wind: vedur.is %1$@, model %2$@; to be safe the higher counts."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vorhergesagter mittlerer Wind: vedur.is %1$@, Modell %2$@; vorsichtshalber zählt der höhere."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vent moyen prévu : vedur.is %1$@, modèle %2$@ ; par prudence, le plus élevé compte."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Viento medio previsto: vedur.is %1$@, modelo %2$@; por prudencia cuenta el más alto."
+          }
+        }
+      }
     }
   },
   "version" : "1.0"

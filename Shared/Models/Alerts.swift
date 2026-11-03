@@ -296,7 +296,10 @@ enum AlertEngine {
                     parts.append("\(w.color.label): \(w.headline).")
                     risk = max(risk, w.color.risk)
                 }
-                guard !parts.isEmpty else { continue }
+                // Always told you are arriving: without any data, where to look.
+                if parts.isEmpty {
+                    parts.append(String(localized: "Nessun dato meteo disponibile: controlla su vedur.is e umferdin.is."))
+                }
                 let day = Int(Calendar.iceland.startOfDay(for: now).timeIntervalSince1970)
                 events.append(AlertEvent(
                     id: "arr:\(a.stopID):\(day)", date: now, category: .arrival, severity: risk.rawValue,

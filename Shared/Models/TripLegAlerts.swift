@@ -6,6 +6,11 @@ struct TripLegCheck {
     struct Hour {
         let date: Date
         var gust: Double?
+        /// Mean wind: the higher of vedur.is and the model (alerts are prudent).
+        var wind: Double?
+        /// vedur.is and the model disagree by 3 m/s or more on the mean wind: both values.
+        var windVedur: Double?
+        var windModel: Double?
         var precipitation: Double?
         var snowfall: Double?
         /// Rain or drizzle with the temperature around zero somewhere on the way.
@@ -38,11 +43,20 @@ struct TripLegCheck {
             let date = Date(timeIntervalSince1970: TimeInterval(t))
             guard date >= start, date < end else { continue }
             let gust = h.wind_gusts_10m?[safe: i] ?? nil
-            let rain = h.precipitation?[safe: i] ?? nil
+            // Where vedur.is replaced the model, the alerts still look at both and take the higher:
+            // better one alert too many than one too few. The screens keep vedur.is's values.
+            let shown = h.wind_speed_10m?[safe: i] ?? nil
+            let modelWind = forecast.official?.modelWind[t]
+            let wind = [shown, modelWind].compactMap { $0 }.max()
+            let rain = [h.precipitation?[safe: i] ?? nil, forecast.official?.modelPrecipitation[t]].compactMap { $0 }.max()
             let snow = h.snowfall?[safe: i] ?? nil
             let temp = h.temperature_2m?[safe: i] ?? nil
             var hour = hours[date] ?? Hour(date: date)
-            hour.gust = max(hour.gust ?? 0, gust ?? 0)
+            hour.gust = max(hour.gust ?? 0, gust ?? 0, wind ?? 0)
+            if let wind, wind > (hour.wind ?? 0) {
+                hour.wind = wind
+                if let shown, let modelWind, abs(shown - modelWind) >= 3 { hour.windVedur = shown; hour.windModel = modelWind } else { hour.windVedur = nil; hour.windModel = nil }
+            }
             hour.precipitation = max(hour.precipitation ?? 0, rain ?? 0)
             hour.snowfall = max(hour.snowfall ?? 0, snow ?? 0)
             if let temp, let rain, temp > -3, temp <= 1, rain >= 0.2, (snow ?? 0) < rain * 0.5 { hour.ice = true }
@@ -70,13 +84,12 @@ extension AlertEngine {
             let isToday = leg.day == today
             let upcoming = leg.hours.filter { $0.date > now.addingTimeInterval(-3600) }
 
-            if settings.isOn(.wind), let worst = upcoming.max(by: { ($0.gust ?? 0) < ($1.gust ?? 0) }),
-               let gust = worst.gust, gust >= settings.gustThreshold {
-                let risk: Risk = gust >= 30 ? .danger : gust >= 25 ? .warning : .caution
+            if settings.isOn(.wind), let worst = strongest(upcoming, settings: settings), let gust = worst.gust {
+                let risk = windRisk(worst)
                 events.append(AlertEvent(
                     id: "lw:\(leg.key):\(Int(gust / 5))", date: now, category: .wind, severity: risk.rawValue,
                     title: String(localized: "Vento sul viaggio \(leg.route), \(day)"),
-                    body: String(localized: "Raffiche previste fino a \(Fmt.ms(gust)) verso le \(Fmt.time(worst.date, in: zone)) lungo il percorso. \(Risk.windAdvice(risk))"),
+                    body: String(localized: "Raffiche previste fino a \(Fmt.ms(gust)) verso le \(Fmt.time(worst.date, in: zone)) lungo il percorso. \(Risk.windAdvice(risk))") + disagreement(worst),
                     expires: leg.day.addingTimeInterval(24 * 3600), group: "lw:\(leg.key)", starts: worst.date))
             }
 
@@ -132,16 +145,35 @@ extension AlertEngine {
                 title: String(localized: "Nelle prossime ore a \(input.herePlace): \(text.title)"),
                 body: text.body, expires: now.addingTimeInterval(6 * 3600), group: "hm"))
         }
-        if settings.isOn(.wind), let worst = soon.max(by: { ($0.gust ?? 0) < ($1.gust ?? 0) }),
-           let gust = worst.gust, gust >= settings.gustThreshold {
-            let risk: Risk = gust >= 30 ? .danger : gust >= 25 ? .warning : .caution
+        if settings.isOn(.wind), let worst = strongest(soon, settings: settings), let gust = worst.gust {
+            let risk = windRisk(worst)
             events.append(AlertEvent(
                 id: "hw:\(bucket):\(Int(gust / 5))", date: now, category: .wind, severity: risk.rawValue,
                 title: String(localized: "Raffiche fino a \(Fmt.ms(gust)) nelle prossime ore a \(input.herePlace)"),
-                body: String(localized: "Previste verso le \(Fmt.time(worst.date, in: zone)). \(Risk.windAdvice(risk))"),
+                body: String(localized: "Previste verso le \(Fmt.time(worst.date, in: zone)). \(Risk.windAdvice(risk))") + disagreement(worst),
                 expires: now.addingTimeInterval(6 * 3600), group: "hw", starts: worst.date))
         }
         return events
+    }
+
+    /// The hour with the strongest wind that calls for an alert: gusts over the
+    /// threshold, or a mean wind of 20 m/s or more (vedur.is or model, the higher).
+    static func strongest(_ hours: [TripLegCheck.Hour], settings: AlertSettings) -> TripLegCheck.Hour? {
+        hours.filter { ($0.gust ?? 0) >= settings.gustThreshold || ($0.wind ?? 0) >= 20 }
+            .max { max($0.gust ?? 0, ($0.wind ?? 0) * 1.4) < max($1.gust ?? 0, ($1.wind ?? 0) * 1.4) }
+    }
+
+    static func windRisk(_ hour: TripLegCheck.Hour) -> Risk {
+        let gust = hour.gust ?? 0, wind = hour.wind ?? 0
+        if gust >= 30 || wind >= 24 { return .danger }
+        if gust >= 25 || wind >= 20 { return .warning }
+        return .caution
+    }
+
+    /// When vedur.is and the model disagree, the alert says both (the higher was used).
+    static func disagreement(_ hour: TripLegCheck.Hour) -> String {
+        guard let v = hour.windVedur, let m = hour.windModel else { return "" }
+        return " " + String(localized: "Vento medio previsto: vedur.is \(Fmt.ms(v)), modello \(Fmt.ms(m)); per prudenza conta il più alto.")
     }
 
     /// The evening summary of tomorrow, for whoever is travelling: the drive (or

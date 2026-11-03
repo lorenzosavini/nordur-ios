@@ -68,12 +68,13 @@ enum WeatherService {
         var wind = h.wind_speed_10m ?? Array(repeating: nil, count: n)
         var dir = h.wind_direction_10m ?? Array(repeating: nil, count: n)
         var gust = h.wind_gusts_10m ?? Array(repeating: nil, count: n)
-        var modelTemperature: [Int: Double] = [:], modelWind: [Int: Double] = [:]
+        var modelTemperature: [Int: Double] = [:], modelWind: [Int: Double] = [:], modelPrecipitation: [Int: Double] = [:]
 
         for (i, t) in h.time.enumerated() {
             guard let v = blend[t] else { continue }
             if let x = temp[i] { modelTemperature[t] = x }
             if let x = wind[i] { modelWind[t] = x }
+            if let x = precip[i] { modelPrecipitation[t] = x }
             if let value = v.temperature {
                 if let felt = apparent[i], let old = temp[i] { apparent[i] = felt + (value - old) }
                 temp[i] = value
@@ -118,7 +119,7 @@ enum WeatherService {
         out.primaryUntil = f.primaryUntil
         out.sources = [IMOForecast.sourceName] + f.sources.filter { $0 != IMOForecast.sourceName }
         out.official = OfficialForecast(station: s.station, distanceKm: s.distanceKm, issued: s.issued, until: until, link: s.link,
-                                        modelTemperature: modelTemperature, modelWind: modelWind)
+                                        modelTemperature: modelTemperature, modelWind: modelWind, modelPrecipitation: modelPrecipitation)
         return out
     }
 

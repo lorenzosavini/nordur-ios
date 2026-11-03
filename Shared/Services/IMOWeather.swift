@@ -67,6 +67,8 @@ struct OfficialForecast {
     /// The models' values in the hours IMO replaced (for the comparison table), by epoch second.
     var modelTemperature: [Int: Double] = [:]
     var modelWind: [Int: Double] = [:]
+    /// The models' precipitation in those hours: the alerts take the higher of the two.
+    var modelPrecipitation: [Int: Double] = [:]
 
     func covers(_ date: Date) -> Bool { date <= until }
 }
