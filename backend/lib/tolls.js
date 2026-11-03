@@ -5,7 +5,7 @@
 //
 // Every entry carries its official source and the day it was checked: the app
 // always shows "checked on <date>" and "indicative prices, check the official site".
-import { readObject, writeObject } from "./core.js";
+import { readObject, writeObject, listObjects, deleteObjects, readJSON, hmac } from "./core.js";
 import { TOLLS_SEED } from "./tolls-data.js";
 
 export const TYPES = ["toll_tunnel", "toll_road", "paid_parking", "info"];
@@ -143,13 +143,114 @@ export async function resetTolls() {
   return writeTolls(TOLLS_SEED);
 }
 
-export function publicTolls(catalog) {
-  return { version: 1, updated_at: catalog.updated_at, entries: catalog.entries };
+export function publicTolls(catalog, reports = {}) {
+  return { version: 1, updated_at: catalog.updated_at, entries: catalog.entries, reports };
 }
 
-export async function tollsHandler(res, send) {
+// MARK: Prices reported by travellers
+//
+// Anyone using the app can say what they paid (no account: one report per
+// toll, per day, per phone and network, kept 120 days). The app shows them
+// next to the official price ("3 people reported 1,200 ISK") and warns when
+// most recent reports disagree with it. They never replace the official
+// price in the catalog: the admin panel lists them, to check and correct.
+
+export const CLASSES = ["under_3_5t", "t3_5_7_5", "over_7_5t", "motorcycle", "car_5", "car_6_9", "bus_10_19", "bus_10_21", "bus_20_32", "bus_22_32", "bus_33"];
+const REPORTS = "toll-reports/";
+const REPORT_DAYS = 120;
+const recentBySender = new Map(); // per instance: at most 10 reports an hour from the same sender
+let reportsCache = null;
+
+const ipOf = (req) => String(req.headers?.["x-forwarded-for"] || req.socket?.remoteAddress || "").split(",")[0].trim();
+
+/** What a report must be: an existing toll or car park, a known class, a believable amount. */
+export function checkReport(body, entries) {
+  const entry = entries.find((e) => e.id === body?.entry);
+  if (!entry || entry.type === "info") return { error: "Pedaggio o parcheggio sconosciuto", code: "unknown" };
+  const cls = String(body.class || "");
+  if (!CLASSES.includes(cls)) return { error: "Tipo di veicolo non valido", code: "class" };
+  const isk = Math.round(num(body.isk));
+  if (!Number.isFinite(isk) || isk < 50 || isk > 100000) return { error: "Importo non valido (in corone, tra 50 e 100.000)", code: "amount" };
+  const official = entry.prices?.find((p) => p.class === cls)?.isk;
+  // Far from the official price for that class: a typo or a joke, not a change.
+  if (official && (isk > official * 4 || isk < official / 4)) return { error: "L'importo è troppo lontano dal prezzo ufficiale: controlla di aver scritto le corone", code: "far" };
+  return { entry, cls, isk };
+}
+
+export async function submitReport(req, body) {
+  const catalog = await readTolls();
+  const r = checkReport(body, catalog.entries);
+  if (r.error) return { status: 400, body: { error: r.error, code: r.code } };
+  const client = typeof body.client === "string" ? body.client.slice(0, 64) : "";
+  const sender = hmac(`${ipOf(req)}|${client}`, "toll-report").slice(0, 16);
+  const now = Date.now();
+  const recent = (recentBySender.get(sender) || []).filter((t) => now - t < 3600e3);
+  if (recent.length >= 10) return { status: 429, body: { error: "Troppe segnalazioni: riprova più tardi", code: "rate" } };
+  recentBySender.set(sender, [...recent, now]);
+  const day = new Date(now).toISOString().slice(0, 10);
+  // The same sender, toll and day: the last report replaces the earlier one.
+  await writeObject(`${REPORTS}${r.entry.id}/${day}-${sender}.bin`, { t: new Date(now).toISOString(), class: r.cls, isk: r.isk }, { ttl: REPORT_DAYS * 86400 });
+  reportsCache = null;
+  return { status: 200, body: { ok: true } };
+}
+
+/** Every stored report of the last REPORT_DAYS days: [{ key, entry, day, t, class, isk }]. */
+export async function listReports(entryID) {
+  const objects = await listObjects(entryID ? `${REPORTS}${entryID}/` : REPORTS, { limit: 3000 });
+  const oldest = new Date(Date.now() - REPORT_DAYS * 864e5).toISOString().slice(0, 10);
+  const fresh = objects.filter((o) => (o.pathname.split("/")[2] || "").slice(0, 10) >= oldest);
+  const old = objects.filter((o) => !fresh.includes(o));
+  if (old.length) deleteObjects(old).catch(() => {});
+  const out = [];
+  for (let i = 0; i < fresh.length; i += 50) {
+    const batch = await Promise.all(fresh.slice(i, i + 50).map(async (o) => {
+      const v = await readObject(o.pathname).catch(() => null);
+      const [, entry, file] = o.pathname.split("/");
+      return v ? { key: o.pathname, entry, day: file.slice(0, 10), t: v.t, class: v.class, isk: v.isk } : null;
+    }));
+    out.push(...batch.filter(Boolean));
+  }
+  return out.sort((a, b) => String(b.t).localeCompare(String(a.t)));
+}
+
+/** Per toll: [{ class, isk, count, last }], most reported first. */
+export function aggregateReports(list) {
+  const out = {};
+  for (const r of list) {
+    const groups = (out[r.entry] ||= []);
+    let g = groups.find((x) => x.class === r.class && x.isk === r.isk);
+    if (!g) groups.push((g = { class: r.class, isk: r.isk, count: 0, last: r.t }));
+    g.count += 1;
+    if (String(r.t) > String(g.last)) g.last = r.t;
+  }
+  for (const groups of Object.values(out)) groups.sort((a, b) => b.count - a.count || String(b.last).localeCompare(String(a.last)));
+  return out;
+}
+
+async function reportsSummary() {
+  if (reportsCache && Date.now() - reportsCache.at < 5 * 60e3) return reportsCache.value;
+  const value = aggregateReports(await listReports());
+  reportsCache = { at: Date.now(), value };
+  return value;
+}
+
+export async function deleteReport(key) {
+  if (!/^toll-reports\/[a-z0-9_-]{2,40}\/\d{4}-\d{2}-\d{2}-[0-9a-f]{16}\.bin$/.test(String(key || ""))) return { error: "Chiave non valida" };
+  await deleteObjects(await listObjects(key, { limit: 1 }));
+  reportsCache = null;
+  return { ok: true };
+}
+
+export async function tollsHandler(req, res, send) {
+  if (req.method === "POST") {
+    const body = await readJSON(req).catch(() => ({}));
+    const r = await submitReport(req, body).catch(() => ({ status: 500, body: { error: "Errore del server" } }));
+    res.setHeader("Cache-Control", "no-store");
+    return send(res, r.status, r.body);
+  }
   const catalog = await readTolls().catch(() => ({ entries: sanitizeTolls(TOLLS_SEED).entries, updated_at: null }));
-  // A price corrected in the panel reaches the phones within minutes.
+  const reports = await reportsSummary().catch(() => ({}));
+  // A price corrected in the panel, or a new report, reaches the phones within minutes.
   res.setHeader("Cache-Control", "public, s-maxage=300, stale-while-revalidate=86400");
-  return send(res, 200, publicTolls(catalog));
+  return send(res, 200, publicTolls(catalog, reports));
 }

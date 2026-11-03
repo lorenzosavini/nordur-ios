@@ -16,7 +16,7 @@ import { deleteAccount, granted, sightingTag, bannedSighterPath } from "./accoun
 import { FEATURES, readConfig, writeConfig, publicConfig, fillLanguages } from "./features.js";
 import { translateTexts } from "../api/translate.js";
 import { pushReady, pushNotice, deviceCount } from "./push.js";
-import { readTolls, writeTolls, resetTolls, TYPES as TOLL_TYPES } from "./tolls.js";
+import { readTolls, writeTolls, resetTolls, listReports, aggregateReports, deleteReport, TYPES as TOLL_TYPES } from "./tolls.js";
 
 const PASSWORD = process.env.ADMIN_PASSWORD || "";
 const TOTP = (process.env.ADMIN_TOTP_SECRET || "").replace(/\s/g, "").toUpperCase();
@@ -277,7 +277,22 @@ const ACTIONS = {
   /** Tolls, tunnels and paid parking shown in the app (lib/tolls.js). */
   async tolls() {
     const catalog = await readTolls();
-    return { ...catalog, types: TOLL_TYPES };
+    const reports = await listReports().catch(() => []);
+    return { ...catalog, types: TOLL_TYPES, reports: aggregateReports(reports) };
+  },
+
+  /** The single reports of one toll, to check them (no identities). */
+  async "toll-reports"(body) {
+    const id = String(body.entry || "");
+    if (!/^[a-z0-9_-]{2,40}$/.test(id)) return { error: "Voce non valida", status: 400 };
+    return { reports: (await listReports(id)).map(({ key, day, t, class: cls, isk }) => ({ key, day, t, class: cls, isk })) };
+  },
+
+  async "toll-report-delete"(body, req) {
+    const r = await deleteReport(body.key);
+    if (r.error) return { error: r.error, status: 400 };
+    await log(req, "toll-report-delete", { key: String(body.key).split("/").slice(1, 2).join("") });
+    return r;
   },
 
   async "tolls-save"(body, req) {

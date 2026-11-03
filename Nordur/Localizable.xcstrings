@@ -56408,6 +56408,566 @@
           }
         }
       }
+    },
+    "%lld viaggiatori segnalano %@ ISK" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$lld travellers report %2$@ ISK"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$lld Reisende melden %2$@ ISK"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$lld voyageurs signalent %2$@ ISK"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$lld viajeros indican %2$@ ISK"
+          }
+        }
+      }
+    },
+    "≈ %@ %@ · segnalato da %lld" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "≈ %1$@ %2$@ · reported by %3$lld"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "≈ %1$@ %2$@ · gemeldet von %3$lld"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "≈ %1$@ %2$@ · signalé par %3$lld"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "≈ %1$@ %2$@ · indicado por %3$lld"
+          }
+        }
+      }
+    },
+    "≈ %@ %@ · segnalato dai viaggiatori" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "≈ %1$@ %2$@ · reported by travellers"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "≈ %1$@ %2$@ · von Reisenden gemeldet"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "≈ %1$@ %2$@ · signalé par des voyageurs"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "≈ %1$@ %2$@ · indicado por viajeros"
+          }
+        }
+      }
+    },
+    "Segnalazioni dei viaggiatori" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Travellers' reports"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Meldungen von Reisenden"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Signalements des voyageurs"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Avisos de los viajeros"
+          }
+        }
+      }
+    },
+    "Quanto dicono di aver pagato le persone che usano Norður negli ultimi 120 giorni (una segnalazione per telefono al giorno, anonima). Non sostituiscono il prezzo ufficiale." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "What people using Norður say they paid in the last 120 days (one anonymous report per phone per day). They do not replace the official price."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Was Norður-Nutzer in den letzten 120 Tagen nach eigenen Angaben bezahlt haben (eine anonyme Meldung pro Telefon und Tag). Sie ersetzen nicht den offiziellen Preis."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ce que les utilisateurs de Norður disent avoir payé ces 120 derniers jours (un signalement anonyme par téléphone et par jour). Ils ne remplacent pas le prix officiel."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lo que dicen haber pagado quienes usan Norður en los últimos 120 días (un aviso anónimo por teléfono y día). No sustituyen el precio oficial."
+          }
+        }
+      }
+    },
+    "La maggior parte delle segnalazioni recenti dice %@ ISK: il prezzo potrebbe essere cambiato, verifica sul sito ufficiale." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Most recent reports say %@ ISK: the price may have changed, check the official site."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Die meisten aktuellen Meldungen nennen %@ ISK: der Preis könnte sich geändert haben, prüfe die offizielle Website."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La plupart des signalements récents indiquent %@ ISK : le prix a peut-être changé, vérifie sur le site officiel."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La mayoría de los avisos recientes indican %@ ISK: el precio puede haber cambiado, compruébalo en el sitio oficial."
+          }
+        }
+      }
+    },
+    "Nessuna segnalazione per ora." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No reports yet."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Noch keine Meldungen."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aucun signalement pour l'instant."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ningún aviso por ahora."
+          }
+        }
+      }
+    },
+    "1 persona ha segnalato %@ ISK" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "1 person reported %@ ISK"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "1 Person hat %@ ISK gemeldet"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "1 personne a signalé %@ ISK"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "1 persona ha indicado %@ ISK"
+          }
+        }
+      }
+    },
+    "%lld persone hanno segnalato %@ ISK" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$lld people reported %2$@ ISK"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$lld Personen haben %2$@ ISK gemeldet"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$lld personnes ont signalé %2$@ ISK"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$lld personas han indicado %2$@ ISK"
+          }
+        }
+      }
+    },
+    "Grazie: hai già segnalato oggi" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Thanks: you already reported today"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Danke: du hast heute schon gemeldet"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Merci : tu as déjà signalé aujourd'hui"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gracias: ya has enviado un aviso hoy"
+          }
+        }
+      }
+    },
+    "Segnala quanto hai pagato" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Report what you paid"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Melde, was du bezahlt hast"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Signale ce que tu as payé"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Indica cuánto has pagado"
+          }
+        }
+      }
+    },
+    "Veicolo" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vehicle"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fahrzeug"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Véhicule"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vehículo"
+          }
+        }
+      }
+    },
+    "Importo in corone (ISK)" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Amount in króna (ISK)"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Betrag in Kronen (ISK)"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Montant en couronnes (ISK)"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Importe en coronas (ISK)"
+          }
+        }
+      }
+    },
+    "Scrivi il prezzo pieno di un passaggio o di un giorno, in corone islandesi, come l'hai pagato. La segnalazione è anonima: una al giorno per questo luogo." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Enter the full price of one trip or one day, in Icelandic króna, as you paid it. The report is anonymous: one a day for this place."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gib den vollen Preis für eine Durchfahrt oder einen Tag in isländischen Kronen ein, so wie du ihn bezahlt hast. Die Meldung ist anonym: eine pro Tag für diesen Ort."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Indique le prix plein d'un passage ou d'une journée, en couronnes islandaises, tel que tu l'as payé. Le signalement est anonyme : un par jour pour ce lieu."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Escribe el precio completo de un paso o de un día, en coronas islandesas, tal como lo pagaste. El aviso es anónimo: uno al día para este lugar."
+          }
+        }
+      }
+    },
+    "Invia segnalazione" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Send report"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Meldung senden"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Envoyer le signalement"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Enviar aviso"
+          }
+        }
+      }
+    },
+    "Segnala il prezzo" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Report the price"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Preis melden"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Signaler le prix"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Indicar el precio"
+          }
+        }
+      }
+    },
+    "Segnalazione non inviata, riprova più tardi." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Report not sent, try again later."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Meldung nicht gesendet, versuche es später erneut."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Signalement non envoyé, réessaie plus tard."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aviso no enviado, inténtalo más tarde."
+          }
+        }
+      }
+    },
+    "Importo non valido: scrivi le corone, tra 50 e 100.000." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Invalid amount: enter króna, between 50 and 100,000."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ungültiger Betrag: gib Kronen ein, zwischen 50 und 100.000."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Montant non valide : indique des couronnes, entre 50 et 100 000."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Importe no válido: escribe coronas, entre 50 y 100.000."
+          }
+        }
+      }
+    },
+    "L'importo è troppo lontano dal prezzo ufficiale: controlla di aver scritto le corone." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The amount is too far from the official price: check you entered króna."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Der Betrag weicht zu stark vom offiziellen Preis ab: prüfe, ob du Kronen eingegeben hast."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Le montant est trop éloigné du prix officiel : vérifie que tu as saisi des couronnes."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "El importe está demasiado lejos del precio oficial: comprueba que has escrito coronas."
+          }
+        }
+      }
+    },
+    "Troppe segnalazioni: riprova più tardi." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Too many reports: try again later."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zu viele Meldungen: versuche es später erneut."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Trop de signalements : réessaie plus tard."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Demasiados avisos: inténtalo más tarde."
+          }
+        }
+      }
     }
   },
   "version" : "1.0"

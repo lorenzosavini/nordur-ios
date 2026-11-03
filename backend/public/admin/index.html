@@ -414,28 +414,33 @@ $("nclear").onclick = () => confirm("Togliere l'avviso dall'app?") && saveNotice
 
 // ——— Log ———
 // MARK: Tolls
-let tolls = [], tollTypes = [], tollEditing = -1;
+let tolls = [], tollTypes = [], tollEditing = -1, tollReports = {};
 const TYPE_LABEL = { toll_tunnel: "Tunnel a pedaggio", toll_road: "Strada a pedaggio", paid_parking: "Parcheggio a pagamento", info: "Informazione" };
 const today = () => new Date().toISOString().slice(0, 10);
 async function loadTolls() {
   try {
     const r = await call("tolls");
-    tolls = r.entries; tollTypes = r.types;
+    tolls = r.entries; tollTypes = r.types; tollReports = r.reports || {};
     $("tstate").textContent = r.edited ? `Catalogo salvato dal pannello il ${when(r.updated_at)}.` : "Prima edizione (verificata a mano): non ancora modificata dal pannello.";
     renderTolls();
   } catch (err) { toast(err.message, true); }
 }
 function renderTolls() {
   const age = (d) => Math.floor((Date.now() - Date.parse(d)) / 864e5);
-  $("tlist").innerHTML = `<table><tr><th>Voce</th><th class="hide-m">Tipo</th><th>Prezzo base</th><th>Verificato</th><th></th></tr>${tolls.map((e, i) => {
+  $("tlist").innerHTML = `<table><tr><th>Voce</th><th class="hide-m">Tipo</th><th>Prezzo base</th><th>Verificato</th><th class="hide-m">Segnalazioni</th><th></th></tr>${tolls.map((e, i) => {
+    const reps = tollReports[e.id] || [];
+    const nrep = reps.reduce((n, g) => n + g.count, 0);
+    const top = reps[0];
     const p = e.prices?.[0];
     const old = age(e.verified_at) > 180;
     return `<tr><td><b>${esc(e.name)}</b><br><code>${esc(e.id)}</code></td><td class="hide-m small dim">${esc(TYPE_LABEL[e.type] || e.type)}</td>
       <td class="small">${p ? `${esc(p.isk)} ISK / ${esc(p.unit)} <span class="faint">(${esc(p.class)})</span>` : "<span class='faint'>–</span>"}</td>
       <td class="small" style="${old ? "color:var(--caution)" : ""}">${esc(e.verified_at)}${old ? " · da riverificare" : ""}</td>
+      <td class="hide-m small">${nrep ? `<button class="btn ghost small" data-r="${esc(e.id)}">${nrep}</button> <span class="dim">più frequente ${esc(top.isk)} ISK (${esc(top.class)}) ×${top.count}</span>` : "<span class='faint'>–</span>"}</td>
       <td style="white-space:nowrap"><button class="btn ghost small" data-e="${i}">Modifica</button> <button class="btn ghost small" data-v="${i}">Verificato oggi</button></td></tr>`;
   }).join("")}</table>`;
   $("tlist").querySelectorAll("[data-e]").forEach((b) => (b.onclick = () => editToll(Number(b.dataset.e))));
+  $("tlist").querySelectorAll("[data-r]").forEach((b) => (b.onclick = () => showReports(b.dataset.r)));
   $("tlist").querySelectorAll("[data-v]").forEach((b) => (b.onclick = () => { tolls[Number(b.dataset.v)].verified_at = today(); renderTolls(); $("tsaved").textContent = "Modifiche non ancora pubblicate"; }));
 }
 function editToll(i) {
@@ -448,6 +453,19 @@ function editToll(i) {
   $("tvtoday").onclick = () => ($("tver").value = today());
   tdlg.showModal();
 }
+async function showReports(id) {
+  try {
+    const r = await call("toll-reports", { entry: id });
+    $("ubody").innerHTML = `<div class="kicker">Segnalazioni dei viaggiatori</div><h2>${esc(id)}</h2>
+      <p class="dim small">Quanto dicono di aver pagato (ultimi 120 giorni, una per telefono al giorno, senza identità). Non cambiano il prezzo ufficiale: se sono giuste, verifica sulla fonte e correggi la voce.</p>
+      <table><tr><th>Giorno</th><th>Classe</th><th>ISK</th><th></th></tr>${r.reports.map((x) => `<tr><td>${esc(x.day)}</td><td><code>${esc(x.class)}</code></td><td>${esc(x.isk)}</td><td><button class="btn ghost small" data-k="${esc(x.key)}">Elimina</button></td></tr>`).join("")}</table>`;
+    $("ubody").querySelectorAll("[data-k]").forEach((b) => (b.onclick = async () => {
+      try { await call("toll-report-delete", { key: b.dataset.k }); b.closest("tr").remove(); toast("Segnalazione eliminata"); } catch (err) { toast(err.message, true); }
+    }));
+    udlg.showModal();
+  } catch (err) { toast(err.message, true); }
+}
+
 $("tapply").onclick = () => {
   try {
     const e = JSON.parse($("tjson").value);
@@ -474,7 +492,7 @@ $("treset").onclick = async () => {
   catch (err) { toast(err.message, true); }
 };
 
-const ACTION = { "tolls-save": "Pedaggi pubblicati", "tolls-reset": "Pedaggi ripristinati", login: "Accesso", "login-failed": "Accesso non riuscito", "pro-grant": "Pro regalato", "pro-remove": "Pro tolto", note: "Nota", block: "Account sospeso", unblock: "Account riattivato", delete: "Account cancellato", export: "Dati esportati", "sighting-delete": "Avvistamento eliminato", "sighter-ban": "Bloccato dagli avvistamenti", "sighter-unban": "Sbloccato dagli avvistamenti", "config-save": "Configurazione pubblicata", "notice-push": "Notifica inviata" };
+const ACTION = { "toll-report-delete": "Segnalazione prezzo eliminata", "tolls-save": "Pedaggi pubblicati", "tolls-reset": "Pedaggi ripristinati", login: "Accesso", "login-failed": "Accesso non riuscito", "pro-grant": "Pro regalato", "pro-remove": "Pro tolto", note: "Nota", block: "Account sospeso", unblock: "Account riattivato", delete: "Account cancellato", export: "Dati esportati", "sighting-delete": "Avvistamento eliminato", "sighter-ban": "Bloccato dagli avvistamenti", "sighter-unban": "Sbloccato dagli avvistamenti", "config-save": "Configurazione pubblicata", "notice-push": "Notifica inviata" };
 async function loadLog() {
   try {
     const r = await call("log");

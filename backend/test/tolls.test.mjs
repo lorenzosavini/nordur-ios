@@ -50,5 +50,26 @@ test("tolls: an entry without source, check date or a valid place is refused", (
 
 test("tolls: public shape", () => {
   const p = publicTolls({ entries: [], updated_at: null });
-  assert.deepEqual(p, { version: 1, updated_at: null, entries: [] });
+  assert.deepEqual(p, { version: 1, updated_at: null, entries: [], reports: {} });
+});
+
+test("tolls: a traveller's report must be a known toll, class and a believable amount", async () => {
+  const { checkReport, aggregateReports } = await import("../lib/tolls.js");
+  const entries = sanitizeTolls(TOLLS_SEED).entries;
+  assert.equal(checkReport({ entry: "thingvellir", class: "car_5", isk: 1200 }, entries).isk, 1200);
+  assert.match(checkReport({ entry: "nope", class: "car_5", isk: 1000 }, entries).error, /sconosciuto/);
+  assert.match(checkReport({ entry: "hvalfjardargong", class: "car_5", isk: 1000 }, entries).error, /sconosciuto/);
+  assert.match(checkReport({ entry: "thingvellir", class: "tank", isk: 1000 }, entries).error, /veicolo/);
+  assert.match(checkReport({ entry: "thingvellir", class: "car_5", isk: 10 }, entries).error, /Importo/);
+  assert.match(checkReport({ entry: "thingvellir", class: "car_5", isk: 9000 }, entries).error, /lontano/);
+  // No official price (Reykjavík): any believable amount.
+  assert.equal(checkReport({ entry: "reykjavik", class: "car_5", isk: 900 }, entries).isk, 900);
+
+  const agg = aggregateReports([
+    { entry: "thingvellir", class: "car_5", isk: 1200, t: "2026-11-01T10:00:00Z" },
+    { entry: "thingvellir", class: "car_5", isk: 1200, t: "2026-11-02T10:00:00Z" },
+    { entry: "thingvellir", class: "car_5", isk: 1000, t: "2026-10-20T10:00:00Z" },
+  ]);
+  assert.deepEqual(agg.thingvellir[0], { class: "car_5", isk: 1200, count: 2, last: "2026-11-02T10:00:00Z" });
+  assert.equal(agg.thingvellir[1].count, 1);
 });

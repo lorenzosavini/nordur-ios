@@ -228,7 +228,7 @@ export default async function handler(req, res) {
   const params = new URL(req.url, "http://x").searchParams;
   const refresh = params.get("refresh") === "1";
   // /api/tolls: tolls, toll tunnels and paid parking (lib/tolls.js), on this function: the Hobby plan allows 12.
-  if (params.get("tolls")) return tollsHandler(res, send);
+  if (params.get("tolls")) return tollsHandler(req, res, send);
   if (params.get("source") === "safetravel") return safeTravel(res);
   if (params.get("shops")) return osm(res, "shops", refresh);
   if (params.get("osm")) {

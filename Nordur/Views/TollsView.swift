@@ -158,6 +158,13 @@ struct TollRow: View {
                 Text(entry.kindLabel).font(.app(.caption)).foregroundStyle(Theme.dim)
                 if let price = entry.price(for: vehicle) {
                     Text("≈ \(price.iskText) \(price.unitLabel)").font(.app(.caption, .semibold)).foregroundStyle(Theme.text)
+                    if let differ = entry.reportsDisagree(for: vehicle) {
+                        Label(String(localized: "\(differ.count) viaggiatori segnalano \(Fmt.number(differ.isk)) ISK"), systemImage: "person.2.fill")
+                            .font(.app(.caption2, .semibold)).foregroundStyle(Theme.caution)
+                    }
+                } else if let reported = entry.reportedPrice(for: vehicle) {
+                    Text("≈ \(reported.iskText) \(reported.unitLabel) · segnalato da \(entry.community(for: vehicle)?.count ?? 0)")
+                        .font(.app(.caption, .semibold)).foregroundStyle(Theme.text)
                 } else if entry.isParking || entry.isToll {
                     Text("A pagamento: verifica il prezzo sul posto").font(.app(.caption)).foregroundStyle(Theme.caution)
                 } else if let summary = entry.text.summary {
@@ -248,23 +255,15 @@ struct TollDetailSections: View {
             } header: { Text("Come pagare").pinnedHeader() }
         }
 
-        if let window = text.window {
-            Section { Text(window).font(.app(.subheadline)).fixedSize(horizontal: false, vertical: true) } header: { Text("Quando").pinnedHeader() }
-        }
-        if let penalty = text.penalty {
-            Section { Text(penalty).font(.app(.subheadline)).fixedSize(horizontal: false, vertical: true) } header: { Text("Se non paghi").pinnedHeader() }
-        }
-        if let rental = text.rental {
-            Section { Text(rental).font(.app(.subheadline)).fixedSize(horizontal: false, vertical: true) } header: { Text("Auto a noleggio").pinnedHeader() }
-        }
-        if let alternative = text.alternative {
+        if entry.isToll || entry.isParking {
             Section {
-                Label(alternative, systemImage: "arrow.triangle.branch").font(.app(.subheadline)).fixedSize(horizontal: false, vertical: true)
-            } header: { Text("Alternativa gratuita").pinnedHeader() }
+                TollReportsBlock(entry: entry)
+            } header: { Text("Segnalazioni dei viaggiatori").pinnedHeader() } footer: {
+                Text("Quanto dicono di aver pagato le persone che usano Norður negli ultimi 120 giorni (una segnalazione per telefono al giorno, anonima). Non sostituiscono il prezzo ufficiale.")
+            }
         }
-        if let note = text.note {
-            Section { Text(note).font(.app(.subheadline)).fixedSize(horizontal: false, vertical: true) }
-        }
+
+        TollTextSections(text: text)
 
         if let c = entry.coordinate {
             Section {
@@ -295,6 +294,145 @@ struct TollDetailSections: View {
                 }
             }
         } header: { Text("Fonte").pinnedHeader() }
+    }
+}
+
+/// When to pay, what happens otherwise, rental cars, the free alternative.
+struct TollTextSections: View {
+    let text: TollEntry.Texts
+
+    var body: some View {
+        if let window = text.window {
+            Section { Text(window).font(.app(.subheadline)).fixedSize(horizontal: false, vertical: true) } header: { Text("Quando").pinnedHeader() }
+        }
+        if let penalty = text.penalty {
+            Section { Text(penalty).font(.app(.subheadline)).fixedSize(horizontal: false, vertical: true) } header: { Text("Se non paghi").pinnedHeader() }
+        }
+        if let rental = text.rental {
+            Section { Text(rental).font(.app(.subheadline)).fixedSize(horizontal: false, vertical: true) } header: { Text("Auto a noleggio").pinnedHeader() }
+        }
+        if let alternative = text.alternative {
+            Section {
+                Label(alternative, systemImage: "arrow.triangle.branch").font(.app(.subheadline)).fixedSize(horizontal: false, vertical: true)
+            } header: { Text("Alternativa gratuita").pinnedHeader() }
+        }
+        if let note = text.note {
+            Section { Text(note).font(.app(.subheadline)).fixedSize(horizontal: false, vertical: true) }
+        }
+    }
+}
+
+/// "3 people reported 1,200 ISK", a warning when most reports disagree with the
+/// official price, and the button to report what you paid.
+struct TollReportsBlock: View {
+    let entry: TollEntry
+    @State private var reporting = false
+    @State private var sentToday = false
+
+    var body: some View {
+        let reports = Array((entry.reports ?? []).prefix(6))
+        if let differ = entry.reportsDisagree() {
+            Label(String(localized: "La maggior parte delle segnalazioni recenti dice \(Fmt.number(differ.isk)) ISK: il prezzo potrebbe essere cambiato, verifica sul sito ufficiale."),
+                  systemImage: "exclamationmark.triangle.fill")
+                .font(.app(.caption, .semibold)).foregroundStyle(Theme.caution)
+                .fixedSize(horizontal: false, vertical: true)
+        }
+        if reports.isEmpty {
+            Text("Nessuna segnalazione per ora.").font(.app(.caption)).foregroundStyle(Theme.dim)
+        }
+        ForEach(reports, id: \.self) { report in
+            VStack(alignment: .leading, spacing: 1) {
+                Text(report.count == 1 ? String(localized: "1 persona ha segnalato \(Fmt.number(report.isk)) ISK")
+                                       : String(localized: "\(report.count) persone hanno segnalato \(Fmt.number(report.isk)) ISK"))
+                    .font(.app(.subheadline, .semibold)).foregroundStyle(Theme.text)
+                Text(TollEntry.Price(cls: report.cls, isk: report.isk, unit: "trip").classLabel)
+                    .font(.app(.caption)).foregroundStyle(Theme.dim)
+            }
+        }
+        if sentToday || Tolls.reportedToday(entry) {
+            Label("Grazie: hai già segnalato oggi", systemImage: "checkmark.circle.fill")
+                .font(.app(.caption, .semibold)).foregroundStyle(Theme.aurora)
+        } else {
+            Button { reporting = true } label: {
+                Label("Segnala quanto hai pagato", systemImage: "square.and.pencil").font(.app(.headline))
+            }
+            .sheet(isPresented: $reporting) {
+                TollReportForm(entry: entry) { sentToday = true }
+                    .presentationDetents([.medium])
+            }
+        }
+    }
+}
+
+/// What you paid: vehicle class and amount in króna.
+struct TollReportForm: View {
+    @Environment(\.dismiss) private var dismiss
+    let entry: TollEntry
+    var onSent: () -> Void
+    @State private var cls = ""
+    @State private var amount: Int?
+    @State private var sending = false
+    @State private var error: String?
+
+    private var classes: [String] {
+        let official = entry.allPrices.map(\.cls)
+        if !official.isEmpty { return official }
+        return entry.isToll ? ["under_3_5t", "t3_5_7_5", "over_7_5t"] : ["car_5", "car_6_9", "motorcycle", "bus_10_19", "bus_20_32", "bus_33"]
+    }
+
+    var body: some View {
+        NavigationStack {
+            Form {
+                Section {
+                    Picker(String(localized: "Veicolo"), selection: $cls) {
+                        ForEach(classes, id: \.self) { c in
+                            Text(TollEntry.Price(cls: c, isk: 0, unit: "trip").classLabel).tag(c)
+                        }
+                    }
+                    TextField(String(localized: "Importo in corone (ISK)"), value: $amount, format: .number)
+                        .keyboardType(.numberPad)
+                } header: { Text(entry.name).pinnedHeader() } footer: {
+                    Text("Scrivi il prezzo pieno di un passaggio o di un giorno, in corone islandesi, come l'hai pagato. La segnalazione è anonima: una al giorno per questo luogo.")
+                }
+                if let error {
+                    Section { Text(error).font(.app(.caption)).foregroundStyle(Theme.danger) }
+                }
+                Section {
+                    Button {
+                        send()
+                    } label: {
+                        if sending { ProgressView() } else { Label("Invia segnalazione", systemImage: "paperplane.fill") }
+                    }
+                    .disabled(sending || (amount ?? 0) <= 0 || cls.isEmpty)
+                }
+            }
+            .navigationTitle("Segnala il prezzo")
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar { ToolbarItem(placement: .cancellationAction) { Button("Chiudi") { dismiss() } } }
+            .onAppear {
+                if cls.isEmpty {
+                    cls = TollVehicle.current.classes.first(where: { classes.contains($0) }) ?? classes.first ?? ""
+                }
+            }
+        }
+    }
+
+    private func send() {
+        guard let amount else { return }
+        sending = true
+        error = nil
+        Task {
+            do {
+                try await Tolls.report(entry: entry, cls: cls, isk: amount)
+                Haptics.result(true)
+                onSent()
+                dismiss()
+            } catch {
+                self.error = error.localizedDescription
+                Haptics.result(false)
+            }
+            sending = false
+        }
     }
 }
 
@@ -348,7 +486,9 @@ struct TollChargeLines: View {
                     VStack(alignment: .leading, spacing: 1) {
                         Text(charge.atStop ? String(localized: "Parcheggio a pagamento: \(charge.entry.name)") : String(localized: "\(charge.entry.kindLabel): \(charge.entry.name)"))
                             .font(.app(.caption, .semibold)).foregroundStyle(Theme.text)
-                        if let price = charge.price {
+                        if let price = charge.price, charge.entry.price() == nil {
+                            Text("≈ \(price.iskText) \(price.unitLabel) · segnalato dai viaggiatori").font(.app(.caption2)).foregroundStyle(Theme.dim)
+                        } else if let price = charge.price {
                             Text("≈ \(price.iskText) \(price.unitLabel)").font(.app(.caption2)).foregroundStyle(Theme.dim)
                         } else {
                             Text("A pagamento: verifica il prezzo sul posto").font(.app(.caption2)).foregroundStyle(Theme.caution)

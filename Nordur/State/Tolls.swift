@@ -39,6 +39,16 @@ struct TollEntry: Decodable, Identifiable, Hashable {
         let url: String
     }
 
+    /// What travellers said they paid: one amount for one class, how many said it.
+    struct Report: Decodable, Hashable {
+        let cls: String
+        let isk: Double
+        let count: Int
+        var last: String?
+
+        enum CodingKeys: String, CodingKey { case cls = "class", isk, count, last }
+    }
+
     let id: String
     let type: String
     let name: String
@@ -60,6 +70,8 @@ struct TollEntry: Decodable, Identifiable, Hashable {
     let sourceUrl: String
     var sources: [Source]?
     let verifiedAt: String
+    /// Prices reported by people using the app (last 120 days), most reported first.
+    var reports: [Report]?
 
     var kind: Kind? { Kind(rawValue: type) }
     var isToll: Bool { kind == .tollTunnel || kind == .tollRoad }
@@ -97,6 +109,31 @@ struct TollEntry: Decodable, Identifiable, Hashable {
             if let price = allPrices.first(where: { $0.cls == cls }) { return price }
         }
         return nil
+    }
+
+    /// What travellers report for this vehicle: the most reported amount, how many
+    /// reported it, how many reports in all for that class.
+    func community(for vehicle: TollVehicle = .current) -> (isk: Double, count: Int, total: Int, cls: String)? {
+        let all = reports ?? []
+        for cls in vehicle.classes {
+            let mine = all.filter { $0.cls == cls }
+            guard let top = mine.max(by: { $0.count < $1.count }) else { continue }
+            return (top.isk, top.count, mine.reduce(0) { $0 + $1.count }, cls)
+        }
+        return nil
+    }
+
+    /// Most of at least three recent reports say another amount than the official one.
+    func reportsDisagree(for vehicle: TollVehicle = .current) -> (isk: Double, count: Int)? {
+        guard let official = price(for: vehicle), let c = community(for: vehicle),
+              c.count >= 3, c.count * 2 > c.total, abs(c.isk - official.isk) >= 1 else { return nil }
+        return (c.isk, c.count)
+    }
+
+    /// Without an official price: the travellers' one, once at least three agree.
+    func reportedPrice(for vehicle: TollVehicle = .current) -> Price? {
+        guard price(for: vehicle) == nil, let c = community(for: vehicle), c.count >= 3, c.count * 2 > c.total else { return nil }
+        return Price(cls: c.cls, isk: c.isk, unit: isToll ? "trip" : "day")
     }
 
     /// Closest distance (km) from a point to the entry: its section, its gates or its centre.
@@ -214,12 +251,64 @@ extension TollEntry.Price {
 enum Tolls {
     static let endpoint = URL(string: "https://nordur-api.vercel.app/api/tolls")!
 
-    private struct File: Decodable { let entries: [TollEntry] }
+    private struct File: Decodable {
+        let entries: [TollEntry]
+        var reports: [String: [TollEntry.Report]]?
+    }
 
     static func parse(_ data: Data) throws -> [TollEntry] {
         let decoder = JSONDecoder()
         decoder.keyDecodingStrategy = .convertFromSnakeCase
-        return try decoder.decode(File.self, from: data).entries
+        let file = try decoder.decode(File.self, from: data)
+        return file.entries.map { entry in
+            var entry = entry
+            entry.reports = file.reports?[entry.id]
+            return entry
+        }
+    }
+
+    enum ReportError: LocalizedError {
+        case refused(String)
+        var errorDescription: String? {
+            switch self { case .refused(let message): return message }
+        }
+    }
+
+    /// A random id of this phone for the reports (no account): with the network
+    /// it limits them to one per toll per day.
+    static var clientID: String {
+        if let id = UserDefaults.standard.string(forKey: "tolls.client") { return id }
+        let id = UUID().uuidString
+        UserDefaults.standard.set(id, forKey: "tolls.client")
+        return id
+    }
+
+    /// Tells nordur-api what you paid.
+    static func report(entry: TollEntry, cls: String, isk: Int) async throws {
+        var request = URLRequest(url: endpoint)
+        request.httpMethod = "POST"
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.httpBody = try JSONSerialization.data(withJSONObject: ["entry": entry.id, "class": cls, "isk": isk, "client": clientID] as [String: Any])
+        let (data, response) = try await URLSession.shared.data(for: request)
+        let status = (response as? HTTPURLResponse)?.statusCode ?? 0
+        guard status == 200 else {
+            let object = (try? JSONSerialization.jsonObject(with: data)) as? [String: Any]
+            let message: String
+            switch object?["code"] as? String {
+            case "amount": message = String(localized: "Importo non valido: scrivi le corone, tra 50 e 100.000.")
+            case "far": message = String(localized: "L'importo è troppo lontano dal prezzo ufficiale: controlla di aver scritto le corone.")
+            case "rate": message = String(localized: "Troppe segnalazioni: riprova più tardi.")
+            default: message = String(localized: "Segnalazione non inviata, riprova più tardi.")
+            }
+            throw ReportError.refused(message)
+        }
+        UserDefaults.standard.set(Date(), forKey: "tolls.reported.\(entry.id)")
+    }
+
+    /// Already reported today from this phone.
+    static func reportedToday(_ entry: TollEntry) -> Bool {
+        guard let date = UserDefaults.standard.object(forKey: "tolls.reported.\(entry.id)") as? Date else { return false }
+        return Calendar.iceland.isDate(date, inSameDayAs: Date())
     }
 
     /// The catalog, from nordur-api; the copy on the phone when offline.
@@ -358,13 +447,13 @@ enum TripTolls {
         var charges: [TollCharge] = []
         if let previous, stop.transport == .car || stop.transport == .bus {
             for entry in TollRoutes.shared.tolls(from: previous.place.coordinate, to: stop.place.coordinate, entries: entries, date: stop.date) {
-                charges.append(TollCharge(entry: entry, price: entry.price(for: vehicle), atStop: false))
+                charges.append(TollCharge(entry: entry, price: entry.price(for: vehicle) ?? entry.reportedPrice(for: vehicle), atStop: false))
             }
         }
         var seen = Set<String>()
         for c in [stop.place.coordinate] + stop.visits.map(\.place.coordinate) {
             for entry in Tolls.parking(at: c, in: entries, date: stop.date) where seen.insert(entry.id).inserted {
-                charges.append(TollCharge(entry: entry, price: entry.price(for: vehicle), atStop: true))
+                charges.append(TollCharge(entry: entry, price: entry.price(for: vehicle) ?? entry.reportedPrice(for: vehicle), atStop: true))
             }
         }
         return charges
