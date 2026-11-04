@@ -182,9 +182,14 @@ struct PlaceHeader: View {
                     if model.useCurrentLocation {
                         Rectangle().fill(Theme.accent).frame(width: 6, height: 6)
                     }
-                    Text(model.useCurrentLocation ? String(localized: "GPS · posizione attuale") : (model.activePlace.subtitle ?? String(localized: "Località scelta")))
+                    Text(model.useCurrentLocation ? String(localized: "Posizione attuale") : (model.activePlace.subtitle ?? String(localized: "Località scelta")))
                         .eyebrow(Theme.dim)
-                    Text(Fmt.coordinate(model.activePlace.coordinate)).font(.mono(10)).foregroundStyle(Theme.faint)
+                        .lineLimit(1)
+                    // Coordinates only while there is room (they are also in the place picker).
+                    ViewThatFits(in: .horizontal) {
+                        Text(Fmt.coordinate(model.activePlace.coordinate)).font(.mono(10)).foregroundStyle(Theme.faint).lineLimit(1)
+                        EmptyView()
+                    }
                 }
                 HStack(alignment: .firstTextBaseline, spacing: 8) {
                     Text(model.activePlace.name)
