@@ -640,7 +640,7 @@ enum Hero: String, CaseIterable {
         case .roads: return ("Driving in Iceland can be challenging (40217475782).jpg", "Winniepix", "CC BY 2.0", "https://commons.wikimedia.org/wiki/File:Driving_in_Iceland_can_be_challenging_(40217475782).jpg")
         case .weather: return ("Crepuscular rays break through clouds in Iceland.jpg", "Thomas Heins", "CC BY 4.0", "https://commons.wikimedia.org/wiki/File:Crepuscular_rays_break_through_clouds_in_Iceland.jpg")
         case .map: return ("Iceland (15082529060).jpg", "NASA Goddard Space Flight Center", "Public domain", "https://commons.wikimedia.org/wiki/File:Iceland_(15082529060).jpg")
-        case .trip: return ("Kirkjufell, Iceland (Unsplash LoKG7kKx7Zc).jpg", "Steven Diaz stevendiazphoto", "Cc0", "https://commons.wikimedia.org/wiki/File:Kirkjufell,_Iceland_(Unsplash_LoKG7kKx7Zc).jpg")
+        case .trip: return ("Kirkjufell, Iceland (Unsplash LoKG7kKx7Zc).jpg", "Steven Diaz stevendiazphoto", "CC0", "https://commons.wikimedia.org/wiki/File:Kirkjufell,_Iceland_(Unsplash_LoKG7kKx7Zc).jpg")
         case .volcano: return ("Iceland's Fagradalsfjall volcano.png", "Mokslo Sriuba", "CC BY-SA 4.0", "https://commons.wikimedia.org/wiki/File:Iceland%27s_Fagradalsfjall_volcano.png")
         case .drive: return ("Saturday Winter Afternoon on the Road from the Factory, Iceland - panoramio.jpg", "Petr Kraumann", "CC BY 3.0", "https://commons.wikimedia.org/wiki/File:Saturday_Winter_Afternoon_on_the_Road_from_the_Factory,_Iceland_-_panoramio.jpg")
         }

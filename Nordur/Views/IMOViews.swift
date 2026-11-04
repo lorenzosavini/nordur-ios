@@ -41,8 +41,8 @@ struct IMOObservationBlock: View {
                 Text(text).font(.app(.caption)).foregroundStyle(Theme.dim)
             }
             Text(observation.tenMinute == true
-                 ? String(localized: "vedur.is · stazione a \(Int(observation.distanceKm.rounded())) km, misura delle \(Fmt.time(observation.time, in: .Iceland)) (ogni 10 minuti)")
-                 : String(localized: "vedur.is · stazione a \(Int(observation.distanceKm.rounded())) km, misura delle \(Fmt.time(observation.time, in: .Iceland))"))
+                 ? String(localized: "vedur.is · stazione a \(Int(observation.distanceKm.rounded())) km, misura delle \(Fmt.time(observation.time, in: .iceland)) (ogni 10 minuti)")
+                 : String(localized: "vedur.is · stazione a \(Int(observation.distanceKm.rounded())) km, misura delle \(Fmt.time(observation.time, in: .iceland))"))
                 .font(.app(.caption2)).foregroundStyle(Theme.faint)
         }
         .padding(.vertical, 4)

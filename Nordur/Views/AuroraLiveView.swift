@@ -57,7 +57,7 @@ struct AuroraLiveView: View {
                     Text("Di giorno l'ovale si trova sul lato notturno della Terra.")
                         .font(.app(.caption2)).foregroundStyle(.secondary)
                     if let ovation = model.ovation {
-                        Text("Previsione OVATION valida per le \(Fmt.time(ovation.value.forecastTime, in: .Iceland)) (circa 30–90 minuti dopo la misura del vento solare a L1): non vale per le ore e i giorni successivi. La scala mostra il valore del modello OVATION, non nuvolosità né probabilità di osservazione. Kp previsto per il blocco attuale \(Fmt.number(model.kp.flatMap { KpLookup.kp(at: Date(), in: $0.value) }, decimals: 1)).")
+                        Text("Previsione OVATION valida per le \(Fmt.time(ovation.value.forecastTime, in: .iceland)) (circa 30–90 minuti dopo la misura del vento solare a L1): non vale per le ore e i giorni successivi. La scala mostra il valore del modello OVATION, non nuvolosità né probabilità di osservazione. Kp previsto per il blocco attuale \(Fmt.number(model.kp.flatMap { KpLookup.kp(at: Date(), in: $0.value) }, decimals: 1)).")
                             .font(.app(.caption2)).foregroundStyle(.secondary)
                         FreshnessLabel(date: ovation.date, isStale: ovation.isStale, source: String(localized: "NOAA SWPC"))
                     }
@@ -183,7 +183,7 @@ struct AuroraLiveView: View {
                     .frame(height: 8)
                 Text("100%").font(.mono(9))
             }
-            Text(model.weatherGrid.map { String(localized: "Copertura nuvolosa totale, ora \(Fmt.time($0.value.times[$0.value.currentHourIndex], in: .Iceland)) · Open-Meteo") } ?? String(localized: "Nuvolosità in caricamento"))
+            Text(model.weatherGrid.map { String(localized: "Copertura nuvolosa totale, ora \(Fmt.time($0.value.times[$0.value.currentHourIndex], in: .iceland)) · Open-Meteo") } ?? String(localized: "Nuvolosità in caricamento"))
                 .font(.mono(8.5)).foregroundStyle(Theme.faint)
         }
     }

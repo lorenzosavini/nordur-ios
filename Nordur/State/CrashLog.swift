@@ -242,7 +242,7 @@ final class CrashLog: NSObject {
     private func armHandlers() {
         crashFile = strdup(Self.pendingURL.path)
         NSSetUncaughtExceptionHandler { exception in
-            let text = "Exception \(exception.name.rawValue): \(exception.reason ?? "")\n"
+            let text = "EXCEPTION \(exception.name.rawValue): \(exception.reason ?? "")\n"
                 + (crashScreen.map { "SCREEN \(String(cString: $0))\n" } ?? "")
                 + exception.callStackSymbols.joined(separator: "\n")
             try? text.write(toFile: String(cString: crashFile!), atomically: false, encoding: .utf8)

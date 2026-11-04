@@ -17,7 +17,7 @@ struct TripOverview: View {
         let visits = stops.reduce(0) { $0 + $1.visits.count }
         VStack(alignment: .leading, spacing: 10) {
             if let first, let last {
-                Text("\(Fmt.day(first, in: .Iceland)) → \(Fmt.day(last, in: .Iceland))")
+                Text("\(Fmt.day(first, in: .iceland)) → \(Fmt.day(last, in: .iceland))")
                     .font(.mono(11, .semibold)).foregroundStyle(Theme.accent)
             }
             HStack(spacing: 0) {
@@ -94,9 +94,9 @@ struct StopCard: View {
 
     private var dates: String {
         let transport = stop.transport.label
-        if stop.nights == 0 { return "\(Fmt.day(stop.date, in: .Iceland)) · \(String(localized: "DI PASSAGGIO")) · \(transport)" }
+        if stop.nights == 0 { return "\(Fmt.day(stop.date, in: .iceland)) · \(String(localized: "DI PASSAGGIO")) · \(transport)" }
         let nights = stop.nights == 1 ? String(localized: "1 notte") : String(localized: "\(stop.nights) notti")
-        return "\(Fmt.day(stop.date, in: .Iceland)) → \(Fmt.day(stop.endDate, in: .Iceland)) · \(nights)"
+        return "\(Fmt.day(stop.date, in: .iceland)) → \(Fmt.day(stop.endDate, in: .iceland)) · \(nights)"
     }
 }
 
@@ -154,8 +154,8 @@ struct StopDetailView: View {
                 VStack(alignment: .leading, spacing: 6) {
                     PlaceHero(place: stop.place, kind: .town, title: stop.place.name,
                               eyebrow: String(localized: "Tappa \(index) di \(trip.stops.count)"), describe: false)
-                    Label(stop.nights == 0 ? String(localized: "\(Fmt.day(stop.date, in: .Iceland)) · di passaggio")
-                                           : String(localized: "\(Fmt.day(stop.date, in: .Iceland)) → \(Fmt.day(stop.endDate, in: .Iceland)) · \(stop.nights) notti"),
+                    Label(stop.nights == 0 ? String(localized: "\(Fmt.day(stop.date, in: .iceland)) · di passaggio")
+                                           : String(localized: "\(Fmt.day(stop.date, in: .iceland)) → \(Fmt.day(stop.endDate, in: .iceland)) · \(stop.nights) notti"),
                           systemImage: "calendar")
                         .font(.app(.subheadline)).foregroundStyle(Theme.dim)
                     Label(String(localized: "Arrivo: \(stop.transport.label)"), systemImage: stop.transport.symbol)
@@ -194,7 +194,7 @@ struct StopDetailView: View {
                     }
                     .accessibilityIdentifier("trip.addVisit")
                 } header: {
-                    Text(String(localized: "Giorno \(i + 1) · \(Fmt.day(day, in: .Iceland))")).pinnedHeader()
+                    Text(String(localized: "Giorno \(i + 1) · \(Fmt.day(day, in: .iceland))")).pinnedHeader()
                 } footer: {
                     if i == 0, dayVisits.count > 0 {
                         Text("Tieni premuta un'attrazione per spostarla a un altro giorno o a un'altra tappa.")

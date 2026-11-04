@@ -152,7 +152,7 @@ final class Account {
     func receivedTrips() async throws -> [ReceivedTrip] {
         guard let email else { return [] }
         struct Answer: Decodable { let items: [ReceivedTrip] }
-        let data = try await request("data", method: "Get", items: [URLQueryItem(name: "inbox", value: "1"), URLQueryItem(name: "email", value: email)])
+        let data = try await request("data", method: "GET", items: [URLQueryItem(name: "inbox", value: "1"), URLQueryItem(name: "email", value: email)])
         return try JSONDecoder().decode(Answer.self, from: data).items
     }
 
@@ -200,12 +200,12 @@ final class Account {
 
     func putSharedTrip(_ id: String, title: String, stops: [TripStop], tombstones: [String: Date]) async throws -> SharedTrip {
         let body = TripBody(email: try signedInEmail(), title: title, stops: stops, tombstones: tombstones)
-        let data = try await request("data", method: "Put", items: [URLQueryItem(name: "trip", value: id)], body: try JSONEncoder().encode(body))
+        let data = try await request("data", method: "PUT", items: [URLQueryItem(name: "trip", value: id)], body: try JSONEncoder().encode(body))
         return try JSONDecoder().decode(TripAnswer.self, from: data).trip
     }
 
     func sharedTrip(_ id: String) async throws -> SharedTrip {
-        let data = try await request("data", method: "Get", items: [URLQueryItem(name: "trip", value: id), URLQueryItem(name: "email", value: try signedInEmail())])
+        let data = try await request("data", method: "GET", items: [URLQueryItem(name: "trip", value: id), URLQueryItem(name: "email", value: try signedInEmail())])
         return try JSONDecoder().decode(TripAnswer.self, from: data).trip
     }
 
@@ -224,7 +224,7 @@ final class Account {
 
     func sharedTrips() async throws -> [SharedTripSummary] {
         struct Answer: Decodable { let trips: [SharedTripSummary] }
-        let data = try await request("data", method: "Get", items: [URLQueryItem(name: "trips", value: "1"), URLQueryItem(name: "email", value: try signedInEmail())])
+        let data = try await request("data", method: "GET", items: [URLQueryItem(name: "trips", value: "1"), URLQueryItem(name: "email", value: try signedInEmail())])
         return try JSONDecoder().decode(Answer.self, from: data).trips
     }
 
@@ -290,7 +290,7 @@ final class Account {
             for item in local where manifest[item.doc] != item.fingerprint {
                 let payload: [String: Any] = ["path": item.path, "data": item.data.base64EncodedString(), "zlib": true]
                 let body = try JSONSerialization.data(withJSONObject: ["payload": payload, "updatedAt": ISO8601DateFormatter().string(from: item.modified)])
-                _ = try await request("data", method: "Put", query: item.doc, body: body)
+                _ = try await request("data", method: "PUT", query: item.doc, body: body)
                 manifest[item.doc] = item.fingerprint
             }
             let present = Set(local.map(\.doc))
@@ -318,11 +318,11 @@ final class Account {
             let payload: Payload
             let updatedAt: String?
         }
-        let listing = try JSONDecoder().decode(Listing.self, from: try await request("data", method: "Get"))
+        let listing = try JSONDecoder().decode(Listing.self, from: try await request("data", method: "GET"))
         var count = 0
         var manifest = Self.manifest
         for entry in listing.docs {
-            let stored = try JSONDecoder().decode(Stored.self, from: try await request("data", method: "Get", query: entry.doc))
+            let stored = try JSONDecoder().decode(Stored.self, from: try await request("data", method: "GET", query: entry.doc))
             guard let raw = Data(base64Encoded: stored.payload.data) else { continue }
             let remoteDate = stored.updatedAt.flatMap { ISO8601DateFormatter().date(from: $0) } ?? .distantPast
             if SyncFiles.write(raw, compressed: stored.payload.zlib ?? false, path: stored.payload.path, remoteDate: remoteDate) {

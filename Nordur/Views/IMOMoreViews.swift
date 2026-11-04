@@ -197,7 +197,7 @@ struct VolcanoSection: View {
                     Text(notes).font(.app(.caption)).foregroundStyle(Theme.dim).fixedSize(horizontal: false, vertical: true)
                 }
                 if let date = status.reportDate {
-                    Text("Bollettino settimanale vedur.is del \(Fmt.dayTime(date, in: .Iceland))").font(.app(.caption2)).foregroundStyle(Theme.faint)
+                    Text("Bollettino settimanale vedur.is del \(Fmt.dayTime(date, in: .iceland))").font(.app(.caption2)).foregroundStyle(Theme.faint)
                 }
                 FreshnessLabel(date: fetched.date, isStale: fetched.isStale, source: String(localized: "vedur.is"))
             } header: { Text("Stato dei vulcani").pinnedHeader() } footer: {

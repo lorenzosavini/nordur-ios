@@ -610,7 +610,7 @@ struct AuroraView: View {
     }
 
     private func darkShort(_ d: Astro.Darkness) -> String {
-        switch d { case .night: return "N"; case .astronomical: return "A"; case .nautical: return "Na"; case .civil: return "C"; case .day: return "G" }
+        switch d { case .night: return "N"; case .astronomical: return "A"; case .nautical: return "NA"; case .civil: return "C"; case .day: return "G" }
     }
 
     private func classBar(_ c: ObservabilityClass) -> some View {

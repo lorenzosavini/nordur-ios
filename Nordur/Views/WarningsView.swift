@@ -58,7 +58,7 @@ struct WarningRow: View {
                 }
                 Text(warning.headline).font(.app(.subheadline, .semibold))
                 Text(warning.region).font(.app(.caption)).foregroundStyle(.secondary)
-                Text("\(Fmt.dayTime(warning.onset, in: .Iceland)) → \(Fmt.dayTime(warning.expires, in: .Iceland))")
+                Text("\(Fmt.dayTime(warning.onset, in: .iceland)) → \(Fmt.dayTime(warning.expires, in: .iceland))")
                     .font(.app(.caption2)).foregroundStyle(.secondary)
             }
         }

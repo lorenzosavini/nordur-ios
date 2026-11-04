@@ -242,7 +242,7 @@ struct HazardRow: View {
                 Text(kind.label).font(.app(.subheadline, .semibold)).foregroundStyle(Theme.text)
                 Text(section.numbers.isEmpty ? section.name : "\(section.numbers) · \(section.name)").font(.app(.caption)).foregroundStyle(Theme.dim)
                 if let text = hazard.text, !text.isEmpty { Text(text).font(.app(.caption)).foregroundStyle(Theme.text) }
-                if let end = hazard.end { Text("Fino al \(Fmt.dayTime(end, in: .Iceland))").font(.app(.caption2)).foregroundStyle(Theme.faint) }
+                if let end = hazard.end { Text("Fino al \(Fmt.dayTime(end, in: .iceland))").font(.app(.caption2)).foregroundStyle(Theme.faint) }
             }
             Spacer(minLength: 4)
             if let km, km.isFinite { Text("\(Int(km.rounded())) km").font(.mono(10)).foregroundStyle(Theme.dim) }

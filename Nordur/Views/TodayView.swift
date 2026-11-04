@@ -264,7 +264,7 @@ struct TodayView: View {
             VStack(alignment: .leading, spacing: 12) {
                 HStack(spacing: 10) {
                     if let measured {
-                        SourceBadge(origin: .measured, detail: "\(measured.station) · \(Fmt.time(measured.time, in: .Iceland))")
+                        SourceBadge(origin: .measured, detail: "\(measured.station) · \(Fmt.time(measured.time, in: .iceland))")
                     } else {
                         SourceBadge(origin: fetched.value.origin(at: Date()), detail: fetched.value.official?.station.name)
                     }
@@ -342,7 +342,7 @@ struct TodayView: View {
                         SourceBadge(origin: forecast.origin(at: first), detail: forecast.origin(at: first) == .official ? forecast.official?.station.name : nil)
                         if forecast.origin(at: first) == .official, let until = forecast.official?.until, let last = hours.last?.date, until < last {
                             Text("→").font(.mono(9)).foregroundStyle(Theme.faint)
-                            SourceBadge(origin: .model, detail: String(localized: "dalle \(Fmt.dayTime(until, in: .Iceland))"))
+                            SourceBadge(origin: .model, detail: String(localized: "dalle \(Fmt.dayTime(until, in: .iceland))"))
                         }
                     }
                 }
@@ -359,7 +359,7 @@ struct TodayView: View {
                 SectionLabel(title: String(localized: "Vento"), trailing: Risk.wind(mean: now.wind, gust: now.gust).label,
                              trailingColor: Risk.wind(mean: now.wind, gust: now.gust).color)
                 if let m = now.measured {
-                    SourceBadge(origin: .measured, detail: "\(m.station) · \(Fmt.time(m.time, in: .Iceland))")
+                    SourceBadge(origin: .measured, detail: "\(m.station) · \(Fmt.time(m.time, in: .iceland))")
                 } else if let f = model.forecast?.value {
                     SourceBadge(origin: f.origin(at: Date()), detail: f.official?.station.name)
                 }
@@ -417,11 +417,11 @@ struct TodayView: View {
                                 VStack(alignment: .leading, spacing: 4) {
                                     HStack(spacing: 8) {
                                         WarningBadge(color: warning.color)
-                                        Text(warning.isActive() ? String(localized: "In corso") : String(localized: "Dalle \(Fmt.dayTime(warning.onset, in: .Iceland))"))
+                                        Text(warning.isActive() ? String(localized: "In corso") : String(localized: "Dalle \(Fmt.dayTime(warning.onset, in: .iceland))"))
                                             .font(.mono(9.5)).foregroundStyle(Theme.dim)
                                     }
                                     Text(warning.headline).font(.app(.subheadline, .semibold)).foregroundStyle(Theme.text)
-                                    Text("\(warning.region) · fino alle \(Fmt.dayTime(warning.expires, in: .Iceland))")
+                                    Text("\(warning.region) · fino alle \(Fmt.dayTime(warning.expires, in: .iceland))")
                                         .font(.app(.caption)).foregroundStyle(Theme.dim)
                                 }
                             }

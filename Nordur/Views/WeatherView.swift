@@ -317,7 +317,7 @@ struct WeatherView: View {
                 SourceBadge(origin: first, detail: first == .official ? forecast.official?.station.name : nil)
                 if first == .official, let until = forecast.official?.until, let to, until < to {
                     Text("→").font(.mono(9)).foregroundStyle(Theme.faint)
-                    SourceBadge(origin: .model, detail: String(localized: "dalle \(Fmt.dayTime(until, in: .Iceland))"))
+                    SourceBadge(origin: .model, detail: String(localized: "dalle \(Fmt.dayTime(until, in: .iceland))"))
                 }
             }
         }

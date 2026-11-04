@@ -110,9 +110,9 @@ enum TripSummary {
             if let a = day.arriving, let f = day.from { title = "\(f.place.name) → \(a.place.name)" }
             else if let n = day.night { title = n.place.name }
             else { title = String(localized: "Rientro") }
-            var items = day.visits.map { "\(Fmt.time($0.visit.date, in: .Iceland)) \($0.visit.place.name)" }
+            var items = day.visits.map { "\(Fmt.time($0.visit.date, in: .iceland)) \($0.visit.place.name)" }
             if let n = day.night { items.append(String(localized: "Notte: \(n.place.name)")) }
-            return (String(localized: "Giorno \(day.number) · \(Fmt.day(day.date, in: .Iceland))"), title, items)
+            return (String(localized: "Giorno \(day.number) · \(Fmt.day(day.date, in: .iceland))"), title, items)
         }
     }
 

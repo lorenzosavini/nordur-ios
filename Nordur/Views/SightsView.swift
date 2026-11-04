@@ -237,7 +237,7 @@ struct SightDetail: View {
                     } else {
                         Menu {
                             ForEach(trip.stops) { stop in
-                                Button("\(stop.place.name) · \(Fmt.day(stop.date, in: .Iceland)) · \(Int(Geo.distanceKm(stop.place.coordinate, c).rounded())) km") {
+                                Button("\(stop.place.name) · \(Fmt.day(stop.date, in: .iceland)) · \(Int(Geo.distanceKm(stop.place.coordinate, c).rounded())) km") {
                                     add(to: stop)
                                 }
                             }

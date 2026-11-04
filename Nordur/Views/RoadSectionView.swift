@@ -59,8 +59,8 @@ struct RoadSectionView: View {
                         VStack(alignment: .leading, spacing: 3) {
                             Label(kind.label, systemImage: kind.symbol).font(.app(.subheadline, .semibold)).foregroundStyle(Theme.text)
                             if let text = hazard.text, !text.isEmpty { Text(text).font(.app(.caption)) }
-                            Text([hazard.start.map { String(localized: "Dal \(Fmt.dayTime($0, in: .Iceland))") },
-                                  hazard.end.map { String(localized: "al \(Fmt.dayTime($0, in: .Iceland))") }].compactMap { $0 }.joined(separator: " "))
+                            Text([hazard.start.map { String(localized: "Dal \(Fmt.dayTime($0, in: .iceland))") },
+                                  hazard.end.map { String(localized: "al \(Fmt.dayTime($0, in: .iceland))") }].compactMap { $0 }.joined(separator: " "))
                                 .font(.app(.caption2)).foregroundStyle(Theme.faint)
                         }
                     }

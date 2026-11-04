@@ -10,12 +10,12 @@ extension Shop {
         let next = hours.nextChange(after: now)
         if open {
             guard let next else { return (String(localized: "Aperto 24 ore"), true) }
-            return (String(localized: "Aperto · chiude alle \(Fmt.time(next, in: .Iceland))"), true)
+            return (String(localized: "Aperto · chiude alle \(Fmt.time(next, in: .iceland))"), true)
         }
         guard let next else { return (String(localized: "Chiuso"), false) }
         let sameDay = Calendar.iceland.isDate(next, inSameDayAs: now)
-        return (sameDay ? String(localized: "Chiuso · apre alle \(Fmt.time(next, in: .Iceland))")
-                        : String(localized: "Chiuso · apre \(Fmt.dayTime(next, in: .Iceland))"), false)
+        return (sameDay ? String(localized: "Chiuso · apre alle \(Fmt.time(next, in: .iceland))")
+                        : String(localized: "Chiuso · apre \(Fmt.dayTime(next, in: .iceland))"), false)
     }
 }
 
@@ -197,11 +197,11 @@ extension FuelStation {
         let next = hours.nextChange(after: now)
         if open {
             guard let next else { return (String(localized: "Aperto 24 ore"), true) }
-            return (String(localized: "Aperto · chiude alle \(Fmt.time(next, in: .Iceland))"), true)
+            return (String(localized: "Aperto · chiude alle \(Fmt.time(next, in: .iceland))"), true)
         }
         guard let next else { return (String(localized: "Chiuso"), false) }
-        return (Calendar.iceland.isDate(next, inSameDayAs: now) ? String(localized: "Chiuso · apre alle \(Fmt.time(next, in: .Iceland))")
-                                                                : String(localized: "Chiuso · apre \(Fmt.dayTime(next, in: .Iceland))"), false)
+        return (Calendar.iceland.isDate(next, inSameDayAs: now) ? String(localized: "Chiuso · apre alle \(Fmt.time(next, in: .iceland))")
+                                                                : String(localized: "Chiuso · apre \(Fmt.dayTime(next, in: .iceland))"), false)
     }
 }
 

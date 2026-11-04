@@ -15,12 +15,12 @@ extension Bath {
         let next = hours.nextChange(after: now)
         if open {
             guard let next else { return (String(localized: "Aperto 24 ore"), true) }
-            return (String(localized: "Aperto · chiude alle \(Fmt.time(next, in: .Iceland))"), true)
+            return (String(localized: "Aperto · chiude alle \(Fmt.time(next, in: .iceland))"), true)
         }
         guard let next else { return (String(localized: "Chiuso"), false) }
         let sameDay = Calendar.iceland.isDate(next, inSameDayAs: now)
-        return (sameDay ? String(localized: "Chiuso · apre alle \(Fmt.time(next, in: .Iceland))")
-                        : String(localized: "Chiuso · apre \(Fmt.dayTime(next, in: .Iceland))"), false)
+        return (sameDay ? String(localized: "Chiuso · apre alle \(Fmt.time(next, in: .iceland))")
+                        : String(localized: "Chiuso · apre \(Fmt.dayTime(next, in: .iceland))"), false)
     }
 }
 
@@ -260,7 +260,7 @@ struct BathDetail: View {
                     } else {
                         Menu {
                             ForEach(trip.stops) { stop in
-                                Button("\(stop.place.name) · \(Fmt.day(stop.date, in: .Iceland)) · \(Int(Geo.distanceKm(stop.place.coordinate, c).rounded())) km") {
+                                Button("\(stop.place.name) · \(Fmt.day(stop.date, in: .iceland)) · \(Int(Geo.distanceKm(stop.place.coordinate, c).rounded())) km") {
                                     add(to: stop)
                                 }
                             }
