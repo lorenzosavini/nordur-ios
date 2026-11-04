@@ -1359,3 +1359,43 @@ struct AdaptiveColumns: Layout {
         }
     }
 }
+
+// MARK: - Tabs inside a screen
+
+/// One topic at a time inside a screen (Weather: hours, days, sea and air):
+/// square, full width, 44 pt, the chosen one solid. What matters for safety is
+/// never put behind one of these: it stays above them.
+struct SectionTabs<Value: Hashable>: View {
+    struct Item: Identifiable {
+        let value: Value
+        let title: String
+        var id: String { title }
+    }
+
+    let items: [Item]
+    @Binding var selection: Value
+
+    var body: some View {
+        HStack(spacing: 0) {
+            ForEach(items) { item in
+                let chosen = item.value == selection
+                Button {
+                    guard !chosen else { return }
+                    Haptics.select()
+                    withAnimation(.snappy(duration: 0.2)) { selection = item.value }
+                } label: {
+                    Text(item.title)
+                        .font(.app(.subheadline, .semibold))
+                        .lineLimit(1).minimumScaleFactor(0.75)
+                        .frame(maxWidth: .infinity, minHeight: 44)
+                        .foregroundStyle(chosen ? Theme.bg : Theme.text)
+                        .background(chosen ? Theme.text : Color.clear)
+                        .contentShape(Rectangle())
+                }
+                .buttonStyle(.plain)
+                .accessibilityAddTraits(chosen ? [.isSelected, .isButton] : .isButton)
+            }
+        }
+        .overlay(Rectangle().strokeBorder(Theme.rule, lineWidth: 1))
+    }
+}

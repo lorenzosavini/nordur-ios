@@ -7,6 +7,8 @@ struct WeatherView: View {
     // Sea and air: the headline value and any risk always shown, the details on request.
     @AppStorage("weather.seaOpen") private var seaOpen = false
     @AppStorage("weather.airOpen") private var airOpen = false
+    /// Hours, days, sea and air: one at a time under "Now" (the last one chosen is kept).
+    @AppStorage("weather.tab") private var tab = "hours"
 
     var body: some View {
         NavigationStack {
@@ -28,26 +30,39 @@ struct WeatherView: View {
                             } else if let now = model.now {
                                 forecastNow(now, forecast: forecast)
                             }
-                            meteogram(next48, forecast: forecast)
-                            dailyTable(forecast.days, zone: forecast.timeZone, forecast: forecast)
-                            IMOTextCard()
-                            if model.stationForecast != nil {
-                                DisclosureGroup(isExpanded: $showComparison) {
-                                    stationComparison(forecast).padding(.top, 8)
-                                } label: {
-                                    Text("Confronto ora per ora tra vedur.is e il modello").font(.app(.subheadline, .semibold)).foregroundStyle(Theme.text)
+                            // Safety stays above the tabs: rough sea at the beaches, bad air.
+                            safetyNotes
+                            SectionTabs(items: [
+                                .init(value: "hours", title: String(localized: "Ore")),
+                                .init(value: "days", title: String(localized: "Giorni")),
+                                .init(value: "sea", title: String(localized: "Mare e aria")),
+                            ], selection: $tab)
+                            switch tab {
+                            case "days":
+                                dailyTable(forecast.days, zone: forecast.timeZone, forecast: forecast)
+                                if model.stationForecast != nil {
+                                    DisclosureGroup(isExpanded: $showComparison) {
+                                        stationComparison(forecast).padding(.top, 8)
+                                    } label: {
+                                        Text("Confronto ora per ora tra vedur.is e il modello").font(.app(.subheadline, .semibold)).foregroundStyle(Theme.text)
+                                    }
+                                    .tint(Theme.text)
                                 }
-                                .tint(Theme.text)
+                            case "sea":
+                                seaSection(full: true)
+                                airSection(full: true)
+                                if model.marine?.value.hasData != true && model.air?.value.current == nil {
+                                    Text("Dati del mare e dell'aria non disponibili per questo luogo.").font(.app(.subheadline)).foregroundStyle(Theme.dim)
+                                }
+                            default:
+                                meteogram(next48, forecast: forecast)
+                                IMOTextCard()
                             }
+                            sourceBlock(forecast, fetched: fetched)
                         } else if let error = model.errors[.forecast] {
                             ErrorNote(message: error)
                         } else {
                             SkeletonBlock(lines: 6)
-                        }
-                        seaSection
-                        airSection
-                        if let fetched = model.forecast {
-                            sourceBlock(fetched.value, fetched: fetched)
                         }
                     }
                 }
@@ -166,7 +181,7 @@ struct WeatherView: View {
         let rain = hours.compactMap(\.precipitation).reduce(0, +)
         let freezing = unit.value(0)
         return VStack(alignment: .leading, spacing: 14) {
-            SectionLabel(index: "01", title: String(localized: "Prossime 48 ore"))
+            SectionLabel(title: String(localized: "Prossime 48 ore"))
             originLine(forecast, from: hours.first?.date, to: hours.last?.date)
 
             chartHeader(String(localized: "Temperatura"), "\(Fmt.temp(hours.compactMap(\.temperature).min())) / \(Fmt.temp(hours.compactMap(\.temperature).max()))")
@@ -280,7 +295,7 @@ struct WeatherView: View {
             let modelW: [Int: Double] = forecast.official?.modelWind
                 ?? Dictionary(forecast.hours.compactMap { h in h.wind.map { (Int(h.date.timeIntervalSince1970), $0) } }, uniquingKeysWith: { a, _ in a })
             VStack(alignment: .leading, spacing: 12) {
-                SectionLabel(index: "02", title: String(localized: "vedur.is e modello a confronto"), trailing: "\(Int(station.distanceKm)) km")
+                SectionLabel(title: String(localized: "vedur.is e modello a confronto"), trailing: "\(Int(station.distanceKm)) km")
                 VStack(alignment: .leading, spacing: 3) {
                     Text(station.station.name.uppercased()).font(.display(24, .bold)).foregroundStyle(Theme.text)
                     Text("Previsione per stazione di vedur.is\(station.issued.map { String(localized: " · emessa \(Fmt.dayTime($0, in: .iceland))") } ?? "")")
@@ -353,7 +368,7 @@ struct WeatherView: View {
         let lows = days.compactMap(\.minTemp), highs = days.compactMap(\.maxTemp)
         let scaleMin = (lows.min() ?? 0) - 1, scaleMax = (highs.max() ?? 10) + 1
         return VStack(alignment: .leading, spacing: 10) {
-            SectionLabel(index: "03", title: String(localized: "10 giorni"), trailing: String(localized: "Min · max · raff · mm"))
+            SectionLabel(title: String(localized: "10 giorni"), trailing: String(localized: "Min · max · raff · mm"))
             originLine(forecast, from: days.first?.date, to: days.last.map { $0.date.addingTimeInterval(86400) })
             VStack(spacing: 0) {
                 ForEach(Array(days.enumerated()), id: \.element.id) { index, day in
@@ -419,16 +434,32 @@ struct WeatherView: View {
 
     // MARK: Sea & air
 
-    @ViewBuilder private var seaSection: some View {
+    /// Above the tabs, only when it matters: the beaches and the air.
+    @ViewBuilder private var safetyNotes: some View {
+        let marine = model.marine?.value
+        let air = model.air?.value
+        let beach = marine?.hasData == true ? (marine?.beachRisk ?? .ok) : .ok
+        let airRisk = air.map { max($0.aqiRisk, $0.so2Risk) } ?? .ok
+        if beach > .ok || airRisk > .ok {
+            HStack(spacing: 8) {
+                if beach > .ok, let marine { RiskBadge(risk: beach, text: String(localized: "Spiagge: \(marine.beachRisk.label)")) }
+                if airRisk > .ok { RiskBadge(risk: airRisk, text: String(localized: "Aria: \(airRisk.label)")) }
+            }
+        }
+    }
+
+    @ViewBuilder private func seaSection(full: Bool) -> some View {
         if let fetched = model.marine, fetched.value.hasData, let c = fetched.value.current {
             let marine = fetched.value
             VStack(alignment: .leading, spacing: 12) {
-                foldHeader(String(localized: "Mare"), summary: String(localized: "onde \(Fmt.number(c.wave_height, decimals: 1)) m"), open: $seaOpen)
+                if full { SectionLabel(title: String(localized: "Mare")) } else {
+                    foldHeader(String(localized: "Mare"), summary: String(localized: "onde \(Fmt.number(c.wave_height, decimals: 1)) m"), open: $seaOpen)
+                }
                 HStack(spacing: 8) {
                     RiskBadge(risk: marine.beachRisk, text: String(localized: "Spiagge: \(marine.beachRisk.label)"))
                     RiskBadge(risk: marine.seaRisk, text: String(localized: "Barca: \(marine.seaRisk.label)"))
                 }
-                if seaOpen {
+                if seaOpen || full {
                 ReadingGrid(items: [
                     Reading(label: String(localized: "Onde"), value: Fmt.number(c.wave_height, decimals: 1), unit: "m", size: 26),
                     Reading(label: String(localized: "Periodo"), value: Fmt.number(c.wave_period), unit: "s", size: 26),
@@ -466,13 +497,15 @@ struct WeatherView: View {
         .accessibilityHint(open.wrappedValue ? String(localized: "Nascondi i dettagli") : String(localized: "Mostra i dettagli"))
     }
 
-    @ViewBuilder private var airSection: some View {
+    @ViewBuilder private func airSection(full: Bool) -> some View {
         if let fetched = model.air, let c = fetched.value.current {
             VStack(alignment: .leading, spacing: 12) {
+                if full { SectionLabel(title: String(localized: "Aria e gas vulcanici")) } else {
                 foldHeader(String(localized: "Aria e gas vulcanici"),
                            summary: String(localized: "indice EU \(Fmt.number(c.european_aqi))"), open: $airOpen,
                            tint: fetched.value.aqiRisk == .ok && fetched.value.so2Risk == .ok ? Theme.dim : max(fetched.value.aqiRisk, fetched.value.so2Risk).color)
-                if airOpen || fetched.value.so2Risk > .ok || fetched.value.aqiRisk > .ok {
+                }
+                if full || airOpen || fetched.value.so2Risk > .ok || fetched.value.aqiRisk > .ok {
                 ReadingGrid(items: [
                     Reading(label: String(localized: "Indice EU"), value: Fmt.number(c.european_aqi),
                             tint: fetched.value.aqiRisk == .ok ? Theme.text : fetched.value.aqiRisk.color, size: 26),
