@@ -27,6 +27,7 @@ struct MapScreen: View {
     @State private var selectedFuel: FuelStation?
     @AppStorage("map.trip") private var showTrip = true
     @AppStorage("map.particles") private var showParticles = true
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @AppStorage("map.imoStations") private var showIMOStations = true
     @AppStorage("map.baths") private var showBaths = false
     @AppStorage("map.tolls") private var showTolls = false
@@ -497,13 +498,13 @@ struct MapScreen: View {
         c.rasterKey = rasterKey
         c.radarTemplate = layer == .radar ? radarFrame?.urlTemplate : nil
 
-        if layer.showsArrows && showParticles, let grid {
+        if layer.showsArrows && showParticles && !reduceMotion, let grid {
             c.windField = WindField(grid: grid, hour: hourIndex)
             c.windFieldKey = "wf-\(hourIndex)-\(model.weatherGrid?.date.timeIntervalSince1970 ?? 0)"
         }
         c.pulse = layer == .aurora
 
-        if layer.showsArrows && !showParticles, let grid {
+        if layer.showsArrows && (!showParticles || reduceMotion), let grid {
             let h = hourIndex
             var arrows: [ArrowAnnotation] = []
             for row in grid.lats.indices where row % 2 == 0 {

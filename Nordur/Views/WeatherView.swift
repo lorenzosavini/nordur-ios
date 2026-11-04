@@ -4,6 +4,9 @@ import Charts
 struct WeatherView: View {
     @Environment(AppModel.self) private var model
     @State private var showComparison = false
+    // Sea and air: the headline value and any risk always shown, the details on request.
+    @AppStorage("weather.seaOpen") private var seaOpen = false
+    @AppStorage("weather.airOpen") private var airOpen = false
 
     var body: some View {
         NavigationStack {
@@ -334,7 +337,12 @@ struct WeatherView: View {
                     let info = WeatherCode.describe(day.code)
                     HStack(spacing: 8) {
                         // The day's source at a glance: blue vedur.is, grey model.
-                        Capsule().fill(forecast.origin(at: day.date.addingTimeInterval(12 * 3600)).color).frame(width: 3, height: 26)
+                        // Filled: vedur.is; outline only: model (not by colour alone).
+                        let official = forecast.origin(at: day.date.addingTimeInterval(12 * 3600)) == .official
+                        Capsule().fill(official ? DataOrigin.official.color : .clear)
+                            .overlay(Capsule().strokeBorder(official ? .clear : DataOrigin.model.color, lineWidth: 1))
+                            .frame(width: 4, height: 26)
+                            .accessibilityLabel(official ? String(localized: "vedur.is · previsto") : String(localized: "Modello"))
                         VStack(alignment: .leading, spacing: 0) {
                             Text(index == 0 ? String(localized: "Oggi") : weekday(day.date, zone)).font(.mono(10.5, .semibold))
                                 .foregroundStyle(index == 0 ? Theme.accent : Theme.text)
@@ -392,7 +400,12 @@ struct WeatherView: View {
         if let fetched = model.marine, fetched.value.hasData, let c = fetched.value.current {
             let marine = fetched.value
             VStack(alignment: .leading, spacing: 12) {
-                SectionLabel(index: "04", title: String(localized: "Mare"))
+                foldHeader(String(localized: "Mare"), summary: String(localized: "onde \(Fmt.number(c.wave_height, decimals: 1)) m"), open: $seaOpen)
+                HStack(spacing: 8) {
+                    RiskBadge(risk: marine.beachRisk, text: String(localized: "Spiagge: \(marine.beachRisk.label)"))
+                    RiskBadge(risk: marine.seaRisk, text: String(localized: "Barca: \(marine.seaRisk.label)"))
+                }
+                if seaOpen {
                 ReadingGrid(items: [
                     Reading(label: String(localized: "Onde"), value: Fmt.number(c.wave_height, decimals: 1), unit: "m", size: 26),
                     Reading(label: String(localized: "Periodo"), value: Fmt.number(c.wave_period), unit: "s", size: 26),
@@ -403,21 +416,40 @@ struct WeatherView: View {
                 ], columns: 3)
                 .overlay(alignment: .top) { Rule() }
                 .overlay(alignment: .bottom) { Rule() }
-                HStack(spacing: 8) {
-                    RiskBadge(risk: marine.beachRisk, text: String(localized: "Spiagge: \(marine.beachRisk.label)"))
-                    RiskBadge(risk: marine.seaRisk, text: String(localized: "Barca: \(marine.seaRisk.label)"))
+                FreshnessLabel(date: fetched.date, isStale: fetched.isStale, source: String(localized: "Open-Meteo Marine"))
                 }
+                // Safety: always visible.
                 Text("Reynisfjara e spiagge del sud: onde anomale senza preavviso. Resta lontano dalla battigia.")
                     .font(.app(.caption)).foregroundStyle(Theme.dim)
-                FreshnessLabel(date: fetched.date, isStale: fetched.isStale, source: String(localized: "Open-Meteo Marine"))
             }
         }
+    }
+
+    /// Section title that opens and closes the details, with its key value on the right.
+    private func foldHeader(_ title: String, summary: String, open: Binding<Bool>, tint: Color = Theme.dim) -> some View {
+        Button {
+            withAnimation(.snappy(duration: 0.2)) { open.wrappedValue.toggle() }
+        } label: {
+            HStack(alignment: .lastTextBaseline, spacing: 8) {
+                Text(title).font(.app(.title3, .semibold)).foregroundStyle(Theme.text)
+                Spacer(minLength: 8)
+                Text(summary).font(.app(.caption, .semibold)).foregroundStyle(tint)
+                Image(systemName: open.wrappedValue ? "chevron.up" : "chevron.down").font(.system(size: 12, weight: .bold)).foregroundStyle(Theme.dim)
+            }
+            .frame(minHeight: 44)
+            .contentShape(Rectangle())
+        }
+        .buttonStyle(.plain)
+        .accessibilityHint(open.wrappedValue ? String(localized: "Nascondi i dettagli") : String(localized: "Mostra i dettagli"))
     }
 
     @ViewBuilder private var airSection: some View {
         if let fetched = model.air, let c = fetched.value.current {
             VStack(alignment: .leading, spacing: 12) {
-                SectionLabel(index: "05", title: String(localized: "Aria e gas vulcanici"))
+                foldHeader(String(localized: "Aria e gas vulcanici"),
+                           summary: String(localized: "indice EU \(Fmt.number(c.european_aqi))"), open: $airOpen,
+                           tint: fetched.value.aqiRisk == .ok && fetched.value.so2Risk == .ok ? Theme.dim : max(fetched.value.aqiRisk, fetched.value.so2Risk).color)
+                if airOpen || fetched.value.so2Risk > .ok || fetched.value.aqiRisk > .ok {
                 ReadingGrid(items: [
                     Reading(label: String(localized: "Indice EU"), value: Fmt.number(c.european_aqi),
                             tint: fetched.value.aqiRisk == .ok ? Theme.text : fetched.value.aqiRisk.color, size: 26),
@@ -429,6 +461,7 @@ struct WeatherView: View {
                 .overlay(alignment: .bottom) { Rule() }
                 Text("Dispersione del gas vulcanico: vedur.is.").font(.app(.caption)).foregroundStyle(Theme.dim)
                 FreshnessLabel(date: fetched.date, isStale: fetched.isStale, source: String(localized: "CAMS via Open-Meteo"))
+                }
             }
         }
     }

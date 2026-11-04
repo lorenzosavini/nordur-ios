@@ -49,7 +49,7 @@ struct TripView: View {
                 if trip.stops.isEmpty {
                     Section {
                         HeroHeader(hero: .trip, eyebrow: String(localized: "Kirkjufell · Snæfellsnes"), title: String(localized: "Il tuo viaggio"),
-                                   subtitle: String(localized: "Per ogni tappa: meteo, allerte, strade e aurora"), height: 150)
+                                   height: 150)
                             .heroRow()
                     }
                     .listSectionSeparator(.hidden)
@@ -143,7 +143,7 @@ struct TripView: View {
                             Label("Importa un viaggio da file GPX o KML", systemImage: "square.and.arrow.down")
                         }
                     } footer: {
-                        Text("Crea tappe e attrazioni con Google My Maps, gpx.studio, Komoot o un altro programma ed esportale in GPX o KML.")
+                        Text("Da Google My Maps, gpx.studio, Komoot e altri.")
                     }
                 }
             }
