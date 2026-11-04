@@ -62,7 +62,7 @@ struct IMOTextCard: View {
                     IMOTextsView()
                 } label: {
                     HStack(spacing: 4) {
-                        Text("Tutte le previsioni scritte: regioni, prossimi giorni, mare")
+                        Text("Tutte le previsioni scritte")
                         Image(systemName: "chevron.right")
                     }
                     .font(.app(.caption, .semibold)).foregroundStyle(Theme.aurora)

@@ -60713,6 +60713,34 @@
           }
         }
       }
+    },
+    "Tutte le previsioni scritte" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "All written forecasts"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Alle Textvorhersagen"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Toutes les prévisions écrites"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Todas las previsiones escritas"
+          }
+        }
+      }
     }
   },
   "version" : "1.0"

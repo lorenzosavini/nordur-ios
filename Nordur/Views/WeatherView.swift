@@ -15,7 +15,10 @@ struct WeatherView: View {
             ScrollView {
                 VStack(alignment: .leading, spacing: 30) {
                     VStack(alignment: .leading, spacing: 16) {
-                        ScreenHeader(title: String(localized: "Meteo"), subtitle: String(localized: "Previsioni · 10 giorni"), index: "02") { AppearanceButton() }
+                        // A thin photo strip with only the title, like Aurora.
+                        HeroHeader(hero: .weather, title: String(localized: "Meteo"))
+                            .overlay(alignment: .topTrailing) { AppearanceButton().background(Theme.bg).padding(.top, 8).padding(.trailing, 14) }
+                            .padding(.horizontal, -18)
                         PlaceHeader(size: 34)
                     }
                     AdaptiveColumns(spacing: 30) {
