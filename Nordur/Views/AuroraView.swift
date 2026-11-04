@@ -156,19 +156,8 @@ struct AuroraView: View {
     }
 
     private var modePicker: some View {
-        HStack(spacing: 0) {
-            ForEach(Mode.allCases) { m in
-                Button { withAnimation(.snappy(duration: 0.2)) { mode = m } } label: {
-                    Text(m.rawValue.loc).font(.mono(10.5, .semibold))
-                        .foregroundStyle(mode == m ? Theme.bg : Theme.text)
-                        .frame(maxWidth: .infinity).frame(height: 36)
-                        .background(mode == m ? Theme.text : .clear)
-                }
-                .buttonStyle(.plain)
-                if m != Mode.allCases.last { Theme.hairline.frame(width: 1, height: 36) }
-            }
-        }
-        .overlay(Rectangle().strokeBorder(Theme.rule, lineWidth: 1))
+        // The same tabs as Weather and Today.
+        SectionTabs(items: Mode.allCases.map { .init(value: $0, title: $0.rawValue.loc) }, selection: $mode)
     }
 
     // MARK: LIVE (now → 90 min)

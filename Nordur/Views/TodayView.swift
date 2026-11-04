@@ -8,7 +8,7 @@ struct TodayView: View {
     @State private var showAccount = false
     @State private var selectedFuel: FuelStation?
     @State private var showFuelPrices = false
-    @AppStorage("today.detail") private var detailRaw = Detail.wind.rawValue
+    @AppStorage("today.detail.v2") private var detailRaw = Detail.hours.rawValue
     @Environment(Account.self) private var account
 
     private var zone: TimeZone { model.forecast?.value.timeZone ?? .iceland }
@@ -42,16 +42,11 @@ struct TodayView: View {
                         warningsSection
                         TodayTripCard()
                         TodayBrief()
-                        VStack(spacing: 10) {
-                            AuroraVerdictCard()
-                            AuroraNowPanel()
-                            AuroraReportBar(compact: true)
-                            AuroraFinderButton()
-                        }
-                        nextHours
-                        outlookSection
-                        exploreSection
+                        // Tonight's aurora in one card; the rest is in the Aurora tab.
+                        AuroraVerdictCard()
+                        // One topic at a time instead of everything stacked.
                         detailsSection
+                        exploreSection
                     }
                 }
                 .padding(.horizontal, 18)
@@ -78,20 +73,22 @@ struct TodayView: View {
     // MARK: Details (one topic at a time)
 
     enum Detail: String, CaseIterable, Identifiable {
-        case wind, roads, webcams, more, news, light
+        case hours, wind, roads, webcams, more, news, light
         var id: String { rawValue }
         var title: String {
             switch self {
+            case .hours: return String(localized: "Ore")
             case .wind: return String(localized: "Vento")
             case .roads: return String(localized: "Strade")
             case .webcams: return String(localized: "Webcam")
-            case .more: return String(localized: "Terra e mare")
+            case .more: return String(localized: "Altro")
             case .news: return String(localized: "SafeTravel")
             case .light: return String(localized: "Luce")
             }
         }
         var symbol: String {
             switch self {
+            case .hours: return "clock"
             case .wind: return "wind"
             case .roads: return "road.lanes"
             case .webcams: return "video.fill"
@@ -103,41 +100,22 @@ struct TodayView: View {
     }
 
     private var detailsSection: some View {
-        // Roads and webcams have their own tiles in Explore: not repeated here.
-        let stored = Detail(rawValue: detailRaw) ?? .wind
-        let current = stored == .roads || stored == .webcams ? .wind : stored
-        return VStack(alignment: .leading, spacing: 14) {
-            SectionLabel(index: "04", title: String(localized: "Dettagli"))
-            FlowLayout(spacing: 6, lineSpacing: 6) {
-                ForEach(Detail.allCases.filter { $0 != .roads && $0 != .webcams }) { item in
-                    Button {
-                        if detailRaw != item.rawValue { Haptics.select() }
-                        withAnimation(.snappy(duration: 0.2)) { detailRaw = item.rawValue }
-                    } label: {
-                        Label(item.title, systemImage: item.symbol)
-                            .font(.mono(10.5, .semibold))
-                            .padding(.horizontal, 10).padding(.vertical, 8)
-                            .foregroundStyle(current == item ? Theme.onAccent : Theme.text)
-                            .background(current == item ? Theme.accent : Color.clear)
-                            .overlay(Rectangle().strokeBorder(current == item ? Color.clear : Theme.hairline))
-                            .contentShape(Rectangle())
-                    }
-                    .buttonStyle(.plain)
-                    .accessibilityAddTraits(current == item ? .isSelected : [])
-                }
-            }
+        // Roads and webcams have their own tiles in Explore; SafeTravel sits under "Other".
+        let stored = Detail(rawValue: detailRaw) ?? .hours
+        let current: Detail = [.roads, .webcams, .news].contains(stored) ? .hours : stored
+        return VStack(alignment: .leading, spacing: 18) {
+            SectionTabs(items: [Detail.hours, .wind, .light, .more].map { .init(value: $0, title: $0.title) },
+                        selection: Binding(get: { current }, set: { detailRaw = $0.rawValue }))
             Group {
                 switch current {
+                case .hours, .roads, .webcams, .news:
+                    nextHours
+                    outlookSection
                 case .wind: windSection
-                case .roads:
-                    if model.inIceland { roadsSection } else { CoverageNote(feature: String(localized: "Strade, chiusure e stazioni Vegagerðin")) }
-                case .webcams:
-                    if model.inIceland { webcamsSection } else { CoverageNote(feature: String(localized: "Le webcam stradali")) }
                 case .more:
                     if !model.inIceland { CoverageNote(feature: String(localized: "Terremoti, distributori, voli KEF e traghetti"), showsIcelandData: true) }
                     moreSection
-                case .news:
-                    if model.inIceland { newsSection } else { CoverageNote(feature: String(localized: "Gli avvisi SafeTravel")) }
+                    if model.inIceland { newsSection }
                 case .light: daylight
                 }
             }
@@ -241,12 +219,8 @@ struct TodayView: View {
             : String(localized: "Tutto tranquillo")
         let tint: Color = risk == .ok ? Theme.aurora : risk.color
         HStack(alignment: .top, spacing: 12) {
-            Image(systemName: risk == .ok ? "checkmark.circle.fill" : "exclamationmark.triangle.fill")
-                .font(.system(size: 22, weight: .semibold))
-                .foregroundStyle(risk >= .warning ? Theme.onAccent : tint)
-                .padding(.top, 1)
             VStack(alignment: .leading, spacing: 4) {
-                Text(title).font(.app(.title3, .semibold))
+                Text(title).font(.app(.title3, .semibold)).foregroundStyle(risk >= .warning ? Theme.onAccent : tint)
                 if reasons.isEmpty {
                     Text("Nessuna criticità nelle prossime 12 ore").font(.app(.subheadline))
                 } else {
@@ -256,10 +230,12 @@ struct TodayView: View {
             Spacer(minLength: 0)
         }
         .foregroundStyle(risk >= .warning ? Theme.onAccent : Theme.text)
-        .padding(14)
+        .padding(.vertical, 12).padding(.leading, 16).padding(.trailing, 12)
         .frame(maxWidth: .infinity, alignment: .leading)
-        .background(risk >= .warning ? AnyShapeStyle(risk.color) : AnyShapeStyle(tint.opacity(0.10)))
-        .overlay(alignment: .leading) { if risk < .warning { Rectangle().fill(tint).frame(width: 4) } }
+        // Only a warning or worse gets a full colour; otherwise a hairline box and a side bar.
+        .background(risk >= .warning ? AnyShapeStyle(risk.color) : AnyShapeStyle(Theme.bg))
+        .overlay { if risk < .warning { Rectangle().strokeBorder(Theme.hairline, lineWidth: 1) } }
+        .overlay(alignment: .leading) { if risk < .warning { Rectangle().fill(tint).frame(width: 3) } }
         .accessibilityElement(children: .combine)
     }
 
@@ -339,7 +315,7 @@ struct TodayView: View {
         if let forecast = model.forecast?.value {
             let hours = forecast.upcomingHours(18)
             VStack(alignment: .leading, spacing: 12) {
-                SectionLabel(index: "02", title: String(localized: "Prossime ore"), trailing: String(localized: "Ora locale"))
+                SectionLabel(title: String(localized: "Prossime ore"), trailing: String(localized: "Ora locale"))
                 if let first = hours.first?.date {
                     HStack(spacing: 10) {
                         SourceBadge(origin: forecast.origin(at: first), detail: forecast.origin(at: first) == .official ? forecast.official?.station.name : nil)
@@ -390,7 +366,7 @@ struct TodayView: View {
     @ViewBuilder private var warningsSection: some View {
         let here = model.warningsHere
         VStack(alignment: .leading, spacing: 12) {
-            SectionLabel(index: "01", title: String(localized: "Allerte"),
+            SectionLabel(title: String(localized: "Allerte"),
                          trailing: model.inIceland ? String(localized: "\(model.warnings?.value.count ?? 0) in Islanda") : nil)
 
             if recorder.isRecording, let session = recorder.session {
@@ -471,7 +447,7 @@ struct TodayView: View {
 
     private var outlookSection: some View {
         VStack(alignment: .leading, spacing: 12) {
-            SectionLabel(index: "03", title: String(localized: "Guida e aurora"))
+            SectionLabel(title: String(localized: "Guida e aurora"))
             HStack(alignment: .top, spacing: 0) {
                 drivingColumn.padding(.trailing, 14)
                 Theme.hairline.frame(width: 1)
