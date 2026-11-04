@@ -22,7 +22,7 @@ struct MapScreen: View {
     @AppStorage("map.chargers") private var showChargers = false
     @AppStorage("map.shops") private var showShops = false
     @State private var selectedShop: Shop?
-    @AppStorage("map.sights") private var showSights = true
+    @AppStorage("map.sights.v2") private var showSights = false
     @State private var selectedSight: Attraction?
     @State private var selectedFuel: FuelStation?
     @AppStorage("map.trip") private var showTrip = true
@@ -30,7 +30,7 @@ struct MapScreen: View {
     @AppStorage("map.imoStations") private var showIMOStations = true
     @AppStorage("map.baths") private var showBaths = false
     @AppStorage("map.tolls") private var showTolls = false
-    @AppStorage("map.volcanoes") private var showVolcanoes = true
+    @AppStorage("map.volcanoes") private var showVolcanoes = false
     @State private var selectedBath: Bath?
     @State private var selectedToll: TollEntry?
     @State private var selectedVolcano: Volcano?
@@ -137,59 +137,64 @@ struct MapScreen: View {
 
     // MARK: Top chips
 
+    /// The weather layer as it is chosen, with the paywall check of the old chips.
+    private var layerChoice: Binding<String> {
+        Binding(get: { layerRaw }, set: { value in
+            guard value == WeatherLayer.none.rawValue || Entitlements.shared.check(.weatherMap) else { return }
+            if layerRaw != value { Haptics.select() }
+            layerRaw = value
+            playing = false
+        })
+    }
+
+    /// Two controls instead of nine chips: what the colours show, and what is drawn on top.
     private var layerChips: some View {
         VStack(spacing: 8) {
-            FlowLayout(spacing: 6, lineSpacing: 6) {
-                ForEach(WeatherLayer.allCases) { item in
-                    Button {
-                        guard item == .none || Entitlements.shared.check(.weatherMap) else { return }
-                        if layerRaw != item.rawValue { Haptics.select() }
-                        layerRaw = item.rawValue
-                        playing = false
-                    } label: {
-                        Label(item.label.loc, systemImage: item.symbol)
-                            .labelStyle(.titleAndIcon)
-                            .font(.mono(10, .semibold))
-                            .padding(.horizontal, 8)
-                            .padding(.vertical, 6)
-                            .background(layer == item ? Theme.accent : Theme.bg.opacity(0.94))
-                            .foregroundStyle(layer == item ? Theme.onAccent : Theme.text)
-                            .overlay(Rectangle().strokeBorder(Theme.hairline))
-                            .contentShape(Rectangle())
-                    }
-                    .buttonStyle(.plain)
-                    .accessibilityIdentifier("layer.\(item.rawValue)")
-                    .accessibilityAddTraits(layer == item ? .isSelected : [])
-                }
-            }
-            .padding(.horizontal)
-            HStack {
+            HStack(spacing: 8) {
                 Menu {
-                    Toggle("Allerte meteo vedur.is", systemImage: "exclamationmark.triangle", isOn: $showWarnings)
-                    Toggle("Strade: chiusure, lavori e pericoli", systemImage: "exclamationmark.triangle", isOn: $showRoadInfo)
-                    Toggle("Stazioni stradali (raffiche)", systemImage: "road.lanes", isOn: $showRoads)
-                    Toggle("Stazioni vedur.is", systemImage: "sensor.fill", isOn: $showIMOStations)
-                    Toggle("Webcam", systemImage: "video", isOn: $showWebcams)
-                    Toggle("Terremoti 48 h", systemImage: "waveform.path.ecg", isOn: $showQuakes)
-                    Toggle("Distributori", systemImage: "fuelpump", isOn: $showFuel)
-                    if showFuel {
-                        Picker("Prezzi di", selection: $fuelRaw) {
-                            ForEach(FuelKind.allCases) { Text($0.label).tag($0.rawValue) }
+                    Picker(String(localized: "Colori della mappa"), selection: layerChoice) {
+                        ForEach(WeatherLayer.allCases) { item in
+                            Label(item.label.loc, systemImage: item.symbol).tag(item.rawValue)
                         }
                     }
-                    Toggle("Ricarica EV", systemImage: "bolt.car", isOn: $showChargers)
-                    Toggle("Supermercati e negozi", systemImage: "cart", isOn: $showShops)
-                    Toggle("Attrazioni e luoghi da vedere", systemImage: "binoculars", isOn: $showSights)
-                    Toggle("Piscine e sorgenti calde", systemImage: "drop", isOn: $showBaths)
-                    Toggle("Pedaggi e parcheggi", systemImage: "eurosign.circle", isOn: $showTolls)
-                    Toggle("Vulcani (stato vedur.is)", systemImage: "mountain.2", isOn: $showVolcanoes)
-                    Toggle("Viaggio e percorso", systemImage: "point.topleft.down.to.point.bottomright.curvepath", isOn: $showTrip)
-                    Toggle("Animazione particelle vento", systemImage: "wind", isOn: $showParticles)
                 } label: {
-                    Text("Livelli +")
-                        .font(.mono(10.5, .semibold)).foregroundStyle(Theme.text)
-                        .padding(.horizontal, 10).padding(.vertical, 7)
-                        .background(Theme.bg.opacity(0.94)).overlay(Rectangle().strokeBorder(Theme.hairline))
+                    chipLabel(layer.label.loc, systemImage: layer.symbol, chevron: true)
+                }
+                .accessibilityLabel(String(localized: "Colori della mappa: \(layer.label.loc)"))
+                .accessibilityIdentifier("layers.weather")
+                Menu {
+                    Section(String(localized: "Sicurezza")) {
+                        Toggle("Allerte meteo vedur.is", systemImage: "exclamationmark.triangle", isOn: $showWarnings)
+                        Toggle("Strade: chiusure, lavori e pericoli", systemImage: "exclamationmark.triangle", isOn: $showRoadInfo)
+                        Toggle("Stazioni stradali (raffiche)", systemImage: "road.lanes", isOn: $showRoads)
+                        Toggle("Stazioni vedur.is", systemImage: "sensor.fill", isOn: $showIMOStations)
+                        Toggle("Terremoti 48 h", systemImage: "waveform.path.ecg", isOn: $showQuakes)
+                        Toggle("Vulcani (stato vedur.is)", systemImage: "mountain.2", isOn: $showVolcanoes)
+                    }
+                    Section(String(localized: "Servizi")) {
+                        Toggle("Distributori", systemImage: "fuelpump", isOn: $showFuel)
+                        if showFuel {
+                            Picker("Prezzi di", selection: $fuelRaw) {
+                                ForEach(FuelKind.allCases) { Text($0.label).tag($0.rawValue) }
+                            }
+                        }
+                        Toggle("Ricarica EV", systemImage: "bolt.car", isOn: $showChargers)
+                        Toggle("Supermercati e negozi", systemImage: "cart", isOn: $showShops)
+                        Toggle("Pedaggi e parcheggi", systemImage: "eurosign.circle", isOn: $showTolls)
+                    }
+                    Section(String(localized: "Luoghi")) {
+                        Toggle("Attrazioni e luoghi da vedere", systemImage: "binoculars", isOn: $showSights)
+                        Toggle("Piscine e sorgenti calde", systemImage: "drop", isOn: $showBaths)
+                        Toggle("Webcam", systemImage: "video", isOn: $showWebcams)
+                    }
+                    Section(String(localized: "Il mio viaggio")) {
+                        Toggle("Viaggio e percorso", systemImage: "point.topleft.down.to.point.bottomright.curvepath", isOn: $showTrip)
+                    }
+                    Section {
+                        Toggle("Animazione particelle vento", systemImage: "wind", isOn: $showParticles)
+                    }
+                } label: {
+                    chipLabel(String(localized: "Livelli"), systemImage: "square.3.layers.3d", chevron: true)
                 }
                 .accessibilityIdentifier("layers.menu")
                 Spacer()
@@ -210,7 +215,7 @@ struct MapScreen: View {
 
     // MARK: Bottom panel
 
-    @AppStorage("map.legendOpen") private var legendOpen = true
+    @AppStorage("map.legendOpen.v2") private var legendOpen = false
     @State private var detailsHeight: CGFloat = 120
 
     /// Floating on the map: the values at a tapped point, a compact legend and a
@@ -231,10 +236,11 @@ struct MapScreen: View {
                 .background(.regularMaterial, in: RoundedRectangle(cornerRadius: 14, style: .continuous))
             }
             HStack(alignment: .bottom, spacing: 8) {
-                if legendOpen {
+                // The colour scale always (it is how the map is read); the road colours on request.
+                if layer != .none || legendOpen {
                     VStack(alignment: .leading, spacing: 6) {
                         legend
-                        if showRoadInfo && model.roadGeometry != nil && model.roadInfo != nil && !model.immersiveMap { roadLegend }
+                        if legendOpen && showRoadInfo && model.roadGeometry != nil && model.roadInfo != nil && !model.immersiveMap { roadLegend }
                     }
                     .padding(.horizontal, 10).padding(.vertical, 8)
                     .frame(maxWidth: 300, alignment: .leading)
@@ -341,7 +347,7 @@ struct MapScreen: View {
             }
             if let fetched = model.weatherGrid, !model.immersiveMap {
                 FreshnessLabel(date: fetched.date, isStale: fetched.isStale,
-                               source: fetched.value.isCorrected ? String(localized: "vedur.is, modello dove non ci sono stazioni") : String(localized: "Open-Meteo"))
+                               source: fetched.value.isCorrected ? String(localized: "vedur.is") : String(localized: "Open-Meteo"))
                 if fetched.value.isCorrected {
                     Text(gridSourceLine(fetched.value)).font(.app(.caption2)).foregroundStyle(.secondary)
                         .fixedSize(horizontal: false, vertical: true)
@@ -396,9 +402,23 @@ struct MapScreen: View {
     private func gridSourceLine(_ grid: WeatherGrid) -> String {
         let issued = grid.imoIssued.map { Fmt.dayTime($0, in: .iceland) } ?? "—"
         if hourIndex == grid.currentHourIndex, let measured = grid.imoMeasured {
-            return String(localized: "\(grid.imoStationCount) stazioni vedur.is: misure delle \(Fmt.time(measured, in: .iceland)), poi previsione emessa alle \(issued). Zone velate: nessuna stazione vicina, modello Open-Meteo.")
+            return String(localized: "Misure vedur.is delle \(Fmt.time(measured, in: .iceland)) · zone velate: solo modello")
         }
-        return String(localized: "\(grid.imoStationCount) stazioni vedur.is: previsione emessa alle \(issued). Zone velate: nessuna stazione vicina, modello Open-Meteo.")
+        return String(localized: "Previsione vedur.is delle \(issued) · zone velate: solo modello")
+    }
+
+    private func chipLabel(_ title: String, systemImage: String, chevron: Bool = false) -> some View {
+        HStack(spacing: 6) {
+            Image(systemName: systemImage).font(.system(size: 14, weight: .semibold))
+            Text(title).font(.app(.subheadline, .semibold)).lineLimit(1)
+            if chevron { Image(systemName: "chevron.down").font(.system(size: 11, weight: .bold)).foregroundStyle(Theme.dim) }
+        }
+        .foregroundStyle(Theme.text)
+        .padding(.horizontal, 12)
+        .frame(minHeight: 44)
+        .background(Theme.bg.opacity(0.94))
+        .overlay(Rectangle().strokeBorder(Theme.hairline))
+        .contentShape(Rectangle())
     }
 
     // MARK: Raster
