@@ -22,13 +22,13 @@ struct DriveView: View {
                     ScreenHeader(title: String(localized: "Guida"), subtitle: recorder.isRecording ? String(localized: "Registrazione in corso") : String(localized: "Percorsi e strade"), index: "04") {
                         if recorder.isRecording {
                             Button { confirmStop = true } label: {
-                                Text("■ STOP").font(.mono(11, .semibold)).tracking(0.8).foregroundStyle(.white)
+                                Text("■ Stop").font(.mono(11, .semibold)).foregroundStyle(.white)
                                     .padding(.horizontal, 12).frame(height: 34)
                                     .background(Theme.danger, in: Rectangle())
                             }
                             .buttonStyle(.plain)
                         } else if let onClose {
-                            HeaderButton(systemImage: "xmark", label: String(localized: "CHIUDI")) { onClose() }
+                            HeaderButton(systemImage: "xmark", label: String(localized: "Chiudi")) { onClose() }
                         } else {
                             AppearanceButton()
                         }
@@ -156,7 +156,7 @@ struct DriveView: View {
             } label: {
                 HStack(spacing: 10) {
                     Circle().fill(.white).frame(width: 10, height: 10)
-                    Text("AVVIA REGISTRAZIONE").font(.mono(13, .semibold)).tracking(1)
+                    Text("Avvia registrazione").font(.mono(13, .semibold))
                     Spacer()
                     Text("→").font(.mono(15, .semibold))
                 }

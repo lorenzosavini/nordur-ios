@@ -54,14 +54,14 @@ struct AccountView: View {
             }
             .overlay(Rectangle().strokeBorder(Theme.rule, lineWidth: 1))
 
-            field(String(localized: "EMAIL")) {
+            field(String(localized: "Email")) {
                 TextField("", text: $email, prompt: Text("nome@esempio.it").foregroundStyle(Theme.faint))
                     .textContentType(.emailAddress)
                     .keyboardType(.emailAddress)
                     .textInputAutocapitalization(.never)
                     .autocorrectionDisabled()
             }
-            field(String(localized: "PASSWORD")) {
+            field(String(localized: "Password")) {
                 SecureField("", text: $password, prompt: Text(register ? String(localized: "Almeno 8 caratteri") : String(localized: "Password")).foregroundStyle(Theme.faint))
                     .textContentType(register ? .newPassword : .password)
             }
@@ -74,7 +74,7 @@ struct AccountView: View {
                 }
             } label: {
                 HStack {
-                    Text(register ? String(localized: "CREA ACCOUNT") : String(localized: "ACCEDI")).font(.mono(13, .semibold)).tracking(1)
+                    Text(register ? String(localized: "Crea account") : String(localized: "Accedi")).font(.mono(13, .semibold))
                     Spacer()
                     if working { ProgressView().tint(Theme.onAccent) } else { Text("→").font(.mono(15, .semibold)) }
                 }
@@ -89,7 +89,7 @@ struct AccountView: View {
 
             if let message { Text(message.loc).font(.app(.footnote)).foregroundStyle(Theme.text) }
             Button { sheet = .reset } label: {
-                Text("PASSWORD DIMENTICATA?").font(.mono(10, .semibold)).foregroundStyle(Theme.accent)
+                Text("Password dimenticata?").font(.mono(10, .semibold)).foregroundStyle(Theme.accent)
             }
             .buttonStyle(.plain)
         }
@@ -97,9 +97,9 @@ struct AccountView: View {
 
     private func modeButton(_ title: String, selected: Bool, action: @escaping () -> Void) -> some View {
         Button(action: action) {
-            Text(title.loc.uppercased())
+            Text(title.loc)
                 .font(.mono(11, .semibold))
-                .tracking(0.6)
+                
                 .foregroundStyle(selected ? Theme.bg : Theme.text)
                 .frame(maxWidth: .infinity)
                 .frame(height: 40)
@@ -194,7 +194,7 @@ struct AccountView: View {
     private func item(_ title: String, _ detail: String) -> some View {
         VStack(spacing: 0) {
             HStack(alignment: .firstTextBaseline, spacing: 12) {
-                Text(title.loc.uppercased()).font(.mono(10, .semibold)).foregroundStyle(Theme.text).frame(width: 120, alignment: .leading)
+                Text(title.loc).font(.mono(10, .semibold)).foregroundStyle(Theme.text).frame(width: 120, alignment: .leading)
                 Text(detail.loc).font(.app(.caption)).foregroundStyle(Theme.dim)
                 Spacer(minLength: 0)
             }

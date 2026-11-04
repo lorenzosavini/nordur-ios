@@ -17,14 +17,14 @@ struct TripOverview: View {
         let visits = stops.reduce(0) { $0 + $1.visits.count }
         VStack(alignment: .leading, spacing: 10) {
             if let first, let last {
-                Text("\(Fmt.day(first, in: .iceland)) → \(Fmt.day(last, in: .iceland))".uppercased())
+                Text("\(Fmt.day(first, in: .Iceland)) → \(Fmt.day(last, in: .Iceland))")
                     .font(.mono(11, .semibold)).foregroundStyle(Theme.accent)
             }
             HStack(spacing: 0) {
-                figure("\(stops.count)", String(localized: "TAPPE"))
-                figure("\(nights)", String(localized: "NOTTI"))
-                figure("~\(Int(legs.rounded()))", String(localized: "KM"))
-                figure("\(visits)", String(localized: "ATTRAZIONI"))
+                figure("\(stops.count)", String(localized: "Tappe"))
+                figure("\(nights)", String(localized: "Notti"))
+                figure("~\(Int(legs.rounded()))", String(localized: "km"))
+                figure("\(visits)", String(localized: "Attrazioni"))
             }
         }
         .padding(.vertical, 6)
@@ -93,10 +93,10 @@ struct StopCard: View {
     }
 
     private var dates: String {
-        let transport = stop.transport.label.uppercased()
-        if stop.nights == 0 { return "\(Fmt.day(stop.date, in: .iceland).uppercased()) · \(String(localized: "DI PASSAGGIO")) · \(transport)" }
-        let nights = stop.nights == 1 ? String(localized: "1 NOTTE") : String(localized: "\(stop.nights) NOTTI")
-        return "\(Fmt.day(stop.date, in: .iceland).uppercased()) → \(Fmt.day(stop.endDate, in: .iceland).uppercased()) · \(nights)"
+        let transport = stop.transport.label
+        if stop.nights == 0 { return "\(Fmt.day(stop.date, in: .Iceland)) · \(String(localized: "DI PASSAGGIO")) · \(transport)" }
+        let nights = stop.nights == 1 ? String(localized: "1 notte") : String(localized: "\(stop.nights) notti")
+        return "\(Fmt.day(stop.date, in: .Iceland)) → \(Fmt.day(stop.endDate, in: .Iceland)) · \(nights)"
     }
 }
 
@@ -153,9 +153,9 @@ struct StopDetailView: View {
             Section {
                 VStack(alignment: .leading, spacing: 6) {
                     PlaceHero(place: stop.place, kind: .town, title: stop.place.name,
-                              eyebrow: String(localized: "TAPPA \(index) DI \(trip.stops.count)"), describe: false)
-                    Label(stop.nights == 0 ? String(localized: "\(Fmt.day(stop.date, in: .iceland)) · di passaggio")
-                                           : String(localized: "\(Fmt.day(stop.date, in: .iceland)) → \(Fmt.day(stop.endDate, in: .iceland)) · \(stop.nights) notti"),
+                              eyebrow: String(localized: "Tappa \(index) di \(trip.stops.count)"), describe: false)
+                    Label(stop.nights == 0 ? String(localized: "\(Fmt.day(stop.date, in: .Iceland)) · di passaggio")
+                                           : String(localized: "\(Fmt.day(stop.date, in: .Iceland)) → \(Fmt.day(stop.endDate, in: .Iceland)) · \(stop.nights) notti"),
                           systemImage: "calendar")
                         .font(.app(.subheadline)).foregroundStyle(Theme.dim)
                     Label(String(localized: "Arrivo: \(stop.transport.label)"), systemImage: stop.transport.symbol)
@@ -194,7 +194,7 @@ struct StopDetailView: View {
                     }
                     .accessibilityIdentifier("trip.addVisit")
                 } header: {
-                    Text(String(localized: "Giorno \(i + 1) · \(Fmt.day(day, in: .iceland))")).pinnedHeader()
+                    Text(String(localized: "Giorno \(i + 1) · \(Fmt.day(day, in: .Iceland))")).pinnedHeader()
                 } footer: {
                     if i == 0, dayVisits.count > 0 {
                         Text("Tieni premuta un'attrazione per spostarla a un altro giorno o a un'altra tappa.")
@@ -226,7 +226,7 @@ struct StopDetailView: View {
                     }
                     .overlay(alignment: .topLeading) {
                         if item.onTheWay {
-                            Text("SULLA STRADA").font(.mono(7.5, .semibold)).foregroundStyle(Theme.onAccent)
+                            Text("Sulla strada").font(.mono(7.5, .semibold)).foregroundStyle(Theme.onAccent)
                                 .padding(.horizontal, 3).background(Theme.dim).offset(x: -2, y: -4)
                         }
                     }

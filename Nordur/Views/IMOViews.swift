@@ -19,7 +19,7 @@ struct IMOObservationBlock: View {
                 }
                 if let w = observation.wind {
                     reading("\(Fmt.wind(w)) \(Fmt.windUnit)",
-                            observation.direction.isEmpty ? String(localized: "vento") : String(localized: "vento da \(observation.direction)"),
+                            observation.degrees == nil ? String(localized: "vento") : String(localized: "vento da \(Fmt.compass(observation.degrees))"),
                             Theme.text)
                 }
                 if let g = observation.gust {
@@ -32,7 +32,7 @@ struct IMOObservationBlock: View {
                     ForEach(details) { d in
                         VStack(alignment: .leading, spacing: 1) {
                             Text(d.value).font(.metric(13, .medium)).foregroundStyle(Theme.text).monospacedDigit()
-                            Text(d.label.uppercased()).font(.mono(8)).foregroundStyle(Theme.faint).lineLimit(1)
+                            Text(d.label).font(.mono(8)).foregroundStyle(Theme.faint).lineLimit(1)
                         }
                     }
                 }
@@ -41,8 +41,8 @@ struct IMOObservationBlock: View {
                 Text(text).font(.app(.caption)).foregroundStyle(Theme.dim)
             }
             Text(observation.tenMinute == true
-                 ? String(localized: "vedur.is · stazione a \(Int(observation.distanceKm.rounded())) km, misura delle \(Fmt.time(observation.time, in: .iceland)) (ogni 10 minuti)")
-                 : String(localized: "vedur.is · stazione a \(Int(observation.distanceKm.rounded())) km, misura delle \(Fmt.time(observation.time, in: .iceland))"))
+                 ? String(localized: "vedur.is · stazione a \(Int(observation.distanceKm.rounded())) km, misura delle \(Fmt.time(observation.time, in: .Iceland)) (ogni 10 minuti)")
+                 : String(localized: "vedur.is · stazione a \(Int(observation.distanceKm.rounded())) km, misura delle \(Fmt.time(observation.time, in: .Iceland))"))
                 .font(.app(.caption2)).foregroundStyle(Theme.faint)
         }
         .padding(.vertical, 4)
@@ -75,7 +75,7 @@ struct IMOObservationBlock: View {
     private func reading(_ value: String, _ label: String, _ color: Color) -> some View {
         VStack(alignment: .leading, spacing: 1) {
             Text(value).font(.metric(20, .semibold)).foregroundStyle(color).monospacedDigit()
-            Text(label.uppercased()).font(.mono(8.5)).foregroundStyle(Theme.faint)
+            Text(label).font(.mono(8.5)).foregroundStyle(Theme.faint)
         }
     }
 }
@@ -104,11 +104,12 @@ struct ForecastSourceNote: View {
 
     var body: some View {
         if let official = forecast.official {
+            // Two short lines; the full explanation is in "Da dove vengono i dati".
             VStack(alignment: .leading, spacing: 3) {
-                Text(official.issued.map { String(localized: "Previsione ufficiale per la stazione \(official.station.name) (\(Int(official.distanceKm.rounded())) km), emessa alle \(Fmt.dayTime($0, in: .iceland)).") }
-                     ?? String(localized: "Previsione ufficiale per la stazione \(official.station.name) (\(Int(official.distanceKm.rounded())) km)."))
+                Text(official.issued.map { String(localized: "Stazione \(official.station.name), \(Int(official.distanceKm.rounded())) km · emessa \(Fmt.dayTime($0, in: .iceland))") }
+                     ?? String(localized: "Stazione \(official.station.name), \(Int(official.distanceKm.rounded())) km"))
                     .font(.app(.caption)).foregroundStyle(Theme.text)
-                Text(String(localized: "Da vedur.is fino a \(Fmt.dayTime(official.until, in: .iceland)): temperatura, vento medio e direzione, cielo, nuvolosità e pioggia. Raffiche, probabilità di pioggia e nuvole a strati da MET Norway e Open-Meteo; dopo quell'ora, solo i modelli."))
+                Text(String(localized: "Raffiche e probabilità di pioggia: modelli. Dopo \(Fmt.dayTime(official.until, in: .iceland)): solo modelli."))
                     .font(.app(.caption)).foregroundStyle(Theme.dim)
             }
             .fixedSize(horizontal: false, vertical: true)
@@ -148,7 +149,7 @@ struct SourceBadge: View {
     var body: some View {
         HStack(spacing: 5) {
             Circle().fill(origin.color).frame(width: 7, height: 7)
-            Text(origin.label.uppercased()).font(.mono(9, .semibold)).foregroundStyle(origin.color)
+            Text(origin.label).font(.mono(9, .semibold)).foregroundStyle(origin.color)
             if let detail {
                 Text(detail).font(.mono(9)).foregroundStyle(Theme.faint).lineLimit(1)
             }

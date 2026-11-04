@@ -66,7 +66,7 @@ struct CurrencyChoiceView: View {
 struct CurrencyConverterView: View {
     @Environment(AppModel.self) private var model
     @AppStorage("currency.converter.from") private var from = "ISK"
-    @AppStorage("currency.converter.to") private var to = "EUR"
+    @AppStorage("currency.converter.to") private var to = "Eur"
     @State private var amount: Double? = 1000
     @FocusState private var editing: Bool
 

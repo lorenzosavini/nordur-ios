@@ -44,15 +44,25 @@ enum Fmt {
 
     static var windUnit: String { WindUnit.current.label }
 
+    /// Decimal separator of the app language ("1,5" in Italian, "1.5" in English); no thousands
+    /// grouping, so pressures and prices read "1028", not "1.028".
     static func number(_ value: Double?, decimals: Int = 0, unit: String = "") -> String {
         guard let value else { return "–" }
-        let text = String(format: "%.\(decimals)f", value)
+        let text = decimal(value, decimals)
         return unit.isEmpty ? text : "\(text) \(unit)"
     }
 
-    /// "63.42N 19.01W"
+    private static func decimal(_ value: Double, _ decimals: Int) -> String {
+        let text = String(format: "%.\(decimals)f", value)
+        let separator = italian.decimalSeparator ?? "."
+        return separator == "." ? text : text.replacingOccurrences(of: ".", with: separator)
+    }
+
+    /// "63,42° N · 19,01° O" (the letters of the app language for west and east).
     static func coordinate(_ c: Coordinate) -> String {
-        String(format: "%.2f%@ %.2f%@", abs(c.lat), c.lat >= 0 ? "N" : "S", abs(c.lon), c.lon >= 0 ? "E" : "W")
+        let ns = c.lat >= 0 ? String(localized: "N") : String(localized: "S")
+        let ew = c.lon >= 0 ? String(localized: "E") : String(localized: "O")
+        return "\(decimal(abs(c.lat), 2))° \(ns) · \(decimal(abs(c.lon), 2))° \(ew)"
     }
 
     /// Hour as two digits ("07").

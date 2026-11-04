@@ -33,8 +33,6 @@ struct RiskBadge: View {
         let solid = risk >= .warning
         Text(text?.loc ?? risk.label)
             .font(.mono(10.5, .semibold))
-            .textCase(.uppercase)
-            .tracking(0.6)
             .padding(.horizontal, 7)
             .padding(.vertical, 4)
             .foregroundStyle(solid ? Theme.onAccent : (risk == .ok ? Theme.dim : risk.color))
@@ -49,8 +47,6 @@ struct WarningBadge: View {
     var body: some View {
         Text(color.label)
             .font(.mono(9.5, .semibold))
-            .textCase(.uppercase)
-            .tracking(0.5)
             .padding(.horizontal, 6)
             .padding(.vertical, 3)
             .background(color.color)
@@ -67,9 +63,9 @@ struct FreshnessLabel: View {
     var body: some View {
         if let date {
             HStack(spacing: 6) {
-                if isStale { Text("OFFLINE").foregroundStyle(Theme.warning) }
+                if isStale { Text("Offline").foregroundStyle(Theme.warning) }
                 Text(isStale ? String(localized: "dati di \(Fmt.relative(date))") : String(localized: "agg. \(Fmt.relative(date))"))
-                if let source { Text("· \(source.uppercased())") }
+                if let source { Text("· \(source)") }
             }
             .font(.mono(10))
             .foregroundStyle(Theme.faint)
@@ -83,7 +79,7 @@ struct ErrorNote: View {
     var body: some View {
         if let message {
             HStack(alignment: .firstTextBaseline, spacing: 6) {
-                Text("ERR").font(.mono(10, .semibold)).foregroundStyle(Theme.warning)
+                Text("Err").font(.mono(10, .semibold)).foregroundStyle(Theme.warning)
                 Text(message.loc).font(.app(.caption)).foregroundStyle(Theme.dim)
             }
         }
@@ -191,12 +187,12 @@ struct PlaceHeader: View {
                     Text(Fmt.coordinate(model.activePlace.coordinate)).font(.mono(10)).foregroundStyle(Theme.faint)
                 }
                 HStack(alignment: .firstTextBaseline, spacing: 8) {
-                    Text(model.activePlace.name.uppercased())
+                    Text(model.activePlace.name)
                         .font(.display(size, .bold))
                         .foregroundStyle(Theme.text)
                         .lineLimit(1)
                         .minimumScaleFactor(0.5)
-                    Text("CAMBIA").font(.mono(9.5, .semibold)).foregroundStyle(Theme.accent)
+                    Text("Cambia").font(.mono(9.5, .semibold)).foregroundStyle(Theme.accent)
                     Spacer(minLength: 0)
                 }
             }
@@ -300,7 +296,7 @@ struct WindDial: View {
             Rectangle().fill(Theme.bg).frame(width: size * 0.4, height: size * 0.3)
             VStack(spacing: -3) {
                 Text(speed.map { "\(Int($0.rounded()))" } ?? "–").font(.metric(size * 0.22, .bold)).foregroundStyle(Theme.text)
-                Text("M/S").font(.mono(7.5, .medium)).foregroundStyle(Theme.dim)
+                Text("m/s").font(.mono(7.5, .medium)).foregroundStyle(Theme.dim)
             }
         }
         .frame(width: size, height: size)
@@ -393,7 +389,7 @@ struct ArcGauge: View {
         VStack(alignment: .leading, spacing: 6) {
             HStack(alignment: .firstTextBaseline, spacing: 4) {
                 Text(label.loc).font(.metric(40, .bold)).foregroundStyle(Theme.text)
-                Text(caption.loc.uppercased()).font(.mono(9.5)).foregroundStyle(Theme.dim)
+                Text(caption.loc).font(.mono(9.5)).foregroundStyle(Theme.dim)
             }
             HStack(spacing: 2) {
                 ForEach(0..<20, id: \.self) { i in
@@ -644,7 +640,7 @@ enum Hero: String, CaseIterable {
         case .roads: return ("Driving in Iceland can be challenging (40217475782).jpg", "Winniepix", "CC BY 2.0", "https://commons.wikimedia.org/wiki/File:Driving_in_Iceland_can_be_challenging_(40217475782).jpg")
         case .weather: return ("Crepuscular rays break through clouds in Iceland.jpg", "Thomas Heins", "CC BY 4.0", "https://commons.wikimedia.org/wiki/File:Crepuscular_rays_break_through_clouds_in_Iceland.jpg")
         case .map: return ("Iceland (15082529060).jpg", "NASA Goddard Space Flight Center", "Public domain", "https://commons.wikimedia.org/wiki/File:Iceland_(15082529060).jpg")
-        case .trip: return ("Kirkjufell, Iceland (Unsplash LoKG7kKx7Zc).jpg", "Steven Diaz stevendiazphoto", "CC0", "https://commons.wikimedia.org/wiki/File:Kirkjufell,_Iceland_(Unsplash_LoKG7kKx7Zc).jpg")
+        case .trip: return ("Kirkjufell, Iceland (Unsplash LoKG7kKx7Zc).jpg", "Steven Diaz stevendiazphoto", "Cc0", "https://commons.wikimedia.org/wiki/File:Kirkjufell,_Iceland_(Unsplash_LoKG7kKx7Zc).jpg")
         case .volcano: return ("Iceland's Fagradalsfjall volcano.png", "Mokslo Sriuba", "CC BY-SA 4.0", "https://commons.wikimedia.org/wiki/File:Iceland%27s_Fagradalsfjall_volcano.png")
         case .drive: return ("Saturday Winter Afternoon on the Road from the Factory, Iceland - panoramio.jpg", "Petr Kraumann", "CC BY 3.0", "https://commons.wikimedia.org/wiki/File:Saturday_Winter_Afternoon_on_the_Road_from_the_Factory,_Iceland_-_panoramio.jpg")
         }
@@ -679,9 +675,9 @@ struct HeroHeader: View {
                            startPoint: .top, endPoint: .bottom)
             VStack(alignment: .leading, spacing: 4) {
                 if let eyebrow {
-                    Text(eyebrow.uppercased()).font(.mono(10, .semibold)).tracking(0.9).foregroundStyle(.white.opacity(0.85))
+                    Text(eyebrow).font(.mono(10, .semibold)).foregroundStyle(.white.opacity(0.85))
                 }
-                Text(title).font(.display(38, .bold)).foregroundStyle(.white)
+                Text(title).font(.display(30, .bold)).foregroundStyle(.white)
                     .lineLimit(2).minimumScaleFactor(0.7)
                 if let subtitle {
                     Text(subtitle).font(.sans(13.5, .medium)).foregroundStyle(.white.opacity(0.88))
@@ -691,9 +687,11 @@ struct HeroHeader: View {
             .padding(.horizontal, 18)
             .padding(.bottom, 16)
         }
-        .frame(height: height)
+        // A strip, not a poster: the data starts higher on the screen.
+        .frame(height: (height * 0.66).rounded())
         .clipped()
         .dynamicTypeSize(...DynamicTypeSize.xxLarge)
+        .accessibilityElement(children: .combine)
     }
 }
 
@@ -713,7 +711,7 @@ struct HeroTile: View {
             HeroPhoto(hero: hero)
             LinearGradient(colors: [.black.opacity(0.05), .black.opacity(0.75)], startPoint: .top, endPoint: .bottom)
             VStack(alignment: .leading, spacing: 2) {
-                Text(title.uppercased()).font(.mono(11, .semibold)).tracking(0.7).foregroundStyle(.white)
+                Text(title).font(.mono(11, .semibold)).foregroundStyle(.white)
                 if let status {
                     Text(status).font(.sans(12.5, .medium)).foregroundStyle(statusColor).lineLimit(2)
                 }
@@ -890,7 +888,7 @@ struct CoverageNote: View {
                 .foregroundStyle(Theme.caution)
                 .frame(width: 28)
             VStack(alignment: .leading, spacing: 3) {
-                Text("FUORI COPERTURA").font(.mono(10, .semibold)).tracking(0.8).foregroundStyle(Theme.caution)
+                Text("Fuori copertura").font(.mono(10, .semibold)).foregroundStyle(Theme.caution)
                 Text(showsIcelandData
                      ? String(localized: "\(feature): per ora solo in Islanda. Qui sotto vedi i dati dell'Islanda, non della tua zona.")
                      : String(localized: "\(feature): per ora solo in Islanda, per la tua zona non ci sono dati. Meteo, mare, qualità dell'aria e aurora restano attivi."))
@@ -997,8 +995,8 @@ struct EmptyState: View {
                     Haptics.tap()
                     action()
                 } label: {
-                    Text(actionTitle.loc.uppercased())
-                        .font(.mono(11.5, .semibold)).tracking(0.8)
+                    Text(actionTitle.loc)
+                        .font(.mono(11.5, .semibold))
                         .foregroundStyle(Theme.onAccent)
                         .padding(.horizontal, 16).frame(minHeight: 40)
                         .background(Theme.accent)
@@ -1047,7 +1045,7 @@ struct OfflineBanner: View {
             if !connectivity.isOnline {
                 HStack(spacing: 8) {
                     Image(systemName: "wifi.slash").font(.system(size: 11, weight: .bold))
-                    Text(label).font(.mono(10, .semibold)).tracking(0.5).lineLimit(1).minimumScaleFactor(0.7)
+                    Text(label).font(.mono(10, .semibold)).lineLimit(1).minimumScaleFactor(0.7)
                 }
                 .foregroundStyle(Theme.onAccent)
                 .padding(.horizontal, 12).padding(.vertical, 6)
@@ -1065,11 +1063,11 @@ struct OfflineBanner: View {
     /// The oldest of the copies the main screens rely on: nothing shown is older than that.
     private var label: String {
         let dates = [model.forecast?.date, model.warnings?.date, model.roads?.date].compactMap { $0 }
-        guard let oldest = dates.min() else { return String(localized: "SEI OFFLINE · NESSUN DATO SALVATO") }
+        guard let oldest = dates.min() else { return String(localized: "Sei offline · nessun dato salvato") }
         if Calendar.current.isDateInToday(oldest) {
-            return String(localized: "SEI OFFLINE · DATI DELLE \(Fmt.time(oldest))")
+            return String(localized: "Sei offline · dati delle \(Fmt.time(oldest))")
         }
-        return String(localized: "SEI OFFLINE · DATI DEL \(Fmt.dayTime(oldest, in: .current))")
+        return String(localized: "Sei offline · dati del \(Fmt.dayTime(oldest, in: .current))")
     }
 }
 
@@ -1272,7 +1270,7 @@ struct PlaceHero: View {
                 }
                 LinearGradient(colors: [.black.opacity(0), .black.opacity(0.7)], startPoint: .center, endPoint: .bottom)
                 VStack(alignment: .leading, spacing: 4) {
-                    Text(eyebrow.uppercased()).font(.mono(11.5, .semibold)).foregroundStyle(.white.opacity(0.9))
+                    Text(eyebrow).font(.mono(11.5, .semibold)).foregroundStyle(.white.opacity(0.9))
                     Text(title).font(.display(32, .bold)).foregroundStyle(.white).lineLimit(2).minimumScaleFactor(0.7)
                 }
                 .shadow(color: .black.opacity(0.5), radius: 4)

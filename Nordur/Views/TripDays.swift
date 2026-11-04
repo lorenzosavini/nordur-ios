@@ -87,7 +87,7 @@ struct TripDayHeader: View {
                     Label("\(Fmt.temp(weather.minTemp))/\(Fmt.temp(weather.maxTemp))", systemImage: info.symbol).symbolRenderingMode(.multicolor)
                     Text(String(localized: "raff. \(Fmt.ms(weather.maxGust))")).foregroundStyle(weather.windRisk == .ok ? Theme.dim : weather.windRisk.color)
                     if let rise = weather.sunrise, let set = weather.sunset {
-                        Label("\(Fmt.time(rise, in: .iceland))–\(Fmt.time(set, in: .iceland))", systemImage: "sun.horizon").foregroundStyle(Theme.dim)
+                        Label("\(Fmt.time(rise, in: .Iceland))–\(Fmt.time(set, in: .Iceland))", systemImage: "sun.horizon").foregroundStyle(Theme.dim)
                     }
                     Spacer()
                     RiskBadge(risk: weather.overallRisk)
@@ -159,9 +159,9 @@ struct TripDaysSections: View {
                 }
             } header: {
                 HStack {
-                    Text(String(localized: "Giorno \(day.number) · \(Fmt.day(day.date, in: .iceland))")).pinnedHeader()
+                    Text(String(localized: "Giorno \(day.number) · \(Fmt.day(day.date, in: .Iceland))")).pinnedHeader()
                     if Calendar.iceland.isDate(day.date, inSameDayAs: today) {
-                        Text("OGGI").font(.mono(9, .bold)).foregroundStyle(Theme.onAccent).padding(.horizontal, 5).background(Theme.accent)
+                        Text("Oggi").font(.mono(9, .bold)).foregroundStyle(Theme.onAccent).padding(.horizontal, 5).background(Theme.accent)
                     }
                 }
             }

@@ -113,7 +113,7 @@ struct TollDisclaimer: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 4) {
             if let date {
-                Label(String(localized: "Verificato il \(Fmt.day(date, in: .iceland))"), systemImage: "checkmark.seal")
+                Label(String(localized: "Verificato il \(Fmt.day(date, in: .Iceland))"), systemImage: "checkmark.seal")
                     .font(.app(.caption, .semibold)).foregroundStyle(Theme.dim)
             }
             Text("Prezzi indicativi, controlla sul sito ufficiale prima di pagare.")
@@ -171,7 +171,7 @@ struct TollRow: View {
                     Text(summary).font(.app(.caption)).foregroundStyle(Theme.text).lineLimit(2)
                 }
                 if !entry.isActive(), let since = entry.since.flatMap(TollEntry.day) {
-                    Text("A pagamento dal \(Fmt.day(since, in: .iceland))").font(.app(.caption2)).foregroundStyle(Theme.caution)
+                    Text("A pagamento dal \(Fmt.day(since, in: .Iceland))").font(.app(.caption2)).foregroundStyle(Theme.caution)
                 }
             }
         }
@@ -207,7 +207,7 @@ struct TollDetailSections: View {
         let mine = entry.price()
         Section {
             VStack(alignment: .leading, spacing: 8) {
-                Label(entry.kindLabel.uppercased(), systemImage: entry.symbol)
+                Label(entry.kindLabel, systemImage: entry.symbol)
                     .font(.mono(10, .semibold)).foregroundStyle(entry.isToll ? Theme.caution : Theme.accent)
                 Text(entry.name).font(.display(26, .bold)).foregroundStyle(Theme.text)
                 if let summary = text.summary {
@@ -561,7 +561,7 @@ struct TripTollsList: View {
             ForEach(byStop) { item in
                 Section {
                     TollChargeLines(charges: item.charges)
-                } header: { Text("\(item.stop.place.name) · \(Fmt.day(item.stop.date, in: .iceland))").pinnedHeader() }
+                } header: { Text("\(item.stop.place.name) · \(Fmt.day(item.stop.date, in: .Iceland))").pinnedHeader() }
             }
             Section {
                 TollDisclaimer(date: model.tolls?.value.compactMap(\.verifiedDate).max())

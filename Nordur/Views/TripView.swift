@@ -30,9 +30,9 @@ struct TripView: View {
                 Section {
                     ScreenHeader(title: String(localized: "Viaggio"), subtitle: trip.stops.isEmpty ? String(localized: "Itinerario") : String(localized: "\(trip.stops.count) tappe"), index: "05") {
                         HStack(spacing: 8) {
-                            HeaderButton(systemImage: "car", dot: recorder.isRecording, label: String(localized: "GUIDA")) { showDrive = true }
+                            HeaderButton(systemImage: "car", dot: recorder.isRecording, label: String(localized: "Guida")) { showDrive = true }
                                 .accessibilityIdentifier("trip.drive")
-                            HeaderButton(systemImage: "tray.and.arrow.down", dot: trip.inboxCount > 0, label: String(localized: "RICEVUTI")) { showInbox = true }
+                            HeaderButton(systemImage: "tray.and.arrow.down", dot: trip.inboxCount > 0, label: String(localized: "Ricevuti")) { showInbox = true }
                                 .accessibilityIdentifier("trip.inbox")
                             HeaderButton(systemImage: "person") { showAccount = true }
                                 .accessibilityLabel(String(localized: "Account"))
@@ -62,7 +62,7 @@ struct TripView: View {
                             .font(.app(.subheadline)).foregroundStyle(Theme.dim)
                         Button { if Entitlements.shared.check(.tripPlanner) { creating = true } } label: {
                             HStack {
-                                Text("AGGIUNGI LA PRIMA TAPPA").font(.mono(12, .semibold)).tracking(0.8)
+                                Text("Aggiungi la prima tappa").font(.mono(12, .semibold))
                                 Spacer()
                                 Text("+").font(.mono(16, .semibold))
                             }
@@ -85,9 +85,9 @@ struct TripView: View {
                             Button { sharing = true } label: { SharedStatusLine() }.buttonStyle(.plain)
                         }
                         HStack(spacing: 8) {
-                            actionButton(String(localized: "TAPPA"), "plus") { if Entitlements.shared.check(.tripPlanner) { creating = true } }
-                            actionButton(String(localized: "IMPORTA"), "square.and.arrow.down") { if Entitlements.shared.check(.tripFiles) { importing = true } }
-                            actionButton(String(localized: "CONDIVIDI"), "square.and.arrow.up") { if Entitlements.shared.check(.tripShared) { sharing = true } }
+                            actionButton(String(localized: "Tappa"), "plus") { if Entitlements.shared.check(.tripPlanner) { creating = true } }
+                            actionButton(String(localized: "Importa"), "square.and.arrow.down") { if Entitlements.shared.check(.tripFiles) { importing = true } }
+                            actionButton(String(localized: "Condividi"), "square.and.arrow.up") { if Entitlements.shared.check(.tripShared) { sharing = true } }
                                 .accessibilityIdentifier("trip.share")
                         }
                         .buttonStyle(.plain)
@@ -489,8 +489,8 @@ struct StopEditor: View {
             }
             LinearGradient(colors: [.black.opacity(0), .black.opacity(0.7)], startPoint: .top, endPoint: .bottom)
             VStack(alignment: .leading, spacing: 4) {
-                Text((place == nil ? String(localized: "Nuova tappa") : String(localized: "Tappa")).uppercased())
-                    .font(.mono(10, .semibold)).tracking(0.9).foregroundStyle(.white.opacity(0.85))
+                Text((place == nil ? String(localized: "Nuova tappa") : String(localized: "Tappa")))
+                    .font(.mono(10, .semibold)).foregroundStyle(.white.opacity(0.85))
                 Text(place?.name ?? String(localized: "Dove vai?"))
                     .font(.display(40, .bold)).foregroundStyle(.white).lineLimit(2).minimumScaleFactor(0.6)
                 if let photo {
@@ -539,7 +539,7 @@ struct StopEditor: View {
                     }
                 }
                 Spacer(minLength: 0)
-                Text(place == nil ? String(localized: "SCEGLI") : String(localized: "CAMBIA")).font(.mono(10, .semibold)).foregroundStyle(Theme.accent)
+                Text(place == nil ? String(localized: "Scegli") : String(localized: "Cambia")).font(.mono(10, .semibold)).foregroundStyle(Theme.accent)
             }
             .padding(12)
             .overlay(Rectangle().strokeBorder(place == nil ? Theme.accent : Theme.hairline, lineWidth: 1))
@@ -568,7 +568,7 @@ struct StopEditor: View {
             .padding(12)
             Rule()
             HStack {
-                Text(nights == 0 ? String(localized: "SOLO DI PASSAGGIO") : String(localized: "PARTENZA"))
+                Text(nights == 0 ? String(localized: "Solo di passaggio") : String(localized: "Partenza"))
                     .font(.mono(9.5)).foregroundStyle(Theme.faint)
                 Spacer()
                 if nights > 0 {
@@ -659,8 +659,8 @@ struct StopEditor: View {
     private var saveButtonBody: some View {
         Button { save() } label: {
             HStack {
-                Text(original == nil ? String(localized: "AGGIUNGI TAPPA") : String(localized: "SALVA MODIFICHE"))
-                    .font(.mono(13, .semibold)).tracking(1)
+                Text(original == nil ? String(localized: "Aggiungi tappa") : String(localized: "Salva modifiche"))
+                    .font(.mono(13, .semibold))
                 Spacer()
                 Image(systemName: "arrow.right").font(.system(size: 15, weight: .bold))
             }

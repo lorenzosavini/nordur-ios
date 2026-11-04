@@ -293,30 +293,30 @@
     "%@ / %@" : {
       "shouldTranslate" : false
     },
-    "%@ KM" : {
+    "%@ km" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%@ KM"
+            "value" : "%@ km"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%@ KM"
+            "value" : "%@ km"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%@ KM"
+            "value" : "%@ km"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%@ KM"
+            "value" : "%@ km"
           }
         }
       }
@@ -662,30 +662,30 @@
     "%lld" : {
       "shouldTranslate" : false
     },
-    "%lld ATTIVI" : {
+    "%lld attivi" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%lld ACTIVE"
+            "value" : "%lld active"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%lld AKTIV"
+            "value" : "%lld aktiv"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%lld ACTIVES"
+            "value" : "%lld actives"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%lld ACTIVOS"
+            "value" : "%lld activos"
           }
         }
       }
@@ -718,114 +718,30 @@
         }
       }
     },
-    "%lld IN ISLANDA" : {
+    "%lld in Islanda" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%lld IN ICELAND"
+            "value" : "%lld in Iceland"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%lld IN ISLAND"
+            "value" : "%lld in Island"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%lld EN ISLANDE"
+            "value" : "%lld en Islande"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%lld EN ISLANDIA"
-          }
-        }
-      }
-    },
-    "%lld KM" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%lld KM"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%lld KM"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%lld KM"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%lld KM"
-          }
-        }
-      }
-    },
-    "%lld KM/H" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%lld KM/H"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%lld KM/H"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%lld KM/H"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%lld KM/H"
-          }
-        }
-      }
-    },
-    "%lld elementi ripristinati." : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%lld items restored."
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%lld Elemente wiederhergestellt."
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%lld éléments restaurés."
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%lld elementos restaurados."
+            "value" : "%lld en Islandia"
           }
         }
       }
@@ -854,6 +770,34 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "%lld km"
+          }
+        }
+      }
+    },
+    "%lld elementi ripristinati." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld items restored."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld Elemente wiederhergestellt."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld éléments restaurés."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld elementos restaurados."
           }
         }
       }
@@ -1220,30 +1164,30 @@
         }
       }
     },
-    "24 ORE" : {
+    "24 ore" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "24 HOURS"
+            "value" : "24 hours"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "24 STUNDEN"
+            "value" : "24 stunden"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "24 HEURES"
+            "value" : "24 heures"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "24 HORAS"
+            "value" : "24 horas"
           }
         }
       }
@@ -1254,86 +1198,86 @@
     "25" : {
       "shouldTranslate" : false
     },
-    "25 M/S · PERICOLO" : {
+    "25 m/S · PERICOLO" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "25 M/S · DANGER"
+            "value" : "25 m/S · DANGER"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "25 M/S · GEFAHR"
+            "value" : "25 m/S · GEFAHR"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "25 M/S · DANGER"
+            "value" : "25 m/S · DANGER"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "25 M/S · PELIGRO"
+            "value" : "25 m/S · PELIGRO"
           }
         }
       }
     },
-    "27 GIORNI" : {
+    "27 giorni" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "27 DAYS"
+            "value" : "27 days"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "27 TAGE"
+            "value" : "27 tage"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "27 JOURS"
+            "value" : "27 jours"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "27 DÍAS"
+            "value" : "27 días"
           }
         }
       }
     },
-    "3 GIORNI" : {
+    "3 giorni" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "3 DAYS"
+            "value" : "3 days"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "3 TAGE"
+            "value" : "3 tage"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "3 JOURS"
+            "value" : "3 jours"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "3 DÍAS"
+            "value" : "3 días"
           }
         }
       }
@@ -1369,30 +1313,30 @@
     "30–60" : {
       "shouldTranslate" : false
     },
-    "4 = MOLTO FAVOREVOLE" : {
+    "4 = molto favorevole" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "4 = VERY FAVOURABLE"
+            "value" : "4 = very favourable"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "4 = SEHR GÜNSTIG"
+            "value" : "4 = sehr günstig"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "4 = TRÈS FAVORABLE"
+            "value" : "4 = très favorable"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "4 = MUY FAVORABLE"
+            "value" : "4 = muy favorable"
           }
         }
       }
@@ -1431,30 +1375,30 @@
     "80–95" : {
       "shouldTranslate" : false
     },
-    "85+ · VALORE OVATION" : {
+    "85+ · valore OVATION" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "85+ · OVATION VALUE"
+            "value" : "85+ · OVATION value"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "85+ · OVATION-WERT"
+            "value" : "85+ · ovation-wert"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "85+ · VALEUR OVATION"
+            "value" : "85+ · valeur OVATION"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "85+ · VALOR OVATION"
+            "value" : "85+ · valor OVATION"
           }
         }
       }
@@ -1549,58 +1493,30 @@
         }
       }
     },
-    "ACCEDI" : {
+    "Accedi per segnalare" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "SIGN IN"
+            "value" : "Sign in to report"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ANMELDEN"
+            "value" : "Zum melden anmelden"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "CONNEXION"
+            "value" : "Connectez-vous pour signaler"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "INICIAR SESIÓN"
-          }
-        }
-      }
-    },
-    "ACCEDI PER SEGNALARE" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "SIGN IN TO REPORT"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "ZUM MELDEN ANMELDEN"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "CONNECTEZ-VOUS POUR SIGNALER"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "INICIA SESIÓN PARA AVISAR"
+            "value" : "Inicia sesión para avisar"
           }
         }
       }
@@ -1633,58 +1549,58 @@
         }
       }
     },
-    "ACQUA %@" : {
+    "Acqua %@" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "WATER %@"
+            "value" : "Water %@"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "WASSER %@"
+            "value" : "Wasser %@"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "EAU %@"
+            "value" : "Eau %@"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "AGUA %@"
+            "value" : "Agua %@"
           }
         }
       }
     },
-    "AFFIDABILITÀ" : {
+    "Affidabilità" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "RELIABILITY"
+            "value" : "Reliability"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ZUVERLÄSSIGKEIT"
+            "value" : "Zuverlässigkeit"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "FIABILITÉ"
+            "value" : "Fiabilité"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "FIABILIDAD"
+            "value" : "Fiabilidad"
           }
         }
       }
@@ -1717,254 +1633,198 @@
         }
       }
     },
-    "AGGIORNATO" : {
+    "Aggiornato" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "UPDATED"
+            "value" : "Updated"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "AKTUALISIERT"
+            "value" : "Aktualisiert"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "MIS À JOUR"
+            "value" : "Mis à jour"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ACTUALIZADO"
+            "value" : "Actualizado"
           }
         }
       }
     },
-    "AGGIUNGI LA PRIMA TAPPA" : {
+    "Aggiungi la prima tappa" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ADD THE FIRST STOP"
+            "value" : "Add the first stop"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ERSTE ETAPPE HINZUFÜGEN"
+            "value" : "Erste etappe hinzufügen"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "AJOUTEZ LA PREMIÈRE ÉTAPE"
+            "value" : "Ajoutez la première étape"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "AÑADE LA PRIMERA PARADA"
+            "value" : "Añade la primera parada"
           }
         }
       }
     },
-    "ALBA %@" : {
+    "Alba %@" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "SUNRISE %@"
+            "value" : "Sunrise %@"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "SONNENAUFGANG %@"
+            "value" : "Sonnenaufgang %@"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "LEVER %@"
+            "value" : "Lever %@"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "AMANECER %@"
+            "value" : "Amanecer %@"
           }
         }
       }
     },
-    "ASFALTO" : {
+    "Asfalto" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ROAD SURFACE"
+            "value" : "Road surface"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "FAHRBAHN"
+            "value" : "Fahrbahn"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "REVÊTEMENT"
+            "value" : "Revêtement"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "FIRME"
+            "value" : "Firme"
           }
         }
       }
     },
-    "ATTENZIONE" : {
+    "Attività" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "CAUTION"
+            "value" : "Activity"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ACHTUNG"
+            "value" : "Aktivität"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ATTENTION"
+            "value" : "Activité"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "PRECAUCIÓN"
+            "value" : "Actividad"
           }
         }
       }
     },
-    "ATTIVITÀ" : {
+    "Aurora · stanotte" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ACTIVITY"
+            "value" : "Aurora · tonight"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "AKTIVITÄT"
+            "value" : "Polarlicht · heute nacht"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ACTIVITÉ"
+            "value" : "Aurore · ce soir"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ACTIVIDAD"
+            "value" : "Aurora · esta noche"
           }
         }
       }
     },
-    "AURORA · STANOTTE" : {
+    "Avvia registrazione" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "AURORA · TONIGHT"
+            "value" : "Start recording"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "POLARLICHT · HEUTE NACHT"
+            "value" : "Aufzeichnung starten"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "AURORE · CE SOIR"
+            "value" : "Démarrer l'enregistrement"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "AURORA · ESTA NOCHE"
-          }
-        }
-      }
-    },
-    "AUTO" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "AUTO"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "AUTO"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "AUTO"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "AUTO"
-          }
-        }
-      }
-    },
-    "AVVIA REGISTRAZIONE" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "START RECORDING"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "AUFZEICHNUNG STARTEN"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "DÉMARRER L'ENREGISTREMENT"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "EMPEZAR A GRABAR"
+            "value" : "Empezar a grabar"
           }
         }
       }
@@ -4321,58 +4181,58 @@
         }
       }
     },
-    "BRILLAMENTI M/X 3 GIORNI: %@" : {
+    "Brillamenti M/X 3 giorni: %@" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "M/X FLARES 3 DAYS: %@"
+            "value" : "M/x flares 3 days: %@"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "M/X-FLARES 3 TAGE: %@"
+            "value" : "M/x-flares 3 tage: %@"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ÉRUPTIONS M/X 3 JOURS : %@"
+            "value" : "Éruptions m/x 3 jours : %@"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "FULGURACIONES M/X 3 DÍAS: %@"
+            "value" : "Fulguraciones m/x 3 días: %@"
           }
         }
       }
     },
-    "BUIO" : {
+    "Buio" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "DARK"
+            "value" : "Dark"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "DUNKEL"
+            "value" : "Dunkel"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "OBSCURITÉ"
+            "value" : "Obscurité"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "OSCURO"
+            "value" : "Oscuro"
           }
         }
       }
@@ -4405,30 +4265,30 @@
         }
       }
     },
-    "BZ GSM, ULTIME 3 ORE · LINEA VERDE −5 NT" : {
+    "Bz GSM, ultime 3 ore · linea verde −5 nT" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "BZ GSM, LAST 3 HOURS · GREEN LINE −5 NT"
+            "value" : "Bz GSM, last 3 hours · green line −5 nT"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "BZ GSM, LETZTE 3 STUNDEN · GRÜNE LINIE −5 NT"
+            "value" : "Bz GSM, letzte 3 stunden · grüne linie −5 nT"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "BZ GSM, 3 DERNIÈRES HEURES · LIGNE VERTE −5 NT"
+            "value" : "Bz GSM, 3 dernières heures · ligne verte −5 nT"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "BZ GSM, ÚLTIMAS 3 HORAS · LÍNEA VERDE −5 NT"
+            "value" : "Bz GSM, últimas 3 horas · línea verde −5 nT"
           }
         }
       }
@@ -5077,58 +4937,30 @@
         }
       }
     },
-    "CAMBIA" : {
+    "Cambia" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "CHANGE"
+            "value" : "Change"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ÄNDERN"
+            "value" : "Ändern"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "CHANGER"
+            "value" : "Changer"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "CAMBIAR"
-          }
-        }
-      }
-    },
-    "CAMBIA PASSWORD" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "CHANGE PASSWORD"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "PASSWORT ÄNDERN"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "CHANGER LE MOT DE PASSE"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "CAMBIAR CONTRASEÑA"
+            "value" : "Cambiar"
           }
         }
       }
@@ -5161,114 +4993,86 @@
         }
       }
     },
-    "CARBURANTE" : {
+    "Chiusi" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "FUEL"
+            "value" : "Closed"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "KRAFTSTOFF"
+            "value" : "Gesperrt"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "CARBURANT"
+            "value" : "Fermé"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "COMBUSTIBLE"
+            "value" : "Cerrado"
           }
         }
       }
     },
-    "CHIUSI" : {
+    "Cielo" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "CLOSED"
+            "value" : "Sky"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "GESPERRT"
+            "value" : "Himmel"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "FERMÉ"
+            "value" : "Ciel"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "CERRADO"
+            "value" : "Cielo"
           }
         }
       }
     },
-    "CIELO" : {
+    "Cielo (vedur.is)" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "SKY"
+            "value" : "Sky (vedur.is)"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "HIMMEL"
+            "value" : "Himmel (vedur.is)"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "CIEL"
+            "value" : "Ciel (vedur.is)"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "CIELO"
-          }
-        }
-      }
-    },
-    "CIELO (VEDUR.IS)" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "SKY (VEDUR.IS)"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "HIMMEL (VEDUR.IS)"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "CIEL (VEDUR.IS)"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "CIELO (VEDUR.IS)"
+            "value" : "Cielo (vedur.is)"
           }
         }
       }
@@ -5385,170 +5189,114 @@
         }
       }
     },
-    "CODICE DI RECUPERO" : {
+    "Conferma" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "RECOVERY CODE"
+            "value" : "Confirm"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "WIEDERHERSTELLUNGSCODE"
+            "value" : "Bestätigen"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "CODE DE RÉCUPÉRATION"
+            "value" : "Confirmer"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "CÓDIGO DE RECUPERACIÓN"
+            "value" : "Confirmar"
           }
         }
       }
     },
-    "CONFERMA" : {
+    "Copertura nuvolosa totale, ora %@ · Open-Meteo" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "CONFIRM"
+            "value" : "Total cloud cover, %@ · Open-Meteo"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "BESTÄTIGEN"
+            "value" : "Gesamtbewölkung, %@ · Open-Meteo"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "CONFIRMER"
+            "value" : "Couverture nuageuse totale, %@ · Open-Meteo"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "CONFIRMAR"
+            "value" : "Nubosidad total, %@ · Open-Meteo"
           }
         }
       }
     },
-    "COPERTURA NUVOLOSA TOTALE, ORA %@ · OPEN-METEO" : {
+    "Copia" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "TOTAL CLOUD COVER, %@ · OPEN-METEO"
+            "value" : "Copy"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "GESAMTBEWÖLKUNG, %@ · OPEN-METEO"
+            "value" : "Kopieren"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "COUVERTURE NUAGEUSE TOTALE, %@ · OPEN-METEO"
+            "value" : "Copier"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "NUBOSIDAD TOTAL, %@ · OPEN-METEO"
+            "value" : "Copiar"
           }
         }
       }
     },
-    "COPIA" : {
+    "Copiato" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "COPY"
+            "value" : "Copied"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "KOPIEREN"
+            "value" : "Kopiert"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "COPIER"
+            "value" : "Copié"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "COPIAR"
-          }
-        }
-      }
-    },
-    "COPIATO" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "COPIED"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "KOPIERT"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "COPIÉ"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "COPIADO"
-          }
-        }
-      }
-    },
-    "CREA ACCOUNT" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "CREATE ACCOUNT"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "ACCOUNT ERSTELLEN"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "CRÉER UN COMPTE"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "CREAR CUENTA"
+            "value" : "Copiado"
           }
         }
       }
@@ -7461,86 +7209,86 @@
         }
       }
     },
-    "DA %@" : {
+    "Da %@" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "FROM %@"
+            "value" : "From %@"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "AB %@"
+            "value" : "Ab %@"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "DE %@"
+            "value" : "De %@"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "DESDE %@"
+            "value" : "Desde %@"
           }
         }
       }
     },
-    "DALLE %@" : {
+    "Dalle %@" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "FROM %@"
+            "value" : "From %@"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "AB %@"
+            "value" : "Ab %@"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "À PARTIR DE %@"
+            "value" : "À partir de %@"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "DESDE LAS %@"
+            "value" : "Desde las %@"
           }
         }
       }
     },
-    "DIR" : {
+    "Dir" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "DIR"
+            "value" : "Dir"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "RICHT."
+            "value" : "Richt."
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "DIR"
+            "value" : "Dir"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "DIR"
+            "value" : "Dir"
           }
         }
       }
@@ -8332,86 +8080,30 @@
     "E" : {
       "shouldTranslate" : false
     },
-    "ELIMINA" : {
+    "Email" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "DELETE"
+            "value" : "Email"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "LÖSCHEN"
+            "value" : "E-mail"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "SUPPRIMER"
+            "value" : "E-mail"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ELIMINAR"
-          }
-        }
-      }
-    },
-    "ELIMINA ACCOUNT" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "DELETE ACCOUNT"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "ACCOUNT LÖSCHEN"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "SUPPRIMER LE COMPTE"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "ELIMINAR CUENTA"
-          }
-        }
-      }
-    },
-    "EMAIL" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "EMAIL"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "E-MAIL"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "E-MAIL"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "CORREO"
+            "value" : "Correo"
           }
         }
       }
@@ -8444,30 +8136,30 @@
         }
       }
     },
-    "ERR" : {
+    "Err" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ERR"
+            "value" : "Err"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "FEHL."
+            "value" : "Fehl."
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ERR"
+            "value" : "Err"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ERR"
+            "value" : "Err"
           }
         }
       }
@@ -9144,58 +8836,58 @@
         }
       }
     },
-    "FINESTRA MIGLIORE 24 H" : {
+    "Finestra migliore 24 h" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "BEST WINDOW 24 H"
+            "value" : "Best window 24 h"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "BESTES ZEITFENSTER 24 H"
+            "value" : "Bestes zeitfenster 24 h"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "MEILLEURE FENÊTRE 24 H"
+            "value" : "Meilleure fenêtre 24 h"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "MEJOR VENTANA 24 H"
+            "value" : "Mejor ventana 24 h"
           }
         }
       }
     },
-    "FONTE" : {
+    "Fonte" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "SOURCE"
+            "value" : "Source"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "QUELLE"
+            "value" : "Quelle"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "SOURCE"
+            "value" : "Source"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "FUENTE"
+            "value" : "Fuente"
           }
         }
       }
@@ -9651,58 +9343,30 @@
         }
       }
     },
-    "GENERA NUOVO CODICE" : {
+    "Genera nuovo codice" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "GENERATE NEW CODE"
+            "value" : "Generate new code"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "NEUEN CODE ERZEUGEN"
+            "value" : "Neuen code erzeugen"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "GÉNÉRER UN NOUVEAU CODE"
+            "value" : "Générer un nouveau code"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "GENERAR NUEVO CÓDIGO"
-          }
-        }
-      }
-    },
-    "GIORNO" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "DAY"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "TAG"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "JOUR"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "DÍA"
+            "value" : "Generar nuevo código"
           }
         }
       }
@@ -9791,58 +9455,58 @@
         }
       }
     },
-    "GUARDA VERSO %@ (%lld°)%@" : {
+    "Guarda verso %@ (%lld°)%@" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "LOOK %1$@ (%2$lld°)%3$@"
+            "value" : "Look %1$@ (%2$lld°)%3$@"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "SCHAU NACH %1$@ (%2$lld°)%3$@"
+            "value" : "Schau nach %1$@ (%2$lld°)%3$@"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "REGARDEZ %1$@ (%2$lld°)%3$@"
+            "value" : "Regardez %1$@ (%2$lld°)%3$@"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "MIRA HACIA %1$@ (%2$lld°)%3$@"
+            "value" : "Mira hacia %1$@ (%2$lld°)%3$@"
           }
         }
       }
     },
-    "GUIDA · 12 H" : {
+    "Guida · 12 h" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "DRIVING · 12 H"
+            "value" : "Driving · 12 h"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "FAHREN · 12 H"
+            "value" : "Fahren · 12 h"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "CONDUITE · 12 H"
+            "value" : "Conduite · 12 h"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "CONDUCCIÓN · 12 H"
+            "value" : "Conducción · 12 h"
           }
         }
       }
@@ -10715,114 +10379,114 @@
         }
       }
     },
-    "IMPOSTA LA NUOVA PASSWORD" : {
+    "Imposta la nuova password" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "SET THE NEW PASSWORD"
+            "value" : "Set the new password"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "NEUES PASSWORT FESTLEGEN"
+            "value" : "Neues passwort festlegen"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "DÉFINIR LE NOUVEAU MOT DE PASSE"
+            "value" : "Définir le nouveau mot de passe"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ESTABLECER NUEVA CONTRASEÑA"
+            "value" : "Establecer nueva contraseña"
           }
         }
       }
     },
-    "IN CORSO" : {
+    "In corso" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "IN FORCE"
+            "value" : "In force"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "AKTIV"
+            "value" : "Aktiv"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "EN VIGUEUR"
+            "value" : "En vigueur"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "EN VIGOR"
+            "value" : "En vigor"
           }
         }
       }
     },
-    "INDICAZIONE PRELIMINARE" : {
+    "Indicazione preliminare" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "PRELIMINARY GUIDANCE"
+            "value" : "Preliminary guidance"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "VORLÄUFIGE EINSCHÄTZUNG"
+            "value" : "Vorläufige einschätzung"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "INDICATION PRÉLIMINAIRE"
+            "value" : "Indication préliminaire"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "INDICACIÓN PRELIMINAR"
+            "value" : "Indicación preliminar"
           }
         }
       }
     },
-    "INVIA" : {
+    "Invia" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "SEND"
+            "value" : "Send"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "SENDEN"
+            "value" : "Senden"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ENVOYER"
+            "value" : "Envoyer"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ENVIAR"
+            "value" : "Enviar"
           }
         }
       }
@@ -12115,58 +11779,58 @@
         }
       }
     },
-    "KM" : {
+    "km" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "KM"
+            "value" : "km"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "KM"
+            "value" : "km"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "KM"
+            "value" : "km"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "KM"
+            "value" : "km"
           }
         }
       }
     },
-    "KP MAX" : {
+    "Kp max" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "KP MAX"
+            "value" : "Kp max"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "KP MAX"
+            "value" : "Kp max"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "KP MAX"
+            "value" : "Kp max"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "KP MÁX"
+            "value" : "Kp máx"
           }
         }
       }
@@ -12479,30 +12143,30 @@
         }
       }
     },
-    "L'HO SALVATO" : {
+    "L'ho salvato" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "I'VE SAVED IT"
+            "value" : "I've saved it"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "HAB ICH GESPEICHERT"
+            "value" : "Hab ich gespeichert"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "JE L'AI ENREGISTRÉ"
+            "value" : "Je l'ai enregistré"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "LO HE GUARDADO"
+            "value" : "Lo he guardado"
           }
         }
       }
@@ -12620,30 +12284,30 @@
         }
       }
     },
-    "LA TUA ZONA" : {
+    "La tua zona" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "YOUR AREA"
+            "value" : "Your area"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "DEINE REGION"
+            "value" : "Deine region"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "VOTRE ZONE"
+            "value" : "Votre zone"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "TU ZONA"
+            "value" : "Tu zona"
           }
         }
       }
@@ -12676,58 +12340,58 @@
         }
       }
     },
-    "LIVELLI +" : {
+    "Livelli +" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "LAYERS +"
+            "value" : "Layers +"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "EBENEN +"
+            "value" : "Ebenen +"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "CALQUES +"
+            "value" : "Calques +"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "CAPAS +"
+            "value" : "Capas +"
           }
         }
       }
     },
-    "LUNA" : {
+    "Luna" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "MOON"
+            "value" : "Moon"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "MOND"
+            "value" : "Mond"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "LUNE"
+            "value" : "Lune"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "LUNA"
+            "value" : "Luna"
           }
         }
       }
@@ -13576,13 +13240,13 @@
         }
       }
     },
-    "M · %@ S" : {
+    "m · %@ s" : {
       "shouldTranslate" : false
     },
     "M%@" : {
       "shouldTranslate" : false
     },
-    "M/S" : {
+    "m/s" : {
       "shouldTranslate" : false
     },
     "M/S RAFFICHE" : {
@@ -13622,58 +13286,58 @@
     "M3+" : {
       "shouldTranslate" : false
     },
-    "MAPPA DELL'OVALE" : {
+    "Mappa dell'ovale" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "OVAL MAP"
+            "value" : "Oval map"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "OVAL-KARTE"
+            "value" : "Oval-karte"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "CARTE DE L'OVALE"
+            "value" : "Carte de l'ovale"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "MAPA DEL ÓVALO"
+            "value" : "Mapa del óvalo"
           }
         }
       }
     },
-    "MARE · ONDE" : {
+    "Mare · onde" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "SEA · WAVES"
+            "value" : "Sea · waves"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "MEER · WELLEN"
+            "value" : "Meer · wellen"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "MER · VAGUES"
+            "value" : "Mer · vagues"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "MAR · OLAS"
+            "value" : "Mar · olas"
           }
         }
       }
@@ -13706,30 +13370,30 @@
         }
       }
     },
-    "MAX M%@ %@" : {
+    "Max M%@ %@" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "MAX M%1$@ %2$@"
+            "value" : "Max M%1$@ %2$@"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "MAX M%1$@ %2$@"
+            "value" : "Max M%1$@ %2$@"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "MAX M%1$@ %2$@"
+            "value" : "Max M%1$@ %2$@"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "MÁX M%1$@ %2$@"
+            "value" : "Máx M%1$@ %2$@"
           }
         }
       }
@@ -13818,170 +13482,170 @@
         }
       }
     },
-    "METEO MET NORWAY" : {
+    "Meteo MET Norway" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "MET NORWAY WEATHER"
+            "value" : "MET Norway weather"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "WETTER MET NORWAY"
+            "value" : "Wetter MET Norway"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "MÉTÉO MET NORWAY"
+            "value" : "Météo MET Norway"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "TIEMPO MET NORWAY"
+            "value" : "Tiempo MET Norway"
           }
         }
       }
     },
-    "MIN / MAX" : {
+    "Min / max" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "MIN / MAX"
+            "value" : "Min / max"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "MIN / MAX"
+            "value" : "Min / max"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "MIN / MAX"
+            "value" : "Min / max"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "MÍN / MÁX"
+            "value" : "Mín / máx"
           }
         }
       }
     },
-    "MIN · MAX · RAFF · MM" : {
+    "Min · max · raff · mm" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "MIN · MAX · GUST · MM"
+            "value" : "Min · max · gust · mm"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "MIN · MAX · BÖE · MM"
+            "value" : "Min · max · böe · mm"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "MIN · MAX · RAF. · MM"
+            "value" : "Min · max · raf. · mm"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "MÍN · MÁX · RACHA · MM"
+            "value" : "Mín · máx · racha · mm"
           }
         }
       }
     },
-    "MINIMA" : {
+    "Minima" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "LOW"
+            "value" : "Low"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "TIEF"
+            "value" : "Tief"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "MINIMALE"
+            "value" : "Minimale"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "MÍNIMA"
+            "value" : "Mínima"
           }
         }
       }
     },
-    "MISURATO FINO A +%lld MIN" : {
+    "Misurato fino a +%lld min" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "MEASURED UP TO +%lld MIN"
+            "value" : "Measured up to +%lld min"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "GEMESSEN BIS +%lld MIN"
+            "value" : "Gemessen bis +%lld min"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "MESURÉ JUSQU'À +%lld MIN"
+            "value" : "Mesuré jusqu'à +%lld min"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "MEDIDO HASTA +%lld MIN"
+            "value" : "Medido hasta +%lld min"
           }
         }
       }
     },
-    "MISURATO ≠ PREVISTO" : {
+    "Misurato ≠ previsto" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "MEASURED ≠ FORECAST"
+            "value" : "Measured ≠ forecast"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "GEMESSEN ≠ PROGNOSE"
+            "value" : "Gemessen ≠ prognose"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "MESURÉ ≠ PRÉVU"
+            "value" : "Mesuré ≠ prévu"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "MEDIDO ≠ PREVISTO"
+            "value" : "Medido ≠ previsto"
           }
         }
       }
@@ -15053,30 +14717,30 @@
         }
       }
     },
-    "NESSUNA ORA DI BUIO" : {
+    "Nessuna ora di buio" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "NO DARK HOURS"
+            "value" : "No dark hours"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "KEINE DUNKELSTUNDEN"
+            "value" : "Keine dunkelstunden"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "AUCUNE HEURE D'OBSCURITÉ"
+            "value" : "Aucune heure d'obscurité"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "SIN HORAS DE OSCURIDAD"
+            "value" : "Sin horas de oscuridad"
           }
         }
       }
@@ -15109,86 +14773,58 @@
         }
       }
     },
-    "NESSUNO ATTIVO" : {
+    "Nessuno attivo" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "NONE ACTIVE"
+            "value" : "None active"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "KEINE AKTIV"
+            "value" : "Keine aktiv"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "AUCUNE ACTIVE"
+            "value" : "Aucune active"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "NINGUNO ACTIVO"
+            "value" : "Ninguno activo"
           }
         }
       }
     },
-    "NEVE" : {
+    "Neve / ghiaccio" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "SNOW"
+            "value" : "Snow / ice"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "SCHNEE"
+            "value" : "Schnee / eis"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "NEIGE"
+            "value" : "Neige / glace"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "NIEVE"
-          }
-        }
-      }
-    },
-    "NEVE / GHIACCIO" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "SNOW / ICE"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "SCHNEE / EIS"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "NEIGE / GLACE"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "NIEVE / HIELO"
+            "value" : "Nieve / hielo"
           }
         }
       }
@@ -15417,58 +15053,30 @@
         }
       }
     },
-    "NON AGGIORNATO · %@" : {
+    "Non aggiornato · %@" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "NOT UPDATED · %@"
+            "value" : "Not updated · %@"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "NICHT AKTUELL · %@"
+            "value" : "Nicht aktuell · %@"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "NON MIS À JOUR · %@"
+            "value" : "Non mis à jour · %@"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "SIN ACTUALIZAR · %@"
-          }
-        }
-      }
-    },
-    "NON DISPONIBILE" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "NOT AVAILABLE"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "NICHT VERFÜGBAR"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "INDISPONIBLE"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "NO DISPONIBLE"
+            "value" : "Sin actualizar · %@"
           }
         }
       }
@@ -15501,142 +15109,114 @@
         }
       }
     },
-    "NOTTE" : {
+    "Notte" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "NIGHT"
+            "value" : "Night"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "NACHT"
+            "value" : "Nacht"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "NUIT"
+            "value" : "Nuit"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "NOCHE"
+            "value" : "Noche"
           }
         }
       }
     },
-    "NUOVA PASSWORD" : {
+    "Nuova password" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "NEW PASSWORD"
+            "value" : "New password"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "NEUES PASSWORT"
+            "value" : "Neues passwort"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "NOUVEAU MOT DE PASSE"
+            "value" : "Nouveau mot de passe"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "NUEVA CONTRASEÑA"
+            "value" : "Nueva contraseña"
           }
         }
       }
     },
-    "NUVOLE" : {
+    "Nuvole ora" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "CLOUDS"
+            "value" : "Clouds now"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "WOLKEN"
+            "value" : "Wolken jetzt"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "NUAGES"
+            "value" : "Nuages actuels"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "NUBES"
+            "value" : "Nubes ahora"
           }
         }
       }
     },
-    "NUVOLE ORA" : {
+    "Nuvolosità in caricamento" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "CLOUDS NOW"
+            "value" : "Loading cloud cover"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "WOLKEN JETZT"
+            "value" : "Bewölkung wird geladen"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "NUAGES ACTUELS"
+            "value" : "Chargement de la nébulosité"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "NUBES AHORA"
-          }
-        }
-      }
-    },
-    "NUVOLOSITÀ IN CARICAMENTO" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "LOADING CLOUD COVER"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "BEWÖLKUNG WIRD GELADEN"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "CHARGEMENT DE LA NÉBULOSITÉ"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "CARGANDO NUBOSIDAD"
+            "value" : "Cargando nubosidad"
           }
         }
       }
@@ -17409,58 +16989,30 @@
         }
       }
     },
-    "OFFLINE" : {
+    "Offline" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "OFFLINE"
+            "value" : "Offline"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "OFFLINE"
+            "value" : "Offline"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "HORS LIGNE"
+            "value" : "Hors ligne"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "SIN CONEXIÓN"
-          }
-        }
-      }
-    },
-    "OGGI" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "TODAY"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "HEUTE"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "AUJOURD'HUI"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "HOY"
+            "value" : "Sin conexión"
           }
         }
       }
@@ -17493,86 +17045,58 @@
         }
       }
     },
-    "ORA" : {
+    "Ora locale" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "HOUR"
+            "value" : "Local time"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "STUNDE"
+            "value" : "Ortszeit"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "HEURE"
+            "value" : "Heure locale"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "HORA"
+            "value" : "Hora local"
           }
         }
       }
     },
-    "ORA LOCALE" : {
+    "Ora migliore per notte" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "LOCAL TIME"
+            "value" : "Best hour per night"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ORTSZEIT"
+            "value" : "Beste stunde Pro nacht"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "HEURE LOCALE"
+            "value" : "Meilleure heure par nuit"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "HORA LOCAL"
-          }
-        }
-      }
-    },
-    "ORA MIGLIORE PER NOTTE" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "BEST HOUR PER NIGHT"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "BESTE STUNDE PRO NACHT"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "MEILLEURE HEURE PAR NUIT"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "MEJOR HORA POR NOCHE"
+            "value" : "Mejor hora por noche"
           }
         }
       }
@@ -17605,142 +17129,142 @@
         }
       }
     },
-    "OSSERVABILITÀ" : {
+    "Osservabilità" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "OBSERVABILITY"
+            "value" : "Observability"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "BEOBACHTBARKEIT"
+            "value" : "Beobachtbarkeit"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "OBSERVABILITÉ"
+            "value" : "Observabilité"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "OBSERVABILIDAD"
+            "value" : "Observabilidad"
           }
         }
       }
     },
-    "OSSERVABILITÀ QUI" : {
+    "Osservabilità qui" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "OBSERVABILITY HERE"
+            "value" : "Observability here"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "BEOBACHTBARKEIT HIER"
+            "value" : "Beobachtbarkeit hier"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "OBSERVABILITÉ ICI"
+            "value" : "Observabilité ici"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "OBSERVABILIDAD AQUÍ"
+            "value" : "Observabilidad aquí"
           }
         }
       }
     },
-    "OSSERVATO · STIMATO · PREVISTO" : {
+    "Osservato · stimato · previsto" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "OBSERVED · ESTIMATED · FORECAST"
+            "value" : "Observed · estimated · forecast"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "GEMESSEN · GESCHÄTZT · PROGNOSE"
+            "value" : "Gemessen · geschätzt · prognose"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "OBSERVÉ · ESTIMÉ · PRÉVU"
+            "value" : "Observé · estimé · prévu"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "OBSERVADO · ESTIMADO · PREVISTO"
+            "value" : "Observado · estimado · previsto"
           }
         }
       }
     },
-    "OV %lld" : {
+    "Ov %lld" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "OV %lld"
+            "value" : "Ov %lld"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "OV %lld"
+            "value" : "Ov %lld"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "OV %lld"
+            "value" : "Ov %lld"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "OV %lld"
+            "value" : "Ov %lld"
           }
         }
       }
     },
-    "OVALE OVATION" : {
+    "Ovale OVATION" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "OVATION OVAL"
+            "value" : "OVATION oval"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "OVATION-OVAL"
+            "value" : "Ovation-oval"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "OVALE OVATION"
+            "value" : "ovale OVATION"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ÓVALO OVATION"
+            "value" : "Óvalo OVATION"
           }
         }
       }
@@ -18501,58 +18025,30 @@
         }
       }
     },
-    "PASSWORD" : {
+    "Password attuale" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "PASSWORD"
+            "value" : "Current password"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "PASSWORT"
+            "value" : "Aktuelles passwort"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "MOT DE PASSE"
+            "value" : "Mot de passe actuel"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "CONTRASEÑA"
-          }
-        }
-      }
-    },
-    "PASSWORD ATTUALE" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "CURRENT PASSWORD"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "AKTUELLES PASSWORT"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "MOT DE PASSE ACTUEL"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "CONTRASEÑA ACTUAL"
+            "value" : "Contraseña actual"
           }
         }
       }
@@ -18585,87 +18081,87 @@
         }
       }
     },
-    "PEGGIORATA" : {
+    "Peggiorata" : {
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "WORSE"
+            "value" : "Worse"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "SCHLECHTER"
+            "value" : "Schlechter"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "DÉGRADÉE"
+            "value" : "Dégradée"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "EMPEORADA"
+            "value" : "Empeorada"
           }
         }
       }
     },
-    "PERCEPITA" : {
+    "Percepita" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "FEELS LIKE"
+            "value" : "Feels like"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "GEFÜHLT"
+            "value" : "Gefühlt"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "RESSENTI"
+            "value" : "Ressenti"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "SENSACIÓN"
+            "value" : "Sensación"
           }
         }
       }
     },
-    "PERCORRIBILI" : {
+    "Percorribili" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "PASSABLE"
+            "value" : "Passable"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "BEFAHRBAR"
+            "value" : "Befahrbar"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "PRATICABLES"
+            "value" : "Praticables"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "TRANSITABLES"
+            "value" : "Transitables"
           }
         }
       }
@@ -18698,142 +18194,142 @@
         }
       }
     },
-    "POSSIBILE SHOCK INTERPLANETARIO · %@" : {
+    "Possibile shock interplanetario · %@" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "POSSIBLE INTERPLANETARY SHOCK · %@"
+            "value" : "Possible interplanetary shock · %@"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "MÖGLICHER INTERPLANETARER SCHOCK · %@"
+            "value" : "Möglicher interplanetarer schock · %@"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "CHOC INTERPLANÉTAIRE POSSIBLE · %@"
+            "value" : "Choc interplanétaire possible · %@"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "POSIBLE CHOQUE INTERPLANETARIO · %@"
+            "value" : "Posible choque interplanetario · %@"
           }
         }
       }
     },
-    "POTENZA EMISFERICA (OVATION)" : {
+    "Potenza emisferica (OVATION)" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "HEMISPHERIC POWER (OVATION)"
+            "value" : "Hemispheric power (OVATION)"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "HEMISPHÄRISCHE LEISTUNG (OVATION)"
+            "value" : "Hemisphärische leistung (OVATION)"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "PUISSANCE HÉMISPHÉRIQUE (OVATION)"
+            "value" : "Puissance hémisphérique (OVATION)"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "POTENCIA HEMISFÉRICA (OVATION)"
+            "value" : "Potencia hemisférica (OVATION)"
           }
         }
       }
     },
-    "PRECIPITAZIONI" : {
+    "Precipitazioni" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "PRECIPITATION"
+            "value" : "Precipitation"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "NIEDERSCHLAG"
+            "value" : "Niederschlag"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "PRÉCIPITATIONS"
+            "value" : "Précipitations"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "PRECIPITACIÓN"
+            "value" : "Precipitación"
           }
         }
       }
     },
-    "PREVISIONE COMPLETA →" : {
+    "Previsione completa →" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "FULL FORECAST →"
+            "value" : "Full forecast →"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "VOLLE PROGNOSE →"
+            "value" : "Volle prognose →"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "PRÉVISION COMPLÈTE →"
+            "value" : "Prévision complète →"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "PREVISIÓN COMPLETA →"
+            "value" : "Previsión completa →"
           }
         }
       }
     },
-    "PUNTI: LOCALITÀ DI RIFERIMENTO, COLORATE PER OSSERVABILITÀ MIGLIORE NELLE PROSSIME 12 H (STIMA EURISTICA, NON PROBABILITÀ). GRIGI PICCOLI: TAPPE DEL VIAGGIO." : {
+    "Punti: località di riferimento, colorate per osservabilità migliore nelle prossime 12 h (stima euristica, non probabilità). Grigi piccoli: tappe del viaggio." : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "DOTS: REFERENCE PLACES, COLOURED BY BEST OBSERVABILITY IN THE NEXT 12 H (HEURISTIC ESTIMATE, NOT A PROBABILITY). SMALL GREY: TRIP STOPS."
+            "value" : "Dots: reference places, coloured by best observability in the next 12 h (heuristic estimate, not a probability). small grey: trip stops."
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "PUNKTE: REFERENZORTE, GEFÄRBT NACH BESTER BEOBACHTBARKEIT IN DEN NÄCHSTEN 12 H (HEURISTISCHE SCHÄTZUNG, KEINE WAHRSCHEINLICHKEIT). KLEIN UND GRAU: REISEETAPPEN."
+            "value" : "Punkte: referenzorte, gefärbt nach bester beobachtbarkeit in den nächsten 12 h (heuristische schätzung, keine wahrscheinlichkeit). klein und grau: reiseetappen."
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "POINTS : LIEUX DE RÉFÉRENCE, COLORÉS SELON LA MEILLEURE OBSERVABILITÉ DANS LES 12 PROCHAINES H (ESTIMATION HEURISTIQUE, PAS UNE PROBABILITÉ). PETITS GRIS : ÉTAPES DU VOYAGE."
+            "value" : "Points : lieux de référence, colorés selon la meilleure observabilité dans les 12 prochaines h (estimation heuristique, pas une probabilité). petits gris : étapes du voyage."
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "PUNTOS: LUGARES DE REFERENCIA, COLOREADOS SEGÚN LA MEJOR OBSERVABILIDAD EN LAS PRÓXIMAS 12 H (ESTIMACIÓN HEURÍSTICA, NO PROBABILIDAD). GRISES PEQUEÑOS: ETAPAS DEL VIAJE."
+            "value" : "Puntos: lugares de referencia, coloreados según la mejor observabilidad en las próximas 12 h (estimación heurística, no probabilidad). grises pequeños: etapas del viaje."
           }
         }
       }
@@ -21051,86 +20547,86 @@
         }
       }
     },
-    "RAFF." : {
+    "Raff." : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "GUST"
+            "value" : "Gust"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "BÖEN"
+            "value" : "Böen"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "RAFALE"
+            "value" : "Rafale"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "RACHA"
+            "value" : "Racha"
           }
         }
       }
     },
-    "RAFF. MAX" : {
+    "Raff. max" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "MAX GUST"
+            "value" : "Max gust"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "MAX. BÖE"
+            "value" : "Max. böe"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "RAFALE MAX"
+            "value" : "Rafale max"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "RACHA MÁX."
+            "value" : "Racha máx."
           }
         }
       }
     },
-    "REC" : {
+    "Rec" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "REC"
+            "value" : "Rec"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "REC"
+            "value" : "Rec"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "REC"
+            "value" : "Rec"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "REC"
+            "value" : "Rec"
           }
         }
       }
@@ -21163,30 +20659,30 @@
         }
       }
     },
-    "RICARICA EV %@ KM" : {
+    "Ricarica EV %@ km" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "EV CHARGING %@ KM"
+            "value" : "EV charging %@ km"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "E-LADEN %@ KM"
+            "value" : "E-laden %@ km"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "RECHARGE VE %@ KM"
+            "value" : "Recharge ve %@ km"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "CARGA VE %@ KM"
+            "value" : "Carga ve %@ km"
           }
         }
       }
@@ -22090,30 +21586,30 @@
         }
       }
     },
-    "SCOSSE" : {
+    "Scosse" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "QUAKES"
+            "value" : "Quakes"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "BEBEN"
+            "value" : "Beben"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "SÉISMES"
+            "value" : "Séismes"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "SEÍSMOS"
+            "value" : "Seísmos"
           }
         }
       }
@@ -22258,58 +21754,58 @@
         }
       }
     },
-    "STATO" : {
+    "Stato" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "STATUS"
+            "value" : "Status"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "STATUS"
+            "value" : "Status"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ÉTAT"
+            "value" : "État"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ESTADO"
+            "value" : "Estado"
           }
         }
       }
     },
-    "STAZIONE" : {
+    "Stazione" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "STATION"
+            "value" : "Station"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "STATION"
+            "value" : "Station"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "STATION"
+            "value" : "Station"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ESTACIÓN"
+            "value" : "Estación"
           }
         }
       }
@@ -24754,114 +24250,86 @@
         }
       }
     },
-    "TEMPERATURA" : {
+    "Terremoti · 24 h" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "TEMPERATURE"
+            "value" : "Earthquakes · 24 h"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "TEMPERATUR"
+            "value" : "Erdbeben · 24 h"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "TEMPÉRATURE"
+            "value" : "Séismes · 24 h"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "TEMPERATURA"
+            "value" : "Terremotos · 24 h"
           }
         }
       }
     },
-    "TERREMOTI · 24 H" : {
+    "Tramonto %@" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "EARTHQUAKES · 24 H"
+            "value" : "Sunset %@"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ERDBEBEN · 24 H"
+            "value" : "Sonnenuntergang %@"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "SÉISMES · 24 H"
+            "value" : "Coucher %@"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "TERREMOTOS · 24 H"
+            "value" : "Atardecer %@"
           }
         }
       }
     },
-    "TRAMONTO %@" : {
+    "Tutte →" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "SUNSET %@"
+            "value" : "All →"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "SONNENUNTERGANG %@"
+            "value" : "Alle →"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "COUCHER %@"
+            "value" : "Tout →"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ATARDECER %@"
-          }
-        }
-      }
-    },
-    "TUTTE →" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "ALL →"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "ALLE →"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "TOUT →"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "TODAS →"
+            "value" : "Todas →"
           }
         }
       }
@@ -25931,58 +25399,58 @@
         }
       }
     },
-    "ULTIMA COPIA SALVATA" : {
+    "Ultima copia salvata" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "LAST SAVED COPY"
+            "value" : "Last saved copy"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "LETZTE GESICHERTE KOPIE"
+            "value" : "Letzte gesicherte kopie"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "DERNIÈRE COPIE ENREGISTRÉE"
+            "value" : "Dernière copie enregistrée"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ÚLTIMA COPIA GUARDADA"
+            "value" : "Última copia guardada"
           }
         }
       }
     },
-    "ULTIMA NOTIFICA · %@" : {
+    "Ultima notifica · %@" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "LAST NOTIFICATION · %@"
+            "value" : "Last notification · %@"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "LETZTE MITTEILUNG · %@"
+            "value" : "Letzte mitteilung · %@"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "DERNIÈRE NOTIFICATION · %@"
+            "value" : "Dernière notification · %@"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ÚLTIMA NOTIFICACIÓN · %@"
+            "value" : "Última notificación · %@"
           }
         }
       }
@@ -26323,142 +25791,114 @@
         }
       }
     },
-    "VALIDO %@" : {
+    "Valido %@" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "VALID %@"
+            "value" : "Valid %@"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "GÜLTIG %@"
+            "value" : "Gültig %@"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "VALABLE %@"
+            "value" : "Valable %@"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "VÁLIDO %@"
+            "value" : "Válido %@"
           }
         }
       }
     },
-    "VALORE OVATION NEL TUO CIELO" : {
+    "Valore OVATION nel tuo cielo" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "OVATION VALUE IN YOUR SKY"
+            "value" : "OVATION value in your sky"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "OVATION-WERT AN DEINEM HIMMEL"
+            "value" : "Ovation-wert an deinem himmel"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "VALEUR OVATION DANS VOTRE CIEL"
+            "value" : "Valeur OVATION dans votre ciel"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "VALOR OVATION EN TU CIELO"
+            "value" : "Valor OVATION en tu cielo"
           }
         }
       }
     },
-    "VENTO" : {
+    "Vento · raffiche" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "WIND"
+            "value" : "Wind · gusts"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "WIND"
+            "value" : "Wind · böen"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "VENT"
+            "value" : "Vent · rafales"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "VIENTO"
+            "value" : "Viento · rachas"
           }
         }
       }
     },
-    "VENTO · RAFFICHE" : {
+    "Vento/raff" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "WIND · GUSTS"
+            "value" : "Wind/gust"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "WIND · BÖEN"
+            "value" : "Wind/böen"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "VENT · RAFALES"
+            "value" : "Vent/raf."
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "VIENTO · RACHAS"
-          }
-        }
-      }
-    },
-    "VENTO/RAFF" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "WIND/GUST"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "WIND/BÖEN"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "VENT/RAF."
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "VIENTO/RACHA"
+            "value" : "Viento/racha"
           }
         }
       }
@@ -26491,58 +25931,30 @@
         }
       }
     },
-    "VERSO LE %@ · %@" : {
+    "Verso le %@ · %@" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "AROUND %1$@ · %2$@"
+            "value" : "Around %1$@ · %2$@"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "GEGEN %1$@ · %2$@"
+            "value" : "Gegen %1$@ · %2$@"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "VERS %1$@ · %2$@"
+            "value" : "Vers %1$@ · %2$@"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "HACIA LAS %1$@ · %2$@"
-          }
-        }
-      }
-    },
-    "VOLI E TRAGHETTI" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "FLIGHTS AND FERRIES"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "FLÜGE UND FÄHREN"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "VOLS ET FERRIES"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "VUELOS Y FERRIS"
+            "value" : "Hacia las %1$@ · %2$@"
           }
         }
       }
@@ -28631,34 +28043,6 @@
         }
       }
     },
-    "km" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "km"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "km"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "km"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "km"
-          }
-        }
-      }
-    },
     "km %lld" : {
       "localizations" : {
         "en" : {
@@ -28770,9 +28154,6 @@
           }
         }
       }
-    },
-    "m/s" : {
-      "shouldTranslate" : false
     },
     "media %lld" : {
       "localizations" : {
@@ -29613,30 +28994,30 @@
         }
       }
     },
-    "■ STOP" : {
+    "■ Stop" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "■ STOP"
+            "value" : "■ Stop"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "■ STOP"
+            "value" : "■ Stop"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "■ STOP"
+            "value" : "■ Stop"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "■ STOP"
+            "value" : "■ Stop"
           }
         }
       }

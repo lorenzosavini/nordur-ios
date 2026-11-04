@@ -142,7 +142,7 @@ struct TripTodayWidgetView: View {
 
     private func header(_ leg: TripTodaySnapshot) -> some View {
         VStack(alignment: .leading, spacing: 2) {
-            Text(dayLabel(leg).uppercased()).font(.mono(9.5, .semibold)).foregroundStyle(Theme.accent).lineLimit(1)
+            Text(dayLabel(leg)).font(.mono(9.5, .semibold)).foregroundStyle(Theme.accent).lineLimit(1)
             if let from = leg.fromName {
                 Text("da \(from)").font(.app(.caption2)).foregroundStyle(.secondary).lineLimit(1)
             }
@@ -172,7 +172,7 @@ struct TripTodayWidgetView: View {
     }
 
     private func dayLabel(_ leg: TripTodaySnapshot) -> String {
-        leg.isToday ? String(localized: "Tappa di oggi") : String(localized: "Prossima tappa · \(Fmt.day(leg.day, in: .iceland))")
+        leg.isToday ? String(localized: "Tappa di oggi") : String(localized: "Prossima tappa · \(Fmt.day(leg.day, in: .Iceland))")
     }
 
     private func distanceText(_ leg: TripTodaySnapshot) -> String {
@@ -185,21 +185,21 @@ struct TripTodayWidgetView: View {
 
     private func departShort(_ leg: TripTodaySnapshot) -> String? {
         guard leg.isToday, let depart = leg.departBy, depart > entry.date else { return nil }
-        return String(localized: "parti entro le \(Fmt.time(depart, in: .iceland))")
+        return String(localized: "parti entro le \(Fmt.time(depart, in: .Iceland))")
     }
 
     private func departLong(_ leg: TripTodaySnapshot) -> String? {
         guard leg.isToday, let depart = leg.departBy else { return nil }
-        if leg.departAtDawn { return String(localized: "Viaggio più lungo della luce: parti all'alba (\(Fmt.time(depart, in: .iceland)))") }
+        if leg.departAtDawn { return String(localized: "Viaggio più lungo della luce: parti all'alba (\(Fmt.time(depart, in: .Iceland)))") }
         guard depart > entry.date else { return String(localized: "Arriverai col buio: guida con prudenza") }
-        return String(localized: "Parti entro le \(Fmt.time(depart, in: .iceland)) per arrivare con la luce")
+        return String(localized: "Parti entro le \(Fmt.time(depart, in: .Iceland)) per arrivare con la luce")
     }
 
     private func lightText(_ leg: TripTodaySnapshot) -> String? {
         let now = entry.date
-        if let sunrise = leg.sunrise, now < sunrise { return String(localized: "Alba alle \(Fmt.time(sunrise, in: .iceland))") }
+        if let sunrise = leg.sunrise, now < sunrise { return String(localized: "Alba alle \(Fmt.time(sunrise, in: .Iceland))") }
         guard let sunset = leg.sunset else { return nil }
-        if now >= sunset { return String(localized: "Già buio (tramonto \(Fmt.time(sunset, in: .iceland)))") }
+        if now >= sunset { return String(localized: "Già buio (tramonto \(Fmt.time(sunset, in: .Iceland)))") }
         let minutes = Int(sunset.timeIntervalSince(now) / 60)
         return String(localized: "Luce ancora \(minutes / 60) h \(minutes % 60) min")
     }

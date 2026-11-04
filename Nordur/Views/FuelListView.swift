@@ -119,7 +119,7 @@ private struct FuelListRow: View {
                 }
                 if let cheapest {
                     let more = value - cheapest
-                    Text(more < 0.05 ? String(localized: "IL PIÙ ECONOMICO") : "+\(Fmt.number(more, decimals: 1)) kr")
+                    Text(more < 0.05 ? String(localized: "Il più economico") : "+\(Fmt.number(more, decimals: 1)) kr")
                         .font(.mono(9.5, .semibold)).foregroundStyle(more < 0.05 ? Theme.aurora : Theme.dim)
                 }
             }

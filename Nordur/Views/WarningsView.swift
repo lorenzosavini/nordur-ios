@@ -53,12 +53,12 @@ struct WarningRow: View {
                 HStack {
                     WarningBadge(color: warning.color)
                     if coversYou {
-                        Text("LA TUA ZONA").font(.app(.caption2, .bold)).foregroundStyle(.red)
+                        Text("La tua zona").font(.app(.caption2, .bold)).foregroundStyle(.red)
                     }
                 }
                 Text(warning.headline).font(.app(.subheadline, .semibold))
                 Text(warning.region).font(.app(.caption)).foregroundStyle(.secondary)
-                Text("\(Fmt.dayTime(warning.onset, in: .iceland)) → \(Fmt.dayTime(warning.expires, in: .iceland))")
+                Text("\(Fmt.dayTime(warning.onset, in: .Iceland)) → \(Fmt.dayTime(warning.expires, in: .Iceland))")
                     .font(.app(.caption2)).foregroundStyle(.secondary)
             }
         }

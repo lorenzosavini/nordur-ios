@@ -147,7 +147,7 @@ struct MapScreen: View {
                         layerRaw = item.rawValue
                         playing = false
                     } label: {
-                        Label(item.label.loc.uppercased(), systemImage: item.symbol)
+                        Label(item.label.loc, systemImage: item.symbol)
                             .labelStyle(.titleAndIcon)
                             .font(.mono(10, .semibold))
                             .padding(.horizontal, 8)
@@ -186,7 +186,7 @@ struct MapScreen: View {
                     Toggle("Viaggio e percorso", systemImage: "point.topleft.down.to.point.bottomright.curvepath", isOn: $showTrip)
                     Toggle("Animazione particelle vento", systemImage: "wind", isOn: $showParticles)
                 } label: {
-                    Text("LIVELLI +")
+                    Text("Livelli +")
                         .font(.mono(10.5, .semibold)).foregroundStyle(Theme.text)
                         .padding(.horizontal, 10).padding(.vertical, 7)
                         .background(Theme.bg.opacity(0.94)).overlay(Rectangle().strokeBorder(Theme.hairline))
@@ -367,7 +367,7 @@ struct MapScreen: View {
             VStack(alignment: .leading, spacing: 4) {
                 HStack {
                     Image(systemName: "moon.stars.fill").foregroundStyle(.secondary)
-                    Text("Ovale OVATION previsto per le \(Fmt.time(model.ovation?.value.forecastTime, in: .iceland)) · Kp \(Fmt.number(model.kp.flatMap { KpLookup.kp(at: Date(), in: $0.value) }, decimals: 1))")
+                    Text("Ovale OVATION previsto per le \(Fmt.time(model.ovation?.value.forecastTime, in: .Iceland)) · Kp \(Fmt.number(model.kp.flatMap { KpLookup.kp(at: Date(), in: $0.value) }, decimals: 1))")
                         .font(.app(.caption))
                     Spacer()
                 }
@@ -396,7 +396,7 @@ struct MapScreen: View {
     private func gridSourceLine(_ grid: WeatherGrid) -> String {
         let issued = grid.imoIssued.map { Fmt.dayTime($0, in: .iceland) } ?? "—"
         if hourIndex == grid.currentHourIndex, let measured = grid.imoMeasured {
-            return String(localized: "\(grid.imoStationCount) stazioni vedur.is: misure delle \(Fmt.time(measured, in: .iceland)), poi previsione emessa alle \(issued). Zone velate: nessuna stazione vicina, modello Open-Meteo.")
+            return String(localized: "\(grid.imoStationCount) stazioni vedur.is: misure delle \(Fmt.time(measured, in: .Iceland)), poi previsione emessa alle \(issued). Zone velate: nessuna stazione vicina, modello Open-Meteo.")
         }
         return String(localized: "\(grid.imoStationCount) stazioni vedur.is: previsione emessa alle \(issued). Zone velate: nessuna stazione vicina, modello Open-Meteo.")
     }
@@ -758,7 +758,7 @@ struct ProbeCard: View {
             HStack {
                 Text(String(format: "%.2f°N %.2f°O", coordinate.lat, -coordinate.lon)).font(.app(.caption, .semibold))
                 if let grid, grid.times.indices.contains(hour) {
-                    Text("· \(Fmt.dayTime(grid.times[hour], in: .iceland))").font(.app(.caption)).foregroundStyle(.secondary)
+                    Text("· \(Fmt.dayTime(grid.times[hour], in: .Iceland))").font(.app(.caption)).foregroundStyle(.secondary)
                 }
                 Spacer()
                 Button(action: close) { Image(systemName: "xmark.circle.fill").foregroundStyle(.secondary) }
@@ -813,7 +813,7 @@ struct IMOProbeLine: View {
         let temp = measured?.temp ?? at(station.temp)
         VStack(alignment: .leading, spacing: 2) {
             Text(measured != nil
-                 ? String(localized: "vedur.is · \(station.name) (\(Int(distanceKm.rounded())) km), misurato alle \(Fmt.time(measured?.date, in: .iceland))")
+                 ? String(localized: "vedur.is · \(station.name) (\(Int(distanceKm.rounded())) km), misurato alle \(Fmt.time(measured?.date, in: .Iceland))")
                  : String(localized: "vedur.is · \(station.name) (\(Int(distanceKm.rounded())) km), previsione"))
                 .font(.app(.caption2, .semibold)).foregroundStyle(.secondary)
             HStack(spacing: 10) {

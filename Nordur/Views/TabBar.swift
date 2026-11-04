@@ -26,9 +26,9 @@ enum Appearance: String, CaseIterable, Identifiable {
 
     var short: String {
         switch self {
-        case .system: return String(localized: "AUTO")
-        case .light: return String(localized: "GIORNO")
-        case .dark: return String(localized: "NOTTE")
+        case .system: return String(localized: "Auto")
+        case .light: return String(localized: "Giorno")
+        case .dark: return String(localized: "Notte")
         }
     }
 
@@ -115,9 +115,9 @@ struct NordurTabBar: View {
                                                 .offset(x: 6, y: -3)
                                         }
                                     }
-                                Text(item.title.loc.uppercased())
+                                Text(item.title.loc)
                                     .font(.mono(10, selected ? .semibold : .medium))
-                                    .tracking(0.5)
+                                    
                                     .foregroundStyle(selected ? Theme.text : Theme.dim)
                                     .lineLimit(1).minimumScaleFactor(0.8)
                             }
@@ -153,7 +153,6 @@ struct ScreenHeader<Trailing: View>: View {
         VStack(alignment: .leading, spacing: 10) {
             HStack(alignment: .center) {
                 HStack(spacing: 8) {
-                    if let index { Text(index).font(.mono(10.5, .semibold)).foregroundStyle(Theme.accent) }
                     if let subtitle { Text(subtitle.loc).eyebrow(Theme.dim) }
                 }
                 Spacer()
@@ -190,18 +189,21 @@ struct HeaderButton: View {
             ZStack(alignment: .topTrailing) {
                 Group {
                     if let label {
-                        Text(label.loc).font(.mono(10.5, .semibold)).tracking(0.6).padding(.horizontal, 9)
+                        Text(label.loc).font(.mono(10.5, .semibold)).padding(.horizontal, 9)
                     } else {
-                        Image(systemName: systemImage).font(.system(size: 13, weight: .semibold)).frame(width: 34)
+                        Image(systemName: systemImage).font(.system(size: 15, weight: .semibold)).frame(width: 40)
                     }
                 }
                 .foregroundStyle(tint)
-                .frame(height: 34)
+                .frame(height: 40)
                 .overlay(Rectangle().strokeBorder(Theme.hairline, lineWidth: 1))
                 if dot { Rectangle().fill(Theme.accent).frame(width: 7, height: 7).offset(x: 2, y: -2) }
             }
         }
         .buttonStyle(.plain)
+        // 44 pt to tap (Apple's minimum), 40 pt drawn.
+        .padding(2)
+        .contentShape(Rectangle())
     }
 }
 

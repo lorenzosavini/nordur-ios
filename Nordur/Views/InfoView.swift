@@ -103,7 +103,7 @@ struct InfoView: View {
                                     Image(hero.asset).resizable().scaledToFill().frame(width: 54, height: 36).clipped()
                                     VStack(alignment: .leading, spacing: 1) {
                                         Text(credit.author).font(.app(.caption, .semibold)).foregroundStyle(Theme.text)
-                                        Text("\(credit.license) · Wikimedia Commons").font(.app(.caption2)).foregroundStyle(.secondary)
+                                        Text("\(credit.license) · wikimedia Commons").font(.app(.caption2)).foregroundStyle(.secondary)
                                     }
                                 }
                             }

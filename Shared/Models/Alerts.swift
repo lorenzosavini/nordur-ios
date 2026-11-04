@@ -260,7 +260,7 @@ enum AlertEngine {
                 let c = IMOForecast.station(o.stationID)?.coordinate
                 let km = c.map { Geo.distanceKm($0, current.coordinate) } ?? o.distanceKm
                 if km <= settings.gustRadiusKm {
-                    gusts.append(Gust(id: "gv:\(o.stationID)", name: o.station, gust: gust, mean: o.wind, direction: o.direction,
+                    gusts.append(Gust(id: "gv:\(o.stationID)", name: o.station, gust: gust, mean: o.wind, direction: Fmt.compass(o.degrees),
                                       km: km, coordinate: c, source: "vedur.is", time: o.time))
                 }
             }

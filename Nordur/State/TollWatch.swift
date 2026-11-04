@@ -105,7 +105,7 @@ final class TollWatch {
         let text = entry.text
         var body: [String] = []
         if let price = priceLine(entry) { body.append(String(localized: "Circa \(price), prezzo indicativo.")) }
-        body.append(String(localized: "Scadenza: \(Fmt.dayTime(deadline, in: .iceland))."))
+        body.append(String(localized: "Scadenza: \(Fmt.dayTime(deadline, in: .Iceland))."))
         if let payment = text.payment { body.append(payment) }
         if let rental = text.rental { body.append(rental) }
         let id = "toll-paid:\(entry.id):\(Int(now.timeIntervalSince1970 / 3600))"
@@ -125,7 +125,7 @@ final class TollWatch {
         let content = UNMutableNotificationContent()
         content.title = String(localized: "Promemoria: pedaggio \(entry.name)")
         content.subtitle = AlertCategory.toll.shortLabel
-        content.body = String(localized: "Se non l'hai già fatto, paga entro le \(Fmt.time(deadline, in: .iceland)): \(entry.payUrl ?? entry.sourceUrl)")
+        content.body = String(localized: "Se non l'hai già fatto, paga entro le \(Fmt.time(deadline, in: .Iceland)): \(entry.payUrl ?? entry.sourceUrl)")
         content.sound = .default
         content.threadIdentifier = AlertCategory.toll.rawValue
         content.userInfo = ["alertID": eventID]

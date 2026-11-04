@@ -47,62 +47,62 @@ struct AccountActionSheet: View {
                     ScreenHeader(title: action.title, subtitle: action.subtitle)
                     switch action {
                     case .reset:
-                        field(String(localized: "EMAIL")) { TextField("", text: $email).textContentType(.emailAddress).keyboardType(.emailAddress).textInputAutocapitalization(.never).autocorrectionDisabled() }
+                        field(String(localized: "Email")) { TextField("", text: $email).textContentType(.emailAddress).keyboardType(.emailAddress).textInputAutocapitalization(.never).autocorrectionDisabled() }
                         if useRecoveryCode {
                             explanation(String(localized: "Il codice di recupero ti è stato mostrato quando hai creato l'account. Dopo l'uso ne riceverai uno nuovo."))
-                            field(String(localized: "CODICE DI RECUPERO")) { TextField("", text: $code, prompt: Text("XXXX-XXXX-XXXX-XXXX").foregroundStyle(Theme.faint)).textInputAutocapitalization(.characters).autocorrectionDisabled().font(.mono(16)) }
-                            field(String(localized: "NUOVA PASSWORD")) { SecureField("", text: $new, prompt: Text("Almeno 8 caratteri").foregroundStyle(Theme.faint)).textContentType(.newPassword) }
-                            primary(String(localized: "IMPOSTA LA NUOVA PASSWORD"), enabled: !email.isEmpty && code.count >= 16 && new.count >= 8) {
+                            field(String(localized: "Codice di recupero")) { TextField("", text: $code, prompt: Text("XXXX-XXXX-XXXX-XXXX").foregroundStyle(Theme.faint)).textInputAutocapitalization(.characters).autocorrectionDisabled().font(.mono(16)) }
+                            field(String(localized: "Nuova password")) { SecureField("", text: $new, prompt: Text("Almeno 8 caratteri").foregroundStyle(Theme.faint)).textContentType(.newPassword) }
+                            primary(String(localized: "Imposta la nuova password"), enabled: !email.isEmpty && code.count >= 16 && new.count >= 8) {
                                 _ = try await account.resetPassword(email: email, recoveryCode: code, newPassword: new)
                                 return String(localized: "Password aggiornata, accesso eseguito.")
                             }
                         } else if !codeSent {
                             explanation(String(localized: "Ti mandiamo per email un codice di 6 cifre, valido 15 minuti."))
-                            primary(String(localized: "INVIA IL CODICE"), enabled: email.contains("@"), closes: false) {
+                            primary(String(localized: "Invia il codice"), enabled: email.contains("@"), closes: false) {
                                 try await account.requestResetCode(email: email)
                                 codeSent = true
                                 code = ""
                                 return String(localized: "Se esiste un account con questa email, il codice è in arrivo. Controlla anche la posta indesiderata.")
                             }
                         } else {
-                            field(String(localized: "CODICE DALL'EMAIL")) {
+                            field(String(localized: "Codice dall'email")) {
                                 TextField("", text: $code, prompt: Text("000000").foregroundStyle(Theme.faint))
                                     .textContentType(.oneTimeCode).keyboardType(.numberPad).font(.mono(20))
                             }
-                            field(String(localized: "NUOVA PASSWORD")) { SecureField("", text: $new, prompt: Text("Almeno 8 caratteri").foregroundStyle(Theme.faint)).textContentType(.newPassword) }
-                            primary(String(localized: "IMPOSTA LA NUOVA PASSWORD"), enabled: code.filter(\.isNumber).count == 6 && new.count >= 8) {
+                            field(String(localized: "Nuova password")) { SecureField("", text: $new, prompt: Text("Almeno 8 caratteri").foregroundStyle(Theme.faint)).textContentType(.newPassword) }
+                            primary(String(localized: "Imposta la nuova password"), enabled: code.filter(\.isNumber).count == 6 && new.count >= 8) {
                                 _ = try await account.resetPassword(email: email, emailCode: code, newPassword: new)
                                 return String(localized: "Password aggiornata, accesso eseguito.")
                             }
-                            secondary(String(localized: "INVIA UN NUOVO CODICE")) {
+                            secondary(String(localized: "Invia un nuovo codice")) {
                                 try await account.requestResetCode(email: email)
                                 return String(localized: "Nuovo codice inviato.")
                             }
                         }
-                        secondary(useRecoveryCode ? String(localized: "USA IL CODICE VIA EMAIL") : String(localized: "HO IL CODICE DI RECUPERO")) {
+                        secondary(useRecoveryCode ? String(localized: "Usa il codice via email") : String(localized: "Ho il codice di recupero")) {
                             useRecoveryCode.toggle()
                             code = ""
                             return nil
                         }
                     case .change:
-                        field(String(localized: "PASSWORD ATTUALE")) { SecureField("", text: $current).textContentType(.password) }
-                        field(String(localized: "NUOVA PASSWORD")) { SecureField("", text: $new, prompt: Text("Almeno 8 caratteri").foregroundStyle(Theme.faint)).textContentType(.newPassword) }
-                        primary(String(localized: "CAMBIA PASSWORD"), enabled: !current.isEmpty && new.count >= 8) {
+                        field(String(localized: "Password attuale")) { SecureField("", text: $current).textContentType(.password) }
+                        field(String(localized: "Nuova password")) { SecureField("", text: $new, prompt: Text("Almeno 8 caratteri").foregroundStyle(Theme.faint)).textContentType(.newPassword) }
+                        primary(String(localized: "Cambia password"), enabled: !current.isEmpty && new.count >= 8) {
                             try await account.changePassword(current: current, new: new)
                             return String(localized: "Password cambiata.")
                         }
                     case .recovery:
                         explanation(String(localized: "Il nuovo codice sostituisce quello precedente, che smette di funzionare."))
-                        field(String(localized: "PASSWORD")) { SecureField("", text: $current).textContentType(.password) }
-                        primary(String(localized: "GENERA NUOVO CODICE"), enabled: !current.isEmpty) {
+                        field(String(localized: "Password")) { SecureField("", text: $current).textContentType(.password) }
+                        primary(String(localized: "Genera nuovo codice"), enabled: !current.isEmpty) {
                             try await account.regenerateRecoveryCode(password: current)
                             return nil
                         }
                     case .delete:
                         explanation(String(localized: "L'account, il backup online e i tuoi avvistamenti vengono eliminati in modo definitivo. I dati sul telefono restano. Scrivi ELIMINA per confermare."))
-                        field(String(localized: "PASSWORD")) { SecureField("", text: $current).textContentType(.password) }
-                        field(String(localized: "CONFERMA")) { TextField("", text: $confirmText, prompt: Text("ELIMINA").foregroundStyle(Theme.faint)).textInputAutocapitalization(.characters) }
-                        primary(String(localized: "ELIMINA ACCOUNT"), enabled: !current.isEmpty && confirmText == String(localized: "ELIMINA"), destructive: true) {
+                        field(String(localized: "Password")) { SecureField("", text: $current).textContentType(.password) }
+                        field(String(localized: "Conferma")) { TextField("", text: $confirmText, prompt: Text("Elimina").foregroundStyle(Theme.faint)).textInputAutocapitalization(.characters) }
+                        primary(String(localized: "Elimina account"), enabled: !current.isEmpty && confirmText == String(localized: "Elimina"), destructive: true) {
                             try await account.deleteAccount(password: current)
                             return String(localized: "Account eliminato.")
                         }
@@ -140,7 +140,7 @@ struct AccountActionSheet: View {
                 do { message = try await action() } catch { message = error.localizedDescription }
             }
         } label: {
-            Text(title.loc).font(.mono(10, .semibold)).tracking(0.6).foregroundStyle(Theme.accent)
+            Text(title.loc).font(.mono(10, .semibold)).foregroundStyle(Theme.accent)
                 .padding(.vertical, 6)
         }
         .buttonStyle(.plain)
@@ -172,7 +172,7 @@ struct AccountActionSheet: View {
             }
         } label: {
             HStack {
-                Text(title.loc).font(.mono(12, .semibold)).tracking(0.8)
+                Text(title.loc).font(.mono(12, .semibold))
                 Spacer()
                 if working { ProgressView().tint(Theme.onAccent) } else { Text("→").font(.mono(15, .semibold)) }
             }
@@ -200,7 +200,7 @@ struct RecoveryCodeSheet: View {
                 .font(.app(.subheadline)).foregroundStyle(Theme.text)
             Text(code)
                 .font(.mono(24, .semibold))
-                .tracking(1)
+                
                 .foregroundStyle(Theme.text)
                 .frame(maxWidth: .infinity)
                 .padding(.vertical, 22)
@@ -210,14 +210,14 @@ struct RecoveryCodeSheet: View {
                 UIPasteboard.general.string = code
                 copied = true
             } label: {
-                Text(copied ? String(localized: "COPIATO") : String(localized: "COPIA")).font(.mono(12, .semibold)).tracking(0.8)
+                Text(copied ? String(localized: "Copiato") : String(localized: "Copia")).font(.mono(12, .semibold))
                     .foregroundStyle(Theme.text).frame(maxWidth: .infinity).frame(height: 44)
                     .overlay(Rectangle().strokeBorder(Theme.hairline, lineWidth: 1))
             }
             .buttonStyle(.plain)
             Button(action: done) {
                 HStack {
-                    Text("L'HO SALVATO").font(.mono(12, .semibold)).tracking(0.8)
+                    Text("L'ho salvato").font(.mono(12, .semibold))
                     Spacer()
                     Text("→").font(.mono(15, .semibold))
                 }

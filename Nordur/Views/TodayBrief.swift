@@ -62,7 +62,7 @@ struct TodayBrief: View {
             let good = best.observability >= .good, fair = best.observability == .moderate
             lines.append(Line(symbol: "sparkles", color: good ? Theme.aurora : fair ? Theme.caution : Theme.dim,
                               title: String(localized: "Aurora stanotte: \(best.observability.label.lowercased())"),
-                              text: String(localized: "Il momento migliore verso le \(Fmt.time(best.date, in: .iceland))") + (best.reasons.first.map { " · " + $0.loc } ?? ""),
+                              text: String(localized: "Il momento migliore verso le \(Fmt.time(best.date, in: .Iceland))") + (best.reasons.first.map { " · " + $0.loc } ?? ""),
                               action: { model.requestedTab = "aurora" }))
         }
         // The next 12 hours.
@@ -129,7 +129,7 @@ struct TodayTripCard: View {
                         HStack(spacing: 12) {
                             PlaceThumb(place: next.visit.place, kind: next.visit.kind ?? Attraction.named(next.visit.place.name)?.kind, size: 56)
                             VStack(alignment: .leading, spacing: 2) {
-                                Text(next.visit.date > Date() ? String(localized: "Prossima alle \(Fmt.time(next.visit.date, in: .iceland))") : String(localized: "Adesso"))
+                                Text(next.visit.date > Date() ? String(localized: "Prossima alle \(Fmt.time(next.visit.date, in: .Iceland))") : String(localized: "Adesso"))
                                     .font(.app(.caption, .semibold)).foregroundStyle(Theme.accent)
                                 Text(next.visit.place.name).font(.app(.headline)).foregroundStyle(Theme.text)
                             }

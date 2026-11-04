@@ -52,7 +52,7 @@ struct IMOTextCard: View {
             VStack(alignment: .leading, spacing: 8) {
                 HStack(spacing: 6) {
                     Image(systemName: "text.quote").font(.system(size: 10, weight: .semibold)).foregroundStyle(Theme.aurora)
-                    Text(String(localized: "IL METEOROLOGO · \(IMOTextNames.name(text).uppercased())"))
+                    Text(String(localized: "Il meteorologo · \(IMOTextNames.name(text))"))
                         .font(.mono(9.5, .semibold)).foregroundStyle(Theme.dim).lineLimit(1)
                 }
                 Text(text.content).font(.app(.subheadline)).foregroundStyle(Theme.text)
@@ -122,7 +122,7 @@ struct IMOTextsView: View {
                         HStack(spacing: 6) {
                             Text(compact ? text.title : IMOTextNames.name(text)).font(.app(.subheadline, .semibold))
                             if text.id == highlight {
-                                Text("QUI").font(.mono(8.5, .semibold)).foregroundStyle(Theme.bg)
+                                Text("Qui").font(.mono(8.5, .semibold)).foregroundStyle(Theme.bg)
                                     .padding(.horizontal, 5).padding(.vertical, 1).background(Theme.aurora, in: Capsule())
                             }
                         }
@@ -197,7 +197,7 @@ struct VolcanoSection: View {
                     Text(notes).font(.app(.caption)).foregroundStyle(Theme.dim).fixedSize(horizontal: false, vertical: true)
                 }
                 if let date = status.reportDate {
-                    Text("Bollettino settimanale vedur.is del \(Fmt.dayTime(date, in: .iceland))").font(.app(.caption2)).foregroundStyle(Theme.faint)
+                    Text("Bollettino settimanale vedur.is del \(Fmt.dayTime(date, in: .Iceland))").font(.app(.caption2)).foregroundStyle(Theme.faint)
                 }
                 FreshnessLabel(date: fetched.date, isStale: fetched.isStale, source: String(localized: "vedur.is"))
             } header: { Text("Stato dei vulcani").pinnedHeader() } footer: {

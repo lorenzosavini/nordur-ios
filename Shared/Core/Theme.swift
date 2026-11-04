@@ -106,8 +106,17 @@ extension Font {
     /// Labels, codes, tables.
     /// Labels, codes, tables. Small sizes are raised: the mono labels were hard
     /// to read on a phone held at arm's length (10 → 12.6, 11 → 13.7, 14 → 15.5).
+    ///
+    /// Small sizes (labels, times, captions under figures) are set in the sans with
+    /// tabular figures: spaced capitals in a typewriter face read slowly, above all
+    /// with large text or a glance while travelling. The mono stays for larger
+    /// sizes, where it is a deliberate code/table look.
     static func mono(_ size: CGFloat, _ weight: Font.Weight = .medium, relativeTo style: Font.TextStyle = .caption) -> Font {
-        .custom(AppFontName.mono(weight), size: size < 14 ? size * 1.1 + 1.6 : size + 1.5, relativeTo: style)
+        if size < 13 {
+            let w: Font.Weight = weight == .regular ? .regular : (weight == .bold || weight == .heavy ? .semibold : .medium)
+            return Font.custom(AppFontName.sans(w), size: size * 1.12 + 2.6, relativeTo: style).monospacedDigit()
+        }
+        return .custom(AppFontName.mono(weight), size: size + 1.5, relativeTo: style)
     }
 
     /// Headlines: condensed, set in capitals by the caller when needed.
@@ -137,13 +146,13 @@ extension Font {
         }
     }
 
-    static let eyebrow = Font.mono(11, .medium, relativeTo: .caption2)
+    static let eyebrow = Font.sans(14, .medium, relativeTo: .caption)
 }
 
 extension View {
-    /// Uppercase mono label.
+    /// Small label above a title: plain words, no capitals, no letter spacing.
     func eyebrow(_ color: Color = Theme.dim) -> some View {
-        font(.eyebrow).tracking(0.8).textCase(.uppercase).foregroundStyle(color)
+        font(.eyebrow).foregroundStyle(color)
     }
 
     /// Plain list on the app background for secondary screens.

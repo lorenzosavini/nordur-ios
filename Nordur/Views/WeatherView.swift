@@ -15,7 +15,6 @@ struct WeatherView: View {
                     }
                     HeroHeader(hero: .weather, eyebrow: model.forecast?.value.official != nil ? String(localized: "vedur.is") : String(localized: "Modello"),
                                title: model.now.map { WeatherCode.describe($0.code, isDay: $0.isDay).text } ?? String(localized: "Previsioni"),
-                               subtitle: model.now.map { String(localized: "\(Fmt.temp($0.temperature)) · vento \(Fmt.ms($0.wind)), raffiche \(Fmt.ms($0.gust))") },
                                height: 170)
                         .padding(.horizontal, -18)
                     AdaptiveColumns(spacing: 30) {
@@ -66,7 +65,7 @@ struct WeatherView: View {
         return VStack(alignment: .leading, spacing: 6) {
             SectionLabel(title: String(localized: "Fonti"))
             HStack(alignment: .firstTextBaseline, spacing: 10) {
-                Text("FONTE").font(.mono(9.5)).foregroundStyle(Theme.faint).frame(width: 52, alignment: .leading)
+                Text("Fonte").font(.mono(9.5)).foregroundStyle(Theme.faint).frame(width: 52, alignment: .leading)
                 Text(forecast.official != nil ? forecast.sourceLine
                      : primary == "MET Norway" ? (Coverage.meps(Coordinate(lat: forecast.latitude, lon: forecast.longitude)) ? String(localized: "MET Norway · MEPS 2,5 km") : String(localized: "MET Norway · ECMWF")) : primary)
                     .font(.mono(11, .semibold)).foregroundStyle(Theme.text)
@@ -117,7 +116,7 @@ struct WeatherView: View {
             let hour = Calendar.current.component(.hour, from: date)
             AxisGridLine(stroke: StrokeStyle(lineWidth: hour == 0 ? 1 : 0.5)).foregroundStyle(hour == 0 ? Theme.rule.opacity(0.5) : Theme.hairline)
             AxisValueLabel {
-                Text(hour == 0 ? Fmt.axis(date, hour: false).uppercased() : String(format: "%02d", hour))
+                Text(hour == 0 ? Fmt.axis(date, hour: false) : String(format: "%02d", hour))
                     .font(.mono(9, hour == 0 ? .semibold : .regular))
                     .foregroundStyle(hour == 0 ? Theme.text : Theme.faint)
             }
@@ -144,7 +143,7 @@ struct WeatherView: View {
             SectionLabel(index: "01", title: String(localized: "Prossime 48 ore"))
             originLine(forecast, from: hours.first?.date, to: hours.last?.date)
 
-            chartHeader(String(localized: "TEMPERATURA"), "\(Fmt.temp(hours.compactMap(\.temperature).min())) / \(Fmt.temp(hours.compactMap(\.temperature).max()))")
+            chartHeader(String(localized: "Temperatura"), "\(Fmt.temp(hours.compactMap(\.temperature).min())) / \(Fmt.temp(hours.compactMap(\.temperature).max()))")
             Chart {
                 ForEach(hours) { hour in
                     if let temp = hour.temperature {
@@ -164,7 +163,7 @@ struct WeatherView: View {
             .chartYAxis { yAxis("°") }
             .frame(height: 130)
 
-            chartHeader(String(localized: "PRECIPITAZIONI"), Fmt.number(rain, decimals: 1, unit: "MM IN 48 H"))
+            chartHeader(String(localized: "Precipitazioni"), Fmt.number(rain, decimals: 1, unit: "Mm in 48 h"))
             Chart {
                 ForEach(hours) { hour in
                     BarMark(x: .value(String(localized: "Ora"), hour.date, unit: .hour), y: .value("mm", hour.precipitation ?? 0), width: .ratio(0.7))
@@ -175,7 +174,7 @@ struct WeatherView: View {
             .chartYAxis { yAxis("") }
             .frame(height: 64)
 
-            chartHeader(String(localized: "VENTO · RAFFICHE"), String(localized: "MAX \(Fmt.ms(peak).uppercased())"), color: Risk.wind(mean: nil, gust: peak) == .ok ? Theme.dim : Risk.wind(mean: nil, gust: peak).color)
+            chartHeader(String(localized: "Vento · raffiche"), String(localized: "Max \(Fmt.ms(peak))"), color: Risk.wind(mean: nil, gust: peak) == .ok ? Theme.dim : Risk.wind(mean: nil, gust: peak).color)
             Chart {
                 ForEach(hours) { hour in
                     if let gust = hour.gust {
@@ -195,7 +194,7 @@ struct WeatherView: View {
                     .foregroundStyle(Theme.danger)
                     .lineStyle(StrokeStyle(lineWidth: 1))
                     .annotation(position: .top, alignment: .leading) {
-                        Text("\(Fmt.ms(25).uppercased()) · PERICOLO").font(.mono(8.5, .semibold)).foregroundStyle(Theme.danger)
+                        Text("\(Fmt.ms(25)) · pericolo").font(.mono(8.5, .semibold)).foregroundStyle(Theme.danger)
                     }
             }
             .chartYScale(domain: 0...(max(30, peak + 3) * WindUnit.current.factor))
@@ -238,7 +237,7 @@ struct WeatherView: View {
             } else {
                 Rectangle().fill(color).frame(width: 14, height: 1.5)
             }
-            Text(text.loc.uppercased()).font(.mono(9)).foregroundStyle(Theme.dim)
+            Text(text.loc).font(.mono(9)).foregroundStyle(Theme.dim)
         }
     }
 
@@ -255,7 +254,7 @@ struct WeatherView: View {
             let modelW: [Int: Double] = forecast.official?.modelWind
                 ?? Dictionary(forecast.hours.compactMap { h in h.wind.map { (Int(h.date.timeIntervalSince1970), $0) } }, uniquingKeysWith: { a, _ in a })
             VStack(alignment: .leading, spacing: 12) {
-                SectionLabel(index: "02", title: String(localized: "vedur.is e modello a confronto"), trailing: "\(Int(station.distanceKm)) KM")
+                SectionLabel(index: "02", title: String(localized: "vedur.is e modello a confronto"), trailing: "\(Int(station.distanceKm)) km")
                 VStack(alignment: .leading, spacing: 3) {
                     Text(station.station.name.uppercased()).font(.display(24, .bold)).foregroundStyle(Theme.text)
                     Text("Previsione per stazione di vedur.is\(station.issued.map { String(localized: " · emessa \(Fmt.dayTime($0, in: .iceland))") } ?? "")")
@@ -263,12 +262,12 @@ struct WeatherView: View {
                 }
                 VStack(spacing: 0) {
                     HStack(spacing: 0) {
-                        head(String(localized: "ORA"), 40, .leading)
+                        head(String(localized: "Ora"), 40, .leading)
                         head("vedur.is \(Fmt.tempUnit)", 52)
                         head("MET \(Fmt.tempUnit)", 52)
-                        head("vedur.is \(Fmt.windUnit.uppercased())", 58)
-                        head("MET \(Fmt.windUnit.uppercased())", 58)
-                        head(String(localized: "CIELO (VEDUR.IS)"), nil, .leading).padding(.leading, 10)
+                        head("vedur.is \(Fmt.windUnit)", 58)
+                        head("MET \(Fmt.windUnit)", 58)
+                        head(String(localized: "Cielo (vedur.is)"), nil, .leading).padding(.leading, 10)
                     }
                     .padding(.bottom, 6)
                     Rule()
@@ -283,7 +282,7 @@ struct WeatherView: View {
                             num(Fmt.degrees(metT), 52, Theme.dim)
                             num(Fmt.wind(hour.wind), 58, (hour.wind ?? 0) >= 15 ? Theme.warning : Theme.text)
                             num(Fmt.wind(metW), 58, diff >= 4 ? Theme.accent : Theme.dim)
-                            Text("\(hour.direction) · \(hour.text)").font(.app(.caption)).foregroundStyle(Theme.dim)
+                            Text("\(Fmt.compass(hour.degrees)) · \(hour.text)").font(.app(.caption)).foregroundStyle(Theme.dim)
                                 .lineLimit(1).minimumScaleFactor(0.8)
                                 .frame(maxWidth: .infinity, alignment: .leading).padding(.leading, 10)
                         }
@@ -318,7 +317,7 @@ struct WeatherView: View {
                 SourceBadge(origin: first, detail: first == .official ? forecast.official?.station.name : nil)
                 if first == .official, let until = forecast.official?.until, let to, until < to {
                     Text("→").font(.mono(9)).foregroundStyle(Theme.faint)
-                    SourceBadge(origin: .model, detail: String(localized: "dalle \(Fmt.dayTime(until, in: .iceland))"))
+                    SourceBadge(origin: .model, detail: String(localized: "dalle \(Fmt.dayTime(until, in: .Iceland))"))
                 }
             }
         }
@@ -328,7 +327,7 @@ struct WeatherView: View {
         let lows = days.compactMap(\.minTemp), highs = days.compactMap(\.maxTemp)
         let scaleMin = (lows.min() ?? 0) - 1, scaleMax = (highs.max() ?? 10) + 1
         return VStack(alignment: .leading, spacing: 10) {
-            SectionLabel(index: "03", title: String(localized: "10 giorni"), trailing: String(localized: "MIN · MAX · RAFF · MM"))
+            SectionLabel(index: "03", title: String(localized: "10 giorni"), trailing: String(localized: "Min · max · raff · mm"))
             originLine(forecast, from: days.first?.date, to: days.last.map { $0.date.addingTimeInterval(86400) })
             VStack(spacing: 0) {
                 ForEach(Array(days.enumerated()), id: \.element.id) { index, day in
@@ -337,7 +336,7 @@ struct WeatherView: View {
                         // The day's source at a glance: blue vedur.is, grey model.
                         Capsule().fill(forecast.origin(at: day.date.addingTimeInterval(12 * 3600)).color).frame(width: 3, height: 26)
                         VStack(alignment: .leading, spacing: 0) {
-                            Text(index == 0 ? String(localized: "OGGI") : weekday(day.date, zone)).font(.mono(10.5, .semibold))
+                            Text(index == 0 ? String(localized: "Oggi") : weekday(day.date, zone)).font(.mono(10.5, .semibold))
                                 .foregroundStyle(index == 0 ? Theme.accent : Theme.text)
                             Text(dayNumber(day.date, zone)).font(.mono(9)).foregroundStyle(Theme.faint)
                         }

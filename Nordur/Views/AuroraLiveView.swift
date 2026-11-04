@@ -14,7 +14,7 @@ struct AuroraLiveView: View {
     /// One quantity at a time, each with its own legend: OVATION or cloud cover.
     @State private var layer: Layer = .oval
 
-    enum Layer: String, CaseIterable { case oval = "OVALE OVATION", clouds = "NUVOLE ORA" }
+    enum Layer: String, CaseIterable { case oval = "Ovale OVATION", clouds = "Nuvole ora" }
     @State private var frames: [OvationFrame] = []
     @State private var images: [Date: UIImage] = [:]
     @State private var index = 0
@@ -57,7 +57,7 @@ struct AuroraLiveView: View {
                     Text("Di giorno l'ovale si trova sul lato notturno della Terra.")
                         .font(.app(.caption2)).foregroundStyle(.secondary)
                     if let ovation = model.ovation {
-                        Text("Previsione OVATION valida per le \(Fmt.time(ovation.value.forecastTime, in: .iceland)) (circa 30–90 minuti dopo la misura del vento solare a L1): non vale per le ore e i giorni successivi. La scala mostra il valore del modello OVATION, non nuvolosità né probabilità di osservazione. Kp previsto per il blocco attuale \(Fmt.number(model.kp.flatMap { KpLookup.kp(at: Date(), in: $0.value) }, decimals: 1)).")
+                        Text("Previsione OVATION valida per le \(Fmt.time(ovation.value.forecastTime, in: .Iceland)) (circa 30–90 minuti dopo la misura del vento solare a L1): non vale per le ore e i giorni successivi. La scala mostra il valore del modello OVATION, non nuvolosità né probabilità di osservazione. Kp previsto per il blocco attuale \(Fmt.number(model.kp.flatMap { KpLookup.kp(at: Date(), in: $0.value) }, decimals: 1)).")
                             .font(.app(.caption2)).foregroundStyle(.secondary)
                         FreshnessLabel(date: ovation.date, isStale: ovation.isStale, source: String(localized: "NOAA SWPC"))
                     }
@@ -153,7 +153,7 @@ struct AuroraLiveView: View {
 
     private var siteLegend: some View {
         VStack(alignment: .leading, spacing: 4) {
-            Text("PUNTI: LOCALITÀ DI RIFERIMENTO, COLORATE PER OSSERVABILITÀ MIGLIORE NELLE PROSSIME 12 H (STIMA EURISTICA, NON PROBABILITÀ). GRIGI PICCOLI: TAPPE DEL VIAGGIO.")
+            Text("Punti: località di riferimento, colorate per osservabilità migliore nelle prossime 12 h (stima euristica, non probabilità). Grigi piccoli: tappe del viaggio.")
                 .font(.mono(8.5)).foregroundStyle(Theme.faint)
             HStack(spacing: 10) {
                 ForEach(ObservabilityClass.allCases.reversed(), id: \.rawValue) { c in
@@ -162,12 +162,12 @@ struct AuroraLiveView: View {
                         Text("\(c.rawValue)").font(.mono(9)).foregroundStyle(Theme.dim)
                     }
                 }
-                Text("4 = MOLTO FAVOREVOLE").font(.mono(8.5)).foregroundStyle(Theme.faint)
+                Text("4 = molto favorevole").font(.mono(8.5)).foregroundStyle(Theme.faint)
             }
             HStack(spacing: 10) {
-                Label("AURORA VISTA", systemImage: "eye.fill").foregroundStyle(Theme.aurora)
-                Label("NON VISTA", systemImage: "eye.slash").foregroundStyle(Theme.dim)
-                Text("SEGNALAZIONI ULTIME 3 H").foregroundStyle(Theme.faint)
+                Label("Aurora vista", systemImage: "eye.fill").foregroundStyle(Theme.aurora)
+                Label("Non vista", systemImage: "eye.slash").foregroundStyle(Theme.dim)
+                Text("Segnalazioni ultime 3 h").foregroundStyle(Theme.faint)
             }
             .font(.mono(8.5))
         }
@@ -183,7 +183,7 @@ struct AuroraLiveView: View {
                     .frame(height: 8)
                 Text("100%").font(.mono(9))
             }
-            Text(model.weatherGrid.map { String(localized: "COPERTURA NUVOLOSA TOTALE, ORA \(Fmt.time($0.value.times[$0.value.currentHourIndex], in: .iceland)) · OPEN-METEO") } ?? String(localized: "NUVOLOSITÀ IN CARICAMENTO"))
+            Text(model.weatherGrid.map { String(localized: "Copertura nuvolosa totale, ora \(Fmt.time($0.value.times[$0.value.currentHourIndex], in: .Iceland)) · Open-Meteo") } ?? String(localized: "Nuvolosità in caricamento"))
                 .font(.mono(8.5)).foregroundStyle(Theme.faint)
         }
     }
@@ -211,7 +211,7 @@ struct AuroraLiveView: View {
                            startPoint: .leading, endPoint: .trailing)
                 .frame(height: 8)
                 .clipShape(Rectangle())
-            Text("85+ · VALORE OVATION").font(.mono(9))
+            Text("85+ · valore OVATION").font(.mono(9))
         }
     }
 

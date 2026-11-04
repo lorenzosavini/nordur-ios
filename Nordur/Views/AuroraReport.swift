@@ -11,9 +11,9 @@ struct AuroraReportBar: View {
 
     var body: some View {
         HStack(spacing: 10) {
-            button(String(localized: "VEDO L'AURORA"), "sparkles", filled: true) { open(.seen) }
+            button(String(localized: "Vedo l'aurora"), "sparkles", filled: true) { open(.seen) }
                 .accessibilityIdentifier("aurora.report.seen")
-            button(String(localized: "NON LA VEDO"), "eye.slash", filled: false) { open(.notSeen) }
+            button(String(localized: "Non la vedo"), "eye.slash", filled: false) { open(.notSeen) }
                 .accessibilityIdentifier("aurora.report.notSeen")
         }
         .sheet(item: $reporting, onDismiss: { Task { await model.refreshSightings() } }) { kind in
@@ -30,7 +30,7 @@ struct AuroraReportBar: View {
     private func button(_ title: String, _ symbol: String, filled: Bool, action: @escaping () -> Void) -> some View {
         Button(action: action) {
             Label(title, systemImage: symbol)
-                .font(.mono(compact ? 11.5 : 13, .bold)).tracking(0.5)
+                .font(.mono(compact ? 11.5 : 13, .bold))
                 .lineLimit(1).minimumScaleFactor(0.7)
                 .frame(maxWidth: .infinity).frame(height: compact ? 44 : 52)
                 .foregroundStyle(filled ? Color.black : Theme.text)

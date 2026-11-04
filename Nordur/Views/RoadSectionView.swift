@@ -59,8 +59,8 @@ struct RoadSectionView: View {
                         VStack(alignment: .leading, spacing: 3) {
                             Label(kind.label, systemImage: kind.symbol).font(.app(.subheadline, .semibold)).foregroundStyle(Theme.text)
                             if let text = hazard.text, !text.isEmpty { Text(text).font(.app(.caption)) }
-                            Text([hazard.start.map { String(localized: "Dal \(Fmt.dayTime($0, in: .iceland))") },
-                                  hazard.end.map { String(localized: "al \(Fmt.dayTime($0, in: .iceland))") }].compactMap { $0 }.joined(separator: " "))
+                            Text([hazard.start.map { String(localized: "Dal \(Fmt.dayTime($0, in: .Iceland))") },
+                                  hazard.end.map { String(localized: "al \(Fmt.dayTime($0, in: .Iceland))") }].compactMap { $0 }.joined(separator: " "))
                                 .font(.app(.caption2)).foregroundStyle(Theme.faint)
                         }
                     }
@@ -129,7 +129,7 @@ struct RoadSectionView: View {
     private func conditionRow(_ title: String, _ condition: RoadInfo.Condition?, highlight: Bool) -> some View {
         let risk = RoadCode.risk(condition?.category) ?? .ok
         return HStack(alignment: .firstTextBaseline) {
-            Text(title.uppercased()).font(.mono(9.5)).foregroundStyle(Theme.faint).frame(width: 64, alignment: .leading)
+            Text(title).font(.mono(9.5)).foregroundStyle(Theme.faint).frame(width: 64, alignment: .leading)
             VStack(alignment: .leading, spacing: 2) {
                 Text(RoadCode.label(condition?.category) ?? condition?.text ?? "–")
                     .font(highlight ? .app(.headline) : .app(.subheadline))

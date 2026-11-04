@@ -24,7 +24,7 @@ struct VisitMenu: View {
         if !otherStops.isEmpty {
             Menu {
                 ForEach(otherStops) { other in
-                    Button("\(other.place.name) · \(Fmt.day(other.date, in: .iceland))") {
+                    Button("\(other.place.name) · \(Fmt.day(other.date, in: .Iceland))") {
                         // Same day if the other stop covers it, otherwise the day you arrive there.
                         let day = other.includes(day: visit.date) ? visit.date : other.date
                         trip.move(visit, from: stop.id, to: other.id, day: day)
@@ -86,9 +86,9 @@ struct DayPlanLine: View {
         VStack(alignment: .leading, spacing: 3) {
             HStack {
                 if showsDate {
-                    Text(Fmt.day(day, in: .iceland).uppercased()).font(.mono(10, .semibold)).foregroundStyle(Theme.accent)
+                    Text(Fmt.day(day, in: .iceland)).font(.mono(10, .semibold)).foregroundStyle(Theme.accent)
                 } else {
-                    Text(visits.isEmpty ? String(localized: "LUCE DEL GIORNO") : String(localized: "TEMPI DEL GIORNO")).font(.mono(10, .semibold)).foregroundStyle(Theme.accent)
+                    Text(visits.isEmpty ? String(localized: "Luce del giorno") : String(localized: "Tempi del giorno")).font(.mono(10, .semibold)).foregroundStyle(Theme.accent)
                 }
                 Spacer()
                 let others = stop.days.filter { !Calendar.iceland.isDate($0, inSameDayAs: day) }
@@ -97,8 +97,8 @@ struct DayPlanLine: View {
                         Section("Sposta la giornata") {
                             ForEach(others, id: \.self) { other in
                                 let busy = stop.visits.contains { Calendar.iceland.isDate($0.date, inSameDayAs: other) }
-                                Button(busy ? String(localized: "Scambia con \(Fmt.day(other, in: .iceland))")
-                                            : String(localized: "Sposta a \(Fmt.day(other, in: .iceland))")) {
+                                Button(busy ? String(localized: "Scambia con \(Fmt.day(other, in: .Iceland))")
+                                            : String(localized: "Sposta a \(Fmt.day(other, in: .Iceland))")) {
                                     trip.swapDays(day, other, in: stop.id)
                                     Haptics.result(true)
                                 }
@@ -120,8 +120,8 @@ struct DayPlanLine: View {
             }
             if let sun {
                 let late = visits.last.map { $0.end > sun.set } ?? false
-                Label(late ? String(localized: "Luce \(Fmt.time(sun.rise, in: .iceland))–\(Fmt.time(sun.set, in: .iceland)): l'ultima visita finisce al buio")
-                           : String(localized: "Luce \(Fmt.time(sun.rise, in: .iceland))–\(Fmt.time(sun.set, in: .iceland))"),
+                Label(late ? String(localized: "Luce \(Fmt.time(sun.rise, in: .Iceland))–\(Fmt.time(sun.set, in: .Iceland)): l'ultima visita finisce al buio")
+                           : String(localized: "Luce \(Fmt.time(sun.rise, in: .Iceland))–\(Fmt.time(sun.set, in: .Iceland))"),
                       systemImage: late ? "moon.fill" : "sun.horizon.fill")
                     .font(.app(.caption2)).foregroundStyle(late ? Theme.caution : Theme.dim)
             }
@@ -175,7 +175,7 @@ struct VisitRow: View {
                 HStack(alignment: .firstTextBaseline) {
                     Text(visit.place.name).font(.app(.subheadline, .semibold)).foregroundStyle(Theme.text)
                     Spacer()
-                    Text("\(Fmt.time(visit.date, in: .iceland))–\(Fmt.time(visit.end, in: .iceland))")
+                    Text("\(Fmt.time(visit.date, in: .Iceland))–\(Fmt.time(visit.end, in: .Iceland))")
                         .font(.mono(10.5, .semibold)).foregroundStyle(Theme.dim)
                 }
                 HStack(spacing: 10) {
@@ -341,7 +341,7 @@ struct VisitEditor: View {
                     if trip.stops.count > 1 {
                         Picker("Tappa", selection: $stopID) {
                             ForEach(trip.stops) { s in
-                                Text("\(s.place.name) · \(Fmt.day(s.date, in: .iceland))").tag(s.id)
+                                Text("\(s.place.name) · \(Fmt.day(s.date, in: .Iceland))").tag(s.id)
                             }
                         }
                     }

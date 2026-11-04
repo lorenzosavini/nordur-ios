@@ -83,7 +83,7 @@ struct RoadsView: View {
                 ForEach(items) { item in
                     VStack(alignment: .leading, spacing: 4) {
                         HStack(spacing: 6) {
-                            Text((item.region ?? "").uppercased()).font(.mono(9.5, .semibold)).foregroundStyle(Theme.accent)
+                            Text((item.region ?? "")).font(.mono(9.5, .semibold)).foregroundStyle(Theme.accent)
                             if let place = item.place { Text("· \(place)").font(.mono(9.5)).foregroundStyle(Theme.dim) }
                             Spacer()
                             if let date = item.published { Text(Fmt.relative(date)).font(.mono(9)).foregroundStyle(Theme.faint) }
@@ -216,7 +216,7 @@ struct RoadSectionRow: View {
                 }
                 HStack(spacing: 6) {
                     Text(section.label).font(.app(.caption)).foregroundStyle((section.risk ?? .ok) > .ok ? (section.risk ?? .ok).color : Theme.dim)
-                    if section.worsened { Text("PEGGIORATA").font(.mono(8.5, .semibold)).foregroundStyle(Theme.warning) }
+                    if section.worsened { Text("Peggiorata").font(.mono(8.5, .semibold)).foregroundStyle(Theme.warning) }
                     if !section.hazards.isEmpty {
                         Label("\(section.hazards.count)", systemImage: "cone.fill").font(.app(.caption2)).foregroundStyle(Theme.caution)
                     }
@@ -242,7 +242,7 @@ struct HazardRow: View {
                 Text(kind.label).font(.app(.subheadline, .semibold)).foregroundStyle(Theme.text)
                 Text(section.numbers.isEmpty ? section.name : "\(section.numbers) · \(section.name)").font(.app(.caption)).foregroundStyle(Theme.dim)
                 if let text = hazard.text, !text.isEmpty { Text(text).font(.app(.caption)).foregroundStyle(Theme.text) }
-                if let end = hazard.end { Text("Fino al \(Fmt.dayTime(end, in: .iceland))").font(.app(.caption2)).foregroundStyle(Theme.faint) }
+                if let end = hazard.end { Text("Fino al \(Fmt.dayTime(end, in: .Iceland))").font(.app(.caption2)).foregroundStyle(Theme.faint) }
             }
             Spacer(minLength: 4)
             if let km, km.isFinite { Text("\(Int(km.rounded())) km").font(.mono(10)).foregroundStyle(Theme.dim) }

@@ -15,7 +15,7 @@ struct PaywallView: View {
         List {
             Section {
                 VStack(alignment: .leading, spacing: 8) {
-                    Text("NORÐUR PRO").font(.mono(11, .semibold)).tracking(1).foregroundStyle(Theme.accent)
+                    Text("Norður Pro").font(.mono(11, .semibold)).foregroundStyle(Theme.accent)
                     Text(store.paywallText(\.title) ?? String(localized: "Sblocca tutto Norður"))
                         .font(.display(34, .bold)).foregroundStyle(Theme.text)
                     if let feature {
@@ -130,7 +130,7 @@ struct ProLock: View {
     @State private var store = Entitlements.shared
     var body: some View {
         if store.locked(feature) {
-            Text("PRO").font(.mono(9, .bold)).foregroundStyle(Theme.onAccent)
+            Text("Pro").font(.mono(9, .bold)).foregroundStyle(Theme.onAccent)
                 .padding(.horizontal, 5).padding(.vertical, 2)
                 .background(Theme.accent, in: RoundedRectangle(cornerRadius: 3))
                 .accessibilityLabel(Text("Richiede Pro"))

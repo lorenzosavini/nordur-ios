@@ -10,12 +10,12 @@ extension Shop {
         let next = hours.nextChange(after: now)
         if open {
             guard let next else { return (String(localized: "Aperto 24 ore"), true) }
-            return (String(localized: "Aperto · chiude alle \(Fmt.time(next, in: .iceland))"), true)
+            return (String(localized: "Aperto · chiude alle \(Fmt.time(next, in: .Iceland))"), true)
         }
         guard let next else { return (String(localized: "Chiuso"), false) }
         let sameDay = Calendar.iceland.isDate(next, inSameDayAs: now)
-        return (sameDay ? String(localized: "Chiuso · apre alle \(Fmt.time(next, in: .iceland))")
-                        : String(localized: "Chiuso · apre \(Fmt.dayTime(next, in: .iceland))"), false)
+        return (sameDay ? String(localized: "Chiuso · apre alle \(Fmt.time(next, in: .Iceland))")
+                        : String(localized: "Chiuso · apre \(Fmt.dayTime(next, in: .Iceland))"), false)
     }
 }
 
@@ -129,7 +129,7 @@ struct ShopRow: View {
                 HStack(alignment: .firstTextBaseline) {
                     Text(shop.name).font(.app(.subheadline, .semibold)).foregroundStyle(Theme.text).lineLimit(1)
                     if shop.isBudget {
-                        Text("ECONOMICO").font(.mono(8.5, .semibold)).foregroundStyle(Theme.aurora)
+                        Text("Economico").font(.mono(8.5, .semibold)).foregroundStyle(Theme.aurora)
                             .padding(.horizontal, 4).overlay(Rectangle().strokeBorder(Theme.aurora.opacity(0.6)))
                     }
                     Spacer()
@@ -162,7 +162,7 @@ struct ShopDetail: View {
                     HStack(spacing: 14) {
                         KindIcon(name: shop.kind.imageName, size: 72)
                         VStack(alignment: .leading, spacing: 4) {
-                            Text(shop.kind.label.uppercased()).font(.mono(11, .semibold)).foregroundStyle(Theme.accent)
+                            Text(shop.kind.label).font(.mono(11, .semibold)).foregroundStyle(Theme.accent)
                             Text(shop.name).font(.display(28, .bold)).foregroundStyle(Theme.text).lineLimit(2).minimumScaleFactor(0.7)
                         }
                     }
@@ -197,11 +197,11 @@ extension FuelStation {
         let next = hours.nextChange(after: now)
         if open {
             guard let next else { return (String(localized: "Aperto 24 ore"), true) }
-            return (String(localized: "Aperto · chiude alle \(Fmt.time(next, in: .iceland))"), true)
+            return (String(localized: "Aperto · chiude alle \(Fmt.time(next, in: .Iceland))"), true)
         }
         guard let next else { return (String(localized: "Chiuso"), false) }
-        return (Calendar.iceland.isDate(next, inSameDayAs: now) ? String(localized: "Chiuso · apre alle \(Fmt.time(next, in: .iceland))")
-                                                                : String(localized: "Chiuso · apre \(Fmt.dayTime(next, in: .iceland))"), false)
+        return (Calendar.iceland.isDate(next, inSameDayAs: now) ? String(localized: "Chiuso · apre alle \(Fmt.time(next, in: .Iceland))")
+                                                                : String(localized: "Chiuso · apre \(Fmt.dayTime(next, in: .Iceland))"), false)
     }
 }
 
@@ -222,7 +222,7 @@ struct FuelDetail: View {
                     HStack(spacing: 14) {
                         KindIcon(name: station.imageName, size: 72)
                         VStack(alignment: .leading, spacing: 4) {
-                            Text((station.kind == .charger ? String(localized: "Ricarica auto elettriche") : String(localized: "Distributore")).uppercased())
+                            Text((station.kind == .charger ? String(localized: "Ricarica auto elettriche") : String(localized: "Distributore")))
                                 .font(.mono(11, .semibold)).foregroundStyle(Theme.accent)
                             Text(station.name).font(.display(28, .bold)).foregroundStyle(Theme.text).lineLimit(2).minimumScaleFactor(0.7)
                             if let brand = station.brand, brand != station.name {

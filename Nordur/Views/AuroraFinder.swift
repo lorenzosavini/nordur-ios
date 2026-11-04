@@ -184,7 +184,7 @@ private struct Target: View {
             Circle().strokeBorder(Theme.aurora, lineWidth: 4).frame(width: 110, height: 110)
                 .scaleEffect(pulse ? 1.15 : 0.95).opacity(pulse ? 0.5 : 1)
             Circle().fill(Theme.aurora.opacity(close ? 0.35 : 0.12)).frame(width: 96, height: 96)
-            Label("AURORA", systemImage: "sparkles").font(.mono(12, .bold)).foregroundStyle(.white).offset(y: 74)
+            Label("Aurora", systemImage: "sparkles").font(.mono(12, .bold)).foregroundStyle(.white).offset(y: 74)
         }
         .onAppear { withAnimation(.easeInOut(duration: 0.9).repeatForever()) { pulse = true } }
     }
@@ -271,7 +271,7 @@ struct AuroraFinderButton: View {
     var body: some View {
         Button { if Entitlements.shared.check(.auroraFinder) { open = true } } label: {
             Label("Trova l'aurora con la fotocamera", systemImage: "camera.viewfinder")
-                .font(.mono(12, .bold)).tracking(0.4)
+                .font(.mono(12, .bold))
                 .lineLimit(1).minimumScaleFactor(0.7)
                 .frame(maxWidth: .infinity).frame(height: 46)
                 .foregroundStyle(Theme.aurora)

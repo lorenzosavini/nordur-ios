@@ -65,7 +65,7 @@ struct QuakesView: View {
                             .frame(width: 58, alignment: .leading)
                         VStack(alignment: .leading) {
                             Text(quake.region).font(.app(.subheadline))
-                            Text("\(Fmt.dayTime(quake.date, in: .iceland)) · prof. \(Fmt.number(quake.depth, decimals: 1, unit: "km"))\(quake.reviewed ? "" : String(localized: " · automatico"))")
+                            Text("\(Fmt.dayTime(quake.date, in: .Iceland)) · prof. \(Fmt.number(quake.depth, decimals: 1, unit: "km"))\(quake.reviewed ? "" : String(localized: " · automatico"))")
                                 .font(.app(.caption)).foregroundStyle(.secondary)
                         }
                         Spacer()

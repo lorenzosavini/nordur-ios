@@ -50,7 +50,11 @@ struct RoadStation: Decodable, Identifiable {
         return Coordinate(lat: Breidd, lon: Lengd)
     }
     var date: Date? { DateParse.roadStation(Dags) }
-    var windDirection: String { VindattAscEng?.trimmingCharacters(in: .whitespaces) ?? "" }
+    /// In the app language ("OSO", not Vegagerðin's English "WSW").
+    var windDirection: String {
+        let raw = VindattAscEng?.trimmingCharacters(in: .whitespaces) ?? ""
+        return IMOForecast.degrees(raw).map { Fmt.compass($0) } ?? raw
+    }
 
     var windRisk: Risk { Risk.wind(mean: Vindhradi, gust: Vindhvida) }
 

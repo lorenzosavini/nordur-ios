@@ -16,7 +16,7 @@ struct InfoTip: View {
         .buttonStyle(.plain)
         .popover(isPresented: $shown) {
             VStack(alignment: .leading, spacing: 8) {
-                Text(title.uppercased()).font(.mono(11, .semibold)).foregroundStyle(Theme.accent)
+                Text(title).font(.mono(11, .semibold)).foregroundStyle(Theme.accent)
                 Text(text).font(.app(.subheadline)).foregroundStyle(Theme.text)
                     .fixedSize(horizontal: false, vertical: true)
             }

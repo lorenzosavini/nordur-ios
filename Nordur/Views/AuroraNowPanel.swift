@@ -23,10 +23,10 @@ struct AuroraNowPanel: View {
         NavigationLink { AuroraView() } label: {
             VStack(alignment: .leading, spacing: 12) {
                 HStack(alignment: .firstTextBaseline) {
-                    Text("AURORA ADESSO · QUI").font(.mono(10, .semibold)).tracking(0.8).foregroundStyle(Theme.aurora)
+                    Text("Aurora adesso · qui").font(.mono(10, .semibold)).foregroundStyle(Theme.aurora)
                     Spacer()
                     if visible {
-                        Text("VISIBILE ORA").font(.mono(10, .semibold)).foregroundStyle(Theme.onAccent)
+                        Text("Visibile ora").font(.mono(10, .semibold)).foregroundStyle(Theme.onAccent)
                             .padding(.horizontal, 7).padding(.vertical, 3).background(Theme.aurora)
                     }
                 }
@@ -44,24 +44,24 @@ struct AuroraNowPanel: View {
                     }
                     Spacer(minLength: 0)
                     VStack(alignment: .trailing, spacing: 0) {
-                        Text("KP").font(.mono(9.5)).foregroundStyle(Theme.faint)
+                        Text("Kp").font(.mono(9.5)).foregroundStyle(Theme.faint)
                         Text(Fmt.number(kp, decimals: 1)).font(.metric(44, .bold))
                             .foregroundStyle((kp ?? 0) >= 5 ? Theme.aurora : Theme.text)
                     }
                 }
                 // Fast signals, each on its own.
                 HStack(spacing: 0) {
-                    signal("BZ", state?.solarWind.map { Fmt.number($0.latest.bz, decimals: 1, unit: "nT") } ?? "–",
+                    signal("Bz", state?.solarWind.map { Fmt.number($0.latest.bz, decimals: 1, unit: "nT") } ?? "–",
                            highlight: (state?.solarWind?.latest.bz ?? 0) <= -5)
                     signal("HP30", Fmt.number(state?.hp30?.last?.hp30, decimals: 1), highlight: (state?.hp30?.last?.hp30 ?? 0) >= 5)
-                    signal(String(localized: "CAMPO"), state?.magnetometer.map { "\(Int($0.rangeNt)) nT" } ?? "–",
+                    signal(String(localized: "Campo"), state?.magnetometer.map { "\(Int($0.rangeNt)) nT" } ?? "–",
                            highlight: (state?.magnetometer?.level ?? 0) >= 2)
                 }
                 .overlay(alignment: .top) { Rule() }
                 if confirmation.status != .noReports {
                     Text(confirmation.headline).font(.app(.caption, .medium)).foregroundStyle(confirmation.status >= .likely ? Theme.aurora : Theme.dim)
                 }
-                Text("PREVISIONE ORA PER ORA, VENTO SOLARE, MAPPA →").font(.mono(9.5, .semibold)).foregroundStyle(Theme.accent)
+                Text("Previsione ora per ora, vento solare, mappa →").font(.mono(9.5, .semibold)).foregroundStyle(Theme.accent)
             }
             .padding(14)
             .background {

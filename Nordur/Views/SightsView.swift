@@ -176,7 +176,7 @@ struct SightRow: View {
                 HStack(alignment: .firstTextBaseline, spacing: 6) {
                     Text(sight.name).font(.app(.subheadline, .semibold)).foregroundStyle(Theme.text).lineLimit(1)
                     if sight.isTop {
-                        Text("TOP").font(.mono(8.5, .semibold)).foregroundStyle(Theme.accent)
+                        Text("Top").font(.mono(8.5, .semibold)).foregroundStyle(Theme.accent)
                             .padding(.horizontal, 4).overlay(Rectangle().strokeBorder(Theme.accent.opacity(0.6)))
                     }
                     Spacer()
@@ -237,7 +237,7 @@ struct SightDetail: View {
                     } else {
                         Menu {
                             ForEach(trip.stops) { stop in
-                                Button("\(stop.place.name) · \(Fmt.day(stop.date, in: .iceland)) · \(Int(Geo.distanceKm(stop.place.coordinate, c).rounded())) km") {
+                                Button("\(stop.place.name) · \(Fmt.day(stop.date, in: .Iceland)) · \(Int(Geo.distanceKm(stop.place.coordinate, c).rounded())) km") {
                                     add(to: stop)
                                 }
                             }

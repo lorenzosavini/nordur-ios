@@ -320,7 +320,7 @@ final class Entitlements {
 
     // MARK: Notice
 
-    /// The backend's dates ("2026-10-25T18:00:00.000Z").
+    /// The backend's dates ("2026-10-25T18:00:00.000z").
     static func date(_ s: String) -> Date? {
         let f = ISO8601DateFormatter()
         f.formatOptions = [.withInternetDateTime, .withFractionalSeconds]

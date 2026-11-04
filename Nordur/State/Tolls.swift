@@ -316,7 +316,7 @@ enum Tolls {
         try await HTTP.get(endpoint, cacheKey: "tolls_catalog").map { try parse($0) }
     }
 
-    /// "≈ 13,20 € · 14,10 US$" for króna, in the currencies chosen in Settings.
+    /// "≈ 13,20 € · 14,10 Us$" for króna, in the currencies chosen in Settings.
     static func converted(_ isk: Double, rates: ExchangeRates?) -> String? {
         let display = CurrencyDisplay(rawValue: UserDefaults.standard.string(forKey: CurrencyDisplay.key) ?? "both") ?? .both
         return display.converted(isk, rates)
