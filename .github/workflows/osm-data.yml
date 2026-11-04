@@ -25,17 +25,38 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Download from Overpass
+        # Overpass can be very slow: what is not done in 110 minutes comes from nordur-api below.
+        timeout-minutes: 110
+        continue-on-error: true
         run: |
           mkdir -p out
           python3 tools/osm/fetch.py out
           ls -l out
+      - name: Fill missing layers (nordur-api, else the previous copy)
+        run: |
+          mkdir -p out
+          for layer in shops sights baths fuel; do
+            if [ ! -s "out/$layer.json" ]; then
+              q="osm=$layer"; [ "$layer" = shops ] && q="shops=1"
+              curl -sf --max-time 120 "https://nordur-api.vercel.app/api/roads?$q" -o "out/$layer.json" \
+                && python3 -c "import json,sys; d=json.load(open('out/$layer.json')); assert len(d.get('elements', d) if isinstance(d, dict) else d) > 0" \
+                && echo "$layer: from nordur-api" || rm -f "out/$layer.json"
+            fi
+            # Last resort: keep the copy already published (the branch is rewritten below).
+            if [ ! -s "out/$layer.json" ]; then
+              curl -sf --max-time 60 "https://raw.githubusercontent.com/${{ github.repository }}/osm-data/$layer.json" -o "out/$layer.json" \
+                && echo "$layer: previous copy kept" || { rm -f "out/$layer.json"; echo "$layer: missing"; }
+            fi
+          done
+          ls -l out
       - name: Publish to osm-data
         run: |
           cd out
+          ls *.json >/dev/null 2>&1 || { echo "nothing to publish"; exit 1; }
           git init -q
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git checkout -q -b osm-data
-          git add shops.json sights.json baths.json fuel.json
+          git add *.json
           git commit -q -m "OSM data $(date -u +%Y-%m-%dT%H:%MZ)"
           git push -q -f "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" osm-data
