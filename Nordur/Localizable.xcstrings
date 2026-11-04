@@ -60321,6 +60321,174 @@
           }
         }
       }
+    },
+    "Prudenza" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Take care"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vorsicht"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Prudence"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Precaución"
+          }
+        }
+      }
+    },
+    "Tutto tranquillo" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "All clear"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Alles ruhig"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tout est calme"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Todo tranquilo"
+          }
+        }
+      }
+    },
+    "Guida: %@, raffiche fino a %@ nelle prossime 12 ore" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Driving: %1$@, gusts up to %2$@ in the next 12 hours"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fahren: %1$@, Böen bis %2$@ in den nächsten 12 Stunden"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Conduite : %1$@, rafales jusqu'à %2$@ dans les 12 prochaines heures"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Conducción: %1$@, rachas de hasta %2$@ en las próximas 12 horas"
+          }
+        }
+      }
+    },
+    "Percepita %@ · min %@ · max %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Feels like %1$@ · min %2$@ · max %3$@"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gefühlt %1$@ · min %2$@ · max %3$@"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ressenti %1$@ · min %2$@ · max %3$@"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sensación %1$@ · mín %2$@ · máx %3$@"
+          }
+        }
+      }
+    },
+    "Pioggia da ora %@ · nuvole %@ · umidità %@ · %@ hPa" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rain from now %1$@ · cloud %2$@ · humidity %3$@ · %4$@ hPa"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Regen ab jetzt %1$@ · Wolken %2$@ · Feuchte %3$@ · %4$@ hPa"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pluie dès maintenant %1$@ · nuages %2$@ · humidité %3$@ · %4$@ hPa"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lluvia desde ahora %1$@ · nubes %2$@ · humedad %3$@ · %4$@ hPa"
+          }
+        }
+      }
+    },
+    "raffiche" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "gusts"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Böen"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "rafales"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "rachas"
+          }
+        }
+      }
     }
   },
   "version" : "1.0"

@@ -4,10 +4,15 @@ import SwiftUI
 /// the gust really measured in the last hour, temperature, and when.
 struct IMOObservationBlock: View {
     let observation: IMOObservation
+    /// The sky now (from the forecast: a station does not report it), shown with the title.
+    var sky: String? = nil
 
     var body: some View {
         VStack(alignment: .leading, spacing: 6) {
-            Text("Adesso").font(.app(.title3, .semibold)).foregroundStyle(Theme.text)
+            HStack(alignment: .lastTextBaseline, spacing: 8) {
+                Text("Adesso").font(.app(.title3, .semibold)).foregroundStyle(Theme.text)
+                if let sky { Text(sky).font(.app(.subheadline, .medium)).foregroundStyle(Theme.dim) }
+            }
             HStack(spacing: 6) {
                 SourceBadge(origin: .measured, detail: observation.station)
                 Spacer(minLength: 4)

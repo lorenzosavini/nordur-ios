@@ -16,18 +16,17 @@ struct WeatherView: View {
                         ScreenHeader(title: String(localized: "Meteo"), subtitle: String(localized: "Previsioni · 10 giorni"), index: "02") { AppearanceButton() }
                         PlaceHeader(size: 34)
                     }
-                    HeroHeader(hero: .weather, eyebrow: model.forecast?.value.official != nil ? String(localized: "vedur.is") : String(localized: "Modello"),
-                               title: model.now.map { WeatherCode.describe($0.code, isDay: $0.isDay).text } ?? String(localized: "Previsioni"),
-                               height: 170)
-                        .padding(.horizontal, -18)
                     AdaptiveColumns(spacing: 30) {
                         if let fetched = model.forecast {
                             let forecast = fetched.value
                             let next48 = forecast.upcomingHours(48)
                             // In order of reliability: what is measured now, then the official
                             // forecast (hours, days), the forecaster's words, the details, the sources.
-                            if let observation = model.observation?.value {
-                                IMOObservationBlock(observation: observation)
+                            // One "now" block (the photo strip that repeated it is gone).
+                            if let observation = model.observation?.value, observation.age <= NowConditions.maxAge {
+                                IMOObservationBlock(observation: observation, sky: model.now.map { WeatherCode.describe($0.code, isDay: $0.isDay).text })
+                            } else if let now = model.now {
+                                forecastNow(now, forecast: forecast)
                             }
                             meteogram(next48, forecast: forecast)
                             dailyTable(forecast.days, zone: forecast.timeZone, forecast: forecast)
@@ -58,6 +57,30 @@ struct WeatherView: View {
             .background(Theme.bg.ignoresSafeArea())
             .toolbar(.hidden, for: .navigationBar)
             .refreshable { await model.refreshPlace() }
+        }
+    }
+
+    /// "Now" without a recent measurement: the forecast for this hour, with its source.
+    private func forecastNow(_ now: NowConditions, forecast: Forecast) -> some View {
+        VStack(alignment: .leading, spacing: 6) {
+            HStack(alignment: .lastTextBaseline, spacing: 8) {
+                Text("Adesso").font(.app(.title3, .semibold)).foregroundStyle(Theme.text)
+                Text(WeatherCode.describe(now.code, isDay: now.isDay).text).font(.app(.subheadline, .medium)).foregroundStyle(Theme.dim)
+            }
+            SourceBadge(origin: forecast.origin(at: Date()), detail: forecast.official?.station.name)
+            HStack(alignment: .firstTextBaseline, spacing: 18) {
+                reading(Fmt.temp(now.temperature), String(localized: "aria"))
+                reading("\(Fmt.wind(now.wind)) \(Fmt.windUnit)", now.direction == nil ? String(localized: "vento") : String(localized: "vento da \(Fmt.compass(now.direction))"))
+                reading("\(Fmt.wind(now.gust)) \(Fmt.windUnit)", String(localized: "raffiche"))
+            }
+        }
+        .padding(.vertical, 4)
+    }
+
+    private func reading(_ value: String, _ label: String) -> some View {
+        VStack(alignment: .leading, spacing: 1) {
+            Text(value).font(.metric(20, .semibold)).foregroundStyle(Theme.text).monospacedDigit()
+            Text(label).font(.app(.caption)).foregroundStyle(Theme.dim)
         }
     }
 

@@ -28,7 +28,7 @@ struct MapScreen: View {
     @AppStorage("map.trip") private var showTrip = true
     @AppStorage("map.particles") private var showParticles = true
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
-    @AppStorage("map.imoStations") private var showIMOStations = true
+    @AppStorage("map.imoStations.v2") private var showIMOStations = false
     @AppStorage("map.baths") private var showBaths = false
     @AppStorage("map.tolls") private var showTolls = false
     @AppStorage("map.volcanoes") private var showVolcanoes = false

@@ -223,89 +223,92 @@ struct TodayView: View {
 
     // MARK: Status
 
+    /// The answer to "do I need to worry?": one word, its colour, and the reasons
+    /// (warnings here, the drive in the next 12 hours). Calm when there is nothing.
     @ViewBuilder private var statusBanner: some View {
         let driving = model.drivingRiskNext12h
         let here = model.warningsHere
         let worstWarning = here.map(\.color).max()
         let risk = max(driving.risk, worstWarning?.risk ?? .ok)
-        let headline: String = {
-            if let w = here.first { return "\(w.color.label) · \(w.hazardItalian) · \(w.region)" }
-            switch driving.risk {
-            case .ok: return String(localized: "Nessuna criticità nelle prossime 12 ore")
-            default: return String(localized: "Guida: \(driving.risk.label.lowercased()) · raffiche fino a \(Fmt.ms(driving.maxGust))")
+        let reasons: [String] = {
+            var out = here.prefix(2).map { "\($0.color.label) · \($0.hazardItalian) · \($0.region)" }
+            if driving.risk > .ok {
+                out.append(String(localized: "Guida: \(driving.risk.label.lowercased()), raffiche fino a \(Fmt.ms(driving.maxGust)) nelle prossime 12 ore"))
             }
+            return out
         }()
-        HStack(alignment: .firstTextBaseline, spacing: 10) {
-            Text(risk == .ok ? String(localized: "Stato") : String(localized: "Attenzione")).font(.mono(10.5, .semibold))
-            Text(headline).font(.sans(14, .medium)).lineLimit(2)
+        let title: String = risk >= .danger ? String(localized: "Pericolo") : risk >= .warning ? String(localized: "Attenzione") : risk > .ok ? String(localized: "Prudenza")
+            : String(localized: "Tutto tranquillo")
+        let tint: Color = risk == .ok ? Theme.aurora : risk.color
+        HStack(alignment: .top, spacing: 12) {
+            Image(systemName: risk == .ok ? "checkmark.circle.fill" : "exclamationmark.triangle.fill")
+                .font(.system(size: 22, weight: .semibold))
+                .foregroundStyle(risk >= .warning ? Theme.onAccent : tint)
+                .padding(.top, 1)
+            VStack(alignment: .leading, spacing: 4) {
+                Text(title).font(.app(.title3, .semibold))
+                if reasons.isEmpty {
+                    Text("Nessuna criticità nelle prossime 12 ore").font(.app(.subheadline))
+                } else {
+                    ForEach(reasons, id: \.self) { Text($0).font(.app(.subheadline)).fixedSize(horizontal: false, vertical: true) }
+                }
+            }
             Spacer(minLength: 0)
         }
         .foregroundStyle(risk >= .warning ? Theme.onAccent : Theme.text)
-        .padding(.horizontal, 12)
-        .padding(.vertical, 10)
+        .padding(14)
         .frame(maxWidth: .infinity, alignment: .leading)
-        .background(risk >= .warning ? risk.color : .clear)
-        .overlay(alignment: .leading) {
-            if risk < .warning { Rectangle().fill(risk == .ok ? Theme.rule : risk.color).frame(width: 3) }
-        }
-        .overlay(Rectangle().strokeBorder(risk >= .warning ? .clear : Theme.hairline, lineWidth: 1))
+        .background(risk >= .warning ? AnyShapeStyle(risk.color) : AnyShapeStyle(tint.opacity(0.10)))
+        .overlay(alignment: .leading) { if risk < .warning { Rectangle().fill(tint).frame(width: 4) } }
+        .accessibilityElement(children: .combine)
     }
 
     // MARK: Now
 
+    /// Now, in four figures (temperature, wind, gust, rain) and one line for the rest.
     @ViewBuilder private var now: some View {
         if let fetched = model.forecast, let current = fetched.value.current {
             let today = fetched.value.days.first
-            let info = WeatherCode.describe(current.weather_code, isDay: current.is_day != 0)
             // Most reliable first: what a vedur.is station measured in the last 75 minutes,
             // else the forecast for now (vedur.is where it has a station, the model elsewhere).
             let nowValues = model.now
             let measured = nowValues?.measured
+            let info = WeatherCode.describe(current.weather_code, isDay: current.is_day != 0)
             VStack(alignment: .leading, spacing: 12) {
-                HStack(spacing: 10) {
-                    if let measured {
-                        SourceBadge(origin: .measured, detail: "\(measured.station) · \(Fmt.time(measured.time, in: .iceland))")
-                    } else {
-                        SourceBadge(origin: fetched.value.origin(at: Date()), detail: fetched.value.official?.station.name)
-                    }
+                if let measured {
+                    SourceBadge(origin: .measured, detail: "\(measured.station) · \(Int(measured.distanceKm.rounded())) km · \(Fmt.time(measured.time, in: .iceland))")
+                } else {
+                    SourceBadge(origin: fetched.value.origin(at: Date()), detail: fetched.value.official?.station.name)
                 }
-                HStack(alignment: .top, spacing: 16) {
+                HStack(alignment: .center, spacing: 14) {
                     HStack(alignment: .top, spacing: 2) {
                         Text(Fmt.degrees(nowValues?.temperature ?? current.temperature_2m))
-                            .font(.metric(128, .semibold))
+                            .font(.metric(88, .semibold))
                             .foregroundStyle(Theme.text)
-                            .padding(.top, -14)
-                        Text(Fmt.tempUnit).font(.mono(14, .medium)).foregroundStyle(Theme.dim).padding(.top, 10)
+                        Text(Fmt.tempUnit).font(.app(.subheadline, .medium)).foregroundStyle(Theme.dim).padding(.top, 10)
                     }
-                    VStack(alignment: .leading, spacing: 8) {
-                        Text(info.text.uppercased()).font(.display(24, .semibold)).foregroundStyle(Theme.text)
-                            .lineLimit(2).minimumScaleFactor(0.7)
-                        dataLine(String(localized: "Percepita"), Fmt.temp(nowValues?.apparent ?? current.apparent_temperature))
-                        dataLine(String(localized: "Min / max"), "\(Fmt.temp(today?.minTemp)) / \(Fmt.temp(today?.maxTemp))")
-                        dataLine(String(localized: "Pioggia da ora"), Fmt.number(today?.precipitation, decimals: 1, unit: "mm"))
+                    VStack(alignment: .leading, spacing: 4) {
+                        Text(info.text).font(.app(.title3, .semibold)).foregroundStyle(Theme.text)
+                            .lineLimit(2).minimumScaleFactor(0.8)
+                        Text(String(localized: "Percepita \(Fmt.temp(nowValues?.apparent ?? current.apparent_temperature)) · min \(Fmt.temp(today?.minTemp)) · max \(Fmt.temp(today?.maxTemp))"))
+                            .font(.app(.subheadline)).foregroundStyle(Theme.dim)
                     }
-                    .padding(.top, 6)
                     Spacer(minLength: 0)
                 }
                 ReadingGrid(items: [
                     Reading(label: String(localized: "Vento"), value: Fmt.wind(nowValues?.wind), unit: Fmt.windUnit,
-                            note: nowValues?.direction == nil ? nil : String(localized: "da \(Fmt.compass(nowValues?.direction))"), size: 28),
+                            note: nowValues?.direction == nil ? nil : String(localized: "da \(Fmt.compass(nowValues?.direction))"), size: 30),
                     Reading(label: String(localized: "Raffiche"), value: Fmt.wind(nowValues?.gust), unit: Fmt.windUnit,
-                            tint: windTint(nowValues?.gust), size: 28),
+                            tint: windTint(nowValues?.gust), size: 30),
                     // Measured: the rain of the last hour (mm); forecast: the rate now (mm/h).
                     measured?.precipitation != nil
-                        ? Reading(label: String(localized: "Pioggia 1 h"), value: Fmt.number(measured?.precipitation, decimals: 1), unit: "mm", size: 28)
-                        : Reading(label: String(localized: "Precip."), value: Fmt.number(current.precipitation, decimals: 1), unit: "mm/h", size: 28),
-                    Reading(label: String(localized: "Nuvole"), value: Fmt.number(nowValues?.cloud), unit: "%", size: 28),
-                    Reading(label: String(localized: "Pressione"), value: Fmt.number(nowValues?.pressure), unit: "hPa", size: 28),
-                    Reading(label: String(localized: "Umidità"), value: Fmt.number(nowValues?.humidity), unit: "%", size: 28),
+                        ? Reading(label: String(localized: "Pioggia 1 h"), value: Fmt.number(measured?.precipitation, decimals: 1), unit: "mm", size: 30)
+                        : Reading(label: String(localized: "Pioggia"), value: Fmt.number(current.precipitation, decimals: 1), unit: "mm/h", size: 30),
                 ], columns: 3)
                 .overlay(alignment: .top) { Rule() }
                 .overlay(alignment: .bottom) { Rule() }
-                if let measured {
-                    Text(String(localized: "Misure della stazione vedur.is \(measured.station) a \(Int(measured.distanceKm.rounded())) km. Cielo e min/max: previsione."))
-                        .font(.app(.caption2)).foregroundStyle(Theme.faint).fixedSize(horizontal: false, vertical: true)
-                }
+                Text(String(localized: "Pioggia da ora \(Fmt.number(today?.precipitation, decimals: 1, unit: "mm")) · nuvole \(Fmt.percent(nowValues?.cloud)) · umidità \(Fmt.percent(nowValues?.humidity)) · \(Fmt.number(nowValues?.pressure)) hPa"))
+                    .font(.app(.subheadline)).foregroundStyle(Theme.dim).fixedSize(horizontal: false, vertical: true)
                 FreshnessLabel(date: fetched.date, isStale: fetched.isStale, source: fetched.value.sourceLine)
             }
         } else if let error = model.errors[.forecast] {
