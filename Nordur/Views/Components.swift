@@ -845,7 +845,7 @@ struct PlaceBackdrop: View {
     @State private var photo: PlacePhoto?
 
     var body: some View {
-        ZStack(alignment: .bottomTrailing) {
+        ZStack(alignment: .topTrailing) {
             if let photo {
                 RemoteImage(url: photo.imageURL)
                     .frame(height: height)
@@ -861,10 +861,12 @@ struct PlaceBackdrop: View {
                         ], startPoint: .top, endPoint: .bottom)
                     }
                     .transition(.opacity)
+                // Under the header buttons, clear of the text below (it ran into the status card).
                 Text(photo.credit)
-                    .font(.mono(7.5)).foregroundStyle(Theme.faint)
-                    .lineLimit(1)
-                    .padding(.trailing, 18).padding(.bottom, 6)
+                    .font(.app(.caption2)).foregroundStyle(Theme.dim)
+                    .lineLimit(1).truncationMode(.middle)
+                    .frame(maxWidth: 240, alignment: .trailing)
+                    .padding(.trailing, 18).padding(.top, 172)
             }
         }
         .frame(height: height)

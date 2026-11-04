@@ -113,8 +113,10 @@ extension Font {
     /// sizes, where it is a deliberate code/table look.
     static func mono(_ size: CGFloat, _ weight: Font.Weight = .medium, relativeTo style: Font.TextStyle = .caption) -> Font {
         if size < 13 {
+            // Two sizes only, the same as the captions: the ten small sizes of the old
+            // labels (7.5…12 pt) made the screens look like texts of every size.
             let w: Font.Weight = weight == .regular ? .regular : (weight == .bold || weight == .heavy ? .semibold : .medium)
-            return Font.custom(AppFontName.sans(w), size: size * 1.12 + 2.6, relativeTo: style).monospacedDigit()
+            return Font.custom(AppFontName.sans(w), size: size < 10.25 ? 13.5 : 14.5, relativeTo: style).monospacedDigit()
         }
         return .custom(AppFontName.mono(weight), size: size + 1.5, relativeTo: style)
     }
@@ -125,8 +127,10 @@ extension Font {
     }
 
     /// Figures: condensed, tabular.
+    /// Figures in a few steps (16, 20, 26, 32, then the big ones as asked).
     static func metric(_ size: CGFloat, _ weight: Font.Weight = .semibold) -> Font {
-        .custom(AppFontName.condensed(weight), size: size, relativeTo: .title).monospacedDigit()
+        let step: CGFloat = size < 17.5 ? 16 : size < 22.5 ? 20 : size < 28.5 ? 26 : size < 36 ? 32 : size
+        return .custom(AppFontName.condensed(weight), size: step, relativeTo: .title).monospacedDigit()
     }
 
     static func app(_ style: Font.TextStyle, _ weight: Font.Weight? = nil) -> Font {
