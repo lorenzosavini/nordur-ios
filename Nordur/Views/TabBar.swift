@@ -42,9 +42,10 @@ enum Appearance: String, CaseIterable, Identifiable {
 
     /// Navigation bars and controls in the app fonts.
     static func configureUIKit() {
-        let title = UIFont(name: "IBMPlexMono-SemiBold", size: 13) ?? .monospacedSystemFont(ofSize: 13, weight: .semibold)
+        // Inline titles in the text face (the typewriter face read like a label, not a title).
+        let title = UIFontMetrics(forTextStyle: .headline).scaledFont(for: UIFont(name: AppFontName.sans(.semibold), size: 17) ?? .systemFont(ofSize: 17, weight: .semibold))
         let large = UIFont(name: "BarlowCondensed-Bold", size: 40) ?? .systemFont(ofSize: 34, weight: .bold)
-        let titleAttributes: [NSAttributedString.Key: Any] = [.font: title, .kern: 1.0]
+        let titleAttributes: [NSAttributedString.Key: Any] = [.font: title]
         let bar = UINavigationBarAppearance()
         bar.configureWithTransparentBackground()
         bar.titleTextAttributes = titleAttributes

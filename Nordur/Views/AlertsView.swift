@@ -152,12 +152,18 @@ struct AlertsView: View {
         Button {
             filter = category
         } label: {
-            Label("\(title) \(count)", systemImage: category?.symbol ?? "tray.full")
-                .font(.app(.caption))
-                .padding(.horizontal, 10)
-                .padding(.vertical, 6)
-                .foregroundStyle(filter == category ? Theme.bg : Theme.text)
-                .background(filter == category ? Theme.text : Color.clear, in: Rectangle())
+            // An explicit row: inside a List a Label turned into a bare icon in a tall black block.
+            HStack(spacing: 5) {
+                Image(systemName: category?.symbol ?? "tray.full").font(.system(size: 12, weight: .semibold))
+                Text("\(title) \(count)").font(.app(.caption, .medium)).lineLimit(1)
+            }
+            .padding(.horizontal, 10)
+            .frame(minHeight: 36)
+            .foregroundStyle(filter == category ? Theme.bg : Theme.text)
+            .background(filter == category ? Theme.text : Color.clear)
+            .overlay(Rectangle().strokeBorder(filter == category ? Color.clear : Theme.hairline))
+            .fixedSize()
+            .contentShape(Rectangle())
         }
         .buttonStyle(.plain)
     }

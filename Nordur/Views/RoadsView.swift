@@ -83,7 +83,7 @@ struct RoadsView: View {
                 ForEach(items) { item in
                     VStack(alignment: .leading, spacing: 4) {
                         HStack(spacing: 6) {
-                            Text((item.region ?? "")).font(.mono(9.5, .semibold)).foregroundStyle(Theme.accent)
+                            Text(item.regionName ?? "").font(.mono(9.5, .semibold)).foregroundStyle(Theme.accent)
                             if let place = item.place { Text("· \(place)").font(.mono(9.5)).foregroundStyle(Theme.dim) }
                             Spacer()
                             if let date = item.published { Text(Fmt.relative(date)).font(.mono(9)).foregroundStyle(Theme.faint) }

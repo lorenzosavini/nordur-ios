@@ -90,6 +90,22 @@ struct RoadInfo: Decodable {
         var text: String
         let date: String?
         var published: Date? { DateParse.iso(date) }
+
+        /// umferdin.is names its regions in English: in the app language.
+        var regionName: String? {
+            switch region {
+            case "Highlands": return String(localized: "Altopiani")
+            case "North": return String(localized: "Nord")
+            case "Northeast": return String(localized: "Nord-est")
+            case "South": return String(localized: "Sud")
+            case "Southeast": return String(localized: "Sud-est")
+            case "Southwest": return String(localized: "Sud-ovest")
+            case "West": return String(localized: "Ovest")
+            case "Overview": return String(localized: "In generale")
+            case "Weight limitations": return String(localized: "Limiti di peso")
+            default: return region
+            }
+        }
     }
 
     struct Code: Decodable, Hashable {
