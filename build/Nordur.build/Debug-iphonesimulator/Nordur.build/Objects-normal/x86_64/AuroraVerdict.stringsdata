@@ -1,0 +1,136 @@
+{
+  "source": "/Users/runner/work/nordur-ios/nordur-ios/Shared/Services/AuroraVerdict.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Esci adesso",
+        "location": {
+          "startingColumn": 72,
+          "startingLine": 34
+        }
+      },
+      {
+        "comment": "",
+        "key": "Osservabilità %@: attività in corso e cielo %lld%% sereno.",
+        "location": {
+          "startingColumn": 60,
+          "startingLine": 35
+        }
+      },
+      {
+        "comment": "",
+        "key": "Aurora attiva: allontanati dalle luci",
+        "location": {
+          "startingColumn": 73,
+          "startingLine": 44
+        }
+      },
+      {
+        "comment": "",
+        "key": "Preparati: probabile tra ~%lld min",
+        "location": {
+          "startingColumn": 73,
+          "startingLine": 55
+        }
+      },
+      {
+        "comment": "",
+        "key": "Il vento solare in arrivo è favorevole (Bz %@ nT da %lld min%@). Verso le %@ qui sarà buio e sereno al %lld%%.",
+        "location": {
+          "startingColumn": 60,
+          "startingLine": 56
+        }
+      },
+      {
+        "comment": "",
+        "key": "Stanotte, verso le %@",
+        "location": {
+          "startingColumn": 74,
+          "startingLine": 62
+        }
+      },
+      {
+        "comment": "",
+        "key": "L'ora migliore: %@. Ti avviso quando è il momento: tieni attiva la sorveglianza aurora.",
+        "location": {
+          "startingColumn": 60,
+          "startingLine": 63
+        }
+      },
+      {
+        "comment": "",
+        "key": "È ancora chiaro: il buio arriva verso le %@.",
+        "location": {
+          "startingColumn": 40,
+          "startingLine": 70
+        }
+      },
+      {
+        "comment": "",
+        "key": "Cielo coperto: anche con l'aurora non si vedrebbe.",
+        "location": {
+          "startingColumn": 40,
+          "startingLine": 72
+        }
+      },
+      {
+        "comment": "",
+        "key": "Attività prevista debole nelle prossime ore.",
+        "location": {
+          "startingColumn": 40,
+          "startingLine": 74
+        }
+      },
+      {
+        "comment": "",
+        "key": "Non adesso",
+        "location": {
+          "startingColumn": 67,
+          "startingLine": 78
+        }
+      },
+      {
+        "comment": "",
+        "key": " Guarda verso %@.",
+        "location": {
+          "startingColumn": 65,
+          "startingLine": 29
+        }
+      },
+      {
+        "comment": "",
+        "key": " Guarda verso nord.",
+        "location": {
+          "startingColumn": 125,
+          "startingLine": 29
+        }
+      },
+      {
+        "comment": "",
+        "key": "Più buio vicino: %@, %lld km.",
+        "location": {
+          "startingColumn": 58,
+          "startingLine": 42
+        }
+      },
+      {
+        "comment": "",
+        "key": "Allontanati dalle luci della città, verso un posto buio con l'orizzonte libero a nord.",
+        "location": {
+          "startingColumn": 38,
+          "startingLine": 43
+        }
+      },
+      {
+        "comment": "",
+        "key": "Condizioni sfavorevoli nelle prossime 12 ore.",
+        "location": {
+          "startingColumn": 66,
+          "startingLine": 76
+        }
+      }
+    ]
+  },
+  "version": 1
+}

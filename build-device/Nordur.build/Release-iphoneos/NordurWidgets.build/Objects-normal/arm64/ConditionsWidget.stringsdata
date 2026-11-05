@@ -1,0 +1,272 @@
+{
+  "source": "/Users/runner/work/nordur-ios/nordur-ios/NordurWidgets/ConditionsWidget.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Luogo",
+        "location": {
+          "startingColumn": 71,
+          "startingLine": 15
+        }
+      },
+      {
+        "comment": "",
+        "key": "%@",
+        "location": {
+          "startingColumn": 85,
+          "startingLine": 16
+        }
+      },
+      {
+        "comment": "",
+        "key": "Posizione attuale",
+        "location": {
+          "startingColumn": 77,
+          "startingLine": 19
+        }
+      },
+      {
+        "comment": "",
+        "key": "Luogo",
+        "location": {
+          "startingColumn": 49,
+          "startingLine": 36
+        }
+      },
+      {
+        "comment": "",
+        "key": "Scegli il luogo da mostrare nel widget.",
+        "location": {
+          "startingColumn": 48,
+          "startingLine": 37
+        }
+      },
+      {
+        "comment": "",
+        "key": "Qui",
+        "location": {
+          "startingColumn": 42,
+          "startingLine": 129
+        }
+      },
+      {
+        "comment": "",
+        "key": " · allerta",
+        "location": {
+          "startingColumn": 123,
+          "startingLine": 200
+        }
+      },
+      {
+        "comment": "",
+        "key": "%@ · raff. %@%@",
+        "location": {
+          "startingColumn": 18,
+          "startingLine": 200
+        }
+      },
+      {
+        "comment": "",
+        "key": "%lld",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 186
+        }
+      },
+      {
+        "comment": "",
+        "key": "%@ %@",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 191
+        }
+      },
+      {
+        "comment": "",
+        "key": "Vento %@ · raff. %@",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 192
+        }
+      },
+      {
+        "comment": "",
+        "key": "Nessuna allerta",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 196
+        }
+      },
+      {
+        "comment": "",
+        "key": "Aurora: %@%@",
+        "location": {
+          "startingColumn": 31,
+          "startingLine": 208
+        }
+      },
+      {
+        "comment": "",
+        "key": "Raffica max 12 h: %@",
+        "location": {
+          "startingColumn": 27,
+          "startingLine": 211
+        }
+      },
+      {
+        "comment": "",
+        "key": "Nessuna allerta",
+        "location": {
+          "startingColumn": 19,
+          "startingLine": 249
+        }
+      },
+      {
+        "comment": "",
+        "key": "agg. %@",
+        "location": {
+          "startingColumn": 18,
+          "startingLine": 238
+        }
+      },
+      {
+        "comment": "",
+        "key": "%lld/%lld m/s",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 234
+        }
+      },
+      {
+        "comment": "",
+        "key": "Condizioni Norður",
+        "location": {
+          "startingColumn": 53,
+          "startingLine": 269
+        }
+      },
+      {
+        "comment": "",
+        "key": "Temperatura, vento, raffiche e allerte vedur.is per un luogo.",
+        "location": {
+          "startingColumn": 40,
+          "startingLine": 270
+        }
+      },
+      {
+        "comment": "",
+        "key": "Poche probabilità: attività debole, nuvole o troppa luce.",
+        "location": {
+          "startingColumn": 57,
+          "startingLine": 291
+        }
+      },
+      {
+        "comment": "",
+        "key": "Possibile: guarda verso nord nelle ore più buie, lontano dalle luci.",
+        "location": {
+          "startingColumn": 50,
+          "startingLine": 292
+        }
+      },
+      {
+        "comment": "",
+        "key": "Buone probabilità: cerca un posto buio con il cielo libero a nord.",
+        "location": {
+          "startingColumn": 58,
+          "startingLine": 293
+        }
+      },
+      {
+        "comment": "",
+        "key": "Meglio verso le %@",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 307
+        }
+      },
+      {
+        "comment": "",
+        "key": "Niente buio stanotte",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 310
+        }
+      },
+      {
+        "comment": "",
+        "key": "Aurora",
+        "location": {
+          "startingColumn": 19,
+          "startingLine": 301
+        }
+      },
+      {
+        "comment": "",
+        "key": "",
+        "location": {
+          "startingColumn": 61,
+          "startingLine": 304
+        }
+      },
+      {
+        "comment": "",
+        "key": "Vento %@ · raff. %@",
+        "location": {
+          "startingColumn": 23,
+          "startingLine": 322
+        }
+      },
+      {
+        "comment": "",
+        "key": "Meglio verso le %@",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 346
+        }
+      },
+      {
+        "comment": "",
+        "key": "Niente buio stanotte",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 349
+        }
+      },
+      {
+        "comment": "",
+        "key": "Aurora",
+        "location": {
+          "startingColumn": 19,
+          "startingLine": 339
+        }
+      },
+      {
+        "comment": "",
+        "key": "",
+        "location": {
+          "startingColumn": 61,
+          "startingLine": 342
+        }
+      },
+      {
+        "comment": "",
+        "key": "Aurora stanotte",
+        "location": {
+          "startingColumn": 53,
+          "startingLine": 362
+        }
+      },
+      {
+        "comment": "",
+        "key": "Classe di osservabilità dell’aurora stanotte: attività prevista, nuvole, buio e Luna.",
+        "location": {
+          "startingColumn": 40,
+          "startingLine": 363
+        }
+      }
+    ]
+  },
+  "version": 1
+}

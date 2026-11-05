@@ -1,0 +1,560 @@
+{
+  "source": "/Users/runner/work/nordur-ios/nordur-ios/Nordur/Views/TollsView.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Pedaggi e parcheggi",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 72
+        }
+      },
+      {
+        "comment": "",
+        "key": "Pedaggi e parcheggi",
+        "location": {
+          "startingColumn": 69,
+          "startingLine": 27
+        }
+      },
+      {
+        "comment": "",
+        "key": "Il tuo veicolo",
+        "location": {
+          "startingColumn": 42,
+          "startingLine": 29
+        }
+      },
+      {
+        "comment": "",
+        "key": "I prezzi mostrati sono quelli per il tuo veicolo: tunnel e strade si pagano in base al peso registrato, i parcheggi in base ai posti.",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 33
+        }
+      },
+      {
+        "comment": "",
+        "key": "Nessun pedaggio in elenco",
+        "location": {
+          "startingColumn": 84,
+          "startingLine": 42
+        }
+      },
+      {
+        "comment": "",
+        "key": "Il catalogo è vuoto: riprova più tardi.",
+        "location": {
+          "startingColumn": 59,
+          "startingLine": 43
+        }
+      },
+      {
+        "comment": "",
+        "key": "Aggiorna",
+        "location": {
+          "startingColumn": 63,
+          "startingLine": 44
+        }
+      },
+      {
+        "comment": "",
+        "key": "Tunnel e strade",
+        "location": {
+          "startingColumn": 34,
+          "startingLine": 51
+        }
+      },
+      {
+        "comment": "",
+        "key": "Parcheggi a pagamento",
+        "location": {
+          "startingColumn": 34,
+          "startingLine": 54
+        }
+      },
+      {
+        "comment": "",
+        "key": "Solo i parcheggi con un prezzo pubblicato dal gestore. In molti altri siti si paga: guarda i cartelli all'ingresso.",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 55
+        }
+      },
+      {
+        "comment": "",
+        "key": "Da sapere",
+        "location": {
+          "startingColumn": 38,
+          "startingLine": 60
+        }
+      },
+      {
+        "comment": "",
+        "key": "Norður · fonti ufficiali",
+        "location": {
+          "startingColumn": 104,
+          "startingLine": 67
+        }
+      },
+      {
+        "comment": "",
+        "key": "Verificato il %@",
+        "location": {
+          "startingColumn": 41,
+          "startingLine": 116
+        }
+      },
+      {
+        "comment": "",
+        "key": "Prezzi indicativi, controlla sul sito ufficiale prima di pagare.",
+        "location": {
+          "startingColumn": 18,
+          "startingLine": 119
+        }
+      },
+      {
+        "comment": "",
+        "key": "≈ %@ %@",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 160
+        }
+      },
+      {
+        "comment": "",
+        "key": "%lld viaggiatori segnalano %@ ISK",
+        "location": {
+          "startingColumn": 49,
+          "startingLine": 162
+        }
+      },
+      {
+        "comment": "",
+        "key": "≈ %@ %@ · segnalato da %lld",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 166
+        }
+      },
+      {
+        "comment": "",
+        "key": "A pagamento: verifica il prezzo sul posto",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 169
+        }
+      },
+      {
+        "comment": "",
+        "key": "A pagamento dal %@",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 174
+        }
+      },
+      {
+        "comment": "",
+        "key": "%@ km",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 155
+        }
+      },
+      {
+        "comment": "",
+        "key": "Chiudi",
+        "location": {
+          "startingColumn": 81,
+          "startingLine": 196
+        }
+      },
+      {
+        "comment": "",
+        "key": "A pagamento: verifica il prezzo sul posto",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 225
+        }
+      },
+      {
+        "comment": "",
+        "key": "≈ %@ %@",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 218
+        }
+      },
+      {
+        "comment": "",
+        "key": "%@ %@",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 235
+        }
+      },
+      {
+        "comment": "",
+        "key": "Prezzi indicativi",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 240
+        }
+      },
+      {
+        "comment": "",
+        "key": "App: %@",
+        "location": {
+          "startingColumn": 45,
+          "startingLine": 247
+        }
+      },
+      {
+        "comment": "",
+        "key": "Paga il parcheggio online",
+        "location": {
+          "startingColumn": 67,
+          "startingLine": 251
+        }
+      },
+      {
+        "comment": "",
+        "key": "Paga online",
+        "location": {
+          "startingColumn": 116,
+          "startingLine": 251
+        }
+      },
+      {
+        "comment": "",
+        "key": "Come pagare",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 255
+        }
+      },
+      {
+        "comment": "",
+        "key": "Segnalazioni dei viaggiatori",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 261
+        }
+      },
+      {
+        "comment": "",
+        "key": "Quanto dicono di aver pagato le persone che usano Norður negli ultimi 120 giorni (una segnalazione per telefono al giorno, anonima). Non sostituiscono il prezzo ufficiale.",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 262
+        }
+      },
+      {
+        "comment": "",
+        "key": "Dove",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 281
+        }
+      },
+      {
+        "comment": "",
+        "key": "Fonte ufficiale: %@",
+        "location": {
+          "startingColumn": 45,
+          "startingLine": 288
+        }
+      },
+      {
+        "comment": "",
+        "key": "Fonte",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 296
+        }
+      },
+      {
+        "comment": "",
+        "key": "Quando",
+        "location": {
+          "startingColumn": 123,
+          "startingLine": 306
+        }
+      },
+      {
+        "comment": "",
+        "key": "Se non paghi",
+        "location": {
+          "startingColumn": 124,
+          "startingLine": 309
+        }
+      },
+      {
+        "comment": "",
+        "key": "Auto a noleggio",
+        "location": {
+          "startingColumn": 123,
+          "startingLine": 312
+        }
+      },
+      {
+        "comment": "",
+        "key": "Alternativa gratuita",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 317
+        }
+      },
+      {
+        "comment": "",
+        "key": "La maggior parte delle segnalazioni recenti dice %@ ISK: il prezzo potrebbe essere cambiato, verifica sul sito ufficiale.",
+        "location": {
+          "startingColumn": 37,
+          "startingLine": 335
+        }
+      },
+      {
+        "comment": "",
+        "key": "Nessuna segnalazione per ora.",
+        "location": {
+          "startingColumn": 18,
+          "startingLine": 341
+        }
+      },
+      {
+        "comment": "",
+        "key": "Grazie: hai già segnalato oggi",
+        "location": {
+          "startingColumn": 19,
+          "startingLine": 353
+        }
+      },
+      {
+        "comment": "",
+        "key": "1 persona ha segnalato %@ ISK",
+        "location": {
+          "startingColumn": 60,
+          "startingLine": 345
+        }
+      },
+      {
+        "comment": "",
+        "key": "%lld persone hanno segnalato %@ ISK",
+        "location": {
+          "startingColumn": 60,
+          "startingLine": 346
+        }
+      },
+      {
+        "comment": "",
+        "key": "Segnala quanto hai pagato",
+        "location": {
+          "startingColumn": 23,
+          "startingLine": 357
+        }
+      },
+      {
+        "comment": "",
+        "key": "Segnala il prezzo",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 409
+        }
+      },
+      {
+        "comment": "",
+        "key": "Veicolo",
+        "location": {
+          "startingColumn": 46,
+          "startingLine": 387
+        }
+      },
+      {
+        "comment": "",
+        "key": "Importo in corone (ISK)",
+        "location": {
+          "startingColumn": 49,
+          "startingLine": 392
+        }
+      },
+      {
+        "comment": "",
+        "key": "Scrivi il prezzo pieno di un passaggio o di un giorno, in corone islandesi, come l'hai pagato. La segnalazione è anonima: una al giorno per questo luogo.",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 395
+        }
+      },
+      {
+        "comment": "",
+        "key": "Invia segnalazione",
+        "location": {
+          "startingColumn": 68,
+          "startingLine": 404
+        }
+      },
+      {
+        "comment": "",
+        "key": "Chiudi",
+        "location": {
+          "startingColumn": 77,
+          "startingLine": 411
+        }
+      },
+      {
+        "comment": "",
+        "key": "Paga online",
+        "location": {
+          "startingColumn": 66,
+          "startingLine": 448
+        }
+      },
+      {
+        "comment": "",
+        "key": "Prezzi, pagamento e fonte: %@",
+        "location": {
+          "startingColumn": 41,
+          "startingLine": 451
+        }
+      },
+      {
+        "comment": "",
+        "key": "Pedaggi e parcheggi",
+        "location": {
+          "startingColumn": 55,
+          "startingLine": 454
+        }
+      },
+      {
+        "comment": "",
+        "key": "Pedaggi o parcheggi a pagamento",
+        "location": {
+          "startingColumn": 51,
+          "startingLine": 468
+        }
+      },
+      {
+        "comment": "",
+        "key": "Parcheggio a pagamento: %@",
+        "location": {
+          "startingColumn": 64,
+          "startingLine": 487
+        }
+      },
+      {
+        "comment": "",
+        "key": "%@: %@",
+        "location": {
+          "startingColumn": 132,
+          "startingLine": 487
+        }
+      },
+      {
+        "comment": "",
+        "key": "≈ %@ %@ · segnalato dai viaggiatori",
+        "location": {
+          "startingColumn": 34,
+          "startingLine": 490
+        }
+      },
+      {
+        "comment": "",
+        "key": "A pagamento: verifica il prezzo sul posto",
+        "location": {
+          "startingColumn": 34,
+          "startingLine": 494
+        }
+      },
+      {
+        "comment": "",
+        "key": "≈ %@ %@",
+        "location": {
+          "startingColumn": 34,
+          "startingLine": 492
+        }
+      },
+      {
+        "comment": "",
+        "key": "Costi stradali del viaggio",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 518
+        }
+      },
+      {
+        "comment": "",
+        "key": "%lld tra pedaggi e parcheggi, %lld senza prezzo",
+        "location": {
+          "startingColumn": 50,
+          "startingLine": 526
+        }
+      },
+      {
+        "comment": "",
+        "key": "%lld tra pedaggi e parcheggi",
+        "location": {
+          "startingColumn": 50,
+          "startingLine": 527
+        }
+      },
+      {
+        "comment": "",
+        "key": "≈ %@ ISK",
+        "location": {
+          "startingColumn": 34,
+          "startingLine": 520
+        }
+      },
+      {
+        "comment": "",
+        "key": "Costi stradali",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 572
+        }
+      },
+      {
+        "comment": "",
+        "key": "≈ %@ ISK",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 548
+        }
+      },
+      {
+        "comment": "",
+        "key": "%lld senza prezzo ufficiale: non sono nel totale.",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 554
+        }
+      },
+      {
+        "comment": "",
+        "key": "Un passaggio per ogni pedaggio sul tragitto tra le tappe (secondo il percorso di Apple Mappe) e un giorno di sosta per ogni parcheggio a pagamento alla tappa o alle sue attrazioni. Non comprende la tassa per chilometro (kílómetragjald), che per le auto a noleggio paga il noleggiatore.",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 559
+        }
+      },
+      {
+        "comment": "",
+        "key": "%@ · %@",
+        "location": {
+          "startingColumn": 34,
+          "startingLine": 564
+        }
+      },
+      {
+        "comment": "",
+        "key": "Tutti i pedaggi e i parcheggi",
+        "location": {
+          "startingColumn": 63,
+          "startingLine": 568
+        }
+      }
+    ]
+  },
+  "version": 1
+}

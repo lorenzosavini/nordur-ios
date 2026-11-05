@@ -1,0 +1,64 @@
+{
+  "source": "/Users/runner/work/nordur-ios/nordur-ios/Nordur/App/CIRemote.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Come si calcola",
+        "location": {
+          "startingColumn": 43,
+          "startingLine": 39
+        }
+      },
+      {
+        "comment": "",
+        "key": "Oggi",
+        "location": {
+          "startingColumn": 56,
+          "startingLine": 39
+        }
+      },
+      {
+        "comment": "",
+        "key": "Meteo",
+        "location": {
+          "startingColumn": 61,
+          "startingLine": 39
+        }
+      },
+      {
+        "comment": "",
+        "key": "Aurora",
+        "location": {
+          "startingColumn": 49,
+          "startingLine": 39
+        }
+      },
+      {
+        "comment": "",
+        "key": "Mappa",
+        "location": {
+          "startingColumn": 46,
+          "startingLine": 39
+        }
+      },
+      {
+        "comment": "",
+        "key": "Viaggio",
+        "location": {
+          "startingColumn": 60,
+          "startingLine": 39
+        }
+      },
+      {
+        "comment": "",
+        "key": "Il mio viaggio in Islanda",
+        "location": {
+          "startingColumn": 50,
+          "startingLine": 39
+        }
+      }
+    ]
+  },
+  "version": 1
+}

@@ -1,0 +1,4 @@
+Target dependency graph (2 targets)
+Target 'Nordur' in project 'Nordur'
+➜ Explicit dependency on target 'NordurWidgets' in project 'Nordur'
+Target 'NordurWidgets' in project 'Nordur' (no dependencies)

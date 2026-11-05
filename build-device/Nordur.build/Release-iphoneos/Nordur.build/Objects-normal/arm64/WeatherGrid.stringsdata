@@ -1,0 +1,80 @@
+{
+  "source": "/Users/runner/work/nordur-ios/nordur-ios/Shared/Services/WeatherGrid.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Nessuno",
+        "location": {
+          "startingColumn": 46,
+          "startingLine": 11
+        }
+      },
+      {
+        "comment": "",
+        "key": "Vento",
+        "location": {
+          "startingColumn": 46,
+          "startingLine": 12
+        }
+      },
+      {
+        "comment": "",
+        "key": "Raffiche",
+        "location": {
+          "startingColumn": 46,
+          "startingLine": 13
+        }
+      },
+      {
+        "comment": "",
+        "key": "Pioggia",
+        "location": {
+          "startingColumn": 55,
+          "startingLine": 14
+        }
+      },
+      {
+        "comment": "",
+        "key": "Neve",
+        "location": {
+          "startingColumn": 46,
+          "startingLine": 15
+        }
+      },
+      {
+        "comment": "",
+        "key": "Nuvole",
+        "location": {
+          "startingColumn": 47,
+          "startingLine": 16
+        }
+      },
+      {
+        "comment": "",
+        "key": "Temperatura",
+        "location": {
+          "startingColumn": 53,
+          "startingLine": 17
+        }
+      },
+      {
+        "comment": "",
+        "key": "Aurora",
+        "location": {
+          "startingColumn": 48,
+          "startingLine": 18
+        }
+      },
+      {
+        "comment": "",
+        "key": "Radar",
+        "location": {
+          "startingColumn": 47,
+          "startingLine": 19
+        }
+      }
+    ]
+  },
+  "version": 1
+}

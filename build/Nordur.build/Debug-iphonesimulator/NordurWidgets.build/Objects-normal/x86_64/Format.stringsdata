@@ -1,0 +1,344 @@
+{
+  "source": "/Users/runner/work/nordur-ios/nordur-ios/Shared/Core/Format.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "nodi",
+        "location": {
+          "startingColumn": 111,
+          "startingLine": 208
+        }
+      },
+      {
+        "comment": "",
+        "key": "N",
+        "location": {
+          "startingColumn": 49,
+          "startingLine": 63
+        }
+      },
+      {
+        "comment": "",
+        "key": "S",
+        "location": {
+          "startingColumn": 74,
+          "startingLine": 63
+        }
+      },
+      {
+        "comment": "",
+        "key": "E",
+        "location": {
+          "startingColumn": 49,
+          "startingLine": 64
+        }
+      },
+      {
+        "comment": "",
+        "key": "O",
+        "location": {
+          "startingColumn": 74,
+          "startingLine": 64
+        }
+      },
+      {
+        "comment": "",
+        "key": "N",
+        "location": {
+          "startingColumn": 40,
+          "startingLine": 82
+        }
+      },
+      {
+        "comment": "",
+        "key": "NNE",
+        "location": {
+          "startingColumn": 64,
+          "startingLine": 82
+        }
+      },
+      {
+        "comment": "",
+        "key": "NE",
+        "location": {
+          "startingColumn": 90,
+          "startingLine": 82
+        }
+      },
+      {
+        "comment": "",
+        "key": "ENE",
+        "location": {
+          "startingColumn": 115,
+          "startingLine": 82
+        }
+      },
+      {
+        "comment": "",
+        "key": "E",
+        "location": {
+          "startingColumn": 141,
+          "startingLine": 82
+        }
+      },
+      {
+        "comment": "",
+        "key": "ESE",
+        "location": {
+          "startingColumn": 165,
+          "startingLine": 82
+        }
+      },
+      {
+        "comment": "",
+        "key": "SE",
+        "location": {
+          "startingColumn": 191,
+          "startingLine": 82
+        }
+      },
+      {
+        "comment": "",
+        "key": "SSE",
+        "location": {
+          "startingColumn": 216,
+          "startingLine": 82
+        }
+      },
+      {
+        "comment": "",
+        "key": "S",
+        "location": {
+          "startingColumn": 40,
+          "startingLine": 83
+        }
+      },
+      {
+        "comment": "",
+        "key": "SSO",
+        "location": {
+          "startingColumn": 64,
+          "startingLine": 83
+        }
+      },
+      {
+        "comment": "",
+        "key": "SO",
+        "location": {
+          "startingColumn": 90,
+          "startingLine": 83
+        }
+      },
+      {
+        "comment": "",
+        "key": "OSO",
+        "location": {
+          "startingColumn": 115,
+          "startingLine": 83
+        }
+      },
+      {
+        "comment": "",
+        "key": "O",
+        "location": {
+          "startingColumn": 141,
+          "startingLine": 83
+        }
+      },
+      {
+        "comment": "",
+        "key": "ONO",
+        "location": {
+          "startingColumn": 165,
+          "startingLine": 83
+        }
+      },
+      {
+        "comment": "",
+        "key": "NO",
+        "location": {
+          "startingColumn": 191,
+          "startingLine": 83
+        }
+      },
+      {
+        "comment": "",
+        "key": "NNO",
+        "location": {
+          "startingColumn": 216,
+          "startingLine": 83
+        }
+      },
+      {
+        "comment": "",
+        "key": "adesso",
+        "location": {
+          "startingColumn": 75,
+          "startingLine": 124
+        }
+      },
+      {
+        "comment": "",
+        "key": "Sereno",
+        "location": {
+          "startingColumn": 43,
+          "startingLine": 149
+        }
+      },
+      {
+        "comment": "",
+        "key": "Poco nuvoloso",
+        "location": {
+          "startingColumn": 43,
+          "startingLine": 150
+        }
+      },
+      {
+        "comment": "",
+        "key": "Parzialmente nuvoloso",
+        "location": {
+          "startingColumn": 43,
+          "startingLine": 151
+        }
+      },
+      {
+        "comment": "",
+        "key": "Coperto",
+        "location": {
+          "startingColumn": 43,
+          "startingLine": 152
+        }
+      },
+      {
+        "comment": "",
+        "key": "Nebbia",
+        "location": {
+          "startingColumn": 48,
+          "startingLine": 153
+        }
+      },
+      {
+        "comment": "",
+        "key": "Pioviggine",
+        "location": {
+          "startingColumn": 52,
+          "startingLine": 154
+        }
+      },
+      {
+        "comment": "",
+        "key": "Pioviggine gelata",
+        "location": {
+          "startingColumn": 48,
+          "startingLine": 155
+        }
+      },
+      {
+        "comment": "",
+        "key": "Pioggia",
+        "location": {
+          "startingColumn": 48,
+          "startingLine": 156
+        }
+      },
+      {
+        "comment": "",
+        "key": "Pioggia forte",
+        "location": {
+          "startingColumn": 44,
+          "startingLine": 157
+        }
+      },
+      {
+        "comment": "",
+        "key": "Pioggia gelata",
+        "location": {
+          "startingColumn": 48,
+          "startingLine": 158
+        }
+      },
+      {
+        "comment": "",
+        "key": "Nevischio",
+        "location": {
+          "startingColumn": 44,
+          "startingLine": 159
+        }
+      },
+      {
+        "comment": "",
+        "key": "Rovesci di nevischio",
+        "location": {
+          "startingColumn": 44,
+          "startingLine": 160
+        }
+      },
+      {
+        "comment": "",
+        "key": "Neve",
+        "location": {
+          "startingColumn": 48,
+          "startingLine": 161
+        }
+      },
+      {
+        "comment": "",
+        "key": "Neve forte",
+        "location": {
+          "startingColumn": 44,
+          "startingLine": 162
+        }
+      },
+      {
+        "comment": "",
+        "key": "Granuli di neve",
+        "location": {
+          "startingColumn": 44,
+          "startingLine": 163
+        }
+      },
+      {
+        "comment": "",
+        "key": "Rovesci",
+        "location": {
+          "startingColumn": 48,
+          "startingLine": 164
+        }
+      },
+      {
+        "comment": "",
+        "key": "Rovesci violenti",
+        "location": {
+          "startingColumn": 44,
+          "startingLine": 165
+        }
+      },
+      {
+        "comment": "",
+        "key": "Rovesci di neve",
+        "location": {
+          "startingColumn": 48,
+          "startingLine": 166
+        }
+      },
+      {
+        "comment": "",
+        "key": "Temporale",
+        "location": {
+          "startingColumn": 44,
+          "startingLine": 167
+        }
+      },
+      {
+        "comment": "",
+        "key": "Temporale con grandine",
+        "location": {
+          "startingColumn": 48,
+          "startingLine": 168
+        }
+      }
+    ]
+  },
+  "version": 1
+}

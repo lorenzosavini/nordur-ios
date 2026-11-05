@@ -1,0 +1,168 @@
+{
+  "source": "/Users/runner/work/nordur-ios/nordur-ios/NordurWidgets/TripTodayWidget.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Nessuna tappa in programma",
+        "location": {
+          "startingColumn": 49,
+          "startingLine": 61
+        }
+      },
+      {
+        "comment": "",
+        "key": "Aggiungi le tappe nella scheda Viaggio.",
+        "location": {
+          "startingColumn": 98,
+          "startingLine": 61
+        }
+      },
+      {
+        "comment": "",
+        "key": "Apri Norður",
+        "location": {
+          "startingColumn": 52,
+          "startingLine": 62
+        }
+      },
+      {
+        "comment": "",
+        "key": "Il widget mostra la tappa dopo il primo avvio dell'app.",
+        "location": {
+          "startingColumn": 87,
+          "startingLine": 62
+        }
+      },
+      {
+        "comment": "",
+        "key": "→ %@",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 91
+        }
+      },
+      {
+        "comment": "",
+        "key": "~%lld km · ~%@",
+        "location": {
+          "startingColumn": 38,
+          "startingLine": 181
+        }
+      },
+      {
+        "comment": "",
+        "key": "~%lld km in linea d'aria",
+        "location": {
+          "startingColumn": 34,
+          "startingLine": 183
+        }
+      },
+      {
+        "comment": "",
+        "key": "parti entro le %@",
+        "location": {
+          "startingColumn": 34,
+          "startingLine": 188
+        }
+      },
+      {
+        "comment": "",
+        "key": "Tappa di oggi",
+        "location": {
+          "startingColumn": 41,
+          "startingLine": 175
+        }
+      },
+      {
+        "comment": "",
+        "key": "Prossima tappa · %@",
+        "location": {
+          "startingColumn": 78,
+          "startingLine": 175
+        }
+      },
+      {
+        "comment": "",
+        "key": "Nessuna allerta sul percorso",
+        "location": {
+          "startingColumn": 31,
+          "startingLine": 111
+        }
+      },
+      {
+        "comment": "",
+        "key": "da %@",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 147
+        }
+      },
+      {
+        "comment": "",
+        "key": "Viaggio più lungo della luce: parti all'alba (%@)",
+        "location": {
+          "startingColumn": 56,
+          "startingLine": 193
+        }
+      },
+      {
+        "comment": "",
+        "key": "Parti entro le %@ per arrivare con la luce",
+        "location": {
+          "startingColumn": 34,
+          "startingLine": 195
+        }
+      },
+      {
+        "comment": "",
+        "key": "Arriverai col buio: guida con prudenza",
+        "location": {
+          "startingColumn": 67,
+          "startingLine": 194
+        }
+      },
+      {
+        "comment": "",
+        "key": "Alba alle %@",
+        "location": {
+          "startingColumn": 80,
+          "startingLine": 200
+        }
+      },
+      {
+        "comment": "",
+        "key": "Già buio (tramonto %@)",
+        "location": {
+          "startingColumn": 53,
+          "startingLine": 202
+        }
+      },
+      {
+        "comment": "",
+        "key": "Luce ancora %lld h %lld min",
+        "location": {
+          "startingColumn": 34,
+          "startingLine": 204
+        }
+      },
+      {
+        "comment": "",
+        "key": "Tappa di oggi",
+        "location": {
+          "startingColumn": 53,
+          "startingLine": 214
+        }
+      },
+      {
+        "comment": "",
+        "key": "Da dove a dove, km, quando partire per arrivare con la luce e le allerte sul percorso.",
+        "location": {
+          "startingColumn": 40,
+          "startingLine": 215
+        }
+      }
+    ]
+  },
+  "version": 1
+}

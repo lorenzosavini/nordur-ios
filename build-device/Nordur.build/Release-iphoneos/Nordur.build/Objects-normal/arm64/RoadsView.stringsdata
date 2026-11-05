@@ -1,0 +1,344 @@
+{
+  "source": "/Users/runner/work/nordur-ios/nordur-ios/Nordur/Views/RoadsView.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Cerca strada, numero o località",
+        "location": {
+          "startingColumn": 61,
+          "startingLine": 67
+        }
+      },
+      {
+        "comment": "",
+        "key": "Strade",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 65
+        }
+      },
+      {
+        "comment": "",
+        "key": "Vegagerðin · umferdin.is",
+        "location": {
+          "startingColumn": 69,
+          "startingLine": 21
+        }
+      },
+      {
+        "comment": "",
+        "key": "Strade",
+        "location": {
+          "startingColumn": 125,
+          "startingLine": 21
+        }
+      },
+      {
+        "comment": "",
+        "key": "Condizioni, chiusure, lavori e notizie in tempo reale",
+        "location": {
+          "startingColumn": 164,
+          "startingLine": 21
+        }
+      },
+      {
+        "comment": "",
+        "key": "Strade e condizioni Vegagerðin",
+        "location": {
+          "startingColumn": 67,
+          "startingLine": 26
+        }
+      },
+      {
+        "comment": "",
+        "key": "Vegagerðin · umferdin.is",
+        "location": {
+          "startingColumn": 139,
+          "startingLine": 35
+        }
+      },
+      {
+        "comment": "",
+        "key": "Vegagerðin",
+        "location": {
+          "startingColumn": 108,
+          "startingLine": 37
+        }
+      },
+      {
+        "comment": "",
+        "key": "Vista",
+        "location": {
+          "startingColumn": 24,
+          "startingLine": 30
+        }
+      },
+      {
+        "comment": "",
+        "key": "Webcam stradali (%lld siti)",
+        "location": {
+          "startingColumn": 65,
+          "startingLine": 51
+        }
+      },
+      {
+        "comment": "",
+        "key": "Pedaggi, tunnel e parcheggi a pagamento",
+        "location": {
+          "startingColumn": 67,
+          "startingLine": 53
+        }
+      },
+      {
+        "comment": "",
+        "key": "Umferdin.is – mappa strade in tempo reale",
+        "location": {
+          "startingColumn": 50,
+          "startingLine": 59
+        }
+      },
+      {
+        "comment": "",
+        "key": "Chiusure, condizioni, webcam",
+        "location": {
+          "startingColumn": 126,
+          "startingLine": 59
+        }
+      },
+      {
+        "comment": "",
+        "key": "Road.is – Vegagerðin",
+        "location": {
+          "startingColumn": 50,
+          "startingLine": 60
+        }
+      },
+      {
+        "comment": "",
+        "key": "Info stradali, strade F nelle Highlands",
+        "location": {
+          "startingColumn": 106,
+          "startingLine": 60
+        }
+      },
+      {
+        "comment": "",
+        "key": "Chiama il 1777",
+        "location": {
+          "startingColumn": 50,
+          "startingLine": 61
+        }
+      },
+      {
+        "comment": "",
+        "key": "Informazioni stradali (8–16, inverno anche 6:30–22)",
+        "location": {
+          "startingColumn": 97,
+          "startingLine": 61
+        }
+      },
+      {
+        "comment": "",
+        "key": "Ufficiale",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 62
+        }
+      },
+      {
+        "comment": "",
+        "key": "Nessuna notizia sulle strade",
+        "location": {
+          "startingColumn": 42,
+          "startingLine": 82
+        }
+      },
+      {
+        "comment": "",
+        "key": "· %@",
+        "location": {
+          "startingColumn": 62,
+          "startingLine": 87
+        }
+      },
+      {
+        "comment": "",
+        "key": "Notizie in tempo reale",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 96
+        }
+      },
+      {
+        "comment": "",
+        "key": "Testi originali di Vegagerðin (in inglese), aggiornati ogni 5 minuti.",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 98
+        }
+      },
+      {
+        "comment": "",
+        "key": "Nessun problema segnalato",
+        "location": {
+          "startingColumn": 45,
+          "startingLine": 114
+        }
+      },
+      {
+        "comment": "",
+        "key": "%lld tratti con problemi",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 119
+        }
+      },
+      {
+        "comment": "",
+        "key": "Lavori e pericoli (%lld)",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 129
+        }
+      },
+      {
+        "comment": "",
+        "key": "%lld tratti · ordinati per distanza da %@",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 149
+        }
+      },
+      {
+        "comment": "",
+        "key": "Nessun problema segnalato",
+        "location": {
+          "startingColumn": 23,
+          "startingLine": 159
+        }
+      },
+      {
+        "comment": "",
+        "key": "Aggiornato %@",
+        "location": {
+          "startingColumn": 34,
+          "startingLine": 168
+        }
+      },
+      {
+        "comment": "",
+        "key": "%lld tratti con problemi",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 173
+        }
+      },
+      {
+        "comment": "",
+        "key": "Ordinate per distanza da %@",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 185
+        }
+      },
+      {
+        "comment": "",
+        "key": "%lld km",
+        "location": {
+          "startingColumn": 43,
+          "startingLine": 226
+        }
+      },
+      {
+        "comment": "",
+        "key": "Peggiorata",
+        "location": {
+          "startingColumn": 48,
+          "startingLine": 219
+        }
+      },
+      {
+        "comment": "",
+        "key": "%lld",
+        "location": {
+          "startingColumn": 31,
+          "startingLine": 221
+        }
+      },
+      {
+        "comment": "",
+        "key": "%lld km",
+        "location": {
+          "startingColumn": 43,
+          "startingLine": 248
+        }
+      },
+      {
+        "comment": "",
+        "key": "Fino al %@",
+        "location": {
+          "startingColumn": 48,
+          "startingLine": 245
+        }
+      },
+      {
+        "comment": "",
+        "key": "Lettura %@",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 283
+        }
+      },
+      {
+        "comment": "",
+        "key": "%lld m",
+        "location": {
+          "startingColumn": 48,
+          "startingLine": 263
+        }
+      },
+      {
+        "comment": "",
+        "key": "%lld km",
+        "location": {
+          "startingColumn": 40,
+          "startingLine": 265
+        }
+      },
+      {
+        "comment": "",
+        "key": "%@ %@",
+        "location": {
+          "startingColumn": 23,
+          "startingLine": 268
+        }
+      },
+      {
+        "comment": "",
+        "key": "raff. %@",
+        "location": {
+          "startingColumn": 23,
+          "startingLine": 269
+        }
+      },
+      {
+        "comment": "",
+        "key": "asfalto %@",
+        "location": {
+          "startingColumn": 23,
+          "startingLine": 272
+        }
+      },
+      {
+        "comment": "",
+        "key": "%@: %@",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 278
+        }
+      }
+    ]
+  },
+  "version": 1
+}

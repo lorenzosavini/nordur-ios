@@ -1,0 +1,216 @@
+{
+  "source": "/Users/runner/work/nordur-ios/nordur-ios/Nordur/Views/SightsView.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Cascata, grotta, nome…",
+        "location": {
+          "startingColumn": 61,
+          "startingLine": 104
+        }
+      },
+      {
+        "comment": "",
+        "key": "Da vedere",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 102
+        }
+      },
+      {
+        "comment": "",
+        "key": "Chiudi",
+        "location": {
+          "startingColumn": 88,
+          "startingLine": 22
+        }
+      },
+      {
+        "comment": "",
+        "key": "Da vedere vicino a %@",
+        "location": {
+          "startingColumn": 69,
+          "startingLine": 44
+        }
+      },
+      {
+        "comment": "",
+        "key": "Solo i più famosi",
+        "location": {
+          "startingColumn": 24,
+          "startingLine": 66
+        }
+      },
+      {
+        "comment": "",
+        "key": "Tutto",
+        "location": {
+          "startingColumn": 48,
+          "startingLine": 60
+        }
+      },
+      {
+        "comment": "",
+        "key": "Piscine e sorgenti calde: orari, aperte ora",
+        "location": {
+          "startingColumn": 40,
+          "startingLine": 69
+        }
+      },
+      {
+        "comment": "",
+        "key": "Nessun risultato",
+        "location": {
+          "startingColumn": 79,
+          "startingLine": 75
+        }
+      },
+      {
+        "comment": "",
+        "key": "Nessun luogo corrisponde ai filtri in questa zona.",
+        "location": {
+          "startingColumn": 59,
+          "startingLine": 76
+        }
+      },
+      {
+        "comment": "",
+        "key": "Togli i filtri",
+        "location": {
+          "startingColumn": 63,
+          "startingLine": 77
+        }
+      },
+      {
+        "comment": "",
+        "key": "%lld luoghi entro %lld km",
+        "location": {
+          "startingColumn": 40,
+          "startingLine": 89
+        }
+      },
+      {
+        "comment": "",
+        "key": "TOP: i luoghi principali scelti dall'app, con tempi di visita e avvertenze. Gli altri vengono da OpenStreetMap (cascate, belvedere, sorgenti calde, grotte, musei, piscine…).",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 92
+        }
+      },
+      {
+        "comment": "",
+        "key": "OpenStreetMap non ancora scaricato: %@",
+        "location": {
+          "startingColumn": 48,
+          "startingLine": 94
+        }
+      },
+      {
+        "comment": "",
+        "key": "OpenStreetMap",
+        "location": {
+          "startingColumn": 110,
+          "startingLine": 96
+        }
+      },
+      {
+        "comment": "",
+        "key": "%@ · ~%@",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 187
+        }
+      },
+      {
+        "comment": "",
+        "key": "Top",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 179
+        }
+      },
+      {
+        "comment": "",
+        "key": "%@ km",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 184
+        }
+      },
+      {
+        "comment": "",
+        "key": "Da vedere",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 263
+        }
+      },
+      {
+        "comment": "",
+        "key": "%lld km in linea d'aria da %@ · visita ~%@",
+        "location": {
+          "startingColumn": 49,
+          "startingLine": 221
+        }
+      },
+      {
+        "comment": "",
+        "key": "Aggiungi una tappa al viaggio per mettere questo luogo nel programma.",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 236
+        }
+      },
+      {
+        "comment": "",
+        "key": "Aggiunto a %@: trovi giorno e ora nella tappa",
+        "location": {
+          "startingColumn": 53,
+          "startingLine": 253
+        }
+      },
+      {
+        "comment": "",
+        "key": "%@ · %@ · %lld km",
+        "location": {
+          "startingColumn": 40,
+          "startingLine": 240
+        }
+      },
+      {
+        "comment": "",
+        "key": "Aggiungi al viaggio",
+        "location": {
+          "startingColumn": 53,
+          "startingLine": 245
+        }
+      },
+      {
+        "comment": "",
+        "key": "Aggiungi alla tappa più vicina: %@",
+        "location": {
+          "startingColumn": 57,
+          "startingLine": 249
+        }
+      },
+      {
+        "comment": "",
+        "key": "Viaggio",
+        "location": {
+          "startingColumn": 34,
+          "startingLine": 257
+        }
+      },
+      {
+        "comment": "",
+        "key": "Chiudi",
+        "location": {
+          "startingColumn": 77,
+          "startingLine": 265
+        }
+      }
+    ]
+  },
+  "version": 1
+}

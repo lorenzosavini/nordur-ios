@@ -1,0 +1,256 @@
+{
+  "source": "/Users/runner/work/nordur-ios/nordur-ios/Nordur/Views/RouteForecastView.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Pianifica percorso",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 37
+        }
+      },
+      {
+        "comment": "",
+        "key": "Partenza alle",
+        "location": {
+          "startingColumn": 46,
+          "startingLine": 24
+        }
+      },
+      {
+        "comment": "",
+        "key": "Partenza",
+        "location": {
+          "startingColumn": 36,
+          "startingLine": 19
+        }
+      },
+      {
+        "comment": "",
+        "key": "Posizione attuale",
+        "location": {
+          "startingColumn": 87,
+          "startingLine": 19
+        }
+      },
+      {
+        "comment": "",
+        "key": "Arrivo",
+        "location": {
+          "startingColumn": 36,
+          "startingLine": 22
+        }
+      },
+      {
+        "comment": "",
+        "key": "Scegli…",
+        "location": {
+          "startingColumn": 83,
+          "startingLine": 22
+        }
+      },
+      {
+        "comment": "",
+        "key": "Percorso",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 25
+        }
+      },
+      {
+        "comment": "",
+        "key": "Mostra meteo e strade sul percorso",
+        "location": {
+          "startingColumn": 31,
+          "startingLine": 31
+        }
+      },
+      {
+        "comment": "",
+        "key": "Chiudi",
+        "location": {
+          "startingColumn": 66,
+          "startingLine": 40
+        }
+      },
+      {
+        "comment": "",
+        "key": "%@ → %@",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 78
+        }
+      },
+      {
+        "comment": "",
+        "key": "Calcolo percorso e previsioni…",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 69
+        }
+      },
+      {
+        "comment": "",
+        "key": " · neve ",
+        "location": {
+          "startingColumn": 34,
+          "startingLine": 98
+        }
+      },
+      {
+        "comment": "",
+        "key": "Percorso",
+        "location": {
+          "startingColumn": 65,
+          "startingLine": 103
+        }
+      },
+      {
+        "comment": "",
+        "key": "Distanza",
+        "location": {
+          "startingColumn": 49,
+          "startingLine": 124
+        }
+      },
+      {
+        "comment": "",
+        "key": "Durata",
+        "location": {
+          "startingColumn": 49,
+          "startingLine": 125
+        }
+      },
+      {
+        "comment": "",
+        "key": "Arrivo",
+        "location": {
+          "startingColumn": 49,
+          "startingLine": 126
+        }
+      },
+      {
+        "comment": "",
+        "key": "Valutazione complessiva",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 129
+        }
+      },
+      {
+        "comment": "",
+        "key": "Avvia navigazione in Apple Mappe",
+        "location": {
+          "startingColumn": 23,
+          "startingLine": 136
+        }
+      },
+      {
+        "comment": "",
+        "key": "Avvia navigazione in Google Maps",
+        "location": {
+          "startingColumn": 23,
+          "startingLine": 139
+        }
+      },
+      {
+        "comment": "",
+        "key": "Allerte vedur.is sul percorso all'ora del passaggio",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 149
+        }
+      },
+      {
+        "comment": "",
+        "key": "Previsione non disponibile",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 173
+        }
+      },
+      {
+        "comment": "",
+        "key": "km %lld",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 156
+        }
+      },
+      {
+        "comment": "",
+        "key": "%@ · %@",
+        "location": {
+          "startingColumn": 34,
+          "startingLine": 164
+        }
+      },
+      {
+        "comment": "",
+        "key": "vedur.is · %@",
+        "location": {
+          "startingColumn": 68,
+          "startingLine": 167
+        }
+      },
+      {
+        "comment": "",
+        "key": "Modelli",
+        "location": {
+          "startingColumn": 112,
+          "startingLine": 167
+        }
+      },
+      {
+        "comment": "",
+        "key": "Meteo previsto quando passi",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 177
+        }
+      },
+      {
+        "comment": "",
+        "key": "Dove c'è una stazione vedur.is vicina e alla stessa quota, temperatura, vento medio e cielo sono la sua previsione ufficiale; raffiche e il resto dai modelli (MET Norway, Open-Meteo).",
+        "location": {
+          "startingColumn": 18,
+          "startingLine": 178
+        }
+      },
+      {
+        "comment": "",
+        "key": "Strade: problemi adesso",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 191
+        }
+      },
+      {
+        "comment": "",
+        "key": "Stazioni stradali lungo il percorso (%lld)",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 199
+        }
+      },
+      {
+        "comment": "",
+        "key": "Webcam lungo il percorso",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 211
+        }
+      },
+      {
+        "comment": "",
+        "key": "Distributori sul percorso (%lld)",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 227
+        }
+      }
+    ]
+  },
+  "version": 1
+}

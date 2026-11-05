@@ -1,0 +1,72 @@
+{
+  "source": "/Users/runner/work/nordur-ios/nordur-ios/Nordur/Views/BackupSettings.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Backup automatico",
+        "location": {
+          "startingColumn": 27,
+          "startingLine": 16
+        }
+      },
+      {
+        "comment": "",
+        "key": "in corso…",
+        "location": {
+          "startingColumn": 64,
+          "startingLine": 20
+        }
+      },
+      {
+        "comment": "",
+        "key": "mai",
+        "location": {
+          "startingColumn": 144,
+          "startingLine": 20
+        }
+      },
+      {
+        "comment": "",
+        "key": "Ultimo backup",
+        "location": {
+          "startingColumn": 27,
+          "startingLine": 23
+        }
+      },
+      {
+        "comment": "",
+        "key": "Esegui backup ora",
+        "location": {
+          "startingColumn": 27,
+          "startingLine": 28
+        }
+      },
+      {
+        "comment": "",
+        "key": "Accedi per attivare il backup",
+        "location": {
+          "startingColumn": 27,
+          "startingLine": 36
+        }
+      },
+      {
+        "comment": "",
+        "key": "Backup",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 39
+        }
+      },
+      {
+        "comment": "",
+        "key": "Viaggio, percorsi registrati, allerte e impostazioni vanno sul tuo account, cifrati. Con «a ogni modifica» il backup parte entro mezzo minuto da ogni cambiamento e invia solo ciò che è cambiato; uscendo dall'app viene sempre salvato l'ultimo stato (tranne con «una volta al giorno» e «solo a mano»).",
+        "location": {
+          "startingColumn": 18,
+          "startingLine": 40
+        }
+      }
+    ]
+  },
+  "version": 1
+}

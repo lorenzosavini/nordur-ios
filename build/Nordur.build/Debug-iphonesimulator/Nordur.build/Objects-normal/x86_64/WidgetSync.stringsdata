@@ -1,0 +1,24 @@
+{
+  "source": "/Users/runner/work/nordur-ios/nordur-ios/Nordur/State/WidgetSync.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Strada: %@ – %@",
+        "location": {
+          "startingColumn": 62,
+          "startingLine": 95
+        }
+      },
+      {
+        "comment": "",
+        "key": "Raffiche fino a %@ a %@",
+        "location": {
+          "startingColumn": 62,
+          "startingLine": 102
+        }
+      }
+    ]
+  },
+  "version": 1
+}

@@ -1,0 +1,456 @@
+{
+  "source": "/Users/runner/work/nordur-ios/nordur-ios/Nordur/Views/SourcesView.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Oggi",
+        "location": {
+          "startingColumn": 44,
+          "startingLine": 16
+        }
+      },
+      {
+        "comment": "",
+        "key": "Condizioni adesso, prossime ore",
+        "location": {
+          "startingColumn": 77,
+          "startingLine": 16
+        }
+      },
+      {
+        "comment": "",
+        "key": "Adesso: misura della stazione vedur.is più vicina. Prossime ore: previsione vedur.is; raffiche e probabilità di pioggia dal modello.",
+        "location": {
+          "startingColumn": 43,
+          "startingLine": 17
+        }
+      },
+      {
+        "comment": "",
+        "key": "Meteo",
+        "location": {
+          "startingColumn": 44,
+          "startingLine": 18
+        }
+      },
+      {
+        "comment": "",
+        "key": "Previsione a 10 giorni, testo del meteorologo",
+        "location": {
+          "startingColumn": 78,
+          "startingLine": 18
+        }
+      },
+      {
+        "comment": "",
+        "key": "Previsione vedur.is per tutto il suo orizzonte (circa 9 giorni), poi il modello. Testo: i meteorologi di vedur.is.",
+        "location": {
+          "startingColumn": 43,
+          "startingLine": 19
+        }
+      },
+      {
+        "comment": "",
+        "key": "Mappa meteo",
+        "location": {
+          "startingColumn": 44,
+          "startingLine": 20
+        }
+      },
+      {
+        "comment": "",
+        "key": "Vento, raffiche, pioggia, neve, nuvole, temperatura",
+        "location": {
+          "startingColumn": 84,
+          "startingLine": 20
+        }
+      },
+      {
+        "comment": "",
+        "key": "Costruita dalle 244 stazioni vedur.is (adesso: misure ogni 10 minuti; poi: previsione). Il modello dà solo la forma tra una stazione e l'altra e copre le zone velate, dove nessuna stazione arriva.",
+        "location": {
+          "startingColumn": 43,
+          "startingLine": 21
+        }
+      },
+      {
+        "comment": "",
+        "key": "Radar",
+        "location": {
+          "startingColumn": 44,
+          "startingLine": 22
+        }
+      },
+      {
+        "comment": "",
+        "key": "Pioggia delle ultime 2 ore",
+        "location": {
+          "startingColumn": 78,
+          "startingLine": 22
+        }
+      },
+      {
+        "comment": "",
+        "key": "RainViewer, mosaico dei radar (compresi quelli islandesi).",
+        "location": {
+          "startingColumn": 43,
+          "startingLine": 23
+        }
+      },
+      {
+        "comment": "",
+        "key": "Viaggio",
+        "location": {
+          "startingColumn": 44,
+          "startingLine": 24
+        }
+      },
+      {
+        "comment": "",
+        "key": "Meteo delle tappe e lungo il percorso, avvisi di vento",
+        "location": {
+          "startingColumn": 80,
+          "startingLine": 24
+        }
+      },
+      {
+        "comment": "",
+        "key": "Stessa regola di Meteo, per ogni tappa e ogni punto del percorso.",
+        "location": {
+          "startingColumn": 43,
+          "startingLine": 25
+        }
+      },
+      {
+        "comment": "",
+        "key": "Allerte",
+        "location": {
+          "startingColumn": 44,
+          "startingLine": 26
+        }
+      },
+      {
+        "comment": "",
+        "key": "Allerte gialle, arancioni, rosse",
+        "location": {
+          "startingColumn": 80,
+          "startingLine": 26
+        }
+      },
+      {
+        "comment": "",
+        "key": "vedur.is.",
+        "location": {
+          "startingColumn": 43,
+          "startingLine": 27
+        }
+      },
+      {
+        "comment": "",
+        "key": "Vulcani e terremoti",
+        "location": {
+          "startingColumn": 44,
+          "startingLine": 28
+        }
+      },
+      {
+        "comment": "",
+        "key": "Scosse, stato dei vulcani, bollettino",
+        "location": {
+          "startingColumn": 92,
+          "startingLine": 28
+        }
+      },
+      {
+        "comment": "",
+        "key": "vedur.is.",
+        "location": {
+          "startingColumn": 43,
+          "startingLine": 29
+        }
+      },
+      {
+        "comment": "",
+        "key": "Strade",
+        "location": {
+          "startingColumn": 44,
+          "startingLine": 30
+        }
+      },
+      {
+        "comment": "",
+        "key": "Condizioni, chiusure, stazioni stradali, webcam",
+        "location": {
+          "startingColumn": 79,
+          "startingLine": 30
+        }
+      },
+      {
+        "comment": "",
+        "key": "Vegagerðin (umferdin.is).",
+        "location": {
+          "startingColumn": 43,
+          "startingLine": 31
+        }
+      },
+      {
+        "comment": "",
+        "key": "Pedaggi e parcheggi",
+        "location": {
+          "startingColumn": 44,
+          "startingLine": 32
+        }
+      },
+      {
+        "comment": "",
+        "key": "Prezzi",
+        "location": {
+          "startingColumn": 92,
+          "startingLine": 32
+        }
+      },
+      {
+        "comment": "",
+        "key": "Fonti ufficiali indicate per ogni voce, più le segnalazioni di chi usa l'app.",
+        "location": {
+          "startingColumn": 43,
+          "startingLine": 33
+        }
+      },
+      {
+        "comment": "",
+        "key": "Avvisi di viaggio",
+        "location": {
+          "startingColumn": 44,
+          "startingLine": 34
+        }
+      },
+      {
+        "comment": "",
+        "key": "Notizie per chi viaggia",
+        "location": {
+          "startingColumn": 90,
+          "startingLine": 34
+        }
+      },
+      {
+        "comment": "",
+        "key": "SafeTravel.is.",
+        "location": {
+          "startingColumn": 43,
+          "startingLine": 35
+        }
+      },
+      {
+        "comment": "",
+        "key": "Aurora",
+        "location": {
+          "startingColumn": 44,
+          "startingLine": 36
+        }
+      },
+      {
+        "comment": "",
+        "key": "Probabilità, Kp, vento solare",
+        "location": {
+          "startingColumn": 79,
+          "startingLine": 36
+        }
+      },
+      {
+        "comment": "",
+        "key": "NOAA, GFZ, NASA; nuvole dalla previsione meteo.",
+        "location": {
+          "startingColumn": 43,
+          "startingLine": 37
+        }
+      },
+      {
+        "comment": "",
+        "key": "Luoghi",
+        "location": {
+          "startingColumn": 44,
+          "startingLine": 38
+        }
+      },
+      {
+        "comment": "",
+        "key": "Distributori, negozi, attrazioni, piscine",
+        "location": {
+          "startingColumn": 79,
+          "startingLine": 38
+        }
+      },
+      {
+        "comment": "",
+        "key": "Distributori e prezzi: Gasvaktin (le compagnie). Altri distributori, colonnine, negozi, attrazioni: OpenStreetMap.",
+        "location": {
+          "startingColumn": 43,
+          "startingLine": 39
+        }
+      },
+      {
+        "comment": "",
+        "key": "Trasporti",
+        "location": {
+          "startingColumn": 44,
+          "startingLine": 40
+        }
+      },
+      {
+        "comment": "",
+        "key": "Voli KEF, traghetti",
+        "location": {
+          "startingColumn": 82,
+          "startingLine": 40
+        }
+      },
+      {
+        "comment": "",
+        "key": "Isavia, Herjólfur.",
+        "location": {
+          "startingColumn": 43,
+          "startingLine": 41
+        }
+      },
+      {
+        "comment": "",
+        "key": "Widget e Live Activity",
+        "location": {
+          "startingColumn": 44,
+          "startingLine": 42
+        }
+      },
+      {
+        "comment": "",
+        "key": "Sintesi",
+        "location": {
+          "startingColumn": 95,
+          "startingLine": 42
+        }
+      },
+      {
+        "comment": "",
+        "key": "Stessa regola di Meteo.",
+        "location": {
+          "startingColumn": 43,
+          "startingLine": 43
+        }
+      },
+      {
+        "comment": "",
+        "key": "Da dove vengono i dati",
+        "location": {
+          "startingColumn": 44,
+          "startingLine": 79
+        }
+      },
+      {
+        "comment": "",
+        "key": "Misurato da una stazione vedur.is",
+        "location": {
+          "startingColumn": 52,
+          "startingLine": 50
+        }
+      },
+      {
+        "comment": "",
+        "key": "Il dato più affidabile: quello che una stazione ha registrato negli ultimi 10–60 minuti.",
+        "location": {
+          "startingColumn": 41,
+          "startingLine": 51
+        }
+      },
+      {
+        "comment": "",
+        "key": "Previsto da vedur.is",
+        "location": {
+          "startingColumn": 52,
+          "startingLine": 52
+        }
+      },
+      {
+        "comment": "",
+        "key": "La previsione ufficiale della stazione vicina e alla stessa quota del luogo, per circa 9 giorni.",
+        "location": {
+          "startingColumn": 41,
+          "startingLine": 53
+        }
+      },
+      {
+        "comment": "",
+        "key": "Modello",
+        "location": {
+          "startingColumn": 49,
+          "startingLine": 54
+        }
+      },
+      {
+        "comment": "",
+        "key": "MET Norway (lo stesso di yr.no) e Open-Meteo: solo per ciò che vedur.is non dà (raffiche previste, probabilità di pioggia, neve in cm), dopo la fine della previsione vedur.is o dove nessuna stazione è adatta.",
+        "location": {
+          "startingColumn": 41,
+          "startingLine": 55
+        }
+      },
+      {
+        "comment": "",
+        "key": "In ordine di affidabilità",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 56
+        }
+      },
+      {
+        "comment": "",
+        "key": "Ogni dato meteo dell'app porta uno di questi tre bollini. Una fonte più in basso non sostituisce mai un valore di una più in alto.",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 57
+        }
+      },
+      {
+        "comment": "",
+        "key": "Sezione per sezione",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 69
+        }
+      },
+      {
+        "comment": "",
+        "key": "vedur.is è il sito di Veðurstofa Íslands, l'istituto meteorologico islandese (in inglese Icelandic Met Office, IMO). Nell'app è sempre chiamato vedur.is.",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 72
+        }
+      },
+      {
+        "comment": "",
+        "key": "I dati sono aggiornati appena vedur.is pubblica: previsioni nuove circa ogni 3 ore, misure ogni 10 minuti, testi più volte al giorno.",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 74
+        }
+      },
+      {
+        "comment": "",
+        "key": "vedur.is",
+        "location": {
+          "startingColumn": 50,
+          "startingLine": 76
+        }
+      },
+      {
+        "comment": "",
+        "key": "vedur.is",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 77
+        }
+      }
+    ]
+  },
+  "version": 1
+}

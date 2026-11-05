@@ -1,0 +1,400 @@
+{
+  "source": "/Users/runner/work/nordur-ios/nordur-ios/Nordur/Views/IMOMoreViews.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Islanda, prossime 36 ore",
+        "location": {
+          "startingColumn": 42,
+          "startingLine": 11
+        }
+      },
+      {
+        "comment": "",
+        "key": "Reykjavík e dintorni",
+        "location": {
+          "startingColumn": 42,
+          "startingLine": 12
+        }
+      },
+      {
+        "comment": "",
+        "key": "Islanda, prossimi giorni",
+        "location": {
+          "startingColumn": 42,
+          "startingLine": 13
+        }
+      },
+      {
+        "comment": "",
+        "key": "Tendenza",
+        "location": {
+          "startingColumn": 42,
+          "startingLine": 14
+        }
+      },
+      {
+        "comment": "",
+        "key": "Situazione generale",
+        "location": {
+          "startingColumn": 42,
+          "startingLine": 15
+        }
+      },
+      {
+        "comment": "",
+        "key": "Altopiani centrali (Miðhálendið)",
+        "location": {
+          "startingColumn": 43,
+          "startingLine": 16
+        }
+      },
+      {
+        "comment": "",
+        "key": "Sud (Suðurland)",
+        "location": {
+          "startingColumn": 43,
+          "startingLine": 17
+        }
+      },
+      {
+        "comment": "",
+        "key": "Faxaflói e Borgarfjörður",
+        "location": {
+          "startingColumn": 43,
+          "startingLine": 18
+        }
+      },
+      {
+        "comment": "",
+        "key": "Breiðafjörður e Snæfellsnes",
+        "location": {
+          "startingColumn": 43,
+          "startingLine": 19
+        }
+      },
+      {
+        "comment": "",
+        "key": "Fiordi occidentali (Vestfirðir)",
+        "location": {
+          "startingColumn": 43,
+          "startingLine": 20
+        }
+      },
+      {
+        "comment": "",
+        "key": "Strandir e Nord-ovest",
+        "location": {
+          "startingColumn": 43,
+          "startingLine": 21
+        }
+      },
+      {
+        "comment": "",
+        "key": "Nord-est (Norðurland eystra)",
+        "location": {
+          "startingColumn": 43,
+          "startingLine": 22
+        }
+      },
+      {
+        "comment": "",
+        "key": "Est (Austurland að Glettingi)",
+        "location": {
+          "startingColumn": 43,
+          "startingLine": 23
+        }
+      },
+      {
+        "comment": "",
+        "key": "Fiordi orientali (Austfirðir)",
+        "location": {
+          "startingColumn": 43,
+          "startingLine": 24
+        }
+      },
+      {
+        "comment": "",
+        "key": "Sud-est (Suðausturland)",
+        "location": {
+          "startingColumn": 43,
+          "startingLine": 25
+        }
+      },
+      {
+        "comment": "",
+        "key": "Il meteorologo · %@",
+        "location": {
+          "startingColumn": 44,
+          "startingLine": 55
+        }
+      },
+      {
+        "comment": "",
+        "key": "Tutte le previsioni scritte",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 65
+        }
+      },
+      {
+        "comment": "",
+        "key": "vedur.is · scritta alle %@, valida fino a %@",
+        "location": {
+          "startingColumn": 44,
+          "startingLine": 83
+        }
+      },
+      {
+        "comment": "",
+        "key": "vedur.is · scritta alle %@",
+        "location": {
+          "startingColumn": 35,
+          "startingLine": 84
+        }
+      },
+      {
+        "comment": "",
+        "key": "Previsioni dei meteorologi",
+        "location": {
+          "startingColumn": 44,
+          "startingLine": 111
+        }
+      },
+      {
+        "comment": "",
+        "key": "Islanda",
+        "location": {
+          "startingColumn": 39,
+          "startingLine": 98
+        }
+      },
+      {
+        "comment": "",
+        "key": "Regioni",
+        "location": {
+          "startingColumn": 39,
+          "startingLine": 99
+        }
+      },
+      {
+        "comment": "",
+        "key": "Situazione generale",
+        "location": {
+          "startingColumn": 39,
+          "startingLine": 101
+        }
+      },
+      {
+        "comment": "",
+        "key": "Mare (zone di pesca e navigazione)",
+        "location": {
+          "startingColumn": 39,
+          "startingLine": 102
+        }
+      },
+      {
+        "comment": "",
+        "key": "Testi scritti dai meteorologi di vedur.is. Le regioni e il mare sono pubblicati solo in islandese: qui sono tradotti automaticamente; i nomi dei luoghi restano originali.",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 105
+        }
+      },
+      {
+        "comment": "",
+        "key": "vedur.is",
+        "location": {
+          "startingColumn": 120,
+          "startingLine": 107
+        }
+      },
+      {
+        "comment": "",
+        "key": "Previsioni testuali su vedur.is",
+        "location": {
+          "startingColumn": 50,
+          "startingLine": 108
+        }
+      },
+      {
+        "comment": "",
+        "key": "Previsioni scritte non ancora caricate.",
+        "location": {
+          "startingColumn": 100,
+          "startingLine": 104
+        }
+      },
+      {
+        "comment": "",
+        "key": "Qui",
+        "location": {
+          "startingColumn": 38,
+          "startingLine": 125
+        }
+      },
+      {
+        "comment": "",
+        "key": "rosso",
+        "location": {
+          "startingColumn": 42,
+          "startingLine": 154
+        }
+      },
+      {
+        "comment": "",
+        "key": "arancione",
+        "location": {
+          "startingColumn": 42,
+          "startingLine": 155
+        }
+      },
+      {
+        "comment": "",
+        "key": "giallo",
+        "location": {
+          "startingColumn": 42,
+          "startingLine": 156
+        }
+      },
+      {
+        "comment": "",
+        "key": "verde",
+        "location": {
+          "startingColumn": 43,
+          "startingLine": 157
+        }
+      },
+      {
+        "comment": "",
+        "key": "eruzione in corso o imminente",
+        "location": {
+          "startingColumn": 42,
+          "startingLine": 164
+        }
+      },
+      {
+        "comment": "",
+        "key": "attività vulcanica molto aumentata",
+        "location": {
+          "startingColumn": 42,
+          "startingLine": 165
+        }
+      },
+      {
+        "comment": "",
+        "key": "attività vulcanica sopra il normale",
+        "location": {
+          "startingColumn": 42,
+          "startingLine": 166
+        }
+      },
+      {
+        "comment": "",
+        "key": "attività normale",
+        "location": {
+          "startingColumn": 43,
+          "startingLine": 167
+        }
+      },
+      {
+        "comment": "",
+        "key": "Tutti i %lld vulcani sono a livello verde: attività normale.",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 187
+        }
+      },
+      {
+        "comment": "",
+        "key": "Bollettino settimanale vedur.is del %@",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 200
+        }
+      },
+      {
+        "comment": "",
+        "key": "vedur.is",
+        "location": {
+          "startingColumn": 104,
+          "startingLine": 202
+        }
+      },
+      {
+        "comment": "",
+        "key": "Vulcani a livello verde (%lld)",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 194
+        }
+      },
+      {
+        "comment": "",
+        "key": "Stato dei vulcani",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 203
+        }
+      },
+      {
+        "comment": "",
+        "key": "Livello di allerta vedur.is (verde → rosso) e codice colore per l'aviazione (VONA). Giallo: attività sopra il normale; arancione: attività aumentata, eruzione possibile; rosso: eruzione in corso o imminente.",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 204
+        }
+      },
+      {
+        "comment": "",
+        "key": "Stato dei vulcani",
+        "location": {
+          "startingColumn": 66,
+          "startingLine": 207
+        }
+      },
+      {
+        "comment": "",
+        "key": "Allerta vedur.is: %@",
+        "location": {
+          "startingColumn": 38,
+          "startingLine": 218
+        }
+      },
+      {
+        "comment": "",
+        "key": "dal %@",
+        "location": {
+          "startingColumn": 80,
+          "startingLine": 220
+        }
+      },
+      {
+        "comment": "",
+        "key": "Aviazione: %@",
+        "location": {
+          "startingColumn": 38,
+          "startingLine": 225
+        }
+      },
+      {
+        "comment": "",
+        "key": "dal %@",
+        "location": {
+          "startingColumn": 83,
+          "startingLine": 226
+        }
+      },
+      {
+        "comment": "",
+        "key": "%lld km",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 236
+        }
+      }
+    ]
+  },
+  "version": 1
+}

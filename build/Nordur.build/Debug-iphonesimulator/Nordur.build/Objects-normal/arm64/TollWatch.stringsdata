@@ -1,0 +1,80 @@
+{
+  "source": "/Users/runner/work/nordur-ios/nordur-ios/Nordur/State/TollWatch.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Circa %@, prezzo indicativo.",
+        "location": {
+          "startingColumn": 73,
+          "startingLine": 77
+        }
+      },
+      {
+        "comment": "",
+        "key": "%@ tra %lld km: %@",
+        "location": {
+          "startingColumn": 38,
+          "startingLine": 83
+        }
+      },
+      {
+        "comment": "",
+        "key": "Parcheggio a pagamento, circa %@",
+        "location": {
+          "startingColumn": 39,
+          "startingLine": 143
+        }
+      },
+      {
+        "comment": "",
+        "key": "Parcheggio a pagamento: verifica il prezzo sul posto",
+        "location": {
+          "startingColumn": 39,
+          "startingLine": 145
+        }
+      },
+      {
+        "comment": "",
+        "key": "Circa %@, prezzo indicativo.",
+        "location": {
+          "startingColumn": 73,
+          "startingLine": 107
+        }
+      },
+      {
+        "comment": "",
+        "key": "Scadenza: %@.",
+        "location": {
+          "startingColumn": 39,
+          "startingLine": 108
+        }
+      },
+      {
+        "comment": "",
+        "key": "Paga %@ entro %lld ore",
+        "location": {
+          "startingColumn": 38,
+          "startingLine": 114
+        }
+      },
+      {
+        "comment": "",
+        "key": "Promemoria: pedaggio %@",
+        "location": {
+          "startingColumn": 43,
+          "startingLine": 126
+        }
+      },
+      {
+        "comment": "",
+        "key": "Se non l'hai già fatto, paga entro le %@: %@",
+        "location": {
+          "startingColumn": 42,
+          "startingLine": 128
+        }
+      }
+    ]
+  },
+  "version": 1
+}

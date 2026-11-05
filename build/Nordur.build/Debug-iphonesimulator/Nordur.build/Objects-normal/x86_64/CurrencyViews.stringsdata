@@ -1,0 +1,176 @@
+{
+  "source": "/Users/runner/work/nordur-ios/nordur-ios/Nordur/Views/CurrencyViews.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Cerca valuta o codice",
+        "location": {
+          "startingColumn": 48,
+          "startingLine": 35
+        }
+      },
+      {
+        "comment": "",
+        "key": "Valute",
+        "location": {
+          "startingColumn": 44,
+          "startingLine": 36
+        }
+      },
+      {
+        "comment": "",
+        "key": "Solo corone",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 19
+        }
+      },
+      {
+        "comment": "",
+        "key": "Mostrate accanto alle corone",
+        "location": {
+          "startingColumn": 34,
+          "startingLine": 24
+        }
+      },
+      {
+        "comment": "",
+        "key": "Fino a %lld valute. Tocca per togliere o aggiungere.",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 25
+        }
+      },
+      {
+        "comment": "",
+        "key": "Tutte le valute",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 32
+        }
+      },
+      {
+        "comment": "",
+        "key": "1.000 kr ≈ %@",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 51
+        }
+      },
+      {
+        "comment": "",
+        "key": "Convertitore valute",
+        "location": {
+          "startingColumn": 44,
+          "startingLine": 129
+        }
+      },
+      {
+        "comment": "",
+        "key": "Importo",
+        "location": {
+          "startingColumn": 45,
+          "startingLine": 80
+        }
+      },
+      {
+        "comment": "",
+        "key": "Da",
+        "location": {
+          "startingColumn": 42,
+          "startingLine": 84
+        }
+      },
+      {
+        "comment": "",
+        "key": "A",
+        "location": {
+          "startingColumn": 42,
+          "startingLine": 90
+        }
+      },
+      {
+        "comment": "",
+        "key": "Inverti",
+        "location": {
+          "startingColumn": 27,
+          "startingLine": 88
+        }
+      },
+      {
+        "comment": "",
+        "key": "Cambi in arrivo…",
+        "location": {
+          "startingColumn": 74,
+          "startingLine": 105
+        }
+      },
+      {
+        "comment": "",
+        "key": "Cambi non disponibili",
+        "location": {
+          "startingColumn": 116,
+          "startingLine": 105
+        }
+      },
+      {
+        "comment": "",
+        "key": "Nessun cambio per questa valuta.",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 108
+        }
+      },
+      {
+        "comment": "",
+        "key": "1 %@ = %@",
+        "location": {
+          "startingColumn": 34,
+          "startingLine": 100
+        }
+      },
+      {
+        "comment": "",
+        "key": "Cambio del %@ (%@), indicativo: banche e carte applicano commissioni.",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 113
+        }
+      },
+      {
+        "comment": "",
+        "key": "Rates By Exchange Rate API",
+        "location": {
+          "startingColumn": 34,
+          "startingLine": 115
+        }
+      },
+      {
+        "comment": "",
+        "key": "Fine",
+        "location": {
+          "startingColumn": 24,
+          "startingLine": 126
+        }
+      },
+      {
+        "comment": "",
+        "key": "Corona islandese",
+        "location": {
+          "startingColumn": 59,
+          "startingLine": 137
+        }
+      },
+      {
+        "comment": "",
+        "key": "%@ (%@)",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 137
+        }
+      }
+    ]
+  },
+  "version": 1
+}

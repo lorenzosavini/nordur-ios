@@ -1,0 +1,576 @@
+{
+  "source": "/Users/runner/work/nordur-ios/nordur-ios/Nordur/Views/TripView.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Importazione non riuscita",
+        "location": {
+          "startingColumn": 20,
+          "startingLine": 238
+        }
+      },
+      {
+        "comment": "",
+        "key": "Viaggio",
+        "location": {
+          "startingColumn": 59,
+          "startingLine": 31
+        }
+      },
+      {
+        "comment": "",
+        "key": "Itinerario",
+        "location": {
+          "startingColumn": 120,
+          "startingLine": 31
+        }
+      },
+      {
+        "comment": "",
+        "key": "%lld tappe",
+        "location": {
+          "startingColumn": 154,
+          "startingLine": 31
+        }
+      },
+      {
+        "comment": "",
+        "key": "Guida",
+        "location": {
+          "startingColumn": 114,
+          "startingLine": 33
+        }
+      },
+      {
+        "comment": "",
+        "key": "Ricevuti",
+        "location": {
+          "startingColumn": 129,
+          "startingLine": 35
+        }
+      },
+      {
+        "comment": "",
+        "key": "Account",
+        "location": {
+          "startingColumn": 71,
+          "startingLine": 38
+        }
+      },
+      {
+        "comment": "",
+        "key": "Aggiungi tappa",
+        "location": {
+          "startingColumn": 53,
+          "startingLine": 40
+        }
+      },
+      {
+        "comment": "",
+        "key": "Kirkjufell · Snæfellsnes",
+        "location": {
+          "startingColumn": 76,
+          "startingLine": 51
+        }
+      },
+      {
+        "comment": "",
+        "key": "Il tuo viaggio",
+        "location": {
+          "startingColumn": 132,
+          "startingLine": 51
+        }
+      },
+      {
+        "comment": "",
+        "key": "NESSUNA TAPPA",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 60
+        }
+      },
+      {
+        "comment": "",
+        "key": "Per ogni tappa: meteo del giorno, allerte, mare e strade lungo il tragitto.",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 61
+        }
+      },
+      {
+        "comment": "",
+        "key": "Aggiungi la prima tappa",
+        "location": {
+          "startingColumn": 38,
+          "startingLine": 65
+        }
+      },
+      {
+        "comment": "",
+        "key": "+",
+        "location": {
+          "startingColumn": 38,
+          "startingLine": 67
+        }
+      },
+      {
+        "comment": "",
+        "key": "Vista",
+        "location": {
+          "startingColumn": 32,
+          "startingLine": 94
+        }
+      },
+      {
+        "comment": "",
+        "key": "Tappa",
+        "location": {
+          "startingColumn": 60,
+          "startingLine": 88
+        }
+      },
+      {
+        "comment": "",
+        "key": "Importa",
+        "location": {
+          "startingColumn": 60,
+          "startingLine": 89
+        }
+      },
+      {
+        "comment": "",
+        "key": "Condividi",
+        "location": {
+          "startingColumn": 60,
+          "startingLine": 90
+        }
+      },
+      {
+        "comment": "",
+        "key": "Giorni",
+        "location": {
+          "startingColumn": 34,
+          "startingLine": 95
+        }
+      },
+      {
+        "comment": "",
+        "key": "Tappe",
+        "location": {
+          "startingColumn": 34,
+          "startingLine": 96
+        }
+      },
+      {
+        "comment": "",
+        "key": "Mappa",
+        "location": {
+          "startingColumn": 34,
+          "startingLine": 97
+        }
+      },
+      {
+        "comment": "",
+        "key": "Tocca un numero per aprire la tappa.",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 113
+        }
+      },
+      {
+        "comment": "",
+        "key": "Importa un viaggio da file GPX o KML",
+        "location": {
+          "startingColumn": 35,
+          "startingLine": 143
+        }
+      },
+      {
+        "comment": "",
+        "key": "Da Google My Maps, gpx.studio, Komoot e altri.",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 146
+        }
+      },
+      {
+        "comment": "",
+        "key": "OK",
+        "location": {
+          "startingColumn": 24,
+          "startingLine": 239
+        }
+      },
+      {
+        "comment": "",
+        "key": "Fonte: %@",
+        "location": {
+          "startingColumn": 44,
+          "startingLine": 298
+        }
+      },
+      {
+        "comment": "",
+        "key": "%@ · %lld %@",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 275
+        }
+      },
+      {
+        "comment": "",
+        "key": "%@/%@",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 287
+        }
+      },
+      {
+        "comment": "",
+        "key": "raff. %@",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 288
+        }
+      },
+      {
+        "comment": "",
+        "key": "%@–%@",
+        "location": {
+          "startingColumn": 27,
+          "startingLine": 294
+        }
+      },
+      {
+        "comment": "",
+        "key": "Tappa passata.",
+        "location": {
+          "startingColumn": 48,
+          "startingLine": 328
+        }
+      },
+      {
+        "comment": "",
+        "key": "Previsioni disponibili circa 10 giorni prima (mancano %lld giorni).",
+        "location": {
+          "startingColumn": 34,
+          "startingLine": 329
+        }
+      },
+      {
+        "comment": "",
+        "key": "Mare ora: onde %@",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 308
+        }
+      },
+      {
+        "comment": "",
+        "key": "Dati attuali: ricontrolla prima di partire.",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 380
+        }
+      },
+      {
+        "comment": "",
+        "key": "Stato del volo: Voli e traghetti.",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 389
+        }
+      },
+      {
+        "comment": "",
+        "key": "Con mare grosso i traghetti possono essere cancellati.",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 392
+        }
+      },
+      {
+        "comment": "",
+        "key": "Verso %@ · ~%lld km in linea d'aria",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 345
+        }
+      },
+      {
+        "comment": "",
+        "key": "Indicazioni",
+        "location": {
+          "startingColumn": 97,
+          "startingLine": 349
+        }
+      },
+      {
+        "comment": "",
+        "key": "Meteo, strade e webcam lungo il percorso",
+        "location": {
+          "startingColumn": 27,
+          "startingLine": 359
+        }
+      },
+      {
+        "comment": "",
+        "key": "Ora lungo il tragitto:",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 370
+        }
+      },
+      {
+        "comment": "",
+        "key": "%lld stazioni · raffica max %@",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 372
+        }
+      },
+      {
+        "comment": "",
+        "key": "• %@: %@",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 375
+        }
+      },
+      {
+        "comment": "",
+        "key": "Nuova tappa",
+        "location": {
+          "startingColumn": 66,
+          "startingLine": 458
+        }
+      },
+      {
+        "comment": "",
+        "key": "Modifica tappa",
+        "location": {
+          "startingColumn": 101,
+          "startingLine": 458
+        }
+      },
+      {
+        "comment": "",
+        "key": "Eliminare questa tappa?",
+        "location": {
+          "startingColumn": 51,
+          "startingLine": 468
+        }
+      },
+      {
+        "comment": "",
+        "key": "Luogo",
+        "location": {
+          "startingColumn": 54,
+          "startingLine": 438
+        }
+      },
+      {
+        "comment": "",
+        "key": "Quando",
+        "location": {
+          "startingColumn": 54,
+          "startingLine": 439
+        }
+      },
+      {
+        "comment": "",
+        "key": "Come ci arrivi",
+        "location": {
+          "startingColumn": 54,
+          "startingLine": 440
+        }
+      },
+      {
+        "comment": "",
+        "key": "Note",
+        "location": {
+          "startingColumn": 54,
+          "startingLine": 441
+        }
+      },
+      {
+        "comment": "",
+        "key": "Prenotazioni, orari, telefono alloggio…",
+        "location": {
+          "startingColumn": 19,
+          "startingLine": 648
+        }
+      },
+      {
+        "comment": "",
+        "key": "Elimina tappa",
+        "location": {
+          "startingColumn": 39,
+          "startingLine": 445
+        }
+      },
+      {
+        "comment": "",
+        "key": "Annulla",
+        "location": {
+          "startingColumn": 70,
+          "startingLine": 461
+        }
+      },
+      {
+        "comment": "",
+        "key": "Elimina tappa",
+        "location": {
+          "startingColumn": 24,
+          "startingLine": 469
+        }
+      },
+      {
+        "comment": "",
+        "key": "Nuova tappa",
+        "location": {
+          "startingColumn": 56,
+          "startingLine": 492
+        }
+      },
+      {
+        "comment": "",
+        "key": "Tappa",
+        "location": {
+          "startingColumn": 91,
+          "startingLine": 492
+        }
+      },
+      {
+        "comment": "",
+        "key": "Dove vai?",
+        "location": {
+          "startingColumn": 55,
+          "startingLine": 494
+        }
+      },
+      {
+        "comment": "",
+        "key": "Scegli",
+        "location": {
+          "startingColumn": 55,
+          "startingLine": 542
+        }
+      },
+      {
+        "comment": "",
+        "key": "Cambia",
+        "location": {
+          "startingColumn": 85,
+          "startingLine": 542
+        }
+      },
+      {
+        "comment": "",
+        "key": "Luoghi principali d'Islanda o qualsiasi indirizzo",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 538
+        }
+      },
+      {
+        "comment": "",
+        "key": "%lld km in linea d'aria da %@",
+        "location": {
+          "startingColumn": 52,
+          "startingLine": 534
+        }
+      },
+      {
+        "comment": "",
+        "key": "Cerca una città, un hotel, una cascata…",
+        "location": {
+          "startingColumn": 59,
+          "startingLine": 528
+        }
+      },
+      {
+        "comment": "",
+        "key": "Arrivo",
+        "location": {
+          "startingColumn": 23,
+          "startingLine": 553
+        }
+      },
+      {
+        "comment": "",
+        "key": "",
+        "location": {
+          "startingColumn": 28,
+          "startingLine": 555
+        }
+      },
+      {
+        "comment": "",
+        "key": "%lld",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 565
+        }
+      },
+      {
+        "comment": "",
+        "key": "Notti",
+        "location": {
+          "startingColumn": 23,
+          "startingLine": 562
+        }
+      },
+      {
+        "comment": "",
+        "key": "Solo di passaggio",
+        "location": {
+          "startingColumn": 54,
+          "startingLine": 571
+        }
+      },
+      {
+        "comment": "",
+        "key": "Partenza",
+        "location": {
+          "startingColumn": 95,
+          "startingLine": 571
+        }
+      },
+      {
+        "comment": "",
+        "key": "Le attrazioni della tappa si spostano con lei (%@ g)",
+        "location": {
+          "startingColumn": 49,
+          "startingLine": 585
+        }
+      },
+      {
+        "comment": "",
+        "key": "Sposta anche le %lld tappe successive",
+        "location": {
+          "startingColumn": 52,
+          "startingLine": 591
+        }
+      },
+      {
+        "comment": "",
+        "key": "Aggiungi tappa",
+        "location": {
+          "startingColumn": 58,
+          "startingLine": 662
+        }
+      },
+      {
+        "comment": "",
+        "key": "Salva modifiche",
+        "location": {
+          "startingColumn": 96,
+          "startingLine": 662
+        }
+      }
+    ]
+  },
+  "version": 1
+}

@@ -1,0 +1,136 @@
+{
+  "source": "/Users/runner/work/nordur-ios/nordur-ios/Nordur/Views/ImportViews.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Da Salute: Garmin, Apple Watch, Strava…",
+        "location": {
+          "startingColumn": 23,
+          "startingLine": 20
+        }
+      },
+      {
+        "comment": "",
+        "key": "Da un file GPX",
+        "location": {
+          "startingColumn": 23,
+          "startingLine": 23
+        }
+      },
+      {
+        "comment": "",
+        "key": "Importa attività",
+        "location": {
+          "startingColumn": 18,
+          "startingLine": 29
+        }
+      },
+      {
+        "comment": "",
+        "key": "Garmin: in Garmin Connect › Altro › Impostazioni › App collegate › Salute di Apple attiva la condivisione. Garmin passa a Salute tempo, distanza, calorie e frequenza cardiaca ma non il tracciato GPS: per il percorso, su connect.garmin.com apri l'attività › ingranaggio › Esporta in GPX e apri il file con Norður. Funziona anche da File, Mail o dal menu Condividi di Strava, Komoot e altre app.",
+        "location": {
+          "startingColumn": 18,
+          "startingLine": 31
+        }
+      },
+      {
+        "comment": "",
+        "key": "%lld tracce importate.",
+        "location": {
+          "startingColumn": 68,
+          "startingLine": 43
+        }
+      },
+      {
+        "comment": "",
+        "key": "Da Salute",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 82
+        }
+      },
+      {
+        "comment": "",
+        "key": "Salute non disponibile",
+        "location": {
+          "startingColumn": 80,
+          "startingLine": 64
+        }
+      },
+      {
+        "comment": "",
+        "key": "Nessuna attività negli ultimi 4 mesi",
+        "location": {
+          "startingColumn": 79,
+          "startingLine": 68
+        }
+      },
+      {
+        "comment": "",
+        "key": "Se usi Garmin, attiva in Garmin Connect la condivisione con Salute e sincronizza l'orologio. Poi torna qui.",
+        "location": {
+          "startingColumn": 59,
+          "startingLine": 69
+        }
+      },
+      {
+        "comment": "",
+        "key": "%lld attività in Salute",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 75
+        }
+      },
+      {
+        "comment": "",
+        "key": "Norður legge da Salute solo le attività che importi; non scrive nulla.",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 77
+        }
+      },
+      {
+        "comment": "",
+        "key": "Fine",
+        "location": {
+          "startingColumn": 73,
+          "startingLine": 84
+        }
+      },
+      {
+        "comment": "",
+        "key": "Su questo dispositivo Salute non è disponibile.",
+        "location": {
+          "startingColumn": 39,
+          "startingLine": 113
+        }
+      },
+      {
+        "comment": "",
+        "key": "Questa installazione di Norður non ha il permesso di Salute: Sideloadly lo toglie quando firma con un Apple ID gratuito. Installa l'app con Xcode per usare Salute, oppure importa le attività da file GPX (per Garmin: connect.garmin.com › attività › ingranaggio › Esporta in GPX).",
+        "location": {
+          "startingColumn": 48,
+          "startingLine": 122
+        }
+      },
+      {
+        "comment": "",
+        "key": "Non è stato possibile leggere Salute: %@. Controlla in Impostazioni › Salute › Accesso ai dati e dispositivi › Norður.",
+        "location": {
+          "startingColumn": 48,
+          "startingLine": 124
+        }
+      },
+      {
+        "comment": "",
+        "key": "Importa",
+        "location": {
+          "startingColumn": 24,
+          "startingLine": 104
+        }
+      }
+    ]
+  },
+  "version": 1
+}

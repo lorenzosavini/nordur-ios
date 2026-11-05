@@ -1,0 +1,240 @@
+{
+  "source": "/Users/runner/work/nordur-ios/nordur-ios/Shared/Services/IMOWeather.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Sereno",
+        "location": {
+          "startingColumn": 44,
+          "startingLine": 294
+        }
+      },
+      {
+        "comment": "",
+        "key": "Poco nuvoloso",
+        "location": {
+          "startingColumn": 90,
+          "startingLine": 294
+        }
+      },
+      {
+        "comment": "",
+        "key": "Nuvoloso",
+        "location": {
+          "startingColumn": 136,
+          "startingLine": 294
+        }
+      },
+      {
+        "comment": "",
+        "key": "Coperto",
+        "location": {
+          "startingColumn": 179,
+          "startingLine": 294
+        }
+      },
+      {
+        "comment": "",
+        "key": "Pioggia debole",
+        "location": {
+          "startingColumn": 45,
+          "startingLine": 295
+        }
+      },
+      {
+        "comment": "",
+        "key": "Pioggia",
+        "location": {
+          "startingColumn": 90,
+          "startingLine": 295
+        }
+      },
+      {
+        "comment": "",
+        "key": "Pioggia forte",
+        "location": {
+          "startingColumn": 134,
+          "startingLine": 295
+        }
+      },
+      {
+        "comment": "",
+        "key": "Pioviggine",
+        "location": {
+          "startingColumn": 181,
+          "startingLine": 295
+        }
+      },
+      {
+        "comment": "",
+        "key": "Nevischio debole",
+        "location": {
+          "startingColumn": 46,
+          "startingLine": 296
+        }
+      },
+      {
+        "comment": "",
+        "key": "Nevischio",
+        "location": {
+          "startingColumn": 94,
+          "startingLine": 296
+        }
+      },
+      {
+        "comment": "",
+        "key": "Neve debole",
+        "location": {
+          "startingColumn": 140,
+          "startingLine": 296
+        }
+      },
+      {
+        "comment": "",
+        "key": "Neve",
+        "location": {
+          "startingColumn": 182,
+          "startingLine": 296
+        }
+      },
+      {
+        "comment": "",
+        "key": "Neve forte",
+        "location": {
+          "startingColumn": 45,
+          "startingLine": 297
+        }
+      },
+      {
+        "comment": "",
+        "key": "Rovesci",
+        "location": {
+          "startingColumn": 94,
+          "startingLine": 297
+        }
+      },
+      {
+        "comment": "",
+        "key": "Rovesci deboli",
+        "location": {
+          "startingColumn": 146,
+          "startingLine": 297
+        }
+      },
+      {
+        "comment": "",
+        "key": "Rovesci di nevischio",
+        "location": {
+          "startingColumn": 48,
+          "startingLine": 298
+        }
+      },
+      {
+        "comment": "",
+        "key": "Rovesci di neve",
+        "location": {
+          "startingColumn": 107,
+          "startingLine": 298
+        }
+      },
+      {
+        "comment": "",
+        "key": "Rovesci di neve deboli",
+        "location": {
+          "startingColumn": 167,
+          "startingLine": 298
+        }
+      },
+      {
+        "comment": "",
+        "key": "Nebbia",
+        "location": {
+          "startingColumn": 38,
+          "startingLine": 299
+        }
+      },
+      {
+        "comment": "",
+        "key": "Polvere",
+        "location": {
+          "startingColumn": 75,
+          "startingLine": 299
+        }
+      },
+      {
+        "comment": "",
+        "key": "Temporale",
+        "location": {
+          "startingColumn": 116,
+          "startingLine": 299
+        }
+      },
+      {
+        "comment": "",
+        "key": "Pioggia gelata",
+        "location": {
+          "startingColumn": 165,
+          "startingLine": 299
+        }
+      },
+      {
+        "comment": "",
+        "key": "Pioviggine debole",
+        "location": {
+          "startingColumn": 48,
+          "startingLine": 300
+        }
+      },
+      {
+        "comment": "",
+        "key": "Pioviggine gelata",
+        "location": {
+          "startingColumn": 108,
+          "startingLine": 300
+        }
+      },
+      {
+        "comment": "",
+        "key": "Mulinelli di polvere",
+        "location": {
+          "startingColumn": 45,
+          "startingLine": 301
+        }
+      },
+      {
+        "comment": "",
+        "key": "Tempesta di polvere",
+        "location": {
+          "startingColumn": 102,
+          "startingLine": 301
+        }
+      },
+      {
+        "comment": "",
+        "key": "Neve sollevata dal vento",
+        "location": {
+          "startingColumn": 47,
+          "startingLine": 302
+        }
+      },
+      {
+        "comment": "",
+        "key": "Grandine",
+        "location": {
+          "startingColumn": 102,
+          "startingLine": 302
+        }
+      },
+      {
+        "comment": "",
+        "key": "Temporale debole",
+        "location": {
+          "startingColumn": 150,
+          "startingLine": 302
+        }
+      }
+    ]
+  },
+  "version": 1
+}

@@ -1,0 +1,288 @@
+{
+  "source": "/Users/runner/work/nordur-ios/nordur-ios/Nordur/Views/TripStopDetail.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "%@ → %@",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 20
+        }
+      },
+      {
+        "comment": "",
+        "key": "Tappe",
+        "location": {
+          "startingColumn": 60,
+          "startingLine": 24
+        }
+      },
+      {
+        "comment": "",
+        "key": "Notti",
+        "location": {
+          "startingColumn": 55,
+          "startingLine": 25
+        }
+      },
+      {
+        "comment": "",
+        "key": "km",
+        "location": {
+          "startingColumn": 69,
+          "startingLine": 26
+        }
+      },
+      {
+        "comment": "",
+        "key": "Attrazioni",
+        "location": {
+          "startingColumn": 55,
+          "startingLine": 27
+        }
+      },
+      {
+        "comment": "",
+        "key": "%lld allerte vedur.is",
+        "location": {
+          "startingColumn": 45,
+          "startingLine": 80
+        }
+      },
+      {
+        "comment": "",
+        "key": "Nessuna attrazione: apri la tappa per i consigli",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 88
+        }
+      },
+      {
+        "comment": "",
+        "key": "DI PASSAGGIO",
+        "location": {
+          "startingColumn": 98,
+          "startingLine": 97
+        }
+      },
+      {
+        "comment": "",
+        "key": "1 notte",
+        "location": {
+          "startingColumn": 59,
+          "startingLine": 98
+        }
+      },
+      {
+        "comment": "",
+        "key": "%lld notti",
+        "location": {
+          "startingColumn": 90,
+          "startingLine": 98
+        }
+      },
+      {
+        "comment": "",
+        "key": "raff. %@",
+        "location": {
+          "startingColumn": 48,
+          "startingLine": 75
+        }
+      },
+      {
+        "comment": "",
+        "key": "%@/%@",
+        "location": {
+          "startingColumn": 31,
+          "startingLine": 74
+        }
+      },
+      {
+        "comment": "",
+        "key": "~%lld km · ~%@",
+        "location": {
+          "startingColumn": 45,
+          "startingLine": 117
+        }
+      },
+      {
+        "comment": "",
+        "key": "~%lld km in linea d'aria",
+        "location": {
+          "startingColumn": 129,
+          "startingLine": 117
+        }
+      },
+      {
+        "comment": "",
+        "key": "strade",
+        "location": {
+          "startingColumn": 88,
+          "startingLine": 119
+        }
+      },
+      {
+        "comment": "",
+        "key": "Tappa %lld di %lld",
+        "location": {
+          "startingColumn": 58,
+          "startingLine": 156
+        }
+      },
+      {
+        "comment": "",
+        "key": "%@ · di passaggio",
+        "location": {
+          "startingColumn": 64,
+          "startingLine": 157
+        }
+      },
+      {
+        "comment": "",
+        "key": "%@ → %@ · %lld notti",
+        "location": {
+          "startingColumn": 64,
+          "startingLine": 158
+        }
+      },
+      {
+        "comment": "",
+        "key": "Arrivo: %@",
+        "location": {
+          "startingColumn": 45,
+          "startingLine": 161
+        }
+      },
+      {
+        "comment": "",
+        "key": "Meteo e allerte",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 172
+        }
+      },
+      {
+        "comment": "",
+        "key": "Giorno della partenza: nessuna attrazione",
+        "location": {
+          "startingColumn": 94,
+          "startingLine": 180
+        }
+      },
+      {
+        "comment": "",
+        "key": "Giornata libera",
+        "location": {
+          "startingColumn": 95,
+          "startingLine": 181
+        }
+      },
+      {
+        "comment": "",
+        "key": "Aggiungi un'attrazione a questo giorno",
+        "location": {
+          "startingColumn": 49,
+          "startingLine": 192
+        }
+      },
+      {
+        "comment": "",
+        "key": "Giorno %lld · %@",
+        "location": {
+          "startingColumn": 44,
+          "startingLine": 197
+        }
+      },
+      {
+        "comment": "",
+        "key": "Tieni premuta un'attrazione per spostarla a un altro giorno o a un'altra tappa.",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 200
+        }
+      },
+      {
+        "comment": "",
+        "key": "Nessun suggerimento qui vicino.",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 209
+        }
+      },
+      {
+        "comment": "",
+        "key": "Aggiungi %@",
+        "location": {
+          "startingColumn": 63,
+          "startingLine": 225
+        }
+      },
+      {
+        "comment": "",
+        "key": "Sulla strada",
+        "location": {
+          "startingColumn": 34,
+          "startingLine": 229
+        }
+      },
+      {
+        "comment": "",
+        "key": "Tutto quello che c'è da vedere, sulla mappa",
+        "location": {
+          "startingColumn": 27,
+          "startingLine": 235
+        }
+      },
+      {
+        "comment": "",
+        "key": "Consigliati per questa tappa",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 238
+        }
+      },
+      {
+        "comment": "",
+        "key": "Vicino a %@ e lungo la strada da %@. Il + li aggiunge al programma dopo l'ultima attrazione.",
+        "location": {
+          "startingColumn": 42,
+          "startingLine": 240
+        }
+      },
+      {
+        "comment": "",
+        "key": "Vicino a %@. Il + li aggiunge al programma dopo l'ultima attrazione.",
+        "location": {
+          "startingColumn": 42,
+          "startingLine": 241
+        }
+      },
+      {
+        "comment": "",
+        "key": "Spesa",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 246
+        }
+      },
+      {
+        "comment": "",
+        "key": "Verso la tappa %lld: %@",
+        "location": {
+          "startingColumn": 52,
+          "startingLine": 251
+        }
+      },
+      {
+        "comment": "",
+        "key": "Modifica",
+        "location": {
+          "startingColumn": 24,
+          "startingLine": 259
+        }
+      }
+    ]
+  },
+  "version": 1
+}

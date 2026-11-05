@@ -1,0 +1,80 @@
+{
+  "source": "/Users/runner/work/nordur-ios/nordur-ios/Nordur/State/RoadWatch.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "peggiorata: %@",
+        "location": {
+          "startingColumn": 89,
+          "startingLine": 188
+        }
+      },
+      {
+        "comment": "",
+        "key": "Tra %lld km (%lld min): %@ – %@",
+        "location": {
+          "startingColumn": 46,
+          "startingLine": 189
+        }
+      },
+      {
+        "comment": "",
+        "key": "Strada davanti: %@",
+        "location": {
+          "startingColumn": 46,
+          "startingLine": 193
+        }
+      },
+      {
+        "comment": "",
+        "key": "Raffiche %@ a %@ tra %lld km (%lld min)",
+        "location": {
+          "startingColumn": 46,
+          "startingLine": 198
+        }
+      },
+      {
+        "comment": "",
+        "key": "Vento forte sulla strada davanti",
+        "location": {
+          "startingColumn": 46,
+          "startingLine": 202
+        }
+      },
+      {
+        "comment": "",
+        "key": "Tra %lld km (%lld min): %@ – %@",
+        "location": {
+          "startingColumn": 46,
+          "startingLine": 210
+        }
+      },
+      {
+        "comment": "",
+        "key": "Sulla strada davanti: %@",
+        "location": {
+          "startingColumn": 46,
+          "startingLine": 214
+        }
+      },
+      {
+        "comment": "",
+        "key": "Tra %lld km (%lld min): %@ – %@",
+        "location": {
+          "startingColumn": 46,
+          "startingLine": 217
+        }
+      },
+      {
+        "comment": "",
+        "key": "Strada davanti: %@",
+        "location": {
+          "startingColumn": 46,
+          "startingLine": 221
+        }
+      }
+    ]
+  },
+  "version": 1
+}

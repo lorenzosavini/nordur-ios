@@ -1,0 +1,136 @@
+{
+  "source": "/Users/runner/work/nordur-ios/nordur-ios/Shared/Services/AuroraConfirm.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "%lld avvistamenti entro %lld km negli ultimi %lld min (%lld a occhio nudo).",
+        "location": {
+          "startingColumn": 44,
+          "startingLine": 111
+        }
+      },
+      {
+        "comment": "",
+        "key": "Il più vicino a %lld km, l'ultimo %@.",
+        "location": {
+          "startingColumn": 48,
+          "startingLine": 113
+        }
+      },
+      {
+        "comment": "",
+        "key": "%lld osservatori con cielo sereno non la vedono.",
+        "location": {
+          "startingColumn": 44,
+          "startingLine": 117
+        }
+      },
+      {
+        "comment": "",
+        "key": "L'assenza di segnalazioni non indica assenza di aurora.",
+        "location": {
+          "startingColumn": 44,
+          "startingLine": 120
+        }
+      },
+      {
+        "comment": "",
+        "key": "Il modello indica attività forte qui.",
+        "location": {
+          "startingColumn": 67,
+          "startingLine": 123
+        }
+      },
+      {
+        "comment": "",
+        "key": "Il modello indica attività moderata qui.",
+        "location": {
+          "startingColumn": 69,
+          "startingLine": 124
+        }
+      },
+      {
+        "comment": "",
+        "key": "Il modello indica attività debole qui.",
+        "location": {
+          "startingColumn": 46,
+          "startingLine": 125
+        }
+      },
+      {
+        "comment": "",
+        "key": "Le segnalazioni superano il modello: può essere un'attività locale non prevista.",
+        "location": {
+          "startingColumn": 46,
+          "startingLine": 129
+        }
+      },
+      {
+        "comment": "",
+        "key": "Il modello prevede attività ma gli osservatori non la vedono: potrebbe essere ancora debole o coperta dalla luce.",
+        "location": {
+          "startingColumn": 46,
+          "startingLine": 130
+        }
+      },
+      {
+        "comment": "",
+        "key": "Qui ora il cielo è in gran parte coperto.",
+        "location": {
+          "startingColumn": 58,
+          "startingLine": 133
+        }
+      },
+      {
+        "comment": "",
+        "key": "Qui ora il cielo è sereno al %lld%%.",
+        "location": {
+          "startingColumn": 46,
+          "startingLine": 134
+        }
+      },
+      {
+        "comment": "",
+        "key": "Aurora confermata dalla community",
+        "location": {
+          "startingColumn": 51,
+          "startingLine": 100
+        }
+      },
+      {
+        "comment": "",
+        "key": "Aurora segnalata vicino a te",
+        "location": {
+          "startingColumn": 48,
+          "startingLine": 101
+        }
+      },
+      {
+        "comment": "",
+        "key": "Una segnalazione da verificare",
+        "location": {
+          "startingColumn": 50,
+          "startingLine": 102
+        }
+      },
+      {
+        "comment": "",
+        "key": "Cielo sereno senza aurora, secondo gli osservatori",
+        "location": {
+          "startingColumn": 55,
+          "startingLine": 103
+        }
+      },
+      {
+        "comment": "",
+        "key": "Nessuna segnalazione recente",
+        "location": {
+          "startingColumn": 51,
+          "startingLine": 104
+        }
+      }
+    ]
+  },
+  "version": 1
+}

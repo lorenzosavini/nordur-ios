@@ -1,0 +1,40 @@
+{
+  "source": "/Users/runner/work/nordur-ios/nordur-ios/Shared/Services/AuroraState.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Tempesta magnetica",
+        "location": {
+          "startingColumn": 46,
+          "startingLine": 160
+        }
+      },
+      {
+        "comment": "",
+        "key": "Campo disturbato: aurora probabile",
+        "location": {
+          "startingColumn": 46,
+          "startingLine": 161
+        }
+      },
+      {
+        "comment": "",
+        "key": "Campo attivo",
+        "location": {
+          "startingColumn": 46,
+          "startingLine": 162
+        }
+      },
+      {
+        "comment": "",
+        "key": "Campo calmo",
+        "location": {
+          "startingColumn": 47,
+          "startingLine": 163
+        }
+      }
+    ]
+  },
+  "version": 1
+}

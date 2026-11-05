@@ -1,0 +1,12 @@
+{
+  "/Users/runner/work/nordur-ios/nordur-ios/Nordur/App/CIRemote.swift" : {
+    "abi-baseline-json" : "/Users/runner/work/nordur-ios/nordur-ios/build-device/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/Nordur.abi.json",
+    "const-values" : "/Users/runner/work/nordur-ios/nordur-ios/build-device/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/Nordur-primary.swiftconstvalues",
+    "dependencies" : "/Users/runner/work/nordur-ios/nordur-ios/build-device/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/Nordur-primary.d",
+    "diagnostics" : "/Users/runner/work/nordur-ios/nordur-ios/build-device/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/Nordur-primary.dia",
+    "objc-header" : "/Users/runner/work/nordur-ios/nordur-ios/build-device/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/Nordur-Swift.h",
+    "swiftdoc" : "/Users/runner/work/nordur-ios/nordur-ios/build-device/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/Nordur.swiftdoc",
+    "swiftmodule" : "/Users/runner/work/nordur-ios/nordur-ios/build-device/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/Nordur.swiftmodule",
+    "swiftsourceinfo" : "/Users/runner/work/nordur-ios/nordur-ios/build-device/Nordur.build/Release-iphoneos/Nordur.build/Objects-normal/arm64/Nordur.swiftsourceinfo"
+  }
+}

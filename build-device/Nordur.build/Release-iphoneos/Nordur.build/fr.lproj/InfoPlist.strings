@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>NSCameraUsageDescription</key>
+	<string>L'appareil photo sert au viseur «Trouver l'aurore», qui vous montre où regarder dans le ciel. Les images ne sont jamais enregistrées ni envoyées.</string>
+	<key>NSHealthShareUsageDescription</key>
+	<string>Norður lit dans Santé les activités que vous choisissez d'importer (par exemple depuis Garmin Connect ou l'Apple Watch) : trace GPS, distance, durée, altitude et fréquence cardiaque. Rien n'est écrit dans Santé.</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>Avec l'accès «Toujours», Norður vérifie les alertes météo, les rafales et les routes fermées autour de vous même quand l'app est fermée, et continue d'enregistrer votre trajet écran verrouillé.</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Norður utilise votre position pour la météo, les alertes, les routes et l'aurore là où vous êtes, et pour enregistrer vos trajets.</string>
+	<key>NSMotionUsageDescription</key>
+	<string>Les données de mouvement indiquent où pointe le téléphone, pour vous guider vers l'aurore.</string>
+</dict>
+</plist>

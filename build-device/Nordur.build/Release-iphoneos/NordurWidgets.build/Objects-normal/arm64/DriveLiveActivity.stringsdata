@@ -1,0 +1,112 @@
+{
+  "source": "/Users/runner/work/nordur-ios/nordur-ios/NordurWidgets/DriveLiveActivity.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "%lld km/h",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 27
+        }
+      },
+      {
+        "comment": "",
+        "key": "media %lld",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 28
+        }
+      },
+      {
+        "comment": "",
+        "key": "Contachilometri %@",
+        "location": {
+          "startingColumn": 34,
+          "startingLine": 49
+        }
+      },
+      {
+        "comment": "",
+        "key": "→%@",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 60
+        }
+      },
+      {
+        "comment": "",
+        "key": "· %@",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 89
+        }
+      },
+      {
+        "comment": "",
+        "key": "· %@",
+        "location": {
+          "startingColumn": 31,
+          "startingLine": 90
+        }
+      },
+      {
+        "comment": "",
+        "key": "%@ · %@",
+        "location": {
+          "startingColumn": 15,
+          "startingLine": 115
+        }
+      },
+      {
+        "comment": "",
+        "key": "Contachilometri %@",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 173
+        }
+      },
+      {
+        "comment": "",
+        "key": "In pausa",
+        "location": {
+          "startingColumn": 56,
+          "startingLine": 136
+        }
+      },
+      {
+        "comment": "",
+        "key": "Norður · in viaggio",
+        "location": {
+          "startingColumn": 88,
+          "startingLine": 136
+        }
+      },
+      {
+        "comment": "",
+        "key": "km",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 144
+        }
+      },
+      {
+        "comment": "",
+        "key": "%lld km/h",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 147
+        }
+      },
+      {
+        "comment": "",
+        "key": "media %lld km/h",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 148
+        }
+      }
+    ]
+  },
+  "version": 1
+}

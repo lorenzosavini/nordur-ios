@@ -1,0 +1,42 @@
+Timestamp               Ty Process[PID:TID]
+2026-11-05 22:11:11.968 E  Nordur[38958:544d9] [com.apple.network:connection] nw_connection_copy_protocol_metadata_internal_block_invoke [C10] Client called nw_connection_copy_protocol_metadata_internal on unconnected nw_connection
+2026-11-05 22:11:11.968 E  Nordur[38958:544d9] [com.apple.network:connection] nw_connection_copy_protocol_metadata_internal_block_invoke [C10] Client called nw_connection_copy_protocol_metadata_internal on unconnected nw_connection
+2026-11-05 22:11:11.968 E  Nordur[38958:544d9] [com.apple.network:connection] nw_connection_copy_connected_local_endpoint_block_invoke [C10] Client called nw_connection_copy_connected_local_endpoint on unconnected nw_connection
+2026-11-05 22:11:11.969 E  Nordur[38958:544d9] [com.apple.network:connection] nw_connection_copy_connected_remote_endpoint_block_invoke [C10] Client called nw_connection_copy_connected_remote_endpoint on unconnected nw_connection
+2026-11-05 22:11:34.327 E  Nordur[39879:54d2c] [com.apple.containermanager:unspecified] container_create_or_lookup_app_group_path_by_app_group_identifier: client is not entitled
+2026-11-05 22:11:36.469 E  Nordur[39879:54d9b] [com.apple.network:connection] nw_connection_copy_protocol_metadata_internal_block_invoke [C10] Client called nw_connection_copy_protocol_metadata_internal on unconnected nw_connection
+2026-11-05 22:11:36.469 E  Nordur[39879:54d9b] [com.apple.network:connection] nw_connection_copy_protocol_metadata_internal_block_invoke [C10] Client called nw_connection_copy_protocol_metadata_internal on unconnected nw_connection
+2026-11-05 22:11:36.469 E  Nordur[39879:54d9b] [com.apple.network:connection] nw_connection_copy_connected_local_endpoint_block_invoke [C10] Client called nw_connection_copy_connected_local_endpoint on unconnected nw_connection
+2026-11-05 22:11:36.469 E  Nordur[39879:54d9b] [com.apple.network:connection] nw_connection_copy_connected_remote_endpoint_block_invoke [C10] Client called nw_connection_copy_connected_remote_endpoint on unconnected nw_connection
+2026-11-05 22:12:00.068 E  Nordur[40906:55669] [com.apple.containermanager:unspecified] container_create_or_lookup_app_group_path_by_app_group_identifier: client is not entitled
+2026-11-05 22:12:01.888 E  Nordur[40906:5568c] [com.apple.network:connection] nw_connection_copy_protocol_metadata_internal_block_invoke [C11] Client called nw_connection_copy_protocol_metadata_internal on unconnected nw_connection
+2026-11-05 22:12:01.888 E  Nordur[40906:5568c] [com.apple.network:connection] nw_connection_copy_protocol_metadata_internal_block_invoke [C11] Client called nw_connection_copy_protocol_metadata_internal on unconnected nw_connection
+2026-11-05 22:12:01.888 E  Nordur[40906:5568c] [com.apple.network:connection] nw_connection_copy_connected_local_endpoint_block_invoke [C11] Client called nw_connection_copy_connected_local_endpoint on unconnected nw_connection
+2026-11-05 22:12:01.888 E  Nordur[40906:5568c] [com.apple.network:connection] nw_connection_copy_connected_remote_endpoint_block_invoke [C11] Client called nw_connection_copy_connected_remote_endpoint on unconnected nw_connection
+2026-11-05 22:12:26.409 E  Nordur[41991:5601b] [com.apple.containermanager:unspecified] container_create_or_lookup_app_group_path_by_app_group_identifier: client is not entitled
+2026-11-05 22:12:26.684 E  Nordur[41991:5601b] [com.apple.GeoServices:ResourceManifest] Failed to locate resource named "default.csv"
+2026-11-05 22:12:26.777 E  Nordur[41991:5601b] [com.apple.coreanimation:API] CAMetalLayer ignoring invalid setDrawableSize width=0.000000 height=0.000000
+2026-11-05 22:12:27.689 E  Nordur[41991:5601b] [com.apple.coregraphics:Unknown process name] clip: empty path.
+2026-11-05 22:12:28.285 E  Nordur[41991:5601b] [com.apple.coregraphics:Unknown process name] clip: empty path.
+2026-11-05 22:12:28.289 E  Nordur[41991:5601b] [com.apple.coregraphics:Unknown process name] clip: empty path.
+2026-11-05 22:12:28.297 E  Nordur[41991:5601b] [com.apple.coregraphics:Unknown process name] clip: empty path.
+2026-11-05 22:12:31.076 E  Nordur[41991:5605b] [com.apple.network:connection] nw_connection_copy_protocol_metadata_internal_block_invoke [C9] Client called nw_connection_copy_protocol_metadata_internal on unconnected nw_connection
+2026-11-05 22:12:31.076 E  Nordur[41991:5605b] [com.apple.network:connection] nw_connection_copy_protocol_metadata_internal_block_invoke [C9] Client called nw_connection_copy_protocol_metadata_internal on unconnected nw_connection
+2026-11-05 22:12:31.077 E  Nordur[41991:5605b] [com.apple.network:connection] nw_connection_copy_connected_local_endpoint_block_invoke [C9] Client called nw_connection_copy_connected_local_endpoint on unconnected nw_connection
+2026-11-05 22:12:31.077 E  Nordur[41991:5605b] [com.apple.network:connection] nw_connection_copy_connected_remote_endpoint_block_invoke [C9] Client called nw_connection_copy_connected_remote_endpoint on unconnected nw_connection
+2026-11-05 22:12:53.505 E  Nordur[43121:56afb] [com.apple.containermanager:unspecified] container_create_or_lookup_app_group_path_by_app_group_identifier: client is not entitled
+2026-11-05 22:12:55.354 F  Nordur[43121:56afb] [com.apple.renderbox:error] building pipeline primitive_gradient-gia4caca8feba4 took 0.802721 seconds
+2026-11-05 22:12:56.702 E  Nordur[43121:56b1e] [com.apple.network:connection] nw_connection_copy_protocol_metadata_internal_block_invoke [C11] Client called nw_connection_copy_protocol_metadata_internal on unconnected nw_connection
+2026-11-05 22:12:56.702 E  Nordur[43121:56b1e] [com.apple.network:connection] nw_connection_copy_protocol_metadata_internal_block_invoke [C11] Client called nw_connection_copy_protocol_metadata_internal on unconnected nw_connection
+2026-11-05 22:12:56.702 E  Nordur[43121:56b1e] [com.apple.network:connection] nw_connection_copy_connected_local_endpoint_block_invoke [C11] Client called nw_connection_copy_connected_local_endpoint on unconnected nw_connection
+2026-11-05 22:12:56.702 E  Nordur[43121:56b1e] [com.apple.network:connection] nw_connection_copy_connected_remote_endpoint_block_invoke [C11] Client called nw_connection_copy_connected_remote_endpoint on unconnected nw_connection
+2026-11-05 22:12:59.688 E  Nordur[43121:56afb] [com.apple.CFBundle:plugin] AddInstanceForFactory: No factory registered for id <CFUUID 0x11a55bf40> F8BB1C28-BAE8-11D6-9C31-00039315CD46
+2026-11-05 22:12:59.862 F  Nordur[43121:56afb] [com.apple.Accessibility:AXCommon] Potential Structural Swift Concurrency Issue: unsafeForcedSync called from Swift Concurrent context.
+2026-11-05 22:12:59.926 E  Nordur[43121:56b16] [com.apple.Accessibility:VoiceDBClient] Error fetching voices: DecodingError.dataCorrupted: Data was corrupted. Debug description: Invalid container metadata for _UnkeyedDecodingContainer, found keyedGraphEncodingNodeID. Using fallback voices.
+2026-11-05 22:13:00.237 E  Nordur[43121:56b28] [com.apple.Accessibility:VoiceDBClient] Error fetching voices: DecodingError.dataCorrupted: Data was corrupted. Debug description: Invalid container metadata for _UnkeyedDecodingContainer, found keyedGraphEncodingNodeID. Using fallback voices.
+2026-11-05 22:13:02.060 E  Nordur[43121:56b29] [com.apple.coreaudio:AQ]        LoudnessManager.mm:1755  ReadPListFile: unable to open stream for LoudnessManager plist
+2026-11-05 22:13:02.060 E  Nordur[43121:56b29] [com.apple.coreaudio:AQ]        LoudnessManager.mm:1261  GetHardwarePlatformKey: cannot get acoustic ID
+2026-11-05 22:13:02.061 E  Nordur[43121:56b29] [com.apple.coreaudio:AQ]        LoudnessManager.mm:1215  IsHardwareSupported: no plist loaded, returning false
+2026-11-05 22:13:02.061 E  Nordur[43121:56b29] [com.apple.coreaudio:AQ]        LoudnessManager.mm:1215  IsHardwareSupported: no plist loaded, returning false
+2026-11-05 22:13:02.204 E  Nordur[43121:56d4a] [com.apple.avfaudio:AVAB]          AVAudioBuffer.mm:281   mBuffers[0].mDataByteSize (0) should be non-zero
+2026-11-05 22:13:17.949 E  Nordur[43121:56b98] [com.apple.coreaudio:AMCP]          HALC_ProxyIOContext.cpp:1623  HALC_ProxyIOContext::IOWorkLoop: skipping cycle due to overload

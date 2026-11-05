@@ -1,0 +1,128 @@
+{
+  "source": "/Users/runner/work/nordur-ios/nordur-ios/Nordur/Views/TripImport.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Nel file non ci sono punti (waypoint o segnaposti). Se è un KMZ di Google My Maps, esportalo come KML.",
+        "location": {
+          "startingColumn": 35,
+          "startingLine": 16
+        }
+      },
+      {
+        "comment": "",
+        "key": "Importa viaggio",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 90
+        }
+      },
+      {
+        "comment": "",
+        "key": "%lld luoghi: %lld tappe e %lld attrazioni.",
+        "location": {
+          "startingColumn": 44,
+          "startingLine": 48
+        }
+      },
+      {
+        "comment": "",
+        "key": "Primo giorno",
+        "location": {
+          "startingColumn": 36,
+          "startingLine": 51
+        }
+      },
+      {
+        "comment": "",
+        "key": "Viaggio attuale",
+        "location": {
+          "startingColumn": 32,
+          "startingLine": 55
+        }
+      },
+      {
+        "comment": "",
+        "key": "Sostituiscilo",
+        "location": {
+          "startingColumn": 34,
+          "startingLine": 56
+        }
+      },
+      {
+        "comment": "",
+        "key": "Aggiungi in coda",
+        "location": {
+          "startingColumn": 34,
+          "startingLine": 57
+        }
+      },
+      {
+        "comment": "",
+        "key": "Le tappe sono i posti dove dormi; ogni attrazione va sotto la tappa del suo giorno o la più vicina. Puoi cambiare tutto anche dopo.",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 61
+        }
+      },
+      {
+        "comment": "",
+        "key": "Notti: %lld",
+        "location": {
+          "startingColumn": 59,
+          "startingLine": 81
+        }
+      },
+      {
+        "comment": "",
+        "key": "",
+        "location": {
+          "startingColumn": 36,
+          "startingLine": 75
+        }
+      },
+      {
+        "comment": "",
+        "key": "Tappa",
+        "location": {
+          "startingColumn": 38,
+          "startingLine": 76
+        }
+      },
+      {
+        "comment": "",
+        "key": "Attrazione",
+        "location": {
+          "startingColumn": 38,
+          "startingLine": 77
+        }
+      },
+      {
+        "comment": "",
+        "key": "Luoghi nel file",
+        "location": {
+          "startingColumn": 34,
+          "startingLine": 87
+        }
+      },
+      {
+        "comment": "",
+        "key": "Annulla",
+        "location": {
+          "startingColumn": 70,
+          "startingLine": 93
+        }
+      },
+      {
+        "comment": "",
+        "key": "Importa",
+        "location": {
+          "startingColumn": 28,
+          "startingLine": 95
+        }
+      }
+    ]
+  },
+  "version": 1
+}

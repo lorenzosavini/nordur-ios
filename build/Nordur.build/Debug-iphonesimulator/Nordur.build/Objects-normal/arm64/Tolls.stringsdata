@@ -1,0 +1,224 @@
+{
+  "source": "/Users/runner/work/nordur-ios/nordur-ios/Nordur/State/Tolls.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Tunnel a pedaggio",
+        "location": {
+          "startingColumn": 52,
+          "startingLine": 165
+        }
+      },
+      {
+        "comment": "",
+        "key": "Strada a pedaggio",
+        "location": {
+          "startingColumn": 50,
+          "startingLine": 166
+        }
+      },
+      {
+        "comment": "",
+        "key": "Parcheggio a pagamento",
+        "location": {
+          "startingColumn": 53,
+          "startingLine": 167
+        }
+      },
+      {
+        "comment": "",
+        "key": "Informazione",
+        "location": {
+          "startingColumn": 43,
+          "startingLine": 168
+        }
+      },
+      {
+        "comment": "",
+        "key": "Auto fino a 5 posti (sotto 3,5 t)",
+        "location": {
+          "startingColumn": 45,
+          "startingLine": 198
+        }
+      },
+      {
+        "comment": "",
+        "key": "Auto o furgone da 6 a 9 posti (sotto 3,5 t)",
+        "location": {
+          "startingColumn": 45,
+          "startingLine": 199
+        }
+      },
+      {
+        "comment": "",
+        "key": "Camper o furgone da 3,5 a 7,5 t",
+        "location": {
+          "startingColumn": 48,
+          "startingLine": 200
+        }
+      },
+      {
+        "comment": "",
+        "key": "Moto",
+        "location": {
+          "startingColumn": 52,
+          "startingLine": 201
+        }
+      },
+      {
+        "comment": "",
+        "key": "Veicoli fino a 3,5 t",
+        "location": {
+          "startingColumn": 53,
+          "startingLine": 219
+        }
+      },
+      {
+        "comment": "",
+        "key": "Veicoli da 3,5 a 7,5 t",
+        "location": {
+          "startingColumn": 51,
+          "startingLine": 220
+        }
+      },
+      {
+        "comment": "",
+        "key": "Veicoli oltre 7,5 t",
+        "location": {
+          "startingColumn": 52,
+          "startingLine": 221
+        }
+      },
+      {
+        "comment": "",
+        "key": "Moto",
+        "location": {
+          "startingColumn": 53,
+          "startingLine": 222
+        }
+      },
+      {
+        "comment": "",
+        "key": "Auto fino a 5 posti",
+        "location": {
+          "startingColumn": 48,
+          "startingLine": 223
+        }
+      },
+      {
+        "comment": "",
+        "key": "Auto da 6 a 9 posti",
+        "location": {
+          "startingColumn": 50,
+          "startingLine": 224
+        }
+      },
+      {
+        "comment": "",
+        "key": "Bus da 10 a 19 posti",
+        "location": {
+          "startingColumn": 52,
+          "startingLine": 225
+        }
+      },
+      {
+        "comment": "",
+        "key": "Bus da 10 a 21 posti",
+        "location": {
+          "startingColumn": 52,
+          "startingLine": 226
+        }
+      },
+      {
+        "comment": "",
+        "key": "Bus da 20 a 32 posti",
+        "location": {
+          "startingColumn": 52,
+          "startingLine": 227
+        }
+      },
+      {
+        "comment": "",
+        "key": "Bus da 22 a 32 posti",
+        "location": {
+          "startingColumn": 52,
+          "startingLine": 228
+        }
+      },
+      {
+        "comment": "",
+        "key": "Bus da 33 posti in su",
+        "location": {
+          "startingColumn": 49,
+          "startingLine": 229
+        }
+      },
+      {
+        "comment": "",
+        "key": "a passaggio",
+        "location": {
+          "startingColumn": 47,
+          "startingLine": 236
+        }
+      },
+      {
+        "comment": "",
+        "key": "al giorno",
+        "location": {
+          "startingColumn": 46,
+          "startingLine": 237
+        }
+      },
+      {
+        "comment": "",
+        "key": "all'ora",
+        "location": {
+          "startingColumn": 47,
+          "startingLine": 238
+        }
+      },
+      {
+        "comment": "",
+        "key": "al km",
+        "location": {
+          "startingColumn": 45,
+          "startingLine": 239
+        }
+      },
+      {
+        "comment": "",
+        "key": "Importo non valido: scrivi le corone, tra 50 e 100.000.",
+        "location": {
+          "startingColumn": 56,
+          "startingLine": 298
+        }
+      },
+      {
+        "comment": "",
+        "key": "L'importo è troppo lontano dal prezzo ufficiale: controlla di aver scritto le corone.",
+        "location": {
+          "startingColumn": 53,
+          "startingLine": 299
+        }
+      },
+      {
+        "comment": "",
+        "key": "Troppe segnalazioni: riprova più tardi.",
+        "location": {
+          "startingColumn": 54,
+          "startingLine": 300
+        }
+      },
+      {
+        "comment": "",
+        "key": "Segnalazione non inviata, riprova più tardi.",
+        "location": {
+          "startingColumn": 50,
+          "startingLine": 301
+        }
+      }
+    ]
+  },
+  "version": 1
+}

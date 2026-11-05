@@ -1,0 +1,400 @@
+{
+  "source": "/Users/runner/work/nordur-ios/nordur-ios/Shared/Services/RoadInfo.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Altopiani",
+        "location": {
+          "startingColumn": 56,
+          "startingLine": 97
+        }
+      },
+      {
+        "comment": "",
+        "key": "Nord",
+        "location": {
+          "startingColumn": 52,
+          "startingLine": 98
+        }
+      },
+      {
+        "comment": "",
+        "key": "Nord-est",
+        "location": {
+          "startingColumn": 56,
+          "startingLine": 99
+        }
+      },
+      {
+        "comment": "",
+        "key": "Sud",
+        "location": {
+          "startingColumn": 52,
+          "startingLine": 100
+        }
+      },
+      {
+        "comment": "",
+        "key": "Sud-est",
+        "location": {
+          "startingColumn": 56,
+          "startingLine": 101
+        }
+      },
+      {
+        "comment": "",
+        "key": "Sud-ovest",
+        "location": {
+          "startingColumn": 56,
+          "startingLine": 102
+        }
+      },
+      {
+        "comment": "",
+        "key": "Ovest",
+        "location": {
+          "startingColumn": 51,
+          "startingLine": 103
+        }
+      },
+      {
+        "comment": "",
+        "key": "In generale",
+        "location": {
+          "startingColumn": 55,
+          "startingLine": 104
+        }
+      },
+      {
+        "comment": "",
+        "key": "Limiti di peso",
+        "location": {
+          "startingColumn": 65,
+          "startingLine": 105
+        }
+      },
+      {
+        "comment": "",
+        "key": "Percorribile",
+        "location": {
+          "startingColumn": 44,
+          "startingLine": 138
+        }
+      },
+      {
+        "comment": "",
+        "key": "Tratti ghiacciati",
+        "location": {
+          "startingColumn": 44,
+          "startingLine": 139
+        }
+      },
+      {
+        "comment": "",
+        "key": "Strada scivolosa",
+        "location": {
+          "startingColumn": 44,
+          "startingLine": 140
+        }
+      },
+      {
+        "comment": "",
+        "key": "Estremamente scivolosa",
+        "location": {
+          "startingColumn": 44,
+          "startingLine": 141
+        }
+      },
+      {
+        "comment": "",
+        "key": "Neve bagnata",
+        "location": {
+          "startingColumn": 44,
+          "startingLine": 142
+        }
+      },
+      {
+        "comment": "",
+        "key": "Neve sulla carreggiata",
+        "location": {
+          "startingColumn": 44,
+          "startingLine": 143
+        }
+      },
+      {
+        "comment": "",
+        "key": "Guida difficile",
+        "location": {
+          "startingColumn": 44,
+          "startingLine": 144
+        }
+      },
+      {
+        "comment": "",
+        "key": "Condizioni stradali difficili",
+        "location": {
+          "startingColumn": 44,
+          "startingLine": 145
+        }
+      },
+      {
+        "comment": "",
+        "key": "Impraticabile / chiusa",
+        "location": {
+          "startingColumn": 49,
+          "startingLine": 146
+        }
+      },
+      {
+        "comment": "",
+        "key": "Chiusa al traffico",
+        "location": {
+          "startingColumn": 44,
+          "startingLine": 147
+        }
+      },
+      {
+        "comment": "",
+        "key": "Solo veicoli 4x4 da montagna",
+        "location": {
+          "startingColumn": 44,
+          "startingLine": 148
+        }
+      },
+      {
+        "comment": "",
+        "key": "Nessun servizio invernale",
+        "location": {
+          "startingColumn": 44,
+          "startingLine": 149
+        }
+      },
+      {
+        "comment": "",
+        "key": "Stato sconosciuto",
+        "location": {
+          "startingColumn": 44,
+          "startingLine": 150
+        }
+      },
+      {
+        "comment": "",
+        "key": "Tempesta",
+        "location": {
+          "startingColumn": 44,
+          "startingLine": 171
+        }
+      },
+      {
+        "comment": "",
+        "key": "Nevicata",
+        "location": {
+          "startingColumn": 44,
+          "startingLine": 172
+        }
+      },
+      {
+        "comment": "",
+        "key": "Neve soffiata dal vento",
+        "location": {
+          "startingColumn": 44,
+          "startingLine": 173
+        }
+      },
+      {
+        "comment": "",
+        "key": "Bufera di neve",
+        "location": {
+          "startingColumn": 44,
+          "startingLine": 174
+        }
+      },
+      {
+        "comment": "",
+        "key": "Nebbia",
+        "location": {
+          "startingColumn": 44,
+          "startingLine": 175
+        }
+      },
+      {
+        "comment": "",
+        "key": "Sgombero neve in corso",
+        "location": {
+          "startingColumn": 44,
+          "startingLine": 176
+        }
+      },
+      {
+        "comment": "",
+        "key": "Sabbia sollevata dal vento",
+        "location": {
+          "startingColumn": 44,
+          "startingLine": 177
+        }
+      },
+      {
+        "comment": "",
+        "key": "Rovesci di neve",
+        "location": {
+          "startingColumn": 45,
+          "startingLine": 178
+        }
+      },
+      {
+        "comment": "",
+        "key": "Condizioni sconosciute fuori dall'orario di servizio",
+        "location": {
+          "startingColumn": 45,
+          "startingLine": 179
+        }
+      },
+      {
+        "comment": "",
+        "key": "Lavori stradali",
+        "location": {
+          "startingColumn": 58,
+          "startingLine": 187
+        }
+      },
+      {
+        "comment": "",
+        "key": "Buche sulla strada",
+        "location": {
+          "startingColumn": 62,
+          "startingLine": 188
+        }
+      },
+      {
+        "comment": "",
+        "key": "Caduta massi",
+        "location": {
+          "startingColumn": 53,
+          "startingLine": 189
+        }
+      },
+      {
+        "comment": "",
+        "key": "Proiezione di ghiaia",
+        "location": {
+          "startingColumn": 46,
+          "startingLine": 190
+        }
+      },
+      {
+        "comment": "",
+        "key": "Limiti di peso",
+        "location": {
+          "startingColumn": 62,
+          "startingLine": 191
+        }
+      },
+      {
+        "comment": "",
+        "key": "Strada dissestata",
+        "location": {
+          "startingColumn": 58,
+          "startingLine": 192
+        }
+      },
+      {
+        "comment": "",
+        "key": "Divieto di transito",
+        "location": {
+          "startingColumn": 67,
+          "startingLine": 193
+        }
+      },
+      {
+        "comment": "",
+        "key": "Animali sulla strada",
+        "location": {
+          "startingColumn": 54,
+          "startingLine": 194
+        }
+      },
+      {
+        "comment": "",
+        "key": "Raffiche improvvise",
+        "location": {
+          "startingColumn": 56,
+          "startingLine": 195
+        }
+      },
+      {
+        "comment": "",
+        "key": "Bitume affiorante: scivoloso",
+        "location": {
+          "startingColumn": 57,
+          "startingLine": 196
+        }
+      },
+      {
+        "comment": "",
+        "key": "Avviso",
+        "location": {
+          "startingColumn": 44,
+          "startingLine": 197
+        }
+      },
+      {
+        "comment": "",
+        "key": "Hringvegur (Ring Road): strada nazionale principale",
+        "location": {
+          "startingColumn": 49,
+          "startingLine": 203
+        }
+      },
+      {
+        "comment": "",
+        "key": "Strada F di montagna: solo 4x4, guadi senza ponti, aperta in genere da giugno a settembre",
+        "location": {
+          "startingColumn": 70,
+          "startingLine": 204
+        }
+      },
+      {
+        "comment": "",
+        "key": "Strada principale (stofnvegur)",
+        "location": {
+          "startingColumn": 45,
+          "startingLine": 207
+        }
+      },
+      {
+        "comment": "",
+        "key": "Strada regionale o di collegamento (tengivegur)",
+        "location": {
+          "startingColumn": 42,
+          "startingLine": 208
+        }
+      },
+      {
+        "comment": "",
+        "key": "Strada locale",
+        "location": {
+          "startingColumn": 43,
+          "startingLine": 209
+        }
+      },
+      {
+        "comment": "",
+        "key": "Stato sconosciuto",
+        "location": {
+          "startingColumn": 101,
+          "startingLine": 217
+        }
+      },
+      {
+        "comment": "",
+        "key": "24 h",
+        "location": {
+          "startingColumn": 47,
+          "startingLine": 238
+        }
+      }
+    ]
+  },
+  "version": 1
+}

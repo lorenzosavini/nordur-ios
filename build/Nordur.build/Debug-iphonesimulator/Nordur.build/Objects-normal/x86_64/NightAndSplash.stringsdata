@@ -1,0 +1,56 @@
+{
+  "source": "/Users/runner/work/nordur-ios/nordur-ios/Nordur/Views/NightAndSplash.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Visione notturna rossa",
+        "location": {
+          "startingColumn": 47,
+          "startingLine": 48
+        }
+      },
+      {
+        "comment": "",
+        "key": "NOTTE ON",
+        "location": {
+          "startingColumn": 45,
+          "startingLine": 40
+        }
+      },
+      {
+        "comment": "",
+        "key": "NOTTE",
+        "location": {
+          "startingColumn": 77,
+          "startingLine": 40
+        }
+      },
+      {
+        "comment": "",
+        "key": "NORÐUR",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 87
+        }
+      },
+      {
+        "comment": "",
+        "key": "Islanda: aurora, meteo, strade",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 91
+        }
+      },
+      {
+        "comment": "",
+        "key": "D",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 79
+        }
+      }
+    ]
+  },
+  "version": 1
+}

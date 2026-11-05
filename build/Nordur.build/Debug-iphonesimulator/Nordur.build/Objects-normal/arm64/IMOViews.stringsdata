@@ -1,0 +1,192 @@
+{
+  "source": "/Users/runner/work/nordur-ios/nordur-ios/Nordur/Views/IMOViews.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "vedur.is · stazione a %lld km, misura delle %@ (ogni 10 minuti)",
+        "location": {
+          "startingColumn": 38,
+          "startingLine": 49
+        }
+      },
+      {
+        "comment": "",
+        "key": "vedur.is · stazione a %lld km, misura delle %@",
+        "location": {
+          "startingColumn": 38,
+          "startingLine": 50
+        }
+      },
+      {
+        "comment": "",
+        "key": "Adesso",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 13
+        }
+      },
+      {
+        "comment": "",
+        "key": "aria",
+        "location": {
+          "startingColumn": 60,
+          "startingLine": 23
+        }
+      },
+      {
+        "comment": "",
+        "key": "vento",
+        "location": {
+          "startingColumn": 76,
+          "startingLine": 27
+        }
+      },
+      {
+        "comment": "",
+        "key": "vento da %@",
+        "location": {
+          "startingColumn": 105,
+          "startingLine": 27
+        }
+      },
+      {
+        "comment": "",
+        "key": "raffica misurata",
+        "location": {
+          "startingColumn": 81,
+          "startingLine": 31
+        }
+      },
+      {
+        "comment": "",
+        "key": "vento max 1 h",
+        "location": {
+          "startingColumn": 87,
+          "startingLine": 67
+        }
+      },
+      {
+        "comment": "",
+        "key": "umidità",
+        "location": {
+          "startingColumn": 69,
+          "startingLine": 68
+        }
+      },
+      {
+        "comment": "",
+        "key": "punto di rugiada",
+        "location": {
+          "startingColumn": 69,
+          "startingLine": 69
+        }
+      },
+      {
+        "comment": "",
+        "key": "pressione",
+        "location": {
+          "startingColumn": 69,
+          "startingLine": 70
+        }
+      },
+      {
+        "comment": "",
+        "key": "pioggia 1 h",
+        "location": {
+          "startingColumn": 74,
+          "startingLine": 71
+        }
+      },
+      {
+        "comment": "",
+        "key": "visibilità",
+        "location": {
+          "startingColumn": 71,
+          "startingLine": 72
+        }
+      },
+      {
+        "comment": "",
+        "key": "nuvolosità",
+        "location": {
+          "startingColumn": 66,
+          "startingLine": 73
+        }
+      },
+      {
+        "comment": "",
+        "key": "neve al suolo",
+        "location": {
+          "startingColumn": 70,
+          "startingLine": 74
+        }
+      },
+      {
+        "comment": "",
+        "key": "suolo",
+        "location": {
+          "startingColumn": 70,
+          "startingLine": 75
+        }
+      },
+      {
+        "comment": "",
+        "key": "mare",
+        "location": {
+          "startingColumn": 64,
+          "startingLine": 76
+        }
+      },
+      {
+        "comment": "",
+        "key": "Raffiche e probabilità di pioggia: modelli. Dopo %@: solo modelli.",
+        "location": {
+          "startingColumn": 40,
+          "startingLine": 117
+        }
+      },
+      {
+        "comment": "",
+        "key": "Stazione %@, %lld km · emessa %@",
+        "location": {
+          "startingColumn": 62,
+          "startingLine": 114
+        }
+      },
+      {
+        "comment": "",
+        "key": "Stazione %@, %lld km",
+        "location": {
+          "startingColumn": 43,
+          "startingLine": 115
+        }
+      },
+      {
+        "comment": "",
+        "key": "vedur.is · misurato",
+        "location": {
+          "startingColumn": 50,
+          "startingLine": 135
+        }
+      },
+      {
+        "comment": "",
+        "key": "vedur.is · previsto",
+        "location": {
+          "startingColumn": 50,
+          "startingLine": 136
+        }
+      },
+      {
+        "comment": "",
+        "key": "Modello",
+        "location": {
+          "startingColumn": 47,
+          "startingLine": 137
+        }
+      }
+    ]
+  },
+  "version": 1
+}

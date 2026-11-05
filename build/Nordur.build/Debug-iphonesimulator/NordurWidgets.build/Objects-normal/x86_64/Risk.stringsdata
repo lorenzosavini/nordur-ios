@@ -1,0 +1,72 @@
+{
+  "source": "/Users/runner/work/nordur-ios/nordur-ios/Shared/Core/Risk.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Buono",
+        "location": {
+          "startingColumn": 44,
+          "startingLine": 20
+        }
+      },
+      {
+        "comment": "",
+        "key": "Attenzione",
+        "location": {
+          "startingColumn": 49,
+          "startingLine": 21
+        }
+      },
+      {
+        "comment": "",
+        "key": "Difficile",
+        "location": {
+          "startingColumn": 49,
+          "startingLine": 22
+        }
+      },
+      {
+        "comment": "",
+        "key": "Pericoloso",
+        "location": {
+          "startingColumn": 48,
+          "startingLine": 23
+        }
+      },
+      {
+        "comment": "",
+        "key": "Vento gestibile.",
+        "location": {
+          "startingColumn": 44,
+          "startingLine": 56
+        }
+      },
+      {
+        "comment": "",
+        "key": "Vento sostenuto: tieni salde le portiere dell'auto aprendole.",
+        "location": {
+          "startingColumn": 49,
+          "startingLine": 57
+        }
+      },
+      {
+        "comment": "",
+        "key": "Guida impegnativa, raffiche forti vicino alle montagne. Evita camper e auto alte.",
+        "location": {
+          "startingColumn": 49,
+          "startingLine": 58
+        }
+      },
+      {
+        "comment": "",
+        "key": "Sconsigliato mettersi in viaggio. Controlla umferdin.is e safetravel.is.",
+        "location": {
+          "startingColumn": 48,
+          "startingLine": 59
+        }
+      }
+    ]
+  },
+  "version": 1
+}

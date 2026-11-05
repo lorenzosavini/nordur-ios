@@ -1,0 +1,56 @@
+{
+  "source": "/Users/runner/work/nordur-ios/nordur-ios/Shared/Models/Trip.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Auto",
+        "location": {
+          "startingColumn": 45,
+          "startingLine": 10
+        }
+      },
+      {
+        "comment": "",
+        "key": "Aereo",
+        "location": {
+          "startingColumn": 47,
+          "startingLine": 11
+        }
+      },
+      {
+        "comment": "",
+        "key": "Traghetto",
+        "location": {
+          "startingColumn": 47,
+          "startingLine": 12
+        }
+      },
+      {
+        "comment": "",
+        "key": "Bus",
+        "location": {
+          "startingColumn": 45,
+          "startingLine": 13
+        }
+      },
+      {
+        "comment": "",
+        "key": "A piedi / trekking",
+        "location": {
+          "startingColumn": 46,
+          "startingLine": 14
+        }
+      },
+      {
+        "comment": "",
+        "key": "Escursione in barca",
+        "location": {
+          "startingColumn": 46,
+          "startingLine": 15
+        }
+      }
+    ]
+  },
+  "version": 1
+}

@@ -1,0 +1,232 @@
+{
+  "source": "/Users/runner/work/nordur-ios/nordur-ios/Shared/Models/Place.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Capitale",
+        "location": {
+          "startingColumn": 111,
+          "startingLine": 24
+        }
+      },
+      {
+        "comment": "",
+        "key": "Penisola di Reykjanes",
+        "location": {
+          "startingColumn": 110,
+          "startingLine": 29
+        }
+      },
+      {
+        "comment": "",
+        "key": "Reykjanes – zona vulcanica attiva",
+        "location": {
+          "startingColumn": 106,
+          "startingLine": 30
+        }
+      },
+      {
+        "comment": "",
+        "key": "Golden Circle",
+        "location": {
+          "startingColumn": 93,
+          "startingLine": 31
+        }
+      },
+      {
+        "comment": "",
+        "key": "Golden Circle",
+        "location": {
+          "startingColumn": 88,
+          "startingLine": 32
+        }
+      },
+      {
+        "comment": "",
+        "key": "Golden Circle",
+        "location": {
+          "startingColumn": 90,
+          "startingLine": 33
+        }
+      },
+      {
+        "comment": "",
+        "key": "Sud",
+        "location": {
+          "startingColumn": 89,
+          "startingLine": 34
+        }
+      },
+      {
+        "comment": "",
+        "key": "Sud",
+        "location": {
+          "startingColumn": 96,
+          "startingLine": 35
+        }
+      },
+      {
+        "comment": "",
+        "key": "Porto per Vestmannaeyjar",
+        "location": {
+          "startingColumn": 107,
+          "startingLine": 36
+        }
+      },
+      {
+        "comment": "",
+        "key": "Isole Westman",
+        "location": {
+          "startingColumn": 96,
+          "startingLine": 37
+        }
+      },
+      {
+        "comment": "",
+        "key": "Sud",
+        "location": {
+          "startingColumn": 92,
+          "startingLine": 38
+        }
+      },
+      {
+        "comment": "",
+        "key": "Spiaggia nera – onde anomale",
+        "location": {
+          "startingColumn": 93,
+          "startingLine": 39
+        }
+      },
+      {
+        "comment": "",
+        "key": "Sud",
+        "location": {
+          "startingColumn": 97,
+          "startingLine": 40
+        }
+      },
+      {
+        "comment": "",
+        "key": "Highlands – solo strade F",
+        "location": {
+          "startingColumn": 97,
+          "startingLine": 41
+        }
+      },
+      {
+        "comment": "",
+        "key": "Vatnajökull",
+        "location": {
+          "startingColumn": 92,
+          "startingLine": 42
+        }
+      },
+      {
+        "comment": "",
+        "key": "Laguna glaciale",
+        "location": {
+          "startingColumn": 96,
+          "startingLine": 43
+        }
+      },
+      {
+        "comment": "",
+        "key": "Sud-est",
+        "location": {
+          "startingColumn": 87,
+          "startingLine": 44
+        }
+      },
+      {
+        "comment": "",
+        "key": "Est",
+        "location": {
+          "startingColumn": 94,
+          "startingLine": 45
+        }
+      },
+      {
+        "comment": "",
+        "key": "Fiordi orientali",
+        "location": {
+          "startingColumn": 98,
+          "startingLine": 46
+        }
+      },
+      {
+        "comment": "",
+        "key": "Nord-est",
+        "location": {
+          "startingColumn": 91,
+          "startingLine": 47
+        }
+      },
+      {
+        "comment": "",
+        "key": "Nord",
+        "location": {
+          "startingColumn": 104,
+          "startingLine": 48
+        }
+      },
+      {
+        "comment": "",
+        "key": "Nord – whale watching",
+        "location": {
+          "startingColumn": 91,
+          "startingLine": 49
+        }
+      },
+      {
+        "comment": "",
+        "key": "Nord",
+        "location": {
+          "startingColumn": 90,
+          "startingLine": 50
+        }
+      },
+      {
+        "comment": "",
+        "key": "Penisola di Tröllaskagi",
+        "location": {
+          "startingColumn": 96,
+          "startingLine": 51
+        }
+      },
+      {
+        "comment": "",
+        "key": "Fiordi occidentali",
+        "location": {
+          "startingColumn": 95,
+          "startingLine": 52
+        }
+      },
+      {
+        "comment": "",
+        "key": "Snæfellsnes",
+        "location": {
+          "startingColumn": 111,
+          "startingLine": 53
+        }
+      },
+      {
+        "comment": "",
+        "key": "Snæfellsnes",
+        "location": {
+          "startingColumn": 92,
+          "startingLine": 54
+        }
+      },
+      {
+        "comment": "",
+        "key": "Ovest",
+        "location": {
+          "startingColumn": 91,
+          "startingLine": 55
+        }
+      }
+    ]
+  },
+  "version": 1
+}

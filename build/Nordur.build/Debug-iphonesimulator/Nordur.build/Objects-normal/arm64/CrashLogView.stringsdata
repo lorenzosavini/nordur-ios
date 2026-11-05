@@ -1,0 +1,152 @@
+{
+  "source": "/Users/runner/work/nordur-ios/nordur-ios/Nordur/Views/CrashLogView.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Registro errori",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 30
+        }
+      },
+      {
+        "comment": "",
+        "key": "Norður: registro errori",
+        "location": {
+          "startingColumn": 61,
+          "startingLine": 19
+        }
+      },
+      {
+        "comment": "",
+        "key": "Mostra",
+        "location": {
+          "startingColumn": 24,
+          "startingLine": 13
+        }
+      },
+      {
+        "comment": "",
+        "key": "Chiusure (%lld)",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 14
+        }
+      },
+      {
+        "comment": "",
+        "key": "Errori (%lld)",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 15
+        }
+      },
+      {
+        "comment": "",
+        "key": "Invia il registro",
+        "location": {
+          "startingColumn": 31,
+          "startingLine": 20
+        }
+      },
+      {
+        "comment": "",
+        "key": "Copia tutto",
+        "location": {
+          "startingColumn": 31,
+          "startingLine": 23
+        }
+      },
+      {
+        "comment": "",
+        "key": "Nessuna chiusura registrata",
+        "location": {
+          "startingColumn": 75,
+          "startingLine": 45
+        }
+      },
+      {
+        "comment": "",
+        "key": "Se l'app si chiude da sola, qui trovi quando, dove e perché.",
+        "location": {
+          "startingColumn": 51,
+          "startingLine": 46
+        }
+      },
+      {
+        "comment": "",
+        "key": "Nessun errore registrato",
+        "location": {
+          "startingColumn": 75,
+          "startingLine": 69
+        }
+      },
+      {
+        "comment": "",
+        "key": "Qui finiscono le fonti che non rispondono, i dati non leggibili, i backup e le sincronizzazioni non riuscite, il GPS.",
+        "location": {
+          "startingColumn": 51,
+          "startingLine": 70
+        }
+      },
+      {
+        "comment": "",
+        "key": "Svuota",
+        "location": {
+          "startingColumn": 24,
+          "startingLine": 35
+        }
+      },
+      {
+        "comment": "",
+        "key": "%@ · %@",
+        "location": {
+          "startingColumn": 34,
+          "startingLine": 52
+        }
+      },
+      {
+        "comment": "",
+        "key": "Schermata: %@",
+        "location": {
+          "startingColumn": 38,
+          "startingLine": 55
+        }
+      },
+      {
+        "comment": "",
+        "key": "Il registro resta sul telefono e parte solo se lo invii tu. I rapporti di iOS («rapporto iOS») arrivano a un avvio successivo, a volte il giorno dopo.",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 62
+        }
+      },
+      {
+        "comment": "",
+        "key": "%@ · %@%@",
+        "location": {
+          "startingColumn": 34,
+          "startingLine": 76
+        }
+      },
+      {
+        "comment": "",
+        "key": "Lo stesso errore ripetuto entro 10 minuti viene contato (×N) invece di ripetuto. Molti errori di rete sono normali senza campo: l'app mostra l'ultima copia salvata.",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 83
+        }
+      },
+      {
+        "comment": "",
+        "key": "Schermata: %@",
+        "location": {
+          "startingColumn": 93,
+          "startingLine": 96
+        }
+      }
+    ]
+  },
+  "version": 1
+}

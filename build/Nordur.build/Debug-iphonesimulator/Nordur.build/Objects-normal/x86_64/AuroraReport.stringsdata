@@ -1,0 +1,24 @@
+{
+  "source": "/Users/runner/work/nordur-ios/nordur-ios/Nordur/Views/AuroraReport.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Vedo l'aurora",
+        "location": {
+          "startingColumn": 38,
+          "startingLine": 14
+        }
+      },
+      {
+        "comment": "",
+        "key": "Non la vedo",
+        "location": {
+          "startingColumn": 38,
+          "startingLine": 16
+        }
+      }
+    ]
+  },
+  "version": 1
+}

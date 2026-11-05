@@ -1,0 +1,288 @@
+{
+  "source": "/Users/runner/work/nordur-ios/nordur-ios/Nordur/Views/BathsView.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Aperto · chiude alle %@",
+        "location": {
+          "startingColumn": 39,
+          "startingLine": 18
+        }
+      },
+      {
+        "comment": "",
+        "key": "Aperto 24 ore",
+        "location": {
+          "startingColumn": 61,
+          "startingLine": 17
+        }
+      },
+      {
+        "comment": "",
+        "key": "Chiuso · apre alle %@",
+        "location": {
+          "startingColumn": 45,
+          "startingLine": 22
+        }
+      },
+      {
+        "comment": "",
+        "key": "Chiuso · apre %@",
+        "location": {
+          "startingColumn": 45,
+          "startingLine": 23
+        }
+      },
+      {
+        "comment": "",
+        "key": "Chiuso",
+        "location": {
+          "startingColumn": 57,
+          "startingLine": 20
+        }
+      },
+      {
+        "comment": "",
+        "key": "Nome, es. Laugardalslaug",
+        "location": {
+          "startingColumn": 61,
+          "startingLine": 133
+        }
+      },
+      {
+        "comment": "",
+        "key": "Piscine e sorgenti calde",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 131
+        }
+      },
+      {
+        "comment": "",
+        "key": "Chiudi",
+        "location": {
+          "startingColumn": 89,
+          "startingLine": 47
+        }
+      },
+      {
+        "comment": "",
+        "key": "Piscine e sorgenti vicino a %@",
+        "location": {
+          "startingColumn": 69,
+          "startingLine": 67
+        }
+      },
+      {
+        "comment": "",
+        "key": "Solo aperte adesso (dove l'orario è noto)",
+        "location": {
+          "startingColumn": 24,
+          "startingLine": 90
+        }
+      },
+      {
+        "comment": "",
+        "key": "Entro %lld km",
+        "location": {
+          "startingColumn": 25,
+          "startingLine": 91
+        }
+      },
+      {
+        "comment": "",
+        "key": "Tutte",
+        "location": {
+          "startingColumn": 48,
+          "startingLine": 84
+        }
+      },
+      {
+        "comment": "",
+        "key": "Nessun risultato",
+        "location": {
+          "startingColumn": 85,
+          "startingLine": 104
+        }
+      },
+      {
+        "comment": "",
+        "key": "Nessuna con orari noti aperta adesso in questa zona.",
+        "location": {
+          "startingColumn": 69,
+          "startingLine": 105
+        }
+      },
+      {
+        "comment": "",
+        "key": "Nessuna piscina o sorgente in questa zona con questi filtri.",
+        "location": {
+          "startingColumn": 69,
+          "startingLine": 106
+        }
+      },
+      {
+        "comment": "",
+        "key": "Mostra anche le chiuse",
+        "location": {
+          "startingColumn": 73,
+          "startingLine": 107
+        }
+      },
+      {
+        "comment": "",
+        "key": "Cerca entro 300 km",
+        "location": {
+          "startingColumn": 91,
+          "startingLine": 108
+        }
+      },
+      {
+        "comment": "",
+        "key": "Entro %lld km da %@",
+        "location": {
+          "startingColumn": 61,
+          "startingLine": 119
+        }
+      },
+      {
+        "comment": "",
+        "key": "%lld entro %lld km da %@",
+        "location": {
+          "startingColumn": 61,
+          "startingLine": 120
+        }
+      },
+      {
+        "comment": "",
+        "key": "Le piscine comunali (sundlaug) sono il modo islandese di stare al caldo: doccia senza costume prima di entrare, è obbligatoria. Orari e ingresso a pagamento solo quando sono indicati su OpenStreetMap: verifica sul sito del posto, soprattutto nei festivi.",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 123
+        }
+      },
+      {
+        "comment": "",
+        "key": "OpenStreetMap",
+        "location": {
+          "startingColumn": 108,
+          "startingLine": 125
+        }
+      },
+      {
+        "comment": "",
+        "key": "%@ km",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 185
+        }
+      },
+      {
+        "comment": "",
+        "key": "%@ km in linea d'aria da %@",
+        "location": {
+          "startingColumn": 49,
+          "startingLine": 223
+        }
+      },
+      {
+        "comment": "",
+        "key": "Ingresso a pagamento",
+        "location": {
+          "startingColumn": 59,
+          "startingLine": 232
+        }
+      },
+      {
+        "comment": "",
+        "key": "Ingresso libero",
+        "location": {
+          "startingColumn": 103,
+          "startingLine": 232
+        }
+      },
+      {
+        "comment": "",
+        "key": "Sicurezza",
+        "location": {
+          "startingColumn": 38,
+          "startingLine": 245
+        }
+      },
+      {
+        "comment": "",
+        "key": "Orari (OpenStreetMap)",
+        "location": {
+          "startingColumn": 38,
+          "startingLine": 250
+        }
+      },
+      {
+        "comment": "",
+        "key": "Sito del posto",
+        "location": {
+          "startingColumn": 57,
+          "startingLine": 254
+        }
+      },
+      {
+        "comment": "",
+        "key": "Aggiungi una tappa al viaggio per mettere questo luogo nel programma.",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 259
+        }
+      },
+      {
+        "comment": "",
+        "key": "Aggiunto a %@: trovi giorno e ora nella tappa",
+        "location": {
+          "startingColumn": 53,
+          "startingLine": 276
+        }
+      },
+      {
+        "comment": "",
+        "key": "%@ · %@ · %lld km",
+        "location": {
+          "startingColumn": 40,
+          "startingLine": 263
+        }
+      },
+      {
+        "comment": "",
+        "key": "Aggiungi al viaggio",
+        "location": {
+          "startingColumn": 53,
+          "startingLine": 268
+        }
+      },
+      {
+        "comment": "",
+        "key": "Aggiungi alla tappa più vicina: %@",
+        "location": {
+          "startingColumn": 57,
+          "startingLine": 272
+        }
+      },
+      {
+        "comment": "",
+        "key": "Viaggio",
+        "location": {
+          "startingColumn": 34,
+          "startingLine": 280
+        }
+      },
+      {
+        "comment": "",
+        "key": "Chiudi",
+        "location": {
+          "startingColumn": 77,
+          "startingLine": 288
+        }
+      }
+    ]
+  },
+  "version": 1
+}

@@ -1,0 +1,64 @@
+{
+  "source": "/Users/runner/work/nordur-ios/nordur-ios/Nordur/Views/PlacePicker.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Cerca un luogo nel mondo",
+        "location": {
+          "startingColumn": 65,
+          "startingLine": 52
+        }
+      },
+      {
+        "comment": "",
+        "key": "Scegli un luogo",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 50
+        }
+      },
+      {
+        "comment": "",
+        "key": "Usa la mia posizione",
+        "location": {
+          "startingColumn": 31,
+          "startingLine": 27
+        }
+      },
+      {
+        "comment": "",
+        "key": "Nessun risultato",
+        "location": {
+          "startingColumn": 34,
+          "startingLine": 38
+        }
+      },
+      {
+        "comment": "",
+        "key": "Risultati",
+        "location": {
+          "startingColumn": 38,
+          "startingLine": 40
+        }
+      },
+      {
+        "comment": "",
+        "key": "Islanda – luoghi principali",
+        "location": {
+          "startingColumn": 34,
+          "startingLine": 47
+        }
+      },
+      {
+        "comment": "",
+        "key": "Chiudi",
+        "location": {
+          "startingColumn": 28,
+          "startingLine": 56
+        }
+      }
+    ]
+  },
+  "version": 1
+}

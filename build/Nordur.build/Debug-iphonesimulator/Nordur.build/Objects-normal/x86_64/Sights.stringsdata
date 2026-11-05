@@ -1,0 +1,104 @@
+{
+  "source": "/Users/runner/work/nordur-ios/nordur-ios/Shared/Services/Sights.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Cascata",
+        "location": {
+          "startingColumn": 52,
+          "startingLine": 87
+        }
+      },
+      {
+        "comment": "",
+        "key": "Sorgente calda",
+        "location": {
+          "startingColumn": 53,
+          "startingLine": 88
+        }
+      },
+      {
+        "comment": "",
+        "key": "Geyser",
+        "location": {
+          "startingColumn": 49,
+          "startingLine": 89
+        }
+      },
+      {
+        "comment": "",
+        "key": "Ghiacciaio",
+        "location": {
+          "startingColumn": 50,
+          "startingLine": 90
+        }
+      },
+      {
+        "comment": "",
+        "key": "Spiaggia",
+        "location": {
+          "startingColumn": 48,
+          "startingLine": 91
+        }
+      },
+      {
+        "comment": "",
+        "key": "Grotta",
+        "location": {
+          "startingColumn": 56,
+          "startingLine": 92
+        }
+      },
+      {
+        "comment": "",
+        "key": "Arco di roccia",
+        "location": {
+          "startingColumn": 47,
+          "startingLine": 93
+        }
+      },
+      {
+        "comment": "",
+        "key": "Vulcano",
+        "location": {
+          "startingColumn": 50,
+          "startingLine": 94
+        }
+      },
+      {
+        "comment": "",
+        "key": "Museo",
+        "location": {
+          "startingColumn": 49,
+          "startingLine": 95
+        }
+      },
+      {
+        "comment": "",
+        "key": "Belvedere",
+        "location": {
+          "startingColumn": 52,
+          "startingLine": 96
+        }
+      },
+      {
+        "comment": "",
+        "key": "Piscina e bagni termali",
+        "location": {
+          "startingColumn": 71,
+          "startingLine": 97
+        }
+      },
+      {
+        "comment": "",
+        "key": "Da vedere",
+        "location": {
+          "startingColumn": 43,
+          "startingLine": 98
+        }
+      }
+    ]
+  },
+  "version": 1
+}

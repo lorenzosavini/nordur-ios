@@ -1,0 +1,24 @@
+{
+  "source": "/Users/runner/work/nordur-ios/nordur-ios/Shared/Services/Webcams.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Strada %@",
+        "location": {
+          "startingColumn": 65,
+          "startingLine": 50
+        }
+      },
+      {
+        "comment": "",
+        "key": "Webcam %lld",
+        "location": {
+          "startingColumn": 63,
+          "startingLine": 51
+        }
+      }
+    ]
+  },
+  "version": 1
+}

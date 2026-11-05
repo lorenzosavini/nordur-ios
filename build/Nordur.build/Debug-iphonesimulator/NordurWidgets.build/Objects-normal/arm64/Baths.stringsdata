@@ -1,0 +1,88 @@
+{
+  "source": "/Users/runner/work/nordur-ios/nordur-ios/Shared/Services/Baths.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Piscina pubblica",
+        "location": {
+          "startingColumn": 50,
+          "startingLine": 22
+        }
+      },
+      {
+        "comment": "",
+        "key": "Sorgente naturale",
+        "location": {
+          "startingColumn": 53,
+          "startingLine": 23
+        }
+      },
+      {
+        "comment": "",
+        "key": "Piscine pubbliche",
+        "location": {
+          "startingColumn": 50,
+          "startingLine": 29
+        }
+      },
+      {
+        "comment": "",
+        "key": "Sorgenti naturali",
+        "location": {
+          "startingColumn": 53,
+          "startingLine": 30
+        }
+      },
+      {
+        "comment": "",
+        "key": "Acqua che può essere bollente: entra solo dove è sicuro e resta sui sentieri.",
+        "location": {
+          "startingColumn": 48,
+          "startingLine": 93
+        }
+      },
+      {
+        "comment": "",
+        "key": "Nelle aree geotermiche l'acqua può superare i 90 °C a pochi metri da una pozza tiepida, e il terreno vicino può cedere. Prova la temperatura prima di entrare, resta sui sentieri e dietro le corde, non lasciare i bambini da soli. D'inverno i sentieri sono spesso ghiacciati.",
+        "location": {
+          "startingColumn": 43,
+          "startingLine": 94
+        }
+      },
+      {
+        "comment": "",
+        "key": "Sorgente calda",
+        "location": {
+          "startingColumn": 49,
+          "startingLine": 151
+        }
+      },
+      {
+        "comment": "",
+        "key": "Bagni termali",
+        "location": {
+          "startingColumn": 77,
+          "startingLine": 153
+        }
+      },
+      {
+        "comment": "",
+        "key": "Centro sportivo con piscina",
+        "location": {
+          "startingColumn": 46,
+          "startingLine": 155
+        }
+      },
+      {
+        "comment": "",
+        "key": "Piscina",
+        "location": {
+          "startingColumn": 79,
+          "startingLine": 157
+        }
+      }
+    ]
+  },
+  "version": 1
+}
