@@ -583,14 +583,19 @@ struct MapScreen: View {
         if showFuel || showChargers {
             let prices = model.fuelPrices?.value ?? []
             let fuel = FuelKind(rawValue: fuelRaw) ?? .petrol
+            // Once per drawing, not once per station.
+            let byKey = Dictionary(prices.map { ($0.key, $0) }, uniquingKeysWith: { first, _ in first })
+            let quartiles = FuelPrices.quartiles(prices, fuel: fuel)
             for station in model.fuel?.value ?? [] where (station.kind == .fuel && showFuel) || (station.kind == .charger && showChargers) {
                 // The pump icon coloured cheap (green) to dear (red) for the fuel chosen, the price
                 // small under it where there is room: compare without opening.
                 var color: UIColor = station.kind == .fuel ? .systemGray : .systemGreen
                 var text: String?
-                if station.kind == .fuel, let price = FuelPrices.match(station, in: prices), let value = price.price(fuel) {
+                // Only Gasvaktin's stations have prices (FuelStations.merge).
+                let price = station.priceKey.flatMap { byKey[$0] }
+                if station.kind == .fuel, let price, let value = price.price(fuel) {
                     text = "\(Int(value.rounded())) kr"
-                    switch FuelPrices.level(value, among: prices, fuel: fuel) {
+                    switch FuelPrices.level(value, quartiles) {
                     case .cheap: color = .systemGreen
                     case .average: color = .systemOrange
                     case .dear: color = .systemRed

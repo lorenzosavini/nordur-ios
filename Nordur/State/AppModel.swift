@@ -224,11 +224,14 @@ final class AppModel {
         // State of the ground and of the sea are Icelandic words at staffed stations.
         guard let m = measured, m.value.snowCover != nil || m.value.sea != nil else { return }
         let words = [m.value.snowCover, m.value.sea].compactMap { $0 }
-        let map = await Translator.shared.translate(words)
-        var v = m.value
-        v.snowCover = v.snowCover.map { map[$0] ?? $0 }
-        v.sea = v.sea.map { map[$0] ?? $0 }
-        if observation?.date == m.date { observation = Fetched(value: v, date: m.date, isStale: m.isStale) }
+        // Shown at once in the original; the translation replaces it when ready.
+        Task { @MainActor in
+            let map = await Translator.shared.translate(words)
+            var v = m.value
+            v.snowCover = v.snowCover.map { map[$0] ?? $0 }
+            v.sea = v.sea.map { map[$0] ?? $0 }
+            if observation?.date == m.date { observation = Fetched(value: v, date: m.date, isStale: m.isStale) }
+        }
     }
 
     @ObservationIgnored private var seenStamps: IMOLive.Stamps?
@@ -265,18 +268,20 @@ final class AppModel {
     }
 
     func refreshPlace() async {
-        // What IMO published last, so its data is fetched again only if it changed.
-        await IMOLive.refresh()
         let c = activePlace.coordinate
-        async let f = attempt { try await WeatherService.forecast(c) }
+        // Sea and air do not depend on vedur.is: they start at once.
         async let m = attempt { try await OpenMeteo.marine(c) }
         async let a = attempt { try await OpenMeteo.airQuality(c) }
+        // What IMO published last (5 s at most), so its data is fetched again only if it changed.
+        await IMOLive.refresh()
+        async let f = attempt { try await WeatherService.forecast(c) }
         async let o = attempt { try await IMOForecast.observation(near: c) }
         let (rf, rm, ra, ro) = await (f, m, a, o)
         // The user may have switched place meanwhile.
         guard c == activePlace.coordinate else { return }
-        if case .success(let measured) = ro { await showObservation(measured) }
+        // The forecast first: the translation of the station's words never holds it back.
         apply(rf, .forecast) { self.forecast = $0 }
+        if case .success(let measured) = ro { await showObservation(measured) }
         // The IMO station the forecast uses, for the comparison table (already in the phone's cache).
         if case .success(let fetched) = rf, fetched.value.official != nil {
             if let station = try? await IMOForecast.forecast(near: c, elevation: fetched.value.elevation) { stationForecast = station }
@@ -295,8 +300,6 @@ final class AppModel {
         lastGlobalRefresh = Date()
         async let w: Void = load(.warnings, { try await IMO.warnings() }) { self.warnings = $0 }
         async let q: Void = load(.quakes, { try await IMO.quakes() }) { self.quakes = $0 }
-        await IMOLive.refresh()
-        async let it: Void = load(.imoTexts, { try await IMOForecast.texts() }) { self.imoTexts = $0 }
         async let vo: Void = load(.volcanoes, { try await IMO.volcanoes() }) { self.volcanoes = $0 }
         // The road feeds are the heaviest (Vegagerðin sends 360 KB uncompressed): every 5 minutes.
         let roadsDue = force || lastRoadsRefresh.map { Date().timeIntervalSince($0) > 290 } ?? true
@@ -308,6 +311,9 @@ final class AppModel {
         // The aurora state from nordur-api carries the OVATION grid too: NOAA's own
         // file is downloaded only when the backend could not be reached.
         async let a: Void = refreshAurora()
+        // Only the written forecasts wait for the vedur.is stamp (5 s at most).
+        await IMOLive.refresh()
+        async let it: Void = load(.imoTexts, { try await IMOForecast.texts() }) { self.imoTexts = $0 }
         _ = await (w, q, r, k, s, n, a, it, vo)
         if ovation == nil || ovation?.isStale == true {
             await load(.ovation, { try await SpaceWeather.ovation() }) { self.ovation = $0 }
@@ -315,7 +321,8 @@ final class AppModel {
         recomputeAurora()
         // The slow-changing data after the live feeds, so they don't compete for the network.
         await refreshStatic()
-        await localizeWebText()
+        // Translations arrive when ready: pull-to-refresh does not wait for them.
+        Task { await localizeWebText() }
     }
 
     @ObservationIgnored private var lastRoadsRefresh: Date?
@@ -356,7 +363,8 @@ final class AppModel {
             async let m: Void = load(.marine, { try await OpenMeteo.marine(c) }) { self.marine = $0 }
             async let ai: Void = load(.air, { try await OpenMeteo.airQuality(c) }) { self.air = $0 }
             async let wc: Void = load(.webcams, { try await Webcams.sites() }) { self.webcams = $0 }
-            _ = await (w, q, r, ri, k, n, f, m, ai, wc, it, vo)
+            async let g: Void = load(.grid, { try await WeatherGridService.iceland() }) { self.weatherGrid = $0 }
+            _ = await (w, q, r, ri, k, n, f, m, ai, wc, it, vo, g)
         }
         recomputeAurora()
     }
@@ -431,23 +439,29 @@ final class AppModel {
     }
 
     /// Slow-changing data: webcam list (every 6 h) and fuel stations (30-day on-device copy).
+    /// All at the same time: none of them waits for another.
     func refreshStatic(force: Bool = false) async {
-        let webcamsOld = webcams.map { Date().timeIntervalSince($0.date) > 6 * 3600 || $0.isStale } ?? true
-        if webcamsOld || force {
-            let result = await attempt { try await Webcams.sites() }
-            apply(result, .webcams) { self.webcams = $0 }
-        }
-        await loadRoadGeometry(force: force)
-        if osmFuel == nil || force {
-            let maxAge: TimeInterval = force ? 0 : 30 * 24 * 3600
-            let result = await attempt { try await FuelStations.all(maxAge: maxAge) }
-            apply(result, .fuel) { self.osmFuel = $0; self.mergeFuel() }
-        }
-        await loadShops(force: force)
-        await loadSights(force: force)
-        await loadBaths(force: force)
-        await loadTolls(force: force)
-        await loadFuelPrices(force: force)
+        async let wc: Void = loadWebcams(force: force)
+        async let geo: Void = loadRoadGeometry(force: force)
+        async let fu: Void = loadFuelStations(force: force)
+        async let sh: Void = loadShops(force: force)
+        async let si: Void = loadSights(force: force)
+        async let ba: Void = loadBaths(force: force)
+        async let to: Void = loadTolls(force: force)
+        async let pr: Void = loadFuelPrices(force: force)
+        _ = await (wc, geo, fu, sh, si, ba, to, pr)
+    }
+
+    private func loadWebcams(force: Bool) async {
+        let old = webcams.map { Date().timeIntervalSince($0.date) > 6 * 3600 || $0.isStale } ?? true
+        guard old || force else { return }
+        apply(await attempt { try await Webcams.sites() }, .webcams) { self.webcams = $0 }
+    }
+
+    private func loadFuelStations(force: Bool) async {
+        guard osmFuel == nil || force else { return }
+        let maxAge: TimeInterval = force ? 0 : 30 * 24 * 3600
+        apply(await attempt { try await FuelStations.all(maxAge: maxAge) }, .fuel) { self.osmFuel = $0; self.mergeFuel() }
     }
 
     /// Pump prices every 10 minutes (Gasvaktin reads the companies about every
@@ -538,18 +552,27 @@ final class AppModel {
     }
 
     /// Forecast grid for the weather map (refreshed at most hourly) and radar frames.
+    /// Everything at the same time; the grid saved on the phone is painted at once
+    /// while the new one downloads.
     func refreshMapData(force: Bool = false) async {
-        await loadRoadGeometry()
-        if roadInfo == nil {
-            apply(await attempt { try await RoadInfoService.load() }, .roadInfo) { self.roadInfo = $0 }
+        if weatherGrid == nil {
+            await HTTP.$cacheOnly.withValue(true) { await refreshMapGrid() }
         }
+        async let geometry: Void = loadRoadGeometry()
+        async let info: Void = loadRoadInfoIfMissing()
+        async let radar = attempt { try await RainViewer.frames() }
         await IMOLive.refresh()
         // Fetched again when the corrected grid has a new version (IMO or the model published), else hourly.
         let newVersion = IMOLive.current?.grid.map { $0 != weatherGrid?.value.version } ?? false
         let gridOld = weatherGrid.map { Date().timeIntervalSince($0.date) > 3600 || $0.isStale || newVersion } ?? true
         if gridOld || force { await refreshMapGrid() }
-        let radar = await attempt { try await RainViewer.frames() }
-        apply(radar, .radar) { self.radarFrames = $0 }
+        apply(await radar, .radar) { self.radarFrames = $0 }
+        _ = await (geometry, info)
+    }
+
+    private func loadRoadInfoIfMissing() async {
+        guard roadInfo == nil else { return }
+        apply(await attempt { try await RoadInfoService.load() }, .roadInfo) { self.roadInfo = $0 }
     }
 
     func refreshMapGrid() async {
@@ -626,10 +649,8 @@ final class AppModel {
                 self?.horizonTask = nil
             }
         }
-        if let a = aurora {
-            let localized = await Translator.shared.localize(a.value)
-            if aurora?.date == a.date { aurora = Fetched(value: localized, date: a.date, isStale: a.isStale) }
-        }
+        // The translation arrives when ready, without holding back what follows.
+        Task { await localizeAurora() }
     }
 
     @ObservationIgnored private var horizonTask: Task<Void, Never>?

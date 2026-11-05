@@ -41,18 +41,41 @@ enum IMOLive {
         return stamps
     }
 
+    private final class Flight: @unchecked Sendable {
+        private let lock = NSLock()
+        private var task: Task<Stamps?, Never>?
+        /// The request already running, or a new one: callers at the same moment share it.
+        func run(_ make: @escaping @Sendable () async -> Stamps?) -> Task<Stamps?, Never> {
+            lock.lock(); defer { lock.unlock() }
+            if let task { return task }
+            let new = Task { await make() }
+            task = new
+            return new
+        }
+        func done() { lock.lock(); task = nil; lock.unlock() }
+    }
+    private static let flight = Flight()
+
     /// Asks the service (at most every 50 seconds); nil when it does not answer.
+    /// Never holds a screen back: 5 seconds at most, one request shared by every
+    /// caller, and no network at all while the saved copies are being shown.
     @discardableResult
     static func refresh(force: Bool = false) async -> Stamps? {
         let (cached, at) = box.read()
         let recent = at.map { Date().timeIntervalSince($0) < 50 } ?? false
-        if recent && !force { return cached }
-        guard let url = URL(string: "https://nordur-api.vercel.app/api/live"),
-              let (data, response) = try? await URLSession.shared.data(from: url),
-              (response as? HTTPURLResponse)?.statusCode == 200,
-              let stamps = try? JSONDecoder().decode(Stamps.self, from: data) else { return nil }
-        box.write(stamps)
-        return stamps
+        if (recent && !force) || HTTP.cacheOnly { return cached }
+        let task = flight.run {
+            defer { flight.done() }
+            guard let url = URL(string: "https://nordur-api.vercel.app/api/live") else { return nil }
+            var request = URLRequest(url: url, cachePolicy: .reloadIgnoringLocalCacheData, timeoutInterval: 5)
+            request.setValue("Nordur-iOS/1.0 github.com/lorenzosavini/nordur-ios", forHTTPHeaderField: "User-Agent")
+            guard let (data, response) = try? await HTTP.session.data(for: request),
+                  (response as? HTTPURLResponse)?.statusCode == 200,
+                  let stamps = try? JSONDecoder().decode(Stamps.self, from: data) else { return nil }
+            box.write(stamps)
+            return stamps
+        }
+        return await task.value ?? box.read().stamps
     }
 
     /// The stamp an xmlweather answer of this type depends on.
