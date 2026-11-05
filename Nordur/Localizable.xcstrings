@@ -60769,6 +60769,34 @@
           }
         }
       }
+    },
+    "* Kp dalla previsione NOAA a 3 giorni, più recente della tendenza settimanale." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "* Kp from NOAA's 3-day forecast, newer than the weekly outlook."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "* Kp aus der 3-Tage-Vorhersage der NOAA, neuer als der Wochenausblick."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "* Kp issu de la prévision NOAA à 3 jours, plus récente que la tendance hebdomadaire."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "* Kp de la previsión de 3 días de NOAA, más reciente que la tendencia semanal."
+          }
+        }
+      }
     }
   },
   "version" : "1.0"

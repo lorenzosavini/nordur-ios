@@ -810,6 +810,9 @@ struct AuroraView: View {
 
     @ViewBuilder private var longMode: some View {
         let days = state?.longTerm?.outlook27 ?? []
+        // NOAA's 3-day forecast (3-hourly, issued twice a day) is newer than the weekly
+        // 27-day table: for the days it covers, its highest Kp replaces the table's.
+        let recent = recentKpMax
         VStack(alignment: .leading, spacing: 10) {
             SectionLabel(index: "01", title: String(localized: "Tendenza 27 giorni"), trailing: String(localized: "Indicazione preliminare"))
             Text("NOAA pubblica ogni settimana il Kp massimo atteso per giorno, basato sulla rotazione solare di 27 giorni (ricorrenza dei buchi coronali). Non esiste una previsione affidabile di aurora o nuvole a queste distanze: qui trovi attività attesa, ore di buio e Luna. Il dettaglio aumenta avvicinandosi alla data.")
@@ -819,15 +822,18 @@ struct AuroraView: View {
             } else {
                 VStack(spacing: 0) {
                     HStack(spacing: 0) {
-                        cellHead(String(localized: "Giorno"), 96, .leading); cellHead(String(localized: "Kp max"), 52); cellHead("Ap", 36); cellHead(String(localized: "Buio"), 50); cellHead(String(localized: "Luna"), nil)
+                        cellHead(String(localized: "Giorno"), 88, .leading); cellHead(String(localized: "Kp max"), 62); cellHead("Ap", 36); cellHead(String(localized: "Buio"), 50); cellHead(String(localized: "Luna"), nil)
                     }
                     .padding(.bottom, 5)
                     Rule()
                     ForEach(days.filter { $0.date >= todayISO }, id: \.date) { d in
                         let info = nightInfo(d.date)
+                        let kp = recent[d.date] ?? d.kpMax
                         HStack(spacing: 0) {
-                            Text(info.label).font(.mono(10, .medium)).foregroundStyle(Theme.text).frame(width: 96, alignment: .leading)
-                            Text(Fmt.number(d.kpMax)).font(.metric(17, .semibold)).foregroundStyle((d.kpMax ?? 0) >= 5 ? Theme.warning : (d.kpMax ?? 0) >= 4 ? Theme.aurora : Theme.text).frame(width: 52, alignment: .trailing)
+                            Text(info.label).font(.mono(10, .medium)).foregroundStyle(Theme.text).frame(width: 88, alignment: .leading)
+                            Text((recent[d.date] != nil ? "* " : "") + Fmt.number(kp, decimals: recent[d.date] != nil ? 1 : 0))
+                                .font(.metric(17, .semibold)).foregroundStyle((kp ?? 0) >= 5 ? Theme.warning : (kp ?? 0) >= 4 ? Theme.aurora : Theme.text)
+                                .lineLimit(1).minimumScaleFactor(0.8).frame(width: 62, alignment: .trailing)
                             Text(Fmt.number(d.ap)).font(.metric(15)).foregroundStyle(Theme.dim).frame(width: 36, alignment: .trailing)
                             Text(info.dark).font(.mono(10)).foregroundStyle(Theme.dim).frame(width: 50, alignment: .trailing)
                             Text(info.moon).font(.mono(10)).foregroundStyle(Theme.dim).frame(maxWidth: .infinity, alignment: .trailing)
@@ -836,9 +842,23 @@ struct AuroraView: View {
                         Rule()
                     }
                 }
+                if !recent.isEmpty {
+                    Text("* Kp dalla previsione NOAA a 3 giorni, più recente della tendenza settimanale.").font(.mono(8.5)).foregroundStyle(Theme.faint)
+                }
                 Text("BUIO: ore con il Sole sotto −12° (crepuscolo nautico o più scuro). LUNA: illuminazione a mezzanotte locale.").font(.mono(8.5)).foregroundStyle(Theme.faint)
             }
         }
+    }
+
+    /// Highest Kp per UTC day in NOAA's 3-day forecast (observed and predicted).
+    private var recentKpMax: [String: Double] {
+        var out: [String: Double] = [:]
+        let f = ISO8601DateFormatter()
+        for p in model.kp?.value ?? [] {
+            let day = String(f.string(from: p.date).prefix(10))
+            out[day] = max(out[day] ?? 0, p.kp)
+        }
+        return out
     }
 
     private var todayISO: String { String(ISO8601DateFormatter().string(from: Date()).prefix(10)) }
