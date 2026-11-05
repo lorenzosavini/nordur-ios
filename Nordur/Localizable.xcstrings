@@ -60797,6 +60797,34 @@
           }
         }
       }
+    },
+    "Kp massimo per giorno" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Highest Kp per day"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Höchster Kp pro Tag"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kp maximal par jour"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kp máximo por día"
+          }
+        }
+      }
     }
   },
   "version" : "1.0"

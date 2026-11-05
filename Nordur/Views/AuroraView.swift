@@ -651,8 +651,10 @@ struct AuroraView: View {
             SectionLabel(index: "01", title: String(localized: "Kp a blocchi di 3 ore"), trailing: String(localized: "Osservato · stimato · previsto"))
             if let blocks = state?.kp.blocks, !blocks.isEmpty {
                 kpChart(blocks)
+                kpDailyMax(blocks.filter { !$0.isObserved })
+                // Every forecast block NOAA gives (to the end of its 3 days), not just the next 30 hours.
                 VStack(spacing: 0) {
-                    ForEach(blocks.filter { !$0.isObserved }.prefix(10)) { b in
+                    ForEach(blocks.filter { !$0.isObserved }) { b in
                         HStack(spacing: 8) {
                             Text(b.start.map { Fmt.dayTime($0, in: zone) } ?? "").font(.mono(10)).foregroundStyle(Theme.dim).frame(width: 110, alignment: .leading)
                             Text(Fmt.number(b.value, decimals: 1)).font(.metric(18, .semibold)).foregroundStyle(b.value >= 5 ? Theme.warning : Theme.text).frame(width: 34, alignment: .trailing)
@@ -671,6 +673,38 @@ struct AuroraView: View {
         nightsSection
         enlilSection
         donkiSection
+    }
+
+    /// The highest Kp of each day, in one line: the days at a glance.
+    @ViewBuilder private func kpDailyMax(_ blocks: [AuroraState.KpSection.Block]) -> some View {
+        let days: [(day: Date, kp: Double)] = {
+            var calendar = Calendar(identifier: .gregorian)
+            calendar.timeZone = zone
+            var out: [(Date, Double)] = []
+            for b in blocks {
+                guard let start = b.start else { continue }
+                let day = calendar.startOfDay(for: start)
+                if let i = out.firstIndex(where: { $0.0 == day }) { out[i].1 = max(out[i].1, b.value) } else { out.append((day, b.value)) }
+            }
+            return out
+        }()
+        if !days.isEmpty {
+            HStack(spacing: 0) {
+                ForEach(days, id: \.day) { d in
+                    VStack(alignment: .leading, spacing: 2) {
+                        Text(Fmt.day(d.day, in: zone)).font(.app(.caption2)).foregroundStyle(Theme.dim).lineLimit(1)
+                        Text(Fmt.number(d.kp, decimals: 1)).font(.metric(20, .semibold))
+                            .foregroundStyle(d.kp >= 5 ? Theme.warning : d.kp >= 4 ? Theme.aurora : Theme.text)
+                    }
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                }
+            }
+            .padding(.vertical, 8)
+            .overlay(alignment: .top) { Rule() }
+            .overlay(alignment: .bottom) { Rule() }
+            .accessibilityElement(children: .combine)
+            .accessibilityLabel(String(localized: "Kp massimo per giorno"))
+        }
     }
 
     private func kpChart(_ blocks: [AuroraState.KpSection.Block]) -> some View {
