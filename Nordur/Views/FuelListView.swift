@@ -50,9 +50,9 @@ struct FuelListView: View {
                     } else {
                         ForEach(near, id: \.price.id) { item in
                             Button {
-                                selected = model.fuel?.value.first { FuelPrices.match($0, in: [item.price]) != nil }
+                                selected = model.fuel?.value.first { $0.priceKey == item.price.key }
                                     ?? FuelStation(id: abs(item.price.key.hashValue), kind: .fuel, name: item.price.name,
-                                                   brand: item.price.company, openingHours: nil, coordinate: item.price.coordinate)
+                                                   brand: item.price.company, openingHours: nil, coordinate: item.price.coordinate, priceKey: item.price.key)
                             } label: {
                                 FuelListRow(price: item.price, km: item.km, value: item.value, fuel: fuel, cheapest: cheapest,
                                             level: FuelPrices.level(item.value, among: all, fuel: fuel), display: display, rates: rates)

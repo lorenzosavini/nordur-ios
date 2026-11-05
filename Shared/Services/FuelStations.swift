@@ -1,8 +1,10 @@
 import Foundation
 
-// Fuel stations and EV chargers from OpenStreetMap (Overpass API). Downloaded
-// once and kept on the device so they are available without coverage —
-// the East and the Westfjords have long stretches without a station.
+// Fuel stations: Gasvaktin first (the companies' own list, with prices), then
+// the OpenStreetMap stations Gasvaktin does not have and the EV chargers.
+// The OpenStreetMap list is downloaded once and kept on the device so it is
+// available without coverage — the East and the Westfjords have long
+// stretches without a station.
 
 struct FuelStation: Identifiable, Hashable, Codable {
     enum Kind: String, Codable { case fuel, charger }
@@ -13,6 +15,8 @@ struct FuelStation: Identifiable, Hashable, Codable {
     let brand: String?
     let openingHours: String?
     let coordinate: Coordinate
+    /// The Gasvaktin station this is (its prices), when it comes from Gasvaktin.
+    var priceKey: String? = nil
 }
 
 enum FuelStations {
@@ -79,6 +83,38 @@ enum FuelStations {
             return FuelStation(id: element.id, kind: kind, name: name, brand: brand,
                                openingHours: tags["opening_hours"], coordinate: Coordinate(lat: lat, lon: lon))
         }
+    }
+
+    /// One list: every Gasvaktin station (name, company, position, prices; the
+    /// opening hours of the OpenStreetMap station at the same place), then the
+    /// OpenStreetMap stations that match no Gasvaktin station, then the chargers.
+    static func merge(osm: [FuelStation], prices: [FuelPrice]) -> [FuelStation] {
+        guard !prices.isEmpty else { return osm }
+        var hours: [String: (hours: String, km: Double)] = [:]
+        var unmatched: [FuelStation] = []
+        for station in osm {
+            guard station.kind == .fuel else { unmatched.append(station); continue }
+            if let price = FuelPrices.nearestMatch(station, in: prices) {
+                if let h = station.openingHours, price.km < (hours[price.price.key]?.km ?? .infinity) {
+                    hours[price.price.key] = (h, price.km)
+                }
+            } else {
+                unmatched.append(station)
+            }
+        }
+        let priced = prices.map { p in
+            let name = p.name.lowercased().contains(p.company.lowercased()) ? p.name : "\(p.company) \(p.name)"
+            return FuelStation(id: stableID(p.key), kind: .fuel, name: name, brand: p.company,
+                               openingHours: hours[p.key]?.hours, coordinate: p.coordinate, priceKey: p.key)
+        }
+        return priced + unmatched
+    }
+
+    /// A fixed negative id for a Gasvaktin key (OpenStreetMap ids are positive).
+    static func stableID(_ key: String) -> Int {
+        var hash: UInt64 = 5381
+        for byte in key.utf8 { hash = (hash &* 33) &+ UInt64(byte) }
+        return -Int(hash % UInt64(Int32.max)) - 1
     }
 
     static func nearest(_ stations: [FuelStation], to point: Coordinate, kind: FuelStation.Kind, limit: Int) -> [(station: FuelStation, km: Double)] {

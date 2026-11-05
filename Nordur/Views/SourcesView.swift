@@ -36,7 +36,7 @@ struct SourcesView: View {
             Row(section: String(localized: "Aurora"), what: String(localized: "Probabilità, Kp, vento solare"),
                 source: String(localized: "NOAA, GFZ, NASA; nuvole dalla previsione meteo.")),
             Row(section: String(localized: "Luoghi"), what: String(localized: "Distributori, negozi, attrazioni, piscine"),
-                source: String(localized: "OpenStreetMap; prezzi del carburante da Gasvaktin.")),
+                source: String(localized: "Distributori e prezzi: Gasvaktin (le compagnie). Altri distributori, colonnine, negozi, attrazioni: OpenStreetMap.")),
             Row(section: String(localized: "Trasporti"), what: String(localized: "Voli KEF, traghetti"),
                 source: String(localized: "Isavia, Herjólfur.")),
             Row(section: String(localized: "Widget e Live Activity"), what: String(localized: "Sintesi"),

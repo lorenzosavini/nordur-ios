@@ -88,7 +88,9 @@ final class AppModel {
     private(set) var horizons: [String: TerrainHorizon] = [:]
     var news: Fetched<[NewsItem]>?
     var webcams: Fetched<[WebcamSite]>?
-    var fuel: Fetched<[FuelStation]>?
+    /// Fuel stations: Gasvaktin's, then OpenStreetMap's others and the chargers (FuelStations.merge).
+    private(set) var fuel: Fetched<[FuelStation]>?
+    private var osmFuel: Fetched<[FuelStation]>?
     /// Live pump prices and the króna exchange rates.
     var fuelPrices: Fetched<[FuelPrice]>?
     var rates: Fetched<ExchangeRates>?
@@ -436,10 +438,10 @@ final class AppModel {
             apply(result, .webcams) { self.webcams = $0 }
         }
         await loadRoadGeometry(force: force)
-        if fuel == nil || force {
+        if osmFuel == nil || force {
             let maxAge: TimeInterval = force ? 0 : 30 * 24 * 3600
             let result = await attempt { try await FuelStations.all(maxAge: maxAge) }
-            apply(result, .fuel) { self.fuel = $0 }
+            apply(result, .fuel) { self.osmFuel = $0; self.mergeFuel() }
         }
         await loadShops(force: force)
         await loadSights(force: force)
@@ -452,9 +454,19 @@ final class AppModel {
     /// quarter of an hour), exchange rates every 6 hours.
     func loadFuelPrices(force: Bool = false) async {
         if force || fuelPrices.map({ Date().timeIntervalSince($0.date) > 600 || $0.isStale }) ?? true {
-            await load(.fuelPrices, { try await FuelPrices.load() }) { self.fuelPrices = $0 }
+            await load(.fuelPrices, { try await FuelPrices.load() }) { self.fuelPrices = $0; self.mergeFuel() }
         }
         await loadRates(force: force)
+    }
+
+    /// Gasvaktin's stations first, then what only OpenStreetMap has.
+    private func mergeFuel() {
+        let prices = fuelPrices?.value ?? []
+        if let osm = osmFuel {
+            fuel = Fetched(value: FuelStations.merge(osm: osm.value, prices: prices), date: osm.date, isStale: osm.isStale)
+        } else if let fetched = fuelPrices {
+            fuel = Fetched(value: FuelStations.merge(osm: [], prices: fetched.value), date: fetched.date, isStale: fetched.isStale)
+        }
     }
 
     /// Exchange rates of every world currency, every 6 hours.

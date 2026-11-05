@@ -60741,6 +60741,34 @@
           }
         }
       }
+    },
+    "Distributori e prezzi: Gasvaktin (le compagnie). Altri distributori, colonnine, negozi, attrazioni: OpenStreetMap." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Stations and prices: Gasvaktin (the companies). Other stations, chargers, shops, sights: OpenStreetMap."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tankstellen und Preise: Gasvaktin (die Gesellschaften). Weitere Tankstellen, Ladesäulen, Geschäfte, Sehenswürdigkeiten: OpenStreetMap."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Stations et prix : Gasvaktin (les compagnies). Autres stations, bornes, commerces, sites : OpenStreetMap."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gasolineras y precios: Gasvaktin (las compañías). Otras gasolineras, cargadores, tiendas, lugares: OpenStreetMap."
+          }
+        }
+      }
     }
   },
   "version" : "1.0"

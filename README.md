@@ -20,7 +20,7 @@ App iOS (SwiftUI, iOS 17+) per viaggiare in Islanda: meteo, allerte ufficiali, s
 
 ## Fonti
 
-Veðurstofa Íslands (allerte CAP, terremoti), Vegagerðin (condizioni stradali, stazioni, webcam), Open-Meteo (previsioni, mare, qualità dell'aria), NOAA SWPC (Kp, OVATION, vento solare), RainViewer (radar), SafeTravel.is, kefairport.com, herjolfur.is, OpenStreetMap (distributori). Nessuna chiave API.
+Veðurstofa Íslands (allerte CAP, terremoti), Vegagerðin (condizioni stradali, stazioni, webcam), Open-Meteo (previsioni, mare, qualità dell'aria), NOAA SWPC (Kp, OVATION, vento solare), RainViewer (radar), SafeTravel.is, kefairport.com, herjolfur.is, Gasvaktin (distributori e prezzi del carburante), OpenStreetMap (altri distributori e colonnine). Nessuna chiave API.
 
 ## Installazione
 

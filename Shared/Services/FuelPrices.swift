@@ -37,12 +37,18 @@ enum FuelPrices {
 
     /// The prices of an OpenStreetMap station: the Gasvaktin station at the same
     /// place (within 400 m; 1 km when the brand matches).
+    /// A station that comes from Gasvaktin has its own prices.
     static func match(_ station: FuelStation, in prices: [FuelPrice]) -> FuelPrice? {
+        if let key = station.priceKey { return prices.first { $0.key == key } }
+        return nearestMatch(station, in: prices)?.price
+    }
+
+    static func nearestMatch(_ station: FuelStation, in prices: [FuelPrice]) -> (price: FuelPrice, km: Double)? {
         let brand = (station.brand ?? station.name).lowercased()
         return prices
             .map { (price: $0, km: Geo.distanceKm($0.coordinate, station.coordinate)) }
             .filter { $0.km <= 0.4 || ($0.km <= 1 && brand.contains($0.price.company.lowercased().prefix(3))) }
-            .min { $0.km < $1.km }?.price
+            .min { $0.km < $1.km }
     }
 
     /// Cheap, average or dear compared with all the pumps in Iceland now:
